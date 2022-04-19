@@ -1,0 +1,1245 @@
+/* FONTS */
+@font-face {
+  font-family: "ATH";
+  font-style: normal;
+  font-weight: normal;
+  src: url("./assets/fonts/Athelas-Regular.woff") format("woff");
+}
+@font-face {
+  font-family: "BS-B";
+  src: url("./assets/fonts/BioSans-Bold.eot");
+  src: url("./assets/fonts/BioSans-Bold.eot?#iefix") format("embedded-opentype"),
+    url("./assets/fonts/BioSans-Bold.woff2") format("woff2"),
+    url("./assets/fonts/BioSans-Bold.woff") format("woff"),
+    url("./assets/fonts/BioSans-Bold.ttf") format("truetype"),
+    url("./assets/fonts/BioSans-Bold.svg#BioSans-Bold") format("svg");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "BS-R";
+  src: url("./assets/fonts/BioSans-Regular.eot");
+  src: url("./assets/fonts/BioSans-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("./assets/fonts/BioSans-Regular.woff2") format("woff2"),
+    url("./assets/fonts/BioSans-Regular.woff") format("woff"),
+    url("./assets/fonts/BioSans-Regular.ttf") format("truetype"),
+    url("./assets/fonts/BioSans-Regular.svg#BioSans-Regular") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "BS-L";
+  src: url("./assets/fonts/BioSans-Light.eot");
+  src: url("./assets/fonts/BioSans-Light.eot?#iefix")
+      format("embedded-opentype"),
+    url("./assets/fonts/BioSans-Light.woff2") format("woff2"),
+    url("./assets/fonts/BioSans-Light.woff") format("woff"),
+    url("./assets/fonts/BioSans-Light.ttf") format("truetype"),
+    url("./assets/fonts/BioSans-Light.svg#BioSans-Light") format("svg");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "BS-SB";
+  src: url("./assets/fonts/BioSans-SemiBold.eot");
+  src: url("./assets/fonts/BioSans-SemiBold.eot?#iefix")
+      format("embedded-opentype"),
+    url("./assets/fonts/BioSans-SemiBold.woff2") format("woff2"),
+    url("./assets/fonts/BioSans-SemiBold.woff") format("woff"),
+    url("./assets/fonts/BioSans-SemiBold.ttf") format("truetype"),
+    url("./assets/fonts/BioSans-SemiBold.svg#BioSans-SemiBold") format("svg");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "BS-I";
+  src: url("./assets/fonts/BioSans-Italic.eot");
+  src: url("./assets/fonts/BioSans-Italic.eot?#iefix")
+      format("embedded-opentype"),
+    url("./assets/fonts/BioSans-Italic.woff2") format("woff2"),
+    url("./assets/fonts/BioSans-Italic.woff") format("woff"),
+    url("./assets/fonts/BioSans-Italic.ttf") format("truetype"),
+    url("./assets/fonts/BioSans-Italic.svg#BioSans-Italic") format("svg");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "BS-EL";
+  src: url("./assets/fonts/BioSans-ExtraLight.eot");
+  src: url("./assets/fonts/BioSans-ExtraLight.eot?#iefix")
+      format("embedded-opentype"),
+    url("./assets/fonts/BioSans-ExtraLight.woff2") format("woff2"),
+    url("./assets/fonts/BioSans-ExtraLight.woff") format("woff"),
+    url("./assets/fonts/BioSans-ExtraLight.ttf") format("truetype"),
+    url("./assets/fonts/BioSans-ExtraLight.svg#BioSans-ExtraLight")
+      format("svg");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "BS-SBI";
+  src: url("./assets/fonts/BioSans-SemiBoldItalic.eot");
+  src: url("./assets/fonts/BioSans-SemiBoldItalic.eot?#iefix")
+      format("embedded-opentype"),
+    url("./assets/fonts/BioSans-SemiBoldItalic.woff2") format("woff2"),
+    url("./assets/fonts/BioSans-SemiBoldItalic.woff") format("woff"),
+    url("./assets/fonts/BioSans-SemiBoldItalic.ttf") format("truetype"),
+    url("./assets/fonts/BioSans-SemiBoldItalic.svg#BioSans-SemiBoldItalic")
+      format("svg");
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "BS-ELI";
+  src: url("./assets/fonts/BioSans-ExtraLightItalic.eot");
+  src: url("./assets/fonts/BioSans-ExtraLightItalic.eot?#iefix")
+      format("embedded-opentype"),
+    url("./assets/fonts/BioSans-ExtraLightItalic.woff2") format("woff2"),
+    url("./assets/fonts/BioSans-ExtraLightItalic.woff") format("woff"),
+    url("./assets/fonts/BioSans-ExtraLightItalic.ttf") format("truetype"),
+    url("./assets/fonts/BioSans-ExtraLightItalic.svg#BioSans-ExtraLightItalic")
+      format("svg");
+  font-weight: 200;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "BS-BI";
+  src: url("./assets/fonts/BioSans-BoldItalic.eot");
+  src: url("./assets/fonts/BioSans-BoldItalic.eot?#iefix")
+      format("embedded-opentype"),
+    url("./assets/fonts/BioSans-BoldItalic.woff2") format("woff2"),
+    url("./assets/fonts/BioSans-BoldItalic.woff") format("woff"),
+    url("./assets/fonts/BioSans-BoldItalic.ttf") format("truetype"),
+    url("./assets/fonts/BioSans-BoldItalic.svg#BioSans-BoldItalic")
+      format("svg");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "BS-EBI";
+  src: url("./assets/fonts/BioSans-ExtraBoldItalic.eot");
+  src: url("./assets/fonts/BioSans-ExtraBoldItalic.eot?#iefix")
+      format("embedded-opentype"),
+    url("./assets/fonts/BioSans-ExtraBoldItalic.woff2") format("woff2"),
+    url("./assets/fonts/BioSans-ExtraBoldItalic.woff") format("woff"),
+    url("./assets/fonts/BioSans-ExtraBoldItalic.ttf") format("truetype"),
+    url("./assets/fonts/BioSans-ExtraBoldItalic.svg#BioSans-ExtraBoldItalic")
+      format("svg");
+  font-weight: 800;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "BS-LI";
+  src: url("./assets/fonts/BioSans-LightItalic.eot");
+  src: url("./assets/fonts/BioSans-LightItalic.eot?#iefix")
+      format("embedded-opentype"),
+    url("./assets/fonts/BioSans-LightItalic.woff2") format("woff2"),
+    url("./assets/fonts/BioSans-LightItalic.woff") format("woff"),
+    url("./assets/fonts/BioSans-LightItalic.ttf") format("truetype"),
+    url("./assets/fonts/BioSans-LightItalic.svg#BioSans-LightItalic")
+      format("svg");
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "BS-EB";
+  src: url("./assets/fonts/BioSans-ExtraBold.eot");
+  src: url("./assets/fonts/BioSans-ExtraBold.eot?#iefix")
+      format("embedded-opentype"),
+    url("./assets/fonts/BioSans-ExtraBold.woff2") format("woff2"),
+    url("./assets/fonts/BioSans-ExtraBold.woff") format("woff"),
+    url("./assets/fonts/BioSans-ExtraBold.ttf") format("truetype"),
+    url("./assets/fonts/BioSans-ExtraBold.svg#BioSans-ExtraBold") format("svg");
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "BEBAS";
+  src: url("./assets/fonts/BebasNeue-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  margin: 0px;
+  padding: 0px;
+  color: black;
+  background-color: white;
+  /* text-shadow: 2px 2px 10px #000000; */
+}
+#bgimg {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  /* background-image: url('./assets/images/r-5.jpg'); */
+  background-size: 160%;
+  background-position-x: 115%;
+  background-position-y: 6%;
+  z-index: -1;
+}
+/* THEME */
+.darkMode {
+  background-color: black;
+  color: white;
+}
+.redMode {
+  background-color: black;
+  color: red;
+}
+
+/* MAIN MENU */
+#mainCont {
+  width: 100%;
+  height: 25%;
+  top: 37.5%;
+  position: fixed;
+}
+.mainMenu {
+  font-family: "BS-B";
+  letter-spacing: 2px;
+  font-size: 14px;
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+}
+.mainMenu:hover {
+  letter-spacing: 6px;
+}
+#r1,
+#r3 {
+  width: 100%;
+  text-align: center;
+}
+#r2 {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  margin: 2% 0% 2% 0%;
+}
+#mainLG {
+  /* width: 50%; */
+  cursor: pointer;
+  font-family: "BEBAS";
+  z-index: 2;
+  font-size: 75px;
+  letter-spacing: 13px;
+}
+
+/* Typed Area */
+#typedArea {
+  position: fixed;
+  bottom: 4%;
+  width: 100%;
+  text-align: center;
+  font-family: "BS-L";
+  /* background-color: black; */
+  color: white;
+  letter-spacing: 1px;
+  font-size: 14px;
+  cursor: default;
+  opacity: 0;
+  overflow: hidden;
+  transition: 0.3s all;
+  z-index: 15;
+}
+
+#typedText {
+  background-color: black;
+  padding: 1% 2%;
+}
+
+#fontTest {
+  position: fixed;
+  left: 40%;
+  top: 3%;
+  font-family: "BEBAS";
+  z-index: 2;
+  font-size: 75px;
+  letter-spacing: 13px;
+}
+
+#subBut1,
+#subBut2,
+#subBut3,
+#subBut4 {
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+#subBut1:hover,
+#subBut2:hover,
+#subBut3:hover,
+#subBut4:hover {
+  letter-spacing: 2px;
+  font-family: "BS-BI";
+}
+
+/* Subscription Element */
+#subSection {
+  width: 0%;
+  height: 8%;
+  position: fixed;
+  top: 43%;
+  right: 0;
+  background-color: black;
+  opacity: 0.97;
+  z-index: 2;
+  color: white;
+  font-family: "BS-R";
+  overflow: hidden;
+}
+
+.subscribeForm {
+  width: 98%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  justify-items: center;
+  padding-left: 2%;
+}
+
+#mc-embedded-subscribe,
+#mce-EMAIL {
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
+  font-family: "BS-R";
+  font-size: 14px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+#mce-EMAIL:focus {
+  border: none;
+  outline: none;
+  text-decoration: none;
+}
+
+/* SHOP START */
+#shopBgOverlay {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.82);
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 25% 50% 25%;
+  grid-template-rows: 1fr;
+  color: white;
+  font-family: BS-R;
+  overflow: hidden;
+}
+#shopConSec {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+#shopPolicy {
+  width: 100%;
+  height: 10%;
+  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  justify-items: center;
+  overflow: hidden;
+  float: left;
+}
+#shoppolicyTextBut {
+  font-size: 12px;
+  background-color: red;
+  color: white;
+  padding: 0.5% 2%;
+  cursor: pointer;
+}
+#shopConInnerSect {
+  width: 100%;
+  height: 85%;
+  background-color: white;
+  color: black;
+  margin-top: 5%;
+  overflow: hidden;
+  position: relative;
+  display: none;
+  z-index: 1;
+}
+#shopConInnerMain {
+  width: 94%;
+  height: 79%;
+  background-color: white;
+  color: black;
+  margin-top: 5%;
+  overflow: scroll;
+  position: relative;
+  display: block;
+  padding: 3%;
+  z-index: 2;
+}
+.productImages {
+  width: 33.3%;
+  height: 40%;
+  overflow: hidden;
+  float: left;
+  cursor: pointer;
+}
+.productImages img {
+  width: 100%;
+  float: left;
+}
+.soldOut {
+  position: absolute;
+  background-color: white;
+  border: 1px solid red;
+  width: 1.5%;
+  height: 1.5%;
+  border-radius: 50%;
+  z-index: 5;
+}
+#shopprodImages {
+  height: 94%;
+  width: 94%;
+  margin: 3% 3%;
+  overflow: scroll;
+  cursor: ns-resize;
+}
+.shopproductImgInner {
+  width: 100%;
+  float: left;
+}
+#previousPro {
+  position: absolute;
+  left: 5%;
+  top: 4%;
+  font-size: 18px;
+  font-family: BS-B;
+  letter-spacing: 1px;
+  opacity: 0.2;
+  transition: 0.2s all;
+  cursor: pointer;
+}
+#nextPro {
+  position: absolute;
+  right: 5%;
+  top: 4%;
+  font-size: 18px;
+  font-family: BS-B;
+  letter-spacing: 1px;
+  opacity: 0.2;
+  transition: 0.2s all;
+  cursor: pointer;
+}
+#previousPro:hover,
+#nextPro:hover {
+  opacity: 1;
+}
+#shopprodName {
+  position: absolute;
+  left: 5%;
+  top: 4%;
+  font-size: 20px;
+  font-family: "BS-SB";
+}
+#shopproductDesc {
+  position: absolute;
+  width: 30%;
+  left: 5%;
+  top: 13%;
+  cursor: default;
+}
+#shopItemCat {
+  position: absolute;
+  border: 1px solid black;
+  background-color: white;
+  text-align: center;
+  width: 7%;
+  left: 5%;
+  top: 10%;
+  padding: 0.5% 1%;
+  transition: 0.3s all;
+  cursor: pointer;
+}
+#shopItemCat:hover ~ #shopCatDesc {
+  display: block;
+}
+#shopCatDesc {
+  position: absolute;
+  border: 1px solid black;
+  background-color: rgb(255, 231, 124);
+  font-size: 14px;
+  line-height: 16px;
+  width: 35%;
+  height: auto;
+  left: 18%;
+  top: 10%;
+  padding: 0.5% 1%;
+  transition: 0.3s all;
+  cursor: pointer;
+  z-index: 10;
+  display: none;
+}
+#shopimgToggle {
+  position: absolute;
+  left: 5%;
+  bottom: 5%;
+  font-size: 14px;
+  cursor: pointer;
+}
+#shopproductPrice {
+  position: absolute;
+  font-size: 20px;
+  right: 5%;
+  top: 4%;
+  font-family: "BS-R";
+}
+#shopproductSizes {
+  position: absolute;
+  right: 5%;
+  bottom: 22%;
+  width: 30%;
+  font-family: BS-B;
+  font-size: 14px;
+}
+.shopsizes {
+  border: 1px solid black;
+  width: 14%;
+  height: 10%;
+  text-align: center;
+  float: right;
+  padding: 3% 1%;
+  margin-left: 8%;
+  margin-bottom: 6%;
+  transition: 0.3s;
+  cursor: pointer;
+  background-color: white;
+}
+.shopsizes:hover {
+  background-color: black;
+  color: white;
+}
+#shopaddToCart {
+  position: absolute;
+  right: 5%;
+  bottom: 14%;
+  width: 20%;
+  text-align: center;
+  border: 1px solid black;
+  padding-top: 1.5%;
+  padding-bottom: 1.5%;
+  cursor: pointer;
+  transition: 0.3s all;
+  background-color: white;
+}
+#shopaddToCart:hover {
+  letter-spacing: 2px;
+  background-color: #f0b858;
+  color: black;
+}
+#shopviewCart:hover {
+  letter-spacing: 2px;
+  background-color: green;
+  color: white;
+}
+#shopviewCart {
+  position: absolute;
+  right: 5%;
+  bottom: 5%;
+  width: 20%;
+  text-align: center;
+  border: 1px solid black;
+  padding-top: 1.5%;
+  padding-bottom: 1.5%;
+  cursor: pointer;
+  transition: 0.3s all;
+  background-color: white;
+}
+#shopnextBut {
+  align-self: center;
+  justify-self: center;
+  cursor: pointer;
+  transition: 0.5s all;
+}
+#shopnextBut:hover {
+  letter-spacing: 5px;
+}
+#cartChecOut {
+  background-color: white;
+  position: relative;
+  z-index: 20;
+  width: 94%;
+  height: 94%;
+  padding: 3% 3%;
+  display: none;
+}
+#checkoutTop {
+  height: 50%;
+  width: 100%;
+  float: left;
+  position: relative;
+  overflow: scroll;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.267);
+}
+#checkoutBot {
+  height: 50%;
+  width: 100%;
+  float: left;
+  overflow: hidden;
+}
+.checkoutProdCard {
+  height: 68%;
+  width: 22%;
+  overflow: hidden;
+  float: left;
+  margin-right: 2%;
+  margin-bottom: 2%;
+}
+.checkoutProdCard img {
+  height: 76%;
+}
+.checkProDetails {
+  width: 100%;
+  height: 22%;
+}
+.cpd {
+  width: 100%;
+  height: 44%;
+  padding-bottom: 3%;
+  font-size: 14px;
+  float: left;
+}
+#emptyCart {
+  font-size: 10px;
+  text-align: center;
+  width: 12%;
+  padding: 1% 2%;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: black;
+  position: absolute;
+  top: 3%;
+  right: 3%;
+  z-index: 2;
+  transition: 0.3s;
+  cursor: pointer;
+}
+#emptyCart:hover {
+  background-color: rgb(253, 0, 0);
+  color: white;
+}
+#font-size {
+  font-size: 12px;
+  opacity: 50%;
+  height: 10%;
+}
+#checkOForm {
+  width: 100%;
+  height: 70%;
+}
+#checkOForm input {
+  border-radius: 0px;
+  border-width: 1px;
+  border-color: rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  font-size: 10px;
+  padding-left: 2%;
+}
+#checkOForm input::placeholder {
+  opacity: 70%;
+}
+#checkOForm input:focus {
+  outline: none;
+}
+#enterInfo {
+  height: 10%;
+  width: 100%;
+  float: left;
+  font-size: 12px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+}
+#paySub {
+  width: 100%;
+  height: 30%;
+  margin-top: 4%;
+}
+.inForm {
+  width: 97%;
+  height: 10%;
+  margin-top: 2%;
+}
+#enterDeets {
+  height: 100%;
+  width: 50%;
+  float: left;
+  position: relative;
+}
+#stripeIcon {
+  position: absolute;
+  height: 32%;
+  right: -3%;
+  top: 20%;
+}
+#ccWrapper {
+  height: 30%;
+  width: 100%;
+  margin-top: 15%;
+  display: grid;
+  grid-template-columns: 60% 13.3% 13.3% 13.3%;
+  grid-template-rows: 1fr;
+  border: 1px solid black;
+}
+#card-element {
+  height: 30%;
+  width: 100%;
+  margin-top: 15%;
+  padding: 1%;
+  border: 1px solid black;
+}
+#ccWrapper input {
+  border: none;
+  font-size: 12px;
+  padding-left: 5%;
+}
+#ccWrapper input:focus {
+  outline: none;
+}
+#inputSect1 {
+  width: 100%;
+  height: 50%;
+  padding-top: 2%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-column-gap: 2%;
+  grid-row-gap: 8%;
+}
+#cartTotal {
+  width: 25%;
+  float: left;
+  text-align: center;
+  font-family: "BS-B";
+  margin-top: 8%;
+  font-size: 14px;
+}
+#confirmDeets {
+  width: 21%;
+  float: left;
+  text-align: center;
+  background-color: black;
+  color: white;
+  padding: 2% 2%;
+  font-size: 12px;
+  margin-top: 6%;
+  transition: 0.3s;
+  cursor: pointer;
+  border: none;
+}
+#confirmDeets:hover {
+  background-color: green;
+  color: white;
+  letter-spacing: 2px;
+}
+
+.incBut {
+  transition: 0.3s;
+  opacity: 0.3;
+}
+.incBut:hover {
+  opacity: 1;
+}
+#inSP,
+#inST {
+  cursor: pointer;
+  font-size: 10px;
+  border-radius: 0px;
+  border-width: 1px;
+  border-color: rgba(0, 0, 0, 1);
+}
+#inSP:focus,
+#inST:focus {
+  outline: none;
+  text-decoration: none;
+}
+#psrPolicy {
+  height: 94%;
+  width: 94%;
+  background-color: white;
+  position: absolute;
+  z-index: 10;
+  color: black;
+  display: none;
+  overflow: scroll;
+  font-size: 12px;
+  font-family: "BS-R";
+  cursor: pointer;
+}
+#orderConf {
+  height: 94%;
+  width: 94%;
+  background-color: white;
+  position: absolute;
+  z-index: 10;
+  color: black;
+  display: none;
+  overflow: scroll;
+  font-size: 12px;
+  font-family: "BS-R";
+  cursor: pointer;
+}
+#divLoadBG,
+#divLoadBG2 {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 21;
+  display: none;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  justify-items: center;
+}
+.loader {
+  border: 2px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 2px solid green;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+#sizeToggle {
+  transition: 0.3s;
+  margin-bottom: 5%;
+}
+#sizeToggle:hover {
+  font-family: "BS-B";
+}
+#scroll {
+  position: absolute;
+  width: 18%;
+  left: 0%;
+  top: 30%;
+  animation-name: scroll;
+  animation-duration: 2s;
+  opacity: 0;
+}
+@keyframes scroll {
+  0% {
+    top: 70%;
+    opacity: 100%;
+  }
+  80% {
+    opacity: 100%;
+  }
+  100% {
+    top: 30%;
+    opacity: 0%;
+  }
+}
+/* Safari */
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/* SHOP END */
+@media screen and (max-width: 769px) {
+  #mobileOnly {
+    display: none !important;
+  }
+  #shopprodName,
+  #shopproductPrice {
+    top: 6%;
+  }
+  #shopItemCat {
+    top: 11%;
+  }
+  #emptyCart {
+    top: 52%;
+  }
+  #stripeIcon {
+    top: 5%;
+  }
+  #cartChecOut {
+    height: 100%;
+  }
+  .cpd {
+    font-size: large;
+  }
+  #psrPolicy {
+    height: 100%;
+  }
+  #scroll {
+    width: 50%;
+    left: 25%;
+  }
+  .checkoutProdCard {
+    width: 47%;
+  }
+  .checkoutProdCard img {
+    width: 100%;
+    height: auto;
+  }
+  #confirmDeets {
+    background-color: green;
+  }
+  #checkoutTop {
+    height: 60%;
+  }
+  #checkoutBot {
+    height: 40%;
+  }
+  .shopsizes {
+    width: 20%;
+    height: 15%;
+  }
+  #shopaddToCart,
+  #shopviewCart {
+    width: 25%;
+    letter-spacing: 2px;
+  }
+  #shopItemCat {
+    width: 12%;
+  }
+  #shopimgToggle {
+    display: none;
+  }
+  #shopConSec {
+    float: left;
+    height: 94%;
+  }
+  #shopConInnerSect {
+    height: 100%;
+    float: left;
+    margin: 0px;
+  }
+  #shopBGOverlay {
+    float: left;
+  }
+  #shoppolicyTextBut {
+    background-color: #ff002d;
+    color: white;
+  }
+  #shopConInnerMain {
+    margin: 0px;
+  }
+  #shopPolicy {
+    position: absolute;
+    top: 0;
+    height: 6%;
+    z-index: 5;
+  }
+  #shopConInnerMain {
+    height: 100%;
+  }
+  #shoppreviousBut {
+    display: none;
+  }
+  .productImages {
+    width: 50%;
+    height: 30%;
+  }
+  #shopprodImages {
+    margin: 0px;
+    height: 100%;
+    width: 100%;
+  }
+  #shopnextBut {
+    background-color: black;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    justify-items: center;
+    align-items: center;
+    font-size: 24px;
+    letter-spacing: 2px;
+    text-align: center;
+    color: #ff002d;
+    height: 6%;
+    width: 100%;
+    float: left;
+  }
+  #Unl {
+    visibility: hidden;
+  }
+  #News {
+    visibility: hidden;
+  }
+  #Special {
+    visibility: hidden;
+  }
+  #r2 {
+    display: grid;
+    grid-template-rows: 1fr !important;
+    grid-template-columns: 1fr !important;
+    align-items: center;
+    justify-items: center;
+    margin: 2% 0% 2% 0%;
+  }
+}
+#s,
+#c,
+#o,
+#g,
+#e {
+  position: relative;
+}
+.topArrow {
+  position: absolute;
+  top: -40%;
+  left: 5%;
+  font-size: 22px;
+  transition: 0.5s;
+  display: none;
+  animation-name: arrowHover;
+  animation-duration: 0.5s;
+}
+.lgb:hover > .topArrow {
+  display: block;
+  transition: 0.8s;
+}
+@keyframes arrowHover {
+  0% {
+    top: -40%;
+  }
+  50% {
+    top: -33%;
+  }
+  100% {
+    top: -40%;
+  }
+}
+/* -----------------------------------------  WORLD --------------------------------------------------------*/
+#worldMain {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-image: url("./assets/images/world/world-bg-2.jpg");
+  background-size: cover;
+}
+#worldTop {
+  font-family: "BS-SB";
+  color: red;
+  width: 100%;
+  height: 49%;
+  margin-top: 12%;
+  padding-left: 6%;
+}
+#worldBottom {
+  background-color: white;
+  width: 100%;
+  height: 34%;
+  border-top: 3px solid black;
+  border-bottom: 3px solid black;
+  overflow-y: scroll;
+  position: absolute;
+  will-change: height;
+  bottom: 5%;
+  z-index: 4;
+}
+#worldBottom img {
+  width: 100%;
+  display: block;
+}
+#worldMenu {
+  width: 10%;
+  height: 48%;
+  position: fixed;
+  right: 4%;
+  top: 7%;
+  z-index: 5;
+  font-family: "ATH";
+}
+.worldMenuOuter {
+  width: 88%;
+  height: 10%;
+  margin-bottom: 30%;
+  float: left;
+  border: 2px solid black;
+  border-radius: 50%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  justify-items: center;
+  cursor: pointer;
+}
+.worldMenuInner {
+  width: 75%;
+  height: 75%;
+  background-color: rgba(255, 255, 255, 0.7);
+  float: left;
+  border: 1px solid black;
+  border-radius: 50%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  justify-items: center;
+  color: black;
+}
+#worldContact {
+  width: 15%;
+  padding: 1.5% 2%;
+  background-color: red;
+  position: fixed;
+  right: 5%;
+  bottom: 2.5%;
+  text-align: center;
+  color: white;
+  font-family: "BS-R";
+  font-size: 10px;
+  letter-spacing: 2px;
+  border: 2px solid black;
+  z-index: 10;
+}
+#worldEntrance {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  background-color: red;
+  color: white;
+  z-index: 11;
+  font-family: "BS-L";
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+#mobileOnly {
+  width: 100%;
+  height: 100%;
+  background-color: red;
+  color: white;
+  font-family: "BS-SB";
+  letter-spacing: 2px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  justify-items: center;
+  align-items: center;
+  z-index: 12;
+}
+canvas {
+  outline: none;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); /* mobile webkit */
+}
+.percentage {
+  height: 2%;
+  z-index: 30;
+  color: white;
+  position: fixed;
+  transition: ".5s all";
+  bottom: 0%;
+  font-family: "BS-R";
+  overflow: hidden;
+  padding-left: 1%;
+  padding-top: 0.5%;
+  padding-bottom: 0.5%;
+  letter-spacing: 2px;
+}
+#B2222 {
+  position: fixed;
+  left: 0;
+  top: 0;
+  margin-left: 10%;
+  margin-right: 10%;
+  z-index: 12;
+  height: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url("https://scoge-2.s3.us-east-2.amazonaws.com/infinite/2222-Book/2222Inner.png");
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+}
+
+#B2222 img {
+  width: 70%;
+  cursor: pointer;
+}
+
+#BMAG {
+  position: fixed;
+  left: 0;
+  top: 0;
+  margin-left: 5%;
+  margin-right: 5%;
+  z-index: 12;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  /* backdrop-filter: blur(6px); */
+}
+
+#BMAG img {
+  width: 100%;
+  cursor: pointer;
+}
+
+#BSketch {
+  position: fixed;
+  left: 0;
+  top: 0;
+  margin-left: 25%;
+  margin-right: 5%;
+  z-index: 12;
+  height: 100%;
+  width: 100%;
+}
+
+.sketches {
+  position: absolute;
+  width: 50%;
+  left: 0;
+  top: 5%;
+}

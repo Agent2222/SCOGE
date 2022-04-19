@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import dfxJson from "./dfx.json"
 import path from "path"
+import { esbuildCommonjs } from '@originjs/vite-plugin-commonjs'
 
 // List of all aliases for canisters
 const aliases = Object.entries(dfxJson.canisters).reduce(
@@ -29,5 +30,9 @@ export default defineConfig({
     alias: {
       ...aliases,
     },
+    // Added below to fix BabylonJS
+    plugins:[
+      esbuildCommonjs(['babylonjs']) 
+    ]
   },
 })
