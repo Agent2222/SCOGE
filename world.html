@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SCOGE World</title>
+        <link href="./src/app.css" rel="stylesheet">
+        <script src="/src/index.js" type="module"></script>
+    </head>
+    <body id="worldMain" onload="isWorld()">
+    <div id="mobileOnly">INTENDED FOR MOBILE</div>
+    <div id="worldEntrance" onclick="worldTap()">
+        <p style="justify-self: center; text-align: center; align-self: flex-end; padding: 0% 15%;">SCOGÉ means 'Between Worlds', one of such worlds is Bankoo.</p>
+        <p style="justify-self: center;font-family: BS-B;">TAP TO ENTER</p>
+    </div>
+    <div id="worldTop">
+        <img id="worldLogo" src="./assets/images/world/s-red-l.png" style="width: 45%;" onclick="playAudio()"/>
+        <p style="font-size: 22px;font-variant: small-caps; font-family: BS-B; margin-bottom: 0px;" id="worldConName">1 - ALANSANA</p>
+        <p style="width: 75%; letter-spacing: 1px;padding-left: 1%; margin-top:1%;" id="worldConText">The people of the 1st continent are heavily affected by altitude class division, which strongly reflects on their dress. However, the cultural phenomenon of the T.A.O.S Entertainment company in partnership with SCOGÉ Worldwide has created a range of unifying T.A.O.S printed garments that remedy the division between ground and sky inhabitants.</p>
+        <div id="worldMenu">
+            <div class="worldMenuOuter" id="world1" onclick="changeWorld(this);">
+                <div class="worldMenuInner" id="world1In" style="background-color: red; color: white;">1</div>
+            </div>
+            <div class="worldMenuOuter" id="world2" onclick="changeWorld(this);">
+                <div class="worldMenuInner" id="world2In">2</div>
+            </div>
+            <div class="worldMenuOuter" id="world3" onclick="changeWorld(this);">
+                <div class="worldMenuInner" id="world3In">3</div>
+            </div>
+            <div class="worldMenuOuter" id="world4" onclick="changeWorld(this);">
+                <div class="worldMenuInner" id="world4In">4</div>
+            </div>
+            <div class="worldMenuOuter" id="world5" onclick="changeWorld(this);">
+                <div class="worldMenuInner" id="world5In">5</div>
+            </div>
+            <div class="worldMenuOuter" id="world6" onclick="changeWorld(this);">
+                <div class="worldMenuInner" id="world6In">6</div>
+            </div>
+            <div class="worldMenuOuter" id="world7" onclick="changeWorld(this);">
+                <div class="worldMenuInner" id="world7In">7</div>
+            </div>
+        </div>
+    </div>
+    <div id="worldBottom">
+        <img id="scroll" src="assets/images/scroll.png"/>
+        <img src="/assets/images/world/look/world1-4.jpg"/>
+        <img src="/assets/images/world/look/world1-1.jpg"/>
+        <img src="/assets/images/world/look/world1-2.jpg"/>
+        <img src="/assets/images/world/look/world1-3.jpg"/>
+    </div>
+    <div id="worldContact"><a href="mailto:info@scoge.co" style="text-decoration: none;color: white;">CONTACT</a></div>
+    </body>
+    <div id="card-element" hidden></div>
+    <script src="https://js.stripe.com/v3/"></script>
+</html>

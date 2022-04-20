@@ -2,17 +2,32 @@
   "name": "scoge",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "serve": "vite preview",
-    "watch": "ic-dfx-watch"
+    "watch": "ic-dfx-watch",
+    "sync": "browser-sync start -sw"
   },
   "devDependencies": {
+    "eslint": "^7.21.0",
     "ic-dfx-utils": "^0.0.14",
     "vite": "^2.3.2"
   },
   "dependencies": {
+    "@chec/commerce.js": "^2.4.1",
     "@dfinity/agent": "0.8.7",
-    "@dfinity/authentication": "0.8.7"
+    "@dfinity/authentication": "0.8.7",
+    "@originjs/vite-plugin-commonjs": "^1.0.3",
+    "@stripe/stripe-js": "^1.13.2",
+    "audio-context": "^1.0.3",
+    "babylonjs": "^5.2.0",
+    "babylonjs-loaders": "^4.2.0",
+    "babylonjs-serializers": "^4.2.0",
+    "browser-sync": "^2.27.9",
+    "dotenv": "^16.0.0",
+    "gsap": "^3.6.0",
+    "ms": "^2.1.2",
+    "stripe": "^8.142.0",
+    "three": "^0.126.1"
   }
 }
