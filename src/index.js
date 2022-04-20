@@ -200,7 +200,7 @@ var continents = {
     <img src="/assets/images/world/look/world1-1.jpg"/>`,
   },
   c2: {
-    name: "2 - CONTINENT UNKNOWN",
+    name: "2 - FAALSANA",
     text: "No concrete data discovered for the 2nd Continent. Few sources indicate a region of migrants from various origins. ",
     images: `<img src="/assets/images/world/look/world0.jpg"/>`,
   },
@@ -491,9 +491,15 @@ window.povOpen = (obj) => {
   document.getElementById("shopProductPrice").innerHTML =
     currentShopProduct[0].price.formatted_with_symbol;
   // Qty Remaining
-  document.getElementById(
-    "shopProductAvailable"
-  ).innerHTML = `(${currentShopProduct[0].inventory.available}) REMAINING`;
+  if (currentShopProduct[0].inventory.available <= 10) {
+    document.getElementById(
+      "shopProductAvailable"
+    ).innerHTML = `(LIMITED QUANTITY)`;
+  } else {
+    document.getElementById(
+      "shopProductAvailable"
+    ).innerHTML = ``;
+  }
   // E Check
   // Images
   var imageContainer = document.getElementById("povImageColumnLeft");
@@ -587,16 +593,19 @@ window.purchaseComplete = () => {
 window.termsOpen = false;
 window.toggleTerms = () => {
   var terms = document.getElementById("tandc");
+  var menu = document.getElementById("gMenu");
   if (terms.style.display === "block") {
     document.getElementById("tandc").style.transition = ".5s all";
     document.getElementById("tandc").style.display = "none";
     document.getElementById("tandc").style.opacity = "0%";
+    menu.style.display = "block";
     window.termsOpen = false;
     return;
   } else if (terms.style.display != "block") {
     document.getElementById("tandc").style.transition = ".5s all";
     document.getElementById("tandc").style.display = "block";
     document.getElementById("tandc").style.opacity = "100%";
+    menu.style.display = "none";
     window.termsOpen = true;
     terms.scrollTop = 0;
     return;
@@ -610,7 +619,7 @@ window.productsloaded = false;
 window.loadShop = async () => {
   var shopParent = document.getElementById("allShopProducts");
   await commerce.products
-    .list()
+    .list({sortDirection: 'desc'})
     .then((product) => allProducts.push(product.data));
   allProducts[0].forEach((product) => {
     var productCont = document.createElement("div");
@@ -1089,8 +1098,11 @@ window.globeImgAni = () => {
       if (globeImgAni === 0) {
         globeOverImg1.src = "./assets/images/red-s1-2.jpg";
         globeImgAni = 1;
-      } else {
+      } else if (globeImgAni === 1) {
         globeOverImg1.src = "./assets/images/red-s1.jpg";
+        globeImgAni = 2;
+      } else {
+        globeOverImg1.src = "./assets/images/squ-3.jpg";
         globeImgAni = 0;
       }
     }, 4005);

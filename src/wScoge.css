@@ -391,7 +391,7 @@ canvas {
   transition: 0.5s all !important;
 }
 .productContainer {
-  width: 25%;
+  width: 100%;
   float: left;
   position: relative;
   overflow: hidden;
@@ -405,6 +405,7 @@ canvas {
 } */
 .productContainer img {
   width: 100%;
+  overflow: hidden;
 }
 .pcDetails {
   width: 40%;
@@ -503,6 +504,7 @@ canvas {
   font-size: 14px;
   position: relative;
   bottom: 0%;
+  color:#b5d3d1;
 }
 #shopProductPrice {
   font-family: "BS-R";
@@ -602,6 +604,7 @@ canvas {
   width: 36%;
   height: 79%;
   position: fixed;
+  z-index: 6;
   padding: 3%;
   left: 2%;
   top: 5%;
@@ -925,7 +928,10 @@ canvas {
 }
 #allShopProducts {
   background-color: white;
-  padding: 3%;
+  padding: 3% 3% 10% 3%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 /*         -----------------------------------------------------------------------------         */
 
