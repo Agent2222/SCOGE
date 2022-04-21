@@ -1,7 +1,7 @@
 //
 import Commerce from "@chec/commerce.js";
-import loadStripe from "stripe";
-import BABYLON from "babylonjs";
+// import loadStripe from "stripe";
+import * as BABYLON from "@babylonjs/core";
 import { GameManager } from "./js/GameManger";
 
 console.log(import.meta.env.VITE_CommerceKey);

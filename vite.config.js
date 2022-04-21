@@ -2,6 +2,8 @@ import { defineConfig } from 'vite'
 import dfxJson from "./dfx.json"
 import path from "path"
 import { esbuildCommonjs } from '@originjs/vite-plugin-commonjs'
+import commonjs from '@rollup/plugin-commonjs'
+// import commonjs from '@rollup/plugin-commonjs'
 
 // List of all aliases for canisters
 const aliases = Object.entries(dfxJson.canisters).reduce(
@@ -31,8 +33,17 @@ export default defineConfig({
       ...aliases,
     },
     // Added below to fix BabylonJS
-    plugins:[
-      esbuildCommonjs(['babylonjs']) 
-    ]
+    // plugins:[
+    //   esbuildCommonjs(['babylonjs']),
+    // ]
   },
+  build: {
+    rollupOptions: {
+      output: {
+        dir: "dist/",
+        format: "esm"
+      }
+      // https://rollupjs.org/guide/en/#big-list-of-options
+    }
+  }
 })

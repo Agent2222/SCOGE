@@ -1,5 +1,5 @@
 import * as utils from "./utils";
-import BABYLON from "babylonjs";
+import * as BABYLON from "@babylonjs/core";
 // import * as Hints from "./Hints.js";
 
 export default class LoaderManager {
