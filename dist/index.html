@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SCOGÉ</title>
+        <meta name="description" content="The world of SCOGÉ">
+        <link rel="shortcut icon" type="image/png" href="/assets/favicon.90cce2f7.png">
+        
+        <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-N33VQSX');</script>
+        <script src="https://code.jquery.com/pep/0.4.2/pep.min.js"></script>
+        <!-- <script src="./src/js/split.js"></script> -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/2.7.2/jquery.serializejson.js"></script>
+        <!-- <script src="https://playground.babylonjs.com/js/libs/split.js"></script> -->
+        <!-- <script type="text/javascript" src="https://cdn.babylonjs.com/babylon.max.js"></script> -->
+        
+      <script type="module" crossorigin src="/assets/index.693e832f.js"></script>
+      <link rel="stylesheet" href="/assets/main.1b37780d.css">
+    </head>
+    <body id="main" onload="loadShop();globeImgAni()">
+    <div id="enter" onclick="enterSite()">CLICK TO CONTINUE..</div>
+    <!---------------------------------MOBILE SHOP----------------------------------------->
+    <div id="mobileOnly" onclick="closeMobileOnly()">
+        <img style="width: 40%; position: absolute; top: 2%; left: 30%;"  src="/assets/s-red-l.281e0429.png"/>
+        <p>PLEASE USE A DESKTOP COMPUTER TO PURCHASE SHOP PRODUCTS.</p>
+        <p>FOR ADDITIONAL HELP WITH SALES, PLEASE CONTACT INFO@SCOGE.CO</p>
+        <p>THANK YOU.</p>
+        <div style="position: fixed;bottom: 10%;width: 100%; left:0%; font-size: 18px; text-align: center;">CLICK TO CONTINUE</div>
+    </div>
+    <!---------------------------------MOBILE SHOP END----------------------------------------->
+     <!---------------------------------SETTINGS-------------------------------CONVERT TO COMPONENT---------->
+    <div id="settingsMenu">
+        <div style="margin-bottom: 5%;">
+        <span>FULLSCREEN:</span><span style="margin-left: 5%; margin-right: 2%;" id="fsOn" onclick="fullOn()" class="togFull">ON</span>|<span style="margin-left: 2%;" id="fsOff" onclick="fullOff()" class="togFull">OFF</span>
+        </div>
+        <div style="margin-bottom: 5%;">
+        <span>VOLUME:</span><input type="range" id="sVolume" class="slider" min="0" max="99" value="10" onchange="volumeSlider(this)">
+        </div>
+        <p>SCOGÉ <span style="font-size: 10px;"><i>noun</i></span><span style="margin-left: 2%;" onclick="sayScoge()">&#128266;</span><br><span style="font-size: 12px;">/S-CO-J/<br></span>1: Between Worlds.</p><p>By: Starnilas Oge</p>
+        <p>New York, NY</p>
+        <a href="Mailto:info@scoge.co">Info@Scoge.co</a>
+        <p style="font-size: 12px;">
+            <br>
+            Website by SCOGÉ<br><br>
+            ©2022 SCOGÉ INC. All Rights Reserved.
+        </p>
+        <audio id="scoge">
+            <source src="/assets/scoge.bb5a98cb.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+    <!-------------------------------------------------------------------------->
+        <div id="shop">
+            <div id="divLoadBG2">
+                <div class="loader"></div>
+            </div>
+            <div id="povLeft">
+                <img id="scroll" src="/assets/scroll.348ed7e0.png"/>
+                <div id="povImageColumnRight">
+                </div>
+                <div id="povImageColumnLeft">
+                    <!-- <img class="leftPOVimages"  src="../assets/images/shoptest/shop1.jpg">
+                    <img class="leftPOVimages"  src="../assets/images/shoptest/shop1.jpg">
+                    <img class="leftPOVimages"  src="../assets/images/shoptest/shop1.jpg"> -->
+              </div>
+            </div>
+            <div id="povRight">
+                <div id="orderConfirm" onclick="toggleShop();">
+                    <img style="width: 30%;" src="/assets/bankoo-map.e0e36177.png"/>
+                    <h2>Order Placed!</h2>
+                    <h3>Thank you for shopping at SCOGÉ.</h3>
+                    <h4>Your order confirmation number is: <span class="blue" id="confirmNumber"></span></h4>
+                    <p class="light-font">Your order is being processed. You will receive an order confirmation email. Once your order is packed you will receive a second email with tracking information.<br><br> All orders are shipped from our NYC office and aim to provide the fastest and most convenient shipping possible. Our main carriers include fedex, ups, usps, dhl and dpex.</p>
+                    <br><br>
+                    <p>For any questions or inquiries please email <span class="blue">INFO@SCOGE.CO</span></p>
+                </div>
+                <div id="divLoadBG">
+                    <div class="loader"></div>
+                </div>
+                <div id="tandc" onclick="toggleTerms()">
+                    <h1>Terms & Conditions</h1><p>For designs marked with an <span class="blue">(‘É’)</span> or <span class="blue">(‘SÉ’)</span> please allow 15 working days for your order to be dispatched and tracking information.</p><p>Upon placing your order, you will receive an order confirmation email. Once your order is packed you will receive a second email with tracking information. All orders are shipped from our NYC office and aim to provide the fastest and most convenient shipping possible. Our main carriers include fedex, ups, usps, dhl and dpex.</p><h2>Shipping:</h2><p>Design prices include express shipping costs. For expedited shipping please contact info@scoge.co. </p><h2>Returns & Exchanges:</h2><p>Please email info@scoge.co if you have any questions prior to purchase. Please view design size charts before purchasing for sizing clarification.</p><h2>Finishes:</h2><p>Our designs exhibit intentional rough finishes and/or unconventional fittings. Designs labeled with an <span class="blue">('SÉ')</span> are categorized as highly limited explorations, and are personally signed by its designer Starnilas Oge.</p><h2> Faulty Items:</h2><p>If you believe you received a faulty item, ie. Incorrect item, Incorrect Size, or Incomplete order, Please contact us via info@scoge.co with photos of the fault and your order number. All claims need to be logged within 7 days of receiving the item. Refunds will be processed if the item is proven faulty. We reserve the right to refuse a return if it does not meet our standards. Items stained or dirty will not be accepted.</p><h2>Exchanges:</h2><p>SCOGÉ does not cover shipping costs for returns/exchanges. Returns, Refunds and Exchanges will be processed once the item is received in its original condition.</p><h2>Privacy:</h2><p>SCOGÉ highly respects your Privacy & Security. In developing SCOGÉ we are actively working to convert the entire SCOGÉ technical stack to a decentralized web3 stack. Any personal information received will not be shared with any third parties.</p><h2>Taxes, Duties and Border Charges:</h2><p>SCOGÉ is not responsible for Taxes, Duties, Border Charges or Duty Reimbursement on any international orders. Please check your country’s border charges before making a purchase.</p><p>If you have any questions or concerns please do not hesitate to contact us before making your purchase. <span class="blue">Info@Scoge.co</span></p>
+                  </div>
+                <div id="shopProductDetails">
+                    <div id="sPDLeft">
+                        <p id="shopProductName"><span class="blue" style="cursor: pointer;" onclick="toggleTerms()">(É)</span></p>
+                        <p id="shopProductDesc"></p>
+                        <p id="shopProductAvailable"></p>
+                    </div>
+                    <div id="sPDRight">
+                        <p id="shopProductPrice"></p>
+                        <p id="shopProductSizeGuide" onmouseover="sizeGuideOn()" onmouseout="sizeGuideOff()">Size Guide</p>
+                        <div id="shopProductSizes">
+                            <span class="shopProduct" id="Small" onclick="selectSize(this)">S</span><span class="shopProduct" id="Medium" onclick="selectSize(this)">M</span><span class="shopProduct" id="Large" onclick="selectSize(this)">L</span><span class="shopProduct" id="XLarge" onclick="selectSize(this)">XL</span><span class="shopProduct" id="2XLarge" onclick="selectSize(this)">2XL</span><span class="shopProduct" id="3XLarge" onclick="selectSize(this)">3XL</span><span class="shopProduct" id="SingleSize" onclick="selectSize(this)">Single Size</span>
+                        </div>
+                        <div id="addToBagBut">Select a size</div>
+                    </div>
+                </div>
+                <div id="shopCheckoutDetails">
+                    <div id="bagHeader">
+                        <span id="leftHeadDeet">SHOPPING BAG</span>
+                        <span id="rightHeadDeet" onclick="toggleTerms()">Info, Terms & Conditions</span>
+                    </div>
+                    <div id="shoppingBag">
+                    </div>
+                    <div id="checkoutForm">
+                        <div class="checkoutFormHead">
+                            <span id="secured">SECURED CHECKOUT</span>
+                            <span id="crypto" onmouseover="ccsOn()" onmouseout="ccsOff()">Pay with Crypto</span>
+                        </div>
+                        <div id="cryptoCheckout"></div>
+                        <form id="inputFormUsd">
+                            <input class="shopFormInput" id="input1" type="text" placeholder="First Name">
+                            <input class="shopFormInput" id="input2" type="text" placeholder="Last Name">
+                            <input class="shopFormInput" id="input3" type="text" placeholder="Billing Address">
+                            <select class="shopFormInput" id="input9" type="text" placeholder="Country" value="" onchange="states()">
+                                <option value="Select Country" title="Select">Select Country</option>
+                                <option value="US" title="US">US</option>
+                                <option value="US" title="US2">US - Next Day Air</option>
+                            </select>
+                            <input class="shopFormInput" id="input5" type="email" placeholder="Email">
+                            <select class="shopFormInput" id="input7" type="text" placeholder="State" value="US-NY">
+                                <option value="Select State" title="Select">Select State</option>
+                                <option value="Select Country First">Select Country First</option>
+                            </select>
+                            <input class="shopFormInput" id="input6" type="text" placeholder="Town / City">
+                            <input class="shopFormInput" id="input4" type="text" value="$0.00 Free Shipping" placeholder="Shipping Fee">
+                            <input class="shopFormInput" id="input8" type="text" placeholder="Post / Zip Code">
+                            <input class="shopFormInput" id="input10" type="text" placeholder="Full Shipping Address (If different from Billing Address)">
+                            <div class="shopFormInput input11" id="card-element"></div>
+                            <div class="checkoutRow">
+                                <img id="stripeLogo" src="/assets/stripe-red.59f2c954.png"/>
+                                <div id="totalPrice">
+                                    <span>Total:</span>
+                                    <span id="carTotal">$</span>
+                                </div>
+                                <div id="purchaseButton" onclick="checkOut()">
+                                    CHECKOUT
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div id="productView">
+                <div id="shopLeft">
+                    <!-- <img src="../assets/images/vest1.jpg"> -->
+                </div>
+                <div id="shopRight"></div>
+            </div>
+            <div id="allShopProducts">
+            </div>
+        </div>
+        <!-------------------------------------------------------------------------->
+        <div id="extrasCont"> 
+            <div id="ctc"><span>Photography by Zoe Lembeck</span><br>CLICK IMAGES TO CONTINUE.</div>
+            <img id="extraImages" onclick="nextExImg();" src="https://scoge.s3.us-east-2.amazonaws.com/extra/scoge-22-bts-1.jpg"/>
+            <!-- <video src="./assets/images/v1v.MP4" autoplay loop muted></video> -->
+        </div>
+        <div id="logo">
+            <img src="/assets/s-red-l.281e0429.png"/>
+        </div>
+        <div id="bankooMapCont">
+            <img id="globeOverImg1" style="position: absolute; width: 90%; z-index: 4; mix-blend-mode: multiply; filter: grayscale(100%); opacity:0%;" src="/assets/squ-3.de90aed7.jpg"/>
+            <img id="bMap" src="/assets/Bankoo-3d-Spin-Web.96434c86.gif"/>
+        </div>
+        <canvas style="width: 100%; height: 100%; display: block;" id="renderCanvas"></canvas>
+        <!-- <div id="typedArea" class="campaign" onclick="activateInfinite();destiny();"></div> -->
+        <div id="mainCont" style="width: 100%; height: 100%; margin: 0;"></div>
+        <div id="gMenu">
+            <!-- <div id="wInfo"><img src="assets/images/world/infoMainicon-03.png"/></div> -->
+            <div id="shopBut" class="mainMenuBut" onclick="toggleShop()">SHOP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div id="newGameBut" class="mainMenuBut" onclick="closeEmail();activateInfinite();">NEW GAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div id="subscribeBut" class="mainMenuBut">          
+        <!-------------------------------------------------------------------------->      
+        <!-- Begin Mailchimp Signup Form -->
+                <span>
+                <form action="https://scoge.us3.list-manage.com/subscribe/post?u=06502830cf2008a1155da093a&amp;id=467d798f05" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                    <div id="mc_embed_signup_scroll">
+                <span class="mc-field-group">
+                    <input type="email" value="" placeholder="ENTER EMAIL" name="EMAIL" class="required email" id="mce-EMAIL">
+                </span>
+                    <div id="mce-responses" class="clear">
+                        <div class="response" id="mce-error-response" style="display:none"></div>
+                        <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_06502830cf2008a1155da093a_467d798f05" tabindex="-1" value=""></div>
+                    <!-- <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div> -->
+                    </div>
+                </form>
+                </span>
+        <!--End mc_embed_signup-->
+        <!-------------------------------------------------------------------------->
+                <span onclick="connectBut()" id="connect">CONNECT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </div>
+            <div id="settingsBut" class="mainMenuBut" onclick="openSettings();closeEmail();">SETTINGS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div id="extraBut" class="mainMenuBut" onclick="openExtra();closeEmail();">EXTRA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        </div>
+    <!-- <div id="card-element"></div> -->
+    <audio id="destiny">
+        <source src="/assets/destiny.dadeeacd.mp3" type="audio/mpeg">
+    </audio>
+    </body>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        // ENTER
+window.enterSite = () => {
+  var enterScreen = document.getElementById("enter");
+  var logo = document.getElementById("logo");
+  var map = document.getElementById("bankooMapCont");
+  var menu = document.getElementById("gMenu");
+//   document.getElementById("main").requestFullscreen();
+  enterScreen.innerHTML = "";
+  enterScreen.style.transition = "5s all";
+  enterScreen.style.opacity = "0%";
+  map.style.transition = "all 2s";
+  map.style.width = "50%";
+  map.style.opacity = "100%";
+  map.style.right = "4%";
+  setTimeout(() => {
+    logo.style.visibility = "visible";
+    logo.style.filter = "blur(0px)";
+    window.logoMove(25, 35, 30, 1);
+  }, 800);
+  setTimeout(() => {
+      menu.style.opacity = "100%";
+  }, 1200)
+  setTimeout(() => {
+    enterScreen.style.display = "none";
+  }, 3000);
+  window.destiny();
+};
+    </script>
+</html>
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./assets/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SCOGÉ</title>
+    <link rel="stylesheet" href="./src/style.css">
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html> -->
