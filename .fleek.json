@@ -1,5 +1,6 @@
 {
     "build": {
-      "publicDir": "dist"
+      "publicDir": "dist",
+      "baseDir": "/"
     }
    }
