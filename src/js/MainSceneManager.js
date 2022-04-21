@@ -1,5 +1,5 @@
 import LoaderManager from "./LoaderManager.js";
-import BABYLON from "babylonjs";
+import * as BABYLON from "@babylonjs/core";
 import * as utils from "./utils";
 import initNoti2 from "../index.js";
 

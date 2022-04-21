@@ -1,5 +1,5 @@
 import MainSceneManager from "./MainSceneManager.js";
-import BABYLON from "babylonjs";
+import * as BABYLON from "@babylonjs/core";
 import "babylonjs-loaders";
 
 export class GameManager {

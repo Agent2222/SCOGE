@@ -1,5 +1,5 @@
 //
-import * as BABYLON from "babylonjs";
+import * as BABYLON from "@babylonjs/core";
 
 export const HoverColor = new BABYLON.Color3(1, 1, 1);
 // export const HoverColor = new BABYLON.Color3.White()
