@@ -1096,13 +1096,13 @@ window.globeImgAni = () => {
     globeOverImg1.style.opacity = "0%";
     setTimeout(() => {
       if (globeImgAni === 0) {
-        globeOverImg1.src = "/assets/images/red-s1-2.jpg";
+        globeOverImg1.src = "https://storageapi2.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/red-s1-2.jpg";
         globeImgAni = 1;
       } else if (globeImgAni === 1) {
-        globeOverImg1.src = "/assets/images/red-s1.jpg";
+        globeOverImg1.src = "https://storageapi2.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/red-s1.jpg";
         globeImgAni = 2;
       } else {
-        globeOverImg1.src = "/assets/images/squ-3.jpg";
+        globeOverImg1.src = "https://storageapi2.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg";
         globeImgAni = 0;
       }
     }, 4005);
