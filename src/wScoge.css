@@ -359,7 +359,7 @@ canvas {
   top: 0;
   background-color: black;
   z-index: 4;
-  overflow: hidden;
+  overflow: scroll;
   opacity: 0%;
   visibility: hidden;
 }
