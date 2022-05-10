@@ -694,12 +694,13 @@ window.selectSize = (obj) => {
     selectedPSize = obj.id;
     document.getElementById("addToBagBut").innerHTML = "Add To Bag";
     document
-      .getElementById("addToBagBut").addEventListener('click', addToCart);
+      .getElementById("addToBagBut")
+      .setAttribute("onclick", "addToCart()");
   } else {
     selectedPSize = "";
     document
       .getElementById("addToBagBut")
-      .removeEventListener('click', addToCart);
+      .removeAttribute("onclick", "addToCart()");
   }
   var sizeElements = document.getElementsByClassName("shopProduct");
   for (let i = 0; i < sizeElements.length; i++) {
@@ -787,7 +788,7 @@ window.addToCart = async () => {
           });
           window.productAdded();
           selectedPSize = "";
-          document.getElementById("addToBagBut").removeEventListener('click', addToCart);
+          document.getElementById("addToBagBut").removeAttribute("onclick");
         });
     });
   if (countriedAdded === false) {
