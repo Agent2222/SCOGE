@@ -1343,7 +1343,7 @@ class mobileShop1 extends HTMLElement {
                         <input class="checkoutInput" id="inputZC" placeholder="Post / Zip Code" value="">
                         <input class="checkoutInput" id="inputSP" value="$0 Free Ship">
                         <input class="checkoutInput" id="inputSA" placeholder="Shipping Address (If different from billing)" value="">
-                        <img id="stripeLogo" src="./assets/images/stripe-red.png"/>
+                        <img id="stripeLogo" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/stripe-red.png"/>
                         <div class="input11" id="card-element"></div>
                    </div>
                     <div id="cartItems">
