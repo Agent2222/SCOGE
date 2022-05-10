@@ -2,7 +2,8 @@
 import Commerce from "@chec/commerce.js";
 // import loadStripe from "stripe";
 import * as BABYLON from "@babylonjs/core";
-import { GameManager } from "./js/GameManger";
+import { GameManager } from "./js/GameManger"; 
+import { mobileShop1 } from "./shop-1";
 
 console.log(import.meta.env.VITE_CommerceKey);
 const VITE_CommerceKey =  import.meta.env.VITE_CommerceKey;
@@ -53,23 +54,41 @@ const learn = [
 ];
 
 // Check Window Size
+// FOCUS
 window.isMobile = false;
 // window.encouraged = false;
+
+// Check Size on Resize
 window.addEventListener("resize", function () {
   if (window.matchMedia("(max-width: 768px)").matches) {
     // Mobile
-  } else {
-    // Desktop
-  }
-});
-window.sizeInit = () => {
-  if (window.matchMedia("(max-width: 768px)").matches) {
-    // Mobile
+    document.getElementById("shopBut").removeEventListener('click', toggleShop);
+    document.getElementById("shopBut").addEventListener('click', openMobile)
     window.isMobile = true;
   } else {
     // Desktop
+    document.getElementById("shopBut").removeEventListener('click', openMobile)
+    document.getElementById("shopBut").addEventListener('click', toggleShop);
+    window.isMobile = false;
+  }
+});
+
+// Check size on Start
+window.sizeInit = () => {
+  if (window.matchMedia("(max-width: 768px)").matches) {
+    // Mobile
+    document.getElementById("shopBut").addEventListener('click', openMobile)
+    window.isMobile = true;
+  } else {
+    // Desktop
+    document.getElementById("shopBut").addEventListener('click', toggleShop)
   }
 };
+
+// Toggle MobileShop
+window.openMobile = () => {
+  document.getElementById("mobileShop").style.display = "block";
+}
 
 // Play Destiny
 window.destiny = () => {

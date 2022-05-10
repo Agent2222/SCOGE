@@ -20,6 +20,7 @@
     "@dfinity/agent": "0.8.7",
     "@dfinity/authentication": "0.8.7",
     "@originjs/vite-plugin-commonjs": "^1.0.3",
+    "@power-elements/stripe-elements": "^3.0.0",
     "@stripe/stripe-js": "^1.13.2",
     "audio-context": "^1.0.3",
     "babylonjs": "^5.2.0",
