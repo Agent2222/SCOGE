@@ -1349,6 +1349,7 @@ class mobileShop1 extends HTMLElement {
                     <div id="cartItems">
                         <div class="productCont">
                             <div class="pcLeft">
+                                <img src="../assets/images/shoptest/shop2.jpg"> 
                             </div>
                             <div class="pcRight">
                                 <p class="cartProName">TESTING PRO NAME</p>
@@ -1363,6 +1364,7 @@ class mobileShop1 extends HTMLElement {
                         </div>
                         <div class="productCont">
                             <div class="pcLeft">
+                                <img src="../assets/images/shoptest/shop4.jpg"> 
                             </div>
                             <div class="pcRight">
                                 <p class="cartProName">TESTING PRO NAME</p>
@@ -1385,6 +1387,7 @@ class mobileShop1 extends HTMLElement {
                 </div>
                 <div id="mb2">
                     <div id="mainImage">
+                        <img id="mainImageCont" src="../assets/images/shoptest/shop3.jpg">
                     </div>
                     <div id="allImages">
                     </div>
