@@ -84,6 +84,7 @@ class mobileShop1 extends HTMLElement {
      // Open Product View
     viewProduct = (e) => {
         var currentProduct = e.target.parentElement.id;
+        this.shadow.getElementById("scroll").style.display = "block";
         currentShopProduct = allProducts[0].filter((product) => {
           return product.id.includes(`${currentProduct}`);
         });
@@ -1306,7 +1307,30 @@ class mobileShop1 extends HTMLElement {
               }
               #eSymbol2 {
                 display: none;
-            }
+              }
+              #scroll {
+                position: absolute;
+                top: 10%;
+                animation-name: scroll;
+                animation-duration: 2s;
+                animation-delay: 1s;
+                opacity: 0;
+                display: none;
+                z-index: 4;
+              }
+              @keyframes scroll {
+                0% {
+                  top: 30%;
+                  opacity: 100%;
+                }
+                80% {
+                  opacity: 100%;
+                }
+                100% {
+                  top: 10%;
+                  opacity: 0%;
+                }
+              }
          </style>
          <div id="main">
             <div id="noti">
@@ -1387,6 +1411,7 @@ class mobileShop1 extends HTMLElement {
                 </div>
                 <div id="mb2">
                     <div id="mainImage">
+                        <img id="scroll" style="width: 60%;" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/scroll.png"/>
                         <img id="mainImageCont" src="../assets/images/shoptest/shop3.jpg">
                     </div>
                     <div id="allImages">
