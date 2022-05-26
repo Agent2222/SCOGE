@@ -2,11 +2,11 @@
 import Commerce from "@chec/commerce.js";
 // import loadStripe from "stripe";
 import * as BABYLON from "@babylonjs/core";
-import { GameManager } from "./js/GameManger"; 
+import { GameManager } from "./js/GameManger";
 import { mobileShop1 } from "./shop-1";
 
 console.log(import.meta.env.VITE_CommerceKey);
-const VITE_CommerceKey =  import.meta.env.VITE_CommerceKey;
+const VITE_CommerceKey = import.meta.env.VITE_CommerceKey;
 const VITE_StripeKey = import.meta.env.VITE_StripeKey;
 
 // Globals
@@ -25,7 +25,7 @@ const commerce = new Commerce(`${VITE_CommerceKey}`, true);
 
 // // Init Stripe
 var stripe = Stripe(`${VITE_StripeKey}`);
-const elements = stripe.elements(); 
+const elements = stripe.elements();
 
 // Notifications
 const noti = {
@@ -62,13 +62,13 @@ window.isMobile = false;
 window.addEventListener("resize", function () {
   if (window.matchMedia("(max-width: 768px)").matches) {
     // Mobile
-    document.getElementById("shopBut").removeEventListener('click', toggleShop);
-    document.getElementById("shopBut").addEventListener('click', openMobile)
+    document.getElementById("shopBut").removeEventListener("click", toggleShop);
+    document.getElementById("shopBut").addEventListener("click", openMobile);
     window.isMobile = true;
   } else {
     // Desktop
-    document.getElementById("shopBut").removeEventListener('click', openMobile)
-    document.getElementById("shopBut").addEventListener('click', toggleShop);
+    document.getElementById("shopBut").removeEventListener("click", openMobile);
+    document.getElementById("shopBut").addEventListener("click", toggleShop);
     document.getElementById("mobileShop").style.display = "none";
     window.isMobile = false;
   }
@@ -78,18 +78,18 @@ window.addEventListener("resize", function () {
 window.sizeInit = () => {
   if (window.matchMedia("(max-width: 768px)").matches) {
     // Mobile
-    document.getElementById("shopBut").addEventListener('click', openMobile)
+    document.getElementById("shopBut").addEventListener("click", openMobile);
     window.isMobile = true;
   } else {
     // Desktop
-    document.getElementById("shopBut").addEventListener('click', toggleShop)
+    document.getElementById("shopBut").addEventListener("click", toggleShop);
   }
 };
 
 // Toggle MobileShop
 window.openMobile = () => {
   document.getElementById("mobileShop").style.display = "block";
-}
+};
 
 // Play Destiny
 window.destiny = () => {
@@ -516,9 +516,7 @@ window.povOpen = (obj) => {
       "shopProductAvailable"
     ).innerHTML = `(LIMITED QUANTITY)`;
   } else {
-    document.getElementById(
-      "shopProductAvailable"
-    ).innerHTML = ``;
+    document.getElementById("shopProductAvailable").innerHTML = ``;
   }
   // E Check
   // Images
@@ -639,7 +637,7 @@ window.productsloaded = false;
 window.loadShop = async () => {
   var shopParent = document.getElementById("allShopProducts");
   await commerce.products
-    .list({sortDirection: 'desc'})
+    .list({ sortDirection: "desc" })
     .then((product) => allProducts.push(product.data));
   allProducts[0].forEach((product) => {
     var productCont = document.createElement("div");
@@ -1116,13 +1114,16 @@ window.globeImgAni = () => {
     globeOverImg1.style.opacity = "0%";
     setTimeout(() => {
       if (globeImgAni === 0) {
-        globeOverImg1.src = "https://storageapi2.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/red-s1-2.jpg";
+        globeOverImg1.src =
+          "https://storageapi2.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/red-s1-2.jpg";
         globeImgAni = 1;
       } else if (globeImgAni === 1) {
-        globeOverImg1.src = "https://storageapi2.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/red-s1.jpg";
+        globeOverImg1.src =
+          "https://storageapi2.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/red-s1.jpg";
         globeImgAni = 2;
       } else {
-        globeOverImg1.src = "https://storageapi2.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg";
+        globeOverImg1.src =
+          "https://storageapi2.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg";
         globeImgAni = 0;
       }
     }, 4005);
