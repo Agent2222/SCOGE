@@ -984,6 +984,7 @@ body {
   border-top: 3px solid black;
   border-bottom: 3px solid black;
   overflow-y: scroll;
+  overflow-x: hidden;
   position: absolute;
   will-change: height;
   bottom: 5%;
