@@ -1052,8 +1052,8 @@ body {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr 1fr;
-  background-color: red;
-  color: white;
+  background-color: black;
+  color: #ff002d;
   z-index: 11;
   font-family: "BS-L";
   letter-spacing: 2px;
