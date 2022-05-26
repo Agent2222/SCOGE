@@ -290,49 +290,49 @@ window.changeWorld = (obj) => {
       worldName.innerHTML = continents.c1.name;
       worldText.innerHTML = continents.c1.text;
       worldMain.style.backgroundImage =
-        "url('./assets/images/world/world-bg-2.jpg')";
+        "url('storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/World/world-bg-2.jpg')";
       worldBottom.innerHTML = continents.c1.images;
       break;
     case "world2":
       worldName.innerHTML = continents.c2.name;
       worldText.innerHTML = continents.c2.text;
       worldMain.style.backgroundImage =
-        "url('./assets/images/world/world-bg-2.jpg')";
+        "url('storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/World/world-bg-2.jpg')";
       worldBottom.innerHTML = continents.c2.images;
       break;
     case "world3":
       worldName.innerHTML = continents.c3.name;
       worldText.innerHTML = continents.c3.text;
       worldMain.style.backgroundImage =
-        "url('./assets/images/world/world-bg-2.jpg')";
+        "url('storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/World/world-bg-2.jpg')";
       worldBottom.innerHTML = continents.c3.images;
       break;
     case "world4":
       worldName.innerHTML = continents.c4.name;
       worldText.innerHTML = continents.c4.text;
       worldMain.style.backgroundImage =
-        "url('./assets/images/world/world-bg-3.jpg')";
+        "url('storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/World/world-bg-3.jpg')";
       worldBottom.innerHTML = continents.c4.images;
       break;
     case "world5":
       worldName.innerHTML = continents.c5.name;
       worldText.innerHTML = continents.c5.text;
       worldMain.style.backgroundImage =
-        "url('./assets/images/world/world-bg-1-2.jpg')";
+        "url('storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/World/world-bg-1-2.jpg')";
       worldBottom.innerHTML = continents.c5.images;
       break;
     case "world6":
       worldName.innerHTML = continents.c6.name;
       worldText.innerHTML = continents.c6.text;
       worldMain.style.backgroundImage =
-        "url('./assets/images/world/world-bg-3.jpg')";
+        "url('storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/World/world-bg-3.jpg')";
       worldBottom.innerHTML = continents.c6.images;
       break;
     case "world7":
       worldName.innerHTML = continents.c7.name;
       worldText.innerHTML = continents.c7.text;
       worldMain.style.backgroundImage =
-        "url('./assets/images/world/world-bg-3.jpg')";
+        "url('storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/World/world-bg-3.jpg')";
       worldBottom.innerHTML = continents.c7.images;
       break;
   }
