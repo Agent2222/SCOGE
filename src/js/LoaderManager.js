@@ -1,5 +1,6 @@
-import * as utils from "./utils";
+import * as utils from "./utils.js";
 import * as BABYLON from "@babylonjs/core";
+import "@babylonjs/loaders/glTF";
 // import * as Hints from "./Hints.js";
 
 export default class LoaderManager {
@@ -174,7 +175,7 @@ export default class LoaderManager {
             );
           }
         }
-        console.log("RoomMeshes", sceneMeshes);
+        // console.log("RoomMeshes", sceneMeshes);
 
         //Set InterActiveMeshes.
         let roomMeshes = [];
@@ -261,8 +262,7 @@ export default class LoaderManager {
       (evt) => {
         // onProgress - Progress Bar Loading
         var loadedPercent = 0;
-        var loadingP = document.getElementById("typedArea");
-        var world = document.getElementById("bankooMapCont");
+        var loadingP = document.getElementById("newGameBut");
         loadingP.setAttribute("onclick", "");
         document.getElementById("renderCanvas").style.transition = "10s all";
         if (evt.lengthComputable) {
@@ -272,13 +272,11 @@ export default class LoaderManager {
           loadedPercent = Math.floor(dlCount * 100.0) / 100.0;
         }
         document.getElementById(
-          "typedText"
-        ).innerHTML = `TRANSFERRING CONSCIOUSNESS.. ${loadedPercent}%`;
+          "newGameBut"
+        ).innerHTML = `LOADING.. ${loadedPercent}%`;
         if (loadedPercent == 100) {
-          document.getElementById("typedText").innerHTML = `ENTER BANKOO`;
-          loadingP.setAttribute("onclick", "activateInfinite();destiny();");
-          world.setAttribute("onclick", "activateInfinite()");
-          world.style.cursor = "pointer";
+          document.getElementById("newGameBut").innerHTML = `ENTER BANKOO`;
+          loadingP.setAttribute("onclick", "activateInfinite();");
         }
       }
     );
