@@ -275,7 +275,7 @@ export default class LoaderManager {
           "newGameBut"
         ).innerHTML = `LOADING.. ${loadedPercent}%`;
         if (loadedPercent == 100) {
-          document.getElementById("newGameBut").innerHTML = `ENTER BANKOO`;
+          document.getElementById("newGameBut").innerHTML = `ENTER`;
           loadingP.setAttribute("onclick", "activateInfinite();");
         }
       }
