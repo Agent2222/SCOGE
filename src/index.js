@@ -1163,7 +1163,7 @@ window.openSettings = () => {
     setTimeout(() => {
       window.globeMove1(4);
       window.logoMove(25, 35, 30, 1);
-      window.globeImgAni();
+      // window.globeImgAni();
     }, 300);
     settingsActive = false;
     return;
@@ -1237,7 +1237,7 @@ window.openExtra = () => {
   if (extraOpen === true) {
     document.getElementById("extrasCont").style.transition = "1s all";
     document.getElementById("extrasCont").style.width = "0%";
-    window.globeImgAni();
+    // window.globeImgAni();
     imageWindow.style.opacity = "0%";
     extraOpen = false;
     setTimeout(() => {
