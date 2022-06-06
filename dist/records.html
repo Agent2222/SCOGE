@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+      <link rel="stylesheet" href="/assets/records.b89c9058.css">
+    </head>
+    <body>
+        <div id="landingP" onclick="enterRecords()">
+            <div id="landingCont">
+                <img src="/assets/sl-r.281e0429.png"/>
+                <div id="recordsText" style="letter-spacing: 20px; text-align: right;">RECORDS</div>
+                <div id="instChangeImage">
+                    <div class="redCircle1"></div>
+                    <div style="align-self: start;" class="green">Change image.</div>
+                </div>
+                <div id="instChangeTexte">
+                    <div class="blueArrow blue" style="font-size: 40px;">&#8614;</div>
+                    <div style="align-self: center;" class="green">Advance text.</div>
+                </div>
+                <div id="continue">CLICK TO CONTINUE..</div>
+            </div>
+        </div>
+        <div id="record">
+            <div id="header">
+                <a href="./index.html"><img src="/assets/sl-r.281e0429.png"/></a>
+                <span style="justify-self: end;padding-right: 10%;">RECORDS</span>
+            </div>
+            <div id="copy">
+                <div id="copyHeadline">
+                    <h2 style="margin-bottom:0;">T.A.O.S</h2>
+                    <h1>Creator 1</h1>
+                </div>
+                <div id="closeText" onclick="closeText()">CLOSE</div>
+                <div id="forwardText">&#8614;</div>
+                <div id="copyBody" onclick="viewRecordText()">
+                    <div id="instructText" class="green">CLICK TO VIEW RECORD TEXT</div>
+                    <p id="cbText">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores at, id optio dolor alias cupiditate consequuntur tenetur accusantium facere consequatur impedit praesentium laboriosam nobis in accusamus qui aliquid blanditiis sit libero? Debitis libero quas perferendis, laudantium ad ut dolorum nulla beatae minus rerum provident dolores porro pariatur expedita architecto atque eaque deleniti voluptatibus magnam!Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores at, id optio dolor alias cupiditate consequuntur tenetur accusantium facere consequatur impedit praesentium laboriosam nobis in accusamus qui aliquid blanditiis sit libero? Debitis libero quas perferendis, laudantium ad ut dolorum nulla beatae minus rerum provident dolores porro pariatur expedita architecto atque eaque deleniti voluptatibus magnam!Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores at, id optio dolor alias cupiditate consequuntur tenetur accusantium facere consequatur impedit praesentium laboriosam nobis in accusamus qui aliquid blanditiis sit libero? Debitis libero quas perferendis, laudantium ad ut dolorum nulla beatae minus rerum provident dolores porro pariatur expedita architecto atque eaque deleniti voluptatibus magnam!</p>
+                </div>
+            </div>
+            <div id="images">
+                <div id="changeImageIcon" class="redCircle"></div>
+            </div>
+        </div>
+    </body>
+    <script>
+        var textCont = document.getElementById("copyBody");
+        var textOpen = false;
+        var closeButton = document.getElementById("closeText");
+        var forward = document.getElementById("forwardText");
+        var instruct = document.getElementById("instructText");
+        function enterRecords() {
+            document.getElementById("landingP").style.display = "none";
+        }
+        function viewRecordText() {
+            closeButton.style.display = "block";
+            textCont.style.transition = ".5s all";
+            textCont.style.bottom = "0%";
+            textOpen = true;
+            textCont.removeAttribute("onclick", viewRecordText);
+            document.getElementById("cbText").style.transition = "2s all";
+            document.getElementById("cbText").style.opacity = "100%";
+            forward.style.display = "block";
+            instruct.style.display = "none";
+        }
+        function closeText() {
+            closeButton.style.display = "none";
+            forward.style.display = "none";
+            textCont.style.bottom = "-40%";
+            textCont.setAttribute("onclick", "viewRecordText()");
+            document.getElementById("cbText").style.transition = "1s all";
+            document.getElementById("cbText").style.opacity = "0%";
+            instruct.style.display = "block";
+        }
+    </script>
+</html>
