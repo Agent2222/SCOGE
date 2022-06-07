@@ -1,4 +1,5 @@
 actor {
+    // Stable actor fields are automatically retained across canister upgrades
     stable var currentProgress: Nat = 0;
 
     public func incrementProgress(): async Nat {

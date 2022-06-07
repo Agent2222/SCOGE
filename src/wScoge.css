@@ -134,12 +134,9 @@ body {
   position: fixed;
   z-index: 3;
   font-family: "BS-R";
-  bottom: 10%;
   bottom: 49%;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
-  justify-items: center;
+  display: none;
+  justify-content: center;
   align-items: center;
   letter-spacing: 2px;
 }
@@ -149,6 +146,34 @@ body {
   padding: .3% 1%;
   background-color: black;
   color: #ff002d;
+}
+#subText2 {
+  height: 2;
+  width: 100%;
+  position: fixed;
+  z-index: 3;
+  font-family: "BS-R";
+  bottom: 45%;
+  display: none;
+  letter-spacing: 2px;
+  justify-content: center;
+  align-items: center;
+}
+#subText2 span {
+  cursor: pointer;
+  text-align: center;
+  padding: .3% 1%;
+  margin-left: 2%;
+  background-color: black;
+  color: #94be8c;
+  float: left;
+}
+#subText2 span:hover {
+  background-color: #b5d3d1;
+  color: black;
+}
+#st2Ans1 {
+  margin-left: 0% !important;
 }
 
 #LoadingPer {
@@ -889,7 +914,7 @@ canvas {
 #newGameBut {
   position: relative;
   left: 8%;
-  opacity: 25%;
+  opacity: 100%;
 }
 #subscribeBut {
   position: relative;

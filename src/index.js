@@ -22,11 +22,7 @@ var intro1 = false;
 var countriedAdded = false;
 var full = 0;
 var vol = 0;
-
-document.getElementById("subText1").addEventListener('click', () => {
-  getGameProgress();
-})
-// document.getElementById("subText1").addEventListener("click",getGameProgress);
+var ngHidden = false;
 
 // Init Commerce
 const commerce = new Commerce(`${VITE_CommerceKey}`, true);
@@ -396,6 +392,7 @@ window.activateInfinite = () => {
         //
         intro1 = true;
       }
+      getGameProgress();
       window.logoMove(6, 3, 16, 1);
       document.getElementById("destiny").pause();
       document.getElementById("renderCanvas").style.opacity = "1";
@@ -1106,7 +1103,7 @@ window.subscribe = () => {
 window.closeEmail = () => {
   var emailInput = document.getElementById("mce-EMAIL");
   document.getElementById("connect").innerHTML =
-    "CONNECT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    "INFO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
   document.getElementById("connect").setAttribute("onclick", "connectBut()");
   emailInput.style.width = "0%";
   emailInput.style.marginRight = "0%";
@@ -1281,9 +1278,7 @@ window.nextExImg = () => {
 
 // BTAC
 window.btAC = () => {
-  console.log(full)
-  console.log(vol)
-  if (full === 1 && vol === 1) {
+  if (full === 1 && vol === 1 && ngHidden === true) {
     document.getElementById("newGameBut").addEventListener('click', activateInfinite);
     document.getElementById("newGameBut").style.opacity = "100%";
     document.getElementById("settingsMenu").style.display = "none";

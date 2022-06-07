@@ -37,6 +37,7 @@
     <body id="main" onload="loadShop();sizeInit();">
     <div id="enter" onclick="enterSite()">CLICK TO CONTINUE..</div>
     <div id="subText1"><p>Do you remmember?</p></div>
+    <div id="subText2"><span class="answerOptions" id="st2Ans1"></span><span class="answerOptions" id="st2Ans2"></span><span class="answerOptions" id="st2Ans3"></span></div>
     <!---------------------------------MOBILE SHOP----------------------------------------->
     <mobile-shop1 product="product1" style="display: none;" id="mobileShop"></mobile-shop1>
     <div id="mobileOnly" onclick="closeMobileOnly()">
@@ -187,7 +188,7 @@
         <div id="gMenu">
             <!-- <div id="wInfo"><img src="assets/images/world/infoMainicon-03.png"/></div> -->
             <div id="shopBut" class="mainMenuBut">SHOP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-            <div id="newGameBut" class="mainMenuBut" onclick="closeEmail();">NEW GAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div id="newGameBut" class="mainMenuBut" onclick="closeEmail();activateInfinite();">NEW GAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
             <div id="subscribeBut" class="mainMenuBut">          
         <!-------------------------------------------------------------------------->      
         <!-- Begin Mailchimp Signup Form -->
