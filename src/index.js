@@ -5,7 +5,7 @@ import * as BABYLON from "@babylonjs/core";
 import { GameManager } from "./game/GameManger.js";
 import { mobileShop1 } from "./shop-1.js";
 // import { dialogue } from "./game/dialogue.js";
-import { getGameProgress } from "../src/game/levels/ch1.js";
+// import { getGameProgress } from "../src/game/levels/ch1.js";
 
 const VITE_CommerceKey = import.meta.env.VITE_CommerceKey;
 const VITE_StripeKey = import.meta.env.VITE_StripeKey;

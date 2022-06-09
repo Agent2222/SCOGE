@@ -333,7 +333,7 @@ canvas {
   width: 100%;
   float: left;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   transition: 0.5s all;
   cursor: url("data:image/svg+xml,%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='24px' height='24px' viewBox='0 0 64 64' style='enable-background:new 0 0 64 64;' xml:space='preserve'%3E%3Cstyle type='text/css'%3E .st0%7Bfill:%23F80F2D;stroke:%23000000;stroke-width:2;stroke-miterlimit:10;%7D%0A%3C/style%3E%3Ccircle class='st0' cx='32.1631' cy='32.1107' r='30.1802'/%3E%3C/svg%3E%0A")
       12 12,
@@ -914,7 +914,7 @@ canvas {
 #newGameBut {
   position: relative;
   left: 8%;
-  opacity: 100%;
+  opacity: 25%;
 }
 #subscribeBut {
   position: relative;

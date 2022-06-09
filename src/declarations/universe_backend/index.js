@@ -4,9 +4,7 @@ import { Actor, HttpAgent } from "@dfinity/agent";
 import { idlFactory } from './universe_backend.did.js';
 export { idlFactory } from './universe_backend.did.js';
 // CANISTER_ID is replaced by webpack based on node environment
-// export const canisterId = process.env.UNIVERSE_BACKEND_CANISTER_ID;
-// Must Change to VITE ENV not Webpack.
-export const canisterId = import.meta.env.VITE_universe_backend_canister_Id;
+export const canisterId = process.env.UNIVERSE_BACKEND_CANISTER_ID;
 
 /**
  * 
