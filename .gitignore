@@ -5,3 +5,4 @@ node_modules
 *.local
 .env
 build/models/Room44/Room44.gltf
+.dfx

@@ -2,10 +2,11 @@
 import Commerce from "@chec/commerce.js";
 // import loadStripe from "stripe";
 import * as BABYLON from "@babylonjs/core";
-import { GameManager } from "./js/GameManger";
-import { mobileShop1 } from "./shop-1";
+import { GameManager } from "./game/GameManger.js";
+import { mobileShop1 } from "./shop-1.js";
+// import { dialogue } from "./game/dialogue.js";
+// import { getGameProgress } from "../src/game/levels/ch1.js";
 
-console.log(import.meta.env.VITE_CommerceKey);
 const VITE_CommerceKey = import.meta.env.VITE_CommerceKey;
 const VITE_StripeKey = import.meta.env.VITE_StripeKey;
 
@@ -21,7 +22,7 @@ var intro1 = false;
 var countriedAdded = false;
 var full = 0;
 var vol = 0;
-
+var ngHidden = false;
 
 // Init Commerce
 const commerce = new Commerce(`${VITE_CommerceKey}`, true);
@@ -391,6 +392,7 @@ window.activateInfinite = () => {
         //
         intro1 = true;
       }
+      getGameProgress();
       window.logoMove(6, 3, 16, 1);
       document.getElementById("destiny").pause();
       document.getElementById("renderCanvas").style.opacity = "1";
@@ -1101,7 +1103,7 @@ window.subscribe = () => {
 window.closeEmail = () => {
   var emailInput = document.getElementById("mce-EMAIL");
   document.getElementById("connect").innerHTML =
-    "CONNECT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    "INFO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
   document.getElementById("connect").setAttribute("onclick", "connectBut()");
   emailInput.style.width = "0%";
   emailInput.style.marginRight = "0%";
@@ -1215,6 +1217,7 @@ window.volumeSlider = (obj) => {
 var extraOpen = false;
 window.openExtra = () => {
   var imageWindow = document.getElementById("extrasCont");
+  document.getElementById("ctc").style.display = "block";
   if (extraOpen === false) {
     imageWindow.style.width = "100%";
     setTimeout(() => {
@@ -1232,6 +1235,9 @@ window.openExtra = () => {
     setTimeout(() => {
       document.getElementById("ctc").style.opacity = "0%";
     }, 5000);
+    setTimeout(() => {
+      document.getElementById("ctc").style.display = "none";
+    }, 7000);
     return;
   }
   if (extraOpen === true) {
@@ -1272,9 +1278,7 @@ window.nextExImg = () => {
 
 // BTAC
 window.btAC = () => {
-  console.log(full)
-  console.log(vol)
-  if (full === 1 && vol === 1) {
+  if (full === 1 && vol === 1 && ngHidden === true) {
     document.getElementById("newGameBut").addEventListener('click', activateInfinite);
     document.getElementById("newGameBut").style.opacity = "100%";
     document.getElementById("settingsMenu").style.display = "none";
