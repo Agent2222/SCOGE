@@ -916,12 +916,12 @@ canvas {
 #newGameBut {
   position: relative;
   left: 8%;
-  opacity: 35%;
+  opacity: 40%;
 }
 #subscribeBut {
   position: relative;
   left: 22%;
-  width: 30%;
+  width: 40%;
 }
 #settingsBut {
   position: relative;
@@ -1093,19 +1093,22 @@ a:hover {
   }
   #gMenu div {
     left: 0%;
+    width: auto !important;
   }
   #settingsMenu {
     width: 80%;
-    height: 50%;
+    height: 38%;
     position: fixed;
     z-index: 5;
     right: 0%;
     top: 0%;
     padding: 10%;
     font-size: 18px;
+    margin-top: 35%;
     background-color: black;
     overflow: scroll;
     border-bottom:1px solid #94be8c;
+    border-top:1px solid #94be8c;
   }
   .slider {
     width: 50%;
