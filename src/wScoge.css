@@ -134,11 +134,12 @@ body {
   position: fixed;
   z-index: 3;
   font-family: "BS-R";
-  bottom: 49%;
+  bottom: 44%;
   display: none;
   justify-content: center;
   align-items: center;
   letter-spacing: 2px;
+  opacity: 0%;
 }
 #subText1 p {
   cursor: pointer;
@@ -153,11 +154,12 @@ body {
   position: fixed;
   z-index: 3;
   font-family: "BS-R";
-  bottom: 45%;
+  bottom: 40%;
   display: none;
   letter-spacing: 2px;
   justify-content: center;
   align-items: center;
+  opacity: 0%;
 }
 #subText2 span {
   cursor: pointer;
@@ -909,16 +911,17 @@ canvas {
   text-decoration: underline;
 }
 #shopBut {
-  width: auto;
+  width: 40%;
 }
 #newGameBut {
   position: relative;
   left: 8%;
-  opacity: 25%;
+  opacity: 35%;
 }
 #subscribeBut {
   position: relative;
   left: 22%;
+  width: 30%;
 }
 #settingsBut {
   position: relative;
@@ -931,6 +934,7 @@ canvas {
 .mainMenuBut {
   margin-bottom: 2%;
   transition: 1s all;
+  width: 40%;
 }
 /* Mailchimp */
 #mce-EMAIL {
@@ -1015,7 +1019,7 @@ a:hover {
   height: 100%;
   background-color: black;
   position: fixed;
-  z-index: 5;
+  z-index: 6;
   position: fixed;
   left: 0px;
   top: 0px;
@@ -1091,10 +1095,17 @@ a:hover {
     left: 0%;
   }
   #settingsMenu {
-    width: 60%;
-    right: 10%;
-    top: 22%;
+    width: 80%;
+    height: 50%;
+    position: fixed;
+    z-index: 5;
+    right: 0%;
+    top: 0%;
+    padding: 10%;
     font-size: 18px;
+    background-color: black;
+    overflow: scroll;
+    border-bottom:1px solid #94be8c;
   }
   .slider {
     width: 50%;
@@ -1116,6 +1127,12 @@ a:hover {
   }
   #allShopProducts {
     display: block;
+  }
+  #fullToggle {
+    display: none;
+  }
+  #volumediv {
+    display: none;
   }
 }
 /* @media (orientation: landscape) and (min-width: 414px) {
@@ -1178,4 +1195,10 @@ a:hover {
   padding-left: 10%;
   padding-right: 10%;
   padding-top: 80%;
+}
+.alt {
+  color: #94be8c !important;
+}
+.active {
+  color: #b5d3d1 !important;
 }

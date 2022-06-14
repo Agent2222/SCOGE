@@ -23,6 +23,9 @@ var countriedAdded = false;
 var full = 0;
 var vol = 0;
 var ngHidden = false;
+window.inUniverse = false;
+
+// Var Elements
 
 // Init Commerce
 const commerce = new Commerce(`${VITE_CommerceKey}`, true);
@@ -65,10 +68,26 @@ window.isMobile = false;
 // Check Size on Resize
 window.addEventListener("resize", function () {
   if (window.matchMedia("(max-width: 768px)").matches) {
+    var shopMenuBut = document.getElementById("shopBut");
     // Mobile
     document.getElementById("shopBut").removeEventListener("click", toggleShop);
     document.getElementById("shopBut").addEventListener("click", openMobile);
     window.isMobile = true;
+    //
+    document.getElementById("shop").style.opacity = "0%";
+    document.getElementById("shop").style.visibility = "hidden";
+    document.getElementById("povRight").style.opacity = "0%";
+    document.getElementById("povLeft").style.opacity = "0%";
+    setTimeout(() => {
+      document.getElementById("povRight").style.visibility = "hidden";
+      document.getElementById("povLeft").style.visibility = "hidden";
+    }, 500);
+    document.getElementById("tandc").style.display = "none";
+    document.getElementById("tandc").style.opacity = "0%";
+    shopMenuBut.innerHTML = "SHOP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    shopActive = "closed";
+    window.termsOpen = false;
+    //
   } else {
     // Desktop
     document.getElementById("shopBut").removeEventListener("click", openMobile);
@@ -131,7 +150,8 @@ window.toggleShop = () => {
   var confirm = document.getElementById("orderConfirm");
   var shopMenuBut = document.getElementById("shopBut");
   window.closeEmail();
-  window.dActiveBut();
+  // Disable some menu items below
+  // window.dActiveBut();
   window.endInter();
   document.getElementById("settingsMenu").style.opacity = "0%";
   settingsActive = false;
@@ -175,6 +195,7 @@ window.toggleShop = () => {
       window.termsOpen = false;
       break;
     case "POVopen":
+      window.mainMenuPosition("","0%","8%","22%","36%","56%");
       shopActive = "open";
       var leftPOV = document.getElementById("povLeft");
       var rightPOV = document.getElementById("povRight");
@@ -392,12 +413,31 @@ window.activateInfinite = () => {
         //
         intro1 = true;
       }
+      //
+      var shopMenuBut = document.getElementById("shopBut");
+      window.mainMenuPosition("","0%","8%","22%","36%","56%");
+      document.getElementById("shop").style.opacity = "0%";
+      document.getElementById("shop").style.visibility = "hidden";
+      document.getElementById("povRight").style.opacity = "0%";
+      document.getElementById("povLeft").style.opacity = "0%";
+      setTimeout(() => {
+        document.getElementById("povRight").style.visibility = "hidden";
+        document.getElementById("povLeft").style.visibility = "hidden";
+      }, 500);
+      document.getElementById("tandc").style.display = "none";
+      document.getElementById("tandc").style.opacity = "0%";
+      shopMenuBut.innerHTML = "SHOP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+      shopActive = "closed";
+      window.termsOpen = false;
+      //
+      window.inUniverse = true;
       getGameProgress();
       window.logoMove(6, 3, 16, 1);
       document.getElementById("destiny").pause();
       document.getElementById("renderCanvas").style.opacity = "1";
       document.getElementById("bankooMapCont").style.opacity = "0";
       document.getElementById("bankooMapCont").style.display = "none";
+      window.clearMainUi();
     }
   }
 };
@@ -485,6 +525,7 @@ window.closeMobileOnly = () => {
 // Open Product POV Screen
 window.povOpen = (obj) => {
   var currentProduct = obj.id;
+  window.mainMenuPosition("black","0%","0%","0%","0%","0%");
   currentShopProduct = allProducts[0].filter((product) => {
     return product.id.includes(`${currentProduct}`);
   });
@@ -1153,14 +1194,33 @@ window.openSettings = () => {
     window.globeMove1(75);
     window.logoMove(6, 3, 16, 1);
     window.endInter();
+    //
+    var shopMenuBut = document.getElementById("shopBut");
+    if (window.isMobile === false) {
+      window.mainMenuPosition("","0%","8%","22%","36%","56%");
+    }
+    document.getElementById("shop").style.opacity = "0%";
+    document.getElementById("shop").style.visibility = "hidden";
+    document.getElementById("povRight").style.opacity = "0%";
+    document.getElementById("povLeft").style.opacity = "0%";
+    setTimeout(() => {
+      document.getElementById("povRight").style.visibility = "hidden";
+      document.getElementById("povLeft").style.visibility = "hidden";
+    }, 500);
+    document.getElementById("tandc").style.display = "none";
+    document.getElementById("tandc").style.opacity = "0%";
+    shopMenuBut.innerHTML = "SHOP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    shopActive = "closed";
+    window.termsOpen = false;
+    //
     settingsActive = true;
     return;
   } else {
-    if (shopActive != "closed") {
-      menu.style.opacity = "0%";
-      settingsActive = false;
-      return;
-    }
+    // if (shopActive != "closed") {
+    //   menu.style.opacity = "0%";
+    //   settingsActive = false;
+    //   return;
+    // }
     menu.style.opacity = "0%";
     setTimeout(() => {
       window.globeMove1(4);
@@ -1217,8 +1277,25 @@ window.volumeSlider = (obj) => {
 var extraOpen = false;
 window.openExtra = () => {
   var imageWindow = document.getElementById("extrasCont");
+  var shopMenuBut = document.getElementById("shopBut");
   document.getElementById("ctc").style.display = "block";
   if (extraOpen === false) {
+    //
+    document.getElementById("shop").style.opacity = "0%";
+    document.getElementById("shop").style.visibility = "hidden";
+    document.getElementById("povRight").style.opacity = "0%";
+    document.getElementById("povLeft").style.opacity = "0%";
+    setTimeout(() => {
+      document.getElementById("povRight").style.visibility = "hidden";
+      document.getElementById("povLeft").style.visibility = "hidden";
+    }, 500);
+    document.getElementById("tandc").style.display = "none";
+    document.getElementById("tandc").style.opacity = "0%";
+    shopMenuBut.innerHTML = "SHOP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    shopActive = "closed";
+    window.termsOpen = false;
+    //
+    window.mainMenuPosition("","0%","8%","22%","36%","56%");
     imageWindow.style.width = "100%";
     setTimeout(() => {
       imageWindow.style.opacity = "100%";
@@ -1278,7 +1355,8 @@ window.nextExImg = () => {
 
 // BTAC
 window.btAC = () => {
-  if (full === 1 && vol === 1 && ngHidden === true) {
+  // console.log(ngHidden);
+  if (full === 1 && vol === 1) {
     document.getElementById("newGameBut").addEventListener('click', activateInfinite);
     document.getElementById("newGameBut").style.opacity = "100%";
     document.getElementById("settingsMenu").style.display = "none";
@@ -1286,3 +1364,92 @@ window.btAC = () => {
     window.logoMove(25, 35, 30, 1);
   }
 }
+
+// ClearMainUI
+window.clearMainUi = () => {
+  var menu = document.getElementById("gMenu");
+  var logo = document.getElementById("logo");
+  var settingsMenu = document.getElementById("settingsMenu");
+  var textTop = document.getElementById("subText1");
+  var textBottom = document.getElementById("subText2");
+  menu.style.transition = "2s all";
+  logo.style.transition = "2s all";
+  textTop.style.transition = "2s all";
+  textBottom.style.transition = "2s all";
+  if (inUniverse === true) {
+    setTimeout(()=> {
+          // Move
+    menu.style.left = "10%";
+    logo.style.left = "30%";
+    // Opacity
+    menu.style.opacity = "0";
+    logo.style.opacity = "0%";
+    setTimeout(()=> {
+      textTop.style.bottom = "49%";
+      textTop.style.opacity = "100%";
+      setTimeout(()=> {
+        textBottom.style.bottom = "45%";
+        textBottom.style.opacity = "100%";
+      },500);
+    },1000);
+    setTimeout(()=> {
+      menu.style.display = "none";
+      logo.style.display = "none";
+      settingsMenu.style.display = "none";
+    },3000);
+    },2000);
+  } else {
+    menu.style.display = "block";
+    logo.style.display = "block";
+    settingsMenu.style.display = "block";
+    textTop.style.bottom = "44%";
+    textTop.style.opacity = "0%";
+    textBottom.style.bottom = "40%";
+    textBottom.style.opacity = "0%";
+    setTimeout(()=> {
+                // Move
+    menu.style.left = "6%";
+    logo.style.left = "3%";
+    // Opacity
+    menu.style.opacity = "100%";
+    logo.style.opacity = "100%";
+    },1000)
+    setTimeout(()=> {
+      textBottom.style.display = "none";
+      textTop.style.display = "none";
+    })
+  }
+}
+
+// Main Menu System
+window.mainMenuPosition = (bg,p1,p2,p3,p4,p5) => {
+  var menu = document.querySelectorAll(".mainMenuBut");
+  var menuItems = document.getElementById("")
+  menu.forEach((menuItem)=> {
+    menuItem.style.backgroundColor = bg;
+    switch (menuItem.id) {
+      case "shopBut":
+        document.getElementById("shopBut").style.left = p1;
+        break;
+      case "newGameBut":
+        document.getElementById("newGameBut").style.left = p2;
+        break;
+      case "subscribeBut":
+      document.getElementById("subscribeBut").style.left = p3;
+      // document.getElementById("connect").style.left = p3;
+      break;
+      case "settingsBut":
+      document.getElementById("settingsBut").style.left = p4;
+      break;
+      case "extraBut":
+      document.getElementById("extraBut").style.left = p5;
+      break;
+    }
+  });
+}
+
+// Add small about section to settings
+
+// Menu Move Settings
+// window.mainMenuPosition("black","0%","8%","22%","36%","56%")
+// window.mainMenuPosition("","0%","0%","0%","0%","0%")

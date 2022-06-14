@@ -1,14 +1,14 @@
 var dialogue = {
     baseAnswers: {
-        a: "Yes",
-        b: "No",
-        c: "Where am I? I don't remember."
+        a: "Thank you..",
+        b: "Xodiac?",
+        c: "What's going on?"
     },
     prelude : {
         introNotLogged: {
             trys: 0,
             questions: {
-                a: "AGENT, DO YOU REMEMBER YOUR NAME?",
+                a: "WELCOME BACK, XODIAC...",
                 b: ""
             },
         }
@@ -29,15 +29,15 @@ var testD = [
     { m: "OK, let's change the topic" }
 ]
 //
-    runD = (e) => {
-    var currentLIne = 0;
-    var line = e.target.id
-    if (Number(line) < testD.length) {
-        // Find object with value
-        // display its messgae
-        // que the next Find
-    }
-//
-}
+//     runD = (e) => {
+//     var currentLIne = 0;
+//     var line = e.target.id
+//     if (Number(line) < testD.length) {
+//         // Find object with value
+//         // display its messgae
+//         // que the next Find
+//     }
+// //
+// }
 
 export { dialogue };

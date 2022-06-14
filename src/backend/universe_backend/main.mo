@@ -1,267 +1,233 @@
+import Array "mo:base/Array";
 import Error "mo:base/Error";
 import Hash "mo:base/Hash";
 import HashMap "mo:base/HashMap";
-import Nat "mo:base/Nat";
-import Option "mo:base/Option";
-import Principal "mo:base/Principal";
-import Array "mo:base/Array";
+import Int "mo:base/Int";
 import Iter "mo:base/Iter";
+import Nat "mo:base/Nat";
+import Nat64 "mo:base/Nat64";
+import Option "mo:base/Option";
 import P "mo:base/Prelude";
+import Principal "mo:base/Principal";
+import Result "mo:base/Result";
+import Text "mo:base/Text";
+import Time "mo:base/Time";
+import Bool "mo:base/Bool";
 
-actor scogeDip721 {
-    
+actor Dip721Nft {
+
+    // TYPES
+     public type GenericValue = {
+        Nat64Content : Nat64;
+        Nat32Content : Nat32;
+        BoolContent : Bool;
+        Nat8Content : Nat8;
+        Int64Content : Int64;
+        IntContent : Int;
+        NatContent : Nat;
+        Nat16Content : Nat16;
+        Int32Content : Int32;
+        Int8Content : Int8;
+        FloatContent : Float;
+        Int16Content : Int16;
+        BlobContent : [Nat8];
+        NestedContent : [Text];
+        Principal : Principal;
+        TextContent : Text;
+    };
+    public type Metadata = {
+        logo : ?Text;
+        name : ?Text;
+        created_at : Nat64;
+        upgraded_at : Nat64;
+        custodians : [Principal];
+        symbol : ?Text;
+    };
+    public type TokenMetadata = {
+        transferred_at : ?Nat64;
+        transferred_by : ?Principal;
+        owner : ?Principal;
+        operator : ?Principal;
+        properties : [(Text, GenericValue )];
+        is_burned : Bool;
+        token_identifier : Nat;
+        burned_at : ?Nat64;
+        burned_by : ?Principal;
+        approved_at : ?Nat64;
+        approved_by : ?Principal;
+        minted_at : Nat64;
+        minted_by : Principal;
+    };
+    public type NftError = {
+        #SelfTransfer;
+        #TokenNotFound;
+        #NotFound;
+        #SelfApprove;
+        #OperatorNotFound;
+        #UnauthorizedOwner;
+        #UnauthorizedOperator;
+        #ExistedNFT;
+        #OwnerNotFound;
+        #Other : Text;
+    };
+    public type Stats = {
+        cycles : Nat;
+        total_transactions : Nat;
+        total_unique_holders : Nat;
+        total_supply : Nat;
+    };
+
+    // Variables
+    stable var ledger : [var TokenMetadata] = [var];
+    stable var cat1NftsRemaining : Nat = 5000;
+    stable var cat2NftsRemaining : Nat = 1000;
+    stable var cat3NftsRemaining : Nat = 450;
+
+    // @DIP721
+
+    // DATA STRUCTURES
+    // {"data", BlobContent(<blob asset data of the NFT>)}
+    // {"location", TextContent(<asset URL of the NFT>)}
+    // {"thumbnail", TextContent(<thumbnail URL of the NFT>)}
+
+    // FUNCTIONS
+    // metadata: () -> (Metadata) query;
+    // stats: () -> (Stats) query;
+    // logo : () -> (opt text) query;
+    // setLogo : (text) -> ();
+    // name : () -> (opt text) query;
+    // setName : (text) -> ();
+    // symbol : () -> (opt text) query;
+    // setSymbol : (text) -> ();
+    // custodians : () -> (vec principal) query;
+    // setCustodians : (vec principal) -> ();
+    // cycles : () -> (nat) query;
+    // totalUniqueHolders : () -> (nat) query;
+
+    // tokenMetadata : (nat) -> (variant { Ok : TokenMetadata; Err : NftError }) query;
+    public query func tokenMetadata ( tokedId :  Nat) : async Result.Result<TokenMetadata, NftError> {
+        if (tokedId < ledger.size()) {
+            #ok(ledger[tokedId]);
+        } else {
+            #err(#TokenNotFound);
+        };
+    }; 
+
+    // balanceOf: (principal) -> (variant { Ok : nat; Err : NftError }) query;
+    public query func balanceOf ( user : Principal) : async Nat {
+        Array.filter<TokenMetadata>(Array.freeze(ledger), func (token) {
+            token.owner == ?user;
+        }).size();
+    }; 
+
+    // ownerOf : (nat) -> (variant { Ok : opt principal; Err : NftError }) query;
+    public query func ownerOf ( tokedId : Nat) : async Result.Result<?Principal, NftError> {
+        if (tokedId < ledger.size()) {
+            #ok(ledger[tokedId].owner);
+        } else {
+            #err(#TokenNotFound);
+        };
+    };
+
+    // ownerTokenIdentifiers : (principal) -> (variant { Ok : vec nat; Err : NftError }) query;
+
+    // ownerTokenMetadata : (principal) -> (variant { Ok : vec TokenMetadata; Err : NftError }) query;
+    public query func ownerTokenMetadata ( user : Principal) : async Result.Result<[TokenMetadata], NftError> {
+        #ok(
+            Array.filter<TokenMetadata>(Array.freeze(ledger), func (token) {
+                token.owner == ?user;
+            })
+        )
+    };
+
+    // operatorOf : (nat) -> (variant { Ok : opt principal; Err : NftError }) query;
+    // operatorTokenIdentifiers : (principal) -> (variant { Ok : vec nat; Err : NftError }) query;
+    // operatorTokenMetadata : (principal) -> (variant { Ok : vec TokenMetadata; Err : NftError }) query;
+    // supportedInterfaces : () -> (vec SupportedInterface) query;
+
+    // totalSupply : () -> (nat) query;
+    public query func totalSupply () : async Nat {
+        return ledger.size();
+    };
+
+    // approve : (principal, nat) -> (variant { Ok : nat; Err : NftError });
+    // setApprovalForAll : (principal, bool) -> (variant { Ok : nat; Err : NftError });
+    // isApprovedForAll : (principal, principal) -> (variant { Ok : bool; Err : NftError }) query;
+    // transfer : (principal, nat) -> (variant { Ok : nat; Err : NftError });
+    // transferFrom : (principal, principal, nat) -> (variant { Ok : nat; Err : NftError });
+
+    // UPDATE METHODS
+
+    // mint : (principal, nat, vec record { text; GenericValue }) -> (variant { Ok : nat; Err : NftError });
+    public shared ({ caller }) func mint ( 
+        // Who are we minting too?
+        to : Principal, 
+        // Which token are we minting?
+        tokedId : Nat,
+        // Metadata of Token Minting
+        properties : [(Text, GenericValue)],
+    ) : async Result.Result<Nat, NftError> {
+        ledger := Array.tabulateVar<TokenMetadata>(ledger.size() +1, func (i) {
+            if (i < ledger.size()) {
+                ledger[i];
+            } else {
+                {
+                    transferred_at = null;
+                    transferred_by = null;
+                    owner = ?to;
+                    operator = ?to;
+                    properties = properties;
+                    is_burned = false;
+                    token_identifier = i;
+                    burned_at = null;
+                    burned_by = null;
+                    approved_at = null;
+                    approved_by = null;
+                    minted_at = Nat64.fromNat(Int.abs(Time.now()));
+                    minted_by = caller;
+                };
+            };
+        });
+        #ok(ledger.size() - 1);
+    };
+
+
+    // burn : (nat) -> (variant { Ok : nat; Err : NftError });
+    // transaction : (nat) -> (variant { Ok : TxEvent; Err : NftError }) query;
+    // totalTransactions : () -> (nat) query;
+
+    // type SupportedInterface = variant {
+    //     Burn;
+    //     Mint;
+    //     Approval;
+    //     TransactionHistory
+    // };
+    // type TxEvent = record {
+    //     time : nat64;
+    //     operation : text;
+    //     details : vec record { text; GenericValue };
+    //     caller : principal;
+    // };
+    // type Vec = vec record {
+    //     text;
+    //     variant {
+    //         Nat64Content : nat64;
+    //         Nat32Content : nat32;
+    //         BoolContent : bool;
+    //         Nat8Content : nat8;
+    //         Int64Content : int64;
+    //         IntContent : int;
+    //         NatContent : nat;
+    //         Nat16Content : nat16;
+    //         Int32Content : int32;
+    //         Int8Content : int8;
+    //         FloatContent : float64;
+    //         Int16Content : int16;
+    //         BlobContent : vec nat8;
+    //         NestedContent : Vec;
+    //         Principal : principal;
+    //         TextContent : text;
+    //     };
+    // };
+
 }
-// actor Dip721Nft {
-// 	public shared query (doIOwn__msg) func doIOwn(tokenId : Nat) : async Bool {
-// 		let caller = doIOwn__msg.caller; // First input
-// 		_ownerOf(tokenId) == ?caller;
-// 	};
-	
-// 	stable var name_ : Text = "ExampleNFT";
-	
-// 	stable var symbol_ : Text = "ENFT";
-	
-// 	// Adapted from: https://github.com/SuddenlyHazel/DIP721/blob/main/src/DIP721/DIP721.mo
-	
-// 	private type TokenAddress = Principal;
-// 	private type TokenId = Nat;
-	
-// 	private stable var tokenPk : Nat = 0;
-	
-// 	private stable var tokenURIEntries : [(TokenId, Text)] = [];
-// 	private stable var ownersEntries : [(TokenId, Principal)] = [];
-// 	private stable var balancesEntries : [(Principal, Nat)] = [];
-// 	private stable var tokenApprovalsEntries : [(TokenId, Principal)] = [];
-// 	private stable var operatorApprovalsEntries : [(Principal, [Principal])] = [];
-	
-// 	private let tokenURIs : HashMap.HashMap<TokenId, Text> = HashMap.fromIter<TokenId, Text>(tokenURIEntries.vals(), 10, Nat.equal, Hash.hash);
-// 	private let owners : HashMap.HashMap<TokenId, Principal> = HashMap.fromIter<TokenId, Principal>(ownersEntries.vals(), 10, Nat.equal, Hash.hash);
-// 	private let balances : HashMap.HashMap<Principal, Nat> = HashMap.fromIter<Principal, Nat>(balancesEntries.vals(), 10, Principal.equal, Principal.hash);
-// 	private let tokenApprovals : HashMap.HashMap<TokenId, Principal> = HashMap.fromIter<TokenId, Principal>(tokenApprovalsEntries.vals(), 10, Nat.equal, Hash.hash);
-// 	private let operatorApprovals : HashMap.HashMap<Principal, [Principal]> = HashMap.fromIter<Principal, [Principal]>(operatorApprovalsEntries.vals(), 10, Principal.equal, Principal.hash);
-	
-// 	private func _unwrap<T>(x : ?T) : T {
-// 		switch x {
-// 			case null { P.unreachable() };
-// 			case (?x_) { x_ };
-// 		}
-// 	};
-	
-// 	public shared query func balanceOf(p : Principal) : async ?Nat {
-// 		return balances.get(p);
-// 	};
-	
-// 	public shared query func ownerOf(tokenId : TokenId) : async ?Principal {
-// 		return _ownerOf(tokenId);
-// 	};
-	
-// 	public shared query func tokenURI(tokenId : TokenId) : async ?Text {
-// 		return _tokenURI(tokenId);
-// 	};
-	
-// 	public shared query func name() : async Text {
-// 		return name_;
-// 	};
-	
-// 	public shared query func symbol() : async Text {
-// 		return symbol_;
-// 	};
-	
-// 	public shared func isApprovedForAll(owner : Principal, opperator : Principal) : async Bool {
-// 		return _isApprovedForAll(owner, opperator);
-// 	};
-	
-// 	public shared(msg) func approve(to : Principal, tokenId : TokenId) : async () {
-// 		switch(_ownerOf(tokenId)) {
-// 			case (?owner) {
-// 				assert to != owner;
-// 				assert msg.caller == owner or _isApprovedForAll(owner, msg.caller);
-// 				_approve(to, tokenId);
-// 			};
-// 			case (null) {
-// 				throw Error.reject("No owner for token")
-// 			};
-// 		}
-// 	};
-	
-// 	public shared func getApproved(tokenId : Nat) : async Principal {
-// 		switch(_getApproved(tokenId)) {
-// 			case (?v) { return v };
-// 			case null { throw Error.reject("None approved") }
-// 		}
-// 	};
-	
-// 	public shared(msg) func setApprovalForAll(op : Principal, isApproved : Bool) : () {
-// 		assert msg.caller != op;
-		
-// 		switch (isApproved) {
-// 			case true {
-// 				switch (operatorApprovals.get(msg.caller)) {
-// 					case (?opList) {
-// 						var array = Array.filter<Principal>(opList,func (p) { p != op });
-// 						array := Array.append<Principal>(array, [op]);
-// 						operatorApprovals.put(msg.caller, array);
-// 					};
-// 					case null {
-// 						operatorApprovals.put(msg.caller, [op]);
-// 					};
-// 				};
-// 			};
-// 			case false {
-// 				switch (operatorApprovals.get(msg.caller)) {
-// 					case (?opList) {
-// 						let array = Array.filter<Principal>(opList, func(p) { p != op });
-// 						operatorApprovals.put(msg.caller, array);
-// 					};
-// 					case null {
-// 						operatorApprovals.put(msg.caller, []);
-// 					};
-// 				};
-// 			};
-// 		};
-		
-// 	};
-	
-// 	public shared(msg) func transferFrom(from : Principal, to : Principal, tokenId : Nat) : () {
-// 		assert _isApprovedOrOwner(msg.caller, tokenId);
-		
-// 		_transfer(from, to, tokenId);
-// 	};
-	
-// 	public shared(msg) func mint(uri : Text) : async Nat {
-// 		tokenPk += 1;
-// 		_mint(msg.caller, tokenPk, uri);
-// 		return tokenPk;
-// 	};
-	
-	
-// 	// Internal
-	
-// 	private func _ownerOf(tokenId : TokenId) : ?Principal {
-// 		return owners.get(tokenId);
-// 	};
-	
-// 	private func _tokenURI(tokenId : TokenId) : ?Text {
-// 		return tokenURIs.get(tokenId);
-// 	};
-	
-// 	private func _isApprovedForAll(owner : Principal, opperator : Principal) : Bool {
-// 		switch (operatorApprovals.get(owner)) {
-// 			case(?whiteList) {
-// 				for (allow in whiteList.vals()) {
-// 					if (allow == opperator) {
-// 						return true;
-// 					};
-// 				};
-// 			};
-// 			case null {return false;};
-// 		};
-// 		return false;
-// 	};
-	
-// 	private func _approve(to : Principal, tokenId : Nat) : () {
-// 		tokenApprovals.put(tokenId, to);
-// 	};
-	
-// 	private func _removeApprove(tokenId : Nat) : () {
-// 		ignore tokenApprovals.remove(tokenId);
-// 	};
-	
-// 	private func _exists(tokenId : Nat) : Bool {
-// 		return Option.isSome(owners.get(tokenId));
-// 	};
-	
-// 	private func _getApproved(tokenId : Nat) : ?Principal {
-// 		assert _exists(tokenId) == true;
-// 		switch(tokenApprovals.get(tokenId)) {
-// 			case (?v) { return ?v };
-// 			case null {
-// 				return null;
-// 			};
-// 		}
-// 	};
-	
-// 	private func _hasApprovedAndSame(tokenId : Nat, spender : Principal) : Bool {
-// 		switch(_getApproved(tokenId)) {
-// 			case (?v) {
-// 				return v == spender;
-// 			};
-// 			case null { return false }
-// 		}
-// 	};
-	
-// 	private func _isApprovedOrOwner(spender : Principal, tokenId : Nat) : Bool {
-// 		assert _exists(tokenId);
-// 		let owner = _unwrap(_ownerOf(tokenId));
-// 		return spender == owner or _hasApprovedAndSame(tokenId, spender) or _isApprovedForAll(owner, spender);
-// 	};
-	
-// 	private func _transfer(from : Principal, to : Principal, tokenId : Nat) : () {
-// 		assert _exists(tokenId);
-// 		assert _unwrap(_ownerOf(tokenId)) == from;
-		
-// 		// Bug in HashMap https://github.com/dfinity/motoko-base/pull/253/files
-// 		// this will throw unless you patch your file
-// 		_removeApprove(tokenId);
-		
-// 		_decrementBalance(from);
-// 		_incrementBalance(to);
-// 		owners.put(tokenId, to);
-// 	};
-	
-// 	private func _incrementBalance(address : Principal) {
-// 		switch (balances.get(address)) {
-// 			case (?v) {
-// 				balances.put(address, v + 1);
-// 			};
-// 			case null {
-// 				balances.put(address, 1);
-// 			}
-// 		}
-// 	};
-	
-// 	private func _decrementBalance(address : Principal) {
-// 		switch (balances.get(address)) {
-// 			case (?v) {
-// 				balances.put(address, v - 1);
-// 			};
-// 			case null {
-// 				balances.put(address, 0);
-// 			}
-// 		}
-// 	};
-	
-// 	private func _mint(to : Principal, tokenId : Nat, uri : Text) : () {
-// 		assert not _exists(tokenId);
-		
-// 		_incrementBalance(to);
-// 		owners.put(tokenId, to);
-// 		tokenURIs.put(tokenId,uri)
-// 	};
-	
-// 	private func _burn(tokenId : Nat) {
-// 		let owner = _unwrap(_ownerOf(tokenId));
-		
-// 		_removeApprove(tokenId);
-// 		_decrementBalance(owner);
-		
-// 		ignore owners.remove(tokenId);
-// 	};
-	
-// 	system func preupgrade() {
-// 		tokenURIEntries := Iter.toArray(tokenURIs.entries());
-// 		ownersEntries := Iter.toArray(owners.entries());
-// 		balancesEntries := Iter.toArray(balances.entries());
-// 		tokenApprovalsEntries := Iter.toArray(tokenApprovals.entries());
-// 		operatorApprovalsEntries := Iter.toArray(operatorApprovals.entries());
-		
-// 	};
-	
-// 	system func postupgrade() {
-// 		tokenURIEntries := [];
-// 		ownersEntries := [];
-// 		balancesEntries := [];
-// 		tokenApprovalsEntries := [];
-// 		operatorApprovalsEntries := [];
-// 	};
-// }
