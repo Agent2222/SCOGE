@@ -602,14 +602,14 @@ export default class MainSceneManager {
           this.currentLocation = "reading chair";
           break;
         case utils.meshesTags.exit:
+          window.inUniverse = false;
           document.getElementById("renderCanvas").style.transition = "5s all";
-          document.getElementById("bankooMapCont").style.transition = "5s all";
+          // document.getElementById("bankooMapCont").style.transition = "5s all";
           document.getElementById("renderCanvas").style.opacity = "0";
           document.getElementById("mainCont").style.visibility = "visible";
           document.getElementById("bankooMapCont").style.opacity = "1";
           document.getElementById("bankooMapCont").style.display = "grid";
-          document.getElementById("typedArea").style.opacity = "100%";
-          document.getElementById("typedText").innerHTML = "ENTER BANKOO";
+          window.clearMainUi();
           for (let i = 0; i < this.audioList.length; i++) {
             this.audioList[i].stop();
           }
