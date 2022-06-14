@@ -1092,7 +1092,7 @@ a:hover {
     left: 10% !important;
   }
   #gMenu div {
-    left: 0%;
+    left: 0% !important;
     width: auto !important;
   }
   #settingsMenu {
