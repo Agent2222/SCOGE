@@ -1109,6 +1109,7 @@ a:hover {
     overflow: scroll;
     border-bottom:1px solid #94be8c;
     border-top:1px solid #94be8c;
+    display: none;
   }
   .slider {
     width: 50%;

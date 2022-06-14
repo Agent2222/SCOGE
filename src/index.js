@@ -1197,6 +1197,7 @@ window.openSettings = () => {
     //
     var shopMenuBut = document.getElementById("shopBut");
     if (window.isMobile === false) {
+      menu.style.display = "block";
       window.mainMenuPosition("","0%","8%","22%","36%","56%");
     }
     document.getElementById("shop").style.opacity = "0%";
@@ -1297,6 +1298,9 @@ window.openExtra = () => {
     //
     if ( window.isMobile == false) {
       window.mainMenuPosition("","0%","8%","22%","36%","56%");
+      setTimeout(()=> {
+        document.getElementById("settingsMenu").style.display = "none";
+      },2000)
     }
     imageWindow.style.width = "100%";
     setTimeout(() => {
