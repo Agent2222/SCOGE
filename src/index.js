@@ -1185,7 +1185,12 @@ window.globeImgAni = () => {
 var settingsActive = false;
 window.openSettings = () => {
   var menu = document.getElementById("settingsMenu");
+  extraOpen = false;
+  if (window.isMobile === true) {
+    menu.style.display = "block";
+  }
   if (settingsActive === false) {
+    settingsActive = true;
     setTimeout(() => {
       menu.style.opacity = "100%";
     }, 300);
@@ -1197,7 +1202,6 @@ window.openSettings = () => {
     //
     var shopMenuBut = document.getElementById("shopBut");
     if (window.isMobile === false) {
-      menu.style.display = "block";
       window.mainMenuPosition("","0%","8%","22%","36%","56%");
     }
     document.getElementById("shop").style.opacity = "0%";
@@ -1214,7 +1218,6 @@ window.openSettings = () => {
     shopActive = "closed";
     window.termsOpen = false;
     //
-    settingsActive = true;
     return;
   } else {
     // if (shopActive != "closed") {
@@ -1222,13 +1225,13 @@ window.openSettings = () => {
     //   settingsActive = false;
     //   return;
     // }
+    settingsActive = false;
     menu.style.opacity = "0%";
     setTimeout(() => {
       window.globeMove1(4);
       window.logoMove(25, 35, 30, 1);
       // window.globeImgAni();
     }, 300);
-    settingsActive = false;
     return;
   }
 };
@@ -1280,8 +1283,11 @@ window.openExtra = () => {
   var imageWindow = document.getElementById("extrasCont");
   var shopMenuBut = document.getElementById("shopBut");
   document.getElementById("ctc").style.display = "block";
+  document.getElementById("settingsMenu").style.display = "none";
+  settingsActive = false;
   if (extraOpen === false) {
     //
+    extraOpen = true;
     document.getElementById("shop").style.opacity = "0%";
     document.getElementById("shop").style.visibility = "hidden";
     document.getElementById("povRight").style.opacity = "0%";
@@ -1298,9 +1304,6 @@ window.openExtra = () => {
     //
     if ( window.isMobile == false) {
       window.mainMenuPosition("","0%","8%","22%","36%","56%");
-      setTimeout(()=> {
-        document.getElementById("settingsMenu").style.display = "none";
-      },2000)
     }
     imageWindow.style.width = "100%";
     setTimeout(() => {
@@ -1311,7 +1314,6 @@ window.openExtra = () => {
     window.endInter();
     extraOpen = true;
     document.getElementById("settingsMenu").style.opacity = "0%";
-    settingsActive = false;
     setTimeout(() => {
       document.getElementById("globeOverImg1").style.opacity = "0%";
     }, 1000);
