@@ -1295,7 +1295,9 @@ window.openExtra = () => {
     shopActive = "closed";
     window.termsOpen = false;
     //
-    window.mainMenuPosition("","0%","8%","22%","36%","56%");
+    if ( window.isMobile == false) {
+      window.mainMenuPosition("","0%","8%","22%","36%","56%");
+    }
     imageWindow.style.width = "100%";
     setTimeout(() => {
       imageWindow.style.opacity = "100%";
