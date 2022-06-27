@@ -603,6 +603,7 @@ export default class MainSceneManager {
           break;
         case utils.meshesTags.exit:
           window.inUniverse = false;
+          window.destiny();
           document.getElementById("renderCanvas").style.transition = "5s all";
           // document.getElementById("bankooMapCont").style.transition = "5s all";
           document.getElementById("getNfts").style.display = "none";

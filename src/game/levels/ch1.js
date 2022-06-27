@@ -24,6 +24,7 @@ async function getGameProgress() {
             dialogueField2.innerHTML = `<span class="answerOptions" style="display:none;" id="st2Ans1"></span><span class="answerOptions" style="display:block;" id="st2Ans2">${dialogue[1].m}</span><span class="answerOptions" style="display:none;" id="st2Ans3"></span>`;
             document.getElementById("st2Ans2").addEventListener("click",getGameProgress);
         newUser = false;
+        return;
     };
     // await universe_backend.getProgress()
     switch(Progress) {

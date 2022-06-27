@@ -50,7 +50,7 @@ export function moveForward() {
     document.getElementById("st2Ans2").style.display = "block";
     document.getElementById("st2Ans3").style.display = "none";
     document.getElementById("st2Ans2").innerHTML = "Thank you System.";
-    document.getElementById("st2Ans2").setAttribute("click", "getGameProgress("
+    document.getElementById("st2Ans2").setAttribute("click", "getGameProgress()"
 );
 }
 

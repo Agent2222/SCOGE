@@ -434,6 +434,8 @@ window.activateInfinite = () => {
       setTimeout(()=>{
         document.getElementById("settingsMenu").style.display = "none";
       },1000)
+      document.getElementById("extrasCont").style.transition = "1s all";
+      document.getElementById("extrasCont").style.width = "0%";
       settingsActive = false;
       var shopMenuBut = document.getElementById("shopBut");
       var canvas = document.getElementById("renderCanvas");
@@ -1220,6 +1222,8 @@ window.openSettings = () => {
       menu.style.opacity = "100%";
     }, 300);
     document.getElementById("extrasCont").style.opacity = "0%";
+    document.getElementById("extrasCont").style.transition = "1s all";
+    document.getElementById("extrasCont").style.width = "0%";
     extraOpen = false;
     window.globeMove1(75);
     window.logoMove(6, 3, 16, 1);
