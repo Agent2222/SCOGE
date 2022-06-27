@@ -605,6 +605,7 @@ export default class MainSceneManager {
           window.inUniverse = false;
           document.getElementById("renderCanvas").style.transition = "5s all";
           // document.getElementById("bankooMapCont").style.transition = "5s all";
+          document.getElementById("getNfts").style.display = "none";
           document.getElementById("renderCanvas").style.opacity = "0";
           document.getElementById("mainCont").style.visibility = "visible";
           document.getElementById("bankooMapCont").style.opacity = "1";
