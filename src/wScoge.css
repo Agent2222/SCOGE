@@ -159,7 +159,11 @@ body {
   letter-spacing: 2px;
   justify-content: center;
   align-items: center;
-  opacity: 0%;
+  opacity: 30%;
+  transition: opcaity .5s;
+}
+#subText2:hover {
+  opacity: 100%;
 }
 #subText2 span {
   cursor: pointer;
@@ -177,7 +181,9 @@ body {
 #st2Ans1 {
   margin-left: 0% !important;
 }
-
+#st2Ans2 {
+  display: none;
+}
 #LoadingPer {
   height: 100%;
   position: absolute;
@@ -916,7 +922,7 @@ canvas {
 #newGameBut {
   position: relative;
   left: 8%;
-  opacity: 40%;
+  opacity: 100%;
 }
 #subscribeBut {
   position: relative;

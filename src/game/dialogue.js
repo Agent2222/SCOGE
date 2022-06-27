@@ -1,4 +1,4 @@
-var dialogue = {
+var test = {
     baseAnswers: {
         a: "Thank you..",
         b: "Xodiac?",
@@ -15,18 +15,26 @@ var dialogue = {
     },
 }
 //
-var testD = [
-    { m: "Hi!" },
-    { m: "This is my new game." },
-    { question: "Do you like it?",
-     answers: [
-        { m: "yes", next: "like_yes" },
-        { m: "no", next: "like_no" },
+var dialogue = [
+    // NOT CONNECTED
+    { question: "Welcome back Xodiac.",
+    answers: [
+        { m: "Xodiac?", next: "" },
+        { m: "What's going on?", next: "" },
     ]},
-    { label: "like_yes", m: "I am happy you like my game!", next: "like_end" },
-    { label: "like_no", m: "You made me sad!", next: "like_end" },
-    { label: "like_end" },
-    { m: "OK, let's change the topic" }
+    // NOW CONNECTED 
+    { m: "Thank you system.", next: "" },
+    // CONNECTED
+    { question: "Welcomme back",
+     answers: [
+        { m: "Thank you System.", next: "" },
+    ]},
+    { question: "Do you remember your name??",
+     answers: [
+        { m: "My name?.. I.. Don't..", next: "" },
+    ]},
+    { m: "Don't worry, take a mem pill. It'll help.", next: "" },
+    { m: "Open your Digi-shop to see what's available.", next: "" },
 ]
 //
 //     runD = (e) => {

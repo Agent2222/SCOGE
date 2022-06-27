@@ -4,8 +4,10 @@ import Commerce from "@chec/commerce.js";
 import * as BABYLON from "@babylonjs/core";
 import { GameManager } from "./game/GameManger.js";
 import { mobileShop1 } from "./shop-1.js";
+import { getWallet } from "../src/getWallet.js";
+import { mintingScreen } from "../src/mint.js";
 // import { dialogue } from "./game/dialogue.js";
-// import { getGameProgress } from "../src/game/levels/ch1.js";
+import { getGameProgress } from "../src/game/levels/ch1";
 
 const VITE_CommerceKey = import.meta.env.VITE_CommerceKey;
 const VITE_StripeKey = import.meta.env.VITE_StripeKey;
@@ -73,6 +75,8 @@ window.addEventListener("resize", function () {
     document.getElementById("shopBut").removeEventListener("click", toggleShop);
     document.getElementById("shopBut").addEventListener("click", openMobile);
     window.isMobile = true;
+    document.getElementById("newGameBut").removeEventListener("click", activateInfinite);
+    document.getElementById("newGameBut").style.opacity = "30%";
     //
     document.getElementById("shop").style.opacity = "0%";
     document.getElementById("shop").style.visibility = "hidden";
@@ -90,9 +94,11 @@ window.addEventListener("resize", function () {
     //
   } else {
     // Desktop
+    document.getElementById("newGameBut").style.opacity = "100%";
     document.getElementById("shopBut").removeEventListener("click", openMobile);
     document.getElementById("shopBut").addEventListener("click", toggleShop);
     document.getElementById("mobileShop").style.display = "none";
+    document.getElementById("newGameBut").addEventListener("click", activateInfinite);
     window.isMobile = false;
   }
 });
@@ -101,11 +107,15 @@ window.addEventListener("resize", function () {
 window.sizeInit = () => {
   if (window.matchMedia("(max-width: 768px)").matches) {
     // Mobile
+    document.getElementById("newGameBut").removeEventListener("click", activateInfinite);
+    document.getElementById("newGameBut").style.opacity = "30%";
     document.getElementById("shopBut").addEventListener("click", openMobile);
     window.isMobile = true;
   } else {
     // Desktop
+    document.getElementById("newGameBut").style.opacity = "100%";
     document.getElementById("shopBut").addEventListener("click", toggleShop);
+    document.getElementById("newGameBut").addEventListener("click", activateInfinite);
   }
 };
 
@@ -403,6 +413,12 @@ window.activateInfinite = () => {
     document.getElementById("renderCanvas").style.transition = "5s all";
     // let game = new GameManager("renderCanvas");
     if (infiniteActive === false) {
+      if (window.ic === undefined) {
+        // Add text to get wallet and return once done.
+        // Refresh Page
+        document.getElementById("getWallet").style.display = "block";
+        return "";
+      }
       document.getElementById("renderCanvas").style.display = "block";
       document.getElementById("renderCanvas").style.opacity = "0";
       // document.getElementById("bankooMapCont").style.visibility = "hidden";
@@ -414,7 +430,15 @@ window.activateInfinite = () => {
         intro1 = true;
       }
       //
+      document.getElementById("settingsMenu").style.opacity = "0%";
+      setTimeout(()=>{
+        document.getElementById("settingsMenu").style.display = "none";
+      },1000)
+      settingsActive = false;
       var shopMenuBut = document.getElementById("shopBut");
+      var canvas = document.getElementById("renderCanvas");
+      canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth;
       window.mainMenuPosition("","0%","8%","22%","36%","56%");
       document.getElementById("shop").style.opacity = "0%";
       document.getElementById("shop").style.visibility = "hidden";
@@ -1185,6 +1209,7 @@ window.globeImgAni = () => {
 var settingsActive = false;
 window.openSettings = () => {
   var menu = document.getElementById("settingsMenu");
+  document.getElementById("settingsMenu").style.display = "block";
   extraOpen = false;
   if (window.isMobile === true) {
     menu.style.display = "block";
@@ -1397,7 +1422,7 @@ window.clearMainUi = () => {
       textTop.style.opacity = "100%";
       setTimeout(()=> {
         textBottom.style.bottom = "45%";
-        textBottom.style.opacity = "100%";
+        // textBottom.style.opacity = "";
       },500);
     },1000);
     setTimeout(()=> {

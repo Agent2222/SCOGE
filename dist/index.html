@@ -33,15 +33,17 @@
         <!-- <script src="https://playground.babylonjs.com/js/libs/split.js"></script> -->
         <!-- <script type="text/javascript" src="https://cdn.babylonjs.com/babylon.max.js"></script> -->
         
-      <script type="module" crossorigin src="/assets/index.3358a48c.js"></script>
-      <link rel="stylesheet" href="/assets/main.d24cf4c8.css">
+      <script type="module" crossorigin src="/assets/index.23b935bf.js"></script>
+      <link rel="stylesheet" href="/assets/main.b2934e51.css">
     </head>
     <body id="main" onload="loadShop();sizeInit();">
     <div id="enter" onclick="enterSite()">CLICK TO CONTINUE..</div>
-    <div id="subText1"><p>Do you remmember?</p></div>
-    <div id="subText2"><span class="answerOptions" id="st2Ans1"></span><span class="answerOptions" id="st2Ans2"></span><span class="answerOptions" id="st2Ans3"></span></div>
+    <div id="subText1" class="dialogue"><p></p></div>
+    <div id="subText2" class="dialogue"><span class="answerOptions" id="st2Ans1"></span><span class="answerOptions" id="st2Ans2"></span><span class="answerOptions" id="st2Ans3"></span></div>
+    <get-wallet wallet="wallet1" style="display:none;" id="getWallet"></get-wallet>
+    <mint-screen mint="mint1" style="display:none;" id="getNfts"></mint-screen>
     <!---------------------------------MOBILE SHOP----------------------------------------->
-    <mobile-shop1 product="product1" style="display: none;" id="mobileShop"></mobile-shop1>
+    <mobile-shop1 product="product1" style="display:none;" id="mobileShop"></mobile-shop1>
     <div id="mobileOnly" onclick="closeMobileOnly()">
         <img style="width: 40%; position: absolute; top: 2%; left: 30%;"  src="/assets/sl-r.281e0429.png"/>
         <p>PLEASE USE A DESKTOP COMPUTER TO PURCHASE SHOP PRODUCTS.</p>
@@ -182,15 +184,13 @@
         </div>
         <div id="bankooMapCont">
             <img id="globeOverImg1" style="position: absolute; width: 90%; z-index: 4; mix-blend-mode: multiply; filter: grayscale(100%); opacity:0%;" src="/assets/squ-3.de90aed7.jpg"/>
-            <img id="bMap" src="/assets/Bankoo-3d-Spin-Web.96434c86.gif"/>
+            <img id="bMap" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-3d-Spin-Web.gif"/>
         </div>
         <canvas style="width: 100%; height: 100%; display: block;" id="renderCanvas"></canvas>
-        <!-- <div id="typedArea" class="campaign" onclick="activateInfinite();destiny();"></div> -->
         <div id="mainCont" style="width: 100%; height: 100%; margin: 0;"></div>
         <div id="gMenu">
-            <!-- <div id="wInfo"><img src="assets/images/world/infoMainicon-03.png"/></div> -->
             <div id="shopBut" class="mainMenuBut">SHOP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-            <div id="newGameBut" class="mainMenuBut" onclick="closeEmail();">NEW GAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div id="newGameBut" class="mainMenuBut" onclick="closeEmail()">NEW GAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
             <div id="subscribeBut" class="mainMenuBut">          
         <!-------------------------------------------------------------------------->      
         <!-- Begin Mailchimp Signup Form -->
