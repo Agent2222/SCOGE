@@ -1,13 +1,25 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SCOGÉ Records</title>
+        <meta name="description" content="The world of SCOGÉ">
+        <link rel="shortcut icon" type="image/png" href="/assets/favicon.90cce2f7.png">
         
-      <link rel="stylesheet" href="/assets/records.b89c9058.css">
+        
+        
+      <script type="module" crossorigin src="/assets/records.1cc455ee.js"></script>
+      <link rel="modulepreload" href="/assets/modulepreload-polyfill.b7f2da20.js">
+      <link rel="stylesheet" href="/assets/records.0f34db6b.css">
+      <link rel="stylesheet" href="/assets/wScoge.c10b3806.css">
     </head>
-    <body>
+    <body onload="getParamsDesktop();">
+        <div id="mobileOnly">RECORDS INTENDED FOR MOBILE</div>
         <div id="landingP" onclick="enterRecords()">
             <div id="landingCont">
-                <img src="/assets/sl-r.281e0429.png"/>
+                <a href="./index.html"><img src="/assets/s-red-l.281e0429.png"/></a>
                 <div id="recordsText" style="letter-spacing: 20px; text-align: right;">RECORDS</div>
                 <div id="instChangeImage">
                     <div class="redCircle1"></div>
@@ -22,54 +34,24 @@
         </div>
         <div id="record">
             <div id="header">
-                <a href="./index.html"><img src="/assets/sl-r.281e0429.png"/></a>
+                <a href="./index.html"><img src="/assets/s-red-l.281e0429.png"/></a>
                 <span style="justify-self: end;padding-right: 10%;">RECORDS</span>
             </div>
             <div id="copy">
                 <div id="copyHeadline">
-                    <h2 style="margin-bottom:0;">T.A.O.S</h2>
-                    <h1>Creator 1</h1>
+                    <h2 style="margin-bottom:0;" id="location">T.A.O.S</h2>
+                    <h1 id="name">Creator 1</h1>
                 </div>
                 <div id="closeText" onclick="closeText()">CLOSE</div>
-                <div id="forwardText">&#8614;</div>
+                <div id="forwardText" onclick="nextText()">&#8614;</div>
                 <div id="copyBody" onclick="viewRecordText()">
                     <div id="instructText" class="green">CLICK TO VIEW RECORD TEXT</div>
-                    <p id="cbText">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores at, id optio dolor alias cupiditate consequuntur tenetur accusantium facere consequatur impedit praesentium laboriosam nobis in accusamus qui aliquid blanditiis sit libero? Debitis libero quas perferendis, laudantium ad ut dolorum nulla beatae minus rerum provident dolores porro pariatur expedita architecto atque eaque deleniti voluptatibus magnam!Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores at, id optio dolor alias cupiditate consequuntur tenetur accusantium facere consequatur impedit praesentium laboriosam nobis in accusamus qui aliquid blanditiis sit libero? Debitis libero quas perferendis, laudantium ad ut dolorum nulla beatae minus rerum provident dolores porro pariatur expedita architecto atque eaque deleniti voluptatibus magnam!Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores at, id optio dolor alias cupiditate consequuntur tenetur accusantium facere consequatur impedit praesentium laboriosam nobis in accusamus qui aliquid blanditiis sit libero? Debitis libero quas perferendis, laudantium ad ut dolorum nulla beatae minus rerum provident dolores porro pariatur expedita architecto atque eaque deleniti voluptatibus magnam!</p>
+                    <p id="cbText"></p>
                 </div>
             </div>
             <div id="images">
-                <div id="changeImageIcon" class="redCircle"></div>
             </div>
+        <div id="changeImageIcon" class="redCircle" onclick="nextImage()"></div>
         </div>
     </body>
-    <script>
-        var textCont = document.getElementById("copyBody");
-        var textOpen = false;
-        var closeButton = document.getElementById("closeText");
-        var forward = document.getElementById("forwardText");
-        var instruct = document.getElementById("instructText");
-        function enterRecords() {
-            document.getElementById("landingP").style.display = "none";
-        }
-        function viewRecordText() {
-            closeButton.style.display = "block";
-            textCont.style.transition = ".5s all";
-            textCont.style.bottom = "0%";
-            textOpen = true;
-            textCont.removeAttribute("onclick", viewRecordText);
-            document.getElementById("cbText").style.transition = "2s all";
-            document.getElementById("cbText").style.opacity = "100%";
-            forward.style.display = "block";
-            instruct.style.display = "none";
-        }
-        function closeText() {
-            closeButton.style.display = "none";
-            forward.style.display = "none";
-            textCont.style.bottom = "-40%";
-            textCont.setAttribute("onclick", "viewRecordText()");
-            document.getElementById("cbText").style.transition = "1s all";
-            document.getElementById("cbText").style.opacity = "0%";
-            instruct.style.display = "block";
-        }
-    </script>
 </html>
