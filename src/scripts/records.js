@@ -130,7 +130,7 @@ window.nextText = () => {
 }
 
 window.getParamsDesktop = () => {
-    const params = new URLSearchParams(location.search)
+    const params = new URLSearchParams(window.location.search)
     productSel = params.get("Product");
     window.nextImage();
     window.nextText();
