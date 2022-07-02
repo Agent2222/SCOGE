@@ -11,6 +11,8 @@ import { getGameProgress } from "../src/game/levels/ch1";
 
 const VITE_CommerceKey = import.meta.env.VITE_CommerceKey;
 const VITE_StripeKey = import.meta.env.VITE_StripeKey;
+// const fleekP = import.meta.env.VITE_fleekP;
+// const fleekS = import.meta.env.VITE_fleekS;
 
 // Globals
 var notiActive = false;
@@ -25,6 +27,8 @@ var countriedAdded = false;
 var full = 0;
 var vol = 0;
 var ngHidden = false;
+window.viewThisProduct = "";
+window.urlParamsActive = false;
 window.inUniverse = false;
 
 // Var Elements
@@ -113,6 +117,7 @@ window.sizeInit = () => {
     window.isMobile = true;
   } else {
     // Desktop
+    window.getParamsDesktop();
     document.getElementById("newGameBut").style.opacity = "100%";
     document.getElementById("shopBut").addEventListener("click", toggleShop);
     document.getElementById("newGameBut").addEventListener("click", activateInfinite);
@@ -711,7 +716,9 @@ window.loadShop = async () => {
   var shopParent = document.getElementById("allShopProducts");
   await commerce.products
     .list({ sortDirection: "desc" })
-    .then((product) => allProducts.push(product.data));
+    .then((product) => {
+      allProducts.push(product.data);
+    })
   allProducts[0].forEach((product) => {
     var productCont = document.createElement("div");
     productCont.setAttribute("class", "productContainer");
@@ -735,14 +742,20 @@ window.loadShop = async () => {
     window.productsloaded = true;
     document.getElementById("divLoadBG2").style.display = "none";
   });
+  if (urlParamsActive === true) {
+    povOpen(document.getElementById(viewThisProduct));
+    window.history.replaceState({}, document.title, "/" + "index.html");
+  };
   commerce.cart.empty();
 };
+
 // Image Fade
 window.imageFade = (obj) => {
   var selected = obj;
   selected.style.transition = "all 2s";
   selected.style.opacity = "1";
 };
+
 // Change Shop Image On Hover
 window.shopOnHover = (obj) => {
   var productId = obj.id;
@@ -750,12 +763,14 @@ window.shopOnHover = (obj) => {
   current.getElementsByTagName("img")[1].style.opacity = "0%";
   current.getElementsByTagName("img")[0].style.opacity = "100%";
 };
+
 window.shopOutHover = (obj) => {
   var productId = obj.id;
   var current = document.getElementById(productId);
   current.getElementsByTagName("img")[0].style.opacity = "0%";
   current.getElementsByTagName("img")[1].style.opacity = "100%";
 };
+
 // Cart
 var currentCart;
 var cartEmpty = true;
@@ -1485,8 +1500,19 @@ window.mainMenuPosition = (bg,p1,p2,p3,p4,p5) => {
   });
 }
 
-// Add small about section to settings
+// URL PARAMS OPEN SHOP
+window.getParamsDesktop = () => {
+  const params = new URLSearchParams(location.search)
+  viewThisProduct = params.get("Product");
+  urlParamsActive = true;
+  toggleShop();
+}
 
-// Menu Move Settings
+window.testing = () => {
+  console.log("it works though");
+}
+
+testing();
+
 // window.mainMenuPosition("black","0%","8%","22%","36%","56%")
 // window.mainMenuPosition("","0%","0%","0%","0%","0%")
