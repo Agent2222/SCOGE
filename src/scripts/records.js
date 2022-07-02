@@ -8,7 +8,7 @@ var imgCount = 1;
 var txtCount = 0;
 var productSel = "";
 
-var Mossman = {
+window.Mossman = {
     location: "SEELOO",
     name: "Mossman Tunic +",
     story: [
@@ -18,7 +18,7 @@ var Mossman = {
     ],
     images: "https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/records/Mossman/SCOGE-Mossman-small-",
 };
-var Negative = {
+window.Negative = {
     location: "SEELOO",
     name: "Negative Sweater",
     story: [
@@ -28,7 +28,7 @@ var Negative = {
     ],
     images: "https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/records/NegativeSweater/SCOGE-NegativeSweater-Small-",
 };
-var AntiCoat = {
+window.AntiCoat = {
     location: "FAALSANA",
     name: "(Anti)SandCoat",
     story: [
@@ -38,7 +38,7 @@ var AntiCoat = {
     ],
     images: "https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/records/AntiCoat/SCOGE-AntiCoat-Small-",
 };
-var AndWrap = {
+window.AndWrap = {
     location: "FAALSANA",
     name: "DNA Wrap Dress",
     story: [
@@ -48,7 +48,7 @@ var AndWrap = {
     ],
     images: "https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/records/AndWrap/SCOGE-AndWrap-Small-",
 };
-var tenthDmDress = {
+window.tenthDmDress = {
     location: "JINOO",
     name: "10th Dimension Dress",
     story: [
@@ -58,7 +58,7 @@ var tenthDmDress = {
     ],
     images: "https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/records/10DimensionDress/SCOGE-10thDimensionDress-Small-",
 };
-var tenthDmVest = {
+window.tenthDmVest = {
     location: "JINOO",
     name: "10th Dimension Vest",
     story: [
@@ -68,7 +68,7 @@ var tenthDmVest = {
     ],
     images: "https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/records/10thDimensionVest/SCOGE-10thDimensionVest-Small-",
 };
-var ProDress = {
+window.ProDress = {
     location: "FAALSANA",
     name: "(Pro)Willowing Dress +",
     story: [
