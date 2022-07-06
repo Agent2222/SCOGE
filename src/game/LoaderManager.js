@@ -24,7 +24,7 @@ export default class LoaderManager {
     // this.game.engine.displayLoadingUI();
     BABYLON.SceneLoader.ImportMesh(
       "",
-      "https://scoge.s3.us-east-2.amazonaws.com/3d/",
+      "https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/3d/",
       "test1.gltf",
       this.scene,
       () => {
@@ -268,13 +268,13 @@ export default class LoaderManager {
         if (evt.lengthComputable) {
           loadedPercent = ((evt.loaded * 100) / evt.total).toFixed();
         } else {
-          var dlCount = evt.loaded / (1024 * 1024);
-          loadedPercent = Math.floor(dlCount * 100.0) / 100.0;
+          var dlCount = evt.loaded / (1210 * 1210);
+          loadedPercent = Math.floor((dlCount * 100.0) / 100);
         }
         document.getElementById(
           "newGameBut"
         ).innerHTML = `LOADING.. ${loadedPercent}%`;
-        if (loadedPercent == 100) {
+        if (loadedPercent >= 100) {
           document.getElementById("newGameBut").innerHTML = `ENTER`;
           loadingP.setAttribute("onclick", "activateInfinite();");
         }

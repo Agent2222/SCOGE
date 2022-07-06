@@ -117,7 +117,7 @@ window.sizeInit = () => {
     window.isMobile = true;
   } else {
     // Desktop
-    window.getParamsDesktop();
+    // window.getParamsDesktop();
     document.getElementById("newGameBut").style.opacity = "100%";
     document.getElementById("shopBut").addEventListener("click", toggleShop);
     document.getElementById("newGameBut").addEventListener("click", activateInfinite);
@@ -1501,18 +1501,18 @@ window.mainMenuPosition = (bg,p1,p2,p3,p4,p5) => {
 }
 
 // URL PARAMS OPEN SHOP
-window.getParamsDesktop = () => {
-  const params = new URLSearchParams(location.search)
-  viewThisProduct = params.get("Product");
-  urlParamsActive = true;
-  toggleShop();
-}
+// window.getParamsDesktop = () => {
+//   const params = new URLSearchParams(location.search)
+//   viewThisProduct = params.get("Product");
+//   urlParamsActive = true;
+//   toggleShop();
+// }
 
-window.testing = () => {
-  console.log("it works though");
-}
+// window.testing = () => {
+//   console.log("it works though");
+// }
 
-testing();
+// testing();
 
 // window.mainMenuPosition("black","0%","8%","22%","36%","56%")
 // window.mainMenuPosition("","0%","0%","0%","0%","0%")

@@ -30,7 +30,7 @@ window.Negative = {
 };
 window.AntiCoat = {
     location: "FAALSANA",
-    name: "(Anti)SandCoat",
+    name: "(Anti) SandCoat",
     story: [
         "<span class='green'>COMPOSITION:</span> <br><br>ANTI’ print cotton twill lightweight coat with braided mid-section.",
         "<span class='green'>BANKOO:</span> <br><br>T.A.O.S City citizens hold a strong resentment toward the neighboring Faalsana- blaming them for the inequalities and heavy law enforcement experienced throughout the city. However, are mostly unaware of the deadly campaigns that provoked the Faalsanians to flee into T.A.O.S and seek retribution.",
@@ -70,7 +70,7 @@ window.tenthDmVest = {
 };
 window.ProDress = {
     location: "FAALSANA",
-    name: "(Pro)Willowing Dress +",
+    name: "(Pro) Willowing Dress +",
     story: [
         "<span class='green'>COMPOSITION:</span> <br><br>Braided, ‘PRO’ print cotton twill willowing Pancho, with a single Fire & Blood talisman known to grant the wearer access to the Union-of-the-three, a rare mental attribute. Combined with ‘PRO’ print cotton twill  Asymmetrical drop skirt.",
         "<span class='green'>BANKOO:</span> <br><br>After a series of intense deadly protests against the Lx-comm corporation, T.A.O.S city politicians and allies made it close to impossible for any group globally to assemble in protest. Citizens from neighboring countries developed ingenious decentralized methods to avoid singular individual prosecution.",
@@ -117,6 +117,7 @@ window.nextImage = () => {
     }
 }
 window.nextText = () => {
+    document.getElementById("cbText").scrollTop = 0;
     if (txtCount <= 2) {
         document.getElementById("cbText").innerHTML = eval(productSel).story[txtCount];
         if (txtCount === 2) {
@@ -129,7 +130,7 @@ window.nextText = () => {
     }
 }
 
-window.getParamsDesktop = () => {
+window.getParamsRecords = () => {
     const params = new URLSearchParams(window.location.search)
     productSel = params.get("Product");
     window.nextImage();
