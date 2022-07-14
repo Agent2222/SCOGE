@@ -684,6 +684,15 @@ window.productAdded = () => {
 // TEST Purchase
 window.purchaseComplete = () => {
   document.getElementById("orderConfirm").style.display = "block";
+  document.getElementById("orderConfirm").innerHTML = `
+  <img style="width: 30%;" src="./assets/images/world/bankoo-map.png"/>
+  <h2>Order Placed!</h2>
+  <h3>Thank you for shopping at SCOGÉ.</h3>
+  <h4>Your order confirmation number is: <span class="blue" id="confirmNumber"></span></h4>
+  <p class="light-font">Your order is being processed. You will receive an order confirmation email. Once your order is packed you will receive a second email with tracking information.<br><br> All orders are shipped from our NYC office and aim to provide the fastest and most convenient shipping possible. Our main carriers include fedex, ups, usps, dhl and dpex.</p>
+  <br><br>
+  <p>For any questions or inquiries please email <span class="blue">INFO@SCOGE.CO</span></p>
+  `
 };
 // Toggle Terms And Conditions
 window.termsOpen = false;
@@ -698,6 +707,9 @@ window.toggleTerms = () => {
     window.termsOpen = false;
     return;
   } else if (terms.style.display != "block") {
+    document.getElementById("tandc").innerHTML = `
+    <h1>Terms & Conditions</h1><p>For designs marked with an <span class="blue">(‘É’)</span> or <span class="blue">(‘SÉ’)</span> please allow 15 working days for your order to be dispatched and tracking information.</p><p>Upon placing your order, you will receive an order confirmation email. Once your order is packed you will receive a second email with tracking information. All orders are shipped from our NYC office and aim to provide the fastest and most convenient shipping possible. Our main carriers include fedex, ups, usps, dhl and dpex.</p><h2>Shipping:</h2><p>Design prices include express shipping costs. For expedited shipping please contact info@scoge.co. </p><h2>Returns & Exchanges:</h2><p>Please email info@scoge.co if you have any questions prior to purchase. Please view design size charts before purchasing for sizing clarification.</p><h2>Finishes:</h2><p>Our designs exhibit intentional rough finishes and/or unconventional fittings. Designs labeled with an <span class="blue">('SÉ')</span> are categorized as highly limited explorations, and are personally signed by its designer Starnilas Oge.</p><h2> Faulty Items:</h2><p>If you believe you received a faulty item, ie. Incorrect item, Incorrect Size, or Incomplete order, Please contact us via info@scoge.co with photos of the fault and your order number. All claims need to be logged within 7 days of receiving the item. Refunds will be processed if the item is proven faulty. We reserve the right to refuse a return if it does not meet our standards. Items stained or dirty will not be accepted.</p><h2>Exchanges:</h2><p>SCOGÉ does not cover shipping costs for returns/exchanges. Returns, Refunds and Exchanges will be processed once the item is received in its original condition.</p><h2>Privacy:</h2><p>SCOGÉ highly respects your Privacy & Security. In developing SCOGÉ we are actively working to convert the entire SCOGÉ technical stack to a decentralized web3 stack. Any personal information received will not be shared with any third parties.</p><h2>Taxes, Duties and Border Charges:</h2><p>SCOGÉ is not responsible for Taxes, Duties, Border Charges or Duty Reimbursement on any international orders. Please check your country’s border charges before making a purchase.</p><p>If you have any questions or concerns please do not hesitate to contact us before making your purchase. <span class="blue">Info@Scoge.co</span></p>
+    `
     document.getElementById("tandc").style.transition = ".5s all";
     document.getElementById("tandc").style.display = "block";
     document.getElementById("tandc").style.opacity = "100%";
@@ -1185,7 +1197,7 @@ window.subscribe = () => {
 window.closeEmail = () => {
   var emailInput = document.getElementById("mce-EMAIL");
   document.getElementById("connect").innerHTML =
-    "INFO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    "FOLLOW&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
   document.getElementById("connect").setAttribute("onclick", "connectBut()");
   emailInput.style.width = "0%";
   emailInput.style.marginRight = "0%";
@@ -1346,7 +1358,7 @@ window.openExtra = () => {
     shopActive = "closed";
     window.termsOpen = false;
     //
-    if ( window.isMobile == false) {
+    if (window.isMobile === false) {
       window.mainMenuPosition("","0%","8%","22%","36%","56%");
     }
     imageWindow.style.width = "100%";
@@ -1486,15 +1498,15 @@ window.mainMenuPosition = (bg,p1,p2,p3,p4,p5) => {
       case "newGameBut":
         document.getElementById("newGameBut").style.left = p2;
         break;
-      case "subscribeBut":
-      document.getElementById("subscribeBut").style.left = p3;
+      case "extraBut":
+      document.getElementById("extraBut").style.left = p3;
       // document.getElementById("connect").style.left = p3;
       break;
       case "settingsBut":
       document.getElementById("settingsBut").style.left = p4;
       break;
-      case "extraBut":
-      document.getElementById("extraBut").style.left = p5;
+      case "subscribeBut":
+      document.getElementById("subscribeBut").style.left = p5;
       break;
     }
   });

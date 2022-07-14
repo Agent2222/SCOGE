@@ -926,7 +926,7 @@ canvas {
 }
 #subscribeBut {
   position: relative;
-  left: 22%;
+  left: 56%;
   width: 40%;
 }
 #settingsBut {
@@ -935,7 +935,7 @@ canvas {
 }
 #extraBut {
   position: relative;
-  left: 56%;
+  left: 22%;
 }
 .mainMenuBut {
   margin-bottom: 2%;
@@ -1038,6 +1038,9 @@ a:hover {
   font-family: "BS-R";
   font-size: 20px;
   letter-spacing: 2px;
+}
+#enter img {
+  width: 25%;
 }
 #globeOverImg1 {
   opacity: 0%;
@@ -1143,6 +1146,9 @@ a:hover {
   }
   #volumediv {
     display: none;
+  }
+  #enter img {
+    width: 50%;
   }
 }
 /* @media (orientation: landscape) and (min-width: 414px) {
