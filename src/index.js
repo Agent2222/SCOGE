@@ -27,6 +27,9 @@ var countriedAdded = false;
 var full = 0;
 var vol = 0;
 var ngHidden = false;
+var followOpen = false;
+var shopActive = "closed";
+var settingsActive = false;
 window.viewThisProduct = "";
 window.urlParamsActive = false;
 window.inUniverse = false;
@@ -76,8 +79,6 @@ window.addEventListener("resize", function () {
   if (window.matchMedia("(max-width: 768px)").matches) {
     var shopMenuBut = document.getElementById("shopBut");
     // Mobile
-    document.getElementById("shopBut").removeEventListener("click", toggleShop);
-    document.getElementById("shopBut").addEventListener("click", openMobile);
     window.isMobile = true;
     document.getElementById("newGameBut").removeEventListener("click", activateInfinite);
     document.getElementById("newGameBut").style.opacity = "30%";
@@ -92,18 +93,16 @@ window.addEventListener("resize", function () {
     }, 500);
     document.getElementById("tandc").style.display = "none";
     document.getElementById("tandc").style.opacity = "0%";
-    shopMenuBut.innerHTML = "SHOP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
     shopActive = "closed";
     window.termsOpen = false;
     //
   } else {
     // Desktop
     document.getElementById("newGameBut").style.opacity = "100%";
-    document.getElementById("shopBut").removeEventListener("click", openMobile);
-    document.getElementById("shopBut").addEventListener("click", toggleShop);
     document.getElementById("mobileShop").style.display = "none";
     document.getElementById("newGameBut").addEventListener("click", activateInfinite);
     window.isMobile = false;
+    window.logoMove(6, 3, 16, 1);
   }
 });
 
@@ -113,14 +112,21 @@ window.sizeInit = () => {
     // Mobile
     document.getElementById("newGameBut").removeEventListener("click", activateInfinite);
     document.getElementById("newGameBut").style.opacity = "30%";
-    document.getElementById("shopBut").addEventListener("click", openMobile);
     window.isMobile = true;
   } else {
     // Desktop
     // window.getParamsDesktop();
     document.getElementById("newGameBut").style.opacity = "100%";
-    document.getElementById("shopBut").addEventListener("click", toggleShop);
     document.getElementById("newGameBut").addEventListener("click", activateInfinite);
+  }
+};
+
+window.shopping = () => {
+  console.log("shopping");
+  if (window.matchMedia("(max-width: 768px)").matches) {
+    openMobile();
+  } else {
+    toggleShop();
   }
 };
 
@@ -159,25 +165,23 @@ export default window.initNoti2 = (name) => {
       break;
   }
 };
-// Toggle Shop
-var shopActive = "closed";
+
+// Shop Button
 window.toggleShop = () => {
   var confirm = document.getElementById("orderConfirm");
   var shopMenuBut = document.getElementById("shopBut");
-  window.closeEmail();
   // Disable some menu items below
   // window.dActiveBut();
-  window.endInter();
-  document.getElementById("settingsMenu").style.opacity = "0%";
-  settingsActive = false;
+  clearSettings();
+  clearFollow();
   document.getElementById("shop").style.transition = "1s all";
   document.getElementById("povImageColumnLeft").innerHTML = "";
   document.getElementById("extrasCont").style.transition = "1s all";
   document.getElementById("extrasCont").style.opacity = "0%";
   document.getElementById("extrasCont").style.width = "0%";
-  extraOpen = false;
   switch (shopActive) {
     case "closed":
+      window.mainMenuPosition("black","0%","0%","0%","0%");
       setTimeout(() => {
         if (window.productsloaded === false) {
           document.getElementById("divLoadBG2").style.display = "grid";
@@ -187,30 +191,10 @@ window.toggleShop = () => {
       }, 500);
       window.globeMove1(75);
       window.logoMove(6, 3, 16, 1);
-      shopMenuBut.innerHTML = "< RETURN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
       shopActive = "open";
       break;
-    case "open":
-      setTimeout(() => {
-        window.globeMove1(4);
-        window.logoMove(25, 35, 30, 1);
-      }, 300);
-      document.getElementById("shop").style.opacity = "0%";
-      document.getElementById("shop").style.visibility = "hidden";
-      document.getElementById("povRight").style.opacity = "0%";
-      document.getElementById("povLeft").style.opacity = "0%";
-      setTimeout(() => {
-        document.getElementById("povRight").style.visibility = "hidden";
-        document.getElementById("povLeft").style.visibility = "hidden";
-      }, 500);
-      document.getElementById("tandc").style.display = "none";
-      document.getElementById("tandc").style.opacity = "0%";
-      shopMenuBut.innerHTML = "SHOP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-      shopActive = "closed";
-      window.termsOpen = false;
-      break;
     case "POVopen":
-      window.mainMenuPosition("","0%","8%","22%","36%","56%");
+      document.getElementById("shop").style.overflowX = "scroll";
       shopActive = "open";
       var leftPOV = document.getElementById("povLeft");
       var rightPOV = document.getElementById("povRight");
@@ -238,13 +222,92 @@ window.toggleShop = () => {
       }
       var sizeElements = document.getElementsByClassName("shopProduct");
       for (let i = 0; i < sizeElements.length; i++) {
-        sizeElements[i].style.color = "#ff002d";
+        sizeElements[i].style.color = "black";
       }
       selectedPSize = "";
       document.getElementById("addToBagBut").innerHTML = "Select a size";
       break;
   }
 };
+
+// SETTINGS Button
+window.openSettings = () => {
+  clearShop();
+  clearFollow();
+  var menu = document.getElementById("settingsMenu");
+  document.getElementById("settingsMenu").style.display = "block";
+  if (window.isMobile === true) {
+    menu.style.display = "block";
+  }
+    window.mainMenuPosition("black","0%","0%","0%","0%");
+    settingsActive = true;
+    setTimeout(() => {
+      menu.style.opacity = "100%";
+    }, 300);
+    document.getElementById("extrasCont").style.opacity = "0%";
+    document.getElementById("extrasCont").style.transition = "1s all";
+    document.getElementById("extrasCont").style.width = "0%";
+    window.globeMove1(48);
+    window.logoMove(6, 3, 16, 1);
+    //
+    var shopMenuBut = document.getElementById("shopBut");
+    if (window.isMobile === false) {
+      // window.mainMenuPosition("","0%","8%","26%","46%");
+    }
+    //
+};
+
+// Follow Button
+window.follow = () => {
+  clearShop();
+  clearSettings();
+  window.globeMove1(20);
+  window.logoMove(6, 3, 16, 1);
+  window.mainMenuPosition("black","0%","0%","0%","0%");
+  console.log("follow");
+  var follow = document.getElementById("followSection");
+  follow.style.transition = ".5s all";
+  follow.style.display = "block";
+  setTimeout(()=> {
+    follow.style.opacity = "100%";
+  },500)
+  followOpen = true;
+}
+
+// Clear Shop
+window.clearShop = () => {
+  document.getElementById("shop").style.opacity = "0%";
+  document.getElementById("shop").style.visibility = "hidden";
+  document.getElementById("povRight").style.opacity = "0%";
+  document.getElementById("povLeft").style.opacity = "0%";
+  setTimeout(() => {
+    document.getElementById("povRight").style.visibility = "hidden";
+    document.getElementById("povLeft").style.visibility = "hidden";
+  }, 500);
+  document.getElementById("tandc").style.display = "none";
+  document.getElementById("tandc").style.opacity = "0%";
+  shopActive = "closed";
+  window.termsOpen = false;
+}
+
+// Clear Settings
+window.clearSettings = () => {
+  document.getElementById("settingsMenu").style.opacity = "0%";
+  document.getElementById("settingsMenu").style.display = "none";
+  console.log("clear settings");
+  settingsActive = false;
+}
+
+// Clear Follow
+window.clearFollow = () => {
+  var follow = document.getElementById("followSection");
+  follow.style.transition = ".5s all";
+  follow.style.opacity = "0%";
+  setTimeout(()=> {
+    follow.style.display = "none";
+  },500)
+  followOpen = true;
+}
 
 // World --------------------------------------------------------------------------------
 
@@ -414,16 +477,18 @@ window.worldTap = () => {
 // World -------------------------------------------------------------------------------- END
 // INFITE -------------------------------------------------------------------------------
 window.activateInfinite = () => {
+  window.globeMove1(20);
+  window.logoMove(6, 3, 16, 1);
   if (BABYLON.Engine.isSupported()) {
     document.getElementById("renderCanvas").style.transition = "5s all";
     // let game = new GameManager("renderCanvas");
     if (infiniteActive === false) {
-      if (window.ic === undefined) {
-        // Add text to get wallet and return once done.
-        // Refresh Page
-        document.getElementById("getWallet").style.display = "block";
-        return "";
-      }
+      // if (window.ic === undefined) {
+      //   // Add text to get wallet and return once done.
+      //   // Refresh Page
+      //   document.getElementById("getWallet").style.display = "block";
+      //   return "";
+      // }
       document.getElementById("renderCanvas").style.display = "block";
       document.getElementById("renderCanvas").style.opacity = "0";
       // document.getElementById("bankooMapCont").style.visibility = "hidden";
@@ -446,7 +511,6 @@ window.activateInfinite = () => {
       var canvas = document.getElementById("renderCanvas");
       canvas.height = window.innerHeight;
       canvas.width = window.innerWidth;
-      window.mainMenuPosition("","0%","8%","22%","36%","56%");
       document.getElementById("shop").style.opacity = "0%";
       document.getElementById("shop").style.visibility = "hidden";
       document.getElementById("povRight").style.opacity = "0%";
@@ -555,8 +619,9 @@ window.closeMobileOnly = () => {
 };
 // Open Product POV Screen
 window.povOpen = (obj) => {
+  document.getElementById("shop").style.overflowX = "visible";
   var currentProduct = obj.id;
-  window.mainMenuPosition("black","0%","0%","0%","0%","0%");
+  window.mainMenuPosition("black","0%","0%","0%","0%");
   currentShopProduct = allProducts[0].filter((product) => {
     return product.id.includes(`${currentProduct}`);
   });
@@ -725,6 +790,7 @@ var allProducts = [];
 window.productsloaded = false;
 // Create Product Elements
 window.loadShop = async () => {
+  document.getElementById("divLoadBG2").style.display = "grid";
   var shopParent = document.getElementById("allShopProducts");
   await commerce.products
     .list({ sortDirection: "desc" })
@@ -744,12 +810,12 @@ window.loadShop = async () => {
     productCont.setAttribute("onclick", "checkScreenSize(this)");
     shopParent.appendChild(productCont);
     productCont.innerHTML = `
-    <div class="pcDetails">
-        <p class="pcProductName">${product.name}</p>
-        <p class="pcProductPrice">${product.price.formatted_with_symbol}</p>
-    </div>
     <img class="shopProductsOver" src="${product.assets[1].url}">
     <img class="shopProducts" style="opacity:0%;" onload="imageFade(this)" src="${product.assets[0].url}">
+    <div class="pcDetails">
+    <p class="pcProductName">${product.name}</p>
+    <p class="pcProductPrice">${product.price.formatted_with_symbol}</p>
+</div>
     `;
     window.productsloaded = true;
     document.getElementById("divLoadBG2").style.display = "none";
@@ -803,9 +869,9 @@ window.selectSize = (obj) => {
   }
   var sizeElements = document.getElementsByClassName("shopProduct");
   for (let i = 0; i < sizeElements.length; i++) {
-    sizeElements[i].style.color = "#ff002d";
+    sizeElements[i].style.color = "black";
   }
-  obj.style.color = "#b5d3d1";
+  obj.style.color = "#ff002d";
 };
 // Countries
 var countriesObj = {};
@@ -979,7 +1045,7 @@ window.states = () => {
 // Create our card inputs
 var style = {
   base: {
-    color: "#ff002d",
+    color: "black",
   },
 };
 const card = elements.create("card", { style });
@@ -1146,6 +1212,7 @@ window.sayScoge = () => {
   document.getElementById("scoge").play();
   window.btAC();
 };
+
 // MOVE GLOBE
 window.globeMove1 = (whereto) => {
   var globe = document.getElementById("bankooMapCont");
@@ -1161,6 +1228,7 @@ window.globeMove1 = (whereto) => {
   //   return;
   // }
 };
+
 // LOGO MOVE
 window.logoMove = (up, whereto, size, speed) => {
   var logo = document.getElementById("logo");
@@ -1174,123 +1242,7 @@ window.logoMove = (up, whereto, size, speed) => {
     logo.style.top = `${up}%`;
   }
 };
-// COMPLETE
-window.connectBut = () => {
-  var emailInput = document.getElementById("mce-EMAIL");
-  emailInput.style.transition = "1s all";
-  if (emailInput.style.width != "35%") {
-    emailInput.style.width = "35%";
-    emailInput.style.marginRight = "5%";
-    document.getElementById("connect").innerHTML = "< SUBSCRIBE";
-    document.getElementById("connect").setAttribute("onclick", "subscribe()");
-    return;
-  }
-};
-// SUBSCRIBE
-window.subscribe = () => {
-  var form = document.getElementById("mc-embedded-subscribe-form");
-  form.submit();
-  form.reset();
-  window.closeEmail();
-};
-// CLOSE EMAIL INPUT
-window.closeEmail = () => {
-  var emailInput = document.getElementById("mce-EMAIL");
-  document.getElementById("connect").innerHTML =
-    "FOLLOW&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-  document.getElementById("connect").setAttribute("onclick", "connectBut()");
-  emailInput.style.width = "0%";
-  emailInput.style.marginRight = "0%";
-};
-// GLOBE IMG ANI
-var globeImgAni = 0;
-var life;
-window.globeImgAni = () => {
-  var globeOverImg1 = document.getElementById("globeOverImg1");
-  globeOverImg1.style.transition = "4s all";
-  setTimeout(() => {
-    globeOverImg1.style.opacity = "100%";
-  }, 6000);
-  life = setInterval(() => {
-    globeOverImg1.style.opacity = "0%";
-    setTimeout(() => {
-      if (globeImgAni === 0) {
-        globeOverImg1.src =
-          "https://storageapi2.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/red-s1-2.jpg";
-        globeImgAni = 1;
-      } else if (globeImgAni === 1) {
-        globeOverImg1.src =
-          "https://storageapi2.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/red-s1.jpg";
-        globeImgAni = 2;
-      } else {
-        globeOverImg1.src =
-          "https://storageapi2.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg";
-        globeImgAni = 0;
-      }
-    }, 4005);
-    setTimeout(() => {
-      globeOverImg1.style.opacity = "100%";
-    }, 6000);
-    return;
-  }, 14000);
-};
-// SETTINGS
-var settingsActive = false;
-window.openSettings = () => {
-  var menu = document.getElementById("settingsMenu");
-  document.getElementById("settingsMenu").style.display = "block";
-  extraOpen = false;
-  if (window.isMobile === true) {
-    menu.style.display = "block";
-  }
-  if (settingsActive === false) {
-    settingsActive = true;
-    setTimeout(() => {
-      menu.style.opacity = "100%";
-    }, 300);
-    document.getElementById("extrasCont").style.opacity = "0%";
-    document.getElementById("extrasCont").style.transition = "1s all";
-    document.getElementById("extrasCont").style.width = "0%";
-    extraOpen = false;
-    window.globeMove1(75);
-    window.logoMove(6, 3, 16, 1);
-    window.endInter();
-    //
-    var shopMenuBut = document.getElementById("shopBut");
-    if (window.isMobile === false) {
-      window.mainMenuPosition("","0%","8%","22%","36%","56%");
-    }
-    document.getElementById("shop").style.opacity = "0%";
-    document.getElementById("shop").style.visibility = "hidden";
-    document.getElementById("povRight").style.opacity = "0%";
-    document.getElementById("povLeft").style.opacity = "0%";
-    setTimeout(() => {
-      document.getElementById("povRight").style.visibility = "hidden";
-      document.getElementById("povLeft").style.visibility = "hidden";
-    }, 500);
-    document.getElementById("tandc").style.display = "none";
-    document.getElementById("tandc").style.opacity = "0%";
-    shopMenuBut.innerHTML = "SHOP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-    shopActive = "closed";
-    window.termsOpen = false;
-    //
-    return;
-  } else {
-    // if (shopActive != "closed") {
-    //   menu.style.opacity = "0%";
-    //   settingsActive = false;
-    //   return;
-    // }
-    settingsActive = false;
-    menu.style.opacity = "0%";
-    setTimeout(() => {
-      window.globeMove1(4);
-      window.logoMove(25, 35, 30, 1);
-      // window.globeImgAni();
-    }, 300);
-    return;
-  }
-};
+
 // FullScreen
 window.fullOn = () => {
   var main = document.getElementById("main");
@@ -1320,8 +1272,8 @@ window.dActiveBut = () => {
   } else {
     settings.style.opacity = "100%";
     extra.style.opacity = "100%";
-    settings.setAttribute("onclick", "openSettings();closeEmail();");
-    extra.setAttribute("onclick", "openExtra();closeEmail();");
+    settings.setAttribute("onclick", "openSettings();");
+    extra.setAttribute("onclick", "openExtra();");
   }
 };
 // VOLUME SLIDER
@@ -1333,73 +1285,7 @@ window.volumeSlider = (obj) => {
     vol = 1;
   }
 };
-// OPEN EXTRA
-var extraOpen = false;
-window.openExtra = () => {
-  var imageWindow = document.getElementById("extrasCont");
-  var shopMenuBut = document.getElementById("shopBut");
-  document.getElementById("ctc").style.display = "block";
-  document.getElementById("settingsMenu").style.display = "none";
-  settingsActive = false;
-  if (extraOpen === false) {
-    //
-    extraOpen = true;
-    document.getElementById("shop").style.opacity = "0%";
-    document.getElementById("shop").style.visibility = "hidden";
-    document.getElementById("povRight").style.opacity = "0%";
-    document.getElementById("povLeft").style.opacity = "0%";
-    setTimeout(() => {
-      document.getElementById("povRight").style.visibility = "hidden";
-      document.getElementById("povLeft").style.visibility = "hidden";
-    }, 500);
-    document.getElementById("tandc").style.display = "none";
-    document.getElementById("tandc").style.opacity = "0%";
-    shopMenuBut.innerHTML = "SHOP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-    shopActive = "closed";
-    window.termsOpen = false;
-    //
-    if (window.isMobile === false) {
-      window.mainMenuPosition("","0%","8%","22%","36%","56%");
-    }
-    imageWindow.style.width = "100%";
-    setTimeout(() => {
-      imageWindow.style.opacity = "100%";
-    }, 300);
-    window.globeMove1(75);
-    window.logoMove(6, 3, 16, 1);
-    window.endInter();
-    extraOpen = true;
-    document.getElementById("settingsMenu").style.opacity = "0%";
-    setTimeout(() => {
-      document.getElementById("globeOverImg1").style.opacity = "0%";
-    }, 1000);
-    setTimeout(() => {
-      document.getElementById("ctc").style.opacity = "0%";
-    }, 5000);
-    setTimeout(() => {
-      document.getElementById("ctc").style.display = "none";
-    }, 7000);
-    return;
-  }
-  if (extraOpen === true) {
-    document.getElementById("extrasCont").style.transition = "1s all";
-    document.getElementById("extrasCont").style.width = "0%";
-    // window.globeImgAni();
-    imageWindow.style.opacity = "0%";
-    extraOpen = false;
-    setTimeout(() => {
-      window.globeMove1(4);
-      window.logoMove(25, 35, 30, 1);
-    }, 300);
-    return;
-  }
-};
-// Clear Interval
-window.endInter = () => {
-  var Image = document.getElementById("globeOverImg1");
-  clearInterval(life);
-  Image.style.opacity = "0%";
-};
+
 // EXTRA NEXT IMAGE
 var currentExtraNumber = 2;
 window.nextExImg = () => {
@@ -1486,7 +1372,7 @@ window.clearMainUi = () => {
 }
 
 // Main Menu System
-window.mainMenuPosition = (bg,p1,p2,p3,p4,p5) => {
+window.mainMenuPosition = (bg,p1,p2,p3,p4) => {
   var menu = document.querySelectorAll(".mainMenuBut");
   var menuItems = document.getElementById("")
   menu.forEach((menuItem)=> {
@@ -1498,19 +1384,16 @@ window.mainMenuPosition = (bg,p1,p2,p3,p4,p5) => {
       case "newGameBut":
         document.getElementById("newGameBut").style.left = p2;
         break;
-      case "extraBut":
-      document.getElementById("extraBut").style.left = p3;
-      // document.getElementById("connect").style.left = p3;
-      break;
       case "settingsBut":
-      document.getElementById("settingsBut").style.left = p4;
+      document.getElementById("settingsBut").style.left = p3;
       break;
       case "subscribeBut":
-      document.getElementById("subscribeBut").style.left = p5;
+      document.getElementById("subscribeBut").style.left = p4;
       break;
     }
   });
 }
+
 
 // URL PARAMS OPEN SHOP
 // window.getParamsDesktop = () => {
@@ -1520,11 +1403,5 @@ window.mainMenuPosition = (bg,p1,p2,p3,p4,p5) => {
 //   toggleShop();
 // }
 
-// window.testing = () => {
-//   console.log("it works though");
-// }
-
-// testing();
-
-// window.mainMenuPosition("black","0%","8%","22%","36%","56%")
+// window.mainMenuPosition("black","0%","8%","36%","56%")
 // window.mainMenuPosition("","0%","0%","0%","0%","0%")
