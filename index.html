@@ -34,7 +34,7 @@
         <!-- <script type="text/javascript" src="https://cdn.babylonjs.com/babylon.max.js"></script> -->
         <script src="./src/index.js" type="module"></script>
     </head>
-    <body id="main" onload="loadShop();sizeInit();">
+    <body id="main" onload="loadShop();">
     <div id="enter" onclick="enterSite()">
         <img src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/bankoo-map.png"/>
     </div>
@@ -61,11 +61,11 @@
         <span>VOLUME:</span><input type="range" id="sVolume" class="slider" min="0" max="99" value="10" onchange="volumeSlider(this)">
         </div>
         <p>SCOGÉ <span style="font-size: 10px;"><i>noun</i></span><span style="margin-left: 2%;" onclick="sayScoge()">&#128266;</span><br><span style="font-size: 12px;">/S-CO-J/<br></span>1: Between Worlds.<br>2: Starnilas C. Oge.</p>
-        <p>SCOGÉ is a New York City-based label founded by Haitian American artist SCOGÉ. The brand practices a Meta-Analytical Psychology best described as Subreality Archeology - An approach where history, geography, and ecology of an alternate world are realized and understood through the production of the world's material culture through the brand.<br><br>SCOGÉ studied at The Fashion Institute of Technology while serving in the USAF Reserve before assembling the SCOGÉ label.</p>
-        <a class="active" href="Mailto:info@scoge.co">Info@Scoge.co</a>
+        <p>SCOGÉ is a New York City-based label founded by Haitian American artist SCOGÉ. The brand practices a Meta-Analytical Psychology best described as Subreality Archeology - An approach where history, geography, and ecology of an alternate world are realized and understood through the production of the world's material culture through the brand.<br><br>SCOGÉ studied at The Fashion Institute of Technology before assembling the SCOGÉ label.</p>
+        <a class="active" href="Mailto:info@scoge.co">Contact</a>
         <p style="font-size: 12px;">
             <br>
-            Sight by SCOGÉ<br><br>
+            Website by SCOGÉ<br><br>
             ©2022 SCOGÉ INC. All Rights Reserved.
         </p>
         <audio id="scoge">
@@ -73,6 +73,29 @@
         </audio>
     </div>
     <!-------------------------------------------------------------------------->
+    <!---------------------------FOLLOW START---------------------------->
+    <div id="followSection">
+        <a href="https://forms.gle/KRpVpGmLqCxdXnUr6" target="_blank" style="text-align:right;">Newsletter</a>
+        <br>
+        <br>
+        <br>
+        <a href="https://www.youtube.com/channel/UC9NMfsERer_0QAjAxszFFpQ" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-youtube" viewBox="0 0 16 16">
+                <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/>
+              </svg>
+        </a>
+        <br>
+        <br>
+        <br>
+        <!-- Instagram Logo Svg-->
+        <a href="https://www.instagram.com/_scoge_" target="_blank">
+            <svg id="followIg" xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">
+                <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
+              </svg>
+        </a>
+        <!-- <a href="https://www.instagram.com/_scoge_" target="_blank">Instagram</a> -->
+    </div>
+    <!---------------------------FOLLOW END------------------------------>
         <div id="shop">
             <div id="divLoadBG2">
                 <div class="loader"></div>
@@ -143,7 +166,7 @@
                             <input class="shopFormInput" id="input10" type="text" placeholder="Full Shipping Address (If different from Billing Address)">
                             <div class="shopFormInput input11" id="card-element"></div>
                             <div class="checkoutRow">
-                                <img id="stripeLogo" src="./assets/images/stripe-red.png"/>
+                                <img id="stripeLogo" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/stripe.png"/>
                                 <div id="totalPrice">
                                     <span>Total:</span>
                                     <span id="carTotal">$</span>
@@ -171,7 +194,7 @@
             <img id="extraImages" onclick="nextExImg();" src="https://scoge.s3.us-east-2.amazonaws.com/extra/scoge-22-bts-1.jpg"/>
             <!-- <video src="./assets/images/v1v.MP4" autoplay loop muted></video> -->
         </div>
-        <div id="logo">
+        <div id="logo" onclick="openSettings();sayScoge();">
             <img src="./assets/images/world/s-red-l.png"/>
         </div>
         <div id="bankooMapCont">
@@ -181,32 +204,12 @@
         <canvas style="width: 100%; height: 100%; display: block;" id="renderCanvas"></canvas>
         <div id="mainCont" style="width: 100%; height: 100%; margin: 0;"></div>
         <div id="gMenu">
-            <div id="shopBut" class="mainMenuBut">SHOP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-            <div id="newGameBut" class="mainMenuBut" onclick="closeEmail()">NEW GAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-            <div id="extraBut" class="mainMenuBut" onclick="openExtra();closeEmail();">EXTRA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-            <div id="settingsBut" class="mainMenuBut" onclick="openSettings();closeEmail();">SETTINGS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>         
-            <div id="subscribeBut" class="mainMenuBut"> 
-                <!-------------------------------------------------------------------------->      
-                <!-- Begin Mailchimp Signup Form -->
-                        <span>
-                        <form action="https://scoge.us3.list-manage.com/subscribe/post?u=06502830cf2008a1155da093a&amp;id=467d798f05" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-                            <div id="mc_embed_signup_scroll">
-                        <span class="mc-field-group">
-                            <input type="email" value="" placeholder="ENTER EMAIL" name="EMAIL" class="required email" id="mce-EMAIL">
-                        </span>
-                            <div id="mce-responses" class="clear">
-                                <div class="response" id="mce-error-response" style="display:none"></div>
-                                <div class="response" id="mce-success-response" style="display:none"></div>
-                            </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-                            <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_06502830cf2008a1155da093a_467d798f05" tabindex="-1" value=""></div>
-                            <!-- <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div> -->
-                            </div>
-                        </form>
-                        </span>
-                <!--End mc_embed_signup-->
-                <!-------------------------------------------------------------------------->
-                        <span onclick="connectBut()" id="connect">FOLLOW&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    </div>
+            <div id="shopBut" class="mainMenuBut" onclick="shopping();">SHOP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div id="newGameBut" class="mainMenuBut">WORLD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div id="settingsBut" class="mainMenuBut" onclick="openSettings();">SETTINGS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>         
+            <div id="subscribeBut" class="mainMenuBut" onclick="follow()">
+                FOLLOW
+            </div>
         </div>
     <!-- <div id="card-element"></div> -->
     <audio id="destiny">
@@ -244,17 +247,3 @@ window.enterSite = () => {
 };
     </script>
 </html>
-<!-- <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="./assets/favicon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SCOGÉ</title>
-    <link rel="stylesheet" href="./src/style.css">
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
-</html> -->

@@ -76,6 +76,10 @@ class mobileShop1 extends HTMLElement {
       shopParent.appendChild(productCont);
       productCont.innerHTML = `
     <img class="shopProducts" style="opacity:0%;" onload="imageFade(this)" src="${product.assets[0].url}">
+    <div class="pcDetails">
+    <p class="pcProductName">${product.name}</p>
+    <p class="pcProductPrice">${product.price.formatted_with_symbol}</p>
+  </div>
     `;
       productsloaded = true;
       this.shadow.getElementById("LoadBG").style.display = "none";
@@ -324,11 +328,14 @@ class mobileShop1 extends HTMLElement {
           var currentItem = currentCart.line_items.filter((obj) => {
             return obj.product_id === currentShopProduct[0].id;
           });
+          console.log(currentCart)
+          console.log(currentShopProduct[0].id)
+          console.log(currentItem)
           if (
-            currentShopProduct[0].inventory.available > 0 &&
-            currentItem[0].quantity <=
-              currentShopProduct[0].inventory.available - 1
-          ) {
+            // currentItem will be null if the item was not already added to the cart.
+            // Removing this code but error will throw if item availability changes to 0 avaible during process.
+            // && currentItem[0].quantity <= currentShopProduct[0].inventory.available - 1
+            currentShopProduct[0].inventory.available > 0) {
             commerce.cart
               .add(currentShopProduct[0].id, 1, {
                 [currentShopProduct[0].variant_groups[0].id]:
@@ -481,8 +488,8 @@ class mobileShop1 extends HTMLElement {
     this.noti1();
     this.shadow.getElementById("noti").innerHTML = `
         <div id="terms">
-         <h1 class="alt">Terms & Conditions</h1><p>For designs marked with an <span class="active">(‘É’)</span> or <span class="active">(‘SÉ’)</span> please allow 15 working days for your order to be dispatched and tracking information.</p><p>Upon placing your order, you will receive an order confirmation email. Once your order is packed you will receive a second email with tracking information. All orders are shipped from our NYC office and aim to provide the fastest and most convenient shipping possible. Our main carriers include fedex, ups, usps, dhl and dpex.</p><h2 class="alt">Shipping:</h2><p>Design prices include express shipping costs. For expedited shipping please contact info@scoge.co. </p><h2 class="alt">Returns & Exchanges:</h2><p>Please email info@scoge.co if you have any questions prior to purchase. Please view design size charts before purchasing for sizing clarification.</p><h2 class="alt">Finishes:</h2><p>Our designs exhibit intentional rough finishes and/or unconventional fittings. Designs labeled with an <span class="active">('SÉ')</span> are categorized as highly limited explorations, and are personally signed by its designer Starnilas Oge.</p><h2 class="alt"> Faulty Items:</h2><p>If you believe you received a faulty item, ie. Incorrect item, Incorrect Size, or Incomplete order, Please contact us via info@scoge.co with photos of the fault and your order number. All claims need to be logged within 7 days of receiving the item. Refunds will be processed if the item is proven faulty. We reserve the right to refuse a return if it does not meet our standards. Items stained or dirty will not be accepted.</p><h2 class="alt">Exchanges:</h2><p>SCOGÉ does not cover shipping costs for returns/exchanges. Returns, Refunds and Exchanges will be processed once the item is received in its original condition.</p>
-         <h2 class="alt">Privacy:</h2><p>SCOGÉ highly respects your Privacy & Security. In developing SCOGÉ we are actively working to convert the entire SCOGÉ technical stack to a decentralized web3 stack. Any personal information received will not be shared with any third parties.</p><h2 class="alt">Taxes, Duties and Border Charges:</h2><p>SCOGÉ is not responsible for Taxes, Duties, Border Charges or Duty Reimbursement on any international orders. Please check your country’s border charges before making a purchase.</p><p>If you have any questions or concerns please do not hesitate to contact us before making your purchase. <span class="active">Info@Scoge.co</span></p>
+         <h1>Terms & Conditions</h1><p>For designs marked with an <span class="active">(‘É’)</span> or <span class="active">(‘SÉ’)</span> please allow 15 working days for your order to be dispatched and tracking information.</p><p>Upon placing your order, you will receive an order confirmation email. Once your order is packed you will receive a second email with tracking information. All orders are shipped from our NYC office and aim to provide the fastest and most convenient shipping possible. Our main carriers include fedex, ups, usps, dhl and dpex.</p><h2>Shipping:</h2><p>Design prices include express shipping costs. For expedited shipping please contact info@scoge.co. </p><h2>Returns & Exchanges:</h2><p>Please email info@scoge.co if you have any questions prior to purchase. Please view design size charts before purchasing for sizing clarification.</p><h2>Finishes:</h2><p>Our designs exhibit intentional rough finishes and/or unconventional fittings. Designs labeled with an <span class="active">('SÉ')</span> are categorized as highly limited explorations, and are personally signed by its designer Starnilas Oge.</p><h2> Faulty Items:</h2><p>If you believe you received a faulty item, ie. Incorrect item, Incorrect Size, or Incomplete order, Please contact us via info@scoge.co with photos of the fault and your order number. All claims need to be logged within 7 days of receiving the item. Refunds will be processed if the item is proven faulty. We reserve the right to refuse a return if it does not meet our standards. Items stained or dirty will not be accepted.</p><h2>Exchanges:</h2><p>SCOGÉ does not cover shipping costs for returns/exchanges. Returns, Refunds and Exchanges will be processed once the item is received in its original condition.</p>
+         <h2>Privacy:</h2><p>SCOGÉ highly respects your Privacy & Security. In developing SCOGÉ we are actively working to convert the entire SCOGÉ technical stack to a decentralized web3 stack. Any personal information received will not be shared with any third parties.</p><h2>Taxes, Duties and Border Charges:</h2><p>SCOGÉ is not responsible for Taxes, Duties, Border Charges or Duty Reimbursement on any international orders. Please check your country’s border charges before making a purchase.</p><p>If you have any questions or concerns please do not hesitate to contact us before making your purchase. <span class="active">Info@Scoge.co</span></p>
         </div>
          `;
   };
@@ -871,7 +878,7 @@ class mobileShop1 extends HTMLElement {
             }
             ::placeholder {
                 /* Chrome, Firefox, Opera, Safari 10.1+ */
-                color: #ff002d;
+                color: black;
                 opacity: 0.9; /* Firefox */
               }
             #noti {
@@ -881,8 +888,9 @@ class mobileShop1 extends HTMLElement {
                 position: fixed;
                 left: 0;
                 top: 0;
-                background-color: rgba(0,0,0,.9);
+                background-color: white;
                 z-index: 5;
+                color: black;
             }
             #noti img {
                 height: 100%;
@@ -908,15 +916,16 @@ class mobileShop1 extends HTMLElement {
                 width: 88%;
                 height: 8%;
                 padding: 2% 6%;
-                background-color: #b5d3d1;
-                color: #ff002d;
+                background-color: white;
+                color:black;
                 float:left;
                 display: grid;
                 grid-template-rows: 1fr;
                 grid-template-columns: 1fr 1fr;
                 align-items: center;
-                font-size: 20px;
+                font-size: 16px;
                 font-family: "BS-SB";
+                border-top: 1px solid black;
             }
             #cartStatus {
                 justify-self: end;
@@ -934,7 +943,7 @@ class mobileShop1 extends HTMLElement {
                 width: 100%;
                 float:left;
                 overflow: hidden;
-                background-color: black;
+                background-color: white;
             }
             #mb1 {
                 display: grid;
@@ -948,7 +957,7 @@ class mobileShop1 extends HTMLElement {
                 display: none;
                 height: 80%;
                 width: 100%;
-                background-color: black;
+                background-color: white;
                 position: absolute;
                 z-index: 2;
                 overflow: hidden;
@@ -957,7 +966,7 @@ class mobileShop1 extends HTMLElement {
                 display: none;
                 height: 80%;
                 width: 100%;
-                background-color: black;
+                background-color: white;
                 position: absolute;
                 z-index: 3;
             }
@@ -965,7 +974,7 @@ class mobileShop1 extends HTMLElement {
                 display: none;
                 height: 72%;
                 width: 100%;
-                background-color: black;
+                background-color: white;
                 position: absolute;
                 z-index: 4;
                 overflow: hidden;
@@ -1008,6 +1017,7 @@ class mobileShop1 extends HTMLElement {
                 width: 90%;
                 float: left;
                 padding: 5% 5%;
+                color: black;
             }
             #pDesc {
                 font-size: 12px;
@@ -1028,7 +1038,7 @@ class mobileShop1 extends HTMLElement {
             }
             #proPrice {
                 float: right;
-                font-family: "BS-SB";
+                font-family: "BS-R";
                 font-size: 18px;
             }
             #pCat {
@@ -1049,7 +1059,7 @@ class mobileShop1 extends HTMLElement {
                 color: black;
                 float: left;
                 font-family: "BS-SB";
-                font-size: 18px;
+                font-size: 16px;
                 display: grid;
                 grid-template-columns: 1fr;
                 grid-template-rows: 1fr;
@@ -1059,7 +1069,8 @@ class mobileShop1 extends HTMLElement {
             #sizesCont {
                 height: 100%;
                 width: 50%;
-                background-color: black;
+                background-color: white;
+                color: black;
                 float: left;
                 display: grid;
                 grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -1071,12 +1082,13 @@ class mobileShop1 extends HTMLElement {
                 height: 100%;
                 width: 100%;
                 float: left;
-                background-color: black;
+                background-color: white;
                 display: grid;
                 justify-items: center;
                 align-items: center;
                 border-top: .5px solid white;
                 opacity: 0.3;
+                border-top: .5px solid black;
             }
             .sizeButtons:hover {
                 background-color: #ff002d;
@@ -1086,7 +1098,7 @@ class mobileShop1 extends HTMLElement {
                 height: 80%;
                 width: 100%;
                 float: left;
-                background-color: black;
+                background-color: white;
                 overflow: scroll;
             }
             #checkoutInputs {
@@ -1096,18 +1108,19 @@ class mobileShop1 extends HTMLElement {
                 float: left;
                 padding-left: 5%;
                 padding-top: 5%;
-                background-color: black;
+                background-color: white;
                 position: absolute;
                 z-index: 2;
                 grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
                 grid-template-columns: 45% 45%;
                 grid-column-gap: 5%;
                 grid-row-gap: 2%;
+                color: black;
             }
             .checkoutInput {
                 background-color: rgba(0,0,0,0);
-                border: 1px solid #ff002d;
-                color: #b5d3d1;
+                border: 1px solid black;
+                color: black;
                 padding-left: 5%;
                 outline: none;
             }
@@ -1175,8 +1188,8 @@ class mobileShop1 extends HTMLElement {
                 align-items: start;
                 z-index: 3;
                 background-color: rgba(0,0,0,0);
-                border: 1px solid #ff002d;
-                color: #b5d3d1;
+                border: 1px solid black;
+                color: black;
                 outline: none;
                 overflow-y: visible;
             }
@@ -1191,18 +1204,19 @@ class mobileShop1 extends HTMLElement {
                 border-radius: 0px;
                 box-shadow: none;
                 width: 100%;
-                color: #b5d3d1;
+                color:black;
                 --stripe-elements-base-color: green;
               }
             stripe-elements {
-                --stripe-elements-base-color: #b5d3d1;
-                --stripe-elements-base-icon-color: #b5d3d1;
+                --stripe-elements-base-color: black;
+                --stripe-elements-base-icon-color: black;
                 --stripe-elements-base-font-size: 14px;
             }
             #termsButton {
                 height: 10%;
                 width: 100%;
                 background-color: white;
+                border-top: 1px solid black;
                 float: left;
                 display: grid;
                 grid-template-columns: 1fr;
@@ -1218,6 +1232,7 @@ class mobileShop1 extends HTMLElement {
                 height: 90%;
                 padding: 5%;
                 overflow: scroll;
+                font-size: 16px;
             }
             #shippingButton {
                 height: 10%;
@@ -1235,9 +1250,10 @@ class mobileShop1 extends HTMLElement {
             .productCont {
                 width: 100%;
                 height: 40%;
-                background-color: black;
+                background-color: white;
+                color: black;
                 overflow: hidden;
-                border-bottom: 1px solid #ff002d;
+                border-bottom: 1px solid black;
             }
             .pcLeft {
                 width: 35%;
@@ -1284,10 +1300,30 @@ class mobileShop1 extends HTMLElement {
                 padding-left: 14%;
             }
             .active {
-                color: #b5d3d1;
+                color: #ff002d;
             }
             .alt {
                 color: #94be8c;
+            }
+            .pcDetails {
+              width: 90%;
+              padding-left: 10%;
+              font-family: "BS-L";
+              bottom: 2%;
+              left: 5%;
+              opacity: 100%;
+              transition: 1s all;
+              z-index: 3;
+              display: block;
+              color: black;
+              font-size: 12px;
+            }
+            .pcProductName {
+              font-family: "BS-SB";
+              margin-bottom: 0%;
+            }
+            .pcProductPrice {
+              margin:0%;
             }
             #LoadBG {
                 width: 100%;
@@ -1378,6 +1414,9 @@ class mobileShop1 extends HTMLElement {
               #scroll {
                 position: absolute;
                 top: 10%;
+                width: 80% !important;
+                padding-left: 10%;
+                padding-right: 10%;
                 animation-name: scroll;
                 animation-duration: 2s;
                 animation-delay: 1s;
@@ -1434,7 +1473,7 @@ class mobileShop1 extends HTMLElement {
                         <input class="checkoutInput" id="inputZC" placeholder="Post / Zip Code" value="">
                         <input class="checkoutInput" id="inputSP" value="$0 Free Ship">
                         <input class="checkoutInput" id="inputSA" placeholder="Shipping Address (If different from billing)" value="">
-                        <img id="stripeLogo" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/stripe-red.png"/>
+                        <img id="stripeLogo" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/stripe.png"/>
                         <div class="input11" id="card-element"></div>
                    </div>
                     <div id="cartItems">
@@ -1478,7 +1517,7 @@ class mobileShop1 extends HTMLElement {
                 </div>
                 <div id="mb2">
                     <div id="mainImage">
-                        <img id="scroll" style="width: 60%;" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/scroll.png"/>
+                        <img id="scroll" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/scroll.png"/>
                         <img id="mainImageCont" src="../assets/images/shoptest/shop3.jpg">
                     </div>
                     <div id="allImages">
@@ -1511,7 +1550,7 @@ class mobileShop1 extends HTMLElement {
                 <div id="mb1"></div>
             </div>
             <div id="footer">
-                <div style="border-right: 1px solid #ff002d">
+                <div style="border-right: 1px solid black">
                     Total: <span id="totalPrice">$0</span>
                 </div>
                 <div id="cartStatus">
