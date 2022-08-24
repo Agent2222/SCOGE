@@ -148,6 +148,8 @@ export default class MainSceneManager {
     this.MainCamera.speed = 0.2;
     this.MainCamera.minZ = 0;
     this.MainCamera.fov = 1;
+    this.MainCamera.inputs.addTouch();
+    this.MainCamera.inputs.removeMouseWheel();
     this.MainCamera.inputs.removeByType("FreeCameraKeyboardMoveInput");
 
     // // //Controls  WASD
