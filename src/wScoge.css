@@ -933,7 +933,7 @@ canvas {
 #newGameBut {
   position: relative;
   left: 10%;
-  opacity: 30%;
+  opacity: 100%;
 }
 #subscribeBut {
   position: relative;

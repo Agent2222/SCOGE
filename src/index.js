@@ -1394,7 +1394,6 @@ window.mainMenuPosition = (bg,p1,p2,p3,p4) => {
   });
 }
 
-
 // URL PARAMS OPEN SHOP
 // window.getParamsDesktop = () => {
 //   const params = new URLSearchParams(location.search)

@@ -2,6 +2,7 @@ import LoaderManager from "./LoaderManager.js";
 import * as BABYLON from "@babylonjs/core";
 import * as utils from "./utils.js";
 import initNoti2 from "../index.js";
+import 'babylonjs-inspector';
 
 export default class MainSceneManager {
   constructor(gameManager) {
@@ -137,7 +138,7 @@ export default class MainSceneManager {
     // console.log("is mobile", this.IsMobile);
 
     //Moving Camera
-    this.MainCamera = new BABYLON.UniversalCamera(
+    this.MainCamera = new BABYLON.TouchCamera(
       "UniversalCamera",
       new BABYLON.Vector3(1.35, 1.25, 1.75),
       this.scene
@@ -174,6 +175,7 @@ export default class MainSceneManager {
 
     this.myRef = document.getElementById("renderCanvas");
   }
+
   initializeEnvironMent() {
     // this.HemiLight = new BABYLON.HemisphericLight(
     //   "HemiLight",
@@ -725,6 +727,11 @@ export default class MainSceneManager {
         this.scene
       );
       ANote0VideoVidTex.vScale = -2;
+      ANote0VideoVidTex.vOffset = 1;
+      ANote0VideoVidTex.vAng = 0;
+      ANote0VideoVidTex.uAng = 0;
+      ANote0VideoVidTex.uOffset = 0;
+      ANote0VideoVidTex.uScale = 1;
       this.videoTextureList.push(ANote0VideoVidTex);
     }
     //create tv material
@@ -792,6 +799,7 @@ export default class MainSceneManager {
         this.scene
       );
       DDANote0VideoVidTex.vScale = -2;
+      DDANote0VideoVidTex.vOffset = 1;
       this.DDVideoTextureList.push(DDANote0VideoVidTex);
     }
     //create DDScreen material
@@ -839,6 +847,7 @@ export default class MainSceneManager {
         this.scene
       );
       CompANote0VideoVidTex.vScale = -1;
+      CompANote0VideoVidTex.vOffset = 1;
       this.compVideoTextureList.push(CompANote0VideoVidTex);
       console.log(this.compVideoTextureList);
     }
