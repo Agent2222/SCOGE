@@ -14,92 +14,50 @@
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-
         gtag('config', 'GA_MEASUREMENT_ID');
         </script>
-        <script src="https://code.jquery.com/pep/0.4.2/pep.min.js"></script>
-        <!-- <script src="./src/js/split.js"></script> -->
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/2.7.2/jquery.serializejson.js"></script>
-        <script type="text/javascript">
-            window._mfq = window._mfq || [];
-            (function() {
-              var mf = document.createElement("script");
-              mf.type = "text/javascript"; mf.defer = true;
-              mf.src = "//cdn.mouseflow.com/projects/3e81e129-c20b-43a6-bad2-8b25aa26f99b.js";
-              document.getElementsByTagName("head")[0].appendChild(mf);
-            })();
-        </script>
-        <!-- <script src="https://playground.babylonjs.com/js/libs/split.js"></script> -->
-        <!-- <script type="text/javascript" src="https://cdn.babylonjs.com/babylon.max.js"></script> -->
         
-      <script type="module" crossorigin src="/assets/modulepreload-polyfill.b7f2da20.js"></script>
-      <script type="module" crossorigin src="/assets/index.ff2dc9ef.js"></script>
-      <link rel="stylesheet" href="/assets/wScoge.d8623e99.css">
+      <script type="module" crossorigin src="/assets/main.8f0f6371.js"></script>
+      <link rel="modulepreload" href="/assets/wScoge.fc00b881.js">
+      <link rel="stylesheet" href="/assets/wScoge.b2b26c05.css">
     </head>
-    <body id="main" onload="loadShop();sizeInit();">
-    <div id="enter" onclick="enterSite()">
-        <img src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/bankoo-map.png"/>
-    </div>
+    <body id="main" onload="enterSite();loadShop();sizeInit();">
     <div id="subText1" class="dialogue"><p></p></div>
     <div id="subText2" class="dialogue"><span class="answerOptions" id="st2Ans1"></span><span class="answerOptions" id="st2Ans2"></span><span class="answerOptions" id="st2Ans3"></span></div>
+    <scoge-subscribe subscribe="subscribe" id="subscribeComp"></scoge-subscribe>
+    <scoge-camp campaign="camp" id="getCamp"></scoge-camp>
     <get-wallet wallet="wallet1" style="display:none;" id="getWallet"></get-wallet>
     <mint-screen mint="mint1" style="display:none;" id="getNfts"></mint-screen>
     <!---------------------------------MOBILE SHOP----------------------------------------->
     <mobile-shop1 product="product1" style="display:none;" id="mobileShop"></mobile-shop1>
-    <div id="mobileOnly" onclick="closeMobileOnly()">
-        <img style="width: 40%; position: absolute; top: 2%; left: 30%;"  src="/assets/sl-r.281e0429.png"/>
-        <p>PLEASE USE A DESKTOP COMPUTER TO PURCHASE SHOP PRODUCTS.</p>
-        <p>FOR ADDITIONAL HELP WITH SALES, PLEASE CONTACT INFO@SCOGE.CO</p>
-        <p>THANK YOU.</p>
-        <div style="position: fixed;bottom: 10%;width: 100%; left:0%; font-size: 18px; text-align: center;">CLICK TO CONTINUE</div>
-    </div>
+    <scoge-music music="music" id="music"></scoge-music>
     <!---------------------------------MOBILE SHOP END----------------------------------------->
      <!---------------------------------SETTINGS-------------------------------CONVERT TO COMPONENT---------->
     <div id="settingsMenu">
-        <div id="fullToggle" style="margin-bottom: 5%;">
-        <span>FULLSCREEN:</span><span style="margin-left: 5%; margin-right: 2%;" id="fsOn" onclick="fullOn()" class="togFull">ON</span>|<span style="margin-left: 2%;" id="fsOff" onclick="fullOff()" class="togFull">OFF</span>
+        <div>
+            <div id="fullToggle" style="margin-bottom: 5%;">
+            <span>FULLSCREEN:</span><span style="margin-left: 5%; margin-right: 2%;" id="fsOn" onclick="fullOn()" class="togFull">ON</span>|<span style="margin-left: 2%;" id="fsOff" onclick="fullOff()" class="togFull">OFF</span>
+            </div>
+            <img src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Bankoo.webp" alt="Bankoo" style="width:30%; height: auto; margin-bottom: 2%;">
+            <p>SCOGÉ <span style="font-size: 10px;"><i>noun</i></span><span style="margin-left: 2%; cursor: pointer;" onclick="sayScoge()">&#128266;</span><br><span style="font-size: 12px;">/S-CO-J/<br></span>1: Between Worlds.<br>2: Starnilas C. Oge.</p>
+            <p style="padding-bottom: 8%;">SCOGÉ™ is a New York City-based label founded by Haitian American designer Starnilas Oge. The brand practices a Meta-Analytical Psychology best described as Subreality Archeology - An approach where history, geography, and ecology of an alternate world are realized and understood through the production of the world's material culture.<br><br>Oge studied at The Fashion Institute of Technology before assembling the SCOGÉ™ label.</p>
+            <a class="active" href="Mailto:info@scoge.co" style="cursor:pointer;">Contact</a><a href="https://www.instagram.com/_scoge_/" target="_blank" class="social alt" style="cursor:pointer;">IG</a><a href="https://www.youtube.com/channel/UC9NMfsERer_0QAjAxszFFpQ" target="_blank" class="social alt" style="cursor:pointer;">YT</a>
+            <p style="font-size: 12px;">
+                <br>
+                Website by SCOGÉ<br><br>
+                ©2022 SCOGÉ INC. All Rights Reserved.
+            </p>
+            <audio id="scoge">
+                <source src="/assets/scoge.bb5a98cb.mp3" type="audio/mpeg">
+            </audio>
         </div>
-        <div style="margin-bottom: 5%;" id="volumediv">
-        <span>VOLUME:</span><input type="range" id="sVolume" class="slider" min="0" max="99" value="10" onchange="volumeSlider(this)">
-        </div>
-        <p>SCOGÉ <span style="font-size: 10px;"><i>noun</i></span><span style="margin-left: 2%;" onclick="sayScoge()">&#128266;</span><br><span style="font-size: 12px;">/S-CO-J/<br></span>1: Between Worlds.<br>2: Starnilas C. Oge.</p>
-        <p>SCOGÉ is a New York City-based label founded by Haitian American artist SCOGÉ. The brand practices a Meta-Analytical Psychology best described as Subreality Archeology - An approach where history, geography, and ecology of an alternate world are realized and understood through the production of the world's material culture through the brand.<br><br>SCOGÉ studied at The Fashion Institute of Technology before assembling the SCOGÉ label.</p>
-        <a class="active" href="Mailto:info@scoge.co">Contact</a>
-        <p style="font-size: 12px;">
-            <br>
-            Website by SCOGÉ<br><br>
-            ©2022 SCOGÉ INC. All Rights Reserved.
-        </p>
-        <audio id="scoge">
-            <source src="/assets/scoge.bb5a98cb.mp3" type="audio/mpeg">
-        </audio>
     </div>
     <!-------------------------------------------------------------------------->
-    <!---------------------------FOLLOW START---------------------------->
-    <div id="followSection">
-        <a href="https://forms.gle/KRpVpGmLqCxdXnUr6" target="_blank" style="text-align:right;">Newsletter</a>
-        <br>
-        <br>
-        <br>
-        <a href="https://www.youtube.com/channel/UC9NMfsERer_0QAjAxszFFpQ" target="_blank">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-youtube" viewBox="0 0 16 16">
-                <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/>
-              </svg>
-        </a>
-        <br>
-        <br>
-        <br>
-        <!-- Instagram Logo Svg-->
-        <a href="https://www.instagram.com/_scoge_" target="_blank">
-            <svg id="followIg" xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">
-                <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
-              </svg>
-        </a>
-        <!-- <a href="https://www.instagram.com/_scoge_" target="_blank">Instagram</a> -->
-    </div>
-    <!---------------------------FOLLOW END------------------------------>
         <div id="shop">
+            <!-- Shop Icon -->
+            <div id="shopIcon" onclick="toggleShop();">
+                ( 0 )
+            </div>
             <div id="divLoadBG2">
                 <div class="loader"></div>
             </div>
@@ -108,9 +66,6 @@
                 <div id="povImageColumnRight">
                 </div>
                 <div id="povImageColumnLeft">
-                    <!-- <img class="leftPOVimages"  src="../assets/images/shoptest/shop1.jpg">
-                    <img class="leftPOVimages"  src="../assets/images/shoptest/shop1.jpg">
-                    <img class="leftPOVimages"  src="../assets/images/shoptest/shop1.jpg"> -->
               </div>
             </div>
             <div id="povRight">
@@ -184,7 +139,6 @@
             </div>
             <div id="productView">
                 <div id="shopLeft">
-                    <!-- <img src="../assets/images/vest1.jpg"> -->
                 </div>
                 <div id="shopRight"></div>
             </div>
@@ -192,61 +146,19 @@
             </div>
         </div>
         <!-------------------------------------------------------------------------->
-        <div id="extrasCont"> 
-            <div id="ctc"><span>Photography by Zoe Lembeck</span><br>CLICK IMAGES TO CONTINUE.</div>
-            <img id="extraImages" onclick="nextExImg();" src="https://scoge.s3.us-east-2.amazonaws.com/extra/scoge-22-bts-1.jpg"/>
-            <!-- <video src="./assets/images/v1v.MP4" autoplay loop muted></video> -->
-        </div>
-        <div id="logo" onclick="openSettings();sayScoge();">
+        <div id="logo" onclick="sayScoge();">
             <img src="/assets/sl-r.281e0429.png"/>
-        </div>
-        <div id="bankooMapCont">
-            <img id="globeOverImg1" style="position: absolute; width: 90%; z-index: 4; mix-blend-mode: multiply; filter: grayscale(100%); opacity:0%;" src="/assets/squ-3.de90aed7.jpg"/>
-            <img id="bMap" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-3d-Spin-Web.gif"/>
         </div>
         <canvas style="width: 100%; height: 100%; display: block;" id="renderCanvas"></canvas>
         <div id="mainCont" style="width: 100%; height: 100%; margin: 0;"></div>
         <div id="gMenu">
-            <div id="shopBut" class="mainMenuBut" onclick="shopping();">SHOP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-            <div id="newGameBut" class="mainMenuBut">WORLD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-            <div id="settingsBut" class="mainMenuBut" onclick="openSettings();">SETTINGS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>         
-            <div id="subscribeBut" class="mainMenuBut" onclick="follow()">
-                FOLLOW
-            </div>
+            <div id="shopBut" class="mainMenuBut" onclick="shopping();">SHOP</div>
+            <div id="settingsBut" class="mainMenuBut" onclick="openSettings();">INFO</div>
+            <div id="campaignBut" class="mainMenuBut">CAMPAIGN</div>         
         </div>
-    <!-- <div id="card-element"></div> -->
-    <audio id="destiny">
-        <source src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/Birth.mp3" type="audio/mpeg">
-    </audio>
+        <div id="bg2">
+            <img src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/scoge-taos-city-1.webp" alt=""/>
+        </div>
     </body>
     <script src="https://js.stripe.com/v3/"></script>
-    <script>
-        // ENTER
-window.enterSite = () => {
-  var enterScreen = document.getElementById("enter");
-  var logo = document.getElementById("logo");
-  var map = document.getElementById("bankooMapCont");
-  var menu = document.getElementById("gMenu");
-//   document.getElementById("main").requestFullscreen();
-  enterScreen.innerHTML = "";
-  enterScreen.style.transition = "5s all";
-  enterScreen.style.opacity = "0%";
-  map.style.transition = "all 2s";
-  map.style.width = "50%";
-  map.style.opacity = "100%";
-  map.style.right = "4%";
-  setTimeout(() => {
-    logo.style.visibility = "visible";
-    logo.style.filter = "blur(0px)";
-    window.logoMove(25, 35, 30, 1);
-  }, 800);
-  setTimeout(() => {
-      menu.style.opacity = "100%";
-  }, 1200)
-  setTimeout(() => {
-    enterScreen.style.display = "none";
-  }, 3000);
-  window.destiny();
-};
-    </script>
 </html>

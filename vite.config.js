@@ -41,7 +41,6 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: new URL('index.html', import.meta.url).pathname,
-        world: new URL('world.html', import.meta.url).pathname,
         records: new URL('records.html', import.meta.url).pathname,
       },
       output: {

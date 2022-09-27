@@ -1,13 +1,18 @@
 //
 import Commerce from "@chec/commerce.js";
 // import loadStripe from "stripe";
-import * as BABYLON from "@babylonjs/core";
-import { GameManager } from "./game/GameManger.js";
+// import * as BABYLON from "@babylonjs/core";
+// import { GameManager } from "./game/GameManger.js";
 import { mobileShop1 } from "./shop-1.js";
 import { getWallet } from "../src/getWallet.js";
-import { mintingScreen } from "../src/mint.js";
+import { dtMusic } from "../src/dt-scogeMusic.js";
+import { dtCampaign } from "../src/dt-campaign.js";
+import { dtSubscribe } from "../src/dt-subscribe.js";
+// import the closeCampaign function from dt-campaign.js
+window.closeCampaign = dtCampaign.closeCampaign;
+// import { mintingScreen } from "../src/mint.js";
 // import { dialogue } from "./game/dialogue.js";
-import { getGameProgress } from "../src/game/levels/ch1";
+// import { getGameProgress } from "../src/game/levels/ch1";
 
 const VITE_CommerceKey = import.meta.env.VITE_CommerceKey;
 const VITE_StripeKey = import.meta.env.VITE_StripeKey;
@@ -27,21 +32,32 @@ var countriedAdded = false;
 var full = 0;
 var vol = 0;
 var ngHidden = false;
-var followOpen = false;
 var shopActive = "closed";
 var settingsActive = false;
 window.viewThisProduct = "";
 window.urlParamsActive = false;
 window.inUniverse = false;
 
-// Var Elements
-
 // Init Commerce
 const commerce = new Commerce(`${VITE_CommerceKey}`, true);
+console.log("COPYRIGHT 2022 - SCOGÉ Inc. - ALL RIGHTS RESERVED");
 
 // // Init Stripe
 var stripe = Stripe(`${VITE_StripeKey}`);
 const elements = stripe.elements();
+
+window.enterSite = () => {
+  var logo = document.getElementById("logo");
+  var menu = document.getElementById("gMenu");
+  setTimeout(() => {
+    logo.style.visibility = "visible";
+    logo.style.filter = "blur(0px)";
+    window.logoMove(6, 3, 16, 1);
+  }, 800);
+  setTimeout(() => {
+      menu.style.opacity = "100%";
+  }, 1200)
+};
 
 // Notifications
 const noti = {
@@ -78,10 +94,6 @@ window.isMobile = false;
 window.addEventListener("resize", function () {
   if (window.matchMedia("(max-width: 768px)").matches) {
     var shopMenuBut = document.getElementById("shopBut");
-    // Mobile
-    window.isMobile = true;
-    document.getElementById("newGameBut").removeEventListener("click", activateInfinite);
-    document.getElementById("newGameBut").style.opacity = "30%";
     //
     document.getElementById("shop").style.opacity = "0%";
     document.getElementById("shop").style.visibility = "hidden";
@@ -98,9 +110,7 @@ window.addEventListener("resize", function () {
     //
   } else {
     // Desktop
-    document.getElementById("newGameBut").style.opacity = "100%";
     document.getElementById("mobileShop").style.display = "none";
-    document.getElementById("newGameBut").addEventListener("click", activateInfinite);
     window.isMobile = false;
     window.logoMove(6, 3, 16, 1);
   }
@@ -110,14 +120,15 @@ window.addEventListener("resize", function () {
 window.sizeInit = () => {
   if (window.matchMedia("(max-width: 768px)").matches) {
     // Mobile
-    document.getElementById("newGameBut").removeEventListener("click", activateInfinite);
-    document.getElementById("newGameBut").style.opacity = "30%";
+    // const node = document.createElement('mobile-shop1')
+    // node.setAttribute("product","product1");
+    // node.setAttribute("id","mobileShop");
+    // node.setAttribute("style","display:none;");
+    // document.getElementById("main").appendChild(node)
     window.isMobile = true;
   } else {
     // Desktop
     // window.getParamsDesktop();
-    document.getElementById("newGameBut").style.opacity = "100%";
-    document.getElementById("newGameBut").addEventListener("click", activateInfinite);
   }
 };
 
@@ -125,10 +136,19 @@ window.shopping = () => {
   console.log("shopping");
   if (window.matchMedia("(max-width: 768px)").matches) {
     openMobile();
+    clearScreen();
   } else {
     toggleShop();
   }
 };
+
+// clear screen
+window.clearScreen = () => {
+  var shadow = document.getElementById("getCamp").shadowRoot;
+    shadow.getElementById("campaignComp").style.transition = "1s all";
+    shadow.getElementById("campaignComp").style.right = "-100%";
+    clearSettings();
+}
 
 // Toggle MobileShop
 window.openMobile = () => {
@@ -138,7 +158,6 @@ window.openMobile = () => {
 // Play Destiny
 window.destiny = () => {
   var destiny = document.getElementById("destiny");
-  destiny.volume = 0.1;
   destiny.play();
   destiny.loop = true;
 };
@@ -171,14 +190,11 @@ window.toggleShop = () => {
   var confirm = document.getElementById("orderConfirm");
   var shopMenuBut = document.getElementById("shopBut");
   // Disable some menu items below
-  // window.dActiveBut();
   clearSettings();
-  clearFollow();
+  document.getElementById("getCamp").shadowRoot.getElementById("campaignComp").style.transition = "1s all";
+  document.getElementById("getCamp").shadowRoot.getElementById("campaignComp").style.right = "-70%";
   document.getElementById("shop").style.transition = "1s all";
   document.getElementById("povImageColumnLeft").innerHTML = "";
-  document.getElementById("extrasCont").style.transition = "1s all";
-  document.getElementById("extrasCont").style.opacity = "0%";
-  document.getElementById("extrasCont").style.width = "0%";
   switch (shopActive) {
     case "closed":
       window.mainMenuPosition("black","0%","0%","0%","0%");
@@ -186,11 +202,10 @@ window.toggleShop = () => {
         if (window.productsloaded === false) {
           document.getElementById("divLoadBG2").style.display = "grid";
         }
-        document.getElementById("shop").style.opacity = "100%";
-        document.getElementById("shop").style.visibility = "visible";
+        document.getElementById("shop").style.right = "0%";
+        document.getElementById("shopIcon").innerHTML = "X";
+        document.getElementById("shopIcon").setAttribute("onclick", "clearShop()");
       }, 500);
-      window.globeMove1(75);
-      window.logoMove(6, 3, 16, 1);
       shopActive = "open";
       break;
     case "POVopen":
@@ -233,9 +248,20 @@ window.toggleShop = () => {
 // SETTINGS Button
 window.openSettings = () => {
   clearShop();
-  clearFollow();
+  var shadow = document.getElementById("getCamp").shadowRoot
+  document.getElementById("getCamp").shadowRoot.getElementById("campaignComp").style.transition = "1s all";
+  document.getElementById("getCamp").shadowRoot.getElementById("campaignComp").style.right = "-70%";
+  if (window.matchMedia("(max-width: 768px)").matches) {
+    // Mobile
+    shadow.getElementById("campaignComp").style.transition = "1s all";
+    shadow.getElementById("campaignComp").style.right = "-100%";
+  } else {
+    // Desktop
+    shadow.getElementById("campaignComp").style.transition = "1s all";
+    shadow.getElementById("campaignComp").style.right = "-70%";
+  }
   var menu = document.getElementById("settingsMenu");
-  document.getElementById("settingsMenu").style.display = "block";
+  document.getElementById("settingsMenu").style.display = "grid";
   if (window.isMobile === true) {
     menu.style.display = "block";
   }
@@ -244,12 +270,6 @@ window.openSettings = () => {
     setTimeout(() => {
       menu.style.opacity = "100%";
     }, 300);
-    document.getElementById("extrasCont").style.opacity = "0%";
-    document.getElementById("extrasCont").style.transition = "1s all";
-    document.getElementById("extrasCont").style.width = "0%";
-    window.globeMove1(48);
-    window.logoMove(6, 3, 16, 1);
-    //
     var shopMenuBut = document.getElementById("shopBut");
     if (window.isMobile === false) {
       // window.mainMenuPosition("","0%","8%","26%","46%");
@@ -257,27 +277,11 @@ window.openSettings = () => {
     //
 };
 
-// Follow Button
-window.follow = () => {
-  clearShop();
-  clearSettings();
-  window.globeMove1(20);
-  window.logoMove(6, 3, 16, 1);
-  window.mainMenuPosition("black","0%","0%","0%","0%");
-  console.log("follow");
-  var follow = document.getElementById("followSection");
-  follow.style.transition = ".5s all";
-  follow.style.display = "block";
-  setTimeout(()=> {
-    follow.style.opacity = "100%";
-  },500)
-  followOpen = true;
-}
-
 // Clear Shop
 window.clearShop = () => {
-  document.getElementById("shop").style.opacity = "0%";
-  document.getElementById("shop").style.visibility = "hidden";
+  document.getElementById("shop").style.right = "-70%";
+  document.getElementById("shopIcon").innerHTML = "(0)";
+  document.getElementById("shopIcon").setAttribute("onclick", "toggleShop()");
   document.getElementById("povRight").style.opacity = "0%";
   document.getElementById("povLeft").style.opacity = "0%";
   setTimeout(() => {
@@ -292,21 +296,12 @@ window.clearShop = () => {
 
 // Clear Settings
 window.clearSettings = () => {
+  document.getElementById("settingsMenu").style.transition = "1s all";
   document.getElementById("settingsMenu").style.opacity = "0%";
-  document.getElementById("settingsMenu").style.display = "none";
-  console.log("clear settings");
+  setTimeout(() => {
+    document.getElementById("settingsMenu").style.display = "none";
+  },1000)
   settingsActive = false;
-}
-
-// Clear Follow
-window.clearFollow = () => {
-  var follow = document.getElementById("followSection");
-  follow.style.transition = ".5s all";
-  follow.style.opacity = "0%";
-  setTimeout(()=> {
-    follow.style.display = "none";
-  },500)
-  followOpen = true;
 }
 
 // World --------------------------------------------------------------------------------
@@ -477,7 +472,6 @@ window.worldTap = () => {
 // World -------------------------------------------------------------------------------- END
 // INFITE -------------------------------------------------------------------------------
 window.activateInfinite = () => {
-  window.globeMove1(20);
   window.logoMove(6, 3, 16, 1);
   if (BABYLON.Engine.isSupported()) {
     document.getElementById("renderCanvas").style.transition = "5s all";
@@ -491,7 +485,6 @@ window.activateInfinite = () => {
       // }
       document.getElementById("renderCanvas").style.display = "block";
       document.getElementById("renderCanvas").style.opacity = "0";
-      // document.getElementById("bankooMapCont").style.visibility = "hidden";
       new GameManager("renderCanvas");
       infiniteActive = true;
     } else {
@@ -504,8 +497,6 @@ window.activateInfinite = () => {
       setTimeout(()=>{
         document.getElementById("settingsMenu").style.display = "none";
       },1000)
-      document.getElementById("extrasCont").style.transition = "1s all";
-      document.getElementById("extrasCont").style.width = "0%";
       settingsActive = false;
       var shopMenuBut = document.getElementById("shopBut");
       var canvas = document.getElementById("renderCanvas");
@@ -530,24 +521,8 @@ window.activateInfinite = () => {
       window.logoMove(6, 3, 16, 1);
       document.getElementById("destiny").pause();
       document.getElementById("renderCanvas").style.opacity = "1";
-      document.getElementById("bankooMapCont").style.opacity = "0";
-      document.getElementById("bankooMapCont").style.display = "none";
       window.clearMainUi();
     }
-  }
-};
-// Toggle Infinite
-window.toggleInfinite = () => {
-  var infState = document.getElementById("bankooMapCont");
-  if (infState.style.display === "grid") {
-    window.activateInfinite();
-    return;
-  }
-  if (infState.style.display === "none") {
-    document.getElementById("bankooMapCont").style.opacity = "1";
-    document.getElementById("bankooMapCont").style.display = "grid";
-    // document.getElementsByClassName("hud")[0].remove();
-    return;
   }
 };
 
@@ -604,19 +579,6 @@ window.setupMagazine = () => {
 
 // -----------------------------------   SHOP  ---------------------------------------------------
 var currentShopProduct;
-// Check for Screen Type
-window.checkScreenSize = (obj) => {
-  if (window.matchMedia("(max-width: 768px)").matches) {
-    // Mobile
-    document.getElementById("mobileOnly").style.display = "block";
-  } else {
-    // Desktop
-    window.povOpen(obj);
-  }
-};
-window.closeMobileOnly = () => {
-  document.getElementById("mobileOnly").style.display = "none";
-};
 // Open Product POV Screen
 window.povOpen = (obj) => {
   document.getElementById("shop").style.overflowX = "visible";
@@ -806,8 +768,8 @@ window.loadShop = async () => {
     } else {
       productCont.setAttribute("onmouseover", "shopOnHover(this)");
       productCont.setAttribute("onmouseout", "shopOutHover(this)");
+      productCont.setAttribute("onclick", "povOpen(this)");
     }
-    productCont.setAttribute("onclick", "checkScreenSize(this)");
     shopParent.appendChild(productCont);
     productCont.innerHTML = `
     <img class="shopProductsOver" src="${product.assets[1].url}">
@@ -1210,23 +1172,12 @@ window.ccsOff = () => {
 // SAY SCOGÉ //
 window.sayScoge = () => {
   document.getElementById("scoge").play();
-  window.btAC();
-};
-
-// MOVE GLOBE
-window.globeMove1 = (whereto) => {
-  var globe = document.getElementById("bankooMapCont");
-  var globeOverImg1 = document.getElementById("globeOverImg1");
-  globeOverImg1.style.transition = "1s all";
-  globe.style.right = `${whereto}%`;
-  if (globe.style.right > `4%`) {
-    globeOverImg1.style.opacity = "0%";
+  if (window.matchMedia("(max-width: 768px)").matches) {
+    clearScreen();
     return;
+  } else {
+    openSettings();
   }
-  // if (globe.style.right <= `4%`) {
-  //   globeOverImg1.style.opacity = "100%";
-  //   return;
-  // }
 };
 
 // LOGO MOVE
@@ -1248,7 +1199,8 @@ window.fullOn = () => {
   var main = document.getElementById("main");
   main.requestFullscreen();
   document.getElementById("fsOn").style.color = "#b5d3d1";
-  document.getElementById("fsOff").style.color = "";
+  document.getElementById("fsOff").style.color = "#ff002d";
+  document.getElementById("bg2").style.display = "block";
   full = 1;
   setTimeout(()=> {
     full = 0;
@@ -1259,6 +1211,7 @@ window.fullOff = () => {
   document.exitFullscreen();
   document.getElementById("fsOff").style.color = "#b5d3d1";
   document.getElementById("fsOn").style.color = "#ff002d";
+  document.getElementById("bg2").style.display = "none";
 };
 // SHOP DEACTIVATE BUTTONS
 window.dActiveBut = () => {
@@ -1276,44 +1229,6 @@ window.dActiveBut = () => {
     extra.setAttribute("onclick", "openExtra();");
   }
 };
-// VOLUME SLIDER
-window.volumeSlider = (obj) => {
-  var value = obj.value;
-  var selected = document.getElementById("destiny");
-  selected.volume = `0.${value}`;
-  if (value > 80) {
-    vol = 1;
-  }
-};
-
-// EXTRA NEXT IMAGE
-var currentExtraNumber = 2;
-window.nextExImg = () => {
-  var image = document.getElementById("extraImages");
-  if (currentExtraNumber <= 37) {
-    document.getElementById("globeOverImg1").style.opacity = "0%";
-    image.src = `https://scoge.s3.us-east-2.amazonaws.com/extra/scoge-22-bts-${currentExtraNumber}.jpg`;
-    currentExtraNumber++;
-  } else {
-    currentExtraNumber = 2;
-    window.openExtra();
-    document.getElementById("extrasCont").style.width = "0%";
-    image.src = `https://scoge.s3.us-east-2.amazonaws.com/extra/scoge-22-bts-1.jpg`;
-  }
-  return;
-};
-
-// BTAC
-window.btAC = () => {
-  // console.log(ngHidden);
-  if (full === 1 && vol === 1) {
-    document.getElementById("newGameBut").addEventListener('click', activateInfinite);
-    document.getElementById("newGameBut").style.opacity = "100%";
-    document.getElementById("settingsMenu").style.display = "none";
-    window.globeMove1(4);
-    window.logoMove(25, 35, 30, 1);
-  }
-}
 
 // ClearMainUI
 window.clearMainUi = () => {
@@ -1351,7 +1266,7 @@ window.clearMainUi = () => {
   } else {
     menu.style.display = "block";
     logo.style.display = "block";
-    settingsMenu.style.display = "block";
+    settingsMenu.style.display = "grid";
     textTop.style.bottom = "44%";
     textTop.style.opacity = "0%";
     textBottom.style.bottom = "40%";
@@ -1393,6 +1308,7 @@ window.mainMenuPosition = (bg,p1,p2,p3,p4) => {
     }
   });
 }
+
 
 // URL PARAMS OPEN SHOP
 // window.getParamsDesktop = () => {
