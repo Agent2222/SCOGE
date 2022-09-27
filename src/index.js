@@ -34,6 +34,7 @@ var vol = 0;
 var ngHidden = false;
 var shopActive = "closed";
 var settingsActive = false;
+window.shoploaded = false;
 window.viewThisProduct = "";
 window.urlParamsActive = false;
 window.inUniverse = false;
@@ -49,14 +50,10 @@ const elements = stripe.elements();
 window.enterSite = () => {
   var logo = document.getElementById("logo");
   var menu = document.getElementById("gMenu");
-  setTimeout(() => {
-    logo.style.visibility = "visible";
-    logo.style.filter = "blur(0px)";
-    window.logoMove(6, 3, 16, 1);
-  }, 800);
-  setTimeout(() => {
-      menu.style.opacity = "100%";
-  }, 1200)
+  logo.style.visibility = "visible";
+  logo.style.filter = "blur(0px)";
+  window.logoMove(6, 3, 16, 1);
+  menu.style.opacity = "100%";
 };
 
 // Notifications
@@ -133,7 +130,11 @@ window.sizeInit = () => {
 };
 
 window.shopping = () => {
-  console.log("shopping");
+  if (window.shoploaded === false) {
+    console.log("shopping");
+    loadShop();
+    window.shoploaded = true;
+  };
   if (window.matchMedia("(max-width: 768px)").matches) {
     openMobile();
     clearScreen();
