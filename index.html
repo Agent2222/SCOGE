@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
         <title>SCOGÉ</title>
         <meta name="description" content="The world of SCOGÉ">
         <link rel="shortcut icon" type="image/png" href="/assets/images/favicon.png">
@@ -143,7 +143,7 @@
             </div>
         </div>
         <!-------------------------------------------------------------------------->
-        <div id="logo" onclick="sayScoge();">
+        <div id="logo" onclick="sayScoge();clearSettings();">
             <img src="./assets/images/sl-r.png"/>
         </div>
         <canvas style="width: 100%; height: 100%; display: block;" id="renderCanvas"></canvas>
