@@ -309,7 +309,7 @@ class dtCampaign extends HTMLElement {
                 transition: 1s;
               }
               #credits {
-                padding-bottom: 60%;
+                padding-bottom: 70%;
               }
               #body {
                 height: 100%;
@@ -334,14 +334,14 @@ class dtCampaign extends HTMLElement {
               #imageInterface {
                 grid-template-columns: 1fr;
                 border-radius: 0;
-                width: 10%;
-                height: 20%;
+                width: 15%;
+                height: 15%;
                 left: auto;
                 right: 5%;
                 border-radius: 5px;
               }
               #nextGalleryImg {
-                font-size: 24px;
+                font-size: 30px;
               }
               #preBtsImg {
                 display: none;
@@ -352,15 +352,15 @@ class dtCampaign extends HTMLElement {
               #imageInterface2 {
                 grid-template-columns: 1fr;
                 border-radius: 0;
-                width: 10%;
-                height: 5%;
+                width: 15%;
+                height: 10%;
                 left: auto;
                 bottom: 47.5%;
                 right: 5%;
                 border-radius: 5px;
               }
               #nextBtsImg {
-                font-size: 24px;
+                font-size: 30px;
               }
               #gImg {
                 width: auto !important;
@@ -374,6 +374,9 @@ class dtCampaign extends HTMLElement {
               }
               #campGallery {
                 height: 60%;
+              }
+              .arrow:hover {
+                color: var(--primary);
               }
             }
          </style>

@@ -147,7 +147,6 @@ window.clearScreen = () => {
   var shadow = document.getElementById("getCamp").shadowRoot;
     shadow.getElementById("campaignComp").style.transition = "1s all";
     shadow.getElementById("campaignComp").style.right = "-100%";
-    clearSettings();
 }
 
 // Toggle MobileShop
