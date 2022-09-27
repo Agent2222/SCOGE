@@ -866,6 +866,32 @@ class mobileShop1 extends HTMLElement {
                 font-weight: normal;
                 font-style: italic;
             }
+            :root {
+              --primary: #ff002d;
+              --secondary: #b5d3d1;
+              --accent: #94be8c;
+              --regular: "BS-R", sans-serif;
+            }
+            
+               /* width */
+               ::-webkit-scrollbar {
+                width: 10px;
+              }
+            
+              /* Track */
+              ::-webkit-scrollbar-track {
+                background: black; 
+              }
+              
+              /* Handle */
+              ::-webkit-scrollbar-thumb {
+                background: var(--accent);
+              }
+            
+              /* Handle on hover */
+              ::-webkit-scrollbar-thumb:hover {
+                background: var(--secondary); 
+              }
             #main {
                 background-color: black;
                 width: 100%;
@@ -952,6 +978,7 @@ class mobileShop1 extends HTMLElement {
                 width: 100%;
                 grid-template-columns: 1fr 1fr;
                 overflow: scroll;
+                overflow-x: hidden;
             }
             #mb2 {
                 display: none;
@@ -993,6 +1020,7 @@ class mobileShop1 extends HTMLElement {
                 width: 100%;
                 float:left;
                 overflow: scroll;
+                overflow-x: hidden;
                 background-color: white;
                 display: grid;
                 grid-template-columns: 1fr;
@@ -1100,6 +1128,7 @@ class mobileShop1 extends HTMLElement {
                 float: left;
                 background-color: white;
                 overflow: scroll;
+                overflow-x: hidden;
             }
             #checkoutInputs {
                 display: none;
@@ -1116,6 +1145,7 @@ class mobileShop1 extends HTMLElement {
                 grid-column-gap: 5%;
                 grid-row-gap: 2%;
                 color: black;
+                overflow-x: hidden;
             }
             .checkoutInput {
                 background-color: rgba(0,0,0,0);
@@ -1233,6 +1263,7 @@ class mobileShop1 extends HTMLElement {
                 padding: 5%;
                 overflow: scroll;
                 font-size: 16px;
+                overflow-x: hidden;
             }
             #shippingButton {
                 height: 10%;

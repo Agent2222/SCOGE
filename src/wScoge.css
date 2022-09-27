@@ -83,6 +83,32 @@
   font-style: normal;
 }
 
+:root {
+  --primary: #ff002d;
+  --secondary: #b5d3d1;
+  --accent: #94be8c;
+  --regular: "BS-R", sans-serif;
+}
+
+   /* width */
+   ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: black; 
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--accent);
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary); 
+  }
 
 body {
   width: 100%;
@@ -91,12 +117,9 @@ body {
   margin: 0%;
   position: fixed;
   color: #ff002d;
-  cursor: url("data:image/svg+xml,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='22px' height='22px' viewBox='0 0 64 64' style='enable-background:new 0 0 64 64;' xml:space='preserve'%3E%3Cstyle type='text/css'%3E .st0%7Bopacity:0.6;%7D .st1%7Bfill:none;stroke:%23F80F2D;stroke-width:2;stroke-miterlimit:10;%7D%0A%3C/style%3E%3Cg id='Layer_1_copy'%3E%3Ccircle class='st0' cx='32.1631' cy='32.1107' r='30.1802'/%3E%3C/g%3E%3Cg id='Layer_1'%3E%3Ccircle class='st1' cx='32.1631' cy='32.1107' r='30.1802'/%3E%3C/g%3E%3C/svg%3E")
-      12 12,
-    auto;
-  /* cursor: url("data:image/svg+xml,%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='24px' height='24px' viewBox='0 0 64 64' style='enable-background:new 0 0 64 64;' xml:space='preserve'%3E%3Cstyle type='text/css'%3E .st0%7Bfill:%23F80F2D;stroke:%23000000;stroke-width:2;stroke-miterlimit:10;%7D%0A%3C/style%3E%3Ccircle class='st0' cx='32.1631' cy='32.1107' r='30.1802'/%3E%3C/svg%3E%0A")
-      12 12,
-    pointer; */
+  background-image: url("https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/scoge-taos-city-1.webp");
+  background-repeat: no-repeat;
+  background-size: 105%;
 }
 #bankooMapCont {
   width: 30%;
@@ -196,24 +219,6 @@ body {
   height: 96%;
 }
 
-/* Typed Area */
-/* #typedArea {
-  position: fixed;
-  bottom: 6%;
-  width: 100%;
-  text-align: center;
-  font-family: "BS-L";
-  background-color: black;
-  color: white;
-  letter-spacing: 1px;
-  font-size: 14px;
-  cursor: default;
-  opacity: 0;
-  overflow: hidden;
-  transition: 0.3s all;
-  z-index: 1;
-} */
-
 #typedText {
   background-color: #ff002d;
   padding: 1% 2%;
@@ -292,15 +297,36 @@ canvas {
   width: 70%;
   margin: 0px;
   position: fixed;
-  right: 0;
+  right: -70%;
   bottom: 0;
   z-index: 4;
-  overflow-x: scroll;
+  overflow-x: visible;
   overflow-y: visible;
   display: block;
-  opacity: 0%;
-  visibility: hidden;
+  opacity: 100%;
+  visibility: visible;
   background-color: white;
+}
+#shopIcon {
+  width: 4%;
+  height: 4%;
+  position: absolute;
+  left: -4%;
+  top: 9.3%;
+  z-index: 5;
+  background-color: #ff002d;
+  border-right: none;
+  border-top-left-radius: 8%;
+  border-bottom-left-radius: 8%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  justify-items: center;
+  font-family: var(--regular);
+  color: var(--secondary);
+  cursor: pointer;
+  font-size: 12px;
 }
 #shopLeft {
   width: 60%;
@@ -344,13 +370,8 @@ canvas {
   position: relative;
   overflow: visible;
   transition: 0.5s all;
-  cursor: url("data:image/svg+xml,%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='24px' height='24px' viewBox='0 0 64 64' style='enable-background:new 0 0 64 64;' xml:space='preserve'%3E%3Cstyle type='text/css'%3E .st0%7Bfill:%23F80F2D;stroke:%23000000;stroke-width:2;stroke-miterlimit:10;%7D%0A%3C/style%3E%3Ccircle class='st0' cx='32.1631' cy='32.1107' r='30.1802'/%3E%3C/svg%3E%0A")
-      12 12,
-    pointer;
 }
-/* .productContainer:hover {
-  border-radius: 50%;
-} */
+
 .productContainer img {
   width: 100%;
   margin-bottom: 5%;
@@ -609,7 +630,6 @@ canvas {
   align-items: center;
   justify-items: center;
   background-color: floralwhite;
-  /* background-image: url("../assets/images/shoptest/1.jpg"); */
   background-size: cover;
   background-position: center;
   transition: 0.3s all;
@@ -889,15 +909,16 @@ canvas {
   height: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  overflow-x: scroll;
 }
 /*         -----------------------------------------------------------------------------         */
 
 #logo {
   position: fixed;
   z-index: 3;
-  width: 30%;
-  left: 25%;
-  top: 25%;
+  width: 14%;
+  left: 3%;
+  top: 6%;
   visibility: hidden;
   filter: blur(50px);
 }
@@ -914,9 +935,9 @@ canvas {
   position: absolute;
   z-index: 4;
   color: #ff002d;
-  left: 6%;
-  bottom: 10%;
-  font-size: 20px;
+  left: 4%;
+  bottom: 0%;
+  font-size: 16px;
   font-family: "BS-R";
   letter-spacing: 1px;
   transition: 1s all;
@@ -926,27 +947,7 @@ canvas {
   letter-spacing: 4px;
   text-decoration: underline;
   color: #b5d3d1;
-}
-#shopBut {
-  width: 40%;
-}
-#newGameBut {
-  position: relative;
-  left: 10%;
-  opacity: 100%;
-}
-#subscribeBut {
-  position: relative;
-  left: 46%;
-  /* width: 60%; */
-}
-#settingsBut {
-  position: relative;
-  left: 26%;
-}
-#extraBut {
-  position: relative;
-  left: 22%;
+  cursor: pointer;
 }
 .mainMenuBut {
   margin-bottom: 2%;
@@ -974,15 +975,25 @@ canvas {
 /* SETTINGS MENU */
 #settingsMenu {
   width: 35%;
-  height: 100%;
+  height: 92%;
   position: fixed;
+  display: grid;
+  right: 0%;
+  top: 0%;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  justify-items: center;
+  align-items: center;
   z-index: 2;
-  right: 14%;
-  top: 26%;
   font-size: 16px;
   font-family: "BS-R";
   opacity: 0%;
   transition: 1s all;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8),rgba(0, 0, 0, 0.8),rgb(0, 0, 0, 0.9),rgb(0, 0, 0, 0.9));
+  padding-right: 5%;
+  padding-left: 10%;
+  padding-top: 2%;
+  padding-bottom: 5%;
 }
 a:link {
   text-decoration: underline;
@@ -1025,6 +1036,7 @@ a:hover {
 }
 .togFull {
   transition: 0.5s all;
+  cursor: pointer;
 }
 .togFull:hover {
   letter-spacing: 4px;
@@ -1093,23 +1105,9 @@ a:hover {
 /* MEDIA */
 @media screen and (max-width: 769px) {
   #logo {
-    width: 50%;
-    left: 25%;
+    width: 50% !important;
+    left: 5%;
     top: 5%;
-  }
-  #bankooMapCont {
-    width: 90% !important;
-    height: 80% !important;
-  }
-  #bankooMapCont img {
-    z-index: 1;
-    width: 100%;
-  }
-  #gMenu {
-    width: 90%;
-    bottom: 8%;
-    font-size: 24px;
-    left: 10% !important;
   }
   #gMenu div {
     left: 0%;
@@ -1117,24 +1115,20 @@ a:hover {
   }
   #settingsMenu {
     width: 80%;
-    height: 38%;
+    height: 52%;
     position: fixed;
-    z-index: 5;
+    z-index: 3;
     right: 0%;
-    top: 0%;
     padding: 10%;
     font-size: 18px;
-    margin-top: 35%;
-    background-color: black;
+    margin-top: 38%;
+    padding-bottom: 36%;
     overflow: scroll;
-    border-bottom:1px solid #94be8c;
-    border-top:1px solid #94be8c;
+    border-bottom:.5px solid #94be8c;
+    border-top:.5px solid #94be8c;
     display: none;
-  }
-  .slider {
-    width: 50%;
-    height: 5px;
-    margin-left: 8%;
+    background-image:none;
+    background-color: rgba(0, 0, 0, 0.6);
   }
   #ctc {
     width: 80%;
@@ -1142,38 +1136,30 @@ a:hover {
     left: 10%;
     font-size: 20px;
   }
-  #shop {
-    width: 100%;
-    z-index: 3;
-  }
-  .productContainer {
-    width: 50%;
-  }
-  #allShopProducts {
-    display: block;
-  }
   #fullToggle {
     display: none;
   }
-  #volumediv {
+  #shop {
     display: none;
   }
-  #enter img {
-    width: 50%;
+  #bg2 {
+    display: block !important;
+    height: 100%;
   }
-  #followSection {
-    width: 20% !important;
-    height: 40% !important;
-    padding-top: 60% !important;
+  #gMenu {
+    width: auto;
+    bottom: auto;
+    left: auto;
+    top: 5%;
+    right: 8% !important;
+    font-size: 24px;
     position: fixed;
-    right: 0;
-    top: 0;
-    font-family: "BS-R";
-    padding-right: 5% !important;
-    opacity: 0%;
-    transition: 5s all;
-    z-index: 5;
-    text-align: right !important;
+  }
+  .mainMenuBut {
+    text-align: right;
+    background-color: rgba(0, 0, 0, 0.9);
+    font-size: 20px;
+    margin-bottom: 8%;
   }
 }
 /* @media (orientation: landscape) and (min-width: 414px) {
@@ -1268,4 +1254,19 @@ a:active {
 }
 #followIg {
   fill: #ff002d;
+}
+#bg2 {
+  position: fixed;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+#bg2 img {
+  width: auto;
+  height: 100%;
+}
+.social {
+  padding-left: 5%;
 }
