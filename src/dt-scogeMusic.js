@@ -189,6 +189,17 @@ class dtMusic extends HTMLElement {
                 z-index: 5;
                 position: fixed;
               }
+              #cat {
+                position: fixed;
+                right: 5%;
+                left: auto;
+                bottom: 18%;
+                top: auto;
+                filter: contrast(110%);
+                display: none;
+                width: 100px !important;
+                height: 100px !important;
+              }
             }
          </style>
          <div id="musicInterface">
