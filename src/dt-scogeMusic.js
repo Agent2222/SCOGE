@@ -94,9 +94,6 @@ class dtMusic extends HTMLElement {
   nextRandomTrack() {
     currentAudio.pause();
     currenttrack = Math.floor(Math.random() * trackList.length);
-    if (nextTrack === currenttrack) {
-      nextTrack = Math.floor(Math.random() * trackList.length);
-    }
     currentAudio = new Audio(trackList[currenttrack].link);
     currentAudio.play();
     this.shadow.getElementById("trackName").innerHTML = trackList[currenttrack].artist;
