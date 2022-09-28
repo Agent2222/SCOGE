@@ -132,6 +132,8 @@ window.clearScreen = () => {
   var shadow = document.getElementById("getCamp").shadowRoot;
     shadow.getElementById("campaignComp").style.transition = "1s all";
     shadow.getElementById("campaignComp").style.right = "-100%";
+    clearSettings();
+    clearShop();
 }
 
 // Toggle MobileShop
@@ -1148,12 +1150,7 @@ window.ccsOff = () => {
 // SAY SCOGÉ //
 window.sayScoge = () => {
   document.getElementById("scoge").play();
-  if (window.matchMedia("(max-width: 768px)").matches) {
-    clearScreen();
-    return;
-  } else {
-    openSettings();
-  }
+  clearScreen();
 };
 
 // LOGO MOVE
