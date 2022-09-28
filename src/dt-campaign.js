@@ -207,7 +207,7 @@ class dtCampaign extends HTMLElement {
               width: 100%;
               height: 65%;
               float: left;
-              margin-bottom: 2%;
+              margin-bottom: 4%;
             }
             #campIcon {
               width: 4%;
@@ -290,6 +290,10 @@ class dtCampaign extends HTMLElement {
             }
             .secondary {
               color: var(--secondary);
+            }
+            #film iframe {
+              width: 100%;
+              height: 100%;
             }
             @media screen and (max-width: 769px) {
               #campIcon {
