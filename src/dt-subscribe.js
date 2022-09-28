@@ -60,7 +60,7 @@ class dtSubscribe extends HTMLElement {
               width: 25%;
               height: 4%;
               position: fixed;
-              bottom: 10%;
+              bottom: 7%;
               right: 0%;
               z-index: 4;
               opacity: 80%;
@@ -123,19 +123,19 @@ class dtSubscribe extends HTMLElement {
                 width: 95%;
                 margin-left: 5%;
                 display: grid;
-                grid-template-columns: 80% 20%;
+                grid-template-columns: 80% 20% 0% !important;
                 grid-template-rows: 1fr;
               }
               #subscribeInput {
                 font-size: 12px;
-                width: 100%;
+                width: 100% !important;
               }
             }
          </style>
          <div id="subscribeSect">
             <form action="https://scoge.us3.list-manage.com/subscribe/post?u=06502830cf2008a1155da093a&amp;id=467d798f05&amp;f_id=00ba43e2f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
               <div id="mc_embed_signup_scroll">
-                <input type="email" id="subscribeInput" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="SIGN UP TO BE NOTIFIED ON DROPS AND MORE." required>
+                <input type="email" id="subscribeInput" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="SIGN UP TO BE NOTIFIED ON DROPS." required>
                 <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
                 <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_06502830cf2008a1155da093a_467d798f05" tabindex="-1" value=""></div>
                 <div class="clear" id="sub"><input type="submit" value="ENTER" name="subscribe" id="mc-embedded-subscribe" class="button"></div>

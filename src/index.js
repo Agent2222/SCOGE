@@ -29,8 +29,6 @@ var sketch2Count = 2;
 var sketch3Count = 1;
 var intro1 = false;
 var countriedAdded = false;
-var full = 0;
-var vol = 0;
 var ngHidden = false;
 var shopActive = "closed";
 var settingsActive = false;
@@ -46,15 +44,6 @@ console.log("COPYRIGHT 2022 - SCOGÉ Inc. - ALL RIGHTS RESERVED");
 // // Init Stripe
 var stripe = Stripe(`${VITE_StripeKey}`);
 const elements = stripe.elements();
-
-window.enterSite = () => {
-  var logo = document.getElementById("logo");
-  var menu = document.getElementById("gMenu");
-  logo.style.visibility = "visible";
-  logo.style.filter = "blur(0px)";
-  window.logoMove(6, 3, 16, 1);
-  menu.style.opacity = "100%";
-};
 
 // Notifications
 const noti = {
@@ -130,11 +119,6 @@ window.sizeInit = () => {
 };
 
 window.shopping = () => {
-  if (window.shoploaded === false) {
-    console.log("shopping");
-    loadShop();
-    window.shoploaded = true;
-  };
   if (window.matchMedia("(max-width: 768px)").matches) {
     openMobile();
     clearScreen();
@@ -197,16 +181,17 @@ window.toggleShop = () => {
   document.getElementById("povImageColumnLeft").innerHTML = "";
   switch (shopActive) {
     case "closed":
-      window.mainMenuPosition("black","0%","0%","0%","0%");
       setTimeout(() => {
         if (window.productsloaded === false) {
           document.getElementById("divLoadBG2").style.display = "grid";
         }
         document.getElementById("shop").style.right = "0%";
         document.getElementById("shopIcon").innerHTML = "X";
-        document.getElementById("shopIcon").setAttribute("onclick", "clearShop()");
       }, 500);
       shopActive = "open";
+      break;
+    case "open":
+      clearShop();
       break;
     case "POVopen":
       document.getElementById("shop").style.overflowX = "scroll";
@@ -262,19 +247,10 @@ window.openSettings = () => {
   }
   var menu = document.getElementById("settingsMenu");
   document.getElementById("settingsMenu").style.display = "grid";
-  if (window.isMobile === true) {
-    menu.style.display = "block";
-  }
-    window.mainMenuPosition("black","0%","0%","0%","0%");
-    settingsActive = true;
+  settingsActive = true;
     setTimeout(() => {
       menu.style.opacity = "100%";
     }, 300);
-    var shopMenuBut = document.getElementById("shopBut");
-    if (window.isMobile === false) {
-      // window.mainMenuPosition("","0%","8%","26%","46%");
-    }
-    //
 };
 
 // Clear Shop
@@ -1192,26 +1168,6 @@ window.logoMove = (up, whereto, size, speed) => {
     logo.style.width = `${size}%`;
     logo.style.top = `${up}%`;
   }
-};
-
-// FullScreen
-window.fullOn = () => {
-  var main = document.getElementById("main");
-  main.requestFullscreen();
-  document.getElementById("fsOn").style.color = "#b5d3d1";
-  document.getElementById("fsOff").style.color = "#ff002d";
-  document.getElementById("bg2").style.display = "block";
-  full = 1;
-  setTimeout(()=> {
-    full = 0;
-    vol = 0;
-  }, 5000)
-};
-window.fullOff = () => {
-  document.exitFullscreen();
-  document.getElementById("fsOff").style.color = "#b5d3d1";
-  document.getElementById("fsOn").style.color = "#ff002d";
-  document.getElementById("bg2").style.display = "none";
 };
 // SHOP DEACTIVATE BUTTONS
 window.dActiveBut = () => {
