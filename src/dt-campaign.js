@@ -164,10 +164,11 @@ class dtCampaign extends HTMLElement {
               transition: 1s;
             }
             #header {
-              height: 25%;
+              height: auto%;
               width: 98%;
               float: left;
               padding-left: 2%;
+              padding-bottom: 2%;
             }
             #head {
               font-size: 34px;
@@ -309,7 +310,7 @@ class dtCampaign extends HTMLElement {
                 transition: 1s;
               }
               #credits {
-                padding-bottom: 70%;
+                padding-bottom: 90%;
               }
               #body {
                 height: 100%;

@@ -94,6 +94,9 @@ class dtMusic extends HTMLElement {
   nextRandomTrack() {
     currentAudio.pause();
     currenttrack = Math.floor(Math.random() * trackList.length);
+    if (nextTrack === currenttrack) {
+      nextTrack = Math.floor(Math.random() * trackList.length);
+    }
     currentAudio = new Audio(trackList[currenttrack].link);
     currentAudio.play();
     this.shadow.getElementById("trackName").innerHTML = trackList[currenttrack].artist;
@@ -146,6 +149,7 @@ class dtMusic extends HTMLElement {
                 flex-wrap: wrap;
                 gap: 2em;
                 padding-left: 3em;
+                padding-right: 3em;
                 background-image: linear-gradient(to right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8),rgba(0, 0, 0, 0.8),rgb(0, 0, 0, 0.9),rgb(0, 0, 0, 0.9)); 
                 font-size: 12px;
                 z-index: 3;

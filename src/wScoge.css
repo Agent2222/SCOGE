@@ -117,9 +117,9 @@ body {
   margin: 0%;
   position: fixed;
   color: #ff002d;
-  background-image: url("https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/scoge-taos-city-1.webp");
+  /* background-image: url("https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/scoge-taos-city-1.webp");
   background-repeat: no-repeat;
-  background-size: 105%;
+  background-size: 105%; */
 }
 #bankooMapCont {
   width: 30%;
@@ -300,7 +300,7 @@ canvas {
   right: -70%;
   bottom: 0;
   z-index: 4;
-  overflow-x: visible;
+  overflow-x: visible !important;
   overflow-y: visible;
   display: block;
   opacity: 100%;
@@ -442,6 +442,7 @@ canvas {
   background-color: white;
   float: left;
   overflow: scroll;
+  overflow-x: hidden;
 }
 #povImageColumnLeft img {
   position: relative;
@@ -584,6 +585,7 @@ canvas {
   color: black;
   font-family: "BS-R";
   overflow: scroll;
+  overflow-x: hidden;
   display: none;
   opacity: 0%;
   font-size: 14px;
@@ -919,8 +921,7 @@ canvas {
   width: 14%;
   left: 3%;
   top: 6%;
-  visibility: hidden;
-  filter: blur(50px);
+  visibility: visible;
 }
 /* #logo:hover ~ #bankooMapCont {
   right: 42%;
@@ -931,17 +932,16 @@ canvas {
 }
 #gMenu {
   width: 32%;
-  height: 20%;
+  height: auto;
   position: absolute;
   z-index: 4;
   color: #ff002d;
-  left: 4%;
-  bottom: 0%;
+  left: 4.5%;
+  bottom: 5.5%;
   font-size: 16px;
   font-family: "BS-R";
   letter-spacing: 1px;
   transition: 1s all;
-  opacity: 0%;
 }
 #gMenu:hover > .mainMenuBut:hover {
   letter-spacing: 4px;
