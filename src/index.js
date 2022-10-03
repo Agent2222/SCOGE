@@ -559,7 +559,6 @@ window.setupMagazine = () => {
 var currentShopProduct;
 // Open Product POV Screen
 window.povOpen = (obj) => {
-  document.getElementById("shop").style.overflowX = "visible";
   var currentProduct = obj.id;
   window.mainMenuPosition("black","0%","0%","0%","0%");
   currentShopProduct = allProducts[0].filter((product) => {
