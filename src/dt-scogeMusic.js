@@ -30,7 +30,15 @@ var trackList = [
   {
     artist:"Michael Giacchino - Stuff We Did",
     link:"https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/stuff-we-did.mp3"
-  }
+  },
+  {
+    artist:"Hareton Salvanini - Não Podes Fugir do Teu Destino",
+    link:"https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/destiny.mp3"
+  },
+  {
+    artist:"Nkosazana Daughter - Inhliziyo",
+    link:"https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/Inhiliziyo.mp3"
+  },
 ]
 
 class dtMusic extends HTMLElement {
