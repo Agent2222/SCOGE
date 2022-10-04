@@ -175,6 +175,7 @@ export default window.initNoti2 = (name) => {
 window.toggleShop = () => {
   var confirm = document.getElementById("orderConfirm");
   var shopMenuBut = document.getElementById("shopBut");
+  var filter = document.getElementById("shopFilter");
   // Disable some menu items below
   clearSettings();
   document.getElementById("getCamp").shadowRoot.getElementById("campaignComp").style.transition = "1s all";
@@ -183,6 +184,10 @@ window.toggleShop = () => {
   document.getElementById("povImageColumnLeft").innerHTML = "";
   switch (shopActive) {
     case "closed":
+      filter.style.display = "grid";
+      setTimeout(() => {
+        filter.style.opacity = "100%";
+      }, 1000);
       setTimeout(() => {
         if (window.productsloaded === false) {
           document.getElementById("divLoadBG2").style.display = "grid";
@@ -193,6 +198,10 @@ window.toggleShop = () => {
       shopActive = "open";
       break;
     case "open":
+      filter.style.opacity = "0%";
+      setTimeout(() => {
+        filter.style.display = "none";
+      }, 1000);
       clearShop();
       break;
     case "POVopen":
@@ -738,8 +747,13 @@ window.loadShop = async () => {
     })
   allProducts[0].forEach((product) => {
     var productCont = document.createElement("div");
+    console.log(product);
     productCont.setAttribute("class", "productContainer");
     productCont.setAttribute("id", product.id);
+    product.categories.forEach((category) => {
+      // add category name as a class
+      productCont.classList.add(category.name);
+    });
     if (window.matchMedia("(max-width: 768px)").matches) {
       // Mobile
     } else {
@@ -1145,6 +1159,145 @@ window.ccsOn = () => {
 window.ccsOff = () => {
   document.getElementById("crypto").innerHTML = "Pay with Crypto";
 };
+// Shop Filter
+window.filterShop = (e) => {
+  var sectionDesc = document.getElementById("sectionDesc");
+  var selected = e.id;
+  // if input is not all then deselect all
+  if (selected !== "all") {
+    document.getElementById("all").checked = false;
+  };
+  // when all is selected deselect all other filters inputs
+  switch (selected) {
+    case "all":
+      sectionDesc.innerHTML = `<h2>All Products</h2>
+      <h4>SCOGÉ Shop - Collection pieces, gifts and more.</h4>`;
+      document.getElementById("all").checked = true;
+      document.getElementById("tops").checked = false;
+      document.getElementById("bottoms").checked = false;
+      document.getElementById("accessories").checked = false;
+      document.getElementById("art").checked = false;
+      document.getElementById("gifts").checked = false;
+      // document.getElementById("dresses").checked = false;
+      document.querySelectorAll(".productContainer").forEach((item) => {
+        item.style.display = "block";
+      });
+      break;
+    case "tops":
+      sectionDesc.innerHTML = `<h2>Tops</h2>
+      <h4>SCOGÉ T-Shirts, Hoodies, Shirts and Jackets.</h4>`;
+      document.getElementById("all").checked = false;
+      document.getElementById("tops").checked = true;
+      document.getElementById("bottoms").checked = false;
+      document.getElementById("accessories").checked = false;
+      document.getElementById("art").checked = false;
+      document.getElementById("gifts").checked = false;
+      // document.getElementById("dresses").checked = false;
+      document.querySelectorAll(".productContainer").forEach((item) => {
+        if (!item.classList.contains("tops")) {
+          item.style.display = "none";
+        } else {
+          item.style.display = "block";
+        };
+      }
+      );
+      break;
+    case "bottoms":
+      sectionDesc.innerHTML = `<h2>Bottoms</h2>
+      <h4>SCOGÉ Pants, Shorts, and Joggers.</h4>`;
+      document.getElementById("all").checked = false;
+      document.getElementById("tops").checked = false;
+      document.getElementById("bottoms").checked = true;
+      document.getElementById("accessories").checked = false;
+      document.getElementById("art").checked = false;
+      document.getElementById("gifts").checked = false;
+      // document.getElementById("dresses").checked = false;
+      document.querySelectorAll(".productContainer").forEach((item) => {
+        if (!item.classList.contains("bottoms")) {
+          item.style.display = "none";
+        } else {
+          item.style.display = "block";
+        };
+      }
+      );
+      break;
+    case "accessories":
+      sectionDesc.innerHTML = `<h2>Accessories</h2>
+      <h4>SCOGÉ Hats & More.</h4>`;
+      document.getElementById("all").checked = false;
+      document.getElementById("tops").checked = false;
+      document.getElementById("bottoms").checked = false;
+      document.getElementById("accessories").checked = true;
+      document.getElementById("art").checked = false;
+      document.getElementById("gifts").checked = false;
+      // document.getElementById("dresses").checked = false;
+      document.querySelectorAll(".productContainer").forEach((item) => {
+        if (!item.classList.contains("accessories")) {
+          item.style.display = "none";
+        } else {
+          item.style.display = "block";
+        };
+      }
+      );
+      break;
+    case "art":
+      sectionDesc.innerHTML = `<h2>Art</h2>
+      <h4>SCOGÉ Limited Edition 1-of-1 Art from Discovery 1 Collection.</h4>`;
+      document.getElementById("all").checked = false;
+      document.getElementById("tops").checked = false;
+      document.getElementById("bottoms").checked = false;
+      document.getElementById("accessories").checked = false;
+      document.getElementById("art").checked = true;
+      document.getElementById("gifts").checked = false;
+      // document.getElementById("dresses").checked = false;
+      document.querySelectorAll(".productContainer").forEach((item) => {
+        if (!item.classList.contains("art")) {
+          item.style.display = "none";
+        } else {
+          item.style.display = "block";
+        };
+      }
+      );
+      break;
+    case "gifts":
+      sectionDesc.innerHTML = `<h2>Gifts</h2>
+      <h4>SCOGÉ pieces gift-wrapped and boxed to share.</h4>`;
+      document.getElementById("all").checked = false;
+      document.getElementById("tops").checked = false;
+      document.getElementById("bottoms").checked = false;
+      document.getElementById("accessories").checked = false;
+      document.getElementById("art").checked = false;
+      document.getElementById("gifts").checked = true;
+      // document.getElementById("dresses").checked = false;
+      document.querySelectorAll(".productContainer").forEach((item) => {
+        if (!item.classList.contains("gifts")) {
+          item.style.display = "none";
+        } else {
+          item.style.display = "block";
+        };
+      }
+      );
+      break;
+    // case "dresses":
+    //   document.getElementById("all").checked = false;
+    //   document.getElementById("tops").checked = false;
+    //   document.getElementById("bottoms").checked = false;
+    //   document.getElementById("accessories").checked = false;
+    //   document.getElementById("art").checked = false;
+    //   document.getElementById("gifts").checked = false;
+    //   document.getElementById("dresses").checked = true;
+    //   document.querySelectorAll(".productContainer").forEach((item) => {
+    //     if (!item.classList.contains("dresses")) {
+    //       item.style.display = "none";
+    //     } else {
+    //       item.style.display = "block";
+    //     };
+    //   }
+    //   );
+    //   break;
+  }
+}
+
 // -----------------------------------   SHOP END  -----------------------------------------------
 // SAY SCOGÉ //
 window.sayScoge = () => {
