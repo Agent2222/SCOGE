@@ -132,6 +132,7 @@ window.clearScreen = () => {
   var shadow = document.getElementById("getCamp").shadowRoot;
     shadow.getElementById("campaignComp").style.transition = "1s all";
     shadow.getElementById("campaignComp").style.right = "-100%";
+    clearFilter();
     clearSettings();
     clearShop();
 }
@@ -170,7 +171,16 @@ export default window.initNoti2 = (name) => {
       break;
   }
 };
-
+// Cler filter 
+window.clearFilter = () => {
+  var filter = document.getElementById("shopFilter");
+  var clearFilter = document.getElementById("all");
+  window.filterShop(clearFilter);
+  filter.style.opacity = "0%";
+  setTimeout(() => {
+    filter.style.display = "none";
+  }, 1000);
+};
 // Shop Button
 window.toggleShop = () => {
   var confirm = document.getElementById("orderConfirm");
@@ -198,12 +208,7 @@ window.toggleShop = () => {
       shopActive = "open";
       break;
     case "open":
-      var clearFilter = document.getElementById("all");
-      window.filterShop(clearFilter);
-      filter.style.opacity = "0%";
-      setTimeout(() => {
-        filter.style.display = "none";
-      }, 1000);
+      window.clearFilter();
       clearShop();
       break;
     case "POVopen":
@@ -245,6 +250,7 @@ window.toggleShop = () => {
 
 // SETTINGS Button
 window.openSettings = () => {
+  window.clearFilter();
   clearShop();
   var shadow = document.getElementById("getCamp").shadowRoot
   document.getElementById("getCamp").shadowRoot.getElementById("campaignComp").style.transition = "1s all";
@@ -1243,8 +1249,8 @@ window.filterShop = (e) => {
       );
       break;
     case "art":
-      sectionDesc.innerHTML = `<h2>Art</h2>
-      <h4>SCOGÉ Limited Edition 1-of-1 Art from Discovery 1 Collection.</h4>`;
+      sectionDesc.innerHTML = `<h2>Artwork</h2>
+      <h4>SCOGÉ Limited Edition 1-of-1 Artworks from Discovery 1 Collection.</h4>`;
       document.getElementById("all").checked = false;
       document.getElementById("tops").checked = false;
       document.getElementById("bottoms").checked = false;
