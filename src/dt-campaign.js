@@ -32,6 +32,7 @@ class dtCampaign extends HTMLElement {
     this.shadow.getElementById("campaignComp").style.right = "0%";
     clearShop();
     clearSettings();
+    clearFilter();
   }
 
   // Close the campaign
