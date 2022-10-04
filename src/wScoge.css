@@ -925,6 +925,55 @@ canvas {
   grid-template-columns: 1fr 1fr 1fr 1fr;
   overflow-x: scroll;
 }
+#sectionDesc {
+  color: black;
+  font-family: "BS-R";
+  width: 100%;
+  height: auto;
+  grid-area: 1/1/2/5;
+}
+#sectionDesc h2 {
+  margin-bottom: 0%;
+}
+#sectionDesc h4 {
+  margin-top: 1%;
+  font-size: 14px;
+}
+#shopFilter {
+  width: 15%;
+  height: 20%;
+  display: none;
+  opacity: 0%;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+  justify-items: start;
+  font-family: "BS-R";
+  font-size: 14px;
+  color: var(--secondary);
+  position: fixed;
+  left: 4.5%;
+  top: 25%;
+  z-index: 3;
+  transition: 1s all;
+}
+#shopFilter input {
+  height: 18px;
+  width: 18px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  border-radius: 4px;
+  outline: none;
+  transition-duration: 0.3s;
+  background-color: var(--accent);
+  cursor: pointer;
+}
+
+#shopFilter > input:checked {
+  background-color: var(--primary);
+}
 /*         -----------------------------------------------------------------------------         */
 
 #logo {

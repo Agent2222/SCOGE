@@ -61,6 +61,23 @@
             <div id="shopIcon" onclick="toggleShop();">
                 ( 0 )
             </div>
+            <!-- 6 Checkbox inputs to filter shop products -->
+            <div id="shopFilter">
+                <label for="all">All</label>
+                <input type="checkbox" id="all" name="all" value="all" checked onclick="filterShop(this);">
+                <label for="gifts">Gifts</label>
+                <input type="checkbox" id="gifts" name="gifts" value="gifts" onclick="filterShop(this);">
+                <label for="tops">Tops</label>
+                <input type="checkbox" id="tops" name="tops" value="tops" onclick="filterShop(this);">
+                <label for="bottoms">Bottoms</label>
+                <input type="checkbox" id="bottoms" name="bottoms" value="bottoms" onclick="filterShop(this);">
+                <!-- <label for="dresses">Dresses</label>
+                <input type="checkbox" id="dresses" name="dresses" value="dresses" onclick="filterShop(this);"> -->
+                <label for="accessories">Accessories</label>
+                <input type="checkbox" id="accessories" name="accessories" value="accessories" onclick="filterShop(this);">
+                <label for="art">Art</label>
+                <input type="checkbox" id="art" name="art" value="art" onclick="filterShop(this);">
+            </div>  
             <div id="divLoadBG2">
                 <div class="loader"></div>
             </div>
@@ -146,6 +163,10 @@
                 <div id="shopRight"></div>
             </div>
             <div id="allShopProducts">
+                <div id="sectionDesc">
+                    <h2>All Products</h2>
+                    <h4>SCOGÉ Shop - Collection pieces, gifts and more.</h4>
+                </div>
             </div>
         </div>
         <!-------------------------------------------------------------------------->
