@@ -198,6 +198,8 @@ window.toggleShop = () => {
       shopActive = "open";
       break;
     case "open":
+      var clearFilter = document.getElementById("all");
+      window.filterShop(clearFilter);
       filter.style.opacity = "0%";
       setTimeout(() => {
         filter.style.display = "none";
@@ -1261,7 +1263,7 @@ window.filterShop = (e) => {
       break;
     case "gifts":
       sectionDesc.innerHTML = `<h2>Gifts</h2>
-      <h4>SCOGÉ pieces gift-wrapped and boxed to share.</h4>`;
+      <h4>SCOGÉ pieces wrapped, boxed, and ready to gift.</h4>`;
       document.getElementById("all").checked = false;
       document.getElementById("tops").checked = false;
       document.getElementById("bottoms").checked = false;
