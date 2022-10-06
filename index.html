@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N33VQSX');</script>
+    <!-- End Google Tag Manager -->
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -8,26 +15,13 @@
         <meta name="description" content="The world of SCOGÉ">
         <link rel="shortcut icon" type="image/png" href="/assets/images/favicon.png">
         <link href="./src/wScoge.css" rel="stylesheet">
-        <!-- Global Site Tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-        <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'GA_MEASUREMENT_ID');
-        </script>
-        <script type="text/javascript">
-              window._mfq = window._mfq || [];
-              (function() {
-                var mf = document.createElement("script");
-                mf.type = "text/javascript"; mf.defer = true;
-                mf.src = "//cdn.mouseflow.com/projects/3e81e129-c20b-43a6-bad2-8b25aa26f99b.js";
-                document.getElementsByTagName("head")[0].appendChild(mf);
-              })();
-            </script>
         <script src="./src/index.js" type="module"></script>
     </head>
     <body id="main" onload="loadShop();">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N33VQSX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <div id="subText1" class="dialogue"><p></p></div>
     <div id="subText2" class="dialogue"><span class="answerOptions" id="st2Ans1"></span><span class="answerOptions" id="st2Ans2"></span><span class="answerOptions" id="st2Ans3"></span></div>
     <scoge-subscribe subscribe="subscribe" id="subscribeComp"></scoge-subscribe>
