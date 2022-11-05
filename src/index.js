@@ -8,6 +8,8 @@ import { getWallet } from "../src/getWallet.js";
 import { dtMusic } from "../src/dt-scogeMusic.js";
 import { dtCampaign } from "../src/dt-campaign.js";
 import { dtSubscribe } from "../src/dt-subscribe.js";
+import { scogeUpdates } from "../src/scoge-updates.js";
+import { dtInvestors } from "../src/dt-investors";
 // import the closeCampaign function from dt-campaign.js
 window.closeCampaign = dtCampaign.closeCampaign;
 // import { mintingScreen } from "../src/mint.js";
@@ -749,13 +751,12 @@ window.loadShop = async () => {
   document.getElementById("divLoadBG2").style.display = "grid";
   var shopParent = document.getElementById("allShopProducts");
   await commerce.products
-    .list({ sortDirection: "desc" })
+    .list({ limit: 100, sortDirection: "desc" })
     .then((product) => {
       allProducts.push(product.data);
     })
   allProducts[0].forEach((product) => {
     var productCont = document.createElement("div");
-    console.log(product);
     productCont.setAttribute("class", "productContainer");
     productCont.setAttribute("id", product.id);
     product.categories.forEach((category) => {

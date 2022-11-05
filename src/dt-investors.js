@@ -1,0 +1,1030 @@
+
+var currentPage = 1;
+var currentBtsPage = 1;
+var inventoryTotal = 2000;
+var lexBio = "Advisor Lex Fenwick (The Dow Jones, WSJ) brings a wealth of experience and connections to the table. Fenwick is a media and technology expert with over 30 years of experience in the industry. He has a long history of success in launching and scaling companies, and his experience will be invaluable in helping SCOGÉ reach its full potential.";
+var clefBio = "Advisor Wyclef Jean (musician, philanthropist) brings a wealth of experience and connections to the table. Jean is a well-known musician and philanthropist with a strong connection to the Haitian community. His involvement with SCOGÉ will help raise awareness of the brand and attract new customers."
+var ogeBio = "Founder and Creative Director Starnilas Oge is a self-taught web developer and seasoned fashion designer with a strong background in marketing and brand development. Oge has also developed and directed an artist residency program in Japan for 5 years, giving him a well-rounded perspective on the creative process. Additionally, he has experience working with major consumer brands such as Liberty Fairs and Pearlman Aesthetic Surgery."
+
+class dtInvestors extends HTMLElement {
+  constructor() {
+    super();
+    this.shadow = this.attachShadow({ mode: "open" });
+  }
+
+  get invest() {
+    return this.getAttribute("invest");
+  }
+
+  set invest(val) {
+    this.setAttribute("invest", val);
+  }
+
+  static get observedAttributes() {
+    return ["invest"];
+  }
+
+  attributeChangedCallback(prop, oldVal, newVal) {
+    if (prop === "invest") {
+      this.render();
+    }
+  }
+
+  // when each menu item is clicked, it will smoothly scroll to the corresponding section 5% above the top of the screen
+  scrollToMenu() {
+    var allMnenuItems = this.shadow.querySelectorAll(".menu-item");
+    allMnenuItems.forEach((item) => {
+      item.addEventListener("click", (e) => {
+        var section = e.target.getAttribute("id");
+        var sectionEl = this.shadow.getElementById(section.replace("Menu","Sect"));
+        var sectionTop = sectionEl.offsetTop;
+        var sectionTopOffset = sectionTop - 200;
+        if (section === "dataMenu") {
+          sectionTopOffset = sectionTop - 0;
+        }
+        if (section === "aboutMenu") {
+          sectionTopOffset = sectionTop - 50;
+        }
+        this.shadow.getElementById("scrollBody").scrollTo({
+          top: sectionTopOffset,
+          behavior: "smooth",
+        });
+        // change the menu item color to secondary color and the rest to primary color
+        allMnenuItems.forEach((item) => {
+          item.style.color = "var(--primary)";
+          item.style.borderBottom = "var(--primary) 1px solid";
+        }
+        );
+        e.target.style.color = "var(--secondary)";
+        e.target.style.borderBottom = "var(--secondary) 1px solid";
+      });
+      // when section is -100px from the top of the screen, change the menu item color to secondary color and the rest to primary color
+      this.shadow.getElementById("scrollBody").addEventListener("scroll", () => {
+        var scrollPos = this.shadow.getElementById("scrollBody").scrollTop;
+        allMnenuItems.forEach((item) => {
+          var section = item.getAttribute("id");
+          var sectionEl = this.shadow.getElementById(section.replace("Menu","Sect"));
+          var sectionTop = sectionEl.offsetTop;
+          if (scrollPos >= sectionTop - 200) {
+            allMnenuItems.forEach((item) => {
+              item.style.color = "var(--primary)";
+              item.style.borderBottom = "var(--primary) 1px solid";
+            });
+            item.style.color = "var(--secondary)";
+            item.style.borderBottom = "var(--secondary) 1px solid";
+          }
+          // if scroll reaches the bottom of the page, change the contact menu item color to secondary color and the rest to primary color
+          if (scrollPos >= this.shadow.getElementById("scrollBody").scrollHeight - this.shadow.getElementById("scrollBody").clientHeight - 100) {
+            allMnenuItems.forEach((item) => {
+              item.style.color = "var(--primary)";
+              item.style.borderBottom = "var(--primary) 1px solid";
+            });
+            this.shadow.getElementById("contactMenu").style.color = "var(--secondary)";
+            this.shadow.getElementById("contactMenu").style.borderBottom = "var(--secondary) 1px solid";
+          }
+        });
+      })
+    }
+    );
+  }
+  
+  // A function to move the "campaign" element to right 0%.
+  openCampaign() {
+    this.shadow.getElementById("campaignComp").style.transition = "1s all";
+    this.shadow.getElementById("campaignComp").style.right = "0%";
+    clearShop();
+    clearSettings();
+    clearFilter();
+  }
+
+  // Close the campaign
+  closeCampaign() {
+    this.shadow.getElementById("yt").src = "https://www.youtube.com/embed/WPccRLEvxW4";
+    if (window.matchMedia("(max-width: 768px)").matches) {
+      // Mobile
+      this.shadow.getElementById("campaignComp").style.transition = "1s all";
+      this.shadow.getElementById("campaignComp").style.right = "-100%";
+      window.isMobile = true;
+    } else {
+      // Desktop
+      this.shadow.getElementById("campaignComp").style.transition = "1s all";
+      this.shadow.getElementById("campaignComp").style.right = "-70%";
+    }
+  }
+
+  // A function to animate the "looks" element to horizontally scroll slowly
+  pageScroll() {
+    var looks = this.shadow.querySelector("#looks");
+    looks.scrollLeft += 1;
+    setTimeout(this.pageScroll.bind(this), 10);
+    // when the scroll reaches the end, reset it to the beginning
+    if (looks.scrollLeft == looks.scrollWidth - looks.clientWidth) {
+      looks.scrollLeft = 0;
+    }
+  }
+
+  // Campaign interface
+  nextImage() {
+    // reset current page to 1 if it is greater than 8
+    if (currentPage >= 2) {
+      currentPage = 0;
+    }
+    currentPage++;
+    this.shadow.getElementById("gImg").src = `https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-about-${currentPage}.webp`;
+  }
+
+  previousImage() {
+    // reset current page to 1 if it is greater than 8
+    if (currentPage <= 1) {
+      currentPage = 2;  
+    } else {
+      currentPage--;
+    }
+    this.shadow.getElementById("gImg").src = `https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-about-${currentPage}.webp`;
+  }
+
+  nextBtsImage() {
+    // reset current page to 1 if it is greater than 8
+    if (currentBtsPage >= 46) {
+      currentBtsPage = 0;
+    }
+    currentBtsPage++;
+    this.shadow.getElementById("btsImg").src = `https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/bts/scoge-bts-${currentBtsPage}.webp`;
+  }
+
+  preBtsImage() {
+    // reset current page to 1 if it is greater than 8
+    if (currentBtsPage <= 1) {
+      currentBtsPage = 46;
+    } else {
+      currentBtsPage--;
+    }
+    this.shadow.getElementById("btsImg").src = `https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/bts/scoge-bts-${currentBtsPage}.webp`;
+  }
+
+    // Sliders Sum
+   slidersTotal() {
+      var avgRetailSlider = this.shadow.getElementById("avgRetailSlider").value;
+      var dtcQtySlider = this.shadow.getElementById("dtcQtySlider").value;
+      var accountsSlider = this.shadow.getElementById("accountsSlider").value;
+      var wsOrderSlider = this.shadow.getElementById("wsOrderSlider").value;
+      var slidersSum = ((avgRetailSlider * dtcQtySlider) + ((avgRetailSlider/2)* (wsOrderSlider * accountsSlider)));
+      // put slider sum in finalTotal element with thousands separator
+      this.shadow.getElementById("finalTotal").innerHTML = slidersSum.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+  sliders() {
+    // change budNum when budgetSlider changes. Add thousands separator
+    this.shadow.getElementById("budgetSlider").addEventListener("input", function() {
+      this.slidersTotal();
+      this.shadow.getElementById("budNum").innerHTML = this.shadow.getElementById("budgetSlider").value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      inventoryTotal = this.shadow.getElementById("budgetSlider").value / this.shadow.getElementById("avgPCSlider").value;
+      this.shadow.getElementById("dtcQtySlider").max = inventoryTotal;
+      this.shadow.getElementById("wsOrderSlider").max = inventoryTotal;
+      // this.shadow.getElementById("wsOrderSlider").value = inventoryTotal;
+      // this.shadow.getElementById("dtcQtySlider").value = inventoryTotal;
+      this.shadow.getElementById("dcqNum").innerHTML = Math.round(inventoryTotal);
+      this.shadow.getElementById("wqtyNum").innerHTML = Math.round(inventoryTotal)
+    } .bind(this));
+    // change avrNum when averageSlider changes.
+    this.shadow.getElementById("avgRetailSlider").addEventListener("input", function() {
+      this.slidersTotal();
+      this.shadow.getElementById("avrNum").innerHTML = this.shadow.getElementById("avgRetailSlider").value;
+    } .bind(this));
+    // change avpNum when avgPCSlider changes.
+    this.shadow.getElementById("avgPCSlider").addEventListener("input", function() {
+      this.slidersTotal();
+      inventoryTotal = this.shadow.getElementById("budgetSlider").value / this.shadow.getElementById("avgPCSlider").value;
+      console.log(inventoryTotal);
+      this.shadow.getElementById("dtcQtySlider").max = inventoryTotal;
+      this.shadow.getElementById("wsOrderSlider").max = inventoryTotal;
+      this.shadow.getElementById("avpNum").innerHTML = this.shadow.getElementById("avgPCSlider").value;
+    } .bind(this));
+    // change dcqNum when dtcQtySlider changes. Add thousands separator
+    this.shadow.getElementById("dtcQtySlider").addEventListener("input", function() {
+      this.slidersTotal();
+      this.shadow.getElementById("wrperSlider").value = 0;
+      this.shadow.getElementById("wrP1").innerHTML = "-";
+      this.shadow.getElementById("wrP2").innerHTML = "-";
+      this.shadow.getElementById("dcqNum").innerHTML = this.shadow.getElementById("dtcQtySlider").value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    } .bind(this));
+    // change waNum when accountsSlider changes.
+    this.shadow.getElementById("accountsSlider").addEventListener("input", function() {
+      this.slidersTotal();
+      this.shadow.getElementById("waNum").innerHTML = this.shadow.getElementById("accountsSlider").value;
+    } .bind(this));
+    // change wqtyNum when wsOrderSlider changes. Add thousands separator
+    this.shadow.getElementById("wsOrderSlider").addEventListener("input", function() {
+      this.slidersTotal();
+      this.shadow.getElementById("wrperSlider").value = 0;
+      this.shadow.getElementById("wrP1").innerHTML = "-";
+      this.shadow.getElementById("wrP2").innerHTML = "-";
+      this.shadow.getElementById("wqtyNum").innerHTML = this.shadow.getElementById("wsOrderSlider").value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      // get value of wsOrderSlider / 2000 * 100
+      var wsOrderSliderPer = this.shadow.getElementById("wsOrderSlider").value;
+      // change wrperSlider value to respective range in wrperSlider value
+    }
+    .bind(this));
+    // correlate wrperSlider min to 100% and max to 100%, with 0 to 50%. Change wrP1 to the min correlation and wrP2 to the max correlation.
+    this.shadow.getElementById("wrperSlider").addEventListener("input", function() {
+      this.slidersTotal();
+      var number = this.shadow.getElementById("wrperSlider").value/2 + 50;
+      var number2 = this.shadow.getElementById("wrperSlider").value/2 - 50;
+      this.shadow.getElementById("wrP1").innerHTML = Math.round(Math.abs(number2));
+      this.shadow.getElementById("wrP2").innerHTML = + Math.round(number);
+      // change dtcQtySlider value to be (number2)% of the value of wsOrderSlider
+      this.shadow.getElementById("wsOrderSlider").value = Math.round(inventoryTotal * (Math.abs(number2)/100));
+      this.shadow.getElementById("wqtyNum").innerHTML = this.shadow.getElementById("wsOrderSlider").value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      // change wsOrderSlider value to be (number)% of the value of dtcQtySlider
+      this.shadow.getElementById("dtcQtySlider").value = Math.round(inventoryTotal * (number/100));
+      this.shadow.getElementById("dcqNum").innerHTML = this.shadow.getElementById("dtcQtySlider").value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    } .bind(this));
+    // correlate wrP1
+  }
+
+  // Change memberName, memberProf, and memberBio when team image is clicked. team1 is clef, teamMain is oge, team2 is lex.
+  team() {
+    this.shadow.getElementById("team1").addEventListener("click", function() {
+      this.shadow.getElementById("memberName").innerHTML = "Wyclef Jean";
+      this.shadow.getElementById("memberProf").innerHTML = "Musician, Philanthropist";
+      this.shadow.getElementById("memberBio").innerHTML = clefBio;
+    } .bind(this));
+    this.shadow.getElementById("teamMain").addEventListener("click", function() {
+      this.shadow.getElementById("memberName").innerHTML = "Starnilas Oge";
+      this.shadow.getElementById("memberProf").innerHTML = "Founder & Creative Director";
+      this.shadow.getElementById("memberBio").innerHTML = ogeBio;
+    } .bind(this));
+    this.shadow.getElementById("team2").addEventListener("click", function() {
+      this.shadow.getElementById("memberName").innerHTML = "Lex Fenwick";
+      this.shadow.getElementById("memberProf").innerHTML = "The Dow Jones, WSJ";
+      this.shadow.getElementById("memberBio").innerHTML = lexBio;
+    } .bind(this));
+  }
+
+// Functions
+  connectedCallback() {
+    this.render();
+    this.pageScroll();
+    document.getElementById("campaignBut").addEventListener("click", this.openCampaign.bind(this));
+    this.shadow.getElementById("campIcon").addEventListener("click", this.closeCampaign.bind(this));
+    this.shadow.getElementById("nextGalleryImg").addEventListener("click", this.nextImage.bind(this));
+    this.shadow.getElementById("preGalleryImg").addEventListener("click", this.previousImage.bind(this));
+    this.shadow.getElementById("nextBtsImg").addEventListener("click", this.nextBtsImage.bind(this));
+    this.shadow.getElementById("preBtsImg").addEventListener("click", this.preBtsImage.bind(this));
+    this.sliders();
+    this.team();
+    this.scrollToMenu();
+    // Add Event handlers to rendered html below
+    // Must use this.shadow to access dom.
+    // Add methods above this method
+    // Ex. btn.addEventListener('click', this.method.bind(this))
+    // NOTE: Render clears all code because of innerHtml
+  }
+
+  render() {
+    this.shadow.innerHTML = `
+         <style>
+            @font-face {
+                font-family: "BS-R";
+                src: url("https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.svg");
+                font-weight: normal;
+                font-style: normal;
+            }
+            :root {
+              --primary: #ff002d;
+              --secondary: #b5d3d1;
+              --accent: #94be8c;
+            }
+            /* width */
+            ::-webkit-scrollbar {
+              width: 10px;
+            }
+
+            /* Track */
+            ::-webkit-scrollbar-track {
+              background: black; 
+            }
+            
+            /* Handle */
+            ::-webkit-scrollbar-thumb {
+              background: var(--accent);
+            }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+              background: var(--secondary); 
+            }
+            #campaignComp {
+              width: 70%;
+              height: 98%;
+              background: black;
+              position: fixed;
+              top: 0;
+              right: 0%;
+              z-index: 4;
+              font-family: "BS-R";
+              padding-top: 2%;
+              overflow-y: visible;
+              overflow-x: visible;
+              transition: 1s;
+            }
+            #header {
+              height: 15%;
+              width: 98%;
+              float: left;
+              padding-left: 2%;
+              padding-bottom: 2%;
+              position: -webkit-sticky; /* Safari */
+              position: sticky;
+              top:0;
+              z-index:4;
+              background-color: rgba(0,0,0,.9);
+            }
+            #head {
+              font-size: 34px;
+            }
+            #sub {
+              margin-bottom: 2%;
+              color: var(--accent);
+            }
+            .body {
+              width: 90%;
+              color: var(--primary);
+              font-size: 1em;
+              line-height: 2em;
+              padding-left: 5%;
+              letter-spacing: 1px;
+              padding-bottom: 2%;
+            }
+            #campGallery {
+              width: 100%;
+              height: auto;
+              float: left;
+              margin-bottom: 2%;
+              position: relative;
+            }
+            #campGallery img {
+              width: 100%;
+            }
+            #looks {
+              height: 40%;
+              width: 100%;
+              overflow-y: hidden;
+              overflow-x: scroll;
+              float: left;
+              margin-bottom: 2%;
+            }
+            #looks img {
+              height: 100%;
+            }
+            #film {
+              width: 100%;
+              height: 65%;
+              float: left;
+              margin-bottom: 4%;
+            }
+            #campIcon {
+              width: 4%;
+              height: 4%;
+              position: absolute;
+              left: -4%;
+              top: 9.3%;
+              z-index: 5;
+              background-color: #ff002d;
+              border-right: none;
+              border-top-left-radius: 8%;
+              border-bottom-left-radius: 8%;
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-template-rows: 1fr;
+              align-items: center;
+              justify-items: center;
+              font-family: "BS-R";
+              color: white;
+              cursor: pointer;
+              font-size: 12px;
+            }
+            #scrollBody {
+              width: 100%;
+              height: 100%;
+              float: left;
+              overflow-y: scroll;
+              overflow-x: hidden;
+            }
+            #imageInterface, #imageInterface2 {
+              position: absolute;
+              width: 10%;
+              height: 5%;
+              background-color: rgba(0, 0, 0, 0.8);
+              bottom: 5%;
+              left: 45%;
+              display: grid;
+              grid-template-columns: 1fr 1fr 1fr;
+              grid-template-rows: 1fr;
+              justify-items: center;
+              align-items: center;
+              border-radius:6px;
+            }
+            #preGalleryImg, #preBtsImg {
+              transform: rotate(180deg);
+            }
+            .arrow {
+              transition: 0.3s;
+              cursor: pointer;
+            }
+            .arrow:hover {
+              color: var(--secondary);
+            }
+            #btsGallery {
+              width: 100%;
+              height: 90%;
+              overflow: hidden;
+              float: left;
+              display: flex;
+              justify-content: center;
+              position: relative;
+              margin-top: 2%;
+            }
+            #btsGallery img {
+              height: 100%;
+            }
+            #runway {
+              width: 80%;
+              height: auto;
+              float: left;
+              padding-left:10%;
+              padding-right:10%;
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-template-rows: 1fr;
+              color: var(--secondary);
+              font-size: 12px;
+              margin-bottom: 5%;
+            }
+            #runwayBody {
+              display: grid;
+              grid-template-columns: 1fr 1fr 1fr 1fr;
+              letter-spacing: 1px;
+              line-height: 2em;
+            }
+            #runwayInner {
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-tenplate-rows: 1fr 1fr 1fr 1fr 1fr;s
+            }
+            .primary {
+              color: var(--primary);
+            }
+            .secondary {
+              color: var(--secondary);
+            }
+            #film iframe {
+              width: 100%;
+              height: 100%;
+            }
+            #menuHead {
+              height: 10%;
+              padding-right: 8%;
+              display: grid;
+              grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
+              grid-template-rows: 1fr;
+              align-items: center;
+              justify-items: center;
+              margin-bottom: 5%;
+              color: var(--primary);
+            }
+            #team {
+              width: 100%;
+              height: 50%;
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-template-rows: 1fr 1fr;
+            }
+            #teamImg {
+              display: grid;
+              grid-template-columns: 1fr 1fr 1fr;
+              grid-template-rows: 1fr;
+            }
+            .profile img {
+              width: 100%;
+              border-radius: 10px;
+            }
+            .advisors {
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-template-rows: 1fr;
+              justify-items: center;
+              align-items: center;
+            }
+            .advisors img {
+              width: 40%;
+              transition: .8s all;
+            }
+            .advisors img:hover {
+              width: 50%;
+            }
+            #menuHead div {
+              padding-bottom: 2px;
+              border-bottom: 1px solid var(--primary);
+            }
+            .generalImages {
+              width: 100%;
+            }
+            .generalImages img {
+              width: 100%;
+            }
+            #projections {
+              width: 80%;
+              height: 40%;
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-template-rows: 10% 70% 20%;
+              overflow: hidden;
+              padding-top: 5%;
+              margin-bottom: 5%;
+              margin-left: 10%;
+              margin-right: 10%;
+              padding-left: 2%;
+            }
+            #pProjBody {
+              width: 100%;
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+            }
+            #pProjFooter {
+              display: grid;
+              grid-template-columns: 50% 20% 30%;
+              grid-template-rows: 1fr;
+              justify-items: center;
+              align-items: center;
+              color: var(--accent);
+            }
+            .pElement {
+              display: grid;
+              grid-template-columns: 20% 30% 50%;
+              grid-template-rows: 1fr;
+              justify-items: start;
+              align-items: start;
+            }
+            .numberEl {
+              padding-left: 5%;
+              color: var(--accent);
+            }
+            #finalNumber {
+              font-size: 28px;
+            }
+            .slidebox {
+              display:block;
+              width: 90%;
+              padding-left: 5%;
+              padding-right: 5%;
+            }
+            .slider {
+              -webkit-appearance: none;
+              width: 100%;
+              height: 2px;
+              background: var(--primary);
+              outline: none;
+              opacity: 0.7;
+              -webkit-transition: .2s;
+              transition: opacity .2s;
+            }
+            
+            .slider:hover {
+              opacity: 1;
+            }
+            
+            .slider::-webkit-slider-thumb {
+              -webkit-appearance: none;
+              appearance: none;
+              width: 20px;
+              height: 20px;
+              border-radius: 10px;
+              background: var(--accent);
+              cursor: pointer;
+            }
+            
+            .slider::-moz-range-thumb {
+              width: 10px;
+              height: 10px;
+              background: var(--accent);
+              cursor: pointer;
+            }
+            .pElHead {
+              color: var(--secondary);
+            }
+            .body2 {
+              width: 80%;
+              color: var(--primary);
+              font-size: 1em;
+              line-height: 2em;
+              padding-left: 10%;
+              padding-right: 10%;
+              letter-spacing: 1px;
+              margin-bottom: 5%;
+              margin-top: 5%;
+            }
+            h1 {
+              padding-left: 5%;
+              color: var(--secondary);
+            }
+            ol, ul {
+              color: var(--accent);
+            }
+            .prime {
+              color: var(--primary);
+            }
+            .acc {
+              color: var(--accent);
+            }
+            .sec {
+              color: var(--secondary);
+            }
+            .profile {
+              cursor: pointer;
+            }
+            #pdfDL {
+              text-decoration: underline;
+              color: var(--accent);
+            }
+            #pdfDL:hover {
+              color: var(--secondary);
+            }
+            .menu-item {
+              cursor: pointer;
+            }
+            #contactSect {
+              width: 80%;
+              height: 20%;
+              padding-left: 10%;
+              padding-right: 10%;
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-template-rows: 1fr;
+              align-items: center;
+              justify-items: center;
+              margin-top: 65%;
+              margin-bottom: 25%;
+            }
+            #contact {
+              background-color: var(--primary);
+              color: white;
+              padding: 2% 4%;
+              border-radius: 5px;
+              transition: .5s all;
+              cursor: pointer;
+              font-size: 14px;
+            }
+            #contact a {
+              color: white;
+              text-decoration: none;
+            }
+            #contact:hover {
+              background-color: var(--secondary);
+              color: black;
+              font-weight: bold;
+              font-size: 16px;
+            }
+            #contact:hover a {
+              color: black;
+            }
+            @media screen and (max-width: 769px) {
+              #campIcon {
+                display: none;
+              }
+              #campaignComp {
+                width: 100%;
+                height: 80%;
+                background: black;
+                position: fixed;
+                top: 20%;
+                right: -100%;
+                z-index: 4;
+                font-family: "BS-R";
+                padding-top: 2%;
+                overflow-y: visible;
+                overflow-x: visible;
+                transition: 1s;
+              }
+              #runway {
+                padding-bottom: 90%;
+              }
+              #body {
+                height: 100%;
+                width: 96%;
+              }
+              #header {
+                height: auto;
+                padding-bottom: 2%;
+              }
+              #film {
+                height: 40%;
+              }
+              #film iframe {
+                height: 100%;
+              }
+              #preGalleryImg {
+                display: none;
+              }
+              #imageInterface  span {
+                display: none;
+              }
+              #imageInterface {
+                grid-template-columns: 1fr;
+                border-radius: 0;
+                width: 15%;
+                height: 15%;
+                left: auto;
+                right: 5%;
+                border-radius: 5px;
+              }
+              #nextGalleryImg {
+                font-size: 30px;
+              }
+              #preBtsImg {
+                display: none;
+              }
+              #imageInterface2  span {
+                display: none;
+              }
+              #imageInterface2 {
+                grid-template-columns: 1fr;
+                border-radius: 0;
+                width: 15%;
+                height: 10%;
+                left: auto;
+                bottom: 47.5%;
+                right: 5%;
+                border-radius: 5px;
+              }
+              #nextBtsImg {
+                font-size: 30px;
+              }
+              #gImg {
+                width: auto !important;
+                height: 100%;
+              }
+              #galleryimg {
+                height: 100%;
+                width: auto;
+                display: flex;
+                justify-content: center;
+              }
+              #campGallery {
+                height: 60%;
+              }
+              .arrow:hover {
+                color: var(--primary);
+              }
+            }
+         </style>
+         <div id="campaignComp">
+            <div id="campIcon">
+              X
+            </div>
+            <div id="scrollBody">
+            <div id="header">
+              <div id="head">Investor Presentation (2022)</div>
+              <div id="sub">Version 1 - <span class="acc" style="cursor:pointer;"><a href="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/files/SCOGE-INVESTOR-PRE22-R1.pdf" id="pdfDL" target="_blank">(Download PDF Version)</a></span></div>
+              <div id="menuHead">
+                <div style="color: var(--secondary); border-color:var(--secondary);" id="introMenu" class="menu-item">INTRO</div>
+                <div id="aboutMenu" class="menu-item">ABOUT</div>
+                <div id="productMenu" class="menu-item">PRODUCT</div>
+                <div id="edgeMenu" class="menu-item">EDGE</div>
+                <div id="modelMenu" class="menu-item">MODEL</div>
+                <div id="newsMenu" class="menu-item">NEWS</div>
+                <div id="growthMenu" class="menu-item">GROWTH</div>
+                <div id="tractionMenu" class="menu-item">TRACTION</div>
+                <div id="raiseMenu" class="menu-item">RAISE</div>
+                <div id="dataMenu" class="menu-item">PROJECTIONS</div>
+                <div id="teamMenu" class="menu-item">TEAM</div>
+                <div id="contactMenu" class="menu-item">CONTACT</div>
+              </div>
+            </div>
+            <h1 id="introSect">INTRO</h1>
+            <div class="body2" id="waveTest">
+              <span class="acc" style="text-align:center; font-size:1.5em;">SCOGÉ is a new and evolving luxury fashion brand that focuses on catering to an untapped global appetite for styles and stories from under-represented communities.</span><br><br>The brand serves as a powerful symbol of this community, making its members feel seen, valued, and stylish. SCOGÉ has the potential to make a real difference in the lives of its customers through its unique approach to luxury fashion and storytelling. Additionally, a growing trend of underrepresented communities craving more visibility in every market - a trend that can be seen in the popularity of Marvel's box office hit movie 'The Black Panther' and brands like Fenty Beauty - will partially attribute to SCOGÉ's success.
+            </div>
+            <div class="generalImages">
+              <img src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Banner-World-SCOGE-narrow.webp"/>
+            </div>
+            <div class="body2">
+              Designer luxury brands are novel universes created to satisfy emotional needs. They serve people with a need to express themselves as imaginative and opulent through fashion. People dream, and luxury brands like SCOGÉ turn dreams into reality.
+            </div>
+            <h1 id="aboutSect">ABOUT</h1>
+            <div id="campGallery">
+              <div id="imageInterface">
+                <div id="preGalleryImg" class="arrow">&#9658;</div>
+                <span>|</span>
+                <div id="nextGalleryImg" class="arrow">&#9658;</div>
+              </div>
+              <div id="galleryimg">
+              <img id="gImg" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-about-1.webp" alt=""/>
+              </div>
+            </div>
+            <div class="body2">
+              SCOGÉ is a mens luxury fashion brand making products for an evolving luxury consumer with an affinity to exploring unique fictional worlds, and avant garde fashion. Our products are inspired by a world we’ve created named bankoo. Each collection of products takes the SCOGÉ customer deeper into this world, satisfying the intrinsic need for exploration, and the extrinsic need for self-expression.<br><br>
+              “Luxury high price is not about tangible benefits,” - The Luxury Strategy: Break the Rules of Marketing to Build Luxury Brands.
+            </div>
+            <h1 id="productSect">PRODUCTS</h1>
+            <div id="looks">
+              <img src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-full-products-opt1.jpeg" alt=""/>
+            </div>
+            <div class="body2">
+              Our products are sourced and created in nyc, with a dedicated approach to up-cycling unused fabrics, trims and designs from previous seasons. We champion designing within our own world, defining our own trends, and becoming a part of the next gaurd of luxury fashion.<br><br>"Despite widespread staffing shortages and supply chain issues, the <span class="acc">fashion and apparel industry saw $180.5 billion in e-commerce revenue in 2021</span>, up from $145 billion in 2020." - 2022 Global Ecommerce Report: Fashion and Apparel
+            </div>
+            <h1 id="edgeSect">EDGE</h1>
+            <div class="generalImages">
+              <img src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-about-3.webp"/>
+            </div>
+            <div class="body2">
+              Because we’ve created our own world, with original places, cultures and stories, our edge is our originality.The products and experiences we create are glimpses into this world. And each vivid exploration creates an opportunity to develop ip that deeply resonates with our customers. Anyone can make a story about star wars. But there will always be one star wars™            
+            </div>
+            <h1 id="modelSect">MODEL</h1>
+            <div class="body2">
+              We are building a strong luxury brand. Our revenue will come primarily from d2c channels, but we will also work with select, brand-aligned wholesale partners.<br><br>Direct (~75% of revenue) - ordered online or purchased at SCOGÉ retail locations.<br>Wholesale (~25% of revenue) - available at select online and retail distributors.<br><br><span class="acc">Product Cost Range: $25 - $500</span><br><span class="acc">Product Price Range: $100 - $4000</span><br><br>
+              Located blocks away from nyc’s garment district gives us the ability to source fabric and trims on demand. We’ve acquired manufacturing and production equipment to quickly develop and market test products, avoiding slow external sampling. We’ve established lasting relationships with several manufacturers and identified scalable operating systems to handle large scale orders. Our product is shirts, pants, jackets, hats, layered garments, accessories, and some dresses.         
+            </div>
+            <h1 id="newsSect">NEWS</h1>
+            <div id="film">
+              <iframe id="yt" width="100%" height="630" src="https://www.youtube.com/embed/f_yQrIwtgYE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="body2">
+              
+            </div>
+            <div class="body2">
+            “Purchasing high-priced luxury items satisfies consumer’s psychological needs for status and exclusivity. Through their purchases, luxury consumers demonstrate they are members of a prestigious, exclusive tribe.” - forbes
+            </div>
+            <h1 id="growthSect">GROWTH</h1>
+            <div class="body2">
+              In 5 years we’ll grow SCOGÉ into a multi-million dollar global brand. Here’s how:<br><br>
+              <ul>
+                <li>Global tradeshows: Expanding wholesale accounts globally.</li>
+                <li>Global retail: Flagship SCOGÉ experiential retail locations in NYC.</li>
+                <li>Enclusive seasonal fashion shows: 2 fashion presentation shows per year to develop partnerships and demand.</li>
+                <li>Content distribution: Distributing captured content where our customers live online and offline.</li>
+                <li>Leverage creative community: Marketing partnerships to reach extended audiences and customers.</li>
+              </ul>
+            </div>
+            <h1 id="tractionSect">TRACTION</h1>
+            <div class="body2">
+              We’ve participated in the contemporary fashion trade-show liberty fairs, garnering wholesale interest from retailers nationwide, and obtained our first global sales agent. We successfully launched our first experiential retail concept, selling out of several products, and expanding our local community of fashion enthusiasts and creatives customer base.<br><br>After our retail concept we presented our frist nyfw runway show, followed by launching our first experiential art exhibition to display exclusive products and expand our community of creative customers. Following our art exhibition, we produced our second and largest NYFW presentation to date. Expanding our visibility to a wider fashion industry audience of fashion editors and wholesalers.
+            </div>
+            <div id="btsGallery">
+              <div id="imageInterface2">
+                <div id="preBtsImg" class="arrow">&#9658;</div>
+                <span>|</span>
+                <div id="nextBtsImg" class="arrow">&#9658;</div>
+              </div>
+              <img id="btsImg" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/bts/scoge-bts-1.webp"/>
+            </div>
+            <div class="body2">
+              We have the vision and objective, now we need the team. So far, the development of the SCOGÉ brand is attributed to it’s founder, friendships, and temporary contract help. Help is capital intensive, but delegation is key.<br><br>Right now, we’re focused on three main things:
+              <ol>
+                <li>Developing great products.</li>
+                <li>Retail and offline experiences.</li>
+                <li>Building a team of passionate, creative, and talented individuals.</li>
+              </ol>
+            </div>
+            <h1 id="raiseSect">RAISE</h1>
+            <div class="body2">
+            <span class="acc" style="font-size:24px;">Raise: $2.5m</span><br>Seed round - safe note<br>20% discount<br>$100k Minimum Buy-In<br>$10 million cap<br>5 year runway.
+            </div>
+            <div id="runway">
+                <div id=runwayBody>
+                  <div class="runwayInner">
+                    <p class="prime">HIRING - $1.2M</p>
+                    <p>4 FULL-TIME EMPLOYEES<br><span class="acc">$300K ANNUALLY</span></p>
+                    <p>SALES DIRECTOR:<br>MANAGES FINANCE, WHOLESALE<br>ACCOUNTS, AND RETAIL</p>
+                    <p>CFO / OPERATIONS DIRECTOR:<br>MANAGES FINANCE AND<br>RESOURCE ALLOCATION</p>
+                    <p>MARKETING DIRECTOR:<br>MANAGES GROWTH STRATEGY</p>
+                    <p>CREATIVE DIRECTOR:<br>DESIGNS AND DEVELOPS<br>PRODUCTS</p>
+                  </div>
+                  <div class="runwayInner">
+                    <p class="prime">OPERATIONS - $500k</p>
+                    <p>OFFICE/RETAIL</p>
+                    <p>1 DUAL PURPOSE OFFICE/RETAIL SPACE.<br><span class="acc">$70K ANNUALLY</span></p>
+                    <p>RETAIL BUILD OUT:<br><span class="acc">$20K ONE TIME BUILD OUT</span></p>
+                    <p>OVERHEAD EXPENSES:<br><span class="acc">$10K ANNUALLY</span></p>
+                    <p>20K, 4 YEAR BUFFER<br>RETAIL PROFIT RE-INVESTED<br>INTO PRODUCTION GROWTH.</p>
+                  </div>
+                  <div class="runwayInner">
+                    <p class="prime">PRODUCT - $300k</p><p>SAMPLING & PRODUCTION</p>
+                    <p>2 SAMPLING SEASONS<br><span class="acc">$20K ANNUALLY</span></p>
+                    <p>2 PRODUCTION SEASONS<br><span class="acc">$40K ANNUALLY</span></p>
+                    <p></p>
+                    <p></p>
+                  </div>
+                  <div class="runwayInner">
+                    <p class="prime">GROWTH - $500k</p><p>CONTENT & MARKETING</p>
+                    <p>CONTENT DEVELOPMENT FOR<br>USE ON WEB, PR, ADS AND SOCIAL<br><span class="acc">$25K ANNUALLY</span></p>
+                    <p>2 FASHION SHOWS SEASONS<br><span class="acc">$40K ANNUALLY</span></p>
+                    <p>ADS<br><span class="acc">$20K ANNUALLY</span></p>
+                    <p>GUREILLA MARKETING<br><span class="acc">$10,000 ANNUALLY</span></p>
+                    <p>COMMUNITY RETAIL EVENTS<br><span class="acc">$5K ANNUALLY</span></p>
+                  </div>
+                </div>
+            </div>
+            <h1 id="dataSect">PROJECTIONS</h1>
+              <div id="projections">
+                <div id="pProjHead">FINANCIAL PROJECTIONS</div>
+                <div id="pProjBody">
+                  <div class="pElement">
+                    <div class="pElHead">Production Budget</div>
+                    <div class="slidebox">
+                      <input class="slider" type="range" min="100" max="500000" value="500000" id="budgetSlider">
+                    </div>
+                    <div class="numberEl">$<span id="budNum">500,000</span></div>
+                  </div>
+                  <div class="pElement">
+                    <div class="pElHead">Avg. Product Cost</div>
+                    <div class="slidebox">
+                      <input class="slider" type="range" min="20" max="500" value="0" id="avgPCSlider">
+                     </div>
+                    <div class="numberEl">$<span id="avpNum">0</span></div>
+                  </div>
+                  <div class="pElement">
+                    <div class="pElHead">Avg. Retail</div>
+                    <div class="slidebox">
+                      <input class="slider" type="range" min="100" max="2000" value="0" id="avgRetailSlider">
+                    </div>
+                    <div class="numberEl">$<span id="avrNum">0</span></div>
+                  </div>
+                  <div class="pElement">
+                    <div class="pElHead">Wholesale % / DTC %</div>
+                    <div class="slidebox">
+                      <input class="slider" type="range" min="-100" max="100" value="0" id="wrperSlider">
+                     </div>
+                    <div class="numberEl"><span id="wrP1">50</span>% WS / <span id="wrP2">50</span>% DTC</div>
+                  </div>
+                  <div class="pElement">
+                    <div class="pElHead">DTC Qty</div>
+                    <div class="slidebox">
+                      <input class="slider" type="range" min="0" max="2000" value="0" id="dtcQtySlider">
+                     </div>
+                    <div class="numberEl"><span id="dcqNum">0</span></div>
+                  </div>
+                  <div class="pElement">
+                    <div class="pElHead">Wholesale Order Qty.</div>
+                    <div class="slidebox">
+                      <input class="slider" type="range" min="0" max="2000" value="0" id="wsOrderSlider">
+                     </div>
+                    <div class="numberEl"><span id="wqtyNum">0</span></div>
+                  </div>
+                  <div class="pElement">
+                    <div class="pElHead">Wholesale Accounts</div>
+                    <div class="slidebox">
+                      <input class="slider" type="range" min="0" max="50" value="1" id="accountsSlider">
+                     </div>
+                    <div class="numberEl"><span id="waNum">1</span></div>
+                  </div>
+                </div>
+                <div id="pProjFooter">
+                  <div></div>
+                  <div>Est. Annual Revenue</div>
+                  <div id="finalNumber">$<span id="finalTotal">0</span></div>
+                </div>
+              </div>
+            <h1 id="teamSect">TEAM</h1>
+            <div id="team">
+                <div id="teamImg">
+                  <div id="team1" class="profile advisors">
+                    <img src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/profiles/Wyclef-Profile-1x1.webp"/>
+                  </div>
+                  <div id="teamMain" class="profile">
+                    <img src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/profiles/SCOGE-profile-1x1.jpg"/>
+                  </div>
+                  <div id="team2" class="profile advisors">
+                    <img src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/profiles/LEX-profile-1x1.webp"/>
+                  </div>
+                </div>
+                <div id="teamInfo">
+                    <div class="body2 acc">
+                      <h2 style="margin-bottom:0px;" id="memberName">Starnilas C. Oge</h2>
+                      <h3 style="margin-top:0px;" id="memberProf">Founder & Creative Director</h3>  
+                    </div>
+                    <div class="body2" id="memberBio">
+                      Founder and Creative Director Starnilas Oge is a self-taught web developer and seasoned fashion designer with a strong background in marketing and brand development. Oge has also developed and directed an artist residency program in Japan for 5 years, giving him a well-rounded perspective on the creative process. Additionally, he has experience working with major consumer brands such as Liberty Fairs and Pearlman Aesthetic Surgery.
+                    </div>
+                    <div class="body2 sec">
+                      Lex Fenwick (The Dow Jones, WSJ)<br>Wyclef Jean (Musician, Philanthropist)
+                    </div>
+                 </div>
+                 <div class="body2 acc" style="text-align:center; font-size:1.5em;">
+                  If you're interested in helping to build the next great luxury fashion brand catering to an untapped global market, join me for a call! I would be more than happy to chat with you and answer any questions you may have.
+                 </div>
+            </div>
+            <div id="contactSect">
+              <div id="contact"><a href="https://calendly.com/scoge/30min" target="_black">I'M IN, LET'S CHAT!</a></div>
+            </div>
+            </div>
+         </div>
+         `;
+  }
+}
+
+customElements.define("scoge-investors", dtInvestors);
+
+export { dtInvestors };
+
