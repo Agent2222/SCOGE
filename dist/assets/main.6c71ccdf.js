@@ -2105,6 +2105,9 @@ but received
                 height: 85%;
                 background: black;
                 position: fixed;
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: auto !important;
                 top: 16%;
                 right: 0%;
                 z-index: 8;
