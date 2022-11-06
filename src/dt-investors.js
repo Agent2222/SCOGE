@@ -89,26 +89,25 @@ class dtInvestors extends HTMLElement {
   }
   
   // A function to move the "campaign" element to right 0%.
-  openCampaign() {
-    this.shadow.getElementById("campaignComp").style.transition = "1s all";
-    this.shadow.getElementById("campaignComp").style.right = "0%";
+  openInvestor() {
+    this.shadow.getElementById("investorComp").style.transition = "1s all";
+    this.shadow.getElementById("investorComp").style.right = "0%";
     clearShop();
     clearSettings();
     clearFilter();
   }
 
   // Close the campaign
-  closeCampaign() {
-    this.shadow.getElementById("yt").src = "https://www.youtube.com/embed/WPccRLEvxW4";
+  closeInvestor() {
     if (window.matchMedia("(max-width: 768px)").matches) {
       // Mobile
-      this.shadow.getElementById("campaignComp").style.transition = "1s all";
-      this.shadow.getElementById("campaignComp").style.right = "-100%";
+      this.shadow.getElementById("investorComp").style.transition = "1s all";
+      this.shadow.getElementById("investorComp").style.right = "-100%";
       window.isMobile = true;
     } else {
       // Desktop
-      this.shadow.getElementById("campaignComp").style.transition = "1s all";
-      this.shadow.getElementById("campaignComp").style.right = "-70%";
+      this.shadow.getElementById("investorComp").style.transition = "1s all";
+      this.shadow.getElementById("investorComp").style.right = "-70%";
     }
   }
 
@@ -145,21 +144,21 @@ class dtInvestors extends HTMLElement {
 
   nextBtsImage() {
     // reset current page to 1 if it is greater than 8
-    if (currentBtsPage >= 46) {
+    if (currentBtsPage >= 9) {
       currentBtsPage = 0;
     }
     currentBtsPage++;
-    this.shadow.getElementById("btsImg").src = `https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/bts/scoge-bts-${currentBtsPage}.webp`;
+    this.shadow.getElementById("btsImg").src = `https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-traction-${currentBtsPage}.jpg`;
   }
 
   preBtsImage() {
     // reset current page to 1 if it is greater than 8
     if (currentBtsPage <= 1) {
-      currentBtsPage = 46;
+      currentBtsPage = 9;
     } else {
       currentBtsPage--;
     }
-    this.shadow.getElementById("btsImg").src = `https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/bts/scoge-bts-${currentBtsPage}.webp`;
+    this.shadow.getElementById("btsImg").src = `https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-traction-${currentBtsPage}.jpg`;
   }
 
     // Sliders Sum
@@ -265,8 +264,8 @@ class dtInvestors extends HTMLElement {
   connectedCallback() {
     this.render();
     this.pageScroll();
-    document.getElementById("campaignBut").addEventListener("click", this.openCampaign.bind(this));
-    this.shadow.getElementById("campIcon").addEventListener("click", this.closeCampaign.bind(this));
+    document.getElementById("investBut").addEventListener("click", this.openInvestor.bind(this));
+    this.shadow.getElementById("campIcon").addEventListener("click", this.closeInvestor.bind(this));
     this.shadow.getElementById("nextGalleryImg").addEventListener("click", this.nextImage.bind(this));
     this.shadow.getElementById("preGalleryImg").addEventListener("click", this.previousImage.bind(this));
     this.shadow.getElementById("nextBtsImg").addEventListener("click", this.nextBtsImage.bind(this));
@@ -314,7 +313,7 @@ class dtInvestors extends HTMLElement {
             ::-webkit-scrollbar-thumb:hover {
               background: var(--secondary); 
             }
-            #campaignComp {
+            #investorComp {
               width: 70%;
               height: 98%;
               background: black;
@@ -437,7 +436,7 @@ class dtInvestors extends HTMLElement {
             }
             #btsGallery {
               width: 100%;
-              height: 90%;
+              height: auto;
               overflow: hidden;
               float: left;
               display: flex;
@@ -446,7 +445,7 @@ class dtInvestors extends HTMLElement {
               margin-top: 2%;
             }
             #btsGallery img {
-              height: 100%;
+              width: 100%;
             }
             #runway {
               width: 80%;
@@ -470,7 +469,7 @@ class dtInvestors extends HTMLElement {
             #runwayInner {
               display: grid;
               grid-template-columns: 1fr;
-              grid-tenplate-rows: 1fr 1fr 1fr 1fr 1fr;s
+              grid-tenplate-rows: 1fr 1fr 1fr 1fr 1fr;
             }
             .primary {
               color: var(--primary);
@@ -499,6 +498,15 @@ class dtInvestors extends HTMLElement {
               display: grid;
               grid-template-columns: 1fr;
               grid-template-rows: 1fr 1fr;
+            }
+            #close {
+              width: 100%;
+              height: 40% !important;
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-template-rows: 1fr;
+              margin-top: 30%;
+              margin-bottom: 0% !important;
             }
             #teamImg {
               display: grid;
@@ -664,8 +672,8 @@ class dtInvestors extends HTMLElement {
               grid-template-rows: 1fr;
               align-items: center;
               justify-items: center;
-              margin-top: 65%;
-              margin-bottom: 25%;
+              margin-top: 0%;
+              margin-bottom: 15%;
             }
             #contact {
               background-color: var(--primary);
@@ -690,31 +698,86 @@ class dtInvestors extends HTMLElement {
               color: black;
             }
             @media screen and (max-width: 769px) {
+              #contactSect {
+                width: 80%;
+                height: 20%;
+                margin-top: 30%;
+                margin-bottom: 15%;
+              }
+              #close {
+                width: 100%;
+                height: 40% !important;
+                margin-top: 75%;
+              }
               #campIcon {
                 display: none;
               }
-              #campaignComp {
+              #investorComp {
                 width: 100%;
-                height: 80%;
+                height: 85%;
                 background: black;
                 position: fixed;
-                top: 20%;
-                right: -100%;
-                z-index: 4;
+                top: 16%;
+                right: 0%;
+                z-index: 8;
                 font-family: "BS-R";
-                padding-top: 2%;
+                padding-top: 0%;
                 overflow-y: visible;
                 overflow-x: visible;
                 transition: 1s;
               }
+              #projections {
+                grid-template-columns: 1fr;
+                grid-template-rows: 5% 80% 15%;
+                width: 90%;
+                margin-left: 5%;
+                margin-right: 5%;
+                padding-left: 0%;
+                height: 80%;
+                padding-top: 0%;
+              }
+              .pElement {
+                width: 100%;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr 1fr 1fr;
+                grid-row-gap: 10%;
+                margin-bottom: 5%;
+              }
+              #pProjFooter {
+                grid-template-columns: 5% 40% 55%;
+              }
+              .numberEl {
+                width: 90%;
+                text-align: right;
+              }
+              #runwayBody {
+                display: grid;
+                grid-template-columns: 1fr;
+                letter-spacing: 1px;
+                line-height: 2em;
+                font-size: 1.2em !important;
+              }
+              #menuHead {
+                height: 10%;
+                width: 100%;
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr 1fr; 
+                grid-template-rows: auto;
+                grid-row-gap: 5px;
+                align-items: center;
+                justify-items: center;
+                margin-bottom: 5%;
+                color: var(--primary);
+              }
               #runway {
-                padding-bottom: 90%;
+                padding-bottom: 5%%;
               }
               #body {
                 height: 100%;
                 width: 96%;
               }
               #header {
+                width: 98%;
                 height: auto;
                 padding-bottom: 2%;
               }
@@ -752,7 +815,7 @@ class dtInvestors extends HTMLElement {
                 grid-template-columns: 1fr;
                 border-radius: 0;
                 width: 15%;
-                height: 10%;
+                height: 20%;
                 left: auto;
                 bottom: 47.5%;
                 right: 5%;
@@ -779,13 +842,13 @@ class dtInvestors extends HTMLElement {
               }
             }
          </style>
-         <div id="campaignComp">
+         <div id="investorComp">
             <div id="campIcon">
               X
             </div>
             <div id="scrollBody">
             <div id="header">
-              <div id="head">Investor Presentation (2022)</div>
+              <div id="head">Investor Presentation</div>
               <div id="sub">Version 1 - <span class="acc" style="cursor:pointer;"><a href="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/files/SCOGE-INVESTOR-PRE22-R1.pdf" id="pdfDL" target="_blank">(Download PDF Version)</a></span></div>
               <div id="menuHead">
                 <div style="color: var(--secondary); border-color:var(--secondary);" id="introMenu" class="menu-item">INTRO</div>
@@ -877,7 +940,7 @@ class dtInvestors extends HTMLElement {
                 <span>|</span>
                 <div id="nextBtsImg" class="arrow">&#9658;</div>
               </div>
-              <img id="btsImg" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/bts/scoge-bts-1.webp"/>
+              <img id="btsImg" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-traction-1.jpg"/>
             </div>
             <div class="body2">
               We have the vision and objective, now we need the team. So far, the development of the SCOGÉ brand is attributed to it’s founder, friendships, and temporary contract help. Help is capital intensive, but delegation is key.<br><br>Right now, we’re focused on three main things:
@@ -1011,9 +1074,11 @@ class dtInvestors extends HTMLElement {
                       Lex Fenwick (The Dow Jones, WSJ)<br>Wyclef Jean (Musician, Philanthropist)
                     </div>
                  </div>
-                 <div class="body2 acc" style="text-align:center; font-size:1.5em;">
-                  If you're interested in helping to build the next great luxury fashion brand catering to an untapped global market, join me for a call! I would be more than happy to chat with you and answer any questions you may have.
-                 </div>
+            </div>
+            <div id="close">
+              <div class="body2 acc" style="text-align:center; font-size:1.5em;">
+                If you're interested in helping to build the next great luxury fashion brand catering to an untapped global market, join me for a call! I would be more than happy to chat with you and answer any questions you may have.
+              </div>
             </div>
             <div id="contactSect">
               <div id="contact"><a href="https://calendly.com/scoge/30min" target="_black">I'M IN, LET'S CHAT!</a></div>

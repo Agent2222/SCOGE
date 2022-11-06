@@ -16,11 +16,11 @@
         <link rel="shortcut icon" type="image/png" href="/assets/favicon.90cce2f7.png">
         
         
-      <script type="module" crossorigin src="/assets/main.f311e60d.js"></script>
+      <script type="module" crossorigin src="/assets/main.efbe5963.js"></script>
       <link rel="modulepreload" href="/assets/wScoge.fc00b881.js">
       <link rel="stylesheet" href="/assets/wScoge.018beb3d.css">
     </head>
-    <body id="main" onload="loadShop();">
+    <body id="main" onload="loadShop();getParamsDesktop();">
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N33VQSX"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -28,7 +28,7 @@
     <div id="subText1" class="dialogue"><p></p></div>
     <div id="subText2" class="dialogue"><span class="answerOptions" id="st2Ans1"></span><span class="answerOptions" id="st2Ans2"></span><span class="answerOptions" id="st2Ans3"></span></div>
     <scoge-subscribe subscribe="subscribe" id="subscribeComp"></scoge-subscribe>
-    <!-- <scoge-investors invest="invest" id="getInvestors"></scoge-investors> -->
+    <scoge-investors invest="invest" id="getInvestors" style="display: none;"></scoge-investors>
     <scoge-camp campaign="camp" id="getCamp"></scoge-camp>
     <!-- <scoge-updates updates="updates" id="updatesModel"></scoge-updates> -->
     <get-wallet wallet="wallet1" style="display:none;" id="getWallet"></get-wallet>
@@ -177,7 +177,8 @@
         <div id="gMenu">
             <div id="shopBut" class="mainMenuBut" onclick="shopping();">SHOP</div>
             <div id="settingsBut" class="mainMenuBut" onclick="openSettings();">INFO</div>
-            <div id="campaignBut" class="mainMenuBut">CAMPAIGN</div>         
+            <div id="campaignBut" class="mainMenuBut">CAMPAIGN</div>   
+            <div id="investBut" class="mainMenuBut" style="display:none;" onclick="openInvestors()">INVESTORS</div>         
         </div>
         <div id="bg2">
             <img src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/campaign/scoge-ch1-6.webp" alt=""/>

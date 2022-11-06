@@ -62,7 +62,7 @@ class mobileShop1 extends HTMLElement {
     this.shadow.getElementById("LoadBG").style.display = "grid";
     var shopParent = this.shadow.getElementById("mb1");
     await commerce.products
-      .list({ sortDirection: "desc" })
+      .list({ limit: 100, sortDirection: "desc" })
       .then((product) => allProducts.push(product.data));
     allProducts[0].forEach((product) => {
       var productCont = document.createElement("div");

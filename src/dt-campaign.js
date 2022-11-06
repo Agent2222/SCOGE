@@ -30,6 +30,7 @@ class dtCampaign extends HTMLElement {
   openCampaign() {
     this.shadow.getElementById("campaignComp").style.transition = "1s all";
     this.shadow.getElementById("campaignComp").style.right = "0%";
+    closeInvestor();
     clearShop();
     clearSettings();
     clearFilter();

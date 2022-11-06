@@ -36,6 +36,7 @@ var shopActive = "closed";
 var settingsActive = false;
 window.shoploaded = false;
 window.viewThisProduct = "";
+window.investorsView = false;
 window.urlParamsActive = false;
 window.inUniverse = false;
 
@@ -254,6 +255,7 @@ window.toggleShop = () => {
 window.openSettings = () => {
   window.clearFilter();
   clearShop();
+  closeInvestor();
   var shadow = document.getElementById("getCamp").shadowRoot
   document.getElementById("getCamp").shadowRoot.getElementById("campaignComp").style.transition = "1s all";
   document.getElementById("getCamp").shadowRoot.getElementById("campaignComp").style.right = "-70%";
@@ -1423,14 +1425,41 @@ window.mainMenuPosition = (bg,p1,p2,p3,p4) => {
   });
 }
 
+// Open Investors
+window.activateInvestors = () => {
+  document.getElementById("getInvestors").style.display = "block";
+  document.getElementById("investBut").style.display = "block";
+  if (window.matchMedia("(max-width: 768px)").matches) {
+    // Mobile
+    document.getElementById("settingsBut").style.display = "none";
+  }
+}
+
+// Open Investors
+window.openInvestors = () => {
+  document.getElementById("getCamp").shadowRoot.getElementById("campaignComp").style.transition = "1s all";
+  document.getElementById("getCamp").shadowRoot.getElementById("campaignComp").style.right = "-70%";
+  document.getElementById("getInvestors").shadowRoot.getElementById("investorComp").style.transition = "1s all";
+  document.getElementById("getInvestors").shadowRoot.getElementById("investorComp").style.right = "0%";
+}
+
+window.closeInvestor = () => {
+  document.getElementById("getInvestors").shadowRoot.getElementById("investorComp").style.transition = "1s all";
+  document.getElementById("getInvestors").shadowRoot.getElementById("investorComp").style.right = "-100%";
+}
 
 // URL PARAMS OPEN SHOP
-// window.getParamsDesktop = () => {
-//   const params = new URLSearchParams(location.search)
-//   viewThisProduct = params.get("Product");
-//   urlParamsActive = true;
-//   toggleShop();
-// }
+window.getParamsDesktop = () => {
+  const params = new URLSearchParams(location.search)
+  // viewThisProduct = params.get("Product");
+  // urlParamsActive = true;
+  investorsView = params.get("Investors");
+  console.log(investorsView);
+  if (investorsView === "true") {
+    activateInvestors();
+  }
+  // toggleShop();
+}
 
 // window.mainMenuPosition("black","0%","8%","36%","56%")
 // window.mainMenuPosition("","0%","0%","0%","0%","0%")
