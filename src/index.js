@@ -1454,6 +1454,7 @@ window.getParamsDesktop = () => {
   // viewThisProduct = params.get("Product");
   // urlParamsActive = true;
   investorsView = params.get("Investors");
+  console.log(investorsView);
   if (investorsView === "true") {
     activateInvestors();
   }
