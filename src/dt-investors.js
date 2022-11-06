@@ -243,11 +243,11 @@ class dtInvestors extends HTMLElement {
 
   // Change memberName, memberProf, and memberBio when team image is clicked. team1 is clef, teamMain is oge, team2 is lex.
   team() {
-    this.shadow.getElementById("team1").addEventListener("click", function() {
-      this.shadow.getElementById("memberName").innerHTML = "Wyclef Jean";
-      this.shadow.getElementById("memberProf").innerHTML = "Musician, Philanthropist";
-      this.shadow.getElementById("memberBio").innerHTML = clefBio;
-    } .bind(this));
+    // this.shadow.getElementById("team1").addEventListener("click", function() {
+    //   this.shadow.getElementById("memberName").innerHTML = "Wyclef Jean";
+    //   this.shadow.getElementById("memberProf").innerHTML = "Musician, Philanthropist";
+    //   this.shadow.getElementById("memberBio").innerHTML = clefBio;
+    // } .bind(this));
     this.shadow.getElementById("teamMain").addEventListener("click", function() {
       this.shadow.getElementById("memberName").innerHTML = "Starnilas Oge";
       this.shadow.getElementById("memberProf").innerHTML = "Founder & Creative Director";
@@ -509,27 +509,38 @@ class dtInvestors extends HTMLElement {
               margin-bottom: 0% !important;
             }
             #teamImg {
+              width: 100%;
               display: grid;
-              grid-template-columns: 1fr 1fr 1fr;
+              grid-template-columns: 1fr 1fr;
               grid-template-rows: 1fr;
             }
             .profile img {
-              width: 100%;
+              width: 60%;
               border-radius: 10px;
             }
             .advisors {
               display: grid;
               grid-template-columns: 1fr;
               grid-template-rows: 1fr;
-              justify-items: center;
+              justify-items: start;
               align-items: center;
             }
             .advisors img {
-              width: 40%;
+              width: 30%;
+              transition: .8s all;
+            }
+            #teamMain {
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-template-rows: 1fr;
+              justify-items: center;
+              align-items: center;
+            }
+            #teamMain img {
               transition: .8s all;
             }
             .advisors img:hover {
-              width: 50%;
+              width: 35%;
             }
             #menuHead div {
               padding-bottom: 2px;
@@ -732,6 +743,7 @@ class dtInvestors extends HTMLElement {
                 overflow-x: visible;
                 transition: 1s;
               }
+
               #projections {
                 grid-template-columns: 1fr;
                 grid-template-rows: 5% 80% 15% !important;
@@ -1062,9 +1074,6 @@ class dtInvestors extends HTMLElement {
             <h1 id="teamSect">TEAM</h1>
             <div id="team">
                 <div id="teamImg">
-                  <div id="team1" class="profile advisors">
-                    <img src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/profiles/Wyclef-Profile-1x1.webp"/>
-                  </div>
                   <div id="teamMain" class="profile">
                     <img src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/profiles/SCOGE-profile-1x1.jpg"/>
                   </div>
@@ -1081,7 +1090,8 @@ class dtInvestors extends HTMLElement {
                       Founder and Creative Director Starnilas Oge is a self-taught web developer and seasoned fashion designer with a strong background in marketing and brand development. Oge has also developed and directed an artist residency program in Japan for 5 years, giving him a well-rounded perspective on the creative process. Additionally, he has experience working with major consumer brands such as Liberty Fairs and Pearlman Aesthetic Surgery.
                     </div>
                     <div class="body2 sec">
-                      Lex Fenwick (The Dow Jones, WSJ)<br>Wyclef Jean (Musician, Philanthropist)
+                      Advisor:<br>
+                      Lex Fenwick (The Dow Jones, WSJ)
                     </div>
                  </div>
             </div>
