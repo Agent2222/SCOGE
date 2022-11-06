@@ -99,7 +99,6 @@ class dtInvestors extends HTMLElement {
 
   // Close the campaign
   closeInvestor() {
-    this.shadow.getElementById("yt").src = "https://youtu.be/f_yQrIwtgYE";
     if (window.matchMedia("(max-width: 768px)").matches) {
       // Mobile
       this.shadow.getElementById("investorComp").style.transition = "1s all";
