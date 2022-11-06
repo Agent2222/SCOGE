@@ -698,16 +698,19 @@ class dtInvestors extends HTMLElement {
               color: black;
             }
             @media screen and (max-width: 769px) {
+              #head {
+                font-size: 1.8em;
+              }
               #contactSect {
                 width: 80%;
                 height: 20%;
-                margin-top: 30%;
-                margin-bottom: 15%;
+                margin-top: 250px;
+                margin-bottom: 150px;
               }
               #close {
                 width: 100%;
                 height: 40% !important;
-                margin-top: 75%;
+                margin-top: 500px;
               }
               #campIcon {
                 display: none;
@@ -720,23 +723,23 @@ class dtInvestors extends HTMLElement {
                 display: grid;
                 grid-template-columns: 1fr;
                 grid-template-rows: auto !important;
-                top: 16%;
+                top: 18%;
                 right: 0%;
                 z-index: 8;
                 font-family: "BS-R";
-                padding-top: 0%;
+                padding-top: 1%;
                 overflow-y: visible;
                 overflow-x: visible;
                 transition: 1s;
               }
               #projections {
                 grid-template-columns: 1fr;
-                grid-template-rows: 5% 80% 15%;
+                grid-template-rows: 5% 80% 15% !important;
                 width: 90%;
                 margin-left: 5%;
                 margin-right: 5%;
                 padding-left: 0%;
-                height: 80%;
+                height: 100%;
                 padding-top: 0%;
               }
               .pElement {
@@ -797,10 +800,11 @@ class dtInvestors extends HTMLElement {
                 display: none;
               }
               #imageInterface {
+                background-color: var(--accent);
                 grid-template-columns: 1fr;
                 border-radius: 0;
-                width: 15%;
-                height: 15%;
+                width: 10%;
+                height: 10%;
                 left: auto;
                 right: 5%;
                 border-radius: 5px;
@@ -815,12 +819,13 @@ class dtInvestors extends HTMLElement {
                 display: none;
               }
               #imageInterface2 {
+                background-color: var(--accent);
                 grid-template-columns: 1fr;
                 border-radius: 0;
-                width: 15%;
+                width: 10%;
                 height: 20%;
                 left: auto;
-                bottom: 47.5%;
+                bottom: 10.5%;
                 right: 5%;
                 border-radius: 5px;
               }
