@@ -739,7 +739,7 @@ class dtInvestors extends HTMLElement {
                 margin-left: 5%;
                 margin-right: 5%;
                 padding-left: 0%;
-                height: 100%;
+                height: auto !important;
                 padding-top: 0%;
               }
               .pElement {
@@ -751,6 +751,8 @@ class dtInvestors extends HTMLElement {
               }
               #pProjFooter {
                 grid-template-columns: 5% 40% 55%;
+                height: auto;
+                margin-top: 50px;
               }
               .numberEl {
                 width: 90%;

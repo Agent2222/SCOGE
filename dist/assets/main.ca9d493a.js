@@ -2127,7 +2127,7 @@ but received
                 margin-left: 5%;
                 margin-right: 5%;
                 padding-left: 0%;
-                height: 100%;
+                height: auto !important;
                 padding-top: 0%;
               }
               .pElement {
@@ -2139,6 +2139,8 @@ but received
               }
               #pProjFooter {
                 grid-template-columns: 5% 40% 55%;
+                height: auto;
+                margin-top: 50px;
               }
               .numberEl {
                 width: 90%;
