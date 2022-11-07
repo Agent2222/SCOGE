@@ -112,15 +112,20 @@ class dtInvestors extends HTMLElement {
   }
 
   // A function to animate the "looks" element to horizontally scroll slowly
-  pageScroll() {
-    var looks = this.shadow.querySelector("#looks");
-    looks.scrollLeft += 1;
-    setTimeout(this.pageScroll.bind(this), 10);
-    // when the scroll reaches the end, reset it to the beginning
-    if (looks.scrollLeft == looks.scrollWidth - looks.clientWidth) {
-      looks.scrollLeft = 0;
-    }
-  }
+  // pageScroll() {
+  //   var looks = this.shadow.querySelector("#looks");
+  //   looks.scrollLeft += 1;
+  //   setTimeout(this.pageScroll.bind(this), 10);
+  //   // when the scroll reaches the end, reset it to the beginning
+  //   if (looks.scrollLeft == looks.scrollWidth - looks.clientWidth) {
+  //     looks.scrollLeft = 0;
+  //   }
+  //   // Stop the scroll when the mouse is over the "#looks" element and resume when the mouse is out of the "looks" element
+  //   looks.addEventListener("mouseover", () => {
+  //     looks.scrollLeft += 0;
+  //   }
+  //   );
+  // }
 
   // Campaign interface
   nextImage() {
@@ -263,7 +268,7 @@ class dtInvestors extends HTMLElement {
 // Functions
   connectedCallback() {
     this.render();
-    this.pageScroll();
+    // this.pageScroll();
     document.getElementById("investBut").addEventListener("click", this.openInvestor.bind(this));
     this.shadow.getElementById("campIcon").addEventListener("click", this.closeInvestor.bind(this));
     this.shadow.getElementById("nextGalleryImg").addEventListener("click", this.nextImage.bind(this));
@@ -917,14 +922,14 @@ class dtInvestors extends HTMLElement {
               <img src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-full-products-opt1.jpeg" alt=""/>
             </div>
             <div class="body2">
-              Our products are sourced and created in nyc, with a dedicated approach to up-cycling unused fabrics, trims and designs from previous seasons. We champion designing within our own world, defining our own trends, and becoming a part of the next gaurd of luxury fashion.<br><br>"Despite widespread staffing shortages and supply chain issues, the <span class="acc">fashion and apparel industry saw $180.5 billion in e-commerce revenue in 2021</span>, up from $145 billion in 2020." - 2022 Global Ecommerce Report: Fashion and Apparel
+              Our products are sourced and created in NYC, with a dedicated approach to up-cycling unused fabrics, trims and designs from previous seasons. We champion designing within our own world, defining our own trends, and becoming a part of the next guard of luxury fashion.<br><br>"Despite widespread staffing shortages and supply chain issues, the <span class="acc">fashion and apparel industry saw $180.5 billion in e-commerce revenue in 2021</span>, up from $145 billion in 2020." - 2022 Global Ecommerce Report: Fashion and Apparel
             </div>
             <h1 id="edgeSect">EDGE</h1>
             <div class="generalImages">
               <img src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-about-3.webp"/>
             </div>
             <div class="body2">
-              Because we’ve created our own world, with original places, cultures and stories, our edge is our originality.The products and experiences we create are glimpses into this world. And each vivid exploration creates an opportunity to develop ip that deeply resonates with our customers. Anyone can make a story about star wars. But there will always be one star wars™            
+              The products and experiences we create are glimpses into a new bold world. We’ve created our own world, with original places, cultures and stories, our edge is our originality. And each vivid exploration creates an opportunity to develop ip that deeply resonates with our customers. Anyone can make a story about star wars. But there will always be one star wars™            
             </div>
             <h1 id="modelSect">MODEL</h1>
             <div class="body2">
