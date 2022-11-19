@@ -952,14 +952,14 @@ class dtInvestors extends HTMLElement {
               <ul>
                 <li>Global tradeshows: Expanding wholesale accounts globally.</li>
                 <li>Global retail: Flagship SCOGÉ experiential retail locations in NYC.</li>
-                <li>Enclusive seasonal fashion shows: 2 fashion presentation shows per year to develop partnerships and demand.</li>
+                <li>Inclusive seasonal fashion shows: 2 fashion presentation shows per year to develop partnerships and demand.</li>
                 <li>Content distribution: Distributing captured content where our customers live online and offline.</li>
                 <li>Leverage creative community: Marketing partnerships to reach extended audiences and customers.</li>
               </ul>
             </div>
             <h1 id="tractionSect">TRACTION</h1>
             <div class="body2">
-              We’ve participated in the contemporary fashion trade-show liberty fairs, garnering wholesale interest from retailers nationwide, and obtained our first global sales agent. We successfully launched our first experiential retail concept, selling out of several products, and expanding our local community of fashion enthusiasts and creatives customer base.<br><br>After our retail concept we presented our frist nyfw runway show, followed by launching our first experiential art exhibition to display exclusive products and expand our community of creative customers. Following our art exhibition, we produced our second and largest NYFW presentation to date. Expanding our visibility to a wider fashion industry audience of fashion editors and wholesalers.
+              We’ve participated in the contemporary fashion trade-show liberty fairs, garnering wholesale interest from retailers nationwide, and obtained our first global sales agent. We successfully launched our first experiential retail concept, selling out of several products, and expanding our local community of fashion enthusiasts and creatives customer base.<br><br>After our retail concept we presented our first NYFW runway show, followed by launching our first experiential art exhibition to display exclusive products and expand our community of creative customers. Following our art exhibition, we produced our second and largest NYFW presentation to date. Expanding our visibility to a wider fashion industry audience of fashion editors and wholesalers.
             </div>
             <div id="btsGallery">
               <div id="imageInterface2">

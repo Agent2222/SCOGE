@@ -1,5 +1,5 @@
 
-var trackname = "T.A.O.S City Radio";
+var trackname = "SCOGÉ Radio";
 var currentAudio = null;
 var currenttrack = 0;
 var trackList = [
