@@ -10,7 +10,7 @@ const commerce = new Commerce(`${VITE_CommerceKey}`, true);
 // var stripe = Stripe(`${VITE_StripeKey}`);
 // var elements = stripe.elements();
 var allProducts = [];
-var productsLoaded = false;
+var productsloaded = false;
 var currentShopProduct;
 var shopPage = 1;
 var currentCart;
@@ -1510,7 +1510,7 @@ class mobileShop1 extends HTMLElement {
                     <div id="cartItems">
                         <div class="productCont">
                             <div class="pcLeft">
-                                <img src="../assets/images/shoptest/shop2.jpg"> 
+                                <img src=""> 
                             </div>
                             <div class="pcRight">
                                 <p class="cartProName">TESTING PRO NAME</p>
@@ -1525,7 +1525,7 @@ class mobileShop1 extends HTMLElement {
                         </div>
                         <div class="productCont">
                             <div class="pcLeft">
-                                <img src="../assets/images/shoptest/shop4.jpg"> 
+                                <img src=""> 
                             </div>
                             <div class="pcRight">
                                 <p class="cartProName">TESTING PRO NAME</p>
@@ -1549,7 +1549,7 @@ class mobileShop1 extends HTMLElement {
                 <div id="mb2">
                     <div id="mainImage">
                         <img id="scroll" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/scroll.png"/>
-                        <img id="mainImageCont" src="../assets/images/shoptest/shop3.jpg">
+                        <img id="mainImageCont" src="">
                     </div>
                     <div id="allImages">
                     </div>
