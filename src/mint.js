@@ -31,26 +31,32 @@ class mintingScreen extends HTMLElement {
   toggleNftScreen = () => {
     var mainScreen = this.shadow.getElementById("mainScreen");
     var viewing = this.shadow.getElementById("svgBox");
-    var canvas = document.getElementById("universe");
-    var menuShadow = document.getElementById("getUniMenu").shadowRoot;
+    var canvas = document.querySelector("canvas");
+    var dialogue = document.querySelectorAll(".dialogue");
     mainScreen.style.transition = "1s all";
-    viewing.style.display = "block";
     viewing.style.transition = ".5s all";
     canvas.style.transition = "1s all";
     if (mainScreenOpen === false) {
-      canvas.style.filter = "blur(5px)";
+      dialogue.forEach((el)=> {
+        el.style.transition = ".5s all";
+        el.style.opacity= "0%";
+      })
+      canvas.style.filter = "blur(9px)";
       mainScreen.style.display = "grid";
+      viewing.style.transform = "scaleX(-1)"
       setTimeout(()=> {
         mainScreen.style.opacity = "100%";
         mainScreenOpen = true;
       },200)
       return;
     } else {
-      viewing.style.display = "none";
-      menuShadow.getElementById("uniMenu").style.filter = "blur(0px)";
-      menuShadow.getElementById("nftShop").style.opacity = "80%";
+      dialogue.forEach((el)=> {
+        el.style.transition = ".5s all";
+        el.style.opacity = "100%";
+      })
       canvas.style.filter = "blur(0px)";
       mainScreen.style.opacity = "0%";
+      viewing.style.transform = "scaleX(1)"
       setTimeout(()=> {
         mainScreen.style.display = "none";
         mainScreenOpen = false;
@@ -201,9 +207,9 @@ class mintingScreen extends HTMLElement {
               left: 0;
               top: 0;
               color: red;
-              z-index: 8;
+              z-index: 7;
               background: rgba(0,0,0,.3);
-              box-shadow: inset 0 0 800px black;
+              box-shadow: inset 0 0 100px black;
               display: none;
               grid-template-columns: 1fr;
               grid-template-rows: 1fr;
@@ -311,13 +317,13 @@ class mintingScreen extends HTMLElement {
               transition: .5s all;
             } 
             #uiIcon {
-              // height: 40%;
-              // width: 40%;
+              height: 40%;
+              width: 40%;
               position: fixed;
               right: 0;
               top: 0;
-              z-index: 8;
-              transition: .5s all;
+              z-index: 7;
+              mix-blend-mode: screen;
             }
             #uiIcon img {
               height: 100%;
@@ -328,17 +334,14 @@ class mintingScreen extends HTMLElement {
               right: 5%;
               bottom: 45%;
               transition: .5s all;
-              display: none;
-              z-index: 7;
-              stroke: #ff002d;
             }
             #svgBox svg {
               height: 100%;
+              opacity: 50%;
               transition: .5s all;
             }
             #svgBox:hover > svg {
-              opacity: 100% !important;
-              transform: scale(1.1);
+              opacity: 100%;
             }
             #videoM {
               height: 100%;
@@ -380,19 +383,6 @@ class mintingScreen extends HTMLElement {
             a:active {
               color: #ff002d;
             }
-            #exit {
-              font-family: "BS-R";
-              width: 100%;
-              align-items: center;
-              text-align: center;
-            }
-            .pills {
-              transition: .5s all;
-            }
-            .pills:hover {
-              transform: scale(1.1);
-              opacity: 100% !important;
-            }
          </style>
          <div id="list"><a href="https://docs.google.com/forms/d/1HEt1jfX4g68LcuHXUyFkmmX4GYLFEfXgT-CQbBwKUSI/edit" target="_blank" id="join">- JOIN WHITELIST -</a></div>
          <video id="videoM" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/videos/Alpha-End-Scoge.mp4">
@@ -400,9 +390,9 @@ class mintingScreen extends HTMLElement {
          <div id="mainScreen">
             <div id="innerScreen">
               <div id="nftAssetGallery">
-                <img class="pills" id="red" style="opacity:31%;" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/nAssets/RAG.png"/>
+                <img class="pills" id="red" style="opacity:21%;" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/nAssets/RAG.png"/>
                 <img class="pills" id="black" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/nAssets/BG1.png"/>
-                <img class="pills" id="blue" style="opacity:31%;" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/nAssets/BGG.png"/>
+                <img class="pills" id="blue" style="opacity:21%;" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/nAssets/BGG.png"/>
               </div>
               <div id="mintUiActions">
                 <div id="mintUiActionsInner">
@@ -423,8 +413,7 @@ class mintingScreen extends HTMLElement {
          </div>
          <div id="uiIcon">
          <div id="svgBox">
-          <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65.05 52.83"><defs><style>.cls-1{fill:#ff002d;}</style></defs><path class="cls-1" d="M57.56,50.14H22.43a.64.64,0,0,1-.63-.64V32.61a.64.64,0,1,1,1.27,0V48.86H56.93V4.24H23.07V21.45a.64.64,0,1,1-1.27,0V3.6A.64.64,0,0,1,22.43,3H57.56a.64.64,0,0,1,.64.64V49.5A.64.64,0,0,1,57.56,50.14Z"/><path class="cls-1" d="M35.38,27.66H8.07a.64.64,0,1,1,0-1.27H35.38a.64.64,0,0,1,0,1.27Z"/><path class="cls-1" d="M13.89,32.39a.63.63,0,0,1-.37-.12L6.88,27.54a.64.64,0,0,1,0-1l6.64-4.73a.63.63,0,0,1,.89.15.65.65,0,0,1-.15.89L8.35,27l5.91,4.2a.64.64,0,0,1-.37,1.16Z"/></svg>
-          <div id="exit">Exit</div>
+          <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 903.48 910.48"><defs><style>.cls-1{fill:#fff;}.cls-2{fill:none;stroke:#fff;stroke-miterlimit:10;stroke-width:80px;}</style></defs><path class="cls-1" d="M676.48,201.59c-67.61,0-122.42,114-122.42,254.72S608.87,711,676.48,711,798.91,597,798.91,456.31,744.1,201.59,676.48,201.59Zm78.29,196.08c-10.49,2.15-23.12-16.2-28.21-41s-.72-46.63,9.77-48.78,23.11,16.19,28.2,41S765.25,395.51,754.77,397.67Z"/><path class="cls-2" d="M676.48,225.64l18.6-109a1.36,1.36,0,0,0-2-1.4L140.76,437.43a4.42,4.42,0,0,0-.22,7.49L675.36,800.84a.68.68,0,0,0,1-.6l-7.55-140.55Z"/></svg>
          </div>
         </div>
          `;

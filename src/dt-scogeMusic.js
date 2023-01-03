@@ -114,7 +114,6 @@ class dtMusic extends HTMLElement {
     this.render();
     this.shadow.querySelector("#playBtn").addEventListener("click", () => {
       this.playMusic();
-      this.shadow.getElementById("ntxBtn").style.display = "block";
     });
     this.shadow.querySelector("#pauseBtn").addEventListener("click", () => {
       this.pauseMusic();
@@ -144,7 +143,7 @@ class dtMusic extends HTMLElement {
               --accent: #94be8c;
             }
             #musicInterface {
-                position: absolute;
+                position: fixed;
                 top: 9%;
                 right: 8%;
                 width: auto;
@@ -158,14 +157,13 @@ class dtMusic extends HTMLElement {
                 padding-right: 3em;
                 background-image: linear-gradient(to right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8),rgba(0, 0, 0, 0.8),rgb(0, 0, 0, 0.9),rgb(0, 0, 0, 0.9)); 
                 font-size: 12px;
-                z-index: 4;
+                z-index: 3;
             }
             #pauseBtn {
               display: none;
             }
             #ntxBtn {
               fill: var(--accent);
-              display: none;
             }
             svg {
               fill: var(--primary);
@@ -183,7 +181,7 @@ class dtMusic extends HTMLElement {
             @media screen and (max-width: 769px) {
               #musicInterface {
                 bottom: 0% !important;
-                width: 90%;
+                width: 100%;
                 height: 10%;
                 top: auto;
                 bottom: 0%;
@@ -199,8 +197,6 @@ class dtMusic extends HTMLElement {
                 border-top: .2px solid var(--accent);
                 z-index: 5;
                 position: fixed;
-                padding-right: 5%;
-                padding-right: 5%;
               }
               #cat {
                 position: fixed;
@@ -208,10 +204,10 @@ class dtMusic extends HTMLElement {
                 left: auto;
                 bottom: 18%;
                 top: auto;
-                filter: contrast(1);
+                filter: contrast(110%);
                 display: none;
-                width: 150px !important;
-                height: 150px !important;
+                width: 100px !important;
+                height: 100px !important;
               }
             }
          </style>

@@ -18,7 +18,7 @@ import Cycles "mo:base/ExperimentalCycles";
 import D "mo:base/Debug";
 import Float64 "mo:base/Float";
 
-actor DIP721 {
+actor Dip721Nft {
     // public type Vec = {
     //     Text;
     //      {
@@ -70,7 +70,6 @@ actor DIP721 {
 
     // Variables
     // Canister State Here
-    stable let admin : Text = "qpbuq-myqvw-yoaff-265ad-5g6xu-wx5dl-zzd7y-y6oak-zo4uf-x3ozb-dqe";
     stable var ledger : [var Metadata.TokenMetadata] = [var];
     stable var blackPillsBeta : Nat = 200;
     stable var logo_ : ?Text = ?"https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/bankoo-logo-square2.jpg";
@@ -83,7 +82,7 @@ actor DIP721 {
     stable var total_transactions_ : Nat = Cycles.balance();
     stable var total_unique_holders_ : Nat = Cycles.balance();
     stable var total_supply_ : Nat = blackPillsBeta;
-    stable var owner : Text = "qpbuq-myqvw-yoaff-265ad-5g6xu-wx5dl-zzd7y-y6oak-zo4uf-x3ozb-dqe";
+    stable var owner : Text = "pzf4c-tunkg-cx6cq-wquml-hvydb-rku72-o45ud-b7ote64ctg-mtxls-oqe";
     stable var supportedInterface_ : [SupportedInterface] = [];
     // @DIP721
 
@@ -128,11 +127,6 @@ actor DIP721 {
         return name_
     };
 
-    // admin : () -> (text) query;
-    public query func adminUser () : async Text {
-        return admin
-    };
-
     // symbol : () -> (opt text) query;
     public query func symbol () : async ?Text {
         return symbol_
@@ -164,15 +158,15 @@ actor DIP721 {
 
     // balanceOf: (principal) -> (variant { Ok : nat; Err : NftError }) query;
     // How many nfts does the user own?
-    public query func balanceOf (user: Principal) : async Result.Result<Nat64, NftError> {
+    public query func balanceOf ( user : Principal) : async Result.Result<Nat,NftError> {
         if (ledger.size() != 0) {
-            #ok(Nat64.fromNat(Array.filter<Metadata.TokenMetadata>(Array.freeze(ledger), func (token) {
-                token.owner == ?user;
-            }).size()))
+        #ok(Array.filter<Metadata.TokenMetadata>(Array.freeze(ledger), func (token) {
+            token.owner == ?user;
+        }).size())
         } else {
             #err(#NotFound);
         }
-    };
+    }; 
 
     // ownerOf : (nat) -> (variant { Ok : opt principal; Err : NftError }) query;
     // Who owns this NFT?
@@ -261,7 +255,7 @@ actor DIP721 {
 
     // setCustodians : (vec principal) -> ();
     public shared(msg) func setCustodians (newCustodian : [Principal]) : async () {
-        if (msg.caller == Principal.fromText(admin)) {
+        if (msg.caller == Principal.fromText(owner)) {
             custodians_ := newCustodian;
         };
     };

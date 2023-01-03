@@ -28,7 +28,6 @@ class dtCampaign extends HTMLElement {
   
   // A function to move the "campaign" element to right 0%.
   openCampaign() {
-    document.getElementById("updatesModal").style.display = "none";
     this.shadow.getElementById("campaignComp").style.transition = "1s all";
     this.shadow.getElementById("campaignComp").style.right = "0%";
     closeInvestor();
@@ -159,7 +158,7 @@ class dtCampaign extends HTMLElement {
               position: fixed;
               top: 0;
               right: -70%;
-              z-index: 5;
+              z-index: 4;
               font-family: "BS-R";
               padding-top: 2%;
               overflow-y: visible;

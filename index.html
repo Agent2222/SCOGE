@@ -10,17 +10,16 @@
     <!-- End Google Tag Manager -->
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
         <title>SCOGÉ | Official Website</title>
         <meta name="description" content="Shop the SCOGÉ Official Store, an exclusive brand of avant-garde clothing, sportswear for men, and textile art.">
-        <meta name="keywords" content="mens fashion, designer fashion, fashion designers, designer mens clothes, new york fashion designer">
         <meta property="twitter:title" content="SCOGÉ | Official Website">
         <meta property="twitter:description" content="Shop the SCOGÉ Official Store, an exclusive brand of avant-garde clothing, sportswear for men, and textile art.">
         <link rel="shortcut icon" type="image/png" href="/assets/images/favicon.png">
         <link href="./src/wScoge.css" rel="stylesheet">
         <script src="./src/index.js" type="module"></script>
     </head>
-    <body id="main">
+    <body id="main" onload="loadShop();getParamsDesktop();">
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N33VQSX"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -30,9 +29,9 @@
     <scoge-subscribe subscribe="subscribe" id="subscribeComp"></scoge-subscribe>
     <scoge-investors invest="invest" id="getInvestors" style="display: none;"></scoge-investors>
     <scoge-camp campaign="camp" id="getCamp"></scoge-camp>
-    <scoge-updates updates="updates" id="updatesModal" style="display:none;"></scoge-updates>
-    <mint-screen mint="mint1" style="display:block;" id="getNfts"></mint-screen>
-    <scoge-UniMenu uniMenu="uniMenu" id="getUniMenu"></scoge-UniMenu>
+    <!-- <scoge-updates updates="updates" id="updatesModel"></scoge-updates> -->
+    <get-wallet wallet="wallet1" style="display:none;" id="getWallet"></get-wallet>
+    <mint-screen mint="mint1" style="display:none;" id="getNfts"></mint-screen>
     <!---------------------------------MOBILE SHOP----------------------------------------->
     <mobile-shop1 product="product1" style="display:none;" id="mobileShop"></mobile-shop1>
     <scoge-music music="music" id="music"></scoge-music>
@@ -173,32 +172,16 @@
             <img src="./assets/images/sl-r.png"/>
         </div>
         <canvas style="width: 100%; height: 100%; display: block;" id="renderCanvas"></canvas>
-        <div id="mainCont" style="width: 83%; height: 100%; margin: 0; display: flex; justify-content: center;">
-            <scoge-dialogue dialogue="dialogue" id="dialogueModal" style="display:none;"></scoge-dialogue>
-        </div>
+        <div id="mainCont" style="width: 100%; height: 100%; margin: 0;"></div>
         <nav id="gMenu">
             <div id="shopBut" class="mainMenuBut" onclick="shopping();">SHOP</div>
-            <div id="settingsBut" class="mainMenuBut">INFO</div>
+            <div id="settingsBut" class="mainMenuBut" onclick="openSettings();">INFO</div>
             <div id="campaignBut" class="mainMenuBut">CAMPAIGN</div>   
-            <div id="investBut" class="mainMenuBut" style="display:none;" onclick="openInvestors()">INVESTORS</div>   
-            <div id="uniBut" class="mainMenuBut">UNIVERSE</div>         
+            <div id="investBut" class="mainMenuBut" style="display:none;" onclick="openInvestors()">INVESTORS</div>         
         </nav>
-        <div class="action-lines-overlay"></div>
-        <div id="camera">
-            <div id="selection"></div>
-            <div id="explore"></div>
-            <canvas id="universe" width="3060px" height="1728px" style="display:none;"></canvas>
-        </div>
         <div id="bg2">
-            <img src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/campaign/scoge-ch1-7.webp" alt=""/>
+            <img src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/campaign/scoge-ch1-6.webp" alt=""/>
         </div>
-        <!-- <div id="bt">
-            <span id="bg2Text">109.8 SCOGÉ-FM</span>
-            <img id="buttonTest" src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/ui.png" alt=""/>
-        </div> -->
-        <div id="previewUI"></div>
-        <div id="exploreUI"></div>
-        <div id="shopBG"></div>
     </body>
     <script src="https://js.stripe.com/v3/"></script>
 </html>
