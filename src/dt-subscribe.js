@@ -13,12 +13,31 @@ class dtSubscribe extends HTMLElement {
     this.setAttribute("subscribe", val);
   }
 
+  get width() {
+    return this.getAttribute("width");
+  }
+  
+  set width(val) {
+    this.setAttribute("width", val);
+  }
+  
+  get height() {
+    return this.getAttribute("height");
+  }
+  
+  set height(val) {
+    this.setAttribute("height", val);
+  }
+
   static get observedAttributes() {
-    return ["subscribe"];
+    return ["subscribe","width", "height"];
   }
 
   attributeChangedCallback(prop, oldVal, newVal) {
     if (prop === "subscribe") {
+      this.render();
+    }
+    if (prop === "subscribe" || prop === "width" || prop === "height") {
       this.render();
     }
   }
@@ -59,7 +78,7 @@ class dtSubscribe extends HTMLElement {
             #subscribeSect {
               width: 25%;
               height: 4%;
-              position: fixed;
+              position: absolute;
               bottom: 7%;
               right: 0%;
               z-index: 4;
@@ -132,7 +151,7 @@ class dtSubscribe extends HTMLElement {
               }
             }
          </style>
-         <div id="subscribeSect">
+         <div id="subscribeSect" style="width: ${this.width}; height: ${this.height}">
             <form action="https://scoge.us3.list-manage.com/subscribe/post?u=06502830cf2008a1155da093a&amp;id=467d798f05&amp;f_id=00ba43e2f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
               <div id="mc_embed_signup_scroll">
                 <input type="email" id="subscribeInput" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="SIGN UP TO BE NOTIFIED ON DROPS." required>
