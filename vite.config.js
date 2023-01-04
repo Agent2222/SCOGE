@@ -47,9 +47,6 @@ export default defineConfig({
   },
   define: {
     global: {},
-    Howl: "Howl",
-    Howler: "Howler",
-    HowlerGlobal: "HowlerGlobal",
   },
   build: {
     rollupOptions: {

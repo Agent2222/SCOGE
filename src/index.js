@@ -59,7 +59,6 @@ const elements = stripe.elements();
 
 // Init Soundtrack
 const soundtrack = new SoundtrackManager();
-soundtrack.addTracks();
 
 // Notifications
 const noti = {

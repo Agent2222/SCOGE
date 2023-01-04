@@ -2,7 +2,6 @@ import { SoundtrackManager } from "./soundtrack.js";
 var menuOpen = true;
 var fullMenuOpen = true;
 const soundtrack2 = new SoundtrackManager();
-soundtrack2.addTracks();
 
 class getUniMenu extends HTMLElement {
   constructor() {

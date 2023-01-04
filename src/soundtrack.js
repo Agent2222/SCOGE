@@ -24,7 +24,6 @@ export class SoundtrackManager {
       ];
     }
 
-    addTracks() {
       this.trackList.forEach(track => {
         this.tracks[track.key] = new Howl({ src: track.src });
       });
