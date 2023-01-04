@@ -319,10 +319,11 @@ window.sysCheck = () => {
       // document.getElementById("uniBut").addEventListener("click", universeSystem);
       document.getElementById("uniBut").setAttribute("onclick", "universeSystem()");
       soundtrack.play("scoge1");
+      console.log("activated");
     }
   });
 }
-
+// Test
 // Clear Shop
 window.clearShop = () => {
   document.getElementById("shop").style.right = "-70%";
