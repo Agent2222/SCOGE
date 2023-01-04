@@ -4,8 +4,6 @@ import dfxJson from "./dfx.json"
 import path from "path"
 import { esbuildCommonjs } from '@originjs/vite-plugin-commonjs'
 import commonjs from '@rollup/plugin-commonjs'
-// import { Howl, Howler} from 'howler';
-// import * as Howler from "./src/scripts/howler.js";
 // import commonjs from '@rollup/plugin-commonjs'
 
 // List of all aliases for canisters

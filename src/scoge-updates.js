@@ -1,4 +1,3 @@
-import { dtSubscribe } from "../src/dt-subscribe.js";
 class scogeUpdates extends HTMLElement {
   constructor() {
     super();
@@ -127,7 +126,8 @@ class scogeUpdates extends HTMLElement {
               font-family: "Garamond";
               font-size: 1.3rem;
               color: var(--secondary);
-              line-height: 1.2;
+              line-height: 1.1;
+              margiin-top: 0;
             }
             #rightPan {
               width: 100%;
@@ -145,6 +145,9 @@ class scogeUpdates extends HTMLElement {
             #closeBtn:hover {
               transform: scale(1.1);
               rotate: 90deg;
+            }
+            h3 {
+              margin-top: 0;
             }
             @media screen and (max-width: 769px) {
               #mainBody {

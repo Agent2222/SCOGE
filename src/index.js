@@ -15,7 +15,7 @@ import { MainDialogue } from "./typing.js";
 import { SoundtrackManager } from "./soundtrack.js";
 import { idlFactory } from "./backend/universe_backend/src/declarations/universe_backend/universe_backend.did.js";
 import { Principal } from '@dfinity/principal';
-import fleekStorage from '@fleekhq/fleek-storage-js';
+// import fleekStorage from '@fleekhq/fleek-storage-js';
 // import { getAllUserNFTs } from '@psychedelic/dab-js';
 // import the closeCampaign function from dt-campaign.js
 import { mintingScreen } from "../src/mint.js";
@@ -122,22 +122,23 @@ window.addEventListener("resize", function () {
   }
 });
 
-// Check size on Start
-window.sizeInit = () => {
-  if (window.matchMedia("(max-width: 768px)").matches) {
-    // Mobile
-    // const node = document.createElement('mobile-shop1')
-    // node.setAttribute("product","product1");
-    // node.setAttribute("id","mobileShop");
-    // node.setAttribute("style","display:none;");
-    // document.getElementById("main").appendChild(node)
-    document.getElementById("uniBut").style.display = "none";
-    window.isMobile = true;
-  } else {
-    // Desktop
-    // window.getParamsDesktop();
-  }
-};
+// // Check size on Start
+// window.sizeInit = () => {
+//   if (window.matchMedia("(max-width: 768px)").matches) {
+//     // Mobile
+//     // const node = document.createElement('mobile-shop1')
+//     // node.setAttribute("product","product1");
+//     // node.setAttribute("id","mobileShop");
+//     // node.setAttribute("style","display:none;");
+//     // document.getElementById("main").appendChild(node)
+//     document.getElementById("uniBut").style.display = "none";
+//     window.isMobile = true;
+//   } else {
+//     // Desktop
+//     document.getElementById("uniBut").style.opacity = "100%";
+//     // window.getParamsDesktop();
+//   }
+// };
 
 window.shopping = () => {
   if (window.matchMedia("(max-width: 768px)").matches) {
@@ -314,8 +315,9 @@ window.sysCheck = () => {
       } , 1000);
     }
     if (event.key === "c" && ci === true) {
-      document.getElementById("uniBut").removeEventListener("click", systemNoti);
-      document.getElementById("uniBut").addEventListener("click", universeSystem);
+      // document.getElementById("uniBut").removeEventListener("click", systemNoti);
+      // document.getElementById("uniBut").addEventListener("click", universeSystem);
+      document.getElementById("uniBut").setAttribute("onclick", "universeSystem()");
       soundtrack.play("scoge1");
     }
   });
@@ -1558,11 +1560,10 @@ let getAllUserNFTs;
 
 document.getElementById("settingsBut").addEventListener("click", openSettings);
 window.onload = () => {
-  sizeInit();
+  // sizeInit();
+  sysCheck();
   loadShop();
   getParamsDesktop();
-  document.getElementById("uniBut").addEventListener("click", systemNoti);
-  sysCheck();
 }
 
 window.universeSystem = async () => {
@@ -1849,7 +1850,7 @@ window.moveSelection = () => {
   // make a event listeniner for arrow keys and move the selection box 18px in the direction of the arrow key pressed starting from its current position if window is not scrolling. Stop from moving at the edge of the window screen size. 
   document.addEventListener("keydown", function(e) {
     exploreUI.style.transform = "scale(0)";
-    if (e.keyCode == 37) {
+    if (e.key == 37) {
       if (selectionBoxPosition.x > 0) {
         if (movementPaused == false) {
           selectionBoxPosition.x -= tileSize;
@@ -1860,7 +1861,7 @@ window.moveSelection = () => {
         }
       }
     }
-    if (e.keyCode == 38) {
+    if (e.key == 38) {
       if (selectionBoxPosition.y > 0) {
         if (movementPaused == false) {
           selectionBoxPosition.y -= tileSize;
@@ -1871,7 +1872,7 @@ window.moveSelection = () => {
         }
       }
     }
-    if (e.keyCode == 39) {
+    if (e.key == 39) {
       if (selectionBoxPosition.x < (window18Width * tileSize) - tileSize) {
         if (movementPaused == false) {
           selectionBoxPosition.x += tileSize;
@@ -1882,7 +1883,7 @@ window.moveSelection = () => {
         }
       }
     }
-    if (e.keyCode == 40) {
+    if (e.key == 40) {
       if (selectionBoxPosition.y < (window18Height * tileSize) - tileSize) {
         if (movementPaused == false) {
           selectionBoxPosition.y += tileSize;
@@ -1897,29 +1898,29 @@ window.moveSelection = () => {
     box.style.top = selectionBoxPosition.y + "px";
     window.playerPos();
     // if space bar is pressed open the explore UI
-    if (e.keyCode == 32) {
+    if (e.key == 32) {
         window.exploreOpenHelper();
     }
   }
   );
   // scroll the camera element when the selection box reaches the edge of the window screen size 
   document.addEventListener("keydown", function(e) {
-    if (e.keyCode == 37) {
+    if (e.key == 37) {
       if (selectionBoxPosition.x == 0) {
         document.getElementById("camera").scrollLeft -= tileSize;
       }
     }
-    if (e.keyCode == 38) {
+    if (e.key == 38) {
       if (selectionBoxPosition.y == 0) {
         document.getElementById("camera").scrollTop -= tileSize;
       }
     }
-    if (e.keyCode == 39) {
+    if (e.key == 39) {
       if (selectionBoxPosition.x == (window18Width * tileSize) - tileSize) {
         document.getElementById("camera").scrollLeft += tileSize;
       }
     }
-    if (e.keyCode == 40) {
+    if (e.key == 40) {
       if (selectionBoxPosition.y == (window18Height * tileSize) - tileSize) {
         document.getElementById("camera").scrollTop += tileSize;
       }
@@ -2389,33 +2390,33 @@ window.systemNoti = async () => {
 
 // typing.type();
 
-const dialogue = new MainDialogue('NPC Name', 'friendly', [
-  {
-    text: 'Hello, $how are you? $] Are you doing well?',
-    choices: [
-      {
-        text: "I'm doing well, thanks.",
-        action: () => console.log("NPC Name: That's great to hear!")
-      },
-      {
-        text: "I'm not doing so well.",
-        action: () => console.log("NPC Name: I'm sorry to hear that.")
-      }
-    ]
-  },
-  {
-    text: 'What brings you here?',
-    choices: [
-      {
-        text: "I'm here to buy something.",
-        action: () => console.log("NPC Name: What would you like to buy?")
-      },
-      {
-        text: "I'm here to sell something.",
-        action: () => console.log("NPC Name: What would you like to sell?")
-      }
-    ]
-  }
-  // (npc, tone, lines) 
-]);
+// const dialogue = new MainDialogue('NPC Name', 'friendly', [
+//   {
+//     text: 'Hello, $how are you? $] Are you doing well?',
+//     choices: [
+//       {
+//         text: "I'm doing well, thanks.",
+//         action: () => console.log("NPC Name: That's great to hear!")
+//       },
+//       {
+//         text: "I'm not doing so well.",
+//         action: () => console.log("NPC Name: I'm sorry to hear that.")
+//       }
+//     ]
+//   },
+//   {
+//     text: 'What brings you here?',
+//     choices: [
+//       {
+//         text: "I'm here to buy something.",
+//         action: () => console.log("NPC Name: What would you like to buy?")
+//       },
+//       {
+//         text: "I'm here to sell something.",
+//         action: () => console.log("NPC Name: What would you like to sell?")
+//       }
+//     ]
+//   }
+//   // (npc, tone, lines) 
+// ]);
 

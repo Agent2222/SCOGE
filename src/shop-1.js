@@ -57,6 +57,12 @@ class mobileShop1 extends HTMLElement {
     document.getElementById("mobileShop").style.display = "none";
   };
 
+  // imageFade = (obj) => {
+  //   var selected = obj;
+  //   selected.style.transition = "all 2s";
+  //   selected.style.opacity = "1";
+  // };
+
   // LoadShop
   loadShop = async () => {
     this.shadow.getElementById("LoadBG").style.display = "grid";
@@ -75,7 +81,7 @@ class mobileShop1 extends HTMLElement {
       productCont.addEventListener("click", this.viewProduct);
       shopParent.appendChild(productCont);
       productCont.innerHTML = `
-    <img class="shopProducts" style="opacity:0%;" onload="imageFade(this)" src="${product.assets[0].url}">
+    <img class="shopProducts" style="opacity:100%;" loading="lazy" src="${product.assets[0].url}">
     <div class="pcDetails">
     <p class="pcProductName">${product.name}</p>
     <p class="pcProductPrice">${product.price.formatted_with_symbol}</p>

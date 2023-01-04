@@ -1028,6 +1028,7 @@ canvas {
   cursor: pointer;
 }
 .mainMenuBut {
+  font-family: "BS-R" !important;
   margin-bottom: 2%;
   transition: 1s all;
   width: 40%;
@@ -1433,7 +1434,20 @@ a:active {
   transition: .5s all;
 }
 /* MEDIA */
+@media screen and (max-width: 800px) {
+  #uniBut {
+    display: none !important;
+  }
+}
+@media screen and (max-height: 600px) {
+  #uniBut {
+    display: none !important;
+  }
+}
 @media screen and (max-width: 769px) {
+  #uniBut {
+    display: none;
+  }
   #logo {
     width: 50% !important;
     left: 5%;
