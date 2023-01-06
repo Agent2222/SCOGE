@@ -181,9 +181,14 @@ class dtCampaign extends HTMLElement {
               color: var(--accent);
             }
             #body {
-              padding-right: 30%;
-              color: var(--primary);
+              padding-left: 10%;
+              padding-right: 19%;
+              color: var(--secondary);
+              font-family: "Garamond";
               letter-spacing: 1px;
+              line-height: 1.5;
+              font-size: 18px;
+              text-align: justify;
             }
             #campGallery {
               width: 100%;
@@ -322,6 +327,7 @@ class dtCampaign extends HTMLElement {
               #body {
                 height: 100%;
                 width: 96%;
+                padding-left: 2%;
               }
               #header {
                 height: auto;

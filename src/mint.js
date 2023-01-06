@@ -67,15 +67,23 @@ class mintingScreen extends HTMLElement {
   // Reacc
   reacc = () => {
     var vid = this.shadow.getElementById("videoM");
-    var white = this.shadow.getElementById("list");
     vid.style.transition = "5s all";
     vid.play();
     vid.style.display = "block";
     setTimeout(()=> {
       vid.style.opacity = "100%";
     },500);
+    setTimeout(()=> {
+      document.getElementById("getUniMenu").toggleMenu();
+      document.getElementById("getNfts").toggleNftScreen();
+    },5000)
     vid.onended = function() {
-      white.style.display = "grid";
+      document.getElementById("updatesModal").style.display = "block";
+      vid.style.transition = "1s all";
+      vid.style.opacity = "0%";
+      setTimeout(()=> {
+        vid.style.display = "none";
+      },1000)
     } 
   }
 
@@ -350,25 +358,6 @@ class mintingScreen extends HTMLElement {
               opacity: 0%;
               transition: 5s all;
             }
-            #list {
-              height: 100%;
-              width: 100%;
-              position: fixed;
-              left: 0;
-              top: 0;
-              z-index: 11;
-              display: none;
-              opacity: 100%;
-              transition: 5s all;
-              grid-template-columns: 1fr;
-              grid-tenplate-rows: 1fr;
-              align-items: center;
-              justify-items: center;
-              color: white;
-              text-decoration: undeline;
-              background-color: black;
-              
-            }
             a {
               color: #ff002d;
               letter-spacing: 2px;
@@ -394,7 +383,6 @@ class mintingScreen extends HTMLElement {
               opacity: 100% !important;
             }
          </style>
-         <div id="list"><a href="https://docs.google.com/forms/d/1HEt1jfX4g68LcuHXUyFkmmX4GYLFEfXgT-CQbBwKUSI/edit" target="_blank" id="join">- JOIN WHITELIST -</a></div>
          <video id="videoM" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/videos/Alpha-End-Scoge.mp4">
          </video>
          <div id="mainScreen">
