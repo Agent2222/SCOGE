@@ -82,11 +82,8 @@ class dtSubscribe extends HTMLElement {
               bottom: 7%;
               right: 0%;
               z-index: 4;
-              opacity: 80%;
-              transition: 0.5s;
-            }
-            #subscribeSect:hover {
               opacity: 100%;
+              transition: 0.5s;
             }
             #subscribeInput {
               width: 80%;

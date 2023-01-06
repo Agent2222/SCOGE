@@ -91,6 +91,31 @@ const learn = [
 window.isMobile = false;
 // window.encouraged = false;
 
+window.sysCheck = () => {
+  document.addEventListener("keydown", checkKeys);
+}
+
+window.checkKeys = (event) => {
+  if (event.key === "i" && ci === "false") {
+    ci = "true";
+    setTimeout(()=> {
+      ci = "false";
+    } , 1000);
+  }
+  if (event.key === "c" && ci === "true") {
+    ci = "bankoo";
+    // document.getElementById("uniBut").removeEventListener("click", systemNoti);
+    // document.getElementById("uniBut").addEventListener("click", universeSystem);
+    universeSystem();
+    document.getElementById("uniBut").setAttribute("onclick", "universeSystem()");
+    soundtrack.play("scoge1");
+    console.log("activated");
+  }
+}
+
+// Init Check
+sysCheck();
+
 // Check Size on Resize
 window.addEventListener("resize", function () {
   if (window.matchMedia("(max-width: 768px)").matches) {
@@ -305,29 +330,17 @@ window.openSettings = () => {
     }, 300);
 };
 
-window.sysCheck = () => {
-  document.addEventListener("keydown", function checkKeys(event){
-    console.log("activated")
-    if (event.key === "i") {
-      ci = true;
-      setTimeout(()=> {
-        ci = false;
-      } , 1000);
-    }
-    if (event.key === "c" && ci === true) {
-      // document.getElementById("uniBut").removeEventListener("click", systemNoti);
-      // document.getElementById("uniBut").addEventListener("click", universeSystem);
-      document.getElementById("uniBut").setAttribute("onclick", "universeSystem()");
-      soundtrack.play("scoge1");
-      console.log("activated");
-    }
-  });
-}
 // Test
 // Clear Shop
 window.clearShop = () => {
   document.getElementById("shop").style.right = "-70%";
   document.getElementById("shopIcon").innerHTML = "(0)";
+  var bg = document.getElementById("shopBG");
+  bg.style.transition = ".5s all";
+  bg.style.opacity = "0%";
+      setTimeout(() => {
+        bg.style.display = "none";
+      }, 500);
   document.getElementById("shopIcon").setAttribute("onclick", "toggleShop()");
   document.getElementById("povRight").style.opacity = "0%";
   document.getElementById("povLeft").style.opacity = "0%";
@@ -629,7 +642,7 @@ var currentShopProduct;
 // Open Product POV Screen
 window.povOpen = (obj) => {
   var currentProduct = obj.id;
-  window.mainMenuPosition("black","0%","0%","0%","0%");
+  // window.mainMenuPosition("black","0%","0%","0%","0%");
   currentShopProduct = allProducts[0].filter((product) => {
     return product.id.includes(`${currentProduct}`);
   });
@@ -642,7 +655,7 @@ window.povOpen = (obj) => {
   document.getElementById("povLeft").style.visibility = "visible";
   leftPOV.style.opacity = "100%";
   rightPOV.style.opacity = "100%";
-  document.getElementById("scroll").style.display = "block";
+  // document.getElementById("scroll").style.display = "block";
   // Name
   document.getElementById("shopProductName").innerHTML = `
   ${currentShopProduct[0].name} <span class="blue" id="eSymbol1" style="display:none;" onclick="toggleTerms()">(É)</span><span class="blue" id="eSymbol2" style="display:none;" onclick="toggleTerms()">(SÉ)</span>
@@ -1539,7 +1552,7 @@ var timeoutHandle2;
 var previewOpen = false;
 var landActivated = false;
 var sessionData = {};
-var ci = false;
+var ci = "false";
 window.suUiActor = null;
 const suIDL = idlFactory;
 var user = {
@@ -1562,7 +1575,6 @@ let getAllUserNFTs;
 document.getElementById("settingsBut").addEventListener("click", openSettings);
 window.onload = () => {
   // sizeInit();
-  sysCheck();
   loadShop();
   getParamsDesktop();
 }
@@ -1841,6 +1853,7 @@ window.playerPos = () => {
 }
 
 window.moveSelection = () => {
+  document.removeEventListener("keydown", checkKeys);
   var box = document.getElementById("selection");
   var window18Height = window.innerHeight / tileSize;
   var window18Width = window.innerWidth / tileSize;
@@ -1851,7 +1864,7 @@ window.moveSelection = () => {
   // make a event listeniner for arrow keys and move the selection box 18px in the direction of the arrow key pressed starting from its current position if window is not scrolling. Stop from moving at the edge of the window screen size. 
   document.addEventListener("keydown", function(e) {
     exploreUI.style.transform = "scale(0)";
-    if (e.key == 37) {
+    if (e.keyCode == 37) {
       if (selectionBoxPosition.x > 0) {
         if (movementPaused == false) {
           selectionBoxPosition.x -= tileSize;
@@ -1862,7 +1875,7 @@ window.moveSelection = () => {
         }
       }
     }
-    if (e.key == 38) {
+    if (e.keyCode == 38) {
       if (selectionBoxPosition.y > 0) {
         if (movementPaused == false) {
           selectionBoxPosition.y -= tileSize;
@@ -1873,7 +1886,7 @@ window.moveSelection = () => {
         }
       }
     }
-    if (e.key == 39) {
+    if (e.keyCode == 39) {
       if (selectionBoxPosition.x < (window18Width * tileSize) - tileSize) {
         if (movementPaused == false) {
           selectionBoxPosition.x += tileSize;
@@ -1884,7 +1897,7 @@ window.moveSelection = () => {
         }
       }
     }
-    if (e.key == 40) {
+    if (e.keyCode == 40) {
       if (selectionBoxPosition.y < (window18Height * tileSize) - tileSize) {
         if (movementPaused == false) {
           selectionBoxPosition.y += tileSize;
@@ -1899,29 +1912,29 @@ window.moveSelection = () => {
     box.style.top = selectionBoxPosition.y + "px";
     window.playerPos();
     // if space bar is pressed open the explore UI
-    if (e.key == 32) {
+    if (e.keyCode == 32) {
         window.exploreOpenHelper();
     }
   }
   );
   // scroll the camera element when the selection box reaches the edge of the window screen size 
   document.addEventListener("keydown", function(e) {
-    if (e.key == 37) {
+    if (e.keyCode == 37) {
       if (selectionBoxPosition.x == 0) {
         document.getElementById("camera").scrollLeft -= tileSize;
       }
     }
-    if (e.key == 38) {
+    if (e.keyCode == 38) {
       if (selectionBoxPosition.y == 0) {
         document.getElementById("camera").scrollTop -= tileSize;
       }
     }
-    if (e.key == 39) {
+    if (e.keyCode == 39) {
       if (selectionBoxPosition.x == (window18Width * tileSize) - tileSize) {
         document.getElementById("camera").scrollLeft += tileSize;
       }
     }
-    if (e.key == 40) {
+    if (e.keyCode == 40) {
       if (selectionBoxPosition.y == (window18Height * tileSize) - tileSize) {
         document.getElementById("camera").scrollTop += tileSize;
       }
