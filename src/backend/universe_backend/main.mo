@@ -17,29 +17,9 @@ import Metadata "metadata";
 import Cycles "mo:base/ExperimentalCycles";
 import D "mo:base/Debug";
 import Float64 "mo:base/Float";
+import List "mo:base/List";
 
 actor DIP721 {
-    // public type Vec = {
-    //     Text;
-    //      {
-    //         Nat64Content : Nat64;
-    //         Nat32Content : Nat32;
-    //         BoolContent : Bool;
-    //         Nat8Content : Nat8;
-    //         Int64Content : Int64;
-    //         IntContent : Int;
-    //         NatContent : Nat;
-    //         Nat16Content : Nat16;
-    //         Int32Content : Int32;
-    //         Int8Content : Int8;
-    //         FloatContent : Float64;
-    //         Int16Content : Int16;
-    //         BlobContent : [Nat8];
-    //         NestedContent : Vec;
-    //         Principal : Principal;
-    //         TextContent : Text;
-    //     }
-    // };
 
     public type SupportedInterface = {
         Burn : Null;
@@ -47,6 +27,8 @@ actor DIP721 {
         Approval : Null;
         TransactionHistory: Null;
     };
+
+    public type List<T> = ?(T, List<T>);
 
     public type TxEvent = {
         time : Nat64;
@@ -68,23 +50,73 @@ actor DIP721 {
         #Other : Text;
     };
 
+    public type FObj = {
+        email: Text;
+        message: Text;
+    };
+
     // Variables
     // Canister State Here
     stable let admin : Text = "qpbuq-myqvw-yoaff-265ad-5g6xu-wx5dl-zzd7y-y6oak-zo4uf-x3ozb-dqe";
+    stable let admin2 : Text = "pzf4c-tunkg-cx6cq-wquml-hvydb-rku72-o45ud-b7ote-64ctg-mtxls-oqe";
     stable var ledger : [var Metadata.TokenMetadata] = [var];
-    stable var blackPillsBeta : Nat = 200;
+    stable var alphaLandPills : Nat = 50;
+    stable var godPill : Nat = 1;
     stable var logo_ : ?Text = ?"https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/bankoo-logo-square2.jpg";
     stable var name_ : ?Text = ?"SCOGE_Dip721";
     stable var created_at_ : Nat64 = Nat64.fromNat(Int.abs(Time.now()));
     stable var upgraded_at_ : Nat64 = Nat64.fromNat(Int.abs(Time.now()));
-    stable var custodians_ : [Principal] = [];
+    stable var custodians_ : [Principal] = [Principal.fromText(admin), ];
     stable var symbol_ : ?Text = ?"SCOGÉ";
     stable var cycles_ : Nat = Cycles.balance();
     stable var total_transactions_ : Nat = Cycles.balance();
     stable var total_unique_holders_ : Nat = Cycles.balance();
-    stable var total_supply_ : Nat = blackPillsBeta;
+    stable var total_supply_ : Nat = alphaLandPills + godPill;
     stable var owner : Text = "qpbuq-myqvw-yoaff-265ad-5g6xu-wx5dl-zzd7y-y6oak-zo4uf-x3ozb-dqe";
     stable var supportedInterface_ : [SupportedInterface] = [];
+    stable var feedback : List<FObj> = List.nil<FObj>();
+
+    var nmcProps : [Metadata.NMCProperties] = [({
+            identifier: Text = "";
+            alias: Text = "";
+            email: Text = "";
+            domains: ?[Nat64] = ?[];
+            pillType: Text = "";
+            landNumber: Nat64 = 0;
+            landRank: Nat64 = 0;
+            rank: Nat64 = 0;
+            netClass: ?Text = ?"";
+            powerUps: ?[Nat64] = ?[];
+            progress: Nat64 = 0;
+            discovered: ?[Text] = ?[];
+            discoveredProgress: ?Float = ?0.0;
+            xp: ?Nat64 = ?0;
+            power: ?Nat64 = ?0;
+            mental: ?Nat64 = ?0;
+            physical: ?Nat64 = ?0;
+            health: ?Nat64 = ?0;
+            speed: ?Nat64 = ?0;
+            sight: ?Nat64 = ?0;
+            endurance: ?Float = ?0.0;
+            network: ?[Text] = ?[];
+            soundLevel: ?Float = ?0.0;
+            musicLevel: ?Float = ?0.0;
+            fsOn: ?Bool = ?false;
+            notiOn: ?Bool = ?false;
+            imageURI: Text = "";
+            videoURI: ?Text = ?"";
+            story: ?Text = ?"";
+            category: Text = "";
+            linked: ?Bool = ?false;
+            bankooImage: ?[Nat8] = ?[];
+            bankooText: ?[Text] = ?[];
+            earthImage: ?[Nat8] = ?[];
+            earthText: ?[Text] = ?[];
+            data: ?[Nat8] = ?[];
+            ancestorsNames: ?[Text] = ?[];
+            ancestorsImages: ?[Nat8] = ?[];
+            styles: ?[Text] = ?[];
+    })];
     // @DIP721
 
     // Check for allowed prin
@@ -164,15 +196,15 @@ actor DIP721 {
 
     // balanceOf: (principal) -> (variant { Ok : nat; Err : NftError }) query;
     // How many nfts does the user own?
-    public query func balanceOf (user: Principal) : async Result.Result<Nat64, NftError> {
+    public query func balanceOf ( user : Principal) : async Result.Result<Nat,NftError> {
         if (ledger.size() != 0) {
-            #ok(Nat64.fromNat(Array.filter<Metadata.TokenMetadata>(Array.freeze(ledger), func (token) {
-                token.owner == ?user;
-            }).size()))
+        #ok(Array.filter<Metadata.TokenMetadata>(Array.freeze(ledger), func (token) {
+            token.owner == ?user;
+        }).size())
         } else {
             #err(#NotFound);
         }
-    };
+    }; 
 
     // ownerOf : (nat) -> (variant { Ok : opt principal; Err : NftError }) query;
     // Who owns this NFT?
@@ -233,7 +265,7 @@ actor DIP721 {
         // Which token are we minting?
         tokedId : Nat,
         // Metadata of Token Minting
-        properties : [(Text, Metadata.NftProperties)],
+        properties : [(Metadata.NMCProperties)],
     ) : async Result.Result<Nat, NftError> {
         ledger := Array.tabulateVar<Metadata.TokenMetadata>(ledger.size() +1, func (i) {
             if (i < ledger.size()) {
@@ -244,7 +276,7 @@ actor DIP721 {
                     transferred_by = null;
                     owner = ?to;
                     operator = ?to;
-                    properties = properties;
+                    properties = nmcProps;
                     is_burned = false;
                     token_identifier = i;
                     burned_at = null;
@@ -261,7 +293,7 @@ actor DIP721 {
 
     // setCustodians : (vec principal) -> ();
     public shared(msg) func setCustodians (newCustodian : [Principal]) : async () {
-        if (msg.caller == Principal.fromText(admin)) {
+        if (msg.caller == Principal.fromText(admin2)) {
             custodians_ := newCustodian;
         };
     };
@@ -278,9 +310,9 @@ actor DIP721 {
     // Sets Name of NFt Canister
      // *** BY CUSTODIAN
     public shared(msg) func setName (newName : Text) : async () {
-        if (allowed(msg.caller)) {
+        // if (allowed(msg.caller)) {
             name_ := ?newName;
-        };
+        // };
     };
 
     // setLogo : (text) -> ();
@@ -290,6 +322,21 @@ actor DIP721 {
             logo_ := ?newLogo;
         };
     };
+
+    public shared func setFeedback(msg : FObj) : async () {
+        feedback := List.push(msg, feedback);
+    };
+
+    // Query feedback messages
+    public shared func getFeedback() : async List<FObj> {
+        return feedback
+    };
+
+    public shared (msg) func clearFeedback() : async () {
+        if (allowed(msg.caller)) {
+            feedback := List.nil<FObj>();
+        };
+    }
 
     // BURN INTERFACE **
     // burn : (nat) -> (variant { Ok : nat; Err : NftError });

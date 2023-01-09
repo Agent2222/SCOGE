@@ -1554,7 +1554,7 @@ var landActivated = false;
 var sessionData = {};
 var ci = "false";
 window.suUiActor = null;
-const suIDL = idlFactory;
+export const suIDL = idlFactory;
 var user = {
   principal: null,
   balance: null,
@@ -2000,6 +2000,7 @@ window.moveMenu = () => {
   var uniMenu = document.getElementById("getUniMenu").shadowRoot.getElementById("menuItems");
   var shadow = document.getElementById("getUniMenu").shadowRoot;
   var text = document.getElementById("getUniMenu").shadowRoot.querySelectorAll(".uniMenuTxt");
+  var headerTabs = document.getElementById("getUniMenu").shadowRoot.querySelectorAll(".men-active");
   // MenuSounds
   text.forEach(el => {
     el.addEventListener("mouseout", () => {
@@ -2020,7 +2021,7 @@ window.moveMenu = () => {
     });
     switch (el.id) {
       case "uniMenuShop":
-        el.addEventListener("click", () => {
+        el.addEventListener("click", (e) => {
           dragElement(moveMenu, true);
           shadow.getElementById("fm-enhancements").style.display = "grid";
           shadow.getElementById("fm-header-headline").style.opacity = "0%";
@@ -2038,18 +2039,27 @@ window.moveMenu = () => {
           shadow.getElementById("fm-inventory").style.display = "none";
           shadow.getElementById("menuLoadingScreen").style.display = "none";
           shadow.getElementById("menuMessage").style.display ="none";
+          headlineSwtich(e);
         }
         );
         break;
       case "uniMenuItems":
-        el.addEventListener("click", () => {
+        el.addEventListener("click", (e) => {
+          headlineSwtich(e);
+          setTimeout(() => {
+            headlineSwtich(e);
+          },500)
           dragElement(moveMenu, true);
           window.openInventory();
           shadow.getElementById("fm-help").style.display = "none";
           shadow.getElementById("fm-feedback").style.display = "none";
           shadow.getElementById("fm-settings").style.display ="none";
+          shadow.getElementById("fm-inventory").style.display = "grid";
           shadow.getElementById("fm-enhancements").style.display = "none";
           shadow.getElementById("fm-profile").style.display = "none";
+          shadow.getElementById("fm-header").style.display = "grid";
+          shadow.getElementById("fm-header-headline").style.opacity = "100%";
+          shadow.getElementById("fm-header-headline").style.pointerEvents = "auto";
           // change style of menu tabs
           el.setAttribute("class", "menuTabs selectedMenu2");
           shadow.getElementById("uniMenuItemsSvg").childNodes.forEach(el => {
@@ -2059,11 +2069,27 @@ window.moveMenu = () => {
           shadow.getElementById("uniMenuHelpSvg").childNodes.forEach(el => {
             el.style.stroke = "#ff002d";
           });
+          //
+          headerTabs.forEach(el => {
+            if (el.id === "fm-menu1") {
+              var selEl = { target: document.getElementById("getUniMenu").shadowRoot.getElementById("fm-menu1")}
+              document.getElementById("getUniMenu").switchMenuTabs(selEl);
+              el.setAttribute("class", "mmen-active it selectedMenu");
+            } else {
+              el.setAttribute("class", "men-active it");
+            }
+          });
         });
         break;
       case "uniMenuProfile":
-        el.addEventListener("click", () => {
+        el.addEventListener("click", (e) => {
+          headlineSwtich(e);
+          setTimeout(() => {
+            headlineSwtich(e);
+          },500)
           shadow.getElementById("fm-profile").style.display = "grid";
+          shadow.getElementById("fm-header").style.display = "grid";
+          shadow.getElementById("fm-header-headline").style.opacity = "100%";
           shadow.getElementById("fm-help").style.display = "none";
           shadow.getElementById("fm-inventory").style.display = "none";
           shadow.getElementById("fm-feedback").style.display = "none";
@@ -2071,14 +2097,19 @@ window.moveMenu = () => {
           shadow.getElementById("fm-enhancements").style.display = "none";
           shadow.getElementById("menuLoadingScreen").style.display ="none";
           shadow.getElementById("menuMessage").style.display ="none";
-          shadow.getElementById("fm-header").style.display = "grid";
-          shadow.getElementById("fm-header-headline").style.opacity = "100%";
           shadow.getElementById("fm-header-headline").style.pointerEvents = "auto";
+          headerTabs.forEach(el => {
+            if (el.id === "fm-menu1") {
+              var selEl = { target: document.getElementById("getUniMenu").shadowRoot.getElementById("fm-menu1")}
+              document.getElementById("getUniMenu").switchMenuTabs(selEl);
+              el.setAttribute("class", "mmen-active ht selectedMenu");
+            }
+          });
           deactivateDrag();
         });
         break;
       case "uniMenuSettings":
-        el.addEventListener("click", () => {
+        el.addEventListener("click", (e) => {
           shadow.getElementById("fm-help").style.display = "none";
           shadow.getElementById("fm-inventory").style.display = "none";
           shadow.getElementById("fm-feedback").style.display = "none";
@@ -2090,11 +2121,12 @@ window.moveMenu = () => {
           shadow.getElementById("fm-header").style.display = "grid";
           shadow.getElementById("fm-header-headline").style.opacity = "0%";
           shadow.getElementById("fm-header-headline").style.pointerEvents = "none";
+          headlineSwtich(e);
           deactivateDrag();
         } );
         break;
       case "uniMenuHelp":
-        el.addEventListener("click", () => {
+        el.addEventListener("click", (e) => {
           dragElement(moveMenu, true);
           shadow.getElementById("fm-help").style.display = "grid";
           shadow.getElementById("fm-inventory").style.display = "none";
@@ -2107,11 +2139,21 @@ window.moveMenu = () => {
           shadow.getElementById("fm-header").style.display = "grid";
           shadow.getElementById("fm-header-headline").style.opacity = "100%";
           shadow.getElementById("fm-header-headline").style.pointerEvents = "all";
+          headlineSwtich(e);
+          headerTabs.forEach(el => {
+            if (el.id === "fm-menu1") {
+              var selEl = { target: document.getElementById("getUniMenu").shadowRoot.getElementById("fm-menu1")}
+              document.getElementById("getUniMenu").switchMenuTabs(selEl);
+              el.setAttribute("class", "mmen-active ht selectedMenu");
+            } else {
+              el.setAttribute("class", "men-active ht");
+            }
+          });
         }
         );
         break;
       case "uniMenuFeedback":
-        el.addEventListener("click", () => {
+        el.addEventListener("click", (e) => {
           shadow.getElementById("fm-help").style.display = "none";
           shadow.getElementById("fm-inventory").style.display = "none";
           shadow.getElementById("fm-enhancements").style.display = "none";
@@ -2126,6 +2168,7 @@ window.moveMenu = () => {
           shadow.getElementById("fm-feedback").addEventListener("click", () => {
             deactivateDrag();
           });
+          headlineSwtich(e);
           deactivateDrag();
         });
         break;
@@ -2146,28 +2189,54 @@ window.moveMenu = () => {
 }
 
 window.headlineSwtich = (e) => {
-  var headline = document.getElementById("getUniMenu").shadowRoot.getElementById("fm-header-headline");
-  switch (e) {
-    case "inventory":
-      headline.innerHTML = "Inventory";
+  var selected = e.target.id;
+  var h1 = document.getElementById("getUniMenu").shadowRoot.getElementById("fm-menu1");
+  var h2 = document.getElementById("getUniMenu").shadowRoot.getElementById("fm-menu2");
+  var h3 = document.getElementById("getUniMenu").shadowRoot.getElementById("fm-menu3");
+  switch (selected) {
+    case "menuInventory":
+      h1.innerHTML = "Land & Enhancements";
+      h2.innerHTML = "Assets";
+      h3.innerHTML = "Sync";
+      h1.style.opacity = "100%";
+      h1.style.userSelect = "auto";
+      h2.style.opacity = "100%";
+      h2.style.userSelect = "auto";
+      h3.style.opacity = "0%";
+      h3.style.userSelect = "none";
       break;
-    case "help":
-      headline.innerHTML = "Help";
+    case "menuProfile":
+      h1.innerHTML = "Earth";
+      h2.innerHTML = "Bankoo";
+      h1.style.opacity = "100%";
+      h1.style.userSelect = "auto";
+      h2.style.opacity = "100%";
+      h2.style.userSelect = "none";
+      h3.style.opacity = "0%";
+      h3.style.userSelect = "none";
       break;
-    case "feedback":
-      headline.innerHTML = "Feedback";
+    case "menuHelp":
+      h1.innerHTML = "Player";
+      h2.innerHTML = "Wallet";
+      h3.innerHTML = "Network";
+      h1.style.opacity = "100%";
+      h1.style.userSelect = "auto";
+      h2.style.opacity = "100%";
+      h2.style.userSelect = "auto";
+      h3.style.opacity = "100%";
+      h3.style.userSelect = "auto";
       break;
-    case "settings":
-      headline.innerHTML = "Settings";
+    case "menuFeedback":
+      //
       break;
-    case "profile":
-      headline.innerHTML = "Profile";
+    case "menuSettings":
+      //
       break;
-    case "enhancements":
-      headline.innerHTML = "Enhancements";
+    case "menuEnhancements":
+      //
       break;
     default:
-      headline.innerHTML = "Menu";
+      //
   }
 }
 
@@ -2246,9 +2315,9 @@ window.showMenu = () => {
 window.openInventory = async () => {
   var shadow = document.getElementById("getUniMenu").shadowRoot;
   var loading = shadow.getElementById("menuLoadingScreen");
-  console.log(uiState);
   if (uiState.nftsLoaded === false) {
     loading.style.display = "grid";
+    soundtrack.loop('menuLoading1');
     soundtrack.play('menuLoading1');
     await connectWallet().then(() => {
       shadow.getElementById("fm-inventory").style.display = "block";

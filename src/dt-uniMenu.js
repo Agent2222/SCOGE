@@ -31,7 +31,8 @@ class getUniMenu extends HTMLElement {
     const menu = this.shadow.querySelector("#uniMenu");
     const menuIcon = this.shadow.querySelector("#uniMenuIcon");
     const menuItems = this.shadow.querySelector("#menuItems");
-    const menuHeader = this.shadow.querySelector("#menuHeader"); 
+    const menuHeader = this.shadow.querySelector("#menuHeader");
+    console.log(suIDL); 
     if (menuOpen === false) {
       menuIcon.style.transform = "rotate(180deg)";
       menu.style.height = "auto";
@@ -68,6 +69,31 @@ class getUniMenu extends HTMLElement {
     }
   }
 
+  // Send Feedback
+  sendFeedback(event) {
+    event.preventDefault(); // Prevent the form from being submitted the traditional way
+    var email = this.shadow.getElementById('feedbackEmailInput').value;
+    var feedback = this.shadow.getElementById('feedbackInput').value;
+    // Validate the form values here, if necessary
+    // Create a FormData object to hold the form data
+    var formData = new FormData();
+    // Add the form data to the FormData object
+    formData.append("Email", email);
+    formData.append("FeedbackText", feedback);
+    // Send a POST request to the specified URL with the form data as the request body
+    fetch("https://script.google.com/macros/s/AKfycbzMbFOkhQtPlk8yYyX46KQ6VB6ODF5b0gqKXPwjXILa1O6lQ6pVJv8FtLa6waxJvYInBw/exec", {
+      method: "POST",
+      body: formData,
+      mode: 'cors'
+    })
+    .then(function(response) {
+      // Handle the response here, if necessary
+      console.log(response);
+    }).catch(function(error) {
+      // Handle errors here
+    });
+  }
+
   closeFullMenu() {
     const menu = this.shadow.querySelector("#uniMenu");
     const fullMenu = this.shadow.querySelector("#fullMenu");
@@ -83,6 +109,17 @@ class getUniMenu extends HTMLElement {
     // soundtrack2.stop('menuExit1');
     // soundtrack2.play('menuExit1');
   }
+
+  toggleFullScreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen(); 
+      }
+    }
+  }
+  
 
   // Switch Menu Tabs 
   switchMenuTabs(e) {
@@ -116,12 +153,13 @@ class getUniMenu extends HTMLElement {
         tab1.setAttribute("class", `men-active ${tabClass}`);
         tab2.setAttribute("class", `men-active ${tabClass}`);
         tab3.setAttribute("class", `men-active ${tabClass} selectedMenu`);
-        break;  
+        break; 
     }
   }
 
   connectedCallback() {
     this.render();
+    this.shadow.getElementById("fsToggle").addEventListener("click", () => {this.toggleFullScreen();});
     this.shadow.querySelector("#uniMenuIcon").addEventListener("click", () => {
       this.toggleMenu();
     });
@@ -147,12 +185,15 @@ class getUniMenu extends HTMLElement {
         this.switchMenuTabs(e);
       });
     });
-    this.shadow.querySelector("#switch23").addEventListener("click", () => {
-      var el = {
-        target: this.shadow.querySelector("#fm-menu3")
-      }
-      this.switchMenuTabs(el);
+    this.shadow.querySelector("#feedbackButton").addEventListener("click", (event) => {
+      this.sendFeedback(event);
     });
+    // this.shadow.querySelector("#switch23").addEventListener("click", () => {
+    //   var el = {
+    //     target: this.shadow.querySelector("#fm-menu3")
+    //   }
+    //   this.switchMenuTabs(el);
+    // });
     this.shadow.getElementById("pinMenu").addEventListener("click", () => {
       pinMenu();
     });
@@ -191,17 +232,17 @@ class getUniMenu extends HTMLElement {
                 font-style: italic;
             }
             a {
-              text-decoration: none;
+              text-decoration: underline;
             }
             a:hover {
-              color: var(--accent) !important;
+              color: var(--primary) !important;
               transition: 0.3s;
             }
             a:link {
-              color: var(--secondary);
+              color: var(--alt);
             }
             a:visited {
-              color: var(--secondary);
+              color: var(--alt);
             }
             :root {
               --primary: #ff002d;
@@ -282,7 +323,7 @@ class getUniMenu extends HTMLElement {
               transition: 0.3s;
             }
             .alt:hover {
-              color: var(--secondary) !important;
+              color: var(--primary) !important;
             }
             /* width */
             ::-webkit-scrollbar {
@@ -488,6 +529,8 @@ class getUniMenu extends HTMLElement {
             }
             .men-active {
               background-color: rgba(0, 0, 0, 0.8);
+              border: .2px solid var(--primary);
+              color: var(--secondary);
             }
             #fm-header-headline:hover > .men-active:hover {
               background-color: #ff002d;
@@ -513,42 +556,127 @@ class getUniMenu extends HTMLElement {
               float: left;
               overflow: hidden;
               display: none;
+              grid-template-columns: 1fr;
+              grid-template-rows: 80% 20%;
+              align-items: center;
+              justify-items: center;
             }
-            #inventory-images {
-              height: 40%;
-              width: auto;
+            #inventoryBody {
+              width: 100%;
+              height: 100%;
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-template-rows: ;
+              overflow-x: auto;
               overflow-y: hidden;
-              overflow-x: scroll;
-              margin-left: 18px;
-              margin-right: 18px;
+            }
+            #inventory-land-images, #invetory-enh-images {
+              height: 100%;
+              margin-left: 3%;
+              margin-right: 3%;
+              overflow-y: hidden;
+              overflow-x: auto;
+            }
+            #landCardCont {
+              width: auto;
+              height: 100%;
               display: flex;
+              flex-wrap: nowrap;
+              overflow-x: auto;
             }
             .Inventory-Image-Cont {
-              height: 100%;
-              margin-right: 10px;
-              width: auto;
+              flex: 0 0 auto;
+              margin-right: 1%;
+              width: 20%;
+              height: 98%;
+              overflow: hidden;
+              border-radius: 5%;
+              cursor: pointer;
+              border: 1px solid rgba(225, 225, 225, 0.8);
+              box-shadow: 0 0 5px rgba(225, 225, 225, 0.9);
+              transform: scale(.8);
+              transition: all 0.3s ease;
+              opacity: 0.8;
+            }
+            .Inventory-Image-Cont:hover {
+              transform: scale(1);
+              opacity: 1;
+            }
+            #landCardCont::-webkit-scrollbar {
+              height: 0.5em;
             }
             .Inventory-Image-Cont img {
+              width: 100%;
               height: 100%;
-              width: auto;
+              object-fit: cover;
+            }
+            .itHead {
+              font-size: 1.1em;
+            }
+            .inventoryInnerText {
+              font-family: "Garamond";
+              color: var(--secondary);
             }
             #fm-menu3 {
               // opacity: .6;
             }
-            #inventory-text {
-              height: 38%;
-              width: auto;
-              padding-right: 18px;
-              padding-left: 18px;
+            .it1 {
+              width: 100%;
+              height: 100%;
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-template-rows: 10% 40% 10% 40%;
+              overflow: hidden;
+            }
+            .itHead {
+              margin: 0px;
+            }
+            .it2 {
+              width: 100%;
+              height: 100%;
+              overflow: auto;
+              display: none;
+            }
+            .inventory-text {
+              height: 99%;
+              width: 94%;
+              padding-right: 3%;
+              padding-left: 3%;
               padding-top: 1%;
-              padding-bottom: 1%;
               font-family: "BS-R";
-              font-size: 0.8em;
+              font-size: 1em;
+              text-align: justify;
               line-height: 1.5em;
+              overflow: hidden;
             }
             #inventory-text > span {
-              background-color: rgba(0, 0, 0, 0.8);
+              font-family: "Garamond";
+              color: var(--secondary);
               letter-spacing: 1px;
+            }
+            #assetsCont {
+              width: 94%;
+              height: 94%;
+              padding: 3%;
+              display: flex;
+              flex-wrap: wrap;
+            }
+            .Inventory-Assets-Cont {
+              width: 24%;
+              height: 150px;
+              border: 1px solid rgba(225, 225, 225, 0.8);
+              transform: scale(.9);
+              transition: all 0.3s ease;
+              cursor: pointer;
+            }
+            .Inventory-Assets-Cont:hover {
+              transform: scale(1);
+            }
+            .Inventory-Assets-Cont img {
+              width: 100%;
+              height: 100%;
+              border-radius: 5%;
+              object-fit: cover;
             }
             .selectedMenu {
               background-color: #ff002d;
@@ -562,7 +690,7 @@ class getUniMenu extends HTMLElement {
               stroke: white;
             }
             #inventory-cta {
-              height: 20%;
+              height: 100%;
               width: 100%;
               display: flex;
               justify-content: end;
@@ -571,8 +699,7 @@ class getUniMenu extends HTMLElement {
             #invCtaBut {
               width: 100px;
               height: 30px;
-              background-color: var(--secondary);
-              color: black;
+              color: var(--accent);
               font-family: "BS-R";
               margin-right: 30px;
               display: grid;
@@ -582,10 +709,12 @@ class getUniMenu extends HTMLElement {
               justify-items: center;
               transition: all 0.5s ease;
               cursor: pointer;
+              border: 1px solid var(--accent);
+              border-radius: 5px;
             }
             #invCtaBut:hover {
-              background-color: #ff002d;
-              color: white;
+              background-color: var(--accent);
+              color: black;
             }
             #menuMessage {
               width: 100%;
@@ -679,7 +808,7 @@ class getUniMenu extends HTMLElement {
             #fm-help {
               width: 100%;
               height: 84%;
-              display: none;
+              display: grid;
               grid-template-columns: 1fr;
               grid-template-rows: 1fr;
               align-items: center;
@@ -694,35 +823,43 @@ class getUniMenu extends HTMLElement {
               align-items: center;
               justify-cotent: start;
               padding-left: 5%;
+              color: var(--secondary);
+              font-family: "Garamond";
             }
             .ht1 {
               display: grid;
             }
             .ht2 {
               width: 80%;
-              height: 75%;
+              height: 95%;
               display: none;
               grid-template-columns: 1fr;
-              grid-template-rows: 1fr;
+              grid-template-rows: 25% 1fr;
               align-items: start;
               justify-cotent: start;
               padding-left: 10%;
               padding-right: 10%;
-              padding-top: 25%;
+              padding-top: 5%;
               font-size: 1em;
+              letter-spacing: 1px;
+              line-height: 1.5em;
+              text-align: justify;
             }
             .ht3 {
               width: 80%;
-              height: 75%;
+              height: 95%;
               display: none;
               grid-template-columns: 1fr;
-              grid-template-rows: 1fr;
+              grid-template-rows: 25% 1fr;
               align-items: start;
               justify-cotent: start;
               padding-left: 10%;
               padding-right: 10%;
-              padding-top: 25%;
+              padding-top: 5%;
               font-size: 1em;
+              letter-spacing: 1px;
+              line-height: 1.5em;
+              text-align: justify;
             }
             .helpSection {
               display: flex;
@@ -730,18 +867,19 @@ class getUniMenu extends HTMLElement {
               height: 20%;
               align-items: center;
               justify-content: start;
+              font-family: "BS-R";
             }
             .arrow {
               font-size: 40px;
-              border: 1px solid #ff002d;
               height: 40px;
               width: 40px;
               display:flex;
               justify-content: center;
+              border: 1px solid rgba(225, 225, 225, 0.3);
               align-items: center;
               border-radius: 10px;
               margin-right: 20px;
-              background-color: rgba(0, 0, 0, 0.7);
+              background-color: rgba(0, 0, 0, 1);
               color: var(--secondary);
             }
             #leftArr {
@@ -757,7 +895,7 @@ class getUniMenu extends HTMLElement {
               width: auto;
               height: auto;
               padding: 10px 80px;
-              border: 1px solid #ff002d;
+              border: 1px solid rgba(225, 225, 225, 0.3);
               border-radius: 5px;
               margin-right: 20px;
               background-color: rgba(0, 0, 0, 0.7);
@@ -767,10 +905,10 @@ class getUniMenu extends HTMLElement {
               width: auto;
               height: auto;
               padding: 30px 15px;
-              border: 1px solid #ff002d;
+              border: 1px solid rgba(225, 225, 225, 0.3);
               border-radius: 5px;
               margin-right: 20px;
-              background-color: rgba(0, 0, 0, 0.7);
+              background-color: rgba(0, 0, 0, 1);
               color: var(--secondary);
             }
             .helpText {
@@ -834,7 +972,8 @@ class getUniMenu extends HTMLElement {
               border-radius: 5px;
               box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
               overflow-wrap: break-word; /* wrap the text when it reaches the edge */
-              font-family: "BS-R";
+              font-family: "Garmond";
+              line-height: 1.5em;
             }
                         
             #fm-feedback #feedbackInput {
@@ -1027,7 +1166,7 @@ class getUniMenu extends HTMLElement {
             }
             .saveButs div {
               width: 100px;
-              height: 100%;
+              height: 70%;
               display: flex;
               justify-content: center;
               align-items: center;
@@ -1080,7 +1219,7 @@ class getUniMenu extends HTMLElement {
               height: 84%;
               padding-left: 4%;
               padding-right: 4%;
-              display: grid;
+              display: none;
               grid-template-columns: 1fr;
               grid-template-rows: 60% 25% 15%;
             }
@@ -1104,6 +1243,7 @@ class getUniMenu extends HTMLElement {
               width: 100%;
               height: 88%;
               padding-top: 2%;
+              font-family: "Garmond";
             }
             #profileButs {
               width: 100%;
@@ -1141,6 +1281,24 @@ class getUniMenu extends HTMLElement {
             }
             #profileDesc {
               color: var(--secondary);
+            }
+            #worldIcon, #walletIcon {
+              height: 100%;
+              overflow: hidden;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+            #worldIcon svg, #walletIcon svg {
+              magrin-top: 0px;
+              height: 100%;
+              fill: var(--primary);
+            }
+            #notiTogSect {
+              opacity: 30%;
+            }
+            #notiToggle {
+              user-select: none;
             }
          </style>
          <div id="uniMenu">
@@ -1220,13 +1378,55 @@ class getUniMenu extends HTMLElement {
               </div>
               <div id="fm-enhancements"></div>
               <div id="fm-inventory">
-                <div id="inventory-images">
-                </div>
-                <div id="inventory-text">
-                  <p>Inventory</p>
-                  <span id="inventoryInnerText">
-                    This iten is not for sale. It is a gift from the creator. You can trade it with other users. This is a limited edition item. There are 1,000 of this item in existence. The highest quality of this edition is 1,000. The lowest quality of this edition is 1. The current quality of this edition is 1,000. The current price of this edition is 0.00 ICP.
-                  </span>
+                <div id="inventoryBody">
+                  <div class="inventory-tabs it1">
+                    <div class="inventory-text">
+                      <span class="itHead">Land:</span>
+                      <span class="inventoryInnerText">
+                       you own.
+                      </span>
+                    </div>
+                    <div id="inventory-land-images">
+                      <div id="landCardCont">
+                          <div class="Inventory-Image-Cont">
+                            <img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+                          </div>
+                          <div class="Inventory-Image-Cont">
+                            <img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+                          </div>
+                          <div class="Inventory-Image-Cont">
+                            <img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="inventory-text">
+                      <span class="itHead">Enhancements:</span>
+                      <span class="inventoryInnerText">
+                       you have purchased.
+                      </span>
+                    </div>
+                    <div id="invetory-enh-images">
+                      <div id="landCardCont">
+                          <div class="Inventory-Image-Cont">
+                            <img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+                          </div>
+                          <div class="Inventory-Image-Cont">
+                            <img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+                          </div>
+                          <div class="Inventory-Image-Cont">
+                            <img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="inventory-tabs it2">
+                    <div id="assetsCont">
+                      <div class="Inventory-Assets-Cont">
+                            <img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="inventory-tabs it3"></div>
                 </div>
                 <div id="inventory-cta">
                   <div id="invCtaBut">USE</div>
@@ -1285,16 +1485,16 @@ class getUniMenu extends HTMLElement {
                   <div>Toggle Fullscreen</div>
                   <div class="toggleBoxes">
                     <label class="switch">
-                    <input type="checkbox" checked="checked">
+                    <input type="checkbox" id="fsToggle">
                     <span class="slider round"></span>
                     </label>
                   </div>
                 </div>
-                <div class="settingsSections">
+                <div class="settingsSections" id="notiTogSect">
                   <div>Notifications</div>
                   <div class="toggleBoxes">
                     <label class="switch">
-                    <input type="checkbox">
+                    <input type="checkbox" id="notiToggle">
                     <span class="slider round"></span>
                     </label>
                   </div>
@@ -1344,21 +1544,29 @@ class getUniMenu extends HTMLElement {
                   </div>
                 </div>
                 <div class="help-tabs ht2">
+                  <div id="walletIcon">
+                  <svg id="DIAMOND" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="45px" height="45px" ><defs><style>.cls-1{fill:#ff002d;}</style></defs><path class="cls-1" d="m794.5,371.91l-200.28-200.28c-.08-.08-.17-.15-.25-.22-.25-.24-.51-.48-.78-.7-.18-.14-.36-.27-.54-.4-.19-.14-.37-.28-.57-.42-.2-.13-.41-.25-.61-.37-.19-.11-.37-.23-.57-.34-.2-.11-.41-.2-.61-.29-.21-.1-.42-.21-.64-.3-.19-.08-.39-.14-.58-.21-.24-.09-.47-.18-.72-.25-.19-.06-.38-.1-.56-.14-.25-.07-.51-.14-.77-.19-.21-.04-.42-.06-.62-.09-.25-.04-.49-.08-.74-.11-.34-.04-.68-.04-1.01-.05-.12,0-.24-.02-.36-.02H215.7c-.16,0-.32.02-.48.02-.3,0-.6.02-.89.05-.27.03-.53.07-.8.12-.19.03-.37.05-.56.09-.28.06-.55.13-.82.2-.17.04-.34.08-.51.13-.26.08-.52.18-.77.27-.18.06-.35.12-.53.19-.24.1-.47.21-.7.33-.18.09-.36.17-.54.26-.23.12-.44.26-.66.39-.17.11-.35.2-.52.32-.24.16-.47.34-.7.51-.14.1-.28.2-.41.31-.36.3-.71.61-1.04.94L5.5,371.91c-.08.08-.16.18-.24.26-.23.25-.47.49-.68.76-.15.19-.29.39-.43.58-.13.18-.26.34-.39.52-.14.22-.27.44-.4.67-.1.17-.21.34-.3.51-.12.22-.22.45-.33.68-.09.19-.18.37-.26.57-.01.03-.03.06-.04.09-.07.19-.13.38-.2.58-.07.21-.15.41-.22.63-.07.23-.12.46-.18.68-.05.22-.11.43-.16.65-.05.27-.08.54-.12.81-.02.18-.06.37-.08.55-.05.46-.07.93-.07,1.39s.02.93.07,1.39c.02.19.06.37.08.55.04.27.07.54.12.8.04.22.11.43.16.65.06.23.11.46.18.68.06.21.14.42.22.63.08.22.15.45.24.67.08.19.17.38.26.57.11.23.21.46.33.68.09.18.2.34.3.51.13.22.26.45.4.67.12.18.26.35.39.52.14.19.28.39.43.58.22.26.45.51.68.76.08.09.15.18.24.26l384.58,384.58c2.74,2.74,6.33,4.11,9.92,4.11s7.18-1.37,9.92-4.11l384.58-384.58c5.48-5.48,5.48-14.36,0-19.83ZM221.51,195.58h104.21l-117.43,172.23H49.27l172.23-172.23Zm218.82,0l117.44,172.23H242.23l117.43-172.23h80.67Zm138.16,0l172.23,172.23h-159.01l-117.44-172.23h104.22Zm-16.82,200.28l-161.67,325.19-161.67-325.19h323.34Zm-354.66,0l155.95,313.68L49.28,395.85h157.73Zm385.99,0h157.73l-313.67,313.68,155.95-313.68Z"/><path class="cls-1" d="m400,126.41c7.75,0,14.02-6.28,14.02-14.02V33.59c0-7.75-6.28-14.02-14.02-14.02s-14.02,6.28-14.02,14.02v78.8c0,7.75,6.28,14.02,14.02,14.02Z"/><path class="cls-1" d="m507.56,119.22c2.21,1.28,4.63,1.89,7.01,1.89,4.84,0,9.55-2.51,12.15-7l39.49-68.19c3.88-6.7,1.59-15.28-5.11-19.16-6.7-3.88-15.28-1.59-19.16,5.11l-39.49,68.19c-3.88,6.7-1.59,15.28,5.11,19.16Z"/><path class="cls-1" d="m640.8,136.37c3.59,0,7.18-1.37,9.92-4.11l55.72-55.72c5.48-5.48,5.48-14.36,0-19.83-5.48-5.47-14.36-5.47-19.83,0l-55.72,55.72c-5.48,5.48-5.48,14.36,0,19.83,2.74,2.74,6.33,4.11,9.92,4.11Z"/><path class="cls-1" d="m273.28,114.11c2.6,4.49,7.31,7,12.15,7,2.38,0,4.8-.61,7.01-1.89,6.7-3.88,8.99-12.46,5.11-19.16l-39.49-68.19c-3.88-6.7-12.46-8.99-19.16-5.11-6.7,3.88-8.99,12.46-5.11,19.16l39.49,68.19Z"/><path class="cls-1" d="m149.28,132.26c2.74,2.74,6.33,4.11,9.92,4.11s7.18-1.37,9.92-4.11c5.48-5.48,5.48-14.36,0-19.83l-55.72-55.72c-5.48-5.47-14.36-5.47-19.83,0-5.48,5.48-5.48,14.36,0,19.83l55.72,55.72Z"/></svg>
+                </div>
                   <div>
-                    Citizens across T.A.O.S City use the <span class="active"><a href="https://plugwallet.ooo/" target="_blank">Plug Wallet</a></span> to manage and secure digital assets on their Internet Computer.<br><br>The Plug Wallet allows you to create and manage your digital identity, send and receive payments, participate in governance, and interact with applications and services on the <span class="active" id="switch23">decentralized network</span>.
+                    Citizens across T.A.O.S City use the <span class="alt"><a href="https://plugwallet.ooo/" target="_blank">Plug Wallet</a></span> to manage and secure digital assets on their Internet Computer.<br><br>The Plug Wallet allows you to create and manage your digital identity, send and receive payments, participate in governance, and interact with applications and services on the <span class="alt" id="switch23">decentralized network</span>.
                   </div>
                 </div>
                 <div class="help-tabs ht3">
+                  <div id="worldIcon">
+                    <svg fill="#000000" width="45px" height="45px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m24 12c0-.002 0-.004 0-.006 0-3.551-1.546-6.74-4.001-8.933l-.012-.01c-.031-.033-.064-.062-.101-.087l-.002-.001c-2.095-1.84-4.859-2.962-7.886-2.962-3.032 0-5.8 1.126-7.91 2.984l.013-.011c-.026.02-.049.041-.07.065v.001c-2.478 2.205-4.031 5.403-4.031 8.963 0 3.55 1.544 6.739 3.997 8.933l.012.01c0 .003.002.005.005.005.031.035.065.065.101.092l.002.001c2.094 1.837 4.857 2.958 7.881 2.958 3.032 0 5.801-1.126 7.911-2.984l-.013.011c.03-.022.056-.045.08-.07 2.475-2.202 4.026-5.395 4.026-8.951 0-.002 0-.005 0-.007zm-4.462 7.805c-.576-.468-1.223-.897-1.909-1.262l-.065-.032c.613-1.767.982-3.804 1.017-5.923v-.016h4.261c-.156 2.852-1.391 5.388-3.301 7.23zm-6.966-1.505c1.283.069 2.482.351 3.588.81l-.072-.026c-.886 2.02-2.133 3.408-3.516 3.713zm0-1.144v-4.584h4.868c-.043 1.961-.383 3.828-.976 5.578l.039-.131c-1.157-.484-2.498-.795-3.903-.862l-.027-.001zm0-5.728v-4.584c1.431-.069 2.772-.379 4.007-.891l-.079.029c.555 1.619.896 3.485.94 5.425v.021zm0-5.728v-4.495c1.383.305 2.63 1.687 3.516 3.713-1.034.43-2.233.711-3.487.781zm2.854-4c1.238.419 2.312 1.009 3.258 1.752l-.023-.018c-.443.348-.94.676-1.464.961l-.056.028c-.449-1.047-1.025-1.947-1.724-2.737l.009.011zm-4-.492v4.492c-1.283-.069-2.482-.35-3.588-.81l.072.026c.89-2.02 2.135-3.407 3.518-3.712zm-4.568 3.212c-.58-.315-1.077-.642-1.544-1.007l.024.018c.923-.726 1.996-1.315 3.158-1.712l.076-.023c-.689.778-1.265 1.678-1.689 2.658l-.025.065zm4.57 2.423v4.584h-4.868c.044-1.961.385-3.827.979-5.577l-.039.131c1.156.483 2.497.794 3.901.861zm0 5.728v4.584c-1.431.069-2.772.379-4.007.891l.079-.029c-.555-1.618-.896-3.485-.94-5.425v-.021zm0 5.728v4.495c-1.383-.305-2.63-1.687-3.516-3.713 1.034-.43 2.233-.71 3.487-.78l.029-.001zm-2.85 4c-1.238-.418-2.311-1.006-3.258-1.748l.024.018c.443-.348.94-.676 1.464-.961l.056-.028c.445 1.047 1.022 1.947 1.723 2.733l-.009-.01zm8.564-2.72c.58.315 1.077.642 1.544 1.007l-.024-.018c-.923.726-1.996 1.315-3.158 1.712l-.076.023c.689-.778 1.265-1.677 1.689-2.657l.025-.065zm5.7-8.151h-4.261c-.035-2.135-.404-4.172-1.058-6.078l.041.138c.751-.399 1.397-.828 1.997-1.312l-.024.018c1.913 1.845 3.148 4.381 3.303 7.205l.001.028zm-18.38-7.233c.576.468 1.223.897 1.909 1.262l.065.032c-.613 1.767-.982 3.804-1.017 5.923v.016h-4.262c.156-2.852 1.391-5.388 3.301-7.23l.003-.003zm-3.304 8.377h4.261c.035 2.135.404 4.172 1.058 6.078l-.041-.138c-.751.399-1.397.828-1.997 1.312l.024-.018c-1.913-1.845-3.148-4.381-3.303-7.205l-.001-.028z"/></svg>
+                </div>
                 <div>
-                  T.A.O.S City's network is powered by the <span class="active"><a href="https://internetcomputer.org/" target="_blank">Internet Computer</a></span>, a revolutionary decentralized network powered by the ICP token.<br><br>In a city fragmented by distinct governors, the Internet Computer offers citizens in each sector a tool to build powerful neural apps and contracts, free from the tyrannical, centralized old internet. With <span class="active"><a href="https://www.coinbase.com/price/internet-computer" target="_blank">ICP</a></span> (aka RedDisks/Reds) citizens are building a brighter world.
+                  T.A.O.S City's network is powered by the <span class="alt"><a href="https://internetcomputer.org/" target="_blank">Internet Computer</a></span>, a revolutionary decentralized network powered by the ICP token.<br><br>In a city fragmented by distinct governors, the Internet Computer offers citizens in each sector a tool to build powerful neural apps and contracts, free from the tyrannical, centralized old internet. With <span class="alt"><a href="https://www.coinbase.com/price/internet-computer" target="_blank">ICP</a></span> (aka RedDisks/Reds) citizens are building a brighter world.
                 </div>
               </div>
               </div>
               <div id="fm-feedback">
                 <div id="feedbackHeadline">Help make T.A.O.S City better.</div>
-                <input type="email" id="feedbackEmailInput" placeholder="Email" value="" maxlength="45">
-                <textarea id="feedbackInput" placeholder="Enter your feedback here..." maxlength="320"></textarea>
-                <div id="feedbackButton">SEND</div>
+                <form id="feedbackForm" action="#" method="post">
+                <input type="email" name="Email" id="feedbackEmailInput" placeholder="Email" value="" maxlength="45">
+                <textarea id="feedbackInput" name="FeedbackText" placeholder="Enter your feedback here..." maxlength="320"></textarea>
+                <div id="feedbackButton" type="submit">SEND</div>
+                </form>
               </div>
             </div>
             <div id="fullMenuBG"></div>

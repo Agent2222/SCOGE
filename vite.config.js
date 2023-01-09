@@ -4,6 +4,7 @@ import dfxJson from "./dfx.json"
 import path from "path"
 import { esbuildCommonjs } from '@originjs/vite-plugin-commonjs'
 import commonjs from '@rollup/plugin-commonjs'
+import cors from 'cors'
 // import commonjs from '@rollup/plugin-commonjs'
 
 // List of all aliases for canisters
@@ -43,6 +44,7 @@ export default defineConfig({
       }),
     ]
   },
+  middleware: [cors()],
   define: {
     global: {},
   },
