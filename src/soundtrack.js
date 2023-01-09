@@ -43,6 +43,10 @@ export class SoundtrackManager {
   setVolume(key, volume) {
     this.tracks[key].volume = volume;
   }
+
+  loop(key) {
+    this.tracks[key].loop = true;
+  }  
 }
 
   

@@ -13,7 +13,7 @@ module {
         transferred_by : ?Principal;
         owner : ?Principal;
         operator : ?Principal;
-        properties : [(Text, NftProperties )];
+        properties : [(NMCProperties)];
         is_burned : Bool;
         token_identifier : Nat;
         burned_at : ?Nat64;
@@ -42,20 +42,46 @@ module {
         TextContent : Text;
     };
 
-    public type NftProperties = {
-        rank : Nat64;
+    public type NMCProperties = {
+        identifier: Text;
+        alias: Text;
+        email: Text;
+        domains: ?[Nat64];
+        pillType: Text;
+        landNumber: Nat64;
+        landRank: Nat64;
+        rank: Nat64;
+        netClass: ?Text;
+        powerUps: ?[Nat64];
         progress: Nat64;
         discovered: ?[Text];
         discoveredProgress: ?Float;
-        xp: Nat64;
+        xp: ?Nat64;
+        power: ?Nat64;
+        mental: ?Nat64;
+        physical: ?Nat64;
+        health: ?Nat64;
+        speed: ?Nat64;
+        sight: ?Nat64;
+        endurance: ?Float;
+        network: ?[Text];
+        soundLevel: ?Float;
+        musicLevel: ?Float;
+        fsOn: ?Bool;
+        notiOn: ?Bool;
         imageURI: Text;
         videoURI: ?Text;
         story: ?Text;
         category: Text;
         linked: ?Bool;
-        ownerImage: ?[Nat8];
-        ownerText: ?[Text];
+        bankooImage: ?[Nat8];
+        bankooText: ?[Text];
+        earthImage: ?[Nat8];
+        earthText: ?[Text];
         data: ?[Nat8];
+        ancestorsNames: ?[Text];
+        ancestorsImages: ?[Nat8];
+        styles: ?[Text];
     };
 
     public type Stats = {
