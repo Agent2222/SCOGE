@@ -9,6 +9,48 @@ export interface Metadata {
   'custodians' : Array<Principal>,
   'symbol' : [] | [string],
 }
+export interface NMCProperties {
+  'xp' : [] | [bigint],
+  'earthImage' : [] | [Uint8Array],
+  'bankooText' : [] | [Array<string>],
+  'mental' : [] | [bigint],
+  'powerUps' : [] | [BigUint64Array],
+  'styles' : [] | [Array<string>],
+  'alias' : string,
+  'notiOn' : [] | [boolean],
+  'netClass' : [] | [string],
+  'data' : [] | [Uint8Array],
+  'fsOn' : [] | [boolean],
+  'rank' : bigint,
+  'network' : [] | [Array<string>],
+  'ancestorsNames' : [] | [Array<string>],
+  'email' : string,
+  'bankooImage' : [] | [Uint8Array],
+  'sight' : [] | [bigint],
+  'speed' : [] | [bigint],
+  'discoveredProgress' : [] | [number],
+  'story' : [] | [string],
+  'imageURI' : string,
+  'progress' : bigint,
+  'musicLevel' : [] | [number],
+  'domains' : [] | [BigUint64Array],
+  'landRank' : bigint,
+  'pillType' : string,
+  'category' : string,
+  'landNumber' : bigint,
+  'endurance' : [] | [number],
+  'power' : [] | [bigint],
+  'physical' : [] | [bigint],
+  'identifier' : string,
+  'videoURI' : [] | [string],
+  'ancestorsImages' : [] | [Uint8Array],
+  'soundLevel' : [] | [number],
+  'earthText' : [] | [Array<string>],
+  'linked' : [] | [boolean],
+  'playerLocation' : bigint,
+  'health' : [] | [bigint],
+  'discovered' : [] | [Array<string>],
+}
 export type NftError = { 'UnauthorizedOperator' : null } |
   { 'SelfTransfer' : null } |
   { 'TokenNotFound' : null } |
@@ -19,21 +61,6 @@ export type NftError = { 'UnauthorizedOperator' : null } |
   { 'ExistedNFT' : null } |
   { 'OwnerNotFound' : null } |
   { 'Other' : string };
-export interface NftProperties {
-  'xp' : bigint,
-  'ownerText' : [] | [Array<string>],
-  'data' : [] | [Uint8Array],
-  'rank' : bigint,
-  'ownerImage' : [] | [Uint8Array],
-  'discoveredProgress' : [] | [number],
-  'story' : [] | [string],
-  'imageURI' : string,
-  'progress' : bigint,
-  'category' : string,
-  'videoURI' : [] | [string],
-  'linked' : [] | [boolean],
-  'discovered' : [] | [Array<string>],
-}
 export type Result = { 'ok' : TokenMetadata } |
   { 'err' : NftError };
 export type Result_1 = { 'ok' : Array<TokenMetadata> } |
@@ -61,7 +88,7 @@ export interface TokenMetadata {
   'operator' : [] | [Principal],
   'approved_at' : [] | [bigint],
   'approved_by' : [] | [Principal],
-  'properties' : Array<[string, NftProperties]>,
+  'properties' : Array<NMCProperties>,
   'is_burned' : boolean,
   'token_identifier' : bigint,
   'burned_at' : [] | [bigint],
@@ -76,10 +103,7 @@ export interface _SERVICE {
   'cycles' : ActorMethod<[], bigint>,
   'logo' : ActorMethod<[], [] | [string]>,
   'metadata' : ActorMethod<[], Metadata>,
-  'mint' : ActorMethod<
-    [Principal, bigint, Array<[string, NftProperties]>],
-    Result_3
-  >,
+  'mint' : ActorMethod<[Principal, bigint, Array<NMCProperties>], Result_3>,
   'name' : ActorMethod<[], [] | [string]>,
   'operatorOf' : ActorMethod<[bigint], Result_2>,
   'operatorTokenMetadata' : ActorMethod<[Principal], Result_1>,

@@ -39,6 +39,8 @@ class mintingScreen extends HTMLElement {
     canvas.style.transition = "1s all";
     if (mainScreenOpen === false) {
       canvas.style.filter = "blur(5px)";
+      menuShadow.getElementById("uniMenu").style.filter = "blur(10px)";
+      document.getElementById("selection").style.filter = "blur(10px)";
       mainScreen.style.display = "grid";
       setTimeout(()=> {
         mainScreen.style.opacity = "100%";
@@ -48,6 +50,7 @@ class mintingScreen extends HTMLElement {
     } else {
       viewing.style.display = "none";
       menuShadow.getElementById("uniMenu").style.filter = "blur(0px)";
+      document.getElementById("selection").style.filter = "blur(0px)";
       menuShadow.getElementById("nftShop").style.opacity = "80%";
       canvas.style.filter = "blur(0px)";
       mainScreen.style.opacity = "0%";
@@ -98,6 +101,7 @@ class mintingScreen extends HTMLElement {
     var desc = this.shadow.getElementById("desc");
     var cost = this.shadow.getElementById("cost");
     var button = this.shadow.getElementById("button");
+    var buttonbg = this.shadow.getElementById("mintButton");
     var screen = this.shadow.getElementById("mainScreen");
     screen.style.transition = "1s all";
     var sources = {
@@ -117,6 +121,8 @@ class mintingScreen extends HTMLElement {
         cost.innerHTML = "IT’LL COST YOU 10 [ICP].";
         button.innerHTML = "UNAVAILABLE";
         button.style.color = "#ff002d";
+        buttonbg.style.backgroundColor = "black";
+        buttonbg.style.border = "1px solid black";
         availablePill = false;
         screen.style.boxShadow = "inset 0 0 100px rgba(0,0,0,.9)";
         screen.style.backgroundColor = "rgba(145,212,202,.4)";
@@ -128,13 +134,15 @@ class mintingScreen extends HTMLElement {
         pills[0].setAttribute("id", "red");
         pills[1].setAttribute("id", "black");
         pills[2].setAttribute("id", "blue");
-        desc.innerHTML = "HERE’S A TEMPORARY PILL YOU CAN TAKE.";
+        desc.innerHTML = "A GIFT FROM THE ORACLE'S";
         // desc.innerHTML = "HERE’S A TEMPORARY PILL YOU CAN TAKE.";
         cost.innerHTML = "IT WONT COST YOU A THING.";
-        button.innerHTML = "TAKE [MINT]";
+        button.innerHTML = "TAKE IT";
         this.shadow.getElementById("mintButton").addEventListener('click', this.reacc.bind(this));
-        button.style.color = "#94be8c";
+        button.style.color = "";
         availablePill = true;
+        buttonbg.style.border = "";
+        buttonbg.style.backgroundColor = "";
         screen.style.boxShadow = "inset 0 0 100px rgba(0,0,0,.9)";
         screen.style.backgroundColor = "rgba(0,0,0,.4)";
         break;
@@ -149,6 +157,8 @@ class mintingScreen extends HTMLElement {
         cost.innerHTML = "IT’LL COST YOU 5 [ICP].";
         button.innerHTML = "UNAVAILABLE";
         button.style.color = "#ff002d";
+        buttonbg.style.backgroundColor = "black";
+        buttonbg.style.border = "none";
         availablePill = false;
         screen.style.boxShadow = "inset 0 0 100px rgba(0,0,0,.9)";
         screen.style.backgroundColor = "rgba(164,219,251,.4)";
@@ -301,7 +311,6 @@ class mintingScreen extends HTMLElement {
             #mintButton {
               width: 30%;
               height: 70%;
-              background-color: black;
               float: right;
               margin-right: 20%;
               display: grid;
@@ -310,6 +319,18 @@ class mintingScreen extends HTMLElement {
               align-items: center;
               justify-items: center;
               font-size: 20px;
+              color: var(--accent);
+              border: 1px solid var(--accent);
+              transition: .5s all;
+              border-radius: 5px;
+              cursor: pointer;
+            }
+            #mintButton:hover {
+              font-family: "BS-B";
+              background-color: var(--accent);
+              color: black !important;
+              letter-spacing: 2px;
+              font-size: 22px;
             }
             .alt {
               color: #94be8c;
@@ -339,12 +360,20 @@ class mintingScreen extends HTMLElement {
               display: none;
               z-index: 7;
               stroke: #ff002d;
+              cursor: pointer;
+              transition: .5s all;
+              transform-origin: bottom;
             }
-            #svgBox svg {
+            #svgBox:hover {
+              transform: scale(1.2);
+            }
+            #svgBox #arrow {
               height: 100%;
               transition: .5s all;
+              font-size: 4.5em;
+              margin-bottom: 2%;
             }
-            #svgBox:hover > svg {
+            #svgBox:hover > span {
               opacity: 100% !important;
               transform: scale(1.1);
             }
@@ -374,6 +403,7 @@ class mintingScreen extends HTMLElement {
               width: 100%;
               align-items: center;
               text-align: center;
+              margin-top: 20%;
             }
             .pills {
               transition: .5s all;
@@ -396,13 +426,13 @@ class mintingScreen extends HTMLElement {
                 <div id="mintUiActionsInner">
                   <div id="texts">
                     <span class="spacer"></span>
-                    <span id="desc">HERE’S A TEMPORARY PILL YOU CAN TAKE.</span>
+                    <span id="desc">A GIFT FROM THE ORACLE'S</span>
                     <span class="active" id="cost">IT WONT COST YOU A THING.</span>
                     <span class="spacer"></span>
                   </div>
                   <div id="buttons">
                     <div id="mintButton">
-                      <span class="alt" id="button">TAKE [MINT]</span>
+                      <span id="button">TAKE IT</span>
                     </div>
                   </div>
                 </div>
@@ -411,7 +441,7 @@ class mintingScreen extends HTMLElement {
          </div>
          <div id="uiIcon">
          <div id="svgBox">
-          <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65.05 52.83"><defs><style>.cls-1{fill:#ff002d;}</style></defs><path class="cls-1" d="M57.56,50.14H22.43a.64.64,0,0,1-.63-.64V32.61a.64.64,0,1,1,1.27,0V48.86H56.93V4.24H23.07V21.45a.64.64,0,1,1-1.27,0V3.6A.64.64,0,0,1,22.43,3H57.56a.64.64,0,0,1,.64.64V49.5A.64.64,0,0,1,57.56,50.14Z"/><path class="cls-1" d="M35.38,27.66H8.07a.64.64,0,1,1,0-1.27H35.38a.64.64,0,0,1,0,1.27Z"/><path class="cls-1" d="M13.89,32.39a.63.63,0,0,1-.37-.12L6.88,27.54a.64.64,0,0,1,0-1l6.64-4.73a.63.63,0,0,1,.89.15.65.65,0,0,1-.15.89L8.35,27l5.91,4.2a.64.64,0,0,1-.37,1.16Z"/></svg>
+          <div id="arrow">&#8682;</div>
           <div id="exit">Exit</div>
          </div>
         </div>

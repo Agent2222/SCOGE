@@ -13,10 +13,11 @@ import { dtInvestors } from "../src/dt-investors";
 import { dialogueBox } from "../src/dialogueBox.js";
 import { MainDialogue } from "./typing.js";
 import { SoundtrackManager } from "./soundtrack.js";
-import { idlFactory } from "./backend/universe_backend/src/declarations/universe_backend/universe_backend.did.js";
+import { idlFactory } from "./declarations/universe_backend/universe_backend.did.js";
+import { HttpAgent } from "@dfinity/agent";
 import { Principal } from '@dfinity/principal';
+// import { getAllUserNFTs } from '@psychedelic/dab-js'
 // import fleekStorage from '@fleekhq/fleek-storage-js';
-// import { getAllUserNFTs } from '@psychedelic/dab-js';
 // import the closeCampaign function from dt-campaign.js
 import { mintingScreen } from "../src/mint.js";
 // import { dialogue } from "./game/dialogue.js";
@@ -42,6 +43,7 @@ var countriedAdded = false;
 var ngHidden = false;
 var shopActive = "closed";
 var settingsActive = false;
+window.dbm = false;
 window.shoploaded = false;
 window.viewThisProduct = "";
 window.investorsView = false;
@@ -95,21 +97,24 @@ window.sysCheck = () => {
   document.addEventListener("keydown", checkKeys);
 }
 
-window.checkKeys = (event) => {
+window.checkKeys = async (event) => {
   if (event.key === "i" && ci === "false") {
     ci = "true";
+    window.dbm = true;
     setTimeout(()=> {
       ci = "false";
     } , 1000);
   }
   if (event.key === "c" && ci === "true") {
     ci = "bankoo";
+      window.getAllUserNFTs = await import('@psychedelic/dab-js').then(module => {
+      return module.getAllUserNFTs;
+    });
     // document.getElementById("uniBut").removeEventListener("click", systemNoti);
     // document.getElementById("uniBut").addEventListener("click", universeSystem);
     universeSystem();
     document.getElementById("uniBut").setAttribute("onclick", "universeSystem()");
     soundtrack.play("scoge1");
-    console.log("activated");
   }
 }
 
@@ -1523,8 +1528,9 @@ window.getParamsDesktop = () => {
 
 // -----------------------------------------------
 // -----------------------------------------------
-// UNIVERSE SYSTEM
+// UNIVERSE SYSTEM 
 
+// US VARS
 var universeCanvas = document.querySelector("#universe");
 var exploreUI = document.querySelector("#exploreUI");
 var previewUI = document.getElementById("previewUI");
@@ -1550,10 +1556,14 @@ var movementPaused = false;
 var timeoutHandle1;
 var timeoutHandle2;
 var previewOpen = false;
-var landActivated = false;
+var typing = false;
 var sessionData = {};
+var connected = false;
 var ci = "false";
+var tempLandEx = ["1435","3162","2849"]
 window.suUiActor = null;
+window.landActivated = false;
+// window.getAllUserNFTs = {};
 export const suIDL = idlFactory;
 var user = {
   principal: null,
@@ -1565,10 +1575,12 @@ var uiState = {
   nftsLoaded: false,
 }
 const VITE_canister = import.meta.env.VITE_universe_backend_canister_Id;
+const lhcanister = "rdmx6-jaaaa-aaaaa-aaadq-cai";
+const lhcanister2 = "renrk-eyaaa-aaaaa-aaada-cai";
 const whitelist = [VITE_canister];
 const host = "https://a4gq6-oaaaa-aaaab-qaa4q-cai.raw.ic0.app/?id=wnunb-baaaa-aaaag-aaoya-cai";
-const localhost = "http://127.0.0.1:8080/?canisterId=r7inp-6aaaa-aaaaa-aaabq-cai&id=ryjl3-tyaaa-aaaaa-aaaba-cai";
-let getAllUserNFTs;
+const localhost = "http://127.0.0.1:8080/?canisterId=rdmx6-jaaaa-aaaaa-aaadq-cai&id=renrk-eyaaa-aaaaa-aaada-cai";
+// http://127.0.0.1:8080/?canisterId=rdmx6-jaaaa-aaaaa-aaadq-cai&id=renrk-eyaaa-aaaaa-aaada-cai
 // BEFORE LAUNCH !!!!!!!!!
 // Rebuilding Actors Across Account Switches
 
@@ -1588,9 +1600,6 @@ window.universeSystem = async () => {
   // Check for browser support
   if (navigator.userAgent.includes("Brave") || navigator.userAgent.includes("Firefox") || navigator.userAgent.includes("Chrome")) {
   // The browser is Brave, Firefox, or Chrome
-    console.log("The browser is Brave, Firefox, or Chrome");
-    // Import the getAllUserNFTs function if someCondition is true
-    getAllUserNFTs = await import('@psychedelic/dab-js').then(module => module.getAllUserNFTs);
     document.querySelector("#universe").style.display = "block";
     setTimeout(()=> {
       document.querySelector("#universe").style.opacity = "100%";
@@ -1621,11 +1630,36 @@ window.universeSystem = async () => {
       e.preventDefault();
     }
     , {passive: false});
-    adminUI();
     // add event listener to mousemove
     universeCanvas.addEventListener("mousemove", mousePos);
     // add event listener to mouseclick
     universeCanvas.addEventListener("click", selectedPos);
+    // Focus and Blur events
+    document.addEventListener("focus", event => {
+      const element = event.target;
+      typing = true;
+    }, true);
+    
+    document.addEventListener("blur", event => {
+      const element = event.target;
+      typing = false;
+    }, true);
+    //    
+    // 
+    var uniEvent = document.createElement("div");
+    var uniEvent2 = document.createElement("div");
+    var uniEvent3 = document.createElement("div");
+    //
+    uniEvent.id = "uniEvent";
+    document.getElementById("camera").appendChild(uniEvent);
+    //
+    uniEvent2.id = "uniEvent2";
+    document.getElementById("camera").appendChild(uniEvent2);
+    //
+    uniEvent3.id = "uniEvent3";
+    document.getElementById("camera").appendChild(uniEvent3);
+    //
+    adminUI();
     openLocationCard();
     window.playerPos();
   } else {
@@ -1850,6 +1884,31 @@ window.playerPos = () => {
  cityPosition.x = boxPos.x;
  cityPosition.y = boxPos.y;
  document.getElementById("playerCord").innerHTML = `Player Coordinates: ${cityPosition.x}, ${cityPosition.y}`;
+  if (`${position}` === tempLandEx[0] || `${position}` === tempLandEx[1] || `${position}` === tempLandEx[2]) {
+    window.landActivated = true;
+    document.getElementById("selection").style.animationPlayState = "running";
+    document.getElementById("selection").style.animation = "whiteBoxGlow 1s infinite";
+    // place a div with an exclamation mark in the center of it positioned 8px absolute from the top and left of the selection box
+    document.getElementById("selection").innerHTML = `<div id="exclamationMark" style="position: absolute; top: 8px; left: 8px; width: 18px; height: 18px; background-color: #ff002d; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 18px; color: #fff; font-weight: 700;">!</div>`;
+    //
+    if (`${position}` === tempLandEx[0]) {
+      exploreUI.innerHTML = tempCont1;
+      return;
+    } else  if (`${position}` === tempLandEx[1]) {
+      exploreUI.innerHTML = tempCont2;
+      return;
+    } else  if (`${position}` === tempLandEx[2]) {
+      exploreUI.innerHTML = tempCont3;
+      return;
+    }
+    return;
+  } else {
+    window.landActivated = false;
+    document.getElementById("selection").style.animationPlayState = "paused";
+    document.getElementById("selection").style.animation = "none";
+    document.getElementById("selection").innerHTML = "";
+    exploreUI.innerHTML = "";
+  }
 }
 
 window.moveSelection = () => {
@@ -1969,27 +2028,74 @@ window.openLocationCard = () => {
   })
 }
 
+var tempCont1 = `<div class="cannonIcon">
+<img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
+</div>
+<h1>Ch.1 - Reacclimate</h1>
+<p>In the distant land of T.A.O.S City, there exists a hidden world of self-exiled creators, known as the Oracles. These Oracles reside in ancient, desolate mansions on the outskirts of the city, and possess a wealth of knowledge and experience that is sought after by migrants from far-off lands. These migrants come to T.A.O.S City in search of a new life, but often find themselves lost and alone in a vast and unfamiliar place. They turn to the Oracles for guidance, seeking to avoid the wrath of the city's enforcers, a powerful and ruthless group of conservative citizens.
+<br><br>
+The journey to visit the Oracles is not an easy one. Many must travel for days, through treacherous and unforgiving terrain, in order to reach the Oracles' remote dwellings. But those who are successful in their quest are rewarded with a profound understanding of themselves and the world around them. The Oracles' teachings help the migrants to remember something that they had long forgotten, and to reacclimate to the new and strange land they now call home.
+<br><br>
+This is the story of one such migrant, and their journey to find the Oracles, to discover the truth about themselves, and to make a place for themselves in the world of T.A.O.S City. It is a story of struggle and sacrifice, of hope and perseverance, and of the power of the human spirit to overcome even the greatest of challenges.
+</p>`
+var tempCont2 = `
+<div class="cannonIcon">
+<img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
+</div>
+<div id="tempVidHead">Ch.2 - Prologue 1</div>
+<div id="tempVidCon">
+  <video id="tempVid" src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Chapter2-Prologue-1-HD.mp4" controls></video>
+</div>
+`
+var tempCont3 = `
+<div class="cannonIcon">
+<img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
+</div>
+<div id="tempVidHead2">Speak Easy</div>
+<div id="tempVidCon2">
+  <video id="tempVid2" src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/nightout.mp4" controls></video>
+</div>
+`
 // Explore Open Helper 
 window.exploreOpenHelper = () => {
   // scale exploreUI to 1 and position it 18px to the right of the selection box if the space to the right of the selection box is greater than the width of the exploreUI element, if not position it 18px to the left of the selection box.
+  console.log(typing)
   var exploreUISize = document.getElementById("exploreUI").offsetWidth;
-  if (selectionBoxPosition.x < (window.innerWidth / tileSize) * tileSize - 18 - exploreUISize) {
-    exploreUI.style.left = selectionBoxPosition.x + tileSize + 18 + "px";
-  } else {
-    exploreUI.style.left = selectionBoxPosition.x - 18 - exploreUISize + "px";
-  }
-  exploreUI.style.transform = "scale(1)";
-  if (landActivated === false) {
-    exploreUI.style.width = "200px";
-    exploreUI.style.height = "92px";
-    exploreUI.style.top = selectionBoxPosition.y - 92 + "px";
-    clearTimeout(timeoutHandle2);
-    timeoutHandle2 = setTimeout(() => {
-      exploreUI.style.transform = "scale(0)";
-    }, 6000);
-  } else {
-    exploreUI.style.width = "540px";
-    exploreUI.style.height = "810px";
+  if (typing === false) {
+    if (selectionBoxPosition.x < (window.innerWidth / tileSize) * tileSize - 18 - exploreUISize) {
+      exploreUI.style.left = selectionBoxPosition.x + tileSize + 18 + "px";
+    } else {
+      exploreUI.style.left = selectionBoxPosition.x - 18 - exploreUISize + "px";
+    }
+    exploreUI.style.transform = "scale(1)";
+    if (window.landActivated === false) {
+      exploreUI.style.width = "128px";
+      exploreUI.style.height = "20px";
+      exploreUI.style.top = selectionBoxPosition.y - 92 + "px";
+      clearTimeout(timeoutHandle2);
+      timeoutHandle2 = setTimeout(() => {
+        exploreUI.style.transform = "scale(0)";
+      }, 6000);
+      exploreUI.innerHTML = `
+      <div id="unclaimedBox">
+        <div id="unclaimed">UNCLAIMED LAND</div>
+      </div>
+      `
+      return;
+    } else {
+      exploreUI.style.width = "540px";
+      exploreUI.style.height = "810px";
+      // BELOW TEMP OPTION
+      exploreUI.style.top = selectionBoxPosition.y / 2 + "px";
+      var vid = document.getElementById("tempVid");
+      var vid2 = document.getElementById("tempVid2");
+      if (vid?.src != "") {
+        vid?.play();
+      }
+      if (vid2.src != "") {
+        vid2.play();
+      }
+    } 
   }
 }
 
@@ -2001,6 +2107,13 @@ window.moveMenu = () => {
   var shadow = document.getElementById("getUniMenu").shadowRoot;
   var text = document.getElementById("getUniMenu").shadowRoot.querySelectorAll(".uniMenuTxt");
   var headerTabs = document.getElementById("getUniMenu").shadowRoot.querySelectorAll(".men-active");
+  var getNewButtons = document.getElementById("getUniMenu").shadowRoot.querySelectorAll(".getNew");
+  //
+  getNewButtons.forEach(el => {
+    el.addEventListener("click", () => {
+      document.getElementById("getNfts").toggleNftScreen();
+    });
+  });
   // MenuSounds
   text.forEach(el => {
     el.addEventListener("mouseout", () => {
@@ -2008,7 +2121,7 @@ window.moveMenu = () => {
       soundtrack.stop('menuMove3');
       soundtrack.play('menuMove3');
     });
-  })
+  });
   //
   uniMenu.childNodes.forEach(el => {
     if (el.id != "uniMenuItems") {
@@ -2087,6 +2200,7 @@ window.moveMenu = () => {
           setTimeout(() => {
             headlineSwtich(e);
           },500)
+          window.openInventory();
           shadow.getElementById("fm-profile").style.display = "grid";
           shadow.getElementById("fm-header").style.display = "grid";
           shadow.getElementById("fm-header-headline").style.opacity = "100%";
@@ -2096,7 +2210,6 @@ window.moveMenu = () => {
           shadow.getElementById("fm-settings").style.display ="none";
           shadow.getElementById("fm-enhancements").style.display = "none";
           shadow.getElementById("menuLoadingScreen").style.display ="none";
-          shadow.getElementById("menuMessage").style.display ="none";
           shadow.getElementById("fm-header-headline").style.pointerEvents = "auto";
           headerTabs.forEach(el => {
             if (el.id === "fm-menu1") {
@@ -2154,6 +2267,7 @@ window.moveMenu = () => {
         break;
       case "uniMenuFeedback":
         el.addEventListener("click", (e) => {
+          shadow.getElementById("feedbackHeadline").innerHTML = "Help make T.A.O.S City better.";
           shadow.getElementById("fm-help").style.display = "none";
           shadow.getElementById("fm-inventory").style.display = "none";
           shadow.getElementById("fm-enhancements").style.display = "none";
@@ -2278,6 +2392,9 @@ window.hideMenu = () => {
     subscribeEl.style.pointerEvents = "none";
     musicEl.style.pointerEvents = "none";
     settings.style.zIndex = "2";
+    document.getElementById("uniEvent").style.display = "block";
+    document.getElementById("uniEvent2").style.display = "block";
+    document.getElementById("uniEvent3").style.display = "block";
 }
 
 // Show default menu
@@ -2305,27 +2422,34 @@ window.showMenu = () => {
 
     // remove playerPos div
     document.getElementById("selection").style.display = "none";
+    document.getElementById("uniEvent").remove();
+    document.getElementById("uniEvent2").remove();
+    document.getElementById("uniEvent3").remove();
     // hide the selection box
     document.getElementById("explore").style.display = "none";
     previewUI.style.transform = "scale(0)";
     moveMenu.style.display = "none";
+    document.getElementById("adminUI").remove();
 }
 
 // Open inventory / wallet
 window.openInventory = async () => {
   var shadow = document.getElementById("getUniMenu").shadowRoot;
   var loading = shadow.getElementById("menuLoadingScreen");
+  var loading2 = shadow.getElementById("menuLoadingScreen3");
   if (uiState.nftsLoaded === false) {
     loading.style.display = "grid";
+    loading2.style.display = "grid";
     soundtrack.loop('menuLoading1');
     soundtrack.play('menuLoading1');
-    await connectWallet().then(() => {
-      shadow.getElementById("fm-inventory").style.display = "block";
-      shadow.getElementById("fm-header").style.display = "grid";
-      shadow.getElementById("fm-enhancements").style.display = "none";
-    });
+    await connectWallet()
+    // .then(() => {
+    //   shadow.getElementById("fm-inventory").style.display = "block";
+    //   shadow.getElementById("fm-header").style.display = "grid";
+    //   shadow.getElementById("fm-enhancements").style.display = "none";
+    // });
   } else {
-    shadow.getElementById("fm-inventory").style.display = "block";
+    shadow.getElementById("fm-inventory").style.display = "grid";
     shadow.getElementById("fm-header").style.display = "grid";
     shadow.getElementById("fm-enhancements").style.display = "none";
   }
@@ -2334,9 +2458,18 @@ window.openInventory = async () => {
 // Connect wallet
 window.connectWallet = async () => {
   var shadow = document.getElementById("getUniMenu").shadowRoot;
-  const connected = await window.ic.plug.isConnected().catch((e) => {
-    console.error(e);
-  });
+  if (window.ic === undefined) {
+    console.log("Plug not found - Get Plug Wallet");
+    connectError();
+    return;
+  } else {
+    connected = await window.ic.plug.isConnected().catch((e) => {
+      console.error(e);
+    });
+    // window.getAllUserNFTs = await import('@psychedelic/dab-js').then(module => {
+    //   return module.getAllUserNFTs;
+    //   });
+  }
   // Callback to print sessionData
   const onConnectionUpdate = () => {
     // Do something when connection is updated
@@ -2344,16 +2477,22 @@ window.connectWallet = async () => {
   }
   //
   if (connected === false) {
-    try {
       const plugpublicKey = await window.ic.plug.requestConnect(
         {
-          whitelist,
-          localhost,
+          whitelist: whitelist,
+          host: host,
           onConnectionUpdate,
           timeout: 50000
         }
-      );
-      createActor().catch((e) => {
+      ).catch((e) => {
+        var error = {e};
+        connectError(error);
+        console.error("Connect Wallet",e);
+      });
+      //
+      const agent = await window.ic.plug.agent;
+      //
+      await createActor().catch((e) => {
         console.log("Create Actor",e);
       });
       // Get the user principal id
@@ -2368,74 +2507,150 @@ window.connectWallet = async () => {
       user.pk = plugpublicKey;
       console.log(user);
       //
+      // Import the getAllUserNFTs function if someCondition is true
       playerState();
       getNFTCollections();
-    } catch (e) {
-      console.error(e);
-    }
   } else if (connected === true) {
-    if (window.suUiActor === null) {
-      await createActor();
-    }
-    sessionData = window.ic.plug.sessionManager.sessionData;
-    var p2 = sessionData.principalId;
-    user.principal = `${p2}`;
-    getNFTCollections(p2);
+    await createActor();
+    getNFTCollections();
     playerState();
   } else { 
-    shadow.getElementById("menuLoadingScreen").style.display = "none";
-    soundtrack.stop('menuLoading1');
-    soundtrack.setVolume('menuError1', 0.4);
-    soundtrack.play('menuError1');
-    shadow.getElementById("menuMessage").style.display = "grid";
+    connectError();
     // document.getElementById("getWallet").style.display = "block";
   }
 }
 
 // Get NFTs
-const getNFTCollections = async (p2) => {
+const getNFTCollections = async () => {
+  var agent = window.ic.plug.sessionManager.sessionData.agent;
   var shadow = document.getElementById("getUniMenu").shadowRoot;
-  const principal = `${user.principal}`;
   const collections = await getAllUserNFTs(
-    { user: principal || p2 }
-  ).catch((e) => {
-    console.log("Get NFTs",e);
+    {
+      agent,
+      user: user.principal
+    }
+  ).then((collection)=>{
+    user.nfts = collection;
+    var nftDisplay = document.createElement("div");
+    var image = document.createElement("img");
+    nftDisplay.setAttribute("class", "Inventory-Assets-Cont");
+    nftDisplay.appendChild(image);
+    image.src = `${user.nfts[0].tokens[0].url}`;
+    shadow.getElementById("assetsCont").appendChild(nftDisplay);
+    // shadow.getElementById("inventoryInnerText").innerHTML = `${user.nfts[0].description}`;
+    shadow.getElementById("menuLoadingScreen").style.display = "none";
+    shadow.getElementById("menuLoadingScreen3").style.display = "none";
+    soundtrack.stop('menuLoading1');
+    uiState.nftsLoaded = true;
+  }).catch((e) => {
+    var error = {e}
+    connectError("getAllUserNFTs",error);
   });
-  user.nfts = collections;
-  var nftDisplay = document.createElement("div");
-  var image = document.createElement("img");
-  nftDisplay.setAttribute("class", "Inventory-Image-Cont");
-  nftDisplay.appendChild(image);
-  image.src = `${user.nfts[0].tokens[0].url}`;
-  shadow.getElementById("inventory-images").appendChild(nftDisplay);
-  shadow.getElementById("inventoryInnerText").innerHTML = `${user.nfts[0].description}`;
-  console.log("NFT Pulled Successfully");
-  shadow.getElementById("menuLoadingScreen").style.display = "none";
-  soundtrack.stop('menuLoading1');
-  uiState.nftsLoaded = true;
 }
 
 // player state
 const playerState = async () => {
-  const metadata = await window.suUiActor.metadata();
-  const admin = await window.suUiActor.adminUser();
+  const metadata = await window.suUiActor.metadata().catch((e) => {
+    console.log("Get Metadata",e);
+  });
+  const admin = await window.suUiActor.adminUser().catch((e) => {
+    console.log("Get Admin", {e});
+    var error = {e}
+    if (window.dmb === false) {
+      attn(error);
+    }
+  });
   if (admin === user.principal) {
-    alert("Welcome Amin of the Scoge Universe!");
+    console.log("Admin Logged in");
   }
 }
 
+// CANISTER (Change in local / production)
 // Create Actor
 const createActor = async () => {
       // Create an actor to interact with the NNS Canister
       // we pass the NNS Canister id and the interface factory
-      console.log("Check Calling createActor");
+      user.principal = window.ic.plug.sessionManager.sessionData.principalId;
       window.suUiActor = await window.ic.plug.createActor({
         canisterId: VITE_canister,
         interfaceFactory: suIDL,
       }).catch((e) => {
-        console.log("Error is Here", e);
+        console.log("creatActor", e);
       });
 };
+
+// Error 
+const connectError = async (error) => {
+  var shadow = document.getElementById("getUniMenu").shadowRoot;
+  shadow.getElementById("menuLoadingScreen").style.display = "none";
+  shadow.getElementById("menuLoadingScreen3").style.display = "none";
+  soundtrack.stop('menuLoading1');
+  soundtrack.setVolume('menuError1', 0.4);
+  soundtrack.play('menuError1');
+  shadow.getElementById("menuMessage").style.display = "grid";
+  switch (error.e.result?.error_code || error.e.message) {
+    case "IC0501":
+      shadow.getElementById("menuMessage").innerHTML = `
+      <div>
+        <div id="menuMessageHead">MAINTENANCE ERROR</div>
+        <div id="menuMessageText">We're on it!</div>
+        <div id="menuMessageBody">City Central has been notified and will resolve the issue. In the meantime, try refreshing your connection and attempting again.</div>
+      </div>`
+      break;
+    case "The agent creation was rejected.":
+      shadow.getElementById("menuMessage").innerHTML = `
+      <div>
+        <div id="menuMessageHead">DISCONNECTED WALLET</div>
+        <div id="menuMessageText">You'll need it to continue.</div>
+        <div id="menuMessageBody" style="text-decoration:none;width:70% !important;margin-left:15%;cursor:default;">T.A.O.S City's Plug wallet is the best of its class. Share any concerns with City Central in the <span style="text-decoration:underline;color: var(--accent);cursor:pointer;">Feedback</span> section.</div>
+        </div>
+      </div>`
+      shadow.querySelector("#menuMessageBody").addEventListener("click", () => {
+        var el = {
+          target: shadow.querySelector("#fm-menu2")
+        }
+        var el2 = {
+          target: shadow.querySelector("#menuHelp")
+        }
+        shadow.querySelector("#uniMenuFeedback").click(el);
+      });
+      break;
+    default:
+      shadow.getElementById("menuMessage").innerHTML = `
+      <div>
+        <div id="menuMessageHead">NEURAL CHIP ERROR</div>
+        <div id="menuMessageText">We're on it!</div>
+        <div id="menuMessageBody" style="text-decoration:none;width:70% !important;margin-left:15%;">Seems like something went wrong with your Digisette. LX-Comm has been notified. In the meantime, try <span style="color:var(--accent);"><a href="#" onclick="location.reload()">refreshing</a></span> your connection and attempting again.</div>
+      </div>`
+      break;
+  }
+  // Canister Error
+  // Default No Wallet Error
+  // Alternative General Something Went Wrong Error
+  // shadow.getElementById("menuMessage").innerHTML = `
+  //     <div>
+  //     <div id="menuMessageHead">${errors.error}</div>
+  //     <div id="menuMessageText">${errors.message}</div>
+  //     <div id="menuMessageBody">${errors.body}</div>
+  //     <div id="menuMessageCTA">${errors.cta}</div>
+  //   </div>
+  // `
+  // if (errors.etaActive === false) {
+  //   shadow.getElementById("menuMessageCTA").style.display = "none";
+  // }
+}
+
+const attn = async (error) => {
+  let data = new FormData();
+  data.append("Email", "ATTN: RELOAD");
+  data.append("FeedbackText", `${error.e.props.Message}`);
+  fetch("https://script.google.com/macros/s/AKfycbxOuAozKPY70nQqWzkD_mYHnd954KrUZuRnGNrmGnA4j3l3nSMYuNssqiJMqn7Z4u064w/exec", {
+  method: "POST",
+  body: data,
+  mode: "cors"
+})
+.then(res => res.text())
+}
 
 // Upcoming
 window.systemNoti = async () => {
