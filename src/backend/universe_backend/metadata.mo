@@ -1,3 +1,4 @@
+import Text "mo:base/Text";
 module {    
 
     public type Metadata = {
@@ -43,20 +44,25 @@ module {
     };
 
     public type NMCProperties = {
+        // ** Visual Identifier **
+        pillType: Text; 
+        landRank: Nat64; 
+        rank: Nat64; 
+        powerUps: ?[Nat64]; 
+        progress: Nat64; 
+        xp: ?Nat64; 
+        category: Text; 
+        linked: ?Bool;  
+        // ** Player Info **
         identifier: Text;
-        alias: Text;
+        alias: Text; 
         email: Text;
-        domains: ?[Nat64];
-        pillType: Text;
-        landNumber: Nat64;
-        landRank: Nat64;
-        rank: Nat64;
-        netClass: ?Text;
-        powerUps: ?[Nat64];
-        progress: Nat64;
+        earthImage: ?[Nat8]; 
+        earthText: ?[Text];
+        styles: ?[Text];
+        // ** Player Stats **
         discovered: ?[Text];
         discoveredProgress: ?Float;
-        xp: ?Nat64;
         power: ?Nat64;
         mental: ?Nat64;
         physical: ?Nat64;
@@ -64,24 +70,30 @@ module {
         speed: ?Nat64;
         sight: ?Nat64;
         endurance: ?Float;
-        network: ?[Text];
+        domains: ?[Nat64];
+        playerLocation: Nat64;
+        // ** Player Settings **
         soundLevel: ?Float;
         musicLevel: ?Float;
         fsOn: ?Bool;
         notiOn: ?Bool;
-        imageURI: Text;
-        videoURI: ?Text;
-        story: ?Text;
-        category: Text;
-        linked: ?Bool;
+        // ** Player Network **
+        networkClass: ?Text;
+        network: ?[Text];
+        // ** Land Info **
+        landNumber: Nat64;
+        story: object{
+            title: ?Text;
+            text: ?Text;
+            imagesUri: ?[Text];
+            videoURI: ?Text;
+        };
         bankooImage: ?[Nat8];
         bankooText: ?[Text];
-        earthImage: ?[Nat8];
-        earthText: ?[Text];
-        data: ?[Nat8];
+        imageCompData: ?[Nat8];
+        // ** History **
         ancestorsNames: ?[Text];
         ancestorsImages: ?[Nat8];
-        styles: ?[Text];
     };
 
     public type Stats = {

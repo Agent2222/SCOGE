@@ -9,10 +9,7 @@ type TokenMetadata =
    minted_by: principal;
    operator: opt principal;
    owner: opt principal;
-   properties: vec record {
-                     text;
-                     NftProperties;
-                   };
+   properties: vec NMCProperties;
    token_identifier: nat;
    transferred_at: opt nat64;
    transferred_by: opt principal;
@@ -51,22 +48,6 @@ type Result =
    err: NftError;
    ok: TokenMetadata;
  };
-type NftProperties = 
- record {
-   category: text;
-   data: opt vec nat8;
-   discovered: opt vec text;
-   discoveredProgress: opt float64;
-   imageURI: text;
-   linked: opt bool;
-   ownerImage: opt vec nat8;
-   ownerText: opt vec text;
-   progress: nat64;
-   rank: nat64;
-   story: opt text;
-   videoURI: opt text;
-   xp: nat64;
- };
 type NftError = 
  variant {
    ExistedNFT;
@@ -79,6 +60,49 @@ type NftError =
    TokenNotFound;
    UnauthorizedOperator;
    UnauthorizedOwner;
+ };
+type NMCProperties = 
+ record {
+   alias: text;
+   ancestorsImages: opt vec nat8;
+   ancestorsNames: opt vec text;
+   bankooImage: opt vec nat8;
+   bankooText: opt vec text;
+   category: text;
+   data: opt vec nat8;
+   discovered: opt vec text;
+   discoveredProgress: opt float64;
+   domains: opt vec nat64;
+   earthImage: opt vec nat8;
+   earthText: opt vec text;
+   email: text;
+   endurance: opt float64;
+   fsOn: opt bool;
+   health: opt nat64;
+   identifier: text;
+   imageURI: text;
+   landNumber: nat64;
+   landRank: nat64;
+   linked: opt bool;
+   mental: opt nat64;
+   musicLevel: opt float64;
+   netClass: opt text;
+   network: opt vec text;
+   notiOn: opt bool;
+   physical: opt nat64;
+   pillType: text;
+   playerLocation: nat64;
+   power: opt nat64;
+   powerUps: opt vec nat64;
+   progress: nat64;
+   rank: nat64;
+   sight: opt nat64;
+   soundLevel: opt float64;
+   speed: opt nat64;
+   story: opt text;
+   styles: opt vec text;
+   videoURI: opt text;
+   xp: opt nat64;
  };
 type Metadata = 
  record {
@@ -96,10 +120,7 @@ service : {
   cycles: () -> (nat) query;
   logo: () -> (opt text) query;
   metadata: () -> (Metadata) query;
-  mint: (principal, nat, vec record {
-                               text;
-                               NftProperties;
-                             }) -> (Result_3);
+  mint: (principal, nat, vec NMCProperties) -> (Result_3);
   name: () -> (opt text) query;
   operatorOf: (nat) -> (Result_2) query;
   operatorTokenMetadata: (principal) -> (Result_1) query;

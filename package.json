@@ -19,7 +19,7 @@
   "dependencies": {
     "@babylonjs/loaders": "^5.7.0",
     "@chec/commerce.js": "^2.4.1",
-    "@dfinity/agent": "^0.14.1",
+    "@dfinity/agent": "^0.15.1",
     "@dfinity/authentication": "0.8.7",
     "@dfinity/principal": "^0.14.1",
     "@fleekhq/fleek-storage-js": "^1.0.23",
@@ -32,8 +32,6 @@
     "babylonjs-inspector": "^5.20.0",
     "babylonjs-loaders": "^4.2.0",
     "babylonjs-serializers": "^4.2.0",
-    "browser-sync": "^2.27.9",
-    "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "gsap": "^3.6.0",
     "ms": "^2.1.2",

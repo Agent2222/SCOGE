@@ -32,7 +32,7 @@ class getUniMenu extends HTMLElement {
     const menuIcon = this.shadow.querySelector("#uniMenuIcon");
     const menuItems = this.shadow.querySelector("#menuItems");
     const menuHeader = this.shadow.querySelector("#menuHeader");
-    console.log(suIDL); 
+    const refresh = this.shadow.querySelector("#refresh");
     if (menuOpen === false) {
       menuIcon.style.transform = "rotate(180deg)";
       menu.style.height = "auto";
@@ -47,6 +47,7 @@ class getUniMenu extends HTMLElement {
       menuItems.style.height = "0%";
       menuItems.style.overflow = "hidden";
       menuOpen = false;
+      refresh.style.animationPlayState = "paused";
       this.closeFullMenu();
       return;
     }
@@ -57,6 +58,7 @@ class getUniMenu extends HTMLElement {
     const fullMenu = this.shadow.querySelector("#fullMenu");
     const fullMenuBg = this.shadow.querySelector("#fullMenuBG");
     const menuItems = this.shadow.querySelector("#menuItems");
+    const refresh = this.shadow.querySelector("#refresh");
     if (fullMenuOpen === false) {
       menu.style.overflowX = "visible";
       fullMenu.style.width = "500px";
@@ -65,41 +67,32 @@ class getUniMenu extends HTMLElement {
       menu.style.borderTopRightRadius = "0px";
       menu.style.borderRight = "0px solid black";
       fullMenuOpen = true;
+      refresh.style.display = "block";
+      refresh.style.animationPlayState = "running";
       return;
     }
   }
 
   // Send Feedback
   sendFeedback(event) {
-    event.preventDefault(); // Prevent the form from being submitted the traditional way
-    var email = this.shadow.getElementById('feedbackEmailInput').value;
-    var feedback = this.shadow.getElementById('feedbackInput').value;
-    // Validate the form values here, if necessary
-    // Create a FormData object to hold the form data
-    var formData = new FormData();
-    // Add the form data to the FormData object
-    formData.append("Email", email);
-    formData.append("FeedbackText", feedback);
-    // Send a POST request to the specified URL with the form data as the request body
-    fetch("https://script.google.com/macros/s/AKfycbzMbFOkhQtPlk8yYyX46KQ6VB6ODF5b0gqKXPwjXILa1O6lQ6pVJv8FtLa6waxJvYInBw/exec", {
-      method: "POST",
-      body: formData,
-      mode: 'cors'
-    })
-    .then(function(response) {
-      // Handle the response here, if necessary
-      console.log(response);
-    }).catch(function(error) {
-      // Handle errors here
-    });
+      // Event.preventDefault(); // Prevent the form from being submitted the traditional way
+      event.preventDefault();
+      var email = this.shadow.getElementById('feedbackEmailInput').value;
+      var feedback = this.shadow.getElementById('feedbackInput').value;
+      // Validate the form values here, if necessary
+      // Submit the form
+      this.shadow.getElementById('feedbackForm').submit();
   }
 
   closeFullMenu() {
     const menu = this.shadow.querySelector("#uniMenu");
     const fullMenu = this.shadow.querySelector("#fullMenu");
     const fullMenuBg = this.shadow.querySelector("#fullMenuBG");
+    const refresh = this.shadow.querySelector("#refresh");
     fullMenu.style.width = "0px";
       fullMenuBg.style.transform = "scaleX(0)";
+      refresh.style.animationPlayState = "paused";
+      refresh.style.display = "none";
       setTimeout(() => {
         menu.style.borderBottomRightRadius = "10px";
         menu.style.borderTopRightRadius = "10px";
@@ -185,15 +178,43 @@ class getUniMenu extends HTMLElement {
         this.switchMenuTabs(e);
       });
     });
-    this.shadow.querySelector("#feedbackButton").addEventListener("click", (event) => {
-      this.sendFeedback(event);
+    this.form = this.shadow.querySelector("#feedbackForm");
+    this.form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      this.shadow.getElementById("menuLoadingScreen2").style.display = "grid";
+      let data = new FormData(this.form);
+      fetch("https://script.google.com/macros/s/AKfycbxOuAozKPY70nQqWzkD_mYHnd954KrUZuRnGNrmGnA4j3l3nSMYuNssqiJMqn7Z4u064w/exec", {
+        method: "POST",
+        body: data,
+        mode: "cors"
+      }).then(res => res.text()).then(data => {
+        this.form.reset();
+        this.shadow.getElementById("menuLoadingScreen2").style.display = "none";
+        this.shadow.getElementById("feedbackHeadline").style.color = "var(--accent)";
+        this.shadow.getElementById("feedbackHeadline").innerHTML = "Outstanding feedback citizen!";
+        setTimeout(() => {
+          this.shadow.getElementById("feedbackHeadline").style.color = "var(--primary)";
+          this.shadow.getElementById("feedbackHeadline").innerHTML = "This City needs more people like you!";
+        }, 3000);
+      });
     });
-    // this.shadow.querySelector("#switch23").addEventListener("click", () => {
-    //   var el = {
-    //     target: this.shadow.querySelector("#fm-menu3")
-    //   }
-    //   this.switchMenuTabs(el);
-    // });
+    this.shadow.querySelector("#menuMessageBody").addEventListener("click", () => {
+      var el = {
+        target: this.shadow.querySelector("#fm-menu2")
+      }
+      var el2 = {
+        target: this.shadow.querySelector("#menuHelp")
+      }
+      this.shadow.querySelector("#uniMenuHelp").click(el);
+      this.switchMenuTabs(el);
+      window.headlineSwtich(el2);
+    });
+    this.shadow.querySelector("#switch23").addEventListener("click", () => {
+      var el = {
+        target: this.shadow.querySelector("#fm-menu3")
+      }
+      this.switchMenuTabs(el);
+    });
     this.shadow.getElementById("pinMenu").addEventListener("click", () => {
       pinMenu();
     });
@@ -742,7 +763,42 @@ class getUniMenu extends HTMLElement {
               font-size: .7em;
               font-family: "BS-R";
             }
-            #menuLoadingScreen {
+            #menuMessageBody {
+              font-size: .7em;
+              font-family: "Garamond";
+              margin-top: 30px;
+              margin-bottom: 30px;
+              transition: all 0.5s ease;
+              text-decoration: underline;
+              cursor: pointer;
+              color: var(--secondary);
+              letter-spacing: 1px;
+            }
+            #menuMessageBody:hover {
+              color: var(--primary);
+            }
+            #menuMessageCTA {
+              color: var(--accent);
+              font-family: "BS-R";
+              border: 1px solid var(--accent);
+              font-size: .9em;
+              padding-top: 8px;
+              padding-bottom: 8px;
+              border-radius: 5px;
+              transition: all 0.5s ease;
+              cursor: pointer;
+            }
+            #menuMessageCTA a {
+              text-decoration: none !important;
+            }
+            #menuMessageCTA:hover {
+              background-color: var(--accent);
+              color: black !important;
+            }
+            #menuMessageCTA:hover a {
+              color: black !important;
+            }
+            .LoadBox {
               width: 100%;
               height: 100%;
               position: absolute;
@@ -759,7 +815,7 @@ class getUniMenu extends HTMLElement {
               font-size: 1.5em;
               color: #ff002d;
             }
-            #loadIcon {
+            .loadIcon {
               width: 300px;
               height: 300px;
               display: grid;
@@ -771,7 +827,7 @@ class getUniMenu extends HTMLElement {
               border: 5px dotted #ff002d;
               border-radius: 50%;
             }
-            #loading {
+            .loadinScreen {
               position: absolute;
               animation: blink 4s ease-in-out infinite;
             }
@@ -1299,9 +1355,55 @@ class getUniMenu extends HTMLElement {
             }
             #notiToggle {
               user-select: none;
+              display: flex;
+            }
+            .getNew {
+              box-shadow: 0 0 5px var(--primary);
+              border: 1px solid var(--primary);
+              color: var(--primary);
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              text-align: center;
+            }
+            .getNew:hover {
+              color: var(--secondary);
+              font-family: "BS-B";
+            }
+            #refresh {
+              position: absolute;
+              z-index: 10;
+              left: 0%;
+              top: 0%;
+              width: 3px;
+              height: 100%;
+              border-left: 1px solid rgba(255,255,255,0.08);
+              box-shadow: 0 0 40px rgba(255,255,255,0.8);
+              background-color: rgba(255,255,255,0.08);
+              margin:0px;
+              animation: refresh 20s infinite;
+              animation-timing-function: linear;
+              pointer-events: none;
+            }
+            @keyframes refresh {
+              0% {
+                transform: translateX(0%);
+                opacity: 0%;
+              } 
+              2% {
+                opacity: 100%;
+              }
+              98% {
+                opacity: 100%;
+              }
+              100% {
+                transform: translateX(760px);
+                opacity: 0%;
+              }
             }
          </style>
          <div id="uniMenu">
+            <div id="refresh"></div>
             <div id="menuHeader">
               <div id="topMenu">
                <img id="uniMenuLogo" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/SCOGÉ_Logo-red.png" draggable="false">
@@ -1358,13 +1460,15 @@ class getUniMenu extends HTMLElement {
             <div id="fullMenu">
               <div id="menuMessage">
                 <div>
-                  <div id="menuMessageHead">GET WALLET</div>
-                  <div id="menuMessageText">You do not have a wallet.</div>
+                  <div id="menuMessageHead">WALLET MISSING</div>
+                  <div id="menuMessageText">You'll need one to continue.</div>
+                  <div id="menuMessageBody">Learn more about wallets here.</div>
+                  <div id="menuMessageCTA"><a href="https://plugwallet.ooo/" target="_blank">GET WALLET</a></div>
                 </div>
               </div>
-              <div id="menuLoadingScreen">
-                <div id="loading">LOADING...</div>
-                <div id="loadIcon"></div>
+              <div id="menuLoadingScreen" class="LoadBox">
+                <div id="loading" class="loadinScreen">LOADING...</div>
+                <div class="loadIcon"></div>
               </div>
               <div id="fm-header">
                 <div id="fm-header-headline">
@@ -1376,7 +1480,9 @@ class getUniMenu extends HTMLElement {
                   &#8682;
                 </div>
               </div>
-              <div id="fm-enhancements"></div>
+              <div id="fm-enhancements">
+                <img src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/universe/nft-shop.webp" alt="NFT Shop" id="nftShop">
+              </div>
               <div id="fm-inventory">
                 <div id="inventoryBody">
                   <div class="inventory-tabs it1">
@@ -1388,14 +1494,8 @@ class getUniMenu extends HTMLElement {
                     </div>
                     <div id="inventory-land-images">
                       <div id="landCardCont">
-                          <div class="Inventory-Image-Cont">
-                            <img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
-                          </div>
-                          <div class="Inventory-Image-Cont">
-                            <img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
-                          </div>
-                          <div class="Inventory-Image-Cont">
-                            <img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+                          <div class="Inventory-Image-Cont getNew">
+                            ADD NEW
                           </div>
                       </div>
                     </div>
@@ -1407,6 +1507,9 @@ class getUniMenu extends HTMLElement {
                     </div>
                     <div id="invetory-enh-images">
                       <div id="landCardCont">
+                          <div class="Inventory-Image-Cont getNew">
+                            ADD NEW
+                          </div>
                           <div class="Inventory-Image-Cont">
                             <img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
                           </div>
@@ -1421,59 +1524,60 @@ class getUniMenu extends HTMLElement {
                   </div>
                   <div class="inventory-tabs it2">
                     <div id="assetsCont">
-                      <div class="Inventory-Assets-Cont">
-                            <img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
-                      </div>
                     </div>
                   </div>
-                  <div class="inventory-tabs it3"></div>
+                  <div class="inventory-tabs it3" style="display:none;"></div>
                 </div>
                 <div id="inventory-cta">
                   <div id="invCtaBut">USE</div>
                 </div>
               </div>
               <div id="fm-profile">
+                <div id="menuLoadingScreen3" class="LoadBox">
+                  <div id="loading" class="loadinScreen">CONNECTING...</div>
+                  <div class="loadIcon"></div>
+                </div>
                 <div id="profileMain">
                   <div id="proImgSect">
-                    <img id="proImg" src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/ui.png">
+                    <img id="proImg" src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/TAOS-CITY-IDC.png">
                   </div>
                   <div id="proInfo">
                     <div class="proInfoSect">
                       <div class="proLabel">Name:</div>
-                      <div id="proLabelName" class="proInfoInput">Daniel lans</div>
+                      <div id="proLabelName" class="proInfoInput">-</div>
                     </div>
                     <div class="proInfoSect">
                       <div class="proLabel">Identifier:</div>
-                      <div id="proLabelIdentity" class="proInfoInput">Male</div>
-                    </div>
-                    <div class="proInfoSect">
-                      <div class="proLabel">Rank:</div>
-                      <div id="proLabelRank" class="proInfoInput">1</div>
+                      <div id="proLabelIdentity" class="proInfoInput">-</div>
                     </div>
                     <div class="proInfoSect">
                       <div class="proLabel">Email:</div>
-                      <div id="proLabelEmail" class="proInfoInput">Daniell@gmail.com</div>
+                      <div id="proLabelEmail" class="proInfoInput">-</div>
+                    </div>
+                    <div class="proInfoSect">
+                      <div class="proLabel">Rank:</div>
+                      <div id="proLabelRank" class="proInfoInput">-</div>
                     </div>
                     <div class="proInfoSect">
                       <div class="proLabel">Progress:</div>
-                      <div id="proLabelProgress" class="proInfoInput">50%</div>
+                      <div id="proLabelProgress" class="proInfoInput">-</div>
                     </div>
                     <div class="proInfoSect">
                       <div class="proLabel">Power Ups:</div>
-                      <div id="proLabelEnh" class="proInfoInput">() - () - ()</div>
+                      <div id="proLabelEnh" class="proInfoInput">-</div>
                     </div>
                     <div class="proInfoSect">
                       <div class="proLabel">Class:</div>
-                      <div id="proLabelClass" class="proInfoInput">4</div>
+                      <div id="proLabelClass" class="proInfoInput">-</div>
                     </div>
                     <div class="proInfoSect">
                       <div class="proLabel">Domains:</div>
-                      <div id="proLabelDom" class="proInfoInput">1, 20, 13</div>
+                      <div id="proLabelDom" class="proInfoInput">-</div>
                     </div>
                   </div>
                 </div>
                 <div id="profileDesc">
-                  Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself. Tomorrow I will be foolish, so I want to change the world again. In the end, I will be wise, so I will change myself again.
+                  Welcome to T.A.O.S City. This interface will allow you to view and update your city profile and developments. No need to come down to City Central!
                 </div>
                 <div id="profileButs">
                   <div id="proEdit" class="editButs">Edit</div>
@@ -1561,11 +1665,15 @@ class getUniMenu extends HTMLElement {
               </div>
               </div>
               <div id="fm-feedback">
+                <div id="menuLoadingScreen2" class="LoadBox">
+                  <div id="loading" class="loadinScreen">SENDING...</div>
+                  <div class="loadIcon"></div>
+                </div>
                 <div id="feedbackHeadline">Help make T.A.O.S City better.</div>
-                <form id="feedbackForm" action="#" method="post">
-                <input type="email" name="Email" id="feedbackEmailInput" placeholder="Email" value="" maxlength="45">
-                <textarea id="feedbackInput" name="FeedbackText" placeholder="Enter your feedback here..." maxlength="320"></textarea>
-                <div id="feedbackButton" type="submit">SEND</div>
+                <form id="feedbackForm">
+                  <input type="email" name="Email" id="feedbackEmailInput" placeholder="Email" maxlength="45">
+                  <textarea id="feedbackInput" name="FeedbackText" placeholder="Enter your feedback here..." maxlength="320"></textarea>
+                  <input id="feedbackButton" type="submit">
                 </form>
               </div>
             </div>
