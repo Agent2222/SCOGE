@@ -19,7 +19,7 @@
         <link rel="shortcut icon" type="image/png" href="/assets/favicon.90cce2f7.png">
         
         
-      <script type="module" crossorigin src="/assets/main.89e7e206.js"></script>
+      <script type="module" crossorigin src="/assets/main.6627b249.js"></script>
       <link rel="modulepreload" href="/assets/wScoge.fc00b881.js">
       <link rel="stylesheet" href="/assets/wScoge.7e441776.css">
     </head>
@@ -34,6 +34,7 @@
     <scoge-investors invest="invest" id="getInvestors" style="display: none;"></scoge-investors>
     <scoge-camp campaign="camp" id="getCamp"></scoge-camp>
     <scoge-updates updates="updates" id="updatesModal" style="display:none;"></scoge-updates>
+    <scoge-rsvp rsvps="rsvp" id="rsvpModal" style="display:none;"></scoge-rsvp>
     <mint-screen mint="mint1" style="display:block;" id="getNfts"></mint-screen>
     <scoge-UniMenu uniMenu="uniMenu" id="getUniMenu"></scoge-UniMenu>
     <!---------------------------------MOBILE SHOP----------------------------------------->
@@ -50,7 +51,7 @@
             <p style="font-size: 12px;">
                 <br>
                 <!-- Website by SCOGÉ<br><br> -->
-                ©2022 SCOGÉ INC. All Rights Reserved.
+                ©2023 SCOGÉ INC. All Rights Reserved.
             </p>
             <audio id="scoge">
                 <source src="/assets/scoge.bb5a98cb.mp3" type="audio/mpeg">
@@ -184,7 +185,8 @@
             <div id="settingsBut" class="mainMenuBut">INFO</div>
             <div id="campaignBut" class="mainMenuBut">CAMPAIGN</div>   
             <div id="investBut" class="mainMenuBut" style="display:none;" onclick="openInvestors()">INVESTORS</div>   
-            <div id="uniBut" class="mainMenuBut" onclick="systemNoti()">UNIVERSE</div>         
+            <div id="uniBut" class="mainMenuBut" onclick="systemNoti()">UNIVERSE</div>    
+            <div id="rsvpBut" class="mainMenuBut" onclick="rsvp()">FW23-RSVP</div>         
         </nav>
         <div class="action-lines-overlay"></div>
         <div id="camera">
