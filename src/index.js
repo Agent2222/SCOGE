@@ -9,6 +9,7 @@ import { dtCampaign } from "../src/dt-campaign.js";
 import { dtSubscribe } from "../src/dt-subscribe.js";
 import { getUniMenu } from "../src/dt-uniMenu.js";
 import { scogeUpdates } from "../src/scoge-updates.js";
+import { scogeRsvp } from "../src/scoge-rsvp.js";
 import { dtInvestors } from "../src/dt-investors";
 import { dialogueBox } from "../src/dialogueBox.js";
 import { MainDialogue } from "./typing.js";
@@ -2655,6 +2656,12 @@ const attn = async (error) => {
 // Upcoming
 window.systemNoti = async () => {
   document.getElementById("updatesModal").style.display = "block";
+  document.getElementById("getCamp").closeCampaign();
+}
+
+// RSVP
+window.rsvp = async () => {
+  document.getElementById("rsvpModal").style.display = "block";
   document.getElementById("getCamp").closeCampaign();
 }
     
