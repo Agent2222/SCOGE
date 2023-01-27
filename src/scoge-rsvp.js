@@ -276,19 +276,28 @@ class scogeRsvp extends HTMLElement {
             }
             @media screen and (max-width: 769px) {
               #mainBody {
-                z-index: 4;
+                z-index: 6;
                 background-size: cover;
                 background-position: center;
               }
               #rsvpModal {
                 width: 90%;
-                height: 60%;
+                height: 90%;
                 z-index: 8;
                 left: 0%;
-                top: 18%;
+                top: 2%;
                 margin-left: 0%;
                 grid-template-columns: 1fr;
-                grid-template-rows: 1fr 1fr;
+                grid-template-rows: 35% 65%;
+              }
+              #info {
+                margin-bottom: 10px !important;
+              }
+              #info p {
+                margin-bottom: 0px;
+              }
+              #deets {
+                margin-top: 0px;
               }
               #info {
                 padding-right: 0% !important;
@@ -301,10 +310,11 @@ class scogeRsvp extends HTMLElement {
                 padding-right: 0% !important;
                 margin-right: 0%;
                 width: 100%;
+                font-size: 1.3rem;
               }
               #rsvp {
-                width: 200px;
-                height: 50px;
+                width: 150px;
+                height: 40px;
                 background-color: var(--accent);
                 color: black;
                 font-family: "BS-B";
@@ -316,6 +326,9 @@ class scogeRsvp extends HTMLElement {
               }
               h5 {
                 margin-bottom: 0px !important;
+              }
+              h4 {
+                font-size: 1.1rem;
               }
             }
          </style>
