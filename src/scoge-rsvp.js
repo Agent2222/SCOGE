@@ -58,6 +58,7 @@ class scogeRsvp extends HTMLElement {
     this.form = this.shadow.querySelector("#rsvpForm");
     this.form.addEventListener("submit", (event) => {
       event.preventDefault();
+      this.shadow.getElementById("menuLoadingScreen").style.display = "grid";
       let guest = this.shadow.querySelector("input[name='Guest']:checked");
       let data = new FormData(this.form);
       data.append("Guest", guest.value);
@@ -66,6 +67,7 @@ class scogeRsvp extends HTMLElement {
         body: data,
         mode: "cors"
       }).then(res => res.text()).then(data => {
+        this.shadow.getElementById("menuLoadingScreen").style.display = "none";
         this.form.reset();
         this.shadow.getElementById("rightPan").innerHTML = `
         <div id="feedbackHeadline" style="font-family: 'BS-R'; font-size: 2em; color: var(--primary); text-align: center; margin-top: 30%; margin-bottom: 10%;">Thank you for your RSVP!</div>
@@ -274,6 +276,69 @@ class scogeRsvp extends HTMLElement {
               margin-top: 0;
               margin-bottom: 30px;
             }
+            .LoadBox {
+              width: 100%;
+              height: 100%;
+              position: absolute;
+              top: 0;
+              left: 0;
+              background-color: rgba(0, 0, 0, 0.9);
+              z-index: 7;
+              display: none;
+              grid-template-columns: 1fr;
+              grid-template-rows: 1fr;
+              align-items: center;
+              justify-items: center;
+              font-family: "BS-B";
+              font-size: 1.5em;
+              color: #ff002d;
+            }
+            .loadIcon {
+              width: 300px;
+              height: 300px;
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-template-rows: 1fr;
+              align-items: center;
+              justify-items: center;
+              animation: spin 10s linear infinite, pulse 3s ease-in-out infinite;
+              border: 5px dotted #ff002d;
+              border-radius: 50%;
+            }
+            .loadinScreen {
+              position: absolute;
+              animation: blink 4s ease-in-out infinite;
+            }
+            @keyframes spin {
+              0% {
+                transform: rotate(0deg);
+              }
+              100% {
+                transform: rotate(360deg);
+              }
+            }
+            @keyframes pulse {
+              0% {
+                scale: 1;
+              }
+              50% {
+                scale: .8;
+              }
+              100% {
+                scale: 1;
+              }
+            }
+            @keyframes blink {
+              0% {
+                opacity: 1;
+              }
+              50% {
+                opacity: 0;
+              }
+              100% {
+                opacity: 1;
+              }
+            }
             @media screen and (max-width: 769px) {
               #mainBody {
                 z-index: 6;
@@ -334,6 +399,10 @@ class scogeRsvp extends HTMLElement {
          </style>
          <div id="mainBody">
          <div id="rsvpModal">
+            <div id="menuLoadingScreen" class="LoadBox">
+              <div id="loading" class="loadinScreen">SENDING...</div>
+              <div class="loadIcon"></div>
+            </div>
             <div id="closeBtn" style="position: absolute; right: 0; top: 0; padding: 10px; cursor: pointer;">
               <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </div>
