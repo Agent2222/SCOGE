@@ -1,5 +1,5 @@
 class UniEvent {
-  constructor(boxClass, boxId, position) {
+  constructor(boxClass, boxId, cordX, cordY) {
     this.universeCanvas = document.getElementById("universeCanvas");
     this.eventBox = document.createElement("div");
     this.eventBox.classList.add(boxClass);
