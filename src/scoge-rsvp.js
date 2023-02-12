@@ -339,6 +339,33 @@ class scogeRsvp extends HTMLElement {
                 opacity: 1;
               }
             }
+            #closed {
+              display: grid;
+              position: relative;
+              width: 100%;
+              height: 100%;
+              margin: 0px;
+              padding: 0px;
+              right: 0;
+              top: 0;
+              background-color: rgba(0, 0, 0, 1);
+              z-index: 1;
+              grid-template-columns: 1fr;
+              grid-template-rows: 1fr;
+              align-items: center;
+              justify-items: center;
+              font-family: "BS-B";
+              text-align: center;
+            }
+            #rsvpForm {
+              display: none !important;
+              overflow: hidden;
+            }
+            #press {
+              font-family: "BS-R";
+              color: var(--accent);
+              font-size: .9em;
+            }
             @media screen and (max-width: 769px) {
               #mainBody {
                 z-index: 6;
@@ -416,6 +443,7 @@ class scogeRsvp extends HTMLElement {
               <div id="deets">Date: Feb 14, 2023<br>Time: 7:00pm<br>Location: New York, NY - TBA<br><span style="color:var(--primary);font-size:.7em;">Confirmations will be sent prior to show date.</span></div>
             </div>
             <div id="rightPan">
+              <div id="closed"><span>RSVP CLOSED</span><br><span id="press">Press: Contact - Info@scoge.co with credentials.</span></div>
               <form id="rsvpForm" style="width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                 <input type="text" name="FirstName" placeholder="First Name" class="textInput">
                 <input type="text" name="LastName" placeholder="Last Name" class="textInput">
