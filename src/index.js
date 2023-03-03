@@ -108,9 +108,10 @@ window.checkKeys = async (event) => {
   }
   if (event.key === "c" && ci === "true") {
     ci = "bankoo";
-      window.getAllUserNFTs = await import('@psychedelic/dab-js').then(module => {
-      return module.getAllUserNFTs;
-    });
+    // DAB IS DEAD?? ALT??
+    //   window.getAllUserNFTs = await import('@psychedelic/dab-js').then(module => {
+    //   return module.getAllUserNFTs;
+    // });
     // document.getElementById("uniBut").removeEventListener("click", systemNoti);
     // document.getElementById("uniBut").addEventListener("click", universeSystem);
     universeSystem();
