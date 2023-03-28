@@ -29,7 +29,6 @@ import { Configuration, OpenAIApi } from "openai";
 // import fleekStorage from "@fleekhq/fleek-storage-js";
 
 window.entry = () => {
-  console.log("entry");
   gsap.to("#introLogo", { duration: 1, opacity: 1, ease: "power2.inOut" });
   gsap.to("#intro", { duration: 1, opacity: 0, ease: "power2.inOut", delay: 1.5 });
   gsap.to(".welcomeOptions", { duration: 1, opacity: 1, ease: "power2.inOut", delay: 2 });
@@ -38,7 +37,6 @@ window.entry = () => {
   setTimeout(() => {
     document.getElementById("welcome").style.pointerEvents = "auto";
   }, 3000);
-  console.log("entry2");
 }
 
 window.entry();
