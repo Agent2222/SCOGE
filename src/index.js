@@ -833,7 +833,9 @@ window.loadShop = async () => {
     .list({ limit: 100, sortDirection: "desc" })
     .then((product) => {
       allProducts.push(product.data);
-    })
+    }).catch((error) => {
+      console.log('There was an error fetching the products', error);
+    });
   allProducts[0].forEach((product) => {
     var productCont = document.createElement("div");
     productCont.setAttribute("class", "productContainer");
@@ -1231,6 +1233,8 @@ window.checkOut = async () => {
             // Any loading state can be removed here.
           }
         });
+    }).catch((error) => {
+      console.log("Error", error);
     });
 };
 // Close Error Loading Message
@@ -3076,12 +3080,16 @@ window.systemSpeak = async (selection, answer) => {
         model: "gpt-3.5-turbo",
         messages: [{role: "user", content: `Say tell me more in 5 words or less. Don't use quotation marks.`}],
         max_tokens: 15,
+      }).catch((error) => {
+        console.log(error);
       });
     } else {
       var completion = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
         messages: [{role: "user", content: `Compose a different version of this request '${selection}' Don't make it a question.`}],
         max_tokens: 10,
+      }).catch((error) => {
+        console.log(error);
       });
     }
     if (seekType === "content" || seekType === "info" || seekType === "mailing") {
@@ -3091,7 +3099,9 @@ window.systemSpeak = async (selection, answer) => {
         top_p: 1.0,
         max_tokens: 15,
         stop: ["."],
-      })
+      }).catch((error) => {
+        console.log(error);
+      });
     } else if (seekType === "discover") {
       const data = await import('./library.json');
       const obj = JSON.stringify(data.default);
@@ -3102,7 +3112,9 @@ window.systemSpeak = async (selection, answer) => {
         messages: [{role: "user", content: `Provide some information from ${focus} in a brief sentence, 20 words max.`}],
         top_p: 1.0,
         max_tokens: 30,
-      })
+      }).catch((error) => {
+        console.log(error);
+      });
     } else if (seekType === "form") {
       const data = await import('./library.json');
       const obj = JSON.stringify(data.default);
@@ -3113,7 +3125,9 @@ window.systemSpeak = async (selection, answer) => {
         messages: [{role: "user", content: `Provide some information from ${focus} in a brief sentence, 20 words max, Include information from any key value pair. Then ask to 'join the MAILING LIST below'.`}],
         top_p: 1.0,
         max_tokens: 30,
-      })
+      }).catch((error) => {
+        console.log(error);
+      });
     } else if (seekType === "contact") {
       const data = await import('./library.json');
       const obj = JSON.stringify(data.default);
@@ -3124,12 +3138,16 @@ window.systemSpeak = async (selection, answer) => {
           messages: [{role: "user", content: `Provide information from ${focus} in a brief sentence, 20 words max, Do not include an opening statement, Alternatively they can 'send a Message below'.`}],
           top_p: 1.0,
           max_tokens: 20,
-        })
+        }).catch((error) => {
+          console.log(error);
+        });
     } else {
       window.completion2 = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
         messages: [{role: "user", content: `Compose a different version of this answer '${answer}'.`}],
         max_tokens: 10,
+      }).catch((error) => {
+        console.log(error);
       });
     }
     if (window.completion2 != undefined) {

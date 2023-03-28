@@ -61,7 +61,11 @@ export class SeekDialogue {
                 this.element.innerHTML += `<span class="${this.specialText2}">${char}</span>`;
               }
             } else if (char === '$') {
-              await this.delay(500);
+              await this.delay(500).catch((err) => {
+                console.log(err);
+              }).catch((error) => {
+                console.log(error);
+              });
             } else if (char === ']') {
               this.element.innerHTML = '';
               this.j += 3;
@@ -73,7 +77,11 @@ export class SeekDialogue {
               this.element.innerHTML += char;
             }
             this.j++;
-            await this.delay(this.speed);
+            await this.delay(this.speed).catch((err) => {
+              console.log(err);
+            }).catch((error) => {
+              console.log(error);
+            });
             this.type();
           } else {
             this.i++;

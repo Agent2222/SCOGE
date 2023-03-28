@@ -18,7 +18,9 @@ export async function portal() {
     getOptions: [
       'publicUrl'
     ],
-  })
+  }).catch((err) => {
+    console.log(err);
+  });
 
   window.videoFiles = await fleekStorage.listFiles({
     apiKey: fleekP,
@@ -27,7 +29,9 @@ export async function portal() {
     getOptions: [
       'publicUrl'
     ],
-  })
+  }).catch((err) => {
+    console.log(err);
+  });
 
   window.shuffleArray = (array) => {
     // Create a new array with the same values as the original array
