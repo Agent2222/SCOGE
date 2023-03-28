@@ -57,6 +57,7 @@ export default defineConfig({
         format: "esm"
       },
       // https://rollupjs.org/guide/en/#big-list-of-options
-    }
+    },
+    chunkSizeWarningLimit: 1000000,
   }
 })

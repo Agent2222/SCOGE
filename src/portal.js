@@ -1,4 +1,5 @@
-import fleekStorage from "@fleekhq/fleek-storage-js";
+/* eslint-disable no-unused-vars */
+// import fleekStorage from "@fleekhq/fleek-storage-js";
 
 export async function portal() {
     const gallery = document.getElementById('seekGallery');
@@ -11,27 +12,44 @@ export async function portal() {
     const fleekP = import.meta.env.VITE_fleekP;
     const fleekS = import.meta.env.VITE_fleekS;
 
-  window.imageFiles = await fleekStorage.listFiles({
-    apiKey: fleekP,
-    apiSecret: fleekS,
-    prefix: 'scogeImages',
-    getOptions: [
-      'publicUrl'
-    ],
-  }).catch((err) => {
-    console.log(err);
+  // window.imageFiles = await fleekStorage.listFiles({
+  //   apiKey: fleekP,
+  //   apiSecret: fleekS,
+  //   prefix: 'scogeImages',
+  //   getOptions: [
+  //     'publicUrl',
+  //   ],
+  // }).catch((err) => {
+  //   console.log(err);
+  // });
+
+  // console.log("images1",window.imageFiles);
+
+  // window.videoFiles = await fleekStorage.listFiles({
+  //   apiKey: fleekP,
+  //   apiSecret: fleekS,
+  //   prefix: 'scogeVideos/GeneralVideo',
+  //   getOptions: [
+  //     'publicUrl',
+  //   ],
+  // }).catch((err) => {
+  //   console.log(err);
+  // });
+
+
+  const setupImages = await import('./imgassetdb.json').catch((error) => {
+    console.log(error);
   });
 
-  window.videoFiles = await fleekStorage.listFiles({
-    apiKey: fleekP,
-    apiSecret: fleekS,
-    prefix: 'scogeVideos/GeneralVideo',
-    getOptions: [
-      'publicUrl'
-    ],
-  }).catch((err) => {
-    console.log(err);
+  const setupVideo = await import('./vidassetdb.json').catch((error) => {
+    console.log(error);
   });
+
+  window.imageFiles = setupImages.images.array;
+  window.videoFiles = setupVideo.videos.array;
+
+  console.log("image",window.imageFiles);
+  console.log("video",window.videoFiles);
 
   window.shuffleArray = (array) => {
     // Create a new array with the same values as the original array
@@ -55,8 +73,8 @@ export async function portal() {
     window.hiddenVideo;
     window.soundOn = false;
 
-    const numMedia = imageFiles.length;
-    const numVMedia = videoFiles.length;
+    const numMedia = window.imageFiles.length;
+    const numVMedia = window.videoFiles.length;
 
     let currentMediaIndex = 1;
     let currentMedia = null;
