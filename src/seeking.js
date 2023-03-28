@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { gsap } from "gsap";
 
 export class SeekDialogue {
@@ -319,15 +320,15 @@ export class SeekDialogue {
             break;
           case "CREDITS":
             window.seekType = "discover";
-            var baseText = "Name some people and their roles credited to have worked with SCOGÉ?";
-            var baseAnswer = "Credits";
-            window.systemSpeak(baseText, baseAnswer);
+            var baseText2 = "Name some people and their roles credited to have worked with SCOGÉ?";
+            var baseAnswer2 = "Credits";
+            window.systemSpeak(baseText2, baseAnswer2);
             break;
           case "CONTACT":
             if (window.seekType != "contact") {
               window.seekType = "contact";
-              var baseText = "How do I contact you?";
-              var baseAnswer = "Contact";
+              let baseText = "How do I contact you?";
+              let baseAnswer = "Contact";
               window.systemSpeak(baseText, baseAnswer);
             } else {
               document.getElementById("genInput2").focus();

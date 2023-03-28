@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 //
 import Commerce from "@chec/commerce.js";
 // import loadStripe from "stripe";
+// import Stripe from "stripe";
 // import * as BABYLON from "@babylonjs/core";
 // import { GameManager } from "./game/GameManger.js";
 import { mobileShop1 } from "./shop-1.js";
@@ -24,9 +26,10 @@ import { mintingScreen } from "../src/mint.js";
 import { gsap } from "gsap";
 import { TextPlugin } from "gsap/TextPlugin";
 import { Configuration, OpenAIApi } from "openai";
-import fleekStorage from "@fleekhq/fleek-storage-js";
+// import fleekStorage from "@fleekhq/fleek-storage-js";
 
 window.entry = () => {
+  console.log("entry");
   gsap.to("#introLogo", { duration: 1, opacity: 1, ease: "power2.inOut" });
   gsap.to("#intro", { duration: 1, opacity: 0, ease: "power2.inOut", delay: 1.5 });
   gsap.to(".welcomeOptions", { duration: 1, opacity: 1, ease: "power2.inOut", delay: 2 });
@@ -35,6 +38,7 @@ window.entry = () => {
   setTimeout(() => {
     document.getElementById("welcome").style.pointerEvents = "auto";
   }, 3000);
+  console.log("entry2");
 }
 
 window.entry();
@@ -109,7 +113,7 @@ window.isMobile = false;
 // window.encouraged = false;
 
 window.sysCheck = () => {
-  document.addEventListener("keydown", checkKeys);
+  document.addEventListener("keydown", window.checkKeys);
 }
 
 
@@ -129,14 +133,14 @@ window.checkKeys = async (event) => {
     // });
     // document.getElementById("uniBut").removeEventListener("click", systemNoti);
     // document.getElementById("uniBut").addEventListener("click", universeSystem);
-    universeSystem();
+    window.universeSystem();
     // document.getElementById("uniBut").setAttribute("onclick", "universeSystem()");
     soundtrack.play("scoge1");
   }
 }
 
 // Init Check
-sysCheck();
+window.sysCheck();
 
 // Check Size on Resize
 window.addEventListener("resize", function () {
@@ -189,17 +193,17 @@ window.sizeInit = () => {
 };
 
 window.onload = () => {
-  sizeInit();
-  loadShop();
-  getParamsDesktop();
+  window.sizeInit();
+  window.loadShop();
+  window.getParamsDesktop();
   window.initFilterActions();
 }
 
 window.shopping = () => {
   if (window.matchMedia("(max-width: 768px)").matches) {
-    openMobile();
+    window.openMobile();
   } else {
-    toggleShop();
+    window.toggleShop();
   }
 };
 
@@ -289,7 +293,7 @@ window.toggleShop = () => {
         bg.style.display = "none";
       }, 500);
       document.getElementById("logo").style.opacity = "0%";
-      clearShop();
+      window.clearShop();
       break;
     case "POVopen":
       document.getElementById("shop").style.overflowX = "scroll";
@@ -331,8 +335,8 @@ window.toggleShop = () => {
 // SETTINGS Button
 window.openSettings = () => {
   window.clearFilter();
-  clearShop();
-  closeInvestor();
+  window.clearShop();
+  window.closeInvestor();
   if (window.matchMedia("(max-width: 768px)").matches) {
     // Mobile
   } else {
@@ -547,60 +551,60 @@ window.worldTap = () => {
 
 // World -------------------------------------------------------------------------------- END
 // INFITE -------------------------------------------------------------------------------
-window.activateInfinite = () => {
-  window.logoMove(6, 3, 16, 1);
-  if (BABYLON.Engine.isSupported()) {
-    document.getElementById("renderCanvas").style.transition = "5s all";
-    // let game = new GameManager("renderCanvas");
-    if (infiniteActive === false) {
-      // if (window.ic === undefined) {
-      //   // Add text to get wallet and return once done.
-      //   // Refresh Page
-      //   document.getElementById("getWallet").style.display = "block";
-      //   return "";
-      // }
-      document.getElementById("renderCanvas").style.display = "block";
-      document.getElementById("renderCanvas").style.opacity = "0";
-      new GameManager("renderCanvas");
-      infiniteActive = true;
-    } else {
-      if (intro1 === false) {
-        //
-        intro1 = true;
-      }
-      //
-      document.getElementById("settingsMenu").style.opacity = "0%";
-      setTimeout(()=>{
-        document.getElementById("settingsMenu").style.display = "none";
-      },1000)
-      settingsActive = false;
-      var shopMenuBut = document.getElementById("shopBut");
-      var canvas = document.getElementById("renderCanvas");
-      canvas.height = window.innerHeight;
-      canvas.width = window.innerWidth;
-      document.getElementById("shop").style.opacity = "0%";
-      document.getElementById("shop").style.visibility = "hidden";
-      document.getElementById("povRight").style.opacity = "0%";
-      document.getElementById("povLeft").style.opacity = "0%";
-      setTimeout(() => {
-        document.getElementById("povRight").style.visibility = "hidden";
-        document.getElementById("povLeft").style.visibility = "hidden";
-      }, 500);
-      document.getElementById("tandc").style.display = "none";
-      document.getElementById("tandc").style.opacity = "0%";
-      shopMenuBut.innerHTML = "SHOP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-      shopActive = "closed";
-      window.termsOpen = false;
-      //
-      window.inUniverse = true;
-      getGameProgress();
-      window.logoMove(6, 3, 16, 1);
-      document.getElementById("destiny").pause();
-      document.getElementById("renderCanvas").style.opacity = "1";
-      window.clearMainUi();
-    }
-  }
-};
+// window.activateInfinite = () => {
+//   window.logoMove(6, 3, 16, 1);
+//   if (BABYLON.Engine.isSupported()) {
+//     document.getElementById("renderCanvas").style.transition = "5s all";
+//     // let game = new GameManager("renderCanvas");
+//     if (infiniteActive === false) {
+//       // if (window.ic === undefined) {
+//       //   // Add text to get wallet and return once done.
+//       //   // Refresh Page
+//       //   document.getElementById("getWallet").style.display = "block";
+//       //   return "";
+//       // }
+//       document.getElementById("renderCanvas").style.display = "block";
+//       document.getElementById("renderCanvas").style.opacity = "0";
+//       new GameManager("renderCanvas");
+//       infiniteActive = true;
+//     } else {
+//       if (intro1 === false) {
+//         //
+//         intro1 = true;
+//       }
+//       //
+//       document.getElementById("settingsMenu").style.opacity = "0%";
+//       setTimeout(()=>{
+//         document.getElementById("settingsMenu").style.display = "none";
+//       },1000)
+//       settingsActive = false;
+//       var shopMenuBut = document.getElementById("shopBut");
+//       var canvas = document.getElementById("renderCanvas");
+//       canvas.height = window.innerHeight;
+//       canvas.width = window.innerWidth;
+//       document.getElementById("shop").style.opacity = "0%";
+//       document.getElementById("shop").style.visibility = "hidden";
+//       document.getElementById("povRight").style.opacity = "0%";
+//       document.getElementById("povLeft").style.opacity = "0%";
+//       setTimeout(() => {
+//         document.getElementById("povRight").style.visibility = "hidden";
+//         document.getElementById("povLeft").style.visibility = "hidden";
+//       }, 500);
+//       document.getElementById("tandc").style.display = "none";
+//       document.getElementById("tandc").style.opacity = "0%";
+//       shopMenuBut.innerHTML = "SHOP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+//       shopActive = "closed";
+//       window.termsOpen = false;
+//       //
+//       window.inUniverse = true;
+//       window.getGameProgress();
+//       window.logoMove(6, 3, 16, 1);
+//       document.getElementById("destiny").pause();
+//       document.getElementById("renderCanvas").style.opacity = "1";
+//       window.clearMainUi();
+//     }
+//   }
+// };
 
 // Setup Book Images
 window.setupBook = (obj) => {
@@ -863,10 +867,10 @@ window.loadShop = async () => {
     window.productsloaded = true;
     document.getElementById("divLoadBG2").style.display = "none";
   });
-  if (urlParamsActive === true) {
-    povOpen(document.getElementById(viewThisProduct));
+  if (window.urlParamsActive === true) {
+    window.povOpen(document.getElementById(window.viewThisProduct));
     window.history.replaceState({}, document.title, "/" + "index.html");
-  };
+  }
   commerce.cart.empty();
 };
 
@@ -1146,6 +1150,8 @@ window.checkOut = async () => {
           const paymentMethodResponse = await stripe.createPaymentMethod({
             type: "card",
             card,
+          }).catch((error) => {
+            console.log(error);
           });
           if (paymentMethodResponse.error) {
             // There was some issue with the information that the customer entered into the payment details form.
@@ -1258,7 +1264,7 @@ window.filterShop = (e) => {
   // if input is not all then deselect all
   if (selected !== "all") {
     document.getElementById("all").checked = false;
-  };
+  }
   // when all is selected deselect all other filters inputs
   switch (selected) {
     case "all":
@@ -1290,7 +1296,7 @@ window.filterShop = (e) => {
           item.style.display = "none";
         } else {
           item.style.display = "block";
-        };
+        }
       }
       );
       break;
@@ -1309,7 +1315,7 @@ window.filterShop = (e) => {
           item.style.display = "none";
         } else {
           item.style.display = "block";
-        };
+        }
       }
       );
       break;
@@ -1328,7 +1334,7 @@ window.filterShop = (e) => {
           item.style.display = "none";
         } else {
           item.style.display = "block";
-        };
+        }
       }
       );
       break;
@@ -1347,7 +1353,7 @@ window.filterShop = (e) => {
           item.style.display = "none";
         } else {
           item.style.display = "block";
-        };
+        }
       }
       );
       break;
@@ -1366,7 +1372,7 @@ window.filterShop = (e) => {
           item.style.display = "none";
         } else {
           item.style.display = "block";
-        };
+        }
       }
       );
       break;
@@ -1437,7 +1443,7 @@ window.clearMainUi = () => {
   logo.style.transition = "2s all";
   textTop.style.transition = "2s all";
   textBottom.style.transition = "2s all";
-  if (inUniverse === true) {
+  if (window.inUniverse === true) {
     setTimeout(()=> {
           // Move
     menu.style.left = "10%";
@@ -1531,9 +1537,9 @@ window.getParamsDesktop = () => {
   const params = new URLSearchParams(location.search)
   // viewThisProduct = params.get("Product");
   // urlParamsActive = true;
-  investorsView = params.get("Investors");
-  if (investorsView === "true") {
-    activateInvestors();
+  window.investorsView = params.get("Investors");
+  if (window.investorsView === "true") {
+    window.activateInvestors();
   }
   // toggleShop();
 }
@@ -1636,9 +1642,9 @@ window.universeSystem = async () => {
     }
     , {passive: false});
     // add event listener to mousemove
-    universeCanvas.addEventListener("mousemove", mousePos);
+    universeCanvas.addEventListener("mousemove", window.mousePos);
     // add event listener to mouseclick
-    universeCanvas.addEventListener("click", selectedPos);
+    universeCanvas.addEventListener("click", window.selectedPos);
     // Focus and Blur events
     document.addEventListener("focus", event => {
       const element = event.target;
@@ -1664,8 +1670,8 @@ window.universeSystem = async () => {
     uniEvent3.id = "uniEvent3";
     document.getElementById("camera").appendChild(uniEvent3);
     //
-    adminUI();
-    openLocationCard();
+    window.adminUI();
+    window.openLocationCard();
     window.playerPos();
   } else {
     // The browser is not Brave, Firefox, or Chrome
@@ -1684,13 +1690,13 @@ window.adminUI = () => {
   var selectPosBoxDiv = document.createElement("div");
   var playerCordDiv = document.createElement("div");
   document.getElementById("selection").style.display = "block";
-  uiWindow.id = "adminUI";
-  columnDiv.id = "DebugColumn";
-  rowDiv.id = "DebugRow";
-  selectionPosDiv.id = "selectionPos";
-  pixelPosDiv.id = "pixelPos";
-  selectPosBoxDiv.id = "selectPosBox";
-  playerCordDiv.id = "playerCord";
+  window.uiWindow.id = "adminUI";
+  window.columnDiv.id = "DebugColumn";
+  window.rowDiv.id = "DebugRow";
+  window.selectionPosDiv.id = "selectionPos";
+  window.pixelPosDiv.id = "pixelPos";
+  window.selectPosBoxDiv.id = "selectPosBox";
+  window.playerCordDiv.id = "playerCord";
   uiWindow.appendChild(pixelPosDiv);
   uiWindow.appendChild(columnDiv);
   uiWindow.appendChild(rowDiv);
@@ -1706,8 +1712,8 @@ window.adminUI = () => {
   pixelPosDiv.innerHTML = "X: , Y:";
   selectPosBoxDiv.innerHTML = "SelBoxTile:";
   playerCordDiv.innerHTML = "Player Coordinates:";
-  initSelection();
-  moveSelection();
+  window.initSelection();
+  window.moveSelection();
   window.moveMenu();
 }
 
@@ -1717,12 +1723,12 @@ window.mousePos = (e) => {
   var rect = universeCanvas.getBoundingClientRect();
   playerPos.x = Math.round((e.clientX - rect.left) / tileSize);
   playerPos.y = Math.round((e.clientY - rect.top) / tileSize);
-  pixelPos.x = e.clientX - rect.left;
-  pixelPos.y = e.clientY - rect.top;
+  window.pixelPos.x = e.clientX - rect.left;
+  window.pixelPos.y = e.clientY - rect.top;
   // innerHTML mouse position to adminUI
   document.getElementById("DebugColumn").innerHTML = "Column: " + playerPos.x;
   document.getElementById("DebugRow").innerHTML = "Row: " + playerPos.y;
-  document.getElementById("pixelPos").innerHTML = "X: " + pixelPos.x + ", " + "Y: " + pixelPos.y;
+  document.getElementById("pixelPos").innerHTML = "X: " + window.pixelPos.x + ", " + "Y: " + window.pixelPos.y;
 }
 
 // selection position
@@ -1854,7 +1860,7 @@ window.pinMenu = () => {
     return;
   }
   if (pinUi.getAttribute("class") == "unpinned") {
-    deactivateDrag();
+    window.deactivateDrag();
     pinUi.setAttribute("class", "pinned");
     moveMenu.style.transition = "1s";
     moveMenu.style.top = "36px";
@@ -1917,7 +1923,7 @@ window.playerPos = () => {
 }
 
 window.moveSelection = () => {
-  document.removeEventListener("keydown", checkKeys);
+  document.removeEventListener("keydown", window.checkKeys);
   var box = document.getElementById("selection");
   var window18Height = window.innerHeight / tileSize;
   var window18Width = window.innerWidth / tileSize;
@@ -2133,7 +2139,7 @@ window.moveMenu = () => {
       soundtrack.stop('menuLoading1');
     }
     el.addEventListener("click", () => {
-      clearAndSelectMenu(el.id);
+      window.clearAndSelectMenu(el.id);
       soundtrack.stop('menuEnter3');
       soundtrack.play('menuEnter3');
     });
@@ -2157,15 +2163,15 @@ window.moveMenu = () => {
           shadow.getElementById("fm-inventory").style.display = "none";
           shadow.getElementById("menuLoadingScreen").style.display = "none";
           shadow.getElementById("menuMessage").style.display ="none";
-          headlineSwtich(e);
+          window.headlineSwtich(e);
         }
         );
         break;
       case "uniMenuItems":
         el.addEventListener("click", (e) => {
-          headlineSwtich(e);
+          window.headlineSwtich(e);
           setTimeout(() => {
-            headlineSwtich(e);
+            window.headlineSwtich(e);
           },500)
           dragElement(moveMenu, true);
           window.openInventory();
@@ -2201,9 +2207,9 @@ window.moveMenu = () => {
         break;
       case "uniMenuProfile":
         el.addEventListener("click", (e) => {
-          headlineSwtich(e);
+          window.headlineSwtich(e);
           setTimeout(() => {
-            headlineSwtich(e);
+            window.headlineSwtich(e);
           },500)
           window.openInventory();
           shadow.getElementById("fm-profile").style.display = "grid";
@@ -2223,7 +2229,7 @@ window.moveMenu = () => {
               el.setAttribute("class", "mmen-active ht selectedMenu");
             }
           });
-          deactivateDrag();
+          window.deactivateDrag();
         });
         break;
       case "uniMenuSettings":
@@ -2239,8 +2245,8 @@ window.moveMenu = () => {
           shadow.getElementById("fm-header").style.display = "grid";
           shadow.getElementById("fm-header-headline").style.opacity = "0%";
           shadow.getElementById("fm-header-headline").style.pointerEvents = "none";
-          headlineSwtich(e);
-          deactivateDrag();
+          window.headlineSwtich(e);
+          window.deactivateDrag();
         } );
         break;
       case "uniMenuHelp":
@@ -2257,7 +2263,7 @@ window.moveMenu = () => {
           shadow.getElementById("fm-header").style.display = "grid";
           shadow.getElementById("fm-header-headline").style.opacity = "100%";
           shadow.getElementById("fm-header-headline").style.pointerEvents = "all";
-          headlineSwtich(e);
+          window.headlineSwtich(e);
           headerTabs.forEach(el => {
             if (el.id === "fm-menu1") {
               var selEl = { target: document.getElementById("getUniMenu").shadowRoot.getElementById("fm-menu1")}
@@ -2285,10 +2291,10 @@ window.moveMenu = () => {
           shadow.getElementById("menuMessage").style.display ="none";
           shadow.getElementById("fm-feedback").style.display = "grid";
           shadow.getElementById("fm-feedback").addEventListener("click", () => {
-            deactivateDrag();
+            window.deactivateDrag();
           });
-          headlineSwtich(e);
-          deactivateDrag();
+          window.headlineSwtich(e);
+          window.deactivateDrag();
         });
         break;
       case "uniMenuExit":
@@ -2304,7 +2310,7 @@ window.moveMenu = () => {
   });
     //
     dragElement(moveMenu, true);
-    hideMenu();
+    window.hideMenu();
 }
 
 window.headlineSwtich = (e) => {
@@ -2424,7 +2430,7 @@ window.showMenu = () => {
     document.getElementById("introLogo").style.pointerEvents = "auto";
     document.getElementById("introLogo").style.cursor = "pointer";
     document.getElementById("introLogo").addEventListener("click", () => {
-      universeSystem();
+      window.universeSystem();
     });
 }
 
@@ -2438,7 +2444,9 @@ window.openInventory = async () => {
     loading2.style.display = "grid";
     soundtrack.loop('menuLoading1');
     soundtrack.play('menuLoading1');
-    await connectWallet()
+    await window.connectWallet().catch((error) => {
+      console.log(error);
+    });
     // .then(() => {
     //   shadow.getElementById("fm-inventory").style.display = "block";
     //   shadow.getElementById("fm-header").style.display = "grid";
@@ -2486,11 +2494,11 @@ window.connectWallet = async () => {
         console.error("Connect Wallet",e);
       });
       //
-      const agent = await window.ic.plug.agent;
+      // const agent = await window.ic.plug.agent;
       //
       await createActor().catch((e) => {
         console.log("Create Actor",e);
-      });
+      })
       // Get the user principal id
       const principalId = await window.ic.plug.agent.getPrincipal().catch((e) => {
         console.error("Get Principal",e);
@@ -2498,16 +2506,18 @@ window.connectWallet = async () => {
       user.principal = `${principalId}`;
       const result = await window.ic.plug.requestBalance().catch((e) => {
         console.error("Get Balance",e);
-      });
+      })
       user.balance = result;
       user.pk = plugpublicKey;
       //
       // Import the getAllUserNFTs function if someCondition is true
       playerState();
-      getNFTCollections();
+      // getNFTCollections();
   } else if (connected === true) {
-    await createActor();
-    getNFTCollections();
+    await createActor().catch((error) => {
+      console.log(error);
+    });
+    // getNFTCollections();
     playerState();
   } else { 
     connectError();
@@ -2516,37 +2526,39 @@ window.connectWallet = async () => {
 }
 
 // Get NFTs
-const getNFTCollections = async () => {
-  var agent = window.ic.plug.sessionManager.sessionData.agent;
-  var shadow = document.getElementById("getUniMenu").shadowRoot;
-  const collections = await getAllUserNFTs(
-    {
-      agent,
-      user: user.principal
-    }
-  ).then((collection)=>{
-    user.nfts = collection;
-    var nftDisplay = document.createElement("div");
-    var image = document.createElement("img");
-    nftDisplay.setAttribute("class", "Inventory-Assets-Cont");
-    nftDisplay.appendChild(image);
-    image.src = `${user.nfts[0].tokens[0].url}`;
-    shadow.getElementById("assetsCont").appendChild(nftDisplay);
-    // shadow.getElementById("inventoryInnerText").innerHTML = `${user.nfts[0].description}`;
-    shadow.getElementById("menuLoadingScreen").style.display = "none";
-    shadow.getElementById("menuLoadingScreen3").style.display = "none";
-    soundtrack.stop('menuLoading1');
-    uiState.nftsLoaded = true;
-  }).catch((e) => {
-    var error = {e}
-    connectError("getAllUserNFTs",error);
-  });
-}
+// const getNFTCollections = async () => {
+//   var agent = window.ic.plug.sessionManager.sessionData.agent;
+//   var shadow = document.getElementById("getUniMenu").shadowRoot;
+//   const collections = await getAllUserNFTs(
+//     {
+//       agent,
+//       user: user.principal
+//     }
+//   ).then((collection)=>{
+//     user.nfts = collection;
+//     var nftDisplay = document.createElement("div");
+//     var image = document.createElement("img");
+//     nftDisplay.setAttribute("class", "Inventory-Assets-Cont");
+//     nftDisplay.appendChild(image);
+//     image.src = `${user.nfts[0].tokens[0].url}`;
+//     shadow.getElementById("assetsCont").appendChild(nftDisplay);
+//     // shadow.getElementById("inventoryInnerText").innerHTML = `${user.nfts[0].description}`;
+//     shadow.getElementById("menuLoadingScreen").style.display = "none";
+//     shadow.getElementById("menuLoadingScreen3").style.display = "none";
+//     soundtrack.stop('menuLoading1');
+//     uiState.nftsLoaded = true;
+//   }).catch((e) => {
+//     var error = {e}
+//     connectError("getAllUserNFTs",error);
+//   });
+// }
 
 // player state
 const playerState = async () => {
   const metadata = await window.suUiActor.metadata().catch((e) => {
     console.log("Get Metadata",e);
+  }).catch((error) => {
+    console.log(error);
   });
   const admin = await window.suUiActor.adminUser().catch((e) => {
     console.log("Get Admin", {e});
@@ -2554,6 +2566,8 @@ const playerState = async () => {
     if (window.dmb === false) {
       attn(error);
     }
+  }).catch((error) => {
+    console.log(error);
   });
   if (admin === user.principal) {
     console.log("Admin Logged in");
@@ -2604,9 +2618,9 @@ const connectError = async (error) => {
         var el = {
           target: shadow.querySelector("#fm-menu2")
         }
-        var el2 = {
-          target: shadow.querySelector("#menuHelp")
-        }
+        // var el2 = {
+        //   target: shadow.querySelector("#menuHelp")
+        // }
         shadow.querySelector("#uniMenuFeedback").click(el);
       });
       break;
@@ -2719,15 +2733,13 @@ window.digiPre = false;
 window.view = "seeking";
 window.galleryType = "video";
 
-portal();
-
 window.dialogue = new SeekDialogue('',[{
   text: 'What do you seek%?',
   choices: [
     {
       text: "I seek the truth.",
       action: () => {
-        dialogue.start(0, 'sysResp');
+        window.dialogue.start(0, 'sysResp');
       }
     },
   ]
@@ -2738,7 +2750,7 @@ window.dialogue = new SeekDialogue('',[{
     {
       text: "I seek the truth.",
       action: () => {
-        dialogue.start(0, 'sysResp');
+        window.dialogue.start(0, 'sysResp');
       }
     },
   ]
@@ -2751,7 +2763,7 @@ window.openSeek = () => {
   // create the GSAP animation
   if (seeking === false) {
     setTimeout(()=>{
-      dialogue.start(0, 'sysResp');
+      window.dialogue.start(0, 'sysResp');
       setTimeout(()=>{
         gsap.to(mandala, { duration: 1, opacity: 1, ease: "power2.inOut"});
         gsap.fromTo(seekOptCards, {
@@ -2838,7 +2850,7 @@ window.closeSeek = () => {
     window.view = "seeking";
     window.viewingPg = false;
     gsap.to("#tooltip", {opacity: 0, duration: 0.5, ease: "power2.out"});
-    tooltip.style.display = "none";
+    document.getElementById("tooltip").style.display = "none";
     document.getElementById("homeTip").innerHTML = "HOME";
     gsap.to('#dropdown', {duration: 1, opacity: 0, y: 0, ease: "power2.out"});
     gsap.to('#soundToggle', {duration: 1, opacity: 0, y: 0, ease: "power2.out"});
@@ -2956,7 +2968,7 @@ window.transitionWords = (element, fromWord, toWord, duration) => {
 window.seek = (e) => {
   var seekCard = e.target.classList[1];
   var blinking = document.querySelectorAll(".blink")
-  var opg = new SeekDialogue();
+  // var opg = new SeekDialogue();
   blinking.forEach((e) => {
     e.classList.remove("blink");
   })
@@ -2975,8 +2987,8 @@ window.seek = (e) => {
       } else {
         window.convoHist(seekCard);
         window.seekType = "content";
-        var baseText = "Show me some visuals.";
-        var baseAnswer = "Which would you like to see?";
+        let baseText = "Show me some visuals.";
+        let baseAnswer = "Which would you like to see?";
         window.systemSpeak(baseText, baseAnswer);
         window.galleryActive = true;
       }
@@ -2986,8 +2998,8 @@ window.seek = (e) => {
       if (window.conversationHistory[0] != "seekOpt2") {
         window.convoHist(seekCard);
         window.seekType = "content";
-        var baseText = "I want to listen to music";
-        var baseAnswer = "Now playing 'SCOGÉ Radio'.";
+        let baseText = "I want to listen to music";
+        let baseAnswer = "Now playing 'SCOGÉ Radio'.";
         window.systemSpeak(baseText, baseAnswer);
       } else {
         var mi = document.querySelector("scoge-music").shadowRoot.querySelector("#musicInterface");
@@ -3001,8 +3013,8 @@ window.seek = (e) => {
       if (window.conversationHistory[0] != "seekOpt3") {
         window.convoHist(seekCard);
         window.seekType = "form";
-        var baseText = "What is Digisette?";
-        var baseAnswer = "Digisette";
+        let baseText = "What is Digisette?";
+        let baseAnswer = "Digisette";
         window.systemSpeak(baseText, baseAnswer);
       } else {
         document.getElementById("genInput")?.focus();
@@ -3021,8 +3033,8 @@ window.seek = (e) => {
       if (window.conversationHistory[0] != "seekOpt5") {
         window.convoHist(seekCard);
         window.seekType = "mailing";
-        var baseText = "I want community?";
-        var baseAnswer = "Keep up by joining our mailing list.";
+        let baseText = "I want community?";
+        let baseAnswer = "Keep up by joining our mailing list.";
         window.systemSpeak(baseText, baseAnswer);
       } else {
         document.getElementById("genInput")?.focus();
@@ -3033,12 +3045,12 @@ window.seek = (e) => {
       if (window.conversationHistory[0] != "seekOpt6") {
         window.convoHist(seekCard);
         window.seekType = "info";
-        var baseText = "Tell me about 'SCOGÉ' the brand.";
-        var baseAnswer = "Sure, what would you like to know?";
+        let  baseText = "Tell me about 'SCOGÉ' the brand.";
+        let baseAnswer = "Sure, what would you like to know?";
         window.systemSpeak(baseText, baseAnswer);
       } else {
-        var reminder = document.querySelectorAll(".infoSubMenu");
-        var selected = reminder[0];
+        let reminder = document.querySelectorAll(".infoSubMenu");
+        let selected = reminder[0];
         gsap.to(selected, { duration: .5, backgroundColor: "#94be8c", ease: "power2.inOut"});
         gsap.to(selected, { duration: .5, color: "black", ease: "power2.inOut"});
         gsap.to(selected, { duration: .8, backgroundColor: "", ease: "power2.inOut", delay: .8});
@@ -3075,8 +3087,8 @@ window.systemSpeak = async (selection, answer) => {
     apiKey: VITE_ScogeI,
     });
     const openai = new OpenAIApi(configuration);
-    if (sameConvo === true) {
-      var completion = await openai.createChatCompletion({
+    if (window.sameConvo === true) {
+      window.completion = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
         messages: [{role: "user", content: `Say tell me more in 5 words or less. Don't use quotation marks.`}],
         max_tokens: 15,
@@ -3084,7 +3096,7 @@ window.systemSpeak = async (selection, answer) => {
         console.log(error);
       });
     } else {
-      var completion = await openai.createChatCompletion({
+      window.completion = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
         messages: [{role: "user", content: `Compose a different version of this request '${selection}' Don't make it a question.`}],
         max_tokens: 10,
@@ -3092,7 +3104,7 @@ window.systemSpeak = async (selection, answer) => {
         console.log(error);
       });
     }
-    if (seekType === "content" || seekType === "info" || seekType === "mailing") {
+    if (window.seekType === "content" || window.seekType === "info" || window.seekType === "mailing") {
       window.completion2 = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
         messages: [{role: "user", content: `Compose a different version of this answer '${answer}'.`}],
@@ -3102,8 +3114,10 @@ window.systemSpeak = async (selection, answer) => {
       }).catch((error) => {
         console.log(error);
       });
-    } else if (seekType === "discover") {
-      const data = await import('./library.json');
+    } else if (window.seekType === "discover") {
+      const data = await import('./library.json').catch((error) => {
+        console.log(error);
+      });
       const obj = JSON.stringify(data.default);
       var selected = JSON.parse(obj);
       var focus = JSON.stringify(selected[answer]);
@@ -3115,11 +3129,13 @@ window.systemSpeak = async (selection, answer) => {
       }).catch((error) => {
         console.log(error);
       });
-    } else if (seekType === "form") {
-      const data = await import('./library.json');
+    } else if (window.seekType === "form") {
+      const data = await import('./library.json').catch((error) => {
+        console.log(error);
+      });
       const obj = JSON.stringify(data.default);
-      var selected = JSON.parse(obj);
-      var focus = JSON.stringify(selected[answer]);
+      let selected = JSON.parse(obj);
+      let focus = JSON.stringify(selected[answer]);
       window.completion2 = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
         messages: [{role: "user", content: `Provide some information from ${focus} in a brief sentence, 20 words max, Include information from any key value pair. Then ask to 'join the MAILING LIST below'.`}],
@@ -3128,11 +3144,11 @@ window.systemSpeak = async (selection, answer) => {
       }).catch((error) => {
         console.log(error);
       });
-    } else if (seekType === "contact") {
+    } else if (window.seekType === "contact") {
       const data = await import('./library.json');
       const obj = JSON.stringify(data.default);
-      var selected = JSON.parse(obj);
-      var focus = JSON.stringify(selected[answer]);
+      let selected = JSON.parse(obj);
+      let focus = JSON.stringify(selected[answer]);
       window.completion2 = await openai.createChatCompletion({
           model: "gpt-3.5-turbo",
           messages: [{role: "user", content: `Provide information from ${focus} in a brief sentence, 20 words max, Do not include an opening statement, Alternatively they can 'send a Message below'.`}],
@@ -3155,12 +3171,12 @@ window.systemSpeak = async (selection, answer) => {
     }
     //
     let userDialogue = new SeekDialogue('',[{
-      text: `${completion.data.choices[0].message.content ?? selection}`,
+      text: `${window.completion.data.choices[0].message.content ?? selection}`,
       choices: [
         {
           text: "Ok, here they are.",
           action: () => {
-            dialogue.start(0, 'sysResp');
+            window.dialogue.start(0, 'sysResp');
           }
         },
       ]
@@ -3173,7 +3189,7 @@ window.systemSpeak = async (selection, answer) => {
         {
           text: "I seek the truth.",
           action: () => {
-            dialogue.start(0, 'sysResp');
+            window.dialogue.start(0, 'sysResp');
           }
         },
       ]
@@ -3184,7 +3200,7 @@ window.systemSpeak = async (selection, answer) => {
         {
           text: "I seek the truth.",
           action: () => {
-            dialogue.start(0, 'sysResp');
+            window.dialogue.start(0, 'sysResp');
           }
         },
       ]
@@ -3211,7 +3227,7 @@ window.autoSmoothScrollToBottom = (container) => {
 
 myContainer.addEventListener('DOMSubtreeModified', function() {
   timeout = setTimeout(() => {
-    autoSmoothScrollToBottom(myContainer);
+    window.autoSmoothScrollToBottom(myContainer);
   }, 250); // debounce time set to 250ms
 });
 
@@ -3243,8 +3259,7 @@ window.sub = () => {
       }
     })
     gsap.to("#genSubLoad", {opacity: 0, duration: 1, ease: "power2.out"
-  });
-    ;
+  })
     });
   });
 }
@@ -3283,8 +3298,7 @@ window.sub2 = () => {
           confirm.innerHTML = `|`;
         }, 1000);
       }, 3000);
-    ;
-    });
+    })
   });
 }
 
@@ -3293,7 +3307,7 @@ window.viewingPg = false;
 
 window.trackMouse = (e) => {
   // Get the tooltip element
-  if (viewingPg === true) {
+  if (window.viewingPg === true) {
     if (window.galleryType == "images" || window.galleryType == "video" && window.view === "gallery") {
       var tooltip = document.getElementById("tooltip");
       // Set the tooltip position to the mouse position
@@ -3308,9 +3322,9 @@ window.trackMouse = (e) => {
   }
 }
 
-window.trackMouseMove = (e) => {
-  let timer;
-  document.addEventListener("mousemove", function(event) {
+window.trackMouseMove = () => {
+  let timer = null;
+  document.addEventListener("mousemove", function() {
     mouseMoving = true;
     timer = setTimeout(function() {
       mouseMoving = false;
@@ -3328,24 +3342,24 @@ window.initFilterActions = () => {
       switch (selected.id) {
         case "filter1":
           window.removeItemsNotEqualToValue("DY1");
-          transitionWords('#dBtn', `${btn}____`, 'DISCOVERY 1', 2);
+          window.transitionWords('#dBtn', `${btn}____`, 'DISCOVERY 1', 2);
         break
         case "filter2":
           window.removeItemsNotEqualToValue("CH1");
-          transitionWords('#dBtn', `${btn}____`, 'CHAPTER 1', 2);
+          window.transitionWords('#dBtn', `${btn}____`, 'CHAPTER 1', 2);
         break
         case "filter3":
           window.removeItemsNotEqualToValue("CH2");
-          transitionWords('#dBtn', `${btn}____`, 'CHAPTER 2', 2);
+          window.transitionWords('#dBtn', `${btn}____`, 'CHAPTER 2', 2);
         break
         case "filter4":
           window.removeItemsNotEqualToValue("ART");
-          transitionWords('#dBtn', `${btn}____`, 'ARTWORK', 2);
+          window.transitionWords('#dBtn', `${btn}____`, 'ARTWORK', 2);
         break
         case "filter5":
           window.filteredVideos = window.shuffleArray(window.videoFiles);
           window.filteredImages = window.shuffleArray(window.imageFiles);
-          transitionWords('#dBtn', `${btn}____`, 'RANDOM', 2);
+          window.transitionWords('#dBtn', `${btn}____`, 'RANDOM', 2);
           portal.showNextMedia();
         break
       }
@@ -3368,28 +3382,28 @@ window.removeItemsNotEqualToValue = (value) => {
   }
 }
 
-
+portal();
 // ------ Seek End
 // ------ Simple Typing
-class Typing {
-  constructor(text, elementId, speed = 50) {
-    this.text = text;
-    this.element = document.getElementById(elementId);
-    this.currentIndex = 0;
-    this.delay = speed;
-  }
+// class Typing {
+//   constructor(text, elementId, speed = 50) {
+//     this.text = text;
+//     this.element = document.getElementById(elementId);
+//     this.currentIndex = 0;
+//     this.delay = speed;
+//   }
 
-  start() {
-    this.intervalId = setInterval(() => {
-      if (this.currentIndex < this.text.length) {
-        this.element.textContent += this.text.charAt(this.currentIndex);
-        this.currentIndex++;
-      } else {
-        clearInterval(this.intervalId);
-      }
-    }, this.delay);
-  }
-}
+//   start() {
+//     this.intervalId = setInterval(() => {
+//       if (this.currentIndex < this.text.length) {
+//         this.element.textContent += this.text.charAt(this.currentIndex);
+//         this.currentIndex++;
+//       } else {
+//         clearInterval(this.intervalId);
+//       }
+//     }, this.delay);
+//   }
+// }
 
 
 // window.galleryHelp = new Typing("Click to move forward.", "simpleNoti", speed = 80);
