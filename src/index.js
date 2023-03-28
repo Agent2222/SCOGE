@@ -4,32 +4,46 @@ import Commerce from "@chec/commerce.js";
 // import * as BABYLON from "@babylonjs/core";
 // import { GameManager } from "./game/GameManger.js";
 import { mobileShop1 } from "./shop-1.js";
-import { dtMusic } from "../src/dt-scogeMusic.js";
-import { dtCampaign } from "../src/dt-campaign.js";
-import { dtSubscribe } from "../src/dt-subscribe.js";
 import { getUniMenu } from "../src/dt-uniMenu.js";
-import { scogeUpdates } from "../src/scoge-updates.js";
 import { scogeRsvp } from "../src/scoge-rsvp.js";
+import { dtMusic } from "./dt-scogeMusic.js";
 import { dtInvestors } from "../src/dt-investors";
 import { dialogueBox } from "../src/dialogueBox.js";
 import { MainDialogue } from "./typing.js";
+import { SeekDialogue } from "./seeking.js";
 import { SoundtrackManager } from "./soundtrack.js";
+import { portal } from "./portal.js";
 import { idlFactory } from "./declarations/universe_backend/universe_backend.did.js";
 import { HttpAgent } from "@dfinity/agent";
 import { Principal } from '@dfinity/principal';
 // import { getAllUserNFTs } from '@psychedelic/dab-js'
-// import fleekStorage from '@fleekhq/fleek-storage-js';
 // import the closeCampaign function from dt-campaign.js
 import { mintingScreen } from "../src/mint.js";
 // import { dialogue } from "./game/dialogue.js";
 // import { getGameProgress } from "../src/game/levels/ch1";
+import { gsap } from "gsap";
+import { TextPlugin } from "gsap/TextPlugin";
+import { Configuration, OpenAIApi } from "openai";
+import fleekStorage from "@fleekhq/fleek-storage-js";
 
-window.closeCampaign = dtCampaign.closeCampaign;
+window.entry = () => {
+  gsap.to("#introLogo", { duration: 1, opacity: 1, ease: "power2.inOut" });
+  gsap.to("#intro", { duration: 1, opacity: 0, ease: "power2.inOut", delay: 1.5 });
+  gsap.to(".welcomeOptions", { duration: 1, opacity: 1, ease: "power2.inOut", delay: 2 });
+  gsap.to("#wOpt1", { duration: 2, translateX: 0, ease: "power2.inOut", delay: 1.5 });
+  gsap.to("#wOpt2", { duration: 2, translateX: 0, ease: "power2.inOut", delay: 1.5 });
+  setTimeout(() => {
+    document.getElementById("welcome").style.pointerEvents = "auto";
+  }, 3000);
+}
+
+window.entry();
 
 const VITE_CommerceKey = import.meta.env.VITE_CommerceKey;
 const VITE_StripeKey = import.meta.env.VITE_StripeKey;
 const fleekP = import.meta.env.VITE_fleekP;
 const fleekS = import.meta.env.VITE_fleekS;
+const VITE_ScogeI = import.meta.env.VITE_ScogeI;
 
 // Globals
 var notiActive = false;
@@ -54,7 +68,7 @@ window.productsloaded = false;
 
 // Init Commerce
 const commerce = new Commerce(`${VITE_CommerceKey}`, true);
-console.log("COPYRIGHT 2022 - SCOGÉ Inc. - ALL RIGHTS RESERVED");
+console.log("COPYRIGHT 2023 - SCOGÉ Inc. - ALL RIGHTS RESERVED");
 
 // // Init Stripe
 var stripe = Stripe(`${VITE_StripeKey}`);
@@ -98,6 +112,7 @@ window.sysCheck = () => {
   document.addEventListener("keydown", checkKeys);
 }
 
+
 window.checkKeys = async (event) => {
   if (event.key === "i" && ci === "false") {
     ci = "true";
@@ -115,7 +130,7 @@ window.checkKeys = async (event) => {
     // document.getElementById("uniBut").removeEventListener("click", systemNoti);
     // document.getElementById("uniBut").addEventListener("click", universeSystem);
     universeSystem();
-    document.getElementById("uniBut").setAttribute("onclick", "universeSystem()");
+    // document.getElementById("uniBut").setAttribute("onclick", "universeSystem()");
     soundtrack.play("scoge1");
   }
 }
@@ -138,14 +153,11 @@ window.addEventListener("resize", function () {
     }, 500);
     document.getElementById("tandc").style.display = "none";
     document.getElementById("tandc").style.opacity = "0%";
-    document.getElementById("uniBut").style.display = "none";
-    document.getElementById("getCamp").shadowRoot.getElementById("campaignComp").style.right = "-100%";
     shopActive = "closed";
     window.termsOpen = false;
     //
   } else {
     // Desktop
-    document.getElementById("uniBut").style.display = "block";
     document.getElementById("shop").style.opacity = "100%";
     document.getElementById("shop").style.visibility = "visible";
     document.getElementById("mobileShop").style.display = "none";
@@ -155,41 +167,41 @@ window.addEventListener("resize", function () {
 });
 
 // // Check size on Start
-// window.sizeInit = () => {
-//   if (window.matchMedia("(max-width: 768px)").matches) {
-//     // Mobile
-//     // const node = document.createElement('mobile-shop1')
-//     // node.setAttribute("product","product1");
-//     // node.setAttribute("id","mobileShop");
-//     // node.setAttribute("style","display:none;");
-//     // document.getElementById("main").appendChild(node)
-//     document.getElementById("uniBut").style.display = "none";
-//     window.isMobile = true;
-//   } else {
-//     // Desktop
-//     document.getElementById("uniBut").style.opacity = "100%";
-//     // window.getParamsDesktop();
-//   }
-// };
+window.sizeInit = () => {
+  if (window.matchMedia("(max-width: 768px)").matches) {
+    // Mobile
+    // const node = document.createElement('mobile-shop1')
+    // node.setAttribute("product","product1");
+    // node.setAttribute("id","mobileShop");
+    // node.setAttribute("style","display:none;");
+    // document.getElementById("main").appendChild(node)
+    // document.getElementById("uniBut").style.display = "none";
+    window.isMobile = true;
+    var videoEls = document.querySelectorAll(".videoEl");
+    videoEls.forEach((videoEl) => {
+      videoEl.setAttribute("class", "mobileVideo");
+    });
+  } else {
+    // Desktop
+    // document.getElementById("uniBut").style.opacity = "100%";
+    // window.getParamsDesktop();
+  }
+};
+
+window.onload = () => {
+  sizeInit();
+  loadShop();
+  getParamsDesktop();
+  window.initFilterActions();
+}
 
 window.shopping = () => {
   if (window.matchMedia("(max-width: 768px)").matches) {
     openMobile();
-    clearScreen();
   } else {
     toggleShop();
   }
 };
-
-// clear screen
-window.clearScreen = () => {
-  var shadow = document.getElementById("getCamp").shadowRoot;
-    shadow.getElementById("campaignComp").style.transition = "1s all";
-    shadow.getElementById("campaignComp").style.right = "-100%";
-    clearFilter();
-    clearSettings();
-    clearShop();
-}
 
 // Toggle MobileShop
 window.openMobile = () => {
@@ -243,10 +255,13 @@ window.toggleShop = () => {
   var bg = document.getElementById("shopBG");
   bg.style.transition = ".5s all";
   // Disable some menu items below
-  clearSettings();
-  document.getElementById("updatesModal").style.display = "none";
-  document.getElementById("getCamp").shadowRoot.getElementById("campaignComp").style.transition = "1s all";
-  document.getElementById("getCamp").shadowRoot.getElementById("campaignComp").style.right = "-70%";
+  setTimeout(()=>{
+    if (shopActive != "closed") {
+      document.getElementById("logo").style.transition = "1s all";
+      document.getElementById("logo").style.opacity = "100%";
+      document.getElementById("shopIcon").style.opacity = "100%"
+    }
+  },1000)
   document.getElementById("shop").style.transition = "1s all";
   document.getElementById("povImageColumnLeft").innerHTML = "";
   switch (shopActive) {
@@ -268,10 +283,12 @@ window.toggleShop = () => {
       break;
     case "open":
       window.clearFilter();
+      document.getElementById("shopIcon").style.opacity = "0%"
       bg.style.opacity = "0%";
       setTimeout(() => {
         bg.style.display = "none";
       }, 500);
+      document.getElementById("logo").style.opacity = "0%";
       clearShop();
       break;
     case "POVopen":
@@ -313,21 +330,13 @@ window.toggleShop = () => {
 
 // SETTINGS Button
 window.openSettings = () => {
-  document.getElementById("updatesModal").style.display = "none";
   window.clearFilter();
   clearShop();
   closeInvestor();
-  var shadow = document.getElementById("getCamp").shadowRoot
-  document.getElementById("getCamp").shadowRoot.getElementById("campaignComp").style.transition = "1s all";
-  document.getElementById("getCamp").shadowRoot.getElementById("campaignComp").style.right = "-70%";
   if (window.matchMedia("(max-width: 768px)").matches) {
     // Mobile
-    shadow.getElementById("campaignComp").style.transition = "1s all";
-    shadow.getElementById("campaignComp").style.right = "-100%";
   } else {
     // Desktop
-    shadow.getElementById("campaignComp").style.transition = "1s all";
-    shadow.getElementById("campaignComp").style.right = "-70%";
   }
   var menu = document.getElementById("settingsMenu");
   document.getElementById("settingsMenu").style.display = "grid";
@@ -1381,7 +1390,6 @@ window.filterShop = (e) => {
 // SAY SCOGÉ //
 window.sayScoge = () => {
   document.getElementById("scoge").play();
-  clearScreen();
 };
 
 // LOGO MOVE
@@ -1505,8 +1513,6 @@ window.activateInvestors = () => {
 
 // Open Investors
 window.openInvestors = () => {
-  document.getElementById("getCamp").shadowRoot.getElementById("campaignComp").style.transition = "1s all";
-  document.getElementById("getCamp").shadowRoot.getElementById("campaignComp").style.right = "-70%";
   document.getElementById("getInvestors").shadowRoot.getElementById("investorComp").style.transition = "1s all";
   document.getElementById("getInvestors").shadowRoot.getElementById("investorComp").style.right = "0%";
 }
@@ -1585,13 +1591,6 @@ const localhost = "http://127.0.0.1:8080/?canisterId=rdmx6-jaaaa-aaaaa-aaadq-cai
 // http://127.0.0.1:8080/?canisterId=rdmx6-jaaaa-aaaaa-aaadq-cai&id=renrk-eyaaa-aaaaa-aaada-cai
 // BEFORE LAUNCH !!!!!!!!!
 // Rebuilding Actors Across Account Switches
-
-document.getElementById("settingsBut").addEventListener("click", openSettings);
-window.onload = () => {
-  // sizeInit();
-  loadShop();
-  getParamsDesktop();
-}
 
 window.universeSystem = async () => {
   var uniCtx = universeCanvas.getContext("2d");
@@ -2379,44 +2378,25 @@ window.clearAndSelectMenu = (e) => {
 
 // Hide default menu
 window.hideMenu = () => {
-    var menu1 = document.getElementById("gMenu");
     var menu4 = document.getElementById("logo");
-    var subscribeEl = document.getElementById("subscribeComp");
-    var musicEl = document.getElementById("music");
-    var settings = document.getElementById("settingsMenu");
     // slowly fade out the menu and logo elements and make them unclickable
-    menu1.style.opacity = "0";
     menu4.style.opacity = "0";
-    subscribeEl.style.opacity = "0";
-    musicEl.style.opacity = "0";
-    menu1.style.pointerEvents = "none";
     menu4.style.pointerEvents = "none";
-    subscribeEl.style.pointerEvents = "none";
-    musicEl.style.pointerEvents = "none";
-    settings.style.zIndex = "2";
     document.getElementById("uniEvent").style.display = "block";
     document.getElementById("uniEvent2").style.display = "block";
     document.getElementById("uniEvent3").style.display = "block";
+    document.getElementById("welcome").style.display = "none";
+    document.getElementById("welcome").style.pointerEvents = "none";
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("intro").style.opacity = "0%";
+    document.getElementById("introLogo").style.userSelect = "none";
+    document.getElementById("introLogo").style.pointerEvents = "none";
+    document.getElementById("introLogo").style.cursor = "pointer";
 }
 
 // Show default menu
 window.showMenu = () => {
     var moveMenu = document.getElementById("getUniMenu").shadowRoot.getElementById("uniMenu");
-    var menu1 = document.getElementById("gMenu");
-    var menu4 = document.getElementById("logo");
-    var subscribeEl = document.getElementById("subscribeComp");
-    var musicEl = document.getElementById("music");
-    var settings = document.getElementById("settingsMenu");
-    // slowly fade in the menu and logo elements and make them clickable
-    menu1.style.opacity = "1";
-    menu4.style.opacity = "1";
-    subscribeEl.style.opacity = "1";
-    musicEl.style.opacity = "1";
-    menu1.style.pointerEvents = "auto";
-    menu4.style.pointerEvents = "auto";
-    subscribeEl.style.pointerEvents = "auto";
-    musicEl.style.pointerEvents = "auto";
-    settings.style.zIndex = "3";
     document.querySelector("#universe").style.opacity= "0%";
     setTimeout(()=> {
       document.querySelector("#universe").style.display = "none";
@@ -2424,7 +2404,7 @@ window.showMenu = () => {
 
     // remove playerPos div
     document.getElementById("selection").style.display = "none";
-    document.getElementById("uniEvent").remove();
+    document.getElementById("uniEvent")?.remove();
     document.getElementById("uniEvent2").remove();
     document.getElementById("uniEvent3").remove();
     // hide the selection box
@@ -2432,6 +2412,16 @@ window.showMenu = () => {
     previewUI.style.transform = "scale(0)";
     moveMenu.style.display = "none";
     document.getElementById("adminUI").remove();
+    document.getElementById("welcome").style.display = "grid";
+    document.getElementById("welcome").style.pointerEvents = "auto";
+    document.getElementById("intro").style.display = "grid";
+    document.getElementById("intro").style.opacity = "100%";
+    document.getElementById("introLogo").style.userSelect = "auto";
+    document.getElementById("introLogo").style.pointerEvents = "auto";
+    document.getElementById("introLogo").style.cursor = "pointer";
+    document.getElementById("introLogo").addEventListener("click", () => {
+      universeSystem();
+    });
 }
 
 // Open inventory / wallet
@@ -2507,7 +2497,6 @@ window.connectWallet = async () => {
       });
       user.balance = result;
       user.pk = plugpublicKey;
-      console.log(user);
       //
       // Import the getAllUserNFTs function if someCondition is true
       playerState();
@@ -2656,32 +2645,13 @@ const attn = async (error) => {
 
 // Upcoming
 window.systemNoti = async () => {
-  document.getElementById("updatesModal").style.display = "block";
-  document.getElementById("getCamp").closeCampaign();
+//
 }
 
 // RSVP
 window.rsvp = async () => {
   document.getElementById("rsvpModal").style.display = "block";
-  document.getElementById("getCamp").closeCampaign();
 }
-    
-// const fleek = async () => {
-//   const files = await fleekStorage.listFiles({
-//     apiKey: '',
-//     apiSecret: '',
-//     prefix: 'Sounds',
-//     getOptions: [
-//       'bucket',
-//       'key',
-//       'hash',
-//       'publicUrl'
-//     ],
-//   })
-//   console.log(files)
-// }
-
-// fleek();
 
 // const element = document.getElementById('dialogueModal').shadowRoot.getElementById('diaMain');
 // element.innerHTML = '';
@@ -2726,3 +2696,683 @@ window.rsvp = async () => {
 //   // (npc, tone, lines) 
 // ]);
 
+// ------ Seek
+var peeking = false;
+var seekActive = false;
+var seeking = false;
+var cards = document.querySelectorAll(".seekOptCard");
+window.seekType = "content";
+window.conversationHistory = [""];
+window.sameConvo = false;
+window.digiFormDislayed = false;
+window.newsFormDisplayed = false;
+window.contactFormDisplayed = false;
+window.form1Active = false;
+window.form2Active = false;
+window.galleryActive = false;
+window.galleryEntry = false;
+window.digiPre = false;
+window.view = "seeking";
+window.galleryType = "video";
+
+portal();
+
+window.dialogue = new SeekDialogue('',[{
+  text: 'What do you seek%?',
+  choices: [
+    {
+      text: "I seek the truth.",
+      action: () => {
+        dialogue.start(0, 'sysResp');
+      }
+    },
+  ]
+},
+{
+  text: 'Ok, here they are.',
+  choices: [
+    {
+      text: "I seek the truth.",
+      action: () => {
+        dialogue.start(0, 'sysResp');
+      }
+    },
+  ]
+}]) 
+
+window.openSeek = () => {
+  var seekModal = document.getElementById("seekModal");
+  var mandala = document.getElementById("manBG");
+  document.getElementById("seekModal").style.display = "grid";
+  // create the GSAP animation
+  if (seeking === false) {
+    setTimeout(()=>{
+      dialogue.start(0, 'sysResp');
+      setTimeout(()=>{
+        gsap.to(mandala, { duration: 1, opacity: 1, ease: "power2.inOut"});
+        gsap.fromTo(seekOptCards, {
+          scale: .7, // initial scale of .9
+          opacity: 0, // initial opacity of 0
+        }, {
+          duration: .3, // animation duration in seconds
+          scale: 1, // scale all elements to 1
+          opacity: 1, // make all elements visible
+          ease: "power4.out", // animation easing
+          stagger: {
+            each: 0.2, // stagger each element by 0.1 seconds
+          },
+        });
+      },1400)
+    },1000)
+    cards.forEach(card => {
+      card.addEventListener("click", (e) => {
+        window.seek(e);
+      })
+    });
+    seeking = true;
+  }
+  seekModal.style.pointerEvents = "auto";
+  gsap.to("#seekModal", { duration: .3, opacity: 1, ease: "power2.inOut"});
+  gsap.to("#seekModal", { duration: .3, scale: 1, ease: "power2.inOut"});
+  gsap.to("#seekModal", { duration: .3, filter: "blur(0px)", ease: "power2.inOut"});
+  mandala.addEventListener("mouseover", () => {
+    window.openPeek();
+  })
+  mandala.addEventListener("mouseleave", () => {
+    window.closePeek();
+  })
+  mandala.addEventListener("mouseeout", () => {
+    window.closePeek();
+  });
+  
+  seekActive = true;
+  peeking = false;
+  window.trackMouse();
+  window.trackMouseMove();
+}
+
+// define the seekOptCard elements as a variable
+const seekOptCards = document.querySelectorAll('.seekOptCard');
+
+window.closeSeek = () => {
+  if (window.view === "seeking") {
+  seekActive = false;
+  gsap.to("#seekModal", { duration: .3, filter: "blur(5px)", ease: "power2.inOut"});
+  gsap.to("#seekModal", { duration: .3, opacity: 0, ease: "power2.inOut"});
+  gsap.to("#seekModal", { duration: .3, scale: 1.1, ease: "power2.inOut"});
+  setTimeout(()=>{
+    document.getElementById("seekModal").style.pointerEvents = "none";
+    document.getElementById("seekModal").style.display = "none";
+  },500)
+  gsap.to(".seekContent", { duration: 1, filter: "blur(0px)", ease: "power2.inOut"});
+  gsap.to("#seekModal", { duration: .4, backgroundColor: "rgba(15,15,18,1)", ease: "power2.inOut"});
+  gsap.to(".seekContent", { duration: 1, opacity: 1, ease: "power2.inOut"});
+  peeking = false;
+  seekActive = false;
+  return;
+}
+  if (window.view === "gallery") {
+    gsap.to("#seekGallery", { duration: 1, opacity: 0, ease: "power2.inOut"});
+    gsap.to("#seekGallery", { duration: 1, scale: 1.5, ease: "power2.inOut"});
+    gsap.to("#videoGallery", { duration: 1, opacity: 0, ease: "power2.inOut"});
+    gsap.to("#videoGallery", { duration: 1, scale: 1.5, ease: "power2.inOut"});
+    gsap.to("#seekOpt", { duration: 1, opacity: 1, ease: "power2.inOut"});
+    gsap.to("#seekResp", { duration: 1, opacity: 1, ease: "power2.inOut"});
+    gsap.to('#manBG', {duration: 1, backgroundColor: '', y: 0, ease: "power2.out"});
+    gsap.to('#manBG', {duration: 1, border: '1px solid var(--secondary)', y: 0, ease: "power2.out"});
+    gsap.to('#manBG', {duration: 1, scale: 1, y: 0, ease: "power2.out"});
+    document.getElementById("seekBody").style.pointerEvents = "auto";
+    document.getElementById("manBG").style.pointerEvents = "auto";
+    document.getElementById("seekGallery").style.pointerEvents = "none";
+    document.getElementById("videoGallery").style.pointerEvents = "none";
+    setTimeout(()=>{
+      document.getElementById("portalVideo").style.display = "none";
+      document.getElementById("portalVideo2").style.display = "none";
+    } , 1000)
+    document.getElementById("portalVideo2").pause()
+    document.getElementById("portalVideo").pause()
+    window.view = "seeking";
+    window.viewingPg = false;
+    gsap.to("#tooltip", {opacity: 0, duration: 0.5, ease: "power2.out"});
+    tooltip.style.display = "none";
+    document.getElementById("homeTip").innerHTML = "HOME";
+    gsap.to('#dropdown', {duration: 1, opacity: 0, y: 0, ease: "power2.out"});
+    gsap.to('#soundToggle', {duration: 1, opacity: 0, y: 0, ease: "power2.out"});
+    document.getElementById("dropdown").style.pointerEvents = "none";
+    document.getElementById("soundToggle").style.pointerEvents = "none";
+    return;
+  }
+}
+
+window.closePeek = () => {
+  if (peeking === true && seekActive === true && window.view === "seeking") {
+    gsap.to(".seekContent", { duration: .1, filter: "blur(0px)", ease: "power2.inOut"});
+    gsap.to("#seekModal", { duration: .1, backgroundColor: "rgba(15,15,18,1)", ease: "power2.inOut"});
+    gsap.to(".seekContent", { duration: .1, opacity: 1, ease: "power2.inOut"});
+    seekActive = true;
+    peeking = false;
+    return;
+  }
+  if (peeking === true && seekActive === true && window.galleryType === "images") {
+    gsap.to("#seekGallery", { duration: .1, filter: "blur(0px)", ease: "power2.inOut"});
+    gsap.to("#seekGallery", { duration: .1, opacity: 1, ease: "power2.inOut"});
+    gsap.to("#seekOpt", { duration: .2, opacity: 0, ease: "power2.inOut"});
+    gsap.to("#seekResp", { duration: .2, opacity: 0, ease: "power2.inOut"});
+    seekActive = true;
+    peeking = false;
+    return;
+  }
+  if (peeking === true && seekActive === true && window.galleryType === "video") {
+    gsap.to("#videoGallery", { duration: .1, filter: "blur(0px)", ease: "power2.inOut"});
+    gsap.to("#videoGallery", { duration: .1, opacity: 1, ease: "power2.inOut"});
+    gsap.to("#seekOpt", { duration: .2, opacity: 0, ease: "power2.inOut"});
+    gsap.to("#seekResp", { duration: .2, opacity: 0, ease: "power2.inOut"});
+    seekActive = true;
+    peeking = false;
+    return;
+  }
+}
+window.openPeek = () => {
+  if (peeking === false && seekActive === true && window.view === "seeking") {
+    gsap.to(".seekContent", { duration: .2, filter: "blur(5px)", ease: "power2.inOut"});
+    gsap.to(".seekContent", { duration: .2, opacity: .5, ease: "power2.inOut"});
+    gsap.to("#seekModal", { duration: .2, backgroundColor: "rgba(15,15,18,.5)", ease: "power2.inOut"});
+    seekActive = true;
+    peeking = true;
+    return;
+  }
+  if (peeking === false && seekActive === true && window.galleryType === "images") {
+    gsap.to("#seekGallery", { duration: .2, filter: "blur(5px)", ease: "power2.inOut"});
+    gsap.to("#seekGallery", { duration: .2, opacity: .5, ease: "power2.inOut"});
+    gsap.to("#seekOpt", { duration: .2, opacity: .5, ease: "power2.inOut"});
+    gsap.to("#seekResp", { duration: .2, opacity: .5, ease: "power2.inOut"});
+    seekActive = true;
+    peeking = true;
+    window.view = "gallery";
+    return;
+  }
+  if (peeking === false && seekActive === true && window.galleryType === "video") {
+    gsap.to("#videoGallery", { duration: .2, filter: "blur(5px)", ease: "power2.inOut"});
+    gsap.to("#videoGallery", { duration: .2, opacity: .5, ease: "power2.inOut"});
+    gsap.to("#seekOpt", { duration: .2, opacity: .5, ease: "power2.inOut"});
+    gsap.to("#seekResp", { duration: .2, opacity: .5, ease: "power2.inOut"});
+    seekActive = true;
+    peeking = true;
+    window.view = "gallery";
+    return;
+  }
+}
+
+gsap.registerPlugin(TextPlugin);
+window.transitionWords = (element, fromWord, toWord, duration) => {
+  // Get the DOM element for the text
+  const textElement = document.querySelector(element);
+
+  // Create an array of the individual characters in each word
+  const fromChars = fromWord.split('');
+  const toChars = toWord.split('');
+
+  // Add any extra characters to the longer word to make the arrays equal in length
+  const maxLength = Math.max(fromChars.length, toChars.length);
+  while (fromChars.length < maxLength) {
+    fromChars.push('');
+  }
+  while (toChars.length < maxLength) {
+    toChars.push('');
+  }
+
+  // Use GSAP to animate each character in the text
+  const tl = gsap.timeline();
+  for (let i = 0; i < maxLength; i++) {
+    tl.to(textElement, {
+      duration: duration / maxLength,
+      text: toChars.slice(0, i + 1).join(''),
+      overwrite: 'auto',
+      onUpdate: () => {
+        // Get the current character of the "from" word and the "to" word
+        const fromChar = fromChars[i] || '';
+        const toChar = toChars[i] || '';
+
+        // Calculate the ASCII code for the current character and the target character
+        const fromCharCode = fromChar.charCodeAt(0);
+        const toCharCode = toChar.charCodeAt(0);
+
+        // Calculate the current character based on the current progress of the animation
+        const currentCharCode = Math.round((toCharCode - fromCharCode) * tl.progress() + fromCharCode);
+
+        // Set the current character of the text element
+        const currentChar = String.fromCharCode(currentCharCode);
+        const newText = toChars.slice(0, i).join('') + currentChar + toChars.slice(i + 1).join('');
+        textElement.textContent = newText;
+      }
+    }, i * (duration / maxLength));
+  }
+}
+
+window.seek = (e) => {
+  var seekCard = e.target.classList[1];
+  var blinking = document.querySelectorAll(".blink")
+  var opg = new SeekDialogue();
+  blinking.forEach((e) => {
+    e.classList.remove("blink");
+  })
+  switch (seekCard) {
+    case "seekOpt1":
+      window.digiPre = false;
+      if (window.conversationHistory[0] === "seekOpt1") {
+        // opg.openGallery();
+        var reminder = document.querySelectorAll(".visualSubMenu");
+        var selected = reminder[0];
+        gsap.to(selected, { duration: .5, backgroundColor: "#94be8c", ease: "power2.inOut"});
+        gsap.to(selected, { duration: .5, color: "black", ease: "power2.inOut"});
+        gsap.to(selected, { duration: .8, backgroundColor: "", ease: "power2.inOut", delay: .8});
+        gsap.to(selected, { duration: .8, color: "", ease: "power2.inOut", delay: .8});
+        return;
+      } else {
+        window.convoHist(seekCard);
+        window.seekType = "content";
+        var baseText = "Show me some visuals.";
+        var baseAnswer = "Which would you like to see?";
+        window.systemSpeak(baseText, baseAnswer);
+        window.galleryActive = true;
+      }
+      break;
+    case "seekOpt2":
+      window.digiPre = false;
+      if (window.conversationHistory[0] != "seekOpt2") {
+        window.convoHist(seekCard);
+        window.seekType = "content";
+        var baseText = "I want to listen to music";
+        var baseAnswer = "Now playing 'SCOGÉ Radio'.";
+        window.systemSpeak(baseText, baseAnswer);
+      } else {
+        var mi = document.querySelector("scoge-music").shadowRoot.querySelector("#musicInterface");
+        gsap.to(mi, { duration: .5, backgroundColor: "red", ease: "power2.inOut"});
+        setTimeout(() => {
+          gsap.to(mi, { duration: .5, backgroundColor: "rgba(0,0,0,0)", ease: "power2.inOut"});
+        }, 500);    
+      }
+      break;
+    case "seekOpt3":
+      if (window.conversationHistory[0] != "seekOpt3") {
+        window.convoHist(seekCard);
+        window.seekType = "form";
+        var baseText = "What is Digisette?";
+        var baseAnswer = "Digisette";
+        window.systemSpeak(baseText, baseAnswer);
+      } else {
+        document.getElementById("genInput")?.focus();
+      }
+      break;
+    case "seekOpt4":
+      window.digiPre = false;
+      window.convoHist(seekCard);
+      window.seekType = "discover";
+      var baseText = "Tell me about Bankoo.";
+      var baseAnswer = "World";
+      window.systemSpeak(baseText, baseAnswer);
+      break;
+    case "seekOpt5":
+      window.digiPre = false;
+      if (window.conversationHistory[0] != "seekOpt5") {
+        window.convoHist(seekCard);
+        window.seekType = "mailing";
+        var baseText = "I want community?";
+        var baseAnswer = "Keep up by joining our mailing list.";
+        window.systemSpeak(baseText, baseAnswer);
+      } else {
+        document.getElementById("genInput")?.focus();
+      }
+      break;
+    case "seekOpt6":
+      window.digiPre = false;
+      if (window.conversationHistory[0] != "seekOpt6") {
+        window.convoHist(seekCard);
+        window.seekType = "info";
+        var baseText = "Tell me about 'SCOGÉ' the brand.";
+        var baseAnswer = "Sure, what would you like to know?";
+        window.systemSpeak(baseText, baseAnswer);
+      } else {
+        var reminder = document.querySelectorAll(".infoSubMenu");
+        var selected = reminder[0];
+        gsap.to(selected, { duration: .5, backgroundColor: "#94be8c", ease: "power2.inOut"});
+        gsap.to(selected, { duration: .5, color: "black", ease: "power2.inOut"});
+        gsap.to(selected, { duration: .8, backgroundColor: "", ease: "power2.inOut", delay: .8});
+        gsap.to(selected, { duration: .8, color: "", ease: "power2.inOut", delay: .8});
+      }
+      break;
+  }
+}
+
+window.convoHist = (cat) => {
+  if (window.conversationHistory[0] === cat) {
+    window.sameConvo = true;
+  } else {
+    window.conversationHistory[0] = cat;
+    window.sameConvo = false;
+  }
+}
+
+window.systemSpeak = async (selection, answer) => {
+  try {
+    document.getElementById("convoCont").style.display = "block";
+    setTimeout(() => {  
+      document.getElementById("convoCont").style.animationPlayState = "paused"; 
+      document.getElementById("convoCont").style.animation = "blink 1s infinite;";
+      document.getElementById("Reqerror").style.display = "block";
+      setTimeout(() => {
+        document.getElementById("Reqerror").style.display = "none";
+        document.getElementById("convoCont").style.animationPlayState = "running"; 
+        gsap.to("#convoCont", { duration: 1, opacity: 0, ease: "power2.inOut"});
+      }, 3000);
+  }, 6000);
+    // document.getElementById("convoCont").style.display = "none";
+    const configuration = new Configuration({
+    apiKey: VITE_ScogeI,
+    });
+    const openai = new OpenAIApi(configuration);
+    if (sameConvo === true) {
+      var completion = await openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [{role: "user", content: `Say tell me more in 5 words or less. Don't use quotation marks.`}],
+        max_tokens: 15,
+      });
+    } else {
+      var completion = await openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [{role: "user", content: `Compose a different version of this request '${selection}' Don't make it a question.`}],
+        max_tokens: 10,
+      });
+    }
+    if (seekType === "content" || seekType === "info" || seekType === "mailing") {
+      window.completion2 = await openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [{role: "user", content: `Compose a different version of this answer '${answer}'.`}],
+        top_p: 1.0,
+        max_tokens: 15,
+        stop: ["."],
+      })
+    } else if (seekType === "discover") {
+      const data = await import('./library.json');
+      const obj = JSON.stringify(data.default);
+      var selected = JSON.parse(obj);
+      var focus = JSON.stringify(selected[answer]);
+      window.completion2 = await openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [{role: "user", content: `Provide some information from ${focus} in a brief sentence, 20 words max.`}],
+        top_p: 1.0,
+        max_tokens: 30,
+      })
+    } else if (seekType === "form") {
+      const data = await import('./library.json');
+      const obj = JSON.stringify(data.default);
+      var selected = JSON.parse(obj);
+      var focus = JSON.stringify(selected[answer]);
+      window.completion2 = await openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [{role: "user", content: `Provide some information from ${focus} in a brief sentence, 20 words max, Include information from any key value pair. Then ask to 'join the MAILING LIST below'.`}],
+        top_p: 1.0,
+        max_tokens: 30,
+      })
+    } else if (seekType === "contact") {
+      const data = await import('./library.json');
+      const obj = JSON.stringify(data.default);
+      var selected = JSON.parse(obj);
+      var focus = JSON.stringify(selected[answer]);
+      window.completion2 = await openai.createChatCompletion({
+          model: "gpt-3.5-turbo",
+          messages: [{role: "user", content: `Provide information from ${focus} in a brief sentence, 20 words max, Do not include an opening statement, Alternatively they can 'send a Message below'.`}],
+          top_p: 1.0,
+          max_tokens: 20,
+        })
+    } else {
+      window.completion2 = await openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [{role: "user", content: `Compose a different version of this answer '${answer}'.`}],
+        max_tokens: 10,
+      });
+    }
+    if (window.completion2 != undefined) {
+      document.getElementById("convoCont").style.display = "none";
+    }
+    //
+    let userDialogue = new SeekDialogue('',[{
+      text: `${completion.data.choices[0].message.content ?? selection}`,
+      choices: [
+        {
+          text: "Ok, here they are.",
+          action: () => {
+            dialogue.start(0, 'sysResp');
+          }
+        },
+      ]
+    },
+    ])
+    //
+    window.dialogue = new SeekDialogue('',[{
+      text: 'What $ do you seek%?',
+      choices: [
+        {
+          text: "I seek the truth.",
+          action: () => {
+            dialogue.start(0, 'sysResp');
+          }
+        },
+      ]
+    },
+    {
+      text: `${window.completion2.data.choices[0].message.content ?? answer}`,
+      choices: [
+        {
+          text: "I seek the truth.",
+          action: () => {
+            dialogue.start(0, 'sysResp');
+          }
+        },
+      ]
+    }
+  ]) 
+    userDialogue.start(0, 'userResp');
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+let timeout;
+const myContainer = document.querySelector('#seekResp');
+window.autoSmoothScrollToBottom = (container) => {
+  if (container.scrollHeight > container.clientHeight) {
+    var scroll = gsap.timeline();
+    scroll.to(container, {
+      duration: 2,
+      scrollTop: container.scrollHeight - container.clientHeight - 10,
+      ease: "power2.out"
+    });
+  }
+}
+
+myContainer.addEventListener('DOMSubtreeModified', function() {
+  timeout = setTimeout(() => {
+    autoSmoothScrollToBottom(myContainer);
+  }, 250); // debounce time set to 250ms
+});
+
+window.sub = () => {
+  var form = document.querySelector("#subGeneral");
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    document.getElementById("genSubLoad").style.opacity = "100%";
+    gsap.to("#genSubLoad", {
+      rotation: 360,
+      duration: 2,
+      repeat: -1,
+      ease: "none" // use linear easing for a constant speed
+    });
+    let data = new FormData(form);
+    fetch("https://script.google.com/macros/s/AKfycby5qNgMlcrC9_ICCIc7_h_7XdGgUGLOLuwFWaMiVLL7Bfd0-rmGAsF3lhPZuH-EKvvhnw/exec", {
+      method: "POST",
+      body: data,
+      mode: "cors"
+    }).then(res => res.text()).then(data => {
+      var block = document.getElementById("subGeneral");
+      var newEl = document.createElement("span");
+      newEl.setAttribute("id", "done");
+      newEl.innerHTML = `Done!`;
+      block.appendChild(newEl);
+      form.reset();
+      gsap.to("#done", {opacity: 0, duration: 1, ease: "power2.out", onComplete: function() {
+      block.removeChild(newEl);
+      }
+    })
+    gsap.to("#genSubLoad", {opacity: 0, duration: 1, ease: "power2.out"
+  });
+    ;
+    });
+  });
+}
+
+window.sub2 = () => {
+  var form2 = document.querySelector("#subGeneral2");
+  form2.addEventListener("submit", (event) => {
+    document.getElementById('genCat2').value = `${document.getElementById('genInput3').value}`;
+    event.preventDefault();
+    document.getElementById("genSubLoad2").style.opacity = "100%";
+    gsap.to("#genSubLoad2", {
+      rotation: 360,
+      duration: 2,
+      repeat: -1,
+      ease: "none" // use linear easing for a constant speed
+    });
+    let data = new FormData(form2);
+    fetch("https://script.google.com/macros/s/AKfycby5qNgMlcrC9_ICCIc7_h_7XdGgUGLOLuwFWaMiVLL7Bfd0-rmGAsF3lhPZuH-EKvvhnw/exec", {
+      method: "POST",
+      body: data,
+      mode: "cors"
+    }).then(res => res.text()).then(data => {
+      var confirm = document.getElementById("genSubLoad2");
+      form2.reset();
+      // Cancel any existing tweens of #genSubLoad2
+      gsap.killTweensOf("#genSubLoad2");
+
+      // Reset the rotation of #genSubLoad2
+      gsap.set("#genSubLoad2", { rotation: 0 });
+
+      confirm.innerHTML = `Sent.`;
+      setTimeout(() => {
+        gsap.to("#genSubLoad2", {opacity: 0, duration: 1, ease: "power2.out"
+      });
+        setTimeout(() => {
+          confirm.innerHTML = `|`;
+        }, 1000);
+      }, 3000);
+    ;
+    });
+  });
+}
+
+var mouseMoving = false;
+window.viewingPg = false;
+
+window.trackMouse = (e) => {
+  // Get the tooltip element
+  if (viewingPg === true) {
+    if (window.galleryType == "images" || window.galleryType == "video" && window.view === "gallery") {
+      var tooltip = document.getElementById("tooltip");
+      // Set the tooltip position to the mouse position
+      tooltip.style.left = (e.clientX - 40) + "px";
+      tooltip.style.top = (e.clientY - 20) + "px";
+      gsap.to("#tooltip", {opacity: 1, duration: 0.5, ease: "power2.out"});
+      if (mouseMoving === false) {
+        gsap.to("#tooltip", {opacity: 0, duration: 0.5, ease: "power2.out", delay: 2});
+      }
+      tooltip.style.display = "block";
+    }
+  }
+}
+
+window.trackMouseMove = (e) => {
+  let timer;
+  document.addEventListener("mousemove", function(event) {
+    mouseMoving = true;
+    timer = setTimeout(function() {
+      mouseMoving = false;
+    }, 2000);
+  });
+}
+
+window.initFilterActions = () => {
+  var filters = document.querySelectorAll(".visualFilters");
+  var btn = document.querySelector(".dropbtn").innerHTML;
+  filters.forEach((filter) => {
+    filter.addEventListener("click", (e) => {
+      var selected = e.target;
+      e.preventDefault();
+      switch (selected.id) {
+        case "filter1":
+          window.removeItemsNotEqualToValue("DY1");
+          transitionWords('#dBtn', `${btn}____`, 'DISCOVERY 1', 2);
+        break
+        case "filter2":
+          window.removeItemsNotEqualToValue("CH1");
+          transitionWords('#dBtn', `${btn}____`, 'CHAPTER 1', 2);
+        break
+        case "filter3":
+          window.removeItemsNotEqualToValue("CH2");
+          transitionWords('#dBtn', `${btn}____`, 'CHAPTER 2', 2);
+        break
+        case "filter4":
+          window.removeItemsNotEqualToValue("ART");
+          transitionWords('#dBtn', `${btn}____`, 'ARTWORK', 2);
+        break
+        case "filter5":
+          window.filteredVideos = window.shuffleArray(window.videoFiles);
+          window.filteredImages = window.shuffleArray(window.imageFiles);
+          transitionWords('#dBtn', `${btn}____`, 'RANDOM', 2);
+          portal.showNextMedia();
+        break
+      }
+    });
+  });
+}
+
+window.removeItemsNotEqualToValue = (value) => {
+  window.filteredVideos = window.shuffleArray(window.videoFiles);
+  window.filteredImages = window.shuffleArray(window.imageFiles);
+  for (let i = window.filteredImages.length - 1; i >= 0; i--) {
+    if (window.filteredImages[i].publicUrl.includes(value) === false) {
+      window.filteredImages.splice(i, 1);
+    }
+  }
+  for (let i = window.filteredVideos.length - 1; i >= 0; i--) {
+    if (window.filteredVideos[i].publicUrl.includes(value) === false) {
+      window.filteredVideos.splice(i, 1);
+    }
+  }
+}
+
+
+// ------ Seek End
+// ------ Simple Typing
+class Typing {
+  constructor(text, elementId, speed = 50) {
+    this.text = text;
+    this.element = document.getElementById(elementId);
+    this.currentIndex = 0;
+    this.delay = speed;
+  }
+
+  start() {
+    this.intervalId = setInterval(() => {
+      if (this.currentIndex < this.text.length) {
+        this.element.textContent += this.text.charAt(this.currentIndex);
+        this.currentIndex++;
+      } else {
+        clearInterval(this.intervalId);
+      }
+    }, this.delay);
+  }
+}
+
+
+// window.galleryHelp = new Typing("Click to move forward.", "simpleNoti", speed = 80);
+// ------ Simple Typing End

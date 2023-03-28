@@ -4,41 +4,9 @@ var currentAudio = null;
 var currenttrack = 0;
 var trackList = [
   {
-    artist:"Floating Points - Birth",
-    link:"https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/Birth.mp3"
-  },
-  {
-    artist:"Erasmo Carlos - É Preciso Dar Um Jeitp, Meu Amigo",
-    link:"https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/Erasmo_carlos.mp3"
-  },  
-  {
-    artist:"Frankz Gordon - The Art Teacher",
-    link:"https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/The-Art-Teacher.mp3"
-  },  
-  {
-    artist:"Ave Maria - Claire de Lune",
-    link:"https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/ave-maria-claire-de-lune.mp3"
-  },  
-  {
-    artist:"Nemzzz - Freestyle",
-    link:"https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/nemzzz-lsw-freestyle.mp3"
-  },  
-  {
-    artist:"Stevie Wonder - If It's Magic",
-    link:"https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/stevie-wonder-if-its-magic.mp3"
-  },  
-  {
-    artist:"Michael Giacchino - Stuff We Did",
-    link:"https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/stuff-we-did.mp3"
-  },
-  {
-    artist:"Hareton Salvanini - Não Podes Fugir do Teu Destino",
-    link:"https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/destiny.mp3"
-  },
-  {
-    artist:"Nkosazana Daughter - Inhliziyo",
-    link:"https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/Inhiliziyo.mp3"
-  },
+    artist:"SCOGÉ Radio - Broadcast 1",
+    link:"https://storage.fleek.zone/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeSounds/IFSTFAW-Mix.mp3"
+  }, 
 ]
 
 class dtMusic extends HTMLElement {
@@ -145,10 +113,10 @@ class dtMusic extends HTMLElement {
             }
             #musicInterface {
                 position: absolute;
-                top: 9%;
-                right: 8%;
+                // top: 9%;
+                right: 0%;
                 width: auto;
-                height: 4%;
+                height: 8%;
                 display: flex;
                 align-items: center;
                 font-family: "BS-R", sans-serif;
@@ -159,6 +127,7 @@ class dtMusic extends HTMLElement {
                 background-image: linear-gradient(to right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8),rgba(0, 0, 0, 0.8),rgb(0, 0, 0, 0.9),rgb(0, 0, 0, 0.9)); 
                 font-size: 12px;
                 z-index: 4;
+                border-radius: 0 10px 10px 0;
             }
             #pauseBtn {
               display: none;
@@ -176,17 +145,17 @@ class dtMusic extends HTMLElement {
             }
             #cat {
               position: absolute;
-              left: -20%;
-              filter: contrast(110%);
+              left: -12%;
+              filter: contrast(150%);
               display: none;
+              padding-bottom: 8px;
             }
             @media screen and (max-width: 769px) {
               #musicInterface {
-                bottom: 0% !important;
                 width: 90%;
-                height: 10%;
+                height: 100%;
                 top: auto;
-                bottom: 0%;
+                bottom: auto;
                 right: 0%;
                 display: grid;
                 grid-template-columns: 4fr 1fr 1fr 1fr;
@@ -197,10 +166,13 @@ class dtMusic extends HTMLElement {
                 background-image: none;
                 background-color: rgba(0, 0, 0, 1);
                 border-top: .2px solid var(--accent);
+                border-radius: 5px;
                 z-index: 5;
-                position: fixed;
                 padding-right: 5%;
                 padding-right: 5%;
+                overflow: hidden;
+                margin-bottom: 5%;
+                position: inherit;
               }
               #cat {
                 position: fixed;
@@ -209,7 +181,7 @@ class dtMusic extends HTMLElement {
                 bottom: 18%;
                 top: auto;
                 filter: contrast(1);
-                display: none;
+                display: none !important;
                 width: 150px !important;
                 height: 150px !important;
               }
