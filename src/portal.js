@@ -48,9 +48,6 @@ export async function portal() {
   window.imageFiles = setupImages.images.array;
   window.videoFiles = setupVideo.videos.array;
 
-  console.log("image",window.imageFiles);
-  console.log("video",window.videoFiles);
-
   window.shuffleArray = (array) => {
     // Create a new array with the same values as the original array
     const shuffledArray = [...array];
