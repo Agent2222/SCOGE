@@ -34,7 +34,7 @@ window.entry = () => {
   gsap.to("#wOpt2", { duration: 2, translateX: 0, ease: "power2.inOut", delay: 1.5 });
   setTimeout(() => {
     document.getElementById("welcome").style.pointerEvents = "auto";
-  }, 3500);
+  }, 3000);
 }
 
 window.entry();
@@ -130,7 +130,7 @@ window.checkKeys = async (event) => {
     // document.getElementById("uniBut").removeEventListener("click", systemNoti);
     // document.getElementById("uniBut").addEventListener("click", universeSystem);
     universeSystem();
-    document.getElementById("uniBut").setAttribute("onclick", "universeSystem()");
+    // document.getElementById("uniBut").setAttribute("onclick", "universeSystem()");
     soundtrack.play("scoge1");
   }
 }
@@ -2378,44 +2378,25 @@ window.clearAndSelectMenu = (e) => {
 
 // Hide default menu
 window.hideMenu = () => {
-    var menu1 = document.getElementById("gMenu");
     var menu4 = document.getElementById("logo");
-    var subscribeEl = document.getElementById("subscribeComp");
-    var musicEl = document.getElementById("music");
-    var settings = document.getElementById("settingsMenu");
     // slowly fade out the menu and logo elements and make them unclickable
-    menu1.style.opacity = "0";
     menu4.style.opacity = "0";
-    subscribeEl.style.opacity = "0";
-    musicEl.style.opacity = "0";
-    menu1.style.pointerEvents = "none";
     menu4.style.pointerEvents = "none";
-    subscribeEl.style.pointerEvents = "none";
-    musicEl.style.pointerEvents = "none";
-    settings.style.zIndex = "2";
     document.getElementById("uniEvent").style.display = "block";
     document.getElementById("uniEvent2").style.display = "block";
     document.getElementById("uniEvent3").style.display = "block";
+    document.getElementById("welcome").style.display = "none";
+    document.getElementById("welcome").style.pointerEvents = "none";
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("intro").style.opacity = "0%";
+    document.getElementById("introLogo").style.userSelect = "none";
+    document.getElementById("introLogo").style.pointerEvents = "none";
+    document.getElementById("introLogo").style.cursor = "pointer";
 }
 
 // Show default menu
 window.showMenu = () => {
     var moveMenu = document.getElementById("getUniMenu").shadowRoot.getElementById("uniMenu");
-    var menu1 = document.getElementById("gMenu");
-    var menu4 = document.getElementById("logo");
-    var subscribeEl = document.getElementById("subscribeComp");
-    var musicEl = document.getElementById("music");
-    var settings = document.getElementById("settingsMenu");
-    // slowly fade in the menu and logo elements and make them clickable
-    menu1.style.opacity = "1";
-    menu4.style.opacity = "1";
-    subscribeEl.style.opacity = "1";
-    musicEl.style.opacity = "1";
-    menu1.style.pointerEvents = "auto";
-    menu4.style.pointerEvents = "auto";
-    subscribeEl.style.pointerEvents = "auto";
-    musicEl.style.pointerEvents = "auto";
-    settings.style.zIndex = "3";
     document.querySelector("#universe").style.opacity= "0%";
     setTimeout(()=> {
       document.querySelector("#universe").style.display = "none";
@@ -2423,7 +2404,7 @@ window.showMenu = () => {
 
     // remove playerPos div
     document.getElementById("selection").style.display = "none";
-    document.getElementById("uniEvent").remove();
+    document.getElementById("uniEvent")?.remove();
     document.getElementById("uniEvent2").remove();
     document.getElementById("uniEvent3").remove();
     // hide the selection box
@@ -2431,6 +2412,16 @@ window.showMenu = () => {
     previewUI.style.transform = "scale(0)";
     moveMenu.style.display = "none";
     document.getElementById("adminUI").remove();
+    document.getElementById("welcome").style.display = "grid";
+    document.getElementById("welcome").style.pointerEvents = "auto";
+    document.getElementById("intro").style.display = "grid";
+    document.getElementById("intro").style.opacity = "100%";
+    document.getElementById("introLogo").style.userSelect = "auto";
+    document.getElementById("introLogo").style.pointerEvents = "auto";
+    document.getElementById("introLogo").style.cursor = "pointer";
+    document.getElementById("introLogo").addEventListener("click", () => {
+      universeSystem();
+    });
 }
 
 // Open inventory / wallet
