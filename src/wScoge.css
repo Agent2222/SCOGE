@@ -1112,7 +1112,7 @@ canvas {
 }
 #settingsBody {
   color: var(--secondary);
-  font-family: "Garamond";
+  font-family: "BS-R";
   letter-spacing: 1px;
   line-height: 1.5;
 }
@@ -1458,7 +1458,7 @@ a:active {
 }
 #exploreUI p {
   margin-top: 0px;
-  font-family: "Garamond";
+  font-family: "BS-R";
   letter-spacing: 1px;
   line-height: 1.5em;
   color: var(--secondary);
