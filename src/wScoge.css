@@ -2401,4 +2401,9 @@ a:active {
     z-index: 6;
     transform: rotate(90deg) scale(2.1);
   }
+  #tooltip {
+    pointer-events: none;
+    user-select: none;
+    display: none !important;
+  }
 }
