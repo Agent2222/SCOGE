@@ -170,6 +170,7 @@ window.addEventListener("resize", function () {
 
 // // Check size on Start
 window.sizeInit = () => {
+  var mandala = document.getElementById("manBG");
   if (window.matchMedia("(max-width: 768px)").matches) {
     // Mobile
     // const node = document.createElement('mobile-shop1')
@@ -184,6 +185,12 @@ window.sizeInit = () => {
       videoEl.setAttribute("class", "mobileVideo");
     });
   } else {
+    mandala.addEventListener("mouseover", () => {
+      window.openPeek();
+    })
+    mandala.addEventListener("mouseeout", () => {
+      window.closePeek();
+    });
     // Desktop
     // document.getElementById("uniBut").style.opacity = "100%";
     // window.getParamsDesktop();
@@ -2789,15 +2796,14 @@ window.openSeek = () => {
   gsap.to("#seekModal", { duration: .3, opacity: 1, ease: "power2.inOut"});
   gsap.to("#seekModal", { duration: .3, scale: 1, ease: "power2.inOut"});
   gsap.to("#seekModal", { duration: .3, filter: "blur(0px)", ease: "power2.inOut"});
-  mandala.addEventListener("mouseover", () => {
-    window.openPeek();
-  })
-  mandala.addEventListener("mouseleave", () => {
-    window.closePeek();
-  })
-  mandala.addEventListener("mouseeout", () => {
-    window.closePeek();
-  });
+  if (window.isMobile != true) {
+    mandala.addEventListener("mouseover", () => {
+      window.openPeek();
+    })
+    mandala.addEventListener("mouseout", () => {
+      window.closePeek();
+    });
+  }
   
   seekActive = true;
   peeking = false;
@@ -3383,26 +3389,26 @@ window.removeItemsNotEqualToValue = (value) => {
 portal();
 // ------ Seek End
 // ------ Simple Typing
-// class Typing {
-//   constructor(text, elementId, speed = 50) {
-//     this.text = text;
-//     this.element = document.getElementById(elementId);
-//     this.currentIndex = 0;
-//     this.delay = speed;
-//   }
+class Typing {
+  constructor(text, elementId, speed = 50) {
+    this.text = text;
+    this.element = document.getElementById(elementId);
+    this.currentIndex = 0;
+    this.delay = speed;
+  }
 
-//   start() {
-//     this.intervalId = setInterval(() => {
-//       if (this.currentIndex < this.text.length) {
-//         this.element.textContent += this.text.charAt(this.currentIndex);
-//         this.currentIndex++;
-//       } else {
-//         clearInterval(this.intervalId);
-//       }
-//     }, this.delay);
-//   }
-// }
+  start() {
+    this.intervalId = setInterval(() => {
+      if (this.currentIndex < this.text.length) {
+        this.element.textContent += this.text.charAt(this.currentIndex);
+        this.currentIndex++;
+      } else {
+        clearInterval(this.intervalId);
+      }
+    }, this.delay);
+  }
+}
 
 
-// window.galleryHelp = new Typing("Click to move forward.", "simpleNoti", speed = 80);
+window.galleryHelp = new Typing("Click to move forward.", "simpleNoti", speed = 80);
 // ------ Simple Typing End

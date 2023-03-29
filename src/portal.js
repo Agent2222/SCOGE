@@ -149,12 +149,12 @@ export async function portal() {
                   video1.muted = false;
                   video2.muted = true;
                 }
-                video1.play();
-                video2.pause();
                 video2.currentTime = 0;
                 video1.currentTime = 0;
                 currentV = 0;
                 video1.src = currentVMedia.publicUrl;
+                video1.play();
+                video2.pause();
                 if (video1.src.includes("POR")) {
                   video1.setAttribute("class","videoEl")
                 } else {

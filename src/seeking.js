@@ -257,18 +257,20 @@ export class SeekDialogue {
         document.getElementById("manBG").style.userSelect = "none";
         document.getElementById("manBG").style.pointerEvents = "auto";
         document.getElementById("seekGallery").style.pointerEvents = "auto";
-        // gsap.to('#simpleNoti', {duration: 1, opacity: 1, y: 0, ease: "power2.out"});
         setTimeout(() => {
-          // window.galleryHelp.start();
-          // document.getElementById('simpleNoti').style.animationPlayState = "running";
-          // Add here
+          if (window.isMobile === true) {
+            gsap.to('#simpleNoti', {duration: 1, opacity: 1, y: 0, ease: "power2.out"});
+            window.galleryHelp.start();
+            document.getElementById('simpleNoti').style.animationPlayState = "running";
+            // Add here
+            setTimeout(() => {
+              gsap.to('#simpleNoti', {duration: 1, opacity: 0, y: 0, ease: "power2.out"});
+              document.getElementById('simpleNoti').style.animationPlayState = "paused";
+            }, 3000);
+          }
           setTimeout(() => {
             gsap.fromTo("#seekGallery", {scale: 1}, {duration: .45, scale: 1.05, yoyo: true, repeat: 1});
           }, 3000);
-          // setTimeout(() => {
-          //   gsap.to('#simpleNoti', {duration: 1, opacity: 0, y: 0, ease: "power2.out"});
-          //   document.getElementById('simpleNoti').style.animationPlayState = "paused";
-          // }, 3000);
         },1000)
         switch (this.selected) {
           case "IMAGES":
