@@ -116,14 +116,14 @@ window.sysCheck = () => {
 
 
 window.checkKeys = async (event) => {
-  if (event.key === "a" && ci === "false") {
+  if (event.key === "i" && ci === "false") {
     ci = "true";
     window.dbm = true;
     setTimeout(()=> {
       ci = "false";
     } , 1000);
   }
-  if (event.key === "p" && ci === "true") {
+  if (event.key === "c" && ci === "true") {
     ci = "bankoo";
     // DAB IS DEAD?? ALT??
     //   window.getAllUserNFTs = await import('@psychedelic/dab-js').then(module => {
