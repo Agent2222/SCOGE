@@ -18,6 +18,7 @@ import Cycles "mo:base/ExperimentalCycles";
 import D "mo:base/Debug";
 import Float64 "mo:base/Float";
 import List "mo:base/List";
+import Debug "mo:base/Debug";
 
 actor DIP721 {
 
@@ -71,7 +72,7 @@ actor DIP721 {
 
     var nmcProps : [Metadata.NMCProperties] = [({
         // ** Visual Identifier **
-        pillType: Text = ""; 
+        ringType: Text = ""; 
         landRank: Nat64 = 0; 
         rank: Nat64 = 0;
         powerUps: ?[Nat64] = ?[0]; 
@@ -326,6 +327,23 @@ actor DIP721 {
             logo_ := ?newLogo;
         };
     };
+
+    // // updateNMC
+    // public func updateNmc(tokenId: Nat, principal: Principal, metadata: Metadata.NMCProperties) : async Result.Null{
+    // let mutfound = false;
+    // for i in Iter.range(0, Array.length(Uniledger)) {
+    //     if (Uniledger[i].tokenID == tokenId && Uniledger[i].owner == principal) {
+    //         Uniledger[i].metadata = metadata;
+    //         found = true;
+    //         break;
+    //     }
+    // }
+    // if (!found) {
+    //     return Result.Err(NftError.TokenNotFound);
+    // }
+    //     return Result.Ok(Null);
+    // }
+
 
     // BURN INTERFACE **
     // burn : (nat) -> (variant { Ok : nat; Err : NftError });

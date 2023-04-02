@@ -45,7 +45,7 @@ module {
 
     public type NMCProperties = {
         // ** Visual Identifier **
-        pillType: Text; 
+        ringType: Text; 
         landRank: Nat64; 
         rank: Nat64; 
         powerUps: ?[Nat64]; 
