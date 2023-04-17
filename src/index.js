@@ -74,6 +74,7 @@ const commerce = new Commerce(`${VITE_CommerceKey}`, true);
 console.log("COPYRIGHT 2023 - SCOGÉ Inc. - ALL RIGHTS RESERVED");
 
 // // Init Stripe
+// eslint-disable-next-line no-undef
 var stripe = Stripe(`${VITE_StripeKey}`);
 const elements = stripe.elements();
 

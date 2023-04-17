@@ -10,46 +10,47 @@ export interface Metadata {
   'symbol' : [] | [string],
 }
 export interface NMCProperties {
-  'xp' : [] | [bigint],
-  'earthImage' : [] | [Uint8Array],
-  'bankooText' : [] | [Array<string>],
-  'mental' : [] | [bigint],
-  'powerUps' : [] | [BigUint64Array],
-  'styles' : [] | [Array<string>],
+  'xp' : bigint,
+  'bankooText' : Array<string>,
+  'mental' : bigint,
+  'ringType' : string,
+  'powerUps' : BigUint64Array | bigint[],
+  'styles' : Array<string>,
   'alias' : string,
-  'notiOn' : [] | [boolean],
-  'netClass' : [] | [string],
-  'data' : [] | [Uint8Array],
-  'fsOn' : [] | [boolean],
+  'notiOn' : boolean,
+  'networkClass' : string,
+  'fsOn' : boolean,
+  'imageCompData' : Uint8Array | number[],
   'rank' : bigint,
-  'network' : [] | [Array<string>],
-  'ancestorsNames' : [] | [Array<string>],
+  'network' : Array<string>,
+  'ancestorsNames' : Array<string>,
   'email' : string,
-  'bankooImage' : [] | [Uint8Array],
-  'sight' : [] | [bigint],
-  'speed' : [] | [bigint],
-  'discoveredProgress' : [] | [number],
-  'story' : [] | [string],
-  'imageURI' : string,
+  'sight' : bigint,
+  'speed' : bigint,
+  'discoveredProgress' : number,
+  'story' : {
+    'title' : string,
+    'imagesUri' : Array<string>,
+    'text' : string,
+    'videoURI' : string,
+  },
   'progress' : bigint,
-  'musicLevel' : [] | [number],
-  'domains' : [] | [BigUint64Array],
+  'musicLevel' : number,
+  'domains' : BigUint64Array | bigint[],
   'landRank' : bigint,
-  'pillType' : string,
   'category' : string,
   'landNumber' : bigint,
-  'endurance' : [] | [number],
-  'power' : [] | [bigint],
-  'physical' : [] | [bigint],
+  'endurance' : number,
+  'power' : bigint,
+  'physical' : bigint,
   'identifier' : string,
-  'videoURI' : [] | [string],
-  'ancestorsImages' : [] | [Uint8Array],
-  'soundLevel' : [] | [number],
-  'earthText' : [] | [Array<string>],
-  'linked' : [] | [boolean],
+  'ancestorsImages' : Uint8Array | number[],
+  'soundLevel' : number,
+  'earthText' : Array<string>,
+  'linked' : boolean,
   'playerLocation' : bigint,
-  'health' : [] | [bigint],
-  'discovered' : [] | [Array<string>],
+  'health' : bigint,
+  'discovered' : Array<string>,
 }
 export type NftError = { 'UnauthorizedOperator' : null } |
   { 'SelfTransfer' : null } |
@@ -61,13 +62,13 @@ export type NftError = { 'UnauthorizedOperator' : null } |
   { 'ExistedNFT' : null } |
   { 'OwnerNotFound' : null } |
   { 'Other' : string };
-export type Result = { 'ok' : TokenMetadata } |
+export type Result = { 'ok' : bigint } |
   { 'err' : NftError };
-export type Result_1 = { 'ok' : Array<TokenMetadata> } |
+export type Result_1 = { 'ok' : TokenMetadata } |
   { 'err' : NftError };
-export type Result_2 = { 'ok' : [] | [Principal] } |
+export type Result_2 = { 'ok' : Array<TokenMetadata> } |
   { 'err' : NftError };
-export type Result_3 = { 'ok' : bigint } |
+export type Result_3 = { 'ok' : [] | [Principal] } |
   { 'err' : NftError };
 export interface Stats {
   'cycles' : bigint,
@@ -98,17 +99,19 @@ export interface TokenMetadata {
 }
 export interface _SERVICE {
   'adminUser' : ActorMethod<[], string>,
-  'balanceOf' : ActorMethod<[Principal], Result_3>,
+  'alphaLedger' : ActorMethod<[], bigint>,
+  'balanceOf' : ActorMethod<[Principal], Result>,
   'custodians' : ActorMethod<[], Array<Principal>>,
   'cycles' : ActorMethod<[], bigint>,
   'logo' : ActorMethod<[], [] | [string]>,
   'metadata' : ActorMethod<[], Metadata>,
-  'mint' : ActorMethod<[Principal, bigint, Array<NMCProperties>], Result_3>,
+  'mint' : ActorMethod<[Principal, bigint, Array<NMCProperties>], Result>,
   'name' : ActorMethod<[], [] | [string]>,
-  'operatorOf' : ActorMethod<[bigint], Result_2>,
-  'operatorTokenMetadata' : ActorMethod<[Principal], Result_1>,
-  'ownerOf' : ActorMethod<[bigint], Result_2>,
-  'ownerTokenMetadata' : ActorMethod<[Principal], Result_1>,
+  'operatorOf' : ActorMethod<[bigint], Result_3>,
+  'operatorTokenMetadata' : ActorMethod<[Principal], Result_2>,
+  'ownerOf' : ActorMethod<[bigint], Result_3>,
+  'ownerTokenMetadata' : ActorMethod<[Principal], Result_2>,
+  'savetoTemp' : ActorMethod<[Principal, bigint, Array<NMCProperties>], Result>,
   'setCustodians' : ActorMethod<[Array<Principal>], undefined>,
   'setLogo' : ActorMethod<[string], undefined>,
   'setName' : ActorMethod<[string], undefined>,
@@ -116,7 +119,9 @@ export interface _SERVICE {
   'stats' : ActorMethod<[], Stats>,
   'supportedInterfaces' : ActorMethod<[], Array<SupportedInterface>>,
   'symbol' : ActorMethod<[], [] | [string]>,
-  'tokenMetadata' : ActorMethod<[bigint], Result>,
+  'tempMetaData' : ActorMethod<[bigint], Result_1>,
+  'tokenMetadata' : ActorMethod<[bigint], Result_1>,
   'totalSupply' : ActorMethod<[], bigint>,
   'totalUniqueHolders' : ActorMethod<[], bigint>,
+  'updateTemp' : ActorMethod<[Principal, bigint, Array<NMCProperties>], Result>,
 }

@@ -1,7 +1,66 @@
 import { SoundtrackManager } from "./soundtrack.js";
-var menuOpen = true;
-var fullMenuOpen = true;
+import { universe } from "./universe.js";
+
+// import { idlFactory } from "./declarations/universe_backend/;universe_backend.did.js";
+import { Configuration, OpenAIApi } from "openai";
+window.dtmenuOpen = true;
+window.dtfullMenuOpen = true;
+const VITE_ScogeI = import.meta.env.VITE_ScogeI;
 const soundtrack2 = new SoundtrackManager();
+// const suIDL = idlFactory;
+// console.log({suIDL});
+var nmcProps = {
+  // ** Visual Identifier **
+  ringType: "",
+  landRank: 0, 
+  rank: 0,
+  powerUps: [0],
+  progress: 0,
+  xp: 0,
+  category: "",
+  linked: false,
+  // ** Player Info **
+  identifier: "",
+  alias: "",
+  email: "",
+  // earthImage: [0],
+  earthText: [""],
+  styles: [""],
+  // ** Player Stats **
+  discovered: [""],
+  discoveredProgress: 0.0,
+  power: 0,
+  mental: 0,
+  physical: 0,
+  health: 0,
+  speed: 0,
+  sight: 0,
+  endurance: 0.0,
+  domains: [0],
+  playerLocation: 0,
+  // ** Player Settings **
+  soundLevel: 0.0,
+  musicLevel: 0.0,
+  fsOn: false,
+  notiOn: false,
+  // ** Player Network **
+  networkClass: "",
+  network: [""],
+  // ** Land Info **
+  landNumber: 0,
+  story: {
+      title: "",
+      text: "",
+      imagesUri: [""],
+      videoURI: "",
+  },
+  // bankooImage: [0],
+  bankooText: [""],
+  imageCompData: [0],
+  // ** History **
+  ancestorsNames: [""],
+  ancestorsImages: [0],
+};
 
 class getUniMenu extends HTMLElement {
   constructor() {
@@ -26,6 +85,7 @@ class getUniMenu extends HTMLElement {
       this.render();
     }
   }
+
   // open menu
   toggleMenu() {
     const menu = this.shadow.querySelector("#uniMenu");
@@ -33,11 +93,11 @@ class getUniMenu extends HTMLElement {
     const menuItems = this.shadow.querySelector("#menuItems");
     const menuHeader = this.shadow.querySelector("#menuHeader");
     const refresh = this.shadow.querySelector("#refresh");
-    if (menuOpen === false) {
+    if (window.dtmenuOpen === false) {
       menuIcon.style.transform = "rotate(180deg)";
       menu.style.height = "auto";
       menuHeader.style.height = "100%";
-      menuOpen = true;
+      window.dtmenuOpen = true;
       return;
     } else {
       menuHeader.style.height = "100%";
@@ -46,7 +106,7 @@ class getUniMenu extends HTMLElement {
       menuIcon.style.transform = "rotate(0deg)";
       menuItems.style.height = "0%";
       menuItems.style.overflow = "hidden";
-      menuOpen = false;
+      window.dtmenuOpen = false;
       refresh.style.animationPlayState = "paused";
       this.closeFullMenu();
       return;
@@ -59,18 +119,19 @@ class getUniMenu extends HTMLElement {
     const fullMenuBg = this.shadow.querySelector("#fullMenuBG");
     const menuItems = this.shadow.querySelector("#menuItems");
     const refresh = this.shadow.querySelector("#refresh");
-    if (fullMenuOpen === false) {
+    if (window.dtfullMenuOpen === false) {
       menu.style.overflowX = "visible";
       fullMenu.style.width = "500px";
       fullMenuBg.style.transform = "scaleX(1)";
       menu.style.borderBottomRightRadius = "0px";
       menu.style.borderTopRightRadius = "0px";
       menu.style.borderRight = "0px solid black";
-      fullMenuOpen = true;
+      window.dtfullMenuOpen = true;
       refresh.style.display = "block";
       refresh.style.animationPlayState = "running";
       return;
     }
+    this.shadow.getElementById("beaconNoti").style.display = "none";
   }
 
   // Send Feedback
@@ -98,7 +159,7 @@ class getUniMenu extends HTMLElement {
         menu.style.borderTopRightRadius = "10px";
         menu.style.borderRight = "2px solid #ff002d";
        }, 500);
-    fullMenuOpen = false;
+       window.dtfullMenuOpen = false;
     // soundtrack2.stop('menuExit1');
     // soundtrack2.play('menuExit1');
   }
@@ -112,7 +173,229 @@ class getUniMenu extends HTMLElement {
       }
     }
   }
+
+  // // Filter Beacons
+  // filterBeacons() {
+  //   var filter = this.shadow.getElementById("filterInput").value.toUpperCase();
+  //   var beaconList = this.shadow.querySelectorAll(".beacon");
+  //   for (var i = 0; i < beaconList.length; i++) {
+  //     var beacon = beaconList[i];
+  //     var beaconName = beacon.querySelector(".beaconName").innerHTML;
+  //     if (beaconName.toUpperCase().indexOf(filter) > -1) {
+  //       beacon.style.display = "grid";
+  //     } else {
+  //       beacon.style.display = "none";
+  //     }
+  //   }
+  // }
+
+  // Edit Profile
+  editProfile(e) {
+    var domain = e?.target;
+    let proImg = this.shadow.getElementById("proImgSect");
+    let proImg2 = this.shadow.getElementById("proImg");
+    let proImg3 = this.shadow.getElementById("editImgIcon");
+    let proText = this.shadow.getElementById("profileDesc");
+    let proEdit = this.shadow.getElementById("proEdit");
+    let proSave = this.shadow.getElementById("proSave");
+    let proName = this.shadow.getElementById("proLabelName");
+    let proIden = this.shadow.getElementById("proLabelIdentity");
+    let proEmail = this.shadow.getElementById("proLabelEmail");
+    // Buttons Styling
+    proEdit.innerHTML = "CANCEL";
+    proSave.style.color = "var(--accent)";
+    proSave.style.border = "2px solid var(--accent)";
+    proSave.style.opacity = "1";
+    proSave.style.pointerEvents = "all";
+    // TextArea Styling
+    proText.style.pointerEvents = "all";
+    proText.readOnly = false;
+    proText.style.borderLeft = "1px solid var(--primary)";
+    proText.style.borderRight = "1px solid var(--primary)";
+    proText.style.borderRadius = "10px";
+    proText.style.borderBottom = "none";
+    proText.style.resize = "none";
+    proText.style.borderTop = "none";
+    proText.value = "";
+    proText.style.animation = "editBlinking 2s infinite";
+    proText.focus();
+    // Name Iden Email Styling
+    proName.style.animation = "editBlinking 2s infinite";
+    proIden.style.animation = "editBlinking 2s infinite";
+    proEmail.style.animation = "editBlinking 2s infinite";
+    window.deactivateDrag();
+    // Image Styling
+    proImg.style.borderLeft = "1px solid var(--accent)";
+    proImg.style.borderRight = "1px solid var(--accent)";
+    proImg3.style.display = "block";
+    proImg2.style.filter = "blur(5px)";
+    proImg2.style.filter = "brightness(0.2)";
+    // Img Upload
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+
+    fileInput.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        // Do something with the file, e.g., upload it to a server or display it
+        console.log('Selected file:', file);
+
+        // Display the selected image in the 'proImg' element
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const blob = new Blob([e.target.result], {type: file.type});
+          console.log('Blob:', blob);
+          const url = URL.createObjectURL(blob);
+          proImg2.src = url;
+          proImg2.style.filter = "brightness(1)";
+        
+          // Store the Blob object for later use (e.g., for saving)
+         this.imageBlob = blob;
+        };
+        
+        reader.readAsArrayBuffer(file);
+      }
+    });
+    proImg.addEventListener('click', () => {
+      fileInput.click();
+    });
+    proSave.addEventListener('click', () => {
+      this.saveProfileTemp();
+    });
+  }
+
+  // Convert for Bankoo
+  convertForBankoo() {
+    // Convert Text
+    // Convert Image
+  }
   
+  // Helper function to read a Blob as an ArrayBuffer
+  readBlobAsArrayBuffer(blob) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsArrayBuffer(blob);
+    });
+  }
+  
+  // Temp Save Profile
+  async saveProfileTemp() {
+    let proImg = this.shadow.getElementById("proImgSect");
+    let proImg2 = this.shadow.getElementById("proImg")
+    let proImg3 = this.shadow.getElementById("editImgIcon");
+    let proText = this.shadow.getElementById("profileDesc");
+    let proEdit = this.shadow.getElementById("proEdit");
+    let proSave = this.shadow.getElementById("proSave");
+    let proName = this.shadow.getElementById("proLabelName");
+    let proIden = this.shadow.getElementById("proLabelIdentity");
+    let proEmail = this.shadow.getElementById("proLabelEmail");
+    const blob = this.imageBlob;
+    
+    // Convert blob to array of arrays to match the expected type
+    const arrayBuffer = await this.readBlobAsArrayBuffer(blob);
+    const CHUNK_SIZE = 1024; // set the chunk size as per your requirements
+    const uint8Array = new Uint8Array(arrayBuffer);
+    const byteChunks = [];
+    for (let i = 0; i < uint8Array.length; i += CHUNK_SIZE) {
+      byteChunks.push(uint8Array.slice(i, i + CHUNK_SIZE));
+    }
+    const vectorOfVectors = byteChunks.map(byteChunk => Array.from(byteChunk));
+
+    const configuration = new Configuration({
+      apiKey: VITE_ScogeI,
+      });
+      const openai = new OpenAIApi(configuration);
+      var convertedToBankoo = await openai.createChatCompletion({
+          model: "gpt-3.5-turbo",
+          messages: [{role: "user", content: `Convert ${proText.value} to speak from a futuristic sci-fi perspective`}],
+          max_tokens: 40,
+        }).catch((error) => {
+          console.log(error);
+        });     
+        
+      const openai2 = new OpenAIApi(configuration);
+      const newImage = await openai2.createImage({
+        prompt: convertedToBankoo.data.choices[0].message.content,
+        n: 1,
+        size: "512x512"
+      });
+
+    console.log('newImage:', newImage);
+    document.getElementById("GenImgCont")?.remove();
+    var ImageCont = document.createElement("div");
+    var newImageCont = document.createElement("img");
+    var genPara = document.createElement("p");
+    genPara.innerHTML = convertedToBankoo.data.choices[0].message.content;
+    newImageCont.src = newImage.data.data[0].url
+    ImageCont.appendChild(newImageCont);
+    ImageCont.appendChild(genPara);
+    ImageCont.setAttribute("id", "GenImgCont");
+    ImageCont.addEventListener('click', () => {
+      ImageCont.remove();
+    });
+    document.getElementById("camera").appendChild(ImageCont);
+
+    console.log('byteArray:', vectorOfVectors);
+    // Alias
+    nmcProps.alias = proName.value;
+    // Email
+    nmcProps.email = proEmail.value;
+    // Identity
+    nmcProps.identifier = proIden.value;
+    // Earth Image
+    // nmcProps.earthImage = [vectorOfVectors];
+    // Bankoo Image
+    // Earth Text
+    nmcProps.earthText = [proText.value];
+    // Bankoo Text
+    nmcProps.bankooText = [convertedToBankoo.data.choices[0].message.content];
+    // Send
+    var prin = await window.ic.bitfinityWallet.getPrincipal();
+    console.log(nmcProps);
+    window.suUiActor.updateTemp(prin,0,[(nmcProps)])
+    console.log("Saved Temp Profile");
+  }
+
+  // Open Beacon Messgae
+  openBeaconMessage(e) {
+    // Temp Filler
+    var data = e.target.getAttribute("data-message");
+    var selected = e.target;
+    document.getElementById("beaconPan")?.remove();
+    var beaconEl = document.createElement("div");
+    var messageData = data;
+    beaconEl.setAttribute("class", "beaconPanel");
+    beaconEl.setAttribute("id", "beaconPan");
+    beaconEl.innerHTML = `
+    <div id="beaconBody">
+        <div id="beaconTutHead">NEW DOMAIN BEACON!</div>
+        <div id="beaconTutBody">${messageData}</div>
+        <div id="beaconTutActions">
+            <div class="beaconActions" id="beaconAction1">INVESTIGATE</div>
+            <div class="beaconActions" id="beaconAction2">"OK, GOT IT!"</div>
+        </div>
+    </div>
+    <div id="beaconTutIcon">
+        <svg id="uniMenuBeaconsSvg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.71 52.83"><defs><style>.cls-1{fill:#ff002d;}</style></defs><path class="cls-1" d="M32.35,16.19a.65.65,0,0,1-.64-.65V3.93a.65.65,0,1,1,1.29,0V15.54A.65.65,0,0,1,32.35,16.19Z"/><path class="cls-1" d="M32.35,51.26a.65.65,0,0,1-.64-.65V39A.65.65,0,1,1,33,39V50.61A.66.66,0,0,1,32.35,51.26Z"/><path class="cls-1" d="M55.69,27.92H44.08a.65.65,0,1,1,0-1.3H55.69a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M20.63,27.92H9a.65.65,0,0,1-.64-.65A.65.65,0,0,1,9,26.62H20.63a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M40.64,19.63a.7.7,0,0,1-.46-.19.66.66,0,0,1,0-.92L48.4,10.3a.65.65,0,0,1,.92.92L41.1,19.44A.68.68,0,0,1,40.64,19.63Z"/><path class="cls-1" d="M15.85,44.42a.63.63,0,0,1-.46-.19.66.66,0,0,1,0-.92l8.22-8.21a.64.64,0,0,1,.91.91l-8.21,8.22A.63.63,0,0,1,15.85,44.42Z"/><path class="cls-1" d="M48.86,44.42a.63.63,0,0,1-.46-.19L40.18,36a.65.65,0,0,1,.92-.91l8.22,8.21a.66.66,0,0,1,0,.92A.65.65,0,0,1,48.86,44.42Z"/><path class="cls-1" d="M24.06,19.63a.65.65,0,0,1-.45-.19l-8.22-8.22a.65.65,0,0,1,.92-.92l8.21,8.22a.64.64,0,0,1,0,.92A.66.66,0,0,1,24.06,19.63Z"/></svg>
+    </div>
+    <div id="beaconBG">
+        <svg id="uniMenuBeaconsSvg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.71 52.83"><defs><style>.cls-1{fill:#ff002d;}</style></defs><path class="cls-1" d="M32.35,16.19a.65.65,0,0,1-.64-.65V3.93a.65.65,0,1,1,1.29,0V15.54A.65.65,0,0,1,32.35,16.19Z"/><path class="cls-1" d="M32.35,51.26a.65.65,0,0,1-.64-.65V39A.65.65,0,1,1,33,39V50.61A.66.66,0,0,1,32.35,51.26Z"/><path class="cls-1" d="M55.69,27.92H44.08a.65.65,0,1,1,0-1.3H55.69a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M20.63,27.92H9a.65.65,0,0,1-.64-.65A.65.65,0,0,1,9,26.62H20.63a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M40.64,19.63a.7.7,0,0,1-.46-.19.66.66,0,0,1,0-.92L48.4,10.3a.65.65,0,0,1,.92.92L41.1,19.44A.68.68,0,0,1,40.64,19.63Z"/><path class="cls-1" d="M15.85,44.42a.63.63,0,0,1-.46-.19.66.66,0,0,1,0-.92l8.22-8.21a.64.64,0,0,1,.91.91l-8.21,8.22A.63.63,0,0,1,15.85,44.42Z"/><path class="cls-1" d="M48.86,44.42a.63.63,0,0,1-.46-.19L40.18,36a.65.65,0,0,1,.92-.91l8.22,8.21a.66.66,0,0,1,0,.92A.65.65,0,0,1,48.86,44.42Z"/><path class="cls-1" d="M24.06,19.63a.65.65,0,0,1-.45-.19l-8.22-8.22a.65.65,0,0,1,.92-.92l8.21,8.22a.64.64,0,0,1,0,.92A.66.66,0,0,1,24.06,19.63Z"/></svg>
+        <svg id="uniMenuBeaconsSvg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.71 52.83"><defs><style>.cls-1{fill:#ff002d;}</style></defs><path class="cls-1" d="M32.35,16.19a.65.65,0,0,1-.64-.65V3.93a.65.65,0,1,1,1.29,0V15.54A.65.65,0,0,1,32.35,16.19Z"/><path class="cls-1" d="M32.35,51.26a.65.65,0,0,1-.64-.65V39A.65.65,0,1,1,33,39V50.61A.66.66,0,0,1,32.35,51.26Z"/><path class="cls-1" d="M55.69,27.92H44.08a.65.65,0,1,1,0-1.3H55.69a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M20.63,27.92H9a.65.65,0,0,1-.64-.65A.65.65,0,0,1,9,26.62H20.63a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M40.64,19.63a.7.7,0,0,1-.46-.19.66.66,0,0,1,0-.92L48.4,10.3a.65.65,0,0,1,.92.92L41.1,19.44A.68.68,0,0,1,40.64,19.63Z"/><path class="cls-1" d="M15.85,44.42a.63.63,0,0,1-.46-.19.66.66,0,0,1,0-.92l8.22-8.21a.64.64,0,0,1,.91.91l-8.21,8.22A.63.63,0,0,1,15.85,44.42Z"/><path class="cls-1" d="M48.86,44.42a.63.63,0,0,1-.46-.19L40.18,36a.65.65,0,0,1,.92-.91l8.22,8.21a.66.66,0,0,1,0,.92A.65.65,0,0,1,48.86,44.42Z"/><path class="cls-1" d="M24.06,19.63a.65.65,0,0,1-.45-.19l-8.22-8.22a.65.65,0,0,1,.92-.92l8.21,8.22a.64.64,0,0,1,0,.92A.66.66,0,0,1,24.06,19.63Z"/></svg>
+    </div>
+    `;
+    document.getElementById("camera").appendChild(beaconEl);
+    document.getElementById("beaconPan").style.display = "block";
+    document.getElementById("beaconAction2")?.addEventListener("click", () => {
+      document.getElementById("beaconPan")?.remove();
+    });
+    document.getElementById("beaconAction1")?.addEventListener("click", () => {
+      document.getElementById("beaconPan")?.remove();
+      selected.querySelector(".beaconIdenIcon").style.opacity = "0";
+    });
+  }
 
   // Switch Menu Tabs 
   switchMenuTabs(e) {
@@ -168,7 +451,7 @@ class getUniMenu extends HTMLElement {
       } else {
         element.addEventListener("click", () => {
           this.closeFullMenu();
-          fullMenuOpen = false;
+          window.dtfullMenuOpen = false;
         });
       }
     });
@@ -203,23 +486,32 @@ class getUniMenu extends HTMLElement {
         target: this.shadow.querySelector("#fm-menu2")
       }
       var el2 = {
-        target: this.shadow.querySelector("#menuHelp")
+        target: this.shadow.querySelector("#menuBeacons")
       }
-      this.shadow.querySelector("#uniMenuHelp").click(el);
+      this.shadow.querySelector("#uniMenuBeacons").click(el);
       this.switchMenuTabs(el);
       window.headlineSwtich(el2);
     });
-    this.shadow.querySelector("#switch23").addEventListener("click", () => {
-      var el = {
-        target: this.shadow.querySelector("#fm-menu3")
-      }
-      this.switchMenuTabs(el);
-    });
+    // this.shadow.querySelector("#switch23").addEventListener("click", () => {
+    //   var el = {
+    //     target: this.shadow.querySelector("#fm-menu3")
+    //   }
+    //   this.switchMenuTabs(el);
+    // });
     this.shadow.getElementById("pinMenu").addEventListener("click", () => {
       pinMenu();
     });
-    // Add Event handlers to rendered html below
-    // Must use this.shadow to access dom.
+    this.beacons = this.shadow.querySelectorAll(".beacon");
+    this.beacons.forEach(element => {
+      element.addEventListener("click", (e) => {
+        console.log(e.target);
+        this.openBeaconMessage(e);
+      });
+    });
+    // CRUD
+    this.shadow.getElementById("proEdit").addEventListener("click", (e) => {
+      this.editProfile(e);
+    });
     // Add methods above this method
     // Ex. btn.addEventListener('click', this.method.bind(this))
     // NOTE: Render clears all code because of innerHtml
@@ -707,7 +999,7 @@ class getUniMenu extends HTMLElement {
               background-color: #ff002d;
               color: white;
             }
-            #uniMenuHelpSvg path {
+            #uniMenuBeaconsSvg path {
               stroke: white;
             }
             #inventory-cta {
@@ -861,7 +1153,7 @@ class getUniMenu extends HTMLElement {
                 opacity: 1;
               }
             }
-            #fm-help {
+            #fm-beacons {
               width: 100%;
               height: 84%;
               display: grid;
@@ -870,17 +1162,11 @@ class getUniMenu extends HTMLElement {
               align-items: center;
               justify-cotent: start;
             }
-            .help-tabs {
+            .beacon-tabs {
               width: 95%;
               height: 100%;
-              display: grid;
-              grid-template-columns: 1fr;
-              grid-template-rows: 1fr 1fr 1fr 1fr;
-              align-items: center;
-              justify-cotent: start;
-              padding-left: 5%;
+              padding-left: 3%;
               color: var(--secondary);
-              font-family: "Garamond";
             }
             .ht1 {
               display: grid;
@@ -916,65 +1202,6 @@ class getUniMenu extends HTMLElement {
               letter-spacing: 1px;
               line-height: 1.5em;
               text-align: justify;
-            }
-            .helpSection {
-              display: flex;
-              width: 100%;
-              height: 20%;
-              align-items: center;
-              justify-content: start;
-              font-family: "BS-R";
-            }
-            .arrow {
-              font-size: 40px;
-              height: 40px;
-              width: 40px;
-              display:flex;
-              justify-content: center;
-              border: 1px solid rgba(225, 225, 225, 0.3);
-              align-items: center;
-              border-radius: 10px;
-              margin-right: 20px;
-              background-color: rgba(0, 0, 0, 1);
-              color: var(--secondary);
-            }
-            #leftArr {
-              transform: rotate(180deg);
-            }
-            #upArr {
-              transform: rotate(-90deg);
-            }
-            #downArr {
-              transform: rotate(90deg);
-            }
-            #spaceHelp {
-              width: auto;
-              height: auto;
-              padding: 10px 80px;
-              border: 1px solid rgba(225, 225, 225, 0.3);
-              border-radius: 5px;
-              margin-right: 20px;
-              background-color: rgba(0, 0, 0, 0.7);
-              color: var(--secondary);
-            }
-            #leftHelp {
-              width: auto;
-              height: auto;
-              padding: 30px 15px;
-              border: 1px solid rgba(225, 225, 225, 0.3);
-              border-radius: 5px;
-              margin-right: 20px;
-              background-color: rgba(0, 0, 0, 1);
-              color: var(--secondary);
-            }
-            .helpText {
-              color: var(--accent);
-            }
-            .boxesUi {
-              width: 18px;
-              height: 18px;
-              border: 2px solid #ff002d;
-              margin-right: 20px;
             }
             .boxOP {
               border: 2px solid yellow;
@@ -1290,17 +1517,57 @@ class getUniMenu extends HTMLElement {
             #proImgSect {
               width: 100%;
               height: auto;
+              border-radius: 10px;
+              position: relative;
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-template-rows: 1fr;
+              justify-items: center;
+              align-items: center;
+              cursor: pointer;
+              overflow: hidden;
+            }
+            #proImgSect:hover {
+              animation: editBlinking 2s infinite;
             }
             #proImg {
               width: 100%;
               height: auto;
             }
             #profileDesc {
-              width: 100%;
+              width: 96%;
               height: 88%;
               padding-top: 2%;
+              padding-left: 2%;
+              padding-right: 2%;
               font-family: "Garmond";
+              background-color: transparent;
+              border: none;
+              text-align: left;
+              readonly: true;
+              pointer-events: none;
+              font-size: 1em;
             }
+            #profileDesc:focus {
+              outline: none;
+              caret-color: var(--primary);
+            }
+
+            @keyframes editBlinking {
+              0% {
+                border-left: 1px solid var(--accent);
+                border-right: 1px solid var(--accent);
+              }
+              50% {
+                border-left: 1px solid var(--primary);
+                border-right: 1px solid var(--primary);
+              }
+              100% {
+                border-left: 1px solid var(--accent);
+                border-right: 1px solid var(--accent);
+              }
+            }
+
             #profileButs {
               width: 100%;
               height: 100%;
@@ -1314,41 +1581,50 @@ class getUniMenu extends HTMLElement {
               display: flex;
               justify-content: center;
               align-items: center;
-              border: 2px solid var(--primary);
+              border: 2px solid var(--accent);
               border-radius: 5px;
-              color: var(--secondary);
+              color: var(--accent);
               cursor: pointer;
               margin-left: 5%;
+              transition: all .3s ease-in-out;
+            }
+            .editButs:hover {
+              background-color: var(--accent);
+              color: black !important;
+            }
+            #proSave {
+              opacity: 50%;
+              pointer-events: none;
             }
             .proInfoSect {
               width: 95%;
-              height: auto%;
+              height: auto;
               display: grid;
-              grid-template-columns: 1fr 1fr;
+              grid-template-columns: 40% 60%;
               grid-template-rows: 1fr;
               padding-left: 5%;
             }
             .proInfoInput {
+              font-size: .8em;
               text-align: right;
               color: var(--secondary);
+              border-radius: 5px;
+              margin-bottom: 2px;
+              border: none;
+              background-color: transparent;
+              resize: none;
+              width: 100%;
+              height: 16px;
+            }
+            .proInfoInput:focus {
+              outline: none;
             }
             .proLabel {
               user-select: none;
+              font-size: .9em;
             }
             #profileDesc {
               color: var(--secondary);
-            }
-            #worldIcon, #walletIcon {
-              height: 100%;
-              overflow: hidden;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-            }
-            #worldIcon svg, #walletIcon svg {
-              magrin-top: 0px;
-              height: 100%;
-              fill: var(--primary);
             }
             #notiTogSect {
               opacity: 30%;
@@ -1401,8 +1677,106 @@ class getUniMenu extends HTMLElement {
                 opacity: 0%;
               }
             }
+            .beacon {
+              width: 85%;
+              height: 50px;
+              margin-right: 5%;
+              display: grid;
+              cursor: pointer;
+              grid-template-columns: 40% 60%;
+              grid-template-rows: 1fr;
+              justify-items: center;
+              align-items: center;
+              border-top: 1px solid var(--accent);
+              background-color: rgba(0,0,0,0.5);
+              font-family: "BS-R";
+              padding-left: 5%;
+              padding-right: 5%;
+              margin-bottom: 10px;
+              transition: 0.3s all ease-in-out;
+              opacity: 1;
+            }
+
+            .beacon:hover {
+              border-bottom: 1px solid var(--primary);
+              border-left: 1px solid var(--primary);
+              border-right: 1px solid var(--primary);
+            }
+
+            .beaconOrigin {
+              height: 100%;
+              width: 100%;
+              display: grid;
+              grid-template-columns: 5% 95%;
+              grid-template-rows: 1fr;
+              justify-items: center;
+              align-items: center;
+              user-select: none;
+              pointer-events: none;
+            }
+            .beaconPreview {
+              height: 100%;
+              width: 100%;
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-template-rows: 1fr;
+              justify-items: end;
+              align-items: center;
+              font-size: 0.7em;
+              text-align: right;
+              user-select: none;
+              pointer-events: none;
+            }
+            .beaconIdenIcon {
+              height: 100%;
+              width: 100%;
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-template-rows: 1fr;
+              justify-items: center;
+              align-items: center;
+              font-size: 1.5em;
+              color: var(--primary);
+              user-select: none;
+              pointer-events: none;
+            }
+            .beaconSender {
+              color: var(--accent);
+              font-size: 0.9em;
+              user-select: none;
+              pointer-events: none;
+            }
+            #beaconNoti {
+              position: absolute;
+              width: 20%;
+              height: auto;
+              top: 30px;
+              left: 280px;
+              animation: rotate 10s infinite linear;
+              display: none;
+            }
+            @keyframes rotate {
+              0% { transform: rotate(0deg); } 
+              100% { transform: rotate(360deg); }
+            }
+            #editImgIcon {
+              position: absolute;
+              height: 30%;
+              fill: var(--accent);
+              z-index: 10;
+              display: none;
+              transition: 0.3s all ease-in-out;
+            }
+
+            #proImgSect:hover > svg  {
+              fill: var(--accent);
+              height: 35%;
+            }
          </style>
          <div id="uniMenu">
+         <div id="beaconNoti">
+          <svg id="beaconNotiSvg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.71 52.83"><defs><style>.cls-1{fill:#ff002d;}</style></defs><path class="cls-1" d="M32.35,16.19a.65.65,0,0,1-.64-.65V3.93a.65.65,0,1,1,1.29,0V15.54A.65.65,0,0,1,32.35,16.19Z"/><path class="cls-1" d="M32.35,51.26a.65.65,0,0,1-.64-.65V39A.65.65,0,1,1,33,39V50.61A.66.66,0,0,1,32.35,51.26Z"/><path class="cls-1" d="M55.69,27.92H44.08a.65.65,0,1,1,0-1.3H55.69a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M20.63,27.92H9a.65.65,0,0,1-.64-.65A.65.65,0,0,1,9,26.62H20.63a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M40.64,19.63a.7.7,0,0,1-.46-.19.66.66,0,0,1,0-.92L48.4,10.3a.65.65,0,0,1,.92.92L41.1,19.44A.68.68,0,0,1,40.64,19.63Z"/><path class="cls-1" d="M15.85,44.42a.63.63,0,0,1-.46-.19.66.66,0,0,1,0-.92l8.22-8.21a.64.64,0,0,1,.91.91l-8.21,8.22A.63.63,0,0,1,15.85,44.42Z"/><path class="cls-1" d="M48.86,44.42a.63.63,0,0,1-.46-.19L40.18,36a.65.65,0,0,1,.92-.91l8.22,8.21a.66.66,0,0,1,0,.92A.65.65,0,0,1,48.86,44.42Z"/><path class="cls-1" d="M24.06,19.63a.65.65,0,0,1-.45-.19l-8.22-8.22a.65.65,0,0,1,.92-.92l8.21,8.22a.64.64,0,0,1,0,.92A.66.66,0,0,1,24.06,19.63Z"/></svg>
+         </div>
             <div id="refresh"></div>
             <div id="menuHeader">
               <div id="topMenu">
@@ -1432,17 +1806,17 @@ class getUniMenu extends HTMLElement {
                 </div>
                 <div class="uniMenuTxt" id="menuProfile">Profile</div>
               </div>
+              <div id="uniMenuBeacons" class="menuTabs selectedMenu2">
+                <div>
+                  <svg id="uniMenuBeaconsSvg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.71 52.83"><defs><style>.cls-1{fill:#ff002d;}</style></defs><path class="cls-1" d="M32.35,16.19a.65.65,0,0,1-.64-.65V3.93a.65.65,0,1,1,1.29,0V15.54A.65.65,0,0,1,32.35,16.19Z"/><path class="cls-1" d="M32.35,51.26a.65.65,0,0,1-.64-.65V39A.65.65,0,1,1,33,39V50.61A.66.66,0,0,1,32.35,51.26Z"/><path class="cls-1" d="M55.69,27.92H44.08a.65.65,0,1,1,0-1.3H55.69a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M20.63,27.92H9a.65.65,0,0,1-.64-.65A.65.65,0,0,1,9,26.62H20.63a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M40.64,19.63a.7.7,0,0,1-.46-.19.66.66,0,0,1,0-.92L48.4,10.3a.65.65,0,0,1,.92.92L41.1,19.44A.68.68,0,0,1,40.64,19.63Z"/><path class="cls-1" d="M15.85,44.42a.63.63,0,0,1-.46-.19.66.66,0,0,1,0-.92l8.22-8.21a.64.64,0,0,1,.91.91l-8.21,8.22A.63.63,0,0,1,15.85,44.42Z"/><path class="cls-1" d="M48.86,44.42a.63.63,0,0,1-.46-.19L40.18,36a.65.65,0,0,1,.92-.91l8.22,8.21a.66.66,0,0,1,0,.92A.65.65,0,0,1,48.86,44.42Z"/><path class="cls-1" d="M24.06,19.63a.65.65,0,0,1-.45-.19l-8.22-8.22a.65.65,0,0,1,.92-.92l8.21,8.22a.64.64,0,0,1,0,.92A.66.66,0,0,1,24.06,19.63Z"/></svg>
+                </div>
+                <div class="uniMenuTxt" id="menuBeacons">Beacons</div>
+              </div>
               <div id="uniMenuSettings" class="menuTabs">
                 <div>
                   <svg id="uniMenuSettingsSvg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.71 52.83"><defs><style>.cls-1{fill:#ff002d;}</style></defs><path class="cls-1" d="M61.26,13.89H24a.79.79,0,0,1-.8-.79.8.8,0,0,1,.8-.8H61.26a.8.8,0,0,1,.8.8A.79.79,0,0,1,61.26,13.89Z"/><path class="cls-1" d="M18.21,13.89H4.28a.79.79,0,0,1-.79-.79.79.79,0,0,1,.79-.8H18.21a.8.8,0,0,1,.8.8A.79.79,0,0,1,18.21,13.89Z"/><path class="cls-1" d="M61.26,28.27H46.64a.8.8,0,0,1-.8-.8.79.79,0,0,1,.8-.79H61.26a.79.79,0,0,1,.8.79A.8.8,0,0,1,61.26,28.27Z"/><path class="cls-1" d="M42.62,28.27H4.28a.79.79,0,0,1-.79-.8.79.79,0,0,1,.79-.79H42.62a.79.79,0,0,1,.8.79A.8.8,0,0,1,42.62,28.27Z"/><path class="cls-1" d="M61.26,42.64H22.19a.79.79,0,0,1-.8-.79.8.8,0,0,1,.8-.8H61.26a.8.8,0,0,1,.8.8A.79.79,0,0,1,61.26,42.64Z"/><path class="cls-1" d="M18.21,42.64H4.28a.79.79,0,0,1-.79-.79.79.79,0,0,1,.79-.8H18.21a.8.8,0,0,1,.8.8A.79.79,0,0,1,18.21,42.64Z"/><path class="cls-1" d="M18.21,20.28a.79.79,0,0,1-.79-.8V5.37a.79.79,0,0,1,.79-.8.8.8,0,0,1,.8.8V19.48A.8.8,0,0,1,18.21,20.28Z"/><path class="cls-1" d="M18.21,49.7a.79.79,0,0,1-.79-.8V34.79a.79.79,0,0,1,.79-.79.79.79,0,0,1,.8.79V48.9A.8.8,0,0,1,18.21,49.7Z"/><path class="cls-1" d="M46.64,34.59a.8.8,0,0,1-.8-.8V19.48a.79.79,0,0,1,.8-.79.79.79,0,0,1,.79.79V33.79A.79.79,0,0,1,46.64,34.59Z"/></svg>  
                 </div>
                 <div class="uniMenuTxt" id="menuSettings">Settings</div>
-              </div>
-              <div id="uniMenuHelp" class="menuTabs selectedMenu2">
-                <div>
-                  <svg id="uniMenuHelpSvg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.71 52.83"><defs><style>.cls-1{fill:#ff002d;}</style></defs><path class="cls-1" d="M32.35,16.19a.65.65,0,0,1-.64-.65V3.93a.65.65,0,1,1,1.29,0V15.54A.65.65,0,0,1,32.35,16.19Z"/><path class="cls-1" d="M32.35,51.26a.65.65,0,0,1-.64-.65V39A.65.65,0,1,1,33,39V50.61A.66.66,0,0,1,32.35,51.26Z"/><path class="cls-1" d="M55.69,27.92H44.08a.65.65,0,1,1,0-1.3H55.69a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M20.63,27.92H9a.65.65,0,0,1-.64-.65A.65.65,0,0,1,9,26.62H20.63a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M40.64,19.63a.7.7,0,0,1-.46-.19.66.66,0,0,1,0-.92L48.4,10.3a.65.65,0,0,1,.92.92L41.1,19.44A.68.68,0,0,1,40.64,19.63Z"/><path class="cls-1" d="M15.85,44.42a.63.63,0,0,1-.46-.19.66.66,0,0,1,0-.92l8.22-8.21a.64.64,0,0,1,.91.91l-8.21,8.22A.63.63,0,0,1,15.85,44.42Z"/><path class="cls-1" d="M48.86,44.42a.63.63,0,0,1-.46-.19L40.18,36a.65.65,0,0,1,.92-.91l8.22,8.21a.66.66,0,0,1,0,.92A.65.65,0,0,1,48.86,44.42Z"/><path class="cls-1" d="M24.06,19.63a.65.65,0,0,1-.45-.19l-8.22-8.22a.65.65,0,0,1,.92-.92l8.21,8.22a.64.64,0,0,1,0,.92A.66.66,0,0,1,24.06,19.63Z"/></svg>
-                </div>
-                <div class="uniMenuTxt" id="menuHelp">Help</div>
               </div>
               <div id="uniMenuFeedback" class="menuTabs">
                 <div>
@@ -1472,9 +1846,9 @@ class getUniMenu extends HTMLElement {
               </div>
               <div id="fm-header">
                 <div id="fm-header-headline">
-                  <span id="fm-menu1" class="men-active ht selectedMenu">Player</span>
-                  <span id="fm-menu2" class="men-active ht">Wallet</span>
-                  <span id="fm-menu3" class="men-active ht">Network</span>
+                  <span id="fm-menu1" class="men-active ht selectedMenu">All</span>
+                  <span id="fm-menu2" class="men-active ht">Domain</span>
+                  <span id="fm-menu3" class="men-active ht">Citizen</span>
                 </div>
                 <div id="uniMenuIcon2">
                   &#8682;
@@ -1539,20 +1913,42 @@ class getUniMenu extends HTMLElement {
                 </div>
                 <div id="profileMain">
                   <div id="proImgSect">
+                  <svg version="1.1" id="editImgIcon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                  viewBox="0 0 800 800" style="enable-background:new 0 0 800 800;" xml:space="preserve">
+                      <g>
+                        <g>
+                          <g>
+                            <path d="M400,99c-77.2,0-140,62.8-140,140c0,37.5,14.8,80,39.5,113.7c28,38.2,63.7,59.2,100.4,59.2c36.8,0,72.5-21,100.4-59.2
+                              C525.2,318.9,540,276.4,540,239C540,161.8,477.2,99,400,99z M400,382c-26.6,0-54.5-17.1-76.4-47c-20.8-28.4-33.7-65.2-33.7-96
+                              c0-60.7,49.4-110.1,110.1-110.1S510.1,178.3,510.1,239C510.1,302,458.3,382,400,382z"/>
+                            <path d="M400,0C217.6,0,69.2,148.4,69.2,330.8c0,182.4,148.4,330.8,330.8,330.8s330.8-148.4,330.8-330.8S582.4,0,400,0z
+                                M400,631.8c-59.9,0-115.7-17.6-162.6-47.8c1.6-45.7,22.3-88.5,57.3-118.3c13.9-11.8,34.2-13.1,50.6-3.2
+                              c17.6,10.7,36.1,16.1,54.7,16.1c18.7,0,37.1-5.4,54.7-16.1c16.3-9.9,36.6-8.6,50.4,3.1c35,29.7,55.9,72.7,57.5,118.4
+                              C515.7,614.2,459.9,631.8,400,631.8z M590.8,563.4c-6.4-46.7-29.9-89.7-66.3-120.6c-23.7-20-57.9-22.4-85.2-5.8
+                              c-25.8,15.6-52.7,15.6-78.5,0c-27.3-16.6-61.6-14.2-85.4,6c-36.4,30.9-59.7,73.8-66.2,120.5C142,508.1,99,424.4,99,330.8
+                              c0-166,135-301,301-301c165.9,0,301,135,301,301C701,424.4,658,508.2,590.8,563.4z"/>
+                            <path d="M602.4,701H197.6c-8.2,0-14.9,6.7-14.9,14.9c0,8.2,6.7,14.9,14.9,14.9h404.7c8.2,0,14.9-6.7,14.9-14.9
+                              C617.3,707.6,610.6,701,602.4,701z"/>
+                            <path d="M602.4,770.2H197.6c-8.2,0-14.9,6.7-14.9,14.9s6.7,14.9,14.9,14.9h404.7c8.2,0,14.9-6.7,14.9-14.9
+                              C617.3,776.8,610.6,770.2,602.4,770.2z"/>
+                          </g>
+                        </g>
+                      </g>
+                    </svg>               
                     <img id="proImg" src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/TAOS-CITY-IDC.png">
                   </div>
                   <div id="proInfo">
                     <div class="proInfoSect">
-                      <div class="proLabel">Name:</div>
-                      <div id="proLabelName" class="proInfoInput">-</div>
+                      <div class="proLabel">Alias:</div>
+                      <textarea id="proLabelName" class="proInfoInput">Damion</textarea>
                     </div>
                     <div class="proInfoSect">
                       <div class="proLabel">Identifier:</div>
-                      <div id="proLabelIdentity" class="proInfoInput">-</div>
+                      <textarea id="proLabelIdentity" class="proInfoInput">Male</textarea>
                     </div>
                     <div class="proInfoSect">
                       <div class="proLabel">Email:</div>
-                      <div id="proLabelEmail" class="proInfoInput">-</div>
+                      <textarea id="proLabelEmail" class="proInfoInput">blank@blank.com</textarea>
                     </div>
                     <div class="proInfoSect">
                       <div class="proLabel">Rank:</div>
@@ -1576,9 +1972,8 @@ class getUniMenu extends HTMLElement {
                     </div>
                   </div>
                 </div>
-                <div id="profileDesc">
-                  Welcome to T.A.O.S City. This interface will allow you to view and update your city profile and developments. No need to come down to City Central!
-                </div>
+                  <textarea id="profileDesc" placeholder="Enter a description for your city.">iWelcome to T.A.O.S City. This interface will allow you to view and update your city profile and developments. No need to come down to City Central!
+                  </textarea>
                 <div id="profileButs">
                   <div id="proEdit" class="editButs">Edit</div>
                   <div id="proSave" class="editButs">Save</div>
@@ -1625,43 +2020,39 @@ class getUniMenu extends HTMLElement {
                   <div>Save</div>
                 </div>
               </div>
-              <div id="fm-help">
-                <div class="help-tabs ht1">
-                  <div class="helpSection">
-                    <div class="arrow" id="leftArr">&#8227;</div>
-                    <div class="arrow" id="upArr">&#8227;</div>
-                    <div class="arrow" id="rightArr">&#8227;</div>
-                    <div class="arrow" id="downArr">&#8227;</div>
-                    <div class="helpText">Move Player</div>
+              <div id="fm-beacons">
+                <div class="beacon-tabs" id="beaconsBody">
+                  <div class="beacon tut">
+                    <div class="beaconOrigin">
+                      <div class="beaconIdenIcon">!</div>
+                      <div class="beaconSender">CITY-CENTRAL</div>
+                    </div>
+                    <div class="beaconPreview">
+                      Welcome to T.A.O.S City. Learn how to...
+                    </div>
                   </div>
-                  <div class="helpSection">
-                    <div id="spaceHelp">SPACE</div>
-                    <div class="helpText">Interact</div>
+                  <div class="beacon tut" data-message="Hello Test">
+                    <div class="beaconOrigin">
+                      <div class="beaconIdenIcon">!</div>
+                      <div class="beaconSender">CITY-CENTRAL</div>
+                    </div>
+                    <div class="beaconPreview">
+                      Register your Digisette at...
+                    </div>
                   </div>
-                  <div class="helpSection">
-                    <div id="leftHelp">LEFT CLICK</div>
-                    <div class="helpText">Explore / Action</div>
-                  </div>
-                  <div class="helpSection">
-                    <div class="boxesUi"></div>
-                    <div class="helpText">Player</div>
+                  <div class="beacon tut">
+                    <div class="beaconOrigin">
+                      <div class="beaconIdenIcon">!</div>
+                      <div class="beaconSender">CITY-CENTRAL</div>
+                    </div>
+                    <div class="beaconPreview">
+                      Public enhancements are now...
+                    </div>
                   </div>
                 </div>
-                <div class="help-tabs ht2">
-                  <div id="walletIcon">
-                  <svg id="DIAMOND" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="45px" height="45px" ><defs><style>.cls-1{fill:#ff002d;}</style></defs><path class="cls-1" d="m794.5,371.91l-200.28-200.28c-.08-.08-.17-.15-.25-.22-.25-.24-.51-.48-.78-.7-.18-.14-.36-.27-.54-.4-.19-.14-.37-.28-.57-.42-.2-.13-.41-.25-.61-.37-.19-.11-.37-.23-.57-.34-.2-.11-.41-.2-.61-.29-.21-.1-.42-.21-.64-.3-.19-.08-.39-.14-.58-.21-.24-.09-.47-.18-.72-.25-.19-.06-.38-.1-.56-.14-.25-.07-.51-.14-.77-.19-.21-.04-.42-.06-.62-.09-.25-.04-.49-.08-.74-.11-.34-.04-.68-.04-1.01-.05-.12,0-.24-.02-.36-.02H215.7c-.16,0-.32.02-.48.02-.3,0-.6.02-.89.05-.27.03-.53.07-.8.12-.19.03-.37.05-.56.09-.28.06-.55.13-.82.2-.17.04-.34.08-.51.13-.26.08-.52.18-.77.27-.18.06-.35.12-.53.19-.24.1-.47.21-.7.33-.18.09-.36.17-.54.26-.23.12-.44.26-.66.39-.17.11-.35.2-.52.32-.24.16-.47.34-.7.51-.14.1-.28.2-.41.31-.36.3-.71.61-1.04.94L5.5,371.91c-.08.08-.16.18-.24.26-.23.25-.47.49-.68.76-.15.19-.29.39-.43.58-.13.18-.26.34-.39.52-.14.22-.27.44-.4.67-.1.17-.21.34-.3.51-.12.22-.22.45-.33.68-.09.19-.18.37-.26.57-.01.03-.03.06-.04.09-.07.19-.13.38-.2.58-.07.21-.15.41-.22.63-.07.23-.12.46-.18.68-.05.22-.11.43-.16.65-.05.27-.08.54-.12.81-.02.18-.06.37-.08.55-.05.46-.07.93-.07,1.39s.02.93.07,1.39c.02.19.06.37.08.55.04.27.07.54.12.8.04.22.11.43.16.65.06.23.11.46.18.68.06.21.14.42.22.63.08.22.15.45.24.67.08.19.17.38.26.57.11.23.21.46.33.68.09.18.2.34.3.51.13.22.26.45.4.67.12.18.26.35.39.52.14.19.28.39.43.58.22.26.45.51.68.76.08.09.15.18.24.26l384.58,384.58c2.74,2.74,6.33,4.11,9.92,4.11s7.18-1.37,9.92-4.11l384.58-384.58c5.48-5.48,5.48-14.36,0-19.83ZM221.51,195.58h104.21l-117.43,172.23H49.27l172.23-172.23Zm218.82,0l117.44,172.23H242.23l117.43-172.23h80.67Zm138.16,0l172.23,172.23h-159.01l-117.44-172.23h104.22Zm-16.82,200.28l-161.67,325.19-161.67-325.19h323.34Zm-354.66,0l155.95,313.68L49.28,395.85h157.73Zm385.99,0h157.73l-313.67,313.68,155.95-313.68Z"/><path class="cls-1" d="m400,126.41c7.75,0,14.02-6.28,14.02-14.02V33.59c0-7.75-6.28-14.02-14.02-14.02s-14.02,6.28-14.02,14.02v78.8c0,7.75,6.28,14.02,14.02,14.02Z"/><path class="cls-1" d="m507.56,119.22c2.21,1.28,4.63,1.89,7.01,1.89,4.84,0,9.55-2.51,12.15-7l39.49-68.19c3.88-6.7,1.59-15.28-5.11-19.16-6.7-3.88-15.28-1.59-19.16,5.11l-39.49,68.19c-3.88,6.7-1.59,15.28,5.11,19.16Z"/><path class="cls-1" d="m640.8,136.37c3.59,0,7.18-1.37,9.92-4.11l55.72-55.72c5.48-5.48,5.48-14.36,0-19.83-5.48-5.47-14.36-5.47-19.83,0l-55.72,55.72c-5.48,5.48-5.48,14.36,0,19.83,2.74,2.74,6.33,4.11,9.92,4.11Z"/><path class="cls-1" d="m273.28,114.11c2.6,4.49,7.31,7,12.15,7,2.38,0,4.8-.61,7.01-1.89,6.7-3.88,8.99-12.46,5.11-19.16l-39.49-68.19c-3.88-6.7-12.46-8.99-19.16-5.11-6.7,3.88-8.99,12.46-5.11,19.16l39.49,68.19Z"/><path class="cls-1" d="m149.28,132.26c2.74,2.74,6.33,4.11,9.92,4.11s7.18-1.37,9.92-4.11c5.48-5.48,5.48-14.36,0-19.83l-55.72-55.72c-5.48-5.47-14.36-5.47-19.83,0-5.48,5.48-5.48,14.36,0,19.83l55.72,55.72Z"/></svg>
+                <div class="beacon-tabs ht2">
                 </div>
-                  <div>
-                    Citizens across T.A.O.S City use the <span class="alt"><a href="https://plugwallet.ooo/" target="_blank">Plug Wallet</a></span> to manage and secure digital assets on their Internet Computer.<br><br>The Plug Wallet allows you to create and manage your digital identity, send and receive payments, participate in governance, and interact with applications and services on the <span class="alt" id="switch23">decentralized network</span>.
-                  </div>
-                </div>
-                <div class="help-tabs ht3">
-                  <div id="worldIcon">
-                    <svg fill="#000000" width="45px" height="45px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m24 12c0-.002 0-.004 0-.006 0-3.551-1.546-6.74-4.001-8.933l-.012-.01c-.031-.033-.064-.062-.101-.087l-.002-.001c-2.095-1.84-4.859-2.962-7.886-2.962-3.032 0-5.8 1.126-7.91 2.984l.013-.011c-.026.02-.049.041-.07.065v.001c-2.478 2.205-4.031 5.403-4.031 8.963 0 3.55 1.544 6.739 3.997 8.933l.012.01c0 .003.002.005.005.005.031.035.065.065.101.092l.002.001c2.094 1.837 4.857 2.958 7.881 2.958 3.032 0 5.801-1.126 7.911-2.984l-.013.011c.03-.022.056-.045.08-.07 2.475-2.202 4.026-5.395 4.026-8.951 0-.002 0-.005 0-.007zm-4.462 7.805c-.576-.468-1.223-.897-1.909-1.262l-.065-.032c.613-1.767.982-3.804 1.017-5.923v-.016h4.261c-.156 2.852-1.391 5.388-3.301 7.23zm-6.966-1.505c1.283.069 2.482.351 3.588.81l-.072-.026c-.886 2.02-2.133 3.408-3.516 3.713zm0-1.144v-4.584h4.868c-.043 1.961-.383 3.828-.976 5.578l.039-.131c-1.157-.484-2.498-.795-3.903-.862l-.027-.001zm0-5.728v-4.584c1.431-.069 2.772-.379 4.007-.891l-.079.029c.555 1.619.896 3.485.94 5.425v.021zm0-5.728v-4.495c1.383.305 2.63 1.687 3.516 3.713-1.034.43-2.233.711-3.487.781zm2.854-4c1.238.419 2.312 1.009 3.258 1.752l-.023-.018c-.443.348-.94.676-1.464.961l-.056.028c-.449-1.047-1.025-1.947-1.724-2.737l.009.011zm-4-.492v4.492c-1.283-.069-2.482-.35-3.588-.81l.072.026c.89-2.02 2.135-3.407 3.518-3.712zm-4.568 3.212c-.58-.315-1.077-.642-1.544-1.007l.024.018c.923-.726 1.996-1.315 3.158-1.712l.076-.023c-.689.778-1.265 1.678-1.689 2.658l-.025.065zm4.57 2.423v4.584h-4.868c.044-1.961.385-3.827.979-5.577l-.039.131c1.156.483 2.497.794 3.901.861zm0 5.728v4.584c-1.431.069-2.772.379-4.007.891l.079-.029c-.555-1.618-.896-3.485-.94-5.425v-.021zm0 5.728v4.495c-1.383-.305-2.63-1.687-3.516-3.713 1.034-.43 2.233-.71 3.487-.78l.029-.001zm-2.85 4c-1.238-.418-2.311-1.006-3.258-1.748l.024.018c.443-.348.94-.676 1.464-.961l.056-.028c.445 1.047 1.022 1.947 1.723 2.733l-.009-.01zm8.564-2.72c.58.315 1.077.642 1.544 1.007l-.024-.018c-.923.726-1.996 1.315-3.158 1.712l-.076.023c.689-.778 1.265-1.677 1.689-2.657l.025-.065zm5.7-8.151h-4.261c-.035-2.135-.404-4.172-1.058-6.078l.041.138c.751-.399 1.397-.828 1.997-1.312l-.024.018c1.913 1.845 3.148 4.381 3.303 7.205l.001.028zm-18.38-7.233c.576.468 1.223.897 1.909 1.262l.065.032c-.613 1.767-.982 3.804-1.017 5.923v.016h-4.262c.156-2.852 1.391-5.388 3.301-7.23l.003-.003zm-3.304 8.377h4.261c.035 2.135.404 4.172 1.058 6.078l-.041-.138c-.751.399-1.397.828-1.997 1.312l.024-.018c-1.913-1.845-3.148-4.381-3.303-7.205l-.001-.028z"/></svg>
-                </div>
-                <div>
-                  T.A.O.S City's network is powered by the <span class="alt"><a href="https://internetcomputer.org/" target="_blank">Internet Computer</a></span>, a revolutionary decentralized network powered by the ICP token.<br><br>In a city fragmented by distinct governors, the Internet Computer offers citizens in each sector a tool to build powerful neural apps and contracts, free from the tyrannical, centralized old internet. With <span class="alt"><a href="https://www.coinbase.com/price/internet-computer" target="_blank">ICP</a></span> (aka RedDisks/Reds) citizens are building a brighter world.
-                </div>
+                <div class="beacon-tabs ht3">
               </div>
               </div>
               <div id="fm-feedback">
