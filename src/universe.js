@@ -1314,7 +1314,7 @@ window.rsvp = async () => {
 
 // SOCKET IO
 
-const socket = io('https://www.scoge.co');
+const socket = io('https://www.scoge.co:3001');
 
 // Set the socket.io instance for the chat room
 const roomName = "alphaTestersChat";
