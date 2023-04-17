@@ -10,7 +10,7 @@ const httpServer = createServer();
 // });
 const io = new Server(httpServer, {
   cors: {
-    origin: 'https://www.scoge.co',
+    origin: 'https://www.scoge.co:3000',
     methods: ['GET', 'POST'],
   },
 });
@@ -44,10 +44,7 @@ io.on('connection', (socket) => {
   // Other event handlers...
 });
 
-const PORT = import.meta.env.VITE_PORT || 3001;
-const HOST = import.meta.env.VITE_HOST || 'localhost';
-
-httpServer.listen(PORT, HOST, () => {
+httpServer.listen(3001, () => {
   console.log('Socket.IO server listening at http://localhost:3001');
 });
 
