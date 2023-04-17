@@ -1,0 +1,780 @@
+/* -----------------------------------------   UNIVERSE -------------------------------------*/
+
+:root {
+    --black : #0f0f12;
+    --primary: #ff002d;
+    --secondary: #b5d3d1;
+    --accent: #94be8c;
+    --regular: "BS-R", sans-serif;
+    --tileSize: 18px;
+  }
+  
+
+#universe {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    opacity: 0%;
+    transition: opacity 1s;
+    image-rendering: pixelated;
+  }
+  #camera {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    /* cursor: crosshair; */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  #camera::-webkit-scrollbar {
+    display: none;
+  }
+  #adminUI {
+    width: 20%;
+    height: 15%;
+    background-color:rgb(0, 0, 0, 0.8);
+    color: #ff002d;
+    border: .5px solid #ff002d;
+    position: absolute;
+    right: 5%;
+    bottom: 5%;
+    z-index: 4;
+    cursor: move;
+    padding: 2% 3%;
+    font-size: 1em;
+    opacity: 0%;
+    pointer-events: none;
+    transition: opacity 1s;
+  }
+  #selection {
+    width: var(--tileSize);
+    height: var(--tileSize);
+    border: 2px solid #ff002d;
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    z-index: 7;
+    pointer-events: none;
+    display: none; 
+    animation: whiteBoxGlow 1s infinite;
+    animation-play-state: paused;
+  }
+  #explore {
+    width: var(--tileSize);
+    height: var(--tileSize);
+    border: 2px solid blue;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    z-index: 6;
+    pointer-events: none;
+    display: none; 
+  }
+  .uniPlayer {
+    width: var(--tileSize);
+    height: var(--tileSize);
+    border: 2px solid #dadcd57f;
+    position: fixed;
+    z-index: 5;
+    pointer-events: none;
+    display: block; 
+  }
+  #uniEvent {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 0 4px rgba(216, 197, 51, 0.4);
+    position: absolute;
+    z-index: 5;
+    left: 1350px;
+    top: 143px;
+    pointer-events: none;
+  }
+  #uniEvent2 {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 0 4px rgba(216, 197, 51, 0.4);
+    position: absolute;
+    z-index: 5;
+    left: 1836px;
+    top: 323px;
+    pointer-events: none;
+  }
+  #uniEvent3 {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 0 4px rgba(216, 197, 51, 0.4);
+    position: absolute;
+    z-index: 5;
+    left: 2324px;
+    top: 289px;
+    pointer-events: none;
+  }
+  #uniEvent4 {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 0 4px rgba(216, 197, 51, 0.4);
+    position: absolute;
+    z-index: 5;
+    left: 1586px;
+    top: 649px;
+    pointer-events: none;
+  }
+  .cannonIcon {
+    width: auto;
+    height: 30px;
+    position: absolute;
+    right: 5%;
+    top: -15px;
+    z-index: 5;
+  }
+  .cannonIcon img {
+    width: auto;
+    height: 100%;
+    filter: brightness(.2), contrast(2);
+  }
+  #tempVidCon, #tempVidCon2 {
+    width: 100%;
+    height: 100%;  
+    overflow: hidden;
+  }
+  #tempVidCon video, #tempVidCon2 video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  #tempVidHead, #tempVidHead2 {
+    width: 100%;
+    height: 5%;
+    position: absolute;  
+    font-family: "BS-R";
+    left: 20px;
+    top: 8px;
+    font-size: 1em;
+  }
+  #previewUI {
+    width: 200px;
+    height: 92px;
+    padding: 8px 8px;
+    background-color:rgb(0, 0, 0, 0.8);
+    color: #ff002d;
+    border: .5px solid blue;
+    position: fixed;
+    z-index: 6;
+    cursor: move;
+    font-size: 1em;
+    transition: transform .5s;
+    transform: scale(0);
+    display: none;
+  }
+  #exploreUI {
+    width: 540px;
+    height: 810px;
+    right:72px;
+    top:90px;
+    background-color:rgb(0, 0, 0, 0.9);
+    color: #ff002d;
+    border: .5px solid #ff002d;
+    position: fixed;
+    z-index: 6;
+    cursor: move;
+    font-size: 1em;
+    transition: transform .5s;
+    transform: scale(0);
+    transform-origin: center;
+    padding: 36px;
+    /* overflow: hidden;  */
+  }
+  #exploreUI h1 {
+    margin-top: 0px;
+    font-family: "BS-R";
+  }
+  #exploreUI p {
+    margin-top: 0px;
+    font-family: "BS-R";
+    letter-spacing: 1px;
+    line-height: 1.5em;
+    color: var(--secondary);
+    font-size: 1.2em;
+  }
+  #unclaimed {
+    width: 100%;
+    height: 100%;
+    font-family: "BS-R";
+  }
+  #unclaimedBox {
+    width: 100%;
+    height: 100%;
+  }
+  
+  #dialogueModal {
+    position: absolute;
+    width: auto !important;
+    z-index: 6;
+    top: 50%;
+    /* align-self: center;
+    justify-content: center; */
+    transform: translate(-50%, -50%);
+  }
+
+  #GenImgCont {
+    position: fixed;
+    right: 20%;
+    top: 20%;
+    z-index: 10;
+    width: 30%;
+    height: 40%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 85% 15%;
+    overflow: hidden;
+  }
+
+  #GenImgCont img {
+    width: 100%;
+    height: auto;
+  }
+
+  #GenImgCont p {
+    font-family: "BS-R";
+    font-size: 1em;
+    color: var(--primary);
+    background-color: #0f0f12;
+    padding: 8px;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* .uniEvents {
+    animation: whiteBoxInnerGlow 2s infinite;
+    animation-play-state: paused;
+  } */
+  
+  @keyframes whiteBoxGlow {
+    0% {
+      box-shadow: 0 0 0 0 rgba(255, 0, 45, 1);
+    }
+    70% {
+      box-shadow: 0 0 0 30px rgba(255, 0, 45, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(255, 0, 45, 0);
+    }
+  }
+
+  @keyframes whiteBoxInnerGlow {
+    0% {
+      background-color: rgba(149, 191, 141, 1);
+    }
+    70% {
+      background-color: rgba(149, 191, 141, 0);
+    }
+    100% {
+      background-color: rgba(149, 191, 141, 0);
+    }
+  }
+  
+  #menuUi {
+    width: 360px;
+    height: 432px;
+    background-color:rgb(0, 0, 0, 0.8);
+    color: #ff002d;
+    border: .5px solid #ff002d;
+    box-shadow: #ff002d 0px 0px 12px;
+    position: fixed;
+    left: 3%;
+    top: 5%;
+    z-index: 6;
+    cursor: move;
+    font-size: 1em;
+    transition: transform .5s;
+    transform: scale(0);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  
+  #nftDisplay {
+    width: auto;
+    height: 100%;
+  }
+  #nftDisplay img {
+    width: auto;
+    height: 100%;
+  }
+  #bt {
+    width: 400px;
+    height: 200px;
+    position: fixed;
+    z-index: 6;
+    left: 20%;
+    top: 20%;
+    overflow: hidden;
+    box-sizing: border-box;
+    background-color:black;
+    color: #ff002d;
+    border-radius: 30px;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    border: 1px solid white;
+    transition: opacity 1s;
+  }
+  #bt:hover > #buttonTest {
+    opacity: .4;
+  }
+  #bt span {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    font-size: 3em;
+    font-family: "BS-B";
+    color: white;
+    z-index: 8;
+  }
+  #bt img {
+    max-width: 100%;
+    /* max-height: 100%; */
+    width: auto;
+    transition: .5s all;
+  }
+
+  /* DOMAIN FUNCTIONS  */
+  .domainFunction {
+    width: 100%;
+    height: 100%;
+    font-family: "BS-R";
+  }
+  .domainHeader {
+    width: 100%;
+    height: 4%;
+    margin-bottom: 1%;
+    display: flex;
+    align-items: center;
+    font-size: 1.2em;
+  }
+  .doaminOwner {
+    font-family: "BS-B";
+    width: 50%;
+    letter-spacing: 1px;
+  }
+  .domainName {
+    font-family: "BS-SB";
+    text-align: right;
+    width: 50%;
+    font-size: .8em;
+  }
+  .domainInfo {
+    width: 100%;
+    height: 20%;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-template-rows: 1fr;
+    margin-bottom: 1%;
+  }
+  .domainLordImg {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+  }
+    .domainLordImg img {
+        width: 100%;
+        height: auto;
+    }
+  .domainInfoBlockRight {
+    width: 95%;
+    height: 98%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 70% 30%;
+    padding-left: 5%;
+    padding-bottom: 2%;
+  }
+  .domainActions {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 5%;
+  }
+  .ampButton, .sabButton {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1em;
+    font-family: "BS-R";
+    color: var(--secondary);
+    border-radius: 10px;
+    border: 1px solid var(--secondary);
+    transition: .3s all;
+    margin-bottom: 2%;
+    cursor: pointer;
+  }
+  .sabButton:hover {
+    border: 1px solid var(--primary);
+    background-color: #ff002d;
+    color: black;
+    font-family: "BS-B";
+  }
+  .ampButton:hover {
+    border: 1px solid var(--secondary);
+    background-color: var(--secondary);
+    color: black;
+    font-family: "BS-B";
+  }
+  .domainFunctStatus {
+    width: 100%;
+    height: 4%;
+    margin-bottom: 1%;
+    font-size: .8em;
+    display: flex;
+  }
+  .dfsLeft {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .dfsRight {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .chatRoom {
+    width: 100%;
+    height: 50%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin-bottom: 1%;
+    border-bottom: 1px solid var(--primary);
+  }
+
+  .chatRoom > div:nth-child(even) .messageSender {
+    color: var(--accent) !important;
+  }
+  .chatRoom > div:nth-child(even) p {
+    color: var(--accent) !important;
+  }
+
+  .chatInputs {
+    width: 100%;
+    height: 13%;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 70% 30%;
+    grid-template-rows: 1fr;
+    margin-top: 5%;
+  }
+  .chatInputButtons {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+  }
+  .chatMessageContainer {
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: 8% 92%;
+    grid-template-rows: 1fr;
+    margin-top: 3%;
+  }
+  .chatInputText {
+    width: 96%;
+    height: 96%;
+    resize: none;
+    background-color: rgba(0, 0, 0, 0);
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-left: .2px solid var(--primary);
+    user-select: auto;
+    color: var(--secondary);
+    letter-spacing: 1px;
+    padding-left: 4%;
+    display: inline-block;
+    font-size: 1em;
+    font-family: "BS-R";
+  }
+  .chatInputText:focus {
+    outline: none;
+  }
+  .sendMessageButton {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    justify-self: center;
+    align-items: center;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    font-size: 1.1em;
+    font-family: "BS-R";
+    border-radius: 5px;
+    transition: .3s all;
+    cursor: pointer;
+  }
+  .sendMessageButton:hover {
+    background-color: var(--accent);
+    color: var(--black);
+  }
+  .messageAvatar {
+    overflow: hidden;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  .messageAvatar img {
+    width: 100%;
+    height: auto;
+  }
+  .messageBody {
+    width: 96%;
+    height: auto;
+    padding-left: 4%;
+    display: flex;
+    position: relative;
+  }
+  .messageSender {
+    width: auto;
+    left: 4%;
+    top: -9px;
+    position: absolute;
+    font-size: .9em;
+    color: var(--secondary);
+    opacity: .5;
+    text-transform: uppercase;
+  }
+  .messageText {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    justify-items: start;
+    align-items: center;
+    font-size: .9em !important;
+    padding-top: 1%;
+  }
+
+  /* Element Help */
+  #elHelp {
+    width: 10%;
+    height: auto;
+    background-color: rgb(198, 160, 24, .8);
+    border: 1px solid rgb(198, 160, 24) ;
+    font-family: "BS-B";
+    color: black;
+    position: absolute;
+    z-index: 9;
+    font-size: .9em;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-transform: uppercase;
+  }
+
+  /* BEACON TUT */
+  .beaconPanel {
+    width: 40%;
+    height: 40%;
+    position: fixed;
+    z-index: 9;
+    right: 2%;
+    top: 30%;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-bottom: 1px solid var(--accent);
+    border-top: 1px solid var(--accent);
+    /* box-shadow: 0px -10px 10px -10px var(--accent); */
+    box-shadow: 0px 10px 10px -10px var(--accent),  0px -10px 10px -10px var(--accent), inset 0px 10px 10px -10px var(--accent), inset 0px -10px 10px -10px var(--accent);
+    border-radius: 10px;
+    display: none;
+  }
+
+  #beaconBG {
+    width: 100%;
+    height: 100%;
+    justify-items: center;
+    align-items: center;
+    position: absolute;
+    overflow: hidden;
+  }
+
+  #beaconBG svg {
+   opacity: .1;
+   stroke: none;
+   pointer-events: none;
+   user-select: none;
+  }
+
+  #beaconBG svg path {
+    stroke: rgb(0, 0, 0, 0.9);
+    stroke-width: 1px;
+    fill: var(--accent);
+  }
+
+  #beaconBG svg:nth-child(1) {
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    justify-self: center;
+    transform: scale(2);
+    animation: Scale 10s infinite;
+    animation-play-state: paused;
+  }
+
+  #beaconBG svg:nth-child(2) {
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    justify-self: center;
+    transform: rotate(25deg) scale(.9);
+    animation: Scale2 10s infinite;
+    animation-play-state: paused;
+  }
+
+  @keyframes Scale {
+    0% {
+      transform: scale(2.3);
+      opacity: .15;
+    }
+    50% {
+      transform: scale(1.7);
+      opacity: .1;
+    }
+    100% {
+      transform: scale(2.3);
+      opacity: .15;
+    }
+  }
+
+  @keyframes Scale2 {
+    0% {
+      transform: scale(2) rotate(25deg);
+      opacity: .1;
+    }
+    50% {
+      transform: scale(3) rotate(25deg);
+      opacity: .1.6;
+    }
+    100% {
+      transform: scale(2) rotate(25deg) ;
+      opacity: .1;
+    }
+  }
+
+  #beaconTutIcon {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    left: 45%;
+    bottom: -30px;
+    padding: 5px;
+    border: 1px solid var(--accent);
+    box-shadow: 0px 0px 5px 1px var(--accent);
+    background-color: rgb(0, 0, 0, 0.9);
+    border-radius: 50%;
+    overflow: hidden;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    transition: transform .5s;
+    cursor: pointer;
+  }
+
+  #beaconTutIcon:hover {
+    transform: rotate(90deg);
+    border: 1px solid var(--primary) !important;
+    box-shadow: 0px 0px 5px 1px var(--primary);
+  }
+
+  #beaconBody{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 3;
+  }
+
+  #beaconTutHead {
+    height: 15%;
+    font-family: "BS-R";
+    font-size: 1.1em;
+    letter-spacing: 2px;
+    width: 100%;
+    display: flex;
+    text-align: center;
+    align-items: end;
+    justify-content: center;
+  }
+
+  #beaconTutBody {
+    height: 45%;
+    font-family: "BS-R";
+    color: var(--secondary);
+    font-size: .9em;
+    width: 60%;
+    letter-spacing: 1px;
+    padding-left: 20%;
+    padding-right: 20%;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  #beaconTutActions {
+    height: 30%;
+    font-family: "BS-R";
+    font-size: .9em;
+    letter-spacing: 2px;
+    width: 100%;
+    display: flex;
+    gap: 5%;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .beaconActions {
+    width: 25%;
+    height: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "BS-R";
+    font-size: .9em;
+    letter-spacing: 2px;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    cursor: pointer;
+    transition: .3s all;
+  }
+
+  .beaconActions:hover {
+    background-color: var(--accent);
+    color: black;
+    font-family: "BS-B";
+  }

@@ -1,6 +1,9 @@
 // UNIVERSE SYSTEM 
 import { SoundtrackManager } from "./soundtrack.js";
 import { idlFactory } from "./declarations/universe_backend/universe_backend.did.js";
+import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
+import { chatRoom } from './uniHelpers/chat.js';
+import { uniPlayers } from "./uniHelpers/players.js";
 
 // Init Soundtrack
 export async function universe() {
@@ -31,14 +34,16 @@ var timeoutHandle1;
 var timeoutHandle2;
 var previewOpen = false;
 var typing = false;
-var connected = false;
-var tempLandEx = ["1435","3162","2849"]
+window.connected = false;
+var tempLandEx = ["1435","3162","2849","6208"]
 window.suUiActor = null;
 window.landActivated = false;
-// window.getAllUserNFTs = {};
+window.chatActive = false;
+window.domainType = "";
+// window.getAllUserNFTs = {};i
 // export const suIDL = idlFactory;
 const suIDL = idlFactory;
-var user = {
+window.user = {
   principal: null,
   balance: null,
   pk: null,
@@ -47,10 +52,12 @@ var user = {
 var uiState = {
   nftsLoaded: false,
 }
+// eslint-disable-next-line no-unused-vars
 const VITE_canister = import.meta.env.VITE_universe_backend_canister_Id;
+const can2 = "ryjl3-tyaaa-aaaaa-aaaba-cai"
 const whitelist = [VITE_canister];
+// eslint-disable-next-line no-unused-vars
 const host = "https://a4gq6-oaaaa-aaaab-qaa4q-cai.raw.ic0.app/?id=wnunb-baaaa-aaaag-aaoya-cai";
-// http://127.0.0.1:8080/?canisterId=rdmx6-jaaaa-aaaaa-aaadq-cai&id=renrk-eyaaa-aaaaa-aaada-cai
 // BEFORE LAUNCH !!!!!!!!!
 // Rebuilding Actors Across Account Switches
 
@@ -98,10 +105,11 @@ window.universeSystem = async () => {
     // add event listener to mouseclick
     universeCanvas.addEventListener("click", window.selectedPos);
     // Focus and Blur events
+    // eslint-disable-next-line no-unused-vars
     document.addEventListener("focus", event => {
       typing = true;
     }, true);
-    
+        // eslint-disable-next-line no-unused-vars
     document.addEventListener("blur", event => {
       typing = false;
     }, true);
@@ -110,15 +118,23 @@ window.universeSystem = async () => {
     var uniEvent = document.createElement("div");
     var uniEvent2 = document.createElement("div");
     var uniEvent3 = document.createElement("div");
+    var uniEvent4 = document.createElement("div");
     //
     uniEvent.id = "uniEvent";
+    uniEvent.setAttribute("class", "uniEvents")
     document.getElementById("camera").appendChild(uniEvent);
     //
     uniEvent2.id = "uniEvent2";
+    uniEvent2.setAttribute("class", "uniEvents")
     document.getElementById("camera").appendChild(uniEvent2);
     //
     uniEvent3.id = "uniEvent3";
+    uniEvent3.setAttribute("class", "uniEvents")
     document.getElementById("camera").appendChild(uniEvent3);
+    //
+    uniEvent4.id = "uniEvent4";
+    uniEvent4.setAttribute("class", "uniEvents")
+    document.getElementById("camera").appendChild(uniEvent4);
     //
     window.adminUI();
     window.openLocationCard();
@@ -139,6 +155,7 @@ window.adminUI = () => {
   var pixelPosDiv = document.createElement("div");
   var selectPosBoxDiv = document.createElement("div");
   var playerCordDiv = document.createElement("div");
+  var playerScreenCoor = document.createElement("div");
   document.getElementById("selection").style.display = "block";
   uiWindow.id = "adminUI";
   columnDiv.id = "DebugColumn";
@@ -147,12 +164,14 @@ window.adminUI = () => {
   pixelPosDiv.id = "pixelPos";
   selectPosBoxDiv.id = "selectPosBox";
   playerCordDiv.id = "playerCord";
+  playerScreenCoor.id = "playerScreenCoor";
   uiWindow.appendChild(pixelPosDiv);
   uiWindow.appendChild(columnDiv);
   uiWindow.appendChild(rowDiv);
   uiWindow.appendChild(selectionPosDiv);
   uiWindow.appendChild(selectPosBoxDiv);
   uiWindow.appendChild(playerCordDiv);
+  uiWindow.appendChild(playerScreenCoor);
   document.getElementById("main").appendChild(uiWindow);
   dragElement(document.getElementById("adminUI"),true);
   dragElement(document.getElementById("exploreUI"),true);
@@ -162,6 +181,7 @@ window.adminUI = () => {
   pixelPosDiv.innerHTML = "X: , Y:";
   selectPosBoxDiv.innerHTML = "SelBoxTile:";
   playerCordDiv.innerHTML = "Player Coordinates:";
+  playerScreenCoor.innerHTML = "Player Screen Coord:";
   window.initSelection();
   window.moveSelection();
   window.moveMenu();
@@ -183,6 +203,7 @@ window.mousePos = (e) => {
 
 // selection position
 window.selectedPos = (e) => {
+  window.chatActive = false;
   // get mouse position
   document.getElementById("explore").style.display = "block";
   var rect = universeCanvas.getBoundingClientRect();
@@ -342,10 +363,20 @@ window.playerPos = () => {
  var position = (170 - deduct) + (convertedBoxPos.y * 170);
  document.getElementById("selectPosBox").innerHTML = `Player Position: ${position}`;
  convertedSelPos = (170 - deduct) + (convertedBoxPos.y * 170);
- cityPosition.x = boxPos.x;
- cityPosition.y = boxPos.y;
+ cityPosition.x = boxPos.x - 2;
+ cityPosition.y = boxPos.y - 2;
  document.getElementById("playerCord").innerHTML = `Player Coordinates: ${cityPosition.x}, ${cityPosition.y}`;
-  if (`${position}` === tempLandEx[0] || `${position}` === tempLandEx[1] || `${position}` === tempLandEx[2]) {
+ document.getElementById("playerScreenCoor").innerHTML = `Player Screen Coordinates: ${boxRect.left}, ${Math.round(boxRect.top)+2}`;
+//
+window.uniPlayer.x = box.style.left;
+window.uniPlayer.y = box.style.top;
+socket.emit('players', { 
+  roomId: room2Name, 
+  playerId: window.uniPlayer.playerId, 
+  playerData: window.uniPlayer
+});
+//
+  if (`${position}` === tempLandEx[0] || `${position}` === tempLandEx[1] || `${position}` === tempLandEx[2] || `${position}` === tempLandEx[3]) {
     window.landActivated = true;
     document.getElementById("selection").style.animationPlayState = "running";
     document.getElementById("selection").style.animation = "whiteBoxGlow 1s infinite";
@@ -353,13 +384,54 @@ window.playerPos = () => {
     document.getElementById("selection").innerHTML = `<div id="exclamationMark" style="position: absolute; top: 8px; left: 8px; width: 18px; height: 18px; background-color: #ff002d; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 18px; color: #fff; font-weight: 700;">!</div>`;
     //
     if (`${position}` === tempLandEx[0]) {
+      window.domainType = "canon";
       exploreUI.innerHTML = tempCont1;
       return;
     } else  if (`${position}` === tempLandEx[1]) {
+      window.domainType = "world";
       exploreUI.innerHTML = tempCont2;
       return;
     } else  if (`${position}` === tempLandEx[2]) {
+      window.domainType = "world";
       exploreUI.innerHTML = tempCont3;
+      return;
+    } else  if (`${position}` === tempLandEx[3]) {
+      window.domainType = "chat";
+      exploreUI.innerHTML = chatDomTemplate;
+      // exploreUI.onmousedown = null;
+      var messagespre = window.room1.getMessages();
+      messagespre?.forEach((message) => {
+        const mEl = document.createElement('div');
+        const mDiv = document.getElementById('chatRoom1');
+        mEl.setAttribute('class', 'chatMessageContainer');
+        // messageElement.innerText = `${data.sender}: ${data.message}`;
+        mEl.innerHTML = `
+        <div class="messageAvatar self">
+          <img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+        </div>
+        <div class="messageBody">
+          <div class="messageSender">Damion</div>
+          <p class="messageText">${message}</p>
+        </div>
+      `;
+        mDiv.appendChild(mEl);
+      });
+      exploreUI.addEventListener('keyup', () => {
+        dragElement(document.getElementById("exploreUI"),true);
+      });
+      document.getElementById("chatTextArea").addEventListener('click', () => {
+        exploreUI.onmousedown = null;
+        document.getElementById("chatInput1").focus();
+      });
+      document.getElementById("sendBut").addEventListener('click', () => {
+        var messageInput = document.getElementById("chatInput1");
+        const message = messageInput.value.trim();
+        if (message) {
+          window.room1.addMessage(message);
+          socket.emit('newMessage', { roomName, message });
+          messageInput.value = '';
+        }
+      });
       return;
     }
     return;
@@ -383,7 +455,9 @@ window.moveSelection = () => {
   selectionBoxPosition.y = topCenter * tileSize;
   // make a event listeniner for arrow keys and move the selection box 18px in the direction of the arrow key pressed starting from its current position if window is not scrolling. Stop from moving at the edge of the window screen size. 
   document.addEventListener("keydown", function(e) {
-    exploreUI.style.transform = "scale(0)";
+    if (window.chatActive != true) {
+      exploreUI.style.transform = "scale(0)";
+      dragElement(document.getElementById("exploreUI"),true);
     if (e.keyCode == 37) {
       if (selectionBoxPosition.x > 0) {
         if (movementPaused == false) {
@@ -434,6 +508,7 @@ window.moveSelection = () => {
     // if space bar is pressed open the explore UI
     if (e.keyCode == 32) {
         window.exploreOpenHelper();
+    }
     }
   }
   );
@@ -517,10 +592,67 @@ var tempCont3 = `
   <video id="tempVid2" src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/nightout.mp4" controls></video>
 </div>
 `
+var chatDomTemplate = `
+<div class="cannonIcon">
+  <img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
+</div>
+<div class="domainFunction">
+  <div class="domainHeader">
+    <div class="doaminOwner">LORD AMINA</div>
+    <div class="domainName">TC-BARGE-1</div>
+  </div>
+  <div class="domainInfo">
+    <div class="domainLordImg">
+      <img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+    </div>
+    <div class="domainInfoBlockRight">
+      <div class="domainLordText">
+        I purchased this barge from a local merchant. I plan to use it as a mobile home for my travels. I'm not sure where I'll go yet, but I'm sure I'll find a place that suits me.
+      </div>
+      <div class="domainActions">
+        <div class="ampButton">AMPLIFY</div>
+        <div class="sabButton">SABOTAGE</div>
+      </div>
+    </div>
+  </div>
+  <div class="domainFunctStatus">
+    <div class="dfsLeft">Created: 9/12/23</div>
+    <div class="dfsRight">Last Message: 9:58pm</div>
+  </div>
+  <div class="chatRoom" id="chatRoom1">
+    <div class="chatMessageContainer">
+      <div class="messageAvatar self">
+        <img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+      </div>
+      <div class="messageBody">
+        <div class="messageSender">Damion</div>
+        <p class="messageText">Hey, whats up! This isnt what I meant when I said I wanted to see the barge. However sometimes you have to see what other things are about first hand.</p>
+      </div>
+    </div>
+    <div class="chatMessageContainer">
+      <div class="messageAvatar self">
+        <img src="https://storage.fleek.zone/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/red-s1.jpg"/>
+      </div>
+      <div class="messageBody">
+        <div class="messageSender">Violet</div>
+        <p class="messageText">Damion no one ever told you you look like you belong on a barge?</p>
+      </div>
+    </div>
+  </div>
+  <div class="chatInputs" id="chatTextArea">
+    <textarea class="chatInputText" id="chatInput1" placeholder="Message..." max-length="320"></textarea>
+    <div class="chatInputButtons">
+      <div></div>
+      <div class="sendMessageButton" id="sendBut">SEND</div>
+      <div></div>
+    </div>
+  </div>
+</div>
+`
+
 // Explore Open Helper 
 window.exploreOpenHelper = () => {
   // scale exploreUI to 1 and position it 18px to the right of the selection box if the space to the right of the selection box is greater than the width of the exploreUI element, if not position it 18px to the left of the selection box.
-  console.log(typing)
   var exploreUISize = document.getElementById("exploreUI").offsetWidth;
   if (typing === false) {
     if (selectionBoxPosition.x < (window.innerWidth / tileSize) * tileSize - 18 - exploreUISize) {
@@ -544,17 +676,23 @@ window.exploreOpenHelper = () => {
       `
       return;
     } else {
+      // Add switch case for different domain functions(catgories)
       exploreUI.style.width = "540px";
       exploreUI.style.height = "810px";
+      if (window.domainType === "chat") {
+        window.chatActive = true;
+        document.getElementById("uniEvent4").setAttribute("style", "animation: none;");
+      }
+      // window.deactivateDrag();
       // BELOW TEMP OPTION
-      exploreUI.style.top = selectionBoxPosition.y / 2 + "px";
+      exploreUI.style.top = (window.innerHeight - 810) / 2 + "px";
       var vid = document.getElementById("tempVid");
       var vid2 = document.getElementById("tempVid2");
       if (vid?.src != "") {
         vid?.play();
       }
-      if (vid2.src != "") {
-        vid2.play();
+      if (vid2?.src != "") {
+        vid2?.play();
       }
     } 
   }
@@ -600,7 +738,7 @@ window.moveMenu = () => {
           shadow.getElementById("fm-enhancements").style.display = "grid";
           shadow.getElementById("fm-header-headline").style.opacity = "0%";
           shadow.getElementById("fm-header-headline").style.pointerEvents = "none";
-          shadow.getElementById("fm-help").style.display = "none";
+          shadow.getElementById("fm-beacons").style.display = "none";
           shadow.getElementById("fm-feedback").style.display = "none";
           shadow.getElementById("fm-settings").style.display ="none";
           shadow.getElementById("fm-profile").style.display = "none";
@@ -625,7 +763,7 @@ window.moveMenu = () => {
           },500)
           dragElement(moveMenu, true);
           window.openInventory();
-          shadow.getElementById("fm-help").style.display = "none";
+          shadow.getElementById("fm-beacons").style.display = "none";
           shadow.getElementById("fm-feedback").style.display = "none";
           shadow.getElementById("fm-settings").style.display ="none";
           shadow.getElementById("fm-inventory").style.display = "grid";
@@ -639,8 +777,8 @@ window.moveMenu = () => {
           shadow.getElementById("uniMenuItemsSvg").childNodes.forEach(el => {
             el.style.fill = "white";
           });
-          shadow.getElementById("uniMenuHelp").setAttribute("class", "menuTabs");
-          shadow.getElementById("uniMenuHelpSvg").childNodes.forEach(el => {
+          shadow.getElementById("uniMenuBeacons").setAttribute("class", "menuTabs");
+          shadow.getElementById("uniMenuBeaconsSvg").childNodes.forEach(el => {
             el.style.stroke = "#ff002d";
           });
           //
@@ -665,7 +803,7 @@ window.moveMenu = () => {
           shadow.getElementById("fm-profile").style.display = "grid";
           shadow.getElementById("fm-header").style.display = "grid";
           shadow.getElementById("fm-header-headline").style.opacity = "100%";
-          shadow.getElementById("fm-help").style.display = "none";
+          shadow.getElementById("fm-beacons").style.display = "none";
           shadow.getElementById("fm-inventory").style.display = "none";
           shadow.getElementById("fm-feedback").style.display = "none";
           shadow.getElementById("fm-settings").style.display ="none";
@@ -684,7 +822,7 @@ window.moveMenu = () => {
         break;
       case "uniMenuSettings":
         el.addEventListener("click", (e) => {
-          shadow.getElementById("fm-help").style.display = "none";
+          shadow.getElementById("fm-beacons").style.display = "none";
           shadow.getElementById("fm-inventory").style.display = "none";
           shadow.getElementById("fm-feedback").style.display = "none";
           shadow.getElementById("fm-enhancements").style.display = "none";
@@ -699,10 +837,11 @@ window.moveMenu = () => {
           window.deactivateDrag();
         } );
         break;
-      case "uniMenuHelp":
+      case "uniMenuBeacons":
         el.addEventListener("click", (e) => {
           dragElement(moveMenu, true);
-          shadow.getElementById("fm-help").style.display = "grid";
+          document.getElementById("getUniMenu").shadowRoot.getElementById("beaconNoti").style.display = "none";
+          shadow.getElementById("fm-beacons").style.display = "grid";
           shadow.getElementById("fm-inventory").style.display = "none";
           shadow.getElementById("fm-feedback").style.display = "none";
           shadow.getElementById("fm-settings").style.display ="none";
@@ -729,7 +868,7 @@ window.moveMenu = () => {
       case "uniMenuFeedback":
         el.addEventListener("click", (e) => {
           shadow.getElementById("feedbackHeadline").innerHTML = "Help make T.A.O.S City better.";
-          shadow.getElementById("fm-help").style.display = "none";
+          shadow.getElementById("fm-beacons").style.display = "none";
           shadow.getElementById("fm-inventory").style.display = "none";
           shadow.getElementById("fm-enhancements").style.display = "none";
           shadow.getElementById("fm-profile").style.display = "none";
@@ -790,10 +929,10 @@ window.headlineSwtich = (e) => {
       h3.style.opacity = "0%";
       h3.style.userSelect = "none";
       break;
-    case "menuHelp":
-      h1.innerHTML = "Player";
-      h2.innerHTML = "Wallet";
-      h3.innerHTML = "Network";
+    case "menuBeacons":
+      h1.innerHTML = "All";
+      h2.innerHTML = "Domain";
+      h3.innerHTML = "Citizen";
       h1.style.opacity = "100%";
       h1.style.userSelect = "auto";
       h2.style.opacity = "100%";
@@ -845,6 +984,7 @@ window.hideMenu = () => {
     document.getElementById("uniEvent").style.display = "block";
     document.getElementById("uniEvent2").style.display = "block";
     document.getElementById("uniEvent3").style.display = "block";
+    document.getElementById("uniEvent4").style.display = "block";
     document.getElementById("welcome").style.display = "none";
     document.getElementById("welcome").style.pointerEvents = "none";
     document.getElementById("intro").style.display = "none";
@@ -867,6 +1007,7 @@ window.showMenu = () => {
     document.getElementById("uniEvent")?.remove();
     document.getElementById("uniEvent2").remove();
     document.getElementById("uniEvent3").remove();
+    document.getElementById("uniEvent4").remove();
     // hide the selection box
     document.getElementById("explore").style.display = "none";
     previewUI.style.transform = "scale(0)";
@@ -916,28 +1057,36 @@ window.connectWallet = async () => {
     connectError();
     return;
   } else {
-    connected = await window.ic.plug.isConnected().catch((e) => {
-      console.error(e);
-    });
-    // window.getAllUserNFTs = await import('@psychedelic/dab-js').then(module => {
-    //   return module.getAllUserNFTs;
-    //   });
+    console.log(window.ic)
+    // window.connected = await window.ic.plug.isConnected().catch((e) => {
+    //   console.error(e);
+    // });
+    window.connected = await window.ic.bitfinityWallet.isConnected()
+    console.log(window.connected)
   }
   // Callback to print sessionData
-  const onConnectionUpdate = () => {
-    // Do something when connection is updated
-    console.log(window.ic.plug.sessionManager.sessionData)
-  }
+  // const onConnectionUpdate = () => {
+  //   // Do something when connection is updated
+  //   // console.log(window.ic.plug.sessionManager.sessionData)
+  // }
   //
-  if (connected === false) {
-      const plugpublicKey = await window.ic.plug.requestConnect(
-        {
-          whitelist: whitelist,
-          host: host,
-          onConnectionUpdate,
-          timeout: 50000
-        }
-      ).catch((e) => {
+  if (window.connected === false) {
+      // const plugpublicKey = await window.ic.plug.requestConnect(
+      //   {
+      //     whitelist: whitelist,
+      //     host: host,
+      //     onConnectionUpdate,
+      //     timeout: 50000
+      //   }
+      // ).catch((e) => {
+      //   var error = {e};
+      //   connectError(error);
+      //   console.error("Connect Wallet",e);
+      // });
+      const publicKey = await window.ic.bitfinityWallet.requestConnect({
+        whitelist: whitelist,
+        timeout: 50000,
+      }).catch((e) => {
         var error = {e};
         connectError(error);
         console.error("Connect Wallet",e);
@@ -949,20 +1098,16 @@ window.connectWallet = async () => {
         console.log("Create Actor",e);
       })
       // Get the user principal id
-      const principalId = await window.ic.plug.agent.getPrincipal().catch((e) => {
+      const principalId = await window.ic.bitfinityWallet.getPrincipal().catch((e) => {
         console.error("Get Principal",e);
       });
-      user.principal = `${principalId}`;
-      const result = await window.ic.plug.requestBalance().catch((e) => {
-        console.error("Get Balance",e);
-      })
-      user.balance = result;
-      user.pk = plugpublicKey;
+      window.user.principal = `${principalId}`;
+      window.user.pk = publicKey;
       //
       // Import the getAllUserNFTs function if someCondition is true
       playerState();
       // getNFTCollections();
-  } else if (connected === true) {
+  } else if (window.connected === true) {
     await createActor().catch((error) => {
       console.log(error);
     });
@@ -1004,6 +1149,8 @@ window.connectWallet = async () => {
 
 // player state
 const playerState = async () => {
+  var shadow = document.getElementById("getUniMenu").shadowRoot;
+  console.log(window.suUiActor);
   const admin = await window.suUiActor.adminUser().catch((e) => {
     console.log("Get Admin", {e});
     var error = {e}
@@ -1013,8 +1160,13 @@ const playerState = async () => {
   }).catch((error) => {
     console.log(error);
   });
-  if (admin === user.principal) {
+  if (admin === window.user.principal) {
     console.log("Admin Logged in");
+  } else {
+    shadow.getElementById("menuLoadingScreen").style.display = "none";
+    shadow.getElementById("menuLoadingScreen3").style.display = "none";
+    soundtrack.stop('menuLoading1');
+    uiState.nftsLoaded = true;
   }
 }
 
@@ -1023,10 +1175,12 @@ const playerState = async () => {
 const createActor = async () => {
       // Create an actor to interact with the NNS Canister
       // we pass the NNS Canister id and the interface factory
-      user.principal = window.ic.plug.sessionManager.sessionData.principalId;
-      window.suUiActor = await window.ic.plug.createActor({
+      window.user.principal = await window.ic.bitfinityWallet.getPrincipal();
+      // console.log(window.ic.infinityWallet);
+      window.suUiActor = await window.ic.bitfinityWallet.createActor({
         canisterId: VITE_canister,
         interfaceFactory: suIDL,
+        host: "https://uqjdj-siaaa-aaaag-aaoxq-cai.ic0.app/"
       }).catch((e) => {
         console.log("creatActor", e);
       });
@@ -1157,4 +1311,133 @@ window.rsvp = async () => {
 //   }
 //   // (npc, tone, lines) 
 // ]);
+
+// SOCKET IO
+
+const socket = io('http://localhost:3001');
+
+// Set the socket.io instance for the chat room
+const roomName = "alphaTestersChat";
+const roomDescription = '1st Chat Room for Alpha Testers';
+window.room1 = chatRoom.create(roomName, roomDescription);
+window.room1.setIo(socket);
+
+// Test Beacon Config
+var beacons = [window.room1];
+
+// Receive and display messages
+socket.on('newMessage', (data) => {
+  console.log("Here 2", {data});
+  console.log(window.room1);
+  window.room1.addMessage(data.message);
+  const messageElement = document.createElement('div');
+  const messagesDiv = document.getElementById('chatRoom1');
+  messageElement.setAttribute('class', 'chatMessageContainer');
+  // messageElement.innerText = `${data.sender}: ${data.message}`;
+  messageElement.innerHTML = `
+  <div class="messageAvatar self">
+    <img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+  </div>
+  <div class="messageBody">
+    <div class="messageSender">Damion</div>
+    <p class="messageText">${data.message}</p>
+  </div>
+  `;
+   messagesDiv?.appendChild(messageElement);
+  if (window.dtfullMenuOpen === false && window.chatActive === false) {
+    document.getElementById("getUniMenu").shadowRoot.getElementById("beaconNoti").style.display = "block";
+  }
+  if (window.chatActive === false) {
+    var newBeacon = document.createElement('div');
+    document.getElementById("uniEvent4").setAttribute("style", "animation: whiteBoxInnerGlow 2s infinite;");
+    newBeacon.setAttribute('class', 'beacon tut');
+    newBeacon.setAttribute('data-message', `${data.message}`);
+    newBeacon.addEventListener('click', (e) => {
+      document.getElementById("getUniMenu").openBeaconMessage(e);
+    });
+    newBeacon.innerHTML = `
+        <div class="beaconOrigin">
+          <div class="beaconIdenIcon">!</div>
+          <div class="beaconSender">${data.roomName}</div>
+        </div>
+        <div class="beaconPreview">
+          ${data.message.substring(0,25)}...
+        </div>
+    `;
+    document.getElementById("getUniMenu").shadowRoot.getElementById("beaconsBody").appendChild(newBeacon);
+  }
+});
+
+// Universe Players
+// Set the socket.io instance for the chat room
+const room2Name = "alphaTesters";
+const room2Description = 'Alpha Testers';
+window.uniPlayer = {
+  playerId: Math.floor(Math.random()*100), 
+  playerName: "Damion",
+  x: 0, 
+  y: 0
+};
+window.room2 = uniPlayers.create(room2Name, room2Description);
+window.room2.setIo(socket);
+var playerInt = false;
+var otherPlayers = [];
+
+
+// Receive and display messages
+socket.on('players', (data) => {
+  if (playerInt === false) {
+    var player1 = uniPlayers.create(data.playerId, data.playerData);
+    player1.renderPlayer(data.playerData);
+    otherPlayers.push(data.playerData.playerId); 
+    playerInt = true;
+    return;
+  }
+  if (otherPlayers.includes(data.playerData.playerId) === false) {
+    otherPlayers.push(data.playerData.playerId);
+    window.room2.renderPlayer(data.playerData);
+  }
+  document.getElementById(`${data.playerData.playerId}`).style.top = data.playerData.y;
+  document.getElementById(`${data.playerData.playerId}`).style.left = data.playerData.x;
+});
+
+
+// TOOLTIP
+window.elementHelp = async (e) => {
+  document.getElementById("elHelp")?.remove();
+  console.log(e.clientX, e.clientY);
+  const elHelp = document.createElement("div");
+  elHelp.setAttribute("id", "elHelp");
+  elHelp.setAttribute("class", "tooltip");
+  elHelp.innerHTML = `<strong>+2 Stealth</strong> - Consequences unknown!`;
+  document.body.appendChild(elHelp);
+  // Please elHelp above the mouse
+  elHelp.style.top = `${e.clientY - 90}px`;
+  elHelp.style.left = `${e.clientX - 0}px`;
+}
+
+// document.addEventListener("click", (e) => {
+//   window.elementHelp(e);
+// });
+
+// const callback = (changes) => {
+//   console.log('Array has been modified:', changes);
+// };
+
+// window.beacons = async () => {
+//   const proxy = new Proxy(beacons, {
+//     set: (target, property, value) => {
+//       const result = Reflect.set(target, property, value);
+//       callback({property, value});
+//       return result;
+//     }
+//   });
+// }
+
+// window.beacons();
+
+return {
+  dragElement
+};
+
 }

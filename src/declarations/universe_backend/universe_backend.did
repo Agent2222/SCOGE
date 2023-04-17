@@ -31,22 +31,22 @@ type Stats =
 type Result_3 = 
  variant {
    err: NftError;
-   ok: nat;
+   ok: opt principal;
  };
 type Result_2 = 
  variant {
    err: NftError;
-   ok: opt principal;
+   ok: vec TokenMetadata;
  };
 type Result_1 = 
  variant {
    err: NftError;
-   ok: vec TokenMetadata;
+   ok: TokenMetadata;
  };
 type Result = 
  variant {
    err: NftError;
-   ok: TokenMetadata;
+   ok: nat;
  };
 type NftError = 
  variant {
@@ -64,45 +64,47 @@ type NftError =
 type NMCProperties = 
  record {
    alias: text;
-   ancestorsImages: opt vec nat8;
-   ancestorsNames: opt vec text;
-   bankooImage: opt vec nat8;
-   bankooText: opt vec text;
+   ancestorsImages: vec nat8;
+   ancestorsNames: vec text;
+   bankooText: vec text;
    category: text;
-   data: opt vec nat8;
-   discovered: opt vec text;
-   discoveredProgress: opt float64;
-   domains: opt vec nat64;
-   earthImage: opt vec nat8;
-   earthText: opt vec text;
+   discovered: vec text;
+   discoveredProgress: float64;
+   domains: vec nat64;
+   earthText: vec text;
    email: text;
-   endurance: opt float64;
-   fsOn: opt bool;
-   health: opt nat64;
+   endurance: float64;
+   fsOn: bool;
+   health: nat64;
    identifier: text;
-   imageURI: text;
+   imageCompData: vec nat8;
    landNumber: nat64;
    landRank: nat64;
-   linked: opt bool;
-   mental: opt nat64;
-   musicLevel: opt float64;
-   netClass: opt text;
-   network: opt vec text;
-   notiOn: opt bool;
-   physical: opt nat64;
-   pillType: text;
+   linked: bool;
+   mental: nat64;
+   musicLevel: float64;
+   network: vec text;
+   networkClass: text;
+   notiOn: bool;
+   physical: nat64;
    playerLocation: nat64;
-   power: opt nat64;
-   powerUps: opt vec nat64;
+   power: nat64;
+   powerUps: vec nat64;
    progress: nat64;
    rank: nat64;
-   sight: opt nat64;
-   soundLevel: opt float64;
-   speed: opt nat64;
-   story: opt text;
-   styles: opt vec text;
-   videoURI: opt text;
-   xp: opt nat64;
+   ringType: text;
+   sight: nat64;
+   soundLevel: float64;
+   speed: nat64;
+   story:
+    record {
+      imagesUri: vec text;
+      "text": text;
+      title: text;
+      videoURI: text;
+    };
+   styles: vec text;
+   xp: nat64;
  };
 type Metadata = 
  record {
@@ -115,17 +117,19 @@ type Metadata =
  };
 service : {
   adminUser: () -> (text) query;
-  balanceOf: (principal) -> (Result_3) query;
+  alphaLedger: () -> (nat) query;
+  balanceOf: (principal) -> (Result) query;
   custodians: () -> (vec principal) query;
   cycles: () -> (nat) query;
   logo: () -> (opt text) query;
   metadata: () -> (Metadata) query;
-  mint: (principal, nat, vec NMCProperties) -> (Result_3);
+  mint: (principal, nat, vec NMCProperties) -> (Result);
   name: () -> (opt text) query;
-  operatorOf: (nat) -> (Result_2) query;
-  operatorTokenMetadata: (principal) -> (Result_1) query;
-  ownerOf: (nat) -> (Result_2) query;
-  ownerTokenMetadata: (principal) -> (Result_1) query;
+  operatorOf: (nat) -> (Result_3) query;
+  operatorTokenMetadata: (principal) -> (Result_2) query;
+  ownerOf: (nat) -> (Result_3) query;
+  ownerTokenMetadata: (principal) -> (Result_2) query;
+  savetoTemp: (principal, nat, vec NMCProperties) -> (Result);
   setCustodians: (vec principal) -> ();
   setLogo: (text) -> ();
   setName: (text) -> ();
@@ -133,7 +137,9 @@ service : {
   stats: () -> (Stats) query;
   supportedInterfaces: () -> (vec SupportedInterface) query;
   symbol: () -> (opt text) query;
-  tokenMetadata: (nat) -> (Result) query;
+  tempMetaData: (nat) -> (Result_1) query;
+  tokenMetadata: (nat) -> (Result_1) query;
   totalSupply: () -> (nat) query;
   totalUniqueHolders: () -> (nat) query;
+  updateTemp: (principal, nat, vec NMCProperties) -> (Result);
 }

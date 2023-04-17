@@ -1,4 +1,7 @@
 import Text "mo:base/Text";
+import Buffer "mo:base/Buffer";
+import Nat64 "mo:base/Nat64";
+import Nat8 "mo:base/Nat8";
 module {    
 
     public type Metadata = {
@@ -9,6 +12,7 @@ module {
         custodians : [Principal];
         symbol : ?Text;
     };
+    
     public type TokenMetadata = {
         transferred_at : ?Nat64;
         transferred_by : ?Principal;
@@ -24,6 +28,7 @@ module {
         minted_at : Nat64;
         minted_by : Principal;
     };
+
     public type GenericValue = {
         Nat64Content : Nat64;
         Nat32Content : Nat32;
@@ -43,57 +48,60 @@ module {
         TextContent : Text;
     };
 
+    public type ImageArray = [Nat8];
+    public type ImageArrayArray = [ImageArray];
+
     public type NMCProperties = {
         // ** Visual Identifier **
         ringType: Text; 
         landRank: Nat64; 
         rank: Nat64; 
-        powerUps: ?[Nat64]; 
+        powerUps: [Nat64]; 
         progress: Nat64; 
-        xp: ?Nat64; 
+        xp: Nat64; 
         category: Text; 
-        linked: ?Bool;  
+        linked: Bool;  
         // ** Player Info **
         identifier: Text;
         alias: Text; 
         email: Text;
-        earthImage: ?[Nat8]; 
-        earthText: ?[Text];
-        styles: ?[Text];
+        // earthImage: [Nat8]; 
+        earthText: [Text];
+        styles: [Text];
         // ** Player Stats **
-        discovered: ?[Text];
-        discoveredProgress: ?Float;
-        power: ?Nat64;
-        mental: ?Nat64;
-        physical: ?Nat64;
-        health: ?Nat64;
-        speed: ?Nat64;
-        sight: ?Nat64;
-        endurance: ?Float;
-        domains: ?[Nat64];
+        discovered: [Text];
+        discoveredProgress: Float;
+        power: Nat64;
+        mental: Nat64;
+        physical: Nat64;
+        health: Nat64;
+        speed: Nat64;
+        sight: Nat64;
+        endurance: Float;
+        domains: [Nat64];
         playerLocation: Nat64;
         // ** Player Settings **
-        soundLevel: ?Float;
-        musicLevel: ?Float;
-        fsOn: ?Bool;
-        notiOn: ?Bool;
+        soundLevel: Float;
+        musicLevel: Float;
+        fsOn: Bool;
+        notiOn: Bool;
         // ** Player Network **
-        networkClass: ?Text;
-        network: ?[Text];
+        networkClass: Text;
+        network: [Text];
         // ** Land Info **
         landNumber: Nat64;
         story: object{
-            title: ?Text;
-            text: ?Text;
-            imagesUri: ?[Text];
-            videoURI: ?Text;
+            title: Text;
+            text: Text;
+            imagesUri: [Text];
+            videoURI: Text;
         };
-        bankooImage: ?[Nat8];
-        bankooText: ?[Text];
-        imageCompData: ?[Nat8];
+        // bankooImage: [Blob];
+        bankooText: [Text];
+        imageCompData: [Nat8];
         // ** History **
-        ancestorsNames: ?[Text];
-        ancestorsImages: ?[Nat8];
+        ancestorsNames: [Text];
+        ancestorsImages: [Nat8];
     };
 
     public type Stats = {
