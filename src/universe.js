@@ -55,7 +55,7 @@ var uiState = {
 // eslint-disable-next-line no-unused-vars
 const VITE_canister = import.meta.env.VITE_universe_backend_canister_Id;
 const can2 = "ryjl3-tyaaa-aaaaa-aaaba-cai"
-const whitelist = [VITE_canister];
+const whitelist = [can2];
 // eslint-disable-next-line no-unused-vars
 const host = "https://a4gq6-oaaaa-aaaab-qaa4q-cai.raw.ic0.app/?id=wnunb-baaaa-aaaag-aaoya-cai";
 // BEFORE LAUNCH !!!!!!!!!
@@ -1178,9 +1178,9 @@ const createActor = async () => {
       window.user.principal = await window.ic.bitfinityWallet.getPrincipal();
       // console.log(window.ic.infinityWallet);
       window.suUiActor = await window.ic.bitfinityWallet.createActor({
-        canisterId: VITE_canister,
+        canisterId: can2,
         interfaceFactory: suIDL,
-        host: "https://uqjdj-siaaa-aaaag-aaoxq-cai.ic0.app/"
+        host: "http://localhost:8080/"
       }).catch((e) => {
         console.log("creatActor", e);
       });
@@ -1314,7 +1314,7 @@ window.rsvp = async () => {
 
 // SOCKET IO
 
-const socket = io('https://www.scoge.co:3001');
+const socket = io('http://localhost:3001');
 
 // Set the socket.io instance for the chat room
 const roomName = "alphaTestersChat";
@@ -1323,7 +1323,7 @@ window.room1 = chatRoom.create(roomName, roomDescription);
 window.room1.setIo(socket);
 
 // Test Beacon Config
-var beacons = [window.room1];
+// var beacons = [window.room1];
 
 // Receive and display messages
 socket.on('newMessage', (data) => {
