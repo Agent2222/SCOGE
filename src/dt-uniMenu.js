@@ -1,11 +1,11 @@
-import { SoundtrackManager } from "./soundtrack.js";
+// import { SoundtrackManager } from "./soundtrack.js";
 
 // import { idlFactory } from "./declarations/universe_backend/;universe_backend.did.js";
 import { Configuration, OpenAIApi } from "openai";
 window.dtmenuOpen = true;
 window.dtfullMenuOpen = true;
 const VITE_ScogeI = import.meta.env.VITE_ScogeI;
-const soundtrack2 = new SoundtrackManager();
+// const soundtrack2 = new SoundtrackManager();
 // const suIDL = idlFactory;
 // console.log({suIDL});
 var nmcProps = {
