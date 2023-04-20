@@ -1,5 +1,4 @@
 import { SoundtrackManager } from "./soundtrack.js";
-import { universe } from "./universe.js";
 
 // import { idlFactory } from "./declarations/universe_backend/;universe_backend.did.js";
 import { Configuration, OpenAIApi } from "openai";
@@ -498,9 +497,9 @@ class getUniMenu extends HTMLElement {
     //   }
     //   this.switchMenuTabs(el);
     // });
-    this.shadow.getElementById("pinMenu").addEventListener("click", () => {
-      pinMenu();
-    });
+    // this.shadow.getElementById("pinMenu").addEventListener("click", () => {
+    //   this.pinMenu();
+    // });
     this.beacons = this.shadow.querySelectorAll(".beacon");
     this.beacons.forEach(element => {
       element.addEventListener("click", (e) => {

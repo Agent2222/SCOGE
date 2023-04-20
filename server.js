@@ -2,15 +2,9 @@ const { createServer } = require('http');
 const { Server } = require('socket.io');
 
 const httpServer = createServer();
-// const io = new Server(httpServer, {
-//   cors: {
-//     origin: 'http://localhost:3000',
-//     methods: ['GET', 'POST'],
-//   },
-// });
 const io = new Server(httpServer, {
   cors: {
-    origin: 'https://www.scoge.co:3000',
+    origin: 'http://localhost:3000',
     methods: ['GET', 'POST'],
   },
 });
@@ -47,7 +41,3 @@ io.on('connection', (socket) => {
 httpServer.listen(3001, () => {
   console.log('Socket.IO server listening at http://localhost:3001');
 });
-
-// httpServer.listen(3001, () => {
-//   console.log('Socket.IO server listening at http://localhost:3001');
-// });
