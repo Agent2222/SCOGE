@@ -134,7 +134,7 @@ class dtInvestors extends HTMLElement {
       currentPage = 0;
     }
     currentPage++;
-    this.shadow.getElementById("gImg").src = `https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-about-${currentPage}.webp`;
+    this.shadow.getElementById("gImg").src = `https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-about-${currentPage}.webp`;
   }
 
   previousImage() {
@@ -144,7 +144,7 @@ class dtInvestors extends HTMLElement {
     } else {
       currentPage--;
     }
-    this.shadow.getElementById("gImg").src = `https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-about-${currentPage}.webp`;
+    this.shadow.getElementById("gImg").src = `https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-about-${currentPage}.webp`;
   }
 
   nextBtsImage() {
@@ -153,7 +153,7 @@ class dtInvestors extends HTMLElement {
       currentBtsPage = 0;
     }
     currentBtsPage++;
-    this.shadow.getElementById("btsImg").src = `https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-traction-${currentBtsPage}.jpg`;
+    this.shadow.getElementById("btsImg").src = `https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-traction-${currentBtsPage}.jpg`;
   }
 
   preBtsImage() {
@@ -163,7 +163,7 @@ class dtInvestors extends HTMLElement {
     } else {
       currentBtsPage--;
     }
-    this.shadow.getElementById("btsImg").src = `https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-traction-${currentBtsPage}.jpg`;
+    this.shadow.getElementById("btsImg").src = `https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-traction-${currentBtsPage}.jpg`;
   }
 
     // Sliders Sum
@@ -290,7 +290,7 @@ class dtInvestors extends HTMLElement {
          <style>
             @font-face {
                 font-family: "BS-R";
-                src: url("https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.svg");
+                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.svg");
                 font-weight: normal;
                 font-style: normal;
             }
@@ -876,7 +876,7 @@ class dtInvestors extends HTMLElement {
             <div id="scrollBody">
             <div id="header">
               <div id="head">Investor Presentation</div>
-              <div id="sub">Version 1 - <span class="acc" style="cursor:pointer;"><a href="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/files/SCOGE-INVESTOR-PRE22-R1.pdf" id="pdfDL" target="_blank">(Download PDF Version)</a></span></div>
+              <div id="sub">Version 1 - <span class="acc" style="cursor:pointer;"><a href="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/files/SCOGE-INVESTOR-PRE22-R1.pdf" id="pdfDL" target="_blank">(Download PDF Version)</a></span></div>
               <div id="menuHead">
                 <div style="color: var(--secondary); border-color:var(--secondary);" id="introMenu" class="menu-item">INTRO</div>
                 <div id="aboutMenu" class="menu-item">ABOUT</div>
@@ -897,7 +897,7 @@ class dtInvestors extends HTMLElement {
               <span class="acc" style="text-align:center; font-size:1.5em;">SCOGÉ is a new and evolving luxury fashion brand that focuses on catering to an untapped global appetite for styles and stories from under-represented communities.</span><br><br>The brand serves as a powerful symbol of this community, making its members feel seen, valued, and stylish. SCOGÉ has the potential to make a real difference in the lives of its customers through its unique approach to luxury fashion and storytelling. Additionally, a growing trend of underrepresented communities craving more visibility in every market - a trend that can be seen in the popularity of Marvel's box office hit movie 'The Black Panther' and brands like Fenty Beauty - will partially attribute to SCOGÉ's success.
             </div>
             <div class="generalImages">
-              <img src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Banner-World-SCOGE-narrow.webp"/>
+              <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Banner-World-SCOGE-narrow.webp"/>
             </div>
             <div class="body2">
               Designer luxury brands are novel universes created to satisfy emotional needs. They serve people with a need to express themselves as imaginative and opulent through fashion. People dream, and luxury brands like SCOGÉ turn dreams into reality.
@@ -910,7 +910,7 @@ class dtInvestors extends HTMLElement {
                 <div id="nextGalleryImg" class="arrow">&#9658;</div>
               </div>
               <div id="galleryimg">
-              <img id="gImg" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-about-1.webp" alt=""/>
+              <img id="gImg" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-about-1.webp" alt=""/>
               </div>
             </div>
             <div class="body2">
@@ -919,14 +919,14 @@ class dtInvestors extends HTMLElement {
             </div>
             <h1 id="productSect">PRODUCTS</h1>
             <div id="looks">
-              <img src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-full-products-opt1.jpeg" alt=""/>
+              <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-full-products-opt1.jpeg" alt=""/>
             </div>
             <div class="body2">
               Our products are sourced and created in NYC, with a dedicated approach to up-cycling unused fabrics, trims and designs from previous seasons. We champion designing within our own world, defining our own trends, and becoming a part of the next guard of luxury fashion.<br><br>"Despite widespread staffing shortages and supply chain issues, the <span class="acc">fashion and apparel industry saw $180.5 billion in e-commerce revenue in 2021</span>, up from $145 billion in 2020." - 2022 Global Ecommerce Report: Fashion and Apparel
             </div>
             <h1 id="edgeSect">EDGE</h1>
             <div class="generalImages">
-              <img src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-about-3.webp"/>
+              <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-about-3.webp"/>
             </div>
             <div class="body2">
               The products and experiences we create are glimpses into a new bold world. We’ve created our own world, with original places, cultures and stories, our edge is our originality. And each vivid exploration creates an opportunity to develop ip that deeply resonates with our customers. Anyone can make a story about star wars. But there will always be one star wars™            
@@ -967,7 +967,7 @@ class dtInvestors extends HTMLElement {
                 <span>|</span>
                 <div id="nextBtsImg" class="arrow">&#9658;</div>
               </div>
-              <img id="btsImg" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-traction-1.jpg"/>
+              <img id="btsImg" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-traction-1.jpg"/>
             </div>
             <div class="body2">
               We have the vision and objective, now we need the team. So far, the development of the SCOGÉ brand is attributed to it’s founder, friendships, and temporary contract help. Help is capital intensive, but delegation is key.<br><br>Right now, we’re focused on three main things:
@@ -1080,10 +1080,10 @@ class dtInvestors extends HTMLElement {
             <div id="team">
                 <div id="teamImg">
                   <div id="teamMain" class="profile">
-                    <img src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/profiles/SCOGE-profile-1x1.jpg"/>
+                    <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/profiles/SCOGE-profile-1x1.jpg"/>
                   </div>
                   <div id="team2" class="profile advisors">
-                    <img src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/profiles/LEX-profile-1x1.webp"/>
+                    <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/profiles/LEX-profile-1x1.webp"/>
                   </div>
                 </div>
                 <div id="teamInfo">

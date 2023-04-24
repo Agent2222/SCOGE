@@ -97,7 +97,7 @@ class scogeRsvp extends HTMLElement {
             }
             @font-face {
                 font-family: "Garamond";
-                src: url("https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/Garamond-Regular.svg");
+                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/Garamond-Regular.svg");
                 font-weight: normal;
                 font-style: normal;
             }
@@ -123,7 +123,7 @@ class scogeRsvp extends HTMLElement {
               width: 100%;
               height: 100%;
               background-color: rgba(0, 0, 0, 0.9);
-              background-image: url("https://storage.fleek.zone/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/textBGRSVP.jpg");
+              background-image: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/textBGRSVP.jpg");
               background-size: cover;
               left: 0;
               top: 0;

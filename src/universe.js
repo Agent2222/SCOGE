@@ -4,6 +4,10 @@ import { idlFactory } from "./declarations/universe_backend/universe_backend.did
 import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
 import { chatRoom } from './uniHelpers/chat.js';
 import { uniPlayers } from "./uniHelpers/players.js";
+import { connectPlugWallet, createActor1 } from "./wallets.js";
+import { Scenario } from "./game/scenarios/scenarios.js";
+import { DialogueScene } from "./game/scenarios/DialogueScene.js";
+import { gsap } from "gsap";
 
 // Init Soundtrack
 export async function universe() {
@@ -34,6 +38,7 @@ var timeoutHandle1;
 var timeoutHandle2;
 var previewOpen = false;
 var typing = false;
+var actor = null;
 window.connected = false;
 var tempLandEx = ["1435","3162","2849","6208"]
 window.suUiActor = null;
@@ -58,8 +63,36 @@ const can2 = "ryjl3-tyaaa-aaaaa-aaaba-cai"
 const whitelist = [can2];
 // eslint-disable-next-line no-unused-vars
 const host = "https://a4gq6-oaaaa-aaaab-qaa4q-cai.raw.ic0.app/?id=wnunb-baaaa-aaaag-aaoya-cai";
+const local = "http://localhost:8080/";
+const localhost = "http://127.0.0.1:8080/?canisterId=r7inp-6aaaa-aaaaa-aaabq-cai&id=ryjl3-tyaaa-aaaaa-aaaba-cai";
 // BEFORE LAUNCH !!!!!!!!!
 // Rebuilding Actors Across Account Switches
+
+
+const test = () => {
+  console.log("test");
+  document.addEventListener("keydown", function(e) {
+    if (e.keyCode === 32) {
+      // connectPlugWallet(whitelist, localhost).then( async () => {
+      //   actor = await createActor1(can2, suIDL);
+      // })
+      var scenario = new Scenario();
+      var dialogueScene = new DialogueScene();
+      scenario.addScene(dialogueScene);
+      scenario.show();
+    }
+    if (e.keyCode === 77) {
+      var character = document.querySelector(".character");
+      gsap.to(character, {duration: 0.5, x: 500});
+      // document.querySelector(".character").style.transform = "translateX(100px)";
+      setTimeout(()=> {
+        gsap.to(character, {duration: 0.5, x: 0});
+        // document.querySelector(".character").style.transform = "translateX(0px)";
+      },10);  
+    }
+  });
+}
+test();
 
 window.universeSystem = async () => {
   var uniCtx = universeCanvas.getContext("2d");
@@ -85,7 +118,7 @@ window.universeSystem = async () => {
         uniCtx.fillRect(0, y, img.width, 1);
       }
     }
-    img.src = "https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/scoge-taos-city-universe.jpg";
+    img.src = "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/scoge-taos-city-universe.jpg";
     cam.scrollTo(990,0);
     // prevent scrolling under scrollto(990,0) and activate scrolling over scrollto(990,0)
     cam.addEventListener("scroll", function() {
@@ -407,7 +440,7 @@ socket.emit('players', {
         // messageElement.innerText = `${data.sender}: ${data.message}`;
         mEl.innerHTML = `
         <div class="messageAvatar self">
-          <img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+          <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
         </div>
         <div class="messageBody">
           <div class="messageSender">Damion</div>
@@ -565,7 +598,7 @@ window.openLocationCard = () => {
 }
 
 var tempCont1 = `<div class="cannonIcon">
-<img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
+<img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
 </div>
 <h1>Ch.1 - Reacclimate</h1>
 <p>In the distant land of T.A.O.S City, there exists a hidden world of self-exiled creators, known as the Oracles. These Oracles reside in ancient, desolate mansions on the outskirts of the city, and possess a wealth of knowledge and experience that is sought after by migrants from far-off lands. These migrants come to T.A.O.S City in search of a new life, but often find themselves lost and alone in a vast and unfamiliar place. They turn to the Oracles for guidance, seeking to avoid the wrath of the city's enforcers, a powerful and ruthless group of conservative citizens.
@@ -576,25 +609,25 @@ This is the story of one such migrant, and their journey to find the Oracles, to
 </p>`
 var tempCont2 = `
 <div class="cannonIcon">
-<img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
+<img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
 </div>
 <div id="tempVidHead">Ch.2 - Prologue 1</div>
 <div id="tempVidCon">
-  <video id="tempVid" src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Chapter2-Prologue-1-HD.mp4" controls></video>
+  <video id="tempVid" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Chapter2-Prologue-1-HD.mp4" controls></video>
 </div>
 `
 var tempCont3 = `
 <div class="cannonIcon">
-<img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
+<img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
 </div>
 <div id="tempVidHead2">Speak Easy</div>
 <div id="tempVidCon2">
-  <video id="tempVid2" src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/nightout.mp4" controls></video>
+  <video id="tempVid2" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/nightout.mp4" controls></video>
 </div>
 `
 var chatDomTemplate = `
 <div class="cannonIcon">
-  <img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
+  <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
 </div>
 <div class="domainFunction">
   <div class="domainHeader">
@@ -603,7 +636,7 @@ var chatDomTemplate = `
   </div>
   <div class="domainInfo">
     <div class="domainLordImg">
-      <img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+      <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
     </div>
     <div class="domainInfoBlockRight">
       <div class="domainLordText">
@@ -622,7 +655,7 @@ var chatDomTemplate = `
   <div class="chatRoom" id="chatRoom1">
     <div class="chatMessageContainer">
       <div class="messageAvatar self">
-        <img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+        <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
       </div>
       <div class="messageBody">
         <div class="messageSender">Damion</div>
@@ -631,7 +664,7 @@ var chatDomTemplate = `
     </div>
     <div class="chatMessageContainer">
       <div class="messageAvatar self">
-        <img src="https://storage.fleek.zone/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/red-s1.jpg"/>
+        <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/red-s1.jpg"/>
       </div>
       <div class="messageBody">
         <div class="messageSender">Violet</div>
@@ -742,7 +775,7 @@ window.moveMenu = () => {
           shadow.getElementById("fm-feedback").style.display = "none";
           shadow.getElementById("fm-settings").style.display ="none";
           shadow.getElementById("fm-profile").style.display = "none";
-          shadow.getElementById("fm-enhancements").innerHTML = `<img src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/universe/nft-shop.webp" alt="NFT Shop" id="nftShop">`;
+          shadow.getElementById("fm-enhancements").innerHTML = `<img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/universe/nft-shop.webp" alt="NFT Shop" id="nftShop">`;
           shadow.getElementById("nftShop").addEventListener("click", () => {
             document.getElementById("getNfts").toggleNftScreen();
             canvas.style.filter = "blur(5px)";
@@ -1336,7 +1369,7 @@ socket.on('newMessage', (data) => {
   // messageElement.innerText = `${data.sender}: ${data.message}`;
   messageElement.innerHTML = `
   <div class="messageAvatar self">
-    <img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+    <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
   </div>
   <div class="messageBody">
     <div class="messageSender">Damion</div>
