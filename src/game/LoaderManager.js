@@ -24,7 +24,7 @@ export default class LoaderManager {
     // this.game.engine.displayLoadingUI();
     BABYLON.SceneLoader.ImportMesh(
       "",
-      "https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/3d/",
+      "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/3d/",
       "test1.gltf",
       this.scene,
       () => {

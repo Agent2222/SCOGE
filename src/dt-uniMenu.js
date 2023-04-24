@@ -1,11 +1,12 @@
-// import { SoundtrackManager } from "./soundtrack.js";
+import { SoundtrackManager } from "./soundtrack.js";
+import { universe } from "./universe.js";
 
 // import { idlFactory } from "./declarations/universe_backend/;universe_backend.did.js";
 import { Configuration, OpenAIApi } from "openai";
 window.dtmenuOpen = true;
 window.dtfullMenuOpen = true;
 const VITE_ScogeI = import.meta.env.VITE_ScogeI;
-// const soundtrack2 = new SoundtrackManager();
+const soundtrack2 = new SoundtrackManager();
 // const suIDL = idlFactory;
 // console.log({suIDL});
 var nmcProps = {
@@ -497,9 +498,9 @@ class getUniMenu extends HTMLElement {
     //   }
     //   this.switchMenuTabs(el);
     // });
-    // this.shadow.getElementById("pinMenu").addEventListener("click", () => {
-    //   this.pinMenu();
-    // });
+    this.shadow.getElementById("pinMenu").addEventListener("click", () => {
+      pinMenu();
+    });
     this.beacons = this.shadow.querySelectorAll(".beacon");
     this.beacons.forEach(element => {
       element.addEventListener("click", (e) => {
@@ -521,25 +522,25 @@ class getUniMenu extends HTMLElement {
          <style>
             @font-face {
                 font-family: "BS-B";
-                src: url("https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Bold.svg");
+                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Bold.svg");
                 font-weight: bold;
                 font-style: normal;
             }
             @font-face {
                 font-family: "BS-R";
-                src: url("https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.svg");
+                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.svg");
                 font-weight: normal;
                 font-style: normal;
             }
             @font-face {
                 font-family: "BS-SB";
-                src: url("https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-SemiBold.svg");
+                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-SemiBold.svg");
                 font-weight: 600;
                 font-style: normal;
             }
             @font-face {
                 font-family: "BS-I";
-                src: url("https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Italic.svg");
+                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Italic.svg");
                 font-weight: normal;
                 font-style: italic;
             }
@@ -1779,7 +1780,7 @@ class getUniMenu extends HTMLElement {
             <div id="refresh"></div>
             <div id="menuHeader">
               <div id="topMenu">
-               <img id="uniMenuLogo" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/SCOGÉ_Logo-red.png" draggable="false">
+               <img id="uniMenuLogo" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/SCOGÉ_Logo-red.png" draggable="false">
                <div id="uniMenuIcon">&#8682;</div>
               </div>
               <div id="uniVersion">
@@ -1854,7 +1855,7 @@ class getUniMenu extends HTMLElement {
                 </div>
               </div>
               <div id="fm-enhancements">
-                <img src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/universe/nft-shop.webp" alt="NFT Shop" id="nftShop">
+                <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/universe/nft-shop.webp" alt="NFT Shop" id="nftShop">
               </div>
               <div id="fm-inventory">
                 <div id="inventoryBody">
@@ -1884,13 +1885,13 @@ class getUniMenu extends HTMLElement {
                             ADD NEW
                           </div>
                           <div class="Inventory-Image-Cont">
-                            <img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+                            <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
                           </div>
                           <div class="Inventory-Image-Cont">
-                            <img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+                            <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
                           </div>
                           <div class="Inventory-Image-Cont">
-                            <img src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+                            <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
                           </div>
                       </div>
                     </div>
@@ -1934,7 +1935,7 @@ class getUniMenu extends HTMLElement {
                         </g>
                       </g>
                     </svg>               
-                    <img id="proImg" src="https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/TAOS-CITY-IDC.png">
+                    <img id="proImg" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/TAOS-CITY-IDC.png">
                   </div>
                   <div id="proInfo">
                     <div class="proInfoSect">

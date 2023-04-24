@@ -63,7 +63,7 @@ class scogeUpdates extends HTMLElement {
             }
             @font-face {
                 font-family: "Garamond";
-                src: url("https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/Garamond-Regular.svg");
+                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/Garamond-Regular.svg");
                 font-weight: normal;
                 font-style: normal;
             }
@@ -132,7 +132,7 @@ class scogeUpdates extends HTMLElement {
             #rightPan {
               width: 100%;
               height: 100%;
-              background-image: url("https://storageapi.fleek.one/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/s-Uni-sq.jpg");
+              background-image: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/s-Uni-sq.jpg");
               background-size: cover;
             }
             #footer {

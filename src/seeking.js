@@ -198,7 +198,7 @@ export class SeekDialogue {
                 window.digiPre = true;
                 var vid3 = document.createElement("video");
                 vid3.setAttribute("id", "portalVideoExt");
-                vid3.setAttribute("src", "https://storage.fleek.zone/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeVideos/Digisette/Digisette-ZoomSpin.mp4");
+                vid3.setAttribute("src", "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeVideos/Digisette/Digisette-ZoomSpin.mp4");
                 vid3.setAttribute("muted", "true");
                 vid3.setAttribute("playsinline", "true");
                 vid3.setAttribute("autoplay", "false");

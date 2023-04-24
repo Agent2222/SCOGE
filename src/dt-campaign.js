@@ -69,7 +69,7 @@ class dtCampaign extends HTMLElement {
       currentPage = 0;
     }
     currentPage++;
-    this.shadow.getElementById("gImg").src = `https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/campaign/scoge-ch1-${currentPage}.webp`;
+    this.shadow.getElementById("gImg").src = `https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/campaign/scoge-ch1-${currentPage}.webp`;
   }
 
   previousImage() {
@@ -79,7 +79,7 @@ class dtCampaign extends HTMLElement {
     } else {
       currentPage--;
     }
-    this.shadow.getElementById("gImg").src = `https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/campaign/scoge-ch1-${currentPage}.webp`;
+    this.shadow.getElementById("gImg").src = `https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/campaign/scoge-ch1-${currentPage}.webp`;
   }
 
   nextBtsImage() {
@@ -88,7 +88,7 @@ class dtCampaign extends HTMLElement {
       currentBtsPage = 0;
     }
     currentBtsPage++;
-    this.shadow.getElementById("btsImg").src = `https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/bts/scoge-bts-${currentBtsPage}.webp`;
+    this.shadow.getElementById("btsImg").src = `https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/bts/scoge-bts-${currentBtsPage}.webp`;
   }
 
   preBtsImage() {
@@ -98,7 +98,7 @@ class dtCampaign extends HTMLElement {
     } else {
       currentBtsPage--;
     }
-    this.shadow.getElementById("btsImg").src = `https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/bts/scoge-bts-${currentBtsPage}.webp`;
+    this.shadow.getElementById("btsImg").src = `https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/bts/scoge-bts-${currentBtsPage}.webp`;
   }
 
 // Functions
@@ -123,7 +123,7 @@ class dtCampaign extends HTMLElement {
          <style>
             @font-face {
                 font-family: "BS-R";
-                src: url("https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.svg");
+                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.svg");
                 font-weight: normal;
                 font-style: normal;
             }
@@ -410,11 +410,11 @@ class dtCampaign extends HTMLElement {
                 <div id="nextGalleryImg" class="arrow">&#9658;</div>
               </div>
               <div id="galleryimg">
-              <img id="gImg" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/campaign/scoge-campaign-1.webp" alt=""/>
+              <img id="gImg" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/campaign/scoge-campaign-1.webp" alt=""/>
               </div>
             </div>
             <div id="looks">
-              <img src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/campaign/SCOGÉ-CH1-Looks.jpeg" alt=""/>
+              <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/campaign/SCOGÉ-CH1-Looks.jpeg" alt=""/>
             </div>
             <div id="film">
             <iframe id="yt" width="100%" height="630" src="https://www.youtube.com/embed/WPccRLEvxW4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -425,7 +425,7 @@ class dtCampaign extends HTMLElement {
                 <span>|</span>
                 <div id="nextBtsImg" class="arrow">&#9658;</div>
               </div>
-              <img id="btsImg" src="https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/bts/scoge-bts-1.webp"/>
+              <img id="btsImg" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/bts/scoge-bts-1.webp"/>
             </div>
             <div id="credits">
               <div>

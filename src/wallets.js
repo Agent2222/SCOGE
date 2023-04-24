@@ -1,0 +1,149 @@
+export const connectPlugWallet = async (whitelist, host) => {
+  if (window.ic === undefined) {
+    console.log("Plug not found - Get Plug Wallet");
+    // connectError();
+    // Scenario - New User. User Does not have a plug wallet
+    return;
+  } else {
+    // Scenario - Returning User
+    const connected = await window.ic.plug.isConnected().catch((e) => {
+      console.error(e);
+    });
+
+    // Callback to print sessionData
+    const onConnectionUpdate = () => {
+        console.log(window.ic.plug.sessionManager.sessionData)
+    }
+
+    if (connected === false) {
+      // Scenario - User has a plug wallet but is not connected
+      console.log("Not Connected");
+      console.log(whitelist, host);
+      const plugpublicKey = await window.ic.plug
+        .requestConnect({
+          whitelist: whitelist,
+          host: host,
+          timeout: 50000,
+        })
+        .catch((e) => {
+          //   var error = {e};
+          //   connectError(error);
+          console.error("Connect Wallet", e);
+        });
+      console.log("pk",plugpublicKey);
+    } else if (connected === true) {
+      // Scenario - User has a plug wallet and is connected
+      console.log("Connected");
+    }
+  }
+};
+
+//   // CANISTER (Change in local / production)
+//   // Create Actor
+export const createActor1 = async (can, idl) => {
+  const suUiActor = await window.ic.plug.createActor({
+      canisterId: can,
+      interfaceFactory: idl,
+    })
+    .catch((e) => {
+      console.log("creatActor", e);
+    });
+    console.log(suUiActor);
+    return suUiActor;
+};
+
+//   // player state
+//   const playerState = async () => {
+//     var shadow = document.getElementById("getUniMenu").shadowRoot;
+//     console.log(window.suUiActor);
+//     const admin = await window.suUiActor.adminUser().catch((e) => {
+//       console.log("Get Admin", {e});
+//       var error = {e}
+//       if (window.dmb === false) {
+//         attn(error);
+//       }
+//     }).catch((error) => {
+//       console.log(error);
+//     });
+//     if (admin === window.user.principal) {
+//       console.log("Admin Logged in");
+//     } else {
+//       shadow.getElementById("menuLoadingScreen").style.display = "none";
+//       shadow.getElementById("menuLoadingScreen3").style.display = "none";
+//       soundtrack.stop('menuLoading1');
+//       uiState.nftsLoaded = true;
+//     }
+//   }
+
+//   // Error
+//   const connectError = async (error) => {
+//     var shadow = document.getElementById("getUniMenu").shadowRoot;
+//     shadow.getElementById("menuLoadingScreen").style.display = "none";
+//     shadow.getElementById("menuLoadingScreen3").style.display = "none";
+//     soundtrack.stop('menuLoading1');
+//     soundtrack.setVolume('menuError1', 0.4);
+//     soundtrack.play('menuError1');
+//     shadow.getElementById("menuMessage").style.display = "grid";
+//     switch (error.e.result?.error_code || error.e.message) {
+//       case "IC0501":
+//         shadow.getElementById("menuMessage").innerHTML = `
+//         <div>
+//           <div id="menuMessageHead">MAINTENANCE ERROR</div>
+//           <div id="menuMessageText">We're on it!</div>
+//           <div id="menuMessageBody">City Central has been notified and will resolve the issue. In the meantime, try refreshing your connection and attempting again.</div>
+//         </div>`
+//         break;
+//       case "The agent creation was rejected.":
+//         shadow.getElementById("menuMessage").innerHTML = `
+//         <div>
+//           <div id="menuMessageHead">DISCONNECTED WALLET</div>
+//           <div id="menuMessageText">You'll need it to continue.</div>
+//           <div id="menuMessageBody" style="text-decoration:none;width:70% !important;margin-left:15%;cursor:default;">T.A.O.S City's Plug wallet is the best of its class. Share any concerns with City Central in the <span style="text-decoration:underline;color: var(--accent);cursor:pointer;">Feedback</span> section.</div>
+//           </div>
+//         </div>`
+//         shadow.querySelector("#menuMessageBody").addEventListener("click", () => {
+//           var el = {
+//             target: shadow.querySelector("#fm-menu2")
+//           }
+//           // var el2 = {
+//           //   target: shadow.querySelector("#menuHelp")
+//           // }
+//           shadow.querySelector("#uniMenuFeedback").click(el);
+//         });
+//         break;
+//       default:
+//         shadow.getElementById("menuMessage").innerHTML = `
+//         <div>
+//           <div id="menuMessageHead">NEURAL CHIP ERROR</div>
+//           <div id="menuMessageText">We're on it!</div>
+//           <div id="menuMessageBody" style="text-decoration:none;width:70% !important;margin-left:15%;">Seems like something went wrong with your Digisette. LX-Comm has been notified. In the meantime, try <span style="color:var(--accent);"><a href="#" onclick="location.reload()">refreshing</a></span> your connection and attempting again.</div>
+//         </div>`
+//         break;
+//     }
+//     // Canister Error
+//     // Default No Wallet Error
+//     // Alternative General Something Went Wrong Error
+//     // shadow.getElementById("menuMessage").innerHTML = `
+//     //     <div>
+//     //     <div id="menuMessageHead">${errors.error}</div>
+//     //     <div id="menuMessageText">${errors.message}</div>
+//     //     <div id="menuMessageBody">${errors.body}</div>
+//     //     <div id="menuMessageCTA">${errors.cta}</div>
+//     //   </div>
+//     // `
+//     // if (errors.etaActive === false) {
+//     //   shadow.getElementById("menuMessageCTA").style.display = "none";
+//     // }
+//   }
+
+//   const attn = async (error) => {
+//     let data = new FormData();
+//     data.append("Email", "ATTN: RELOAD");
+//     data.append("FeedbackText", `${error.e.props.Message}`);
+//     fetch("https://script.google.com/macros/s/AKfycbxOuAozKPY70nQqWzkD_mYHnd954KrUZuRnGNrmGnA4j3l3nSMYuNssqiJMqn7Z4u064w/exec", {
+//     method: "POST",
+//     body: data,
+//     mode: "cors"
+//   })
+//   .then(res => res.text())
+//   }
