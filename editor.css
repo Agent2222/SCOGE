@@ -1,0 +1,746 @@
+:root {
+ font-family: "BS-R";
+}
+
+#editorScreen {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.9);
+    z-index: 500;
+}
+
+#editorHeader {
+    width: 100%;
+    height: 9.9%;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+    float: left;
+    border-bottom: .5px solid #ff002d;
+    display: grid;
+    grid-template-columns: 10% 15% 10% 10% 55%;
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-items: center;
+}
+
+#editorName {
+    font-size: 2em;
+    font-family: "BS-EL";
+}
+
+#scenarioEdit {
+    background-color: transparent;
+    border-left: none;
+    border-right: none;
+    border-top: .5px solid rgba(255, 0, 47, 0.5);
+    border-bottom: .5px solid rgba(255, 0, 47, 0.5);
+    border-radius: 5px;
+    resize: none;
+    transition: .3s all;
+    text-align: center;
+    display: flex;
+    padding-top: 5%;
+    color: #ff002d;
+    font-family: "BS-R";
+}
+
+#scenarioEdit:focus {
+    outline: none;
+}
+
+#scenarioEdit:focus ~ .seBut{
+    opacity: 1 !important;
+}
+
+#scenarioEdit::placeholder {
+    color: rgba(255, 0, 47, 0.3);
+}
+
+.seBut {
+    font-size: .6em;
+    letter-spacing: 1px;
+    color: #ff002d;
+    transition: .3s all;
+    cursor: pointer;
+}
+
+.seBut:hover {
+    opacity: 1 !important;
+}
+
+#generateScenario {
+    color: var(--accent);
+    opacity: 0.2;
+}
+
+#deleteScenario {
+    color: var(--primary);
+    opacity: 0.2;
+}
+
+#editorLeftPanel {
+    float: left;
+    width: 20%;
+    height: 90%;
+    border-right: .2px solid #ff002d;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    font-family: "BS-R";
+}
+
+#editorBody {
+    float: left;
+    width: 48%;
+    height: 90%;
+    border-right: .2px solid #ff002d;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 10% 45% 45%;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+#editorRightPanel {
+    width: 25%;
+    height: 90%;
+    float: left;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 8% 12% 70% 10%;
+    padding-left: 2%;
+}
+
+#editorbodyHeader {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 70% 30%;
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-items: start;
+}
+
+#updateAttributes {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border-top: .5px solid #ff002d;
+    color: #ff002d;
+    font-size: .8em;
+    letter-spacing: 1px;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-items: center;
+}
+
+#scope {
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.editorButton {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-items: center;
+}
+
+.editorButton:hover {
+    background-color: rgba(165, 42, 42, 0.124);
+}
+
+#ebhLeft {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    align-items: center;
+    justify-items: start;
+}
+
+#ebhRight {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-items: end;
+}
+
+#headerSceneName {
+    font-size: 1.5em;
+    text-transform: uppercase;
+}
+
+#headerScenarioName {
+    align-self: flex-end;
+}
+
+#scenarioDropdown {
+    width: 100%;
+    height: 100%;
+    border-bottom: .2px solid #ff002d;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    padding-left: 10%;
+    background-color: rgba(255, 0, 45, 0);
+    color: #ff002d;
+    font-size: 1.1em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    pointer-events: all;
+    cursor: pointer;
+}
+
+#scenarioDropdown:focus {
+    outline: none;
+}
+
+.sectHeader {
+    width: 90%;
+    border-top: .5px solid #ff002d;
+    border-bottom: .5px solid #ff002d;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding-left: 10%;
+    font-size: .9em;
+}
+
+.scenesContainer {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.sceneSelectElement {
+    width: 80%;
+    height: auto;
+    float: left;
+    font-size: .8em;
+    padding: 5% 10%;
+    border-bottom: .5px solid #ff002f4e;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: .3s all;
+    cursor: pointer !important;
+}
+
+.sceneSelectElement:hover {
+    background-color: rgba(255, 0, 45, 0.1);
+    cursor: pointer;
+    letter-spacing: 4px;
+}
+
+#editorbodyElements {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+#inScene {
+    width: 100%;
+    height: 95%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    padding-top: 5%;
+    border-right: .5px solid #ff002f4e;
+}
+
+#inSceneChars {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.inSceneSections {
+    width: 100%;
+    height: 10%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+    padding: 2% 5%;
+    text-transform: uppercase;
+    font-size: .7em;
+}
+
+.inSceneCard {
+    width: 80%;
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+    padding: 4% 5%;
+    text-transform: uppercase;
+    font-size: .9em;
+    border: .5px solid #ff002d;
+    border-radius: 5px;
+    transition: .3s all;
+    cursor: pointer !important;
+    margin-bottom: 5%;
+    text-align: center;
+    transition: .3s all;
+}
+
+.inSceneCard:hover {
+    background-color: rgba(255, 0, 45, 0.1);
+    cursor: pointer;
+    letter-spacing: 4px;
+    font-family: "BS-B";
+}
+
+#editorbodyDisplay {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    position: relative;
+    grid-template-columns: auto;
+    grid-template-rows: 1fr;
+    background-color: rgba(165, 42, 42, 0.124);
+    overflow: hidden;
+}
+
+.menuSceneElement {
+    width: auto;
+    height: 100%;
+    padding: 2% 2%;
+    font-size: .8em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#editorRightPanelHeader {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 70% 15% 15%;
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-items: center;
+    text-transform: uppercase;
+    font-size: 1.2em;
+    letter-spacing: 1px;
+}
+
+#attMain {
+    justify-self: start;
+    align-self: center;
+}
+
+#attLock {
+    color: #ff002d;
+}
+
+#attPreview {
+    color: var(--accent)
+}
+
+.attBut {
+    opacity: .3;
+    font-size: 1.2em;
+    justify-self: center;
+    transition: .3s all;
+    display: none;
+}
+
+.attBut:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+#editorRightPanelContent {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+}
+
+.attribute {
+    width: 100%;
+    height: 4%;
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-items: start;
+    text-transform: uppercase;
+    font-size: 1em;
+    letter-spacing: 1px;
+}
+
+.attInput {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-bottom: .2px solid #ff002f67;
+    background-color: rgba(0, 0, 0, 0);
+    color: #ff002d;
+    font-size: 1em;
+    letter-spacing: .5px;
+}
+
+.attInput:focus {
+    outline: none;
+}
+
+#newSceneBut {
+    color: var(--accent);
+}
+
+.editorButton {
+    transition: .3s all;
+    text-transform: uppercase;
+}
+
+.editorButton:hover {
+    cursor: pointer !important;
+    color: var(--secondary);
+    letter-spacing: 2px;
+}
+
+#editorSceneGal {
+    float: left;
+    width: 100%;
+    height: 100%;
+    border-right: .2px solid #ff002d;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 15% 85%;
+    font-family: "BS-R";
+}
+
+#editorCharGal {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 15% 85%;
+}
+
+#characterDropdown, #elDropdown {
+    width: 100%;
+    border-bottom: .2px solid #ff002d;
+    border-top: .2px solid #ff002d;
+    border-left: none;
+    border-right: none;
+    padding-left: 10%;
+    background-color: rgba(255, 0, 45, 0);
+    color: #ff002d;
+    font-size: 1.1em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#editorElementGal {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 15% 85%;
+}
+
+#aiAsst {
+    width: 100%;
+    height: 90%;
+    margin-top: 8%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 30% 15% 55%;
+}
+
+#editorUserInput {
+    width: 95%;
+    height: 100%;
+    background-color: transparent;
+    color: #ff002d;
+    margin-left: 5%;
+    font-family: "BS-R";
+    padding-left: 5%;
+    border: none;
+    resize: none;
+    letter-spacing: 2px;
+    border-top: .5px solid #ff002f4e;;
+    border-bottom: .5px solid #ff002f4e;;
+    border-radius: 10px;
+}
+
+#editorAiOutput {
+    width: 91%;
+    height: 96%;
+    background-color: transparent;
+    color: #ff002d;
+    margin-left: 5%;
+    font-family: "BS-R";
+    border: none;
+    resize: none;
+    letter-spacing: 2px;
+    border-top: .5px solid #ff002f4e;;
+    border-bottom: .5px solid #ff002f4e;;
+    border-radius: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-size: .9em;
+    padding: 2%;
+}
+
+#editorUserInput::placeholder {
+    color: rgba(255, 0, 47, 0.5);
+    font-family: "BS-R";
+    letter-spacing: 2px;
+}
+
+#editorUserInput:focus {
+    outline: none;
+}
+
+#aiAsstButtons {
+    width: 95%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-left: 5%;
+}
+
+.aiAsstBut {
+    font-size: .8em;
+    letter-spacing: 1px;
+    transition: .3s all;
+    height: 90%;
+    width: 90%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-items: center;
+}
+
+.aiAsstBut:hover {
+    cursor: pointer;
+    background-color: rgba(255, 0, 45, 0.1);
+    letter-spacing: 4px;
+}
+
+#newCharBut, #newElBut {
+    color: var(--accent) !important;
+}
+
+.selectorContainer {
+    opacity: .5;
+    transition: .3s all;
+}
+
+.selectorContainer:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.attribute {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-items: start;
+    text-transform: uppercase;
+    font-size: 1em;
+}
+
+.attribute input {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: .2px solid #ff002f67;
+}
+
+.sliderAttribute {
+    display: grid;
+    grid-template-columns: 30% 10% 60%;
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-items: start;
+    text-transform: uppercase;
+    opacity: .5;
+    transition: .3s all;
+    font-size: .8em;
+}
+
+.sliderAttribute:hover {
+    opacity: 1;
+    font-size: 1em;
+}
+
+.txtAttribute {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-items: start;
+    text-transform: uppercase;
+    opacity: .5;
+    transition: .3s all;
+    font-size: .8em;
+}
+
+
+.txtAttribute input {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: .2px solid #ff002f67;
+    color: #ff002d;
+}
+
+.txtAttribute input:focus {
+    outline: none;
+}
+
+.txtAttribute:hover {
+    opacity: 1;
+    font-size: 1em;
+}
+
+#chElAtt {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;   
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 95%;
+    height: .5px;
+    border-radius: 5px;  
+    background: rgba(255, 0, 47, 0.5);
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%; 
+    border: 2px solid #ff002d;
+    background-color: black;
+    cursor: pointer;
+}
+
+.charActions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 10% 90%;
+    grid-template-rows: 1fr;
+}
+
+#charAttChatInput {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    color: #ff002d;
+    font-family: "BS-R";
+    border: none;
+    resize: none;
+    letter-spacing: 2px;
+    border-top: .5px solid #ff002f4e;;
+    border-bottom: .5px solid #ff002f4e;;
+    border-radius: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#charAttActions input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+  /* Change the color of the checkbox when it's checked */
+input[type="checkbox"]:checked + label::before {
+    background-color: red;
+}
+
+  /* Change the color of the checkbox when it's not checked */
+input[type="checkbox"] + label::before {
+    background-color: transparent;
+    border: 1px solid #ff002d;
+}
+
+label::before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.attSelect {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    align-items: center;
+    justify-items: center;
+    background-color: transparent;
+    border: .5px solid #ff002d;
+    color: #ff002d;
+}
+
+.attSelect:focus {
+    outline: none;
+}
+
+#aiAsstSelectScope {
+    background-color: transparent;
+    border: none;
+    color: #ff002d;
+    font-family: "BS-R";
+    transition: .3s all;
+    height: 90%;
+    width: 100%;
+}
+
+#aiAsstSelectScope:hover {
+    background-color: rgba(255, 0, 47, 0.1);
+}
+
+#aiAsstSelectScope:focus {
+    outline: none;
+}

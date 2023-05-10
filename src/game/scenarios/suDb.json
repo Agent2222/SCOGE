@@ -1,0 +1,314 @@
+{
+  "SUD": {
+    "Characters": [
+      {
+        "name": "Alex",
+        "location": "City-Central",
+        "job": "Identity Agent",
+        "dialogue": "Hello, welcome to City Central. I'm Alex, your Identity Agent. I'm here to help you get started with your new wallet.",
+        "images":
+          {
+            "default": "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-1.png"
+          }
+      },
+      {
+        "name": "Destiny",
+        "location": "City-Central",
+        "job": "Identity Agent",
+        "dialogue": "You haven't purchased your Digisette yet? You can still get one at the YUMI Marketplace.",
+        "images":
+          {
+            "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Destiny-1.png"
+          }
+      }
+    ],
+    "Elements": [
+      {
+        "id": "plugWallet",
+        "src": "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/plugWallet.png"
+      },
+      {
+        "id": "bitfinityWallet",
+        "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/BFWallet.png"
+      }
+    ],
+    "Scenarios": {
+      "Intro": [
+        {
+          "name": "scene1",
+          "type": "dialogue",
+          "bg": "rgba(0, 0, 0, 0.75)",
+          "activated": "Uni-204",
+          "conditions": [true],
+          "characters": [
+            {
+              "persona": {
+                "name": "Alex",
+                "location": "City-Central",
+                "job": "Identity Agent",
+                "dialogue": {
+                    "intro":
+                    "Hello, welcome to City Central. I'm Alex, your Identity Agent. I'm here to help you get started with your new wallet.",
+                    "annoyed" : "I'm sorry, I can't help you until you plug in your wallet."
+                },
+                "images":
+                  {
+                    "default": "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-1.png",
+                    "alt": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-2.png"
+                  }
+              },
+              "pns": {
+                "position": "absolute",
+                "left": "-5%",
+                "leftTo": "5%",
+                "right": "auto",
+                "rightTo": "auto",
+                "bottom": 0,
+                "bottomTo": 0,
+                "top": "auto",
+                "topTo": "auto",
+                "zIndex": 1,
+                "zIndexTo": 1,
+                "width": "auto",
+                "widthTo": "auto",
+                "height": "85%",
+                "heightTo": "85%",
+                "speed": 1,
+                "blur": "0px",
+                "blurTo": "0px",
+                "brightness": "1",
+                "brightnessTo": "1"
+              },
+              "element": {
+                "class": "chr-textElement",
+                "type": "div",
+                "backgroundColor": "rgba(0, 0, 0, 0.75)",
+                "padding": "10px 10px",
+                "borderRadius": "10px",
+                "width": "350px",
+                "height": "auto",
+                "left": "auto",
+                "right": "-10%",
+                "bottom": "auto",
+                "top": "-5%",
+                "zIndex": 2,
+                "position": "absolute",
+                "border": ".5px solid #ff002d",
+                "pointer": {
+                  "position": "absolute",
+                  "width": "80px",
+                  "height": "80px",
+                  "borderleft": "1px solid #ff002d",
+                  "bottom": "-100px",
+                  "left": "-40px",
+                  "zIndex": -5,
+                  "transform": "rotate(45deg)"
+                }
+              },
+              "actions": ["chat"]
+            },
+            {
+              "persona": {
+                "name": "Destiny",
+                "location": "City-Central",
+                "job": "Identity Agent",
+                "dialogue": {
+                    "intro": "You haven't purchased your Digisette yet? You can still get one at the YUMI Marketplace."
+                },
+                "images":
+                  {
+                    "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Destiny-1.png"
+                  }
+              },
+              "pns": {
+                "position": "absolute",
+                "left": "auto",
+                "right": "-5%",
+                "leftTo": "auto",
+                "rightTo": "30%",
+                "bottom": 0,
+                "top": "auto",
+                "zIndex": 0,
+                "width": "auto",
+                "height": "66%",
+                "speed": 50,
+                "blur": "4px",
+                "brightness": "0.4"
+              },
+              "actions": [""]
+            }
+          ],
+          "elements": [
+            {
+              "id": "plugWallet",
+              "src": "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/plugWallet.png",
+              "type": "div",
+              "innerType": "img",
+              "width": "20%",
+              "height": "auto",
+              "left": "40%",
+              "top": "45%",
+              "zIndex": "1",
+              "position": "absolute",
+              "shadow": true,
+              "shadowEffect": "blur(50px)",
+              "action": "`${connectPlugWallet()}`"
+            },
+            {
+              "id": "bitfinityWallet",
+              "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/BFWallet.png",
+              "type": "div",
+              "second": true,
+              "innerType": "img",
+              "width": "20%",
+              "height": "auto",
+              "left": "65%",
+              "top": "45%",
+              "zIndex": "2",
+              "position": "absolute",
+              "shadow": true,
+              "shadowEffect": "blur(50px)"
+            }
+          ]
+        },
+        {
+          "name": "scene2",
+          "type": "dialogue",
+          "bg": "rgba(0, 0, 0, 0.75)",
+          "activated": "Uni-204",
+          "conditions": [true],
+          "characters": [
+            {
+              "persona": {
+                "name": "Alex",
+                "location": "City-Central",
+                "job": "Identity Agent",
+                "dialogue": {
+                    "intro":
+                    "Hello, welcome to City Central. I'm Alex, your Identity Agent. I'm here to help you get started with your new wallet."
+                },
+                "images":
+                  {
+                    "default": "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-1.png"
+                  }
+              },
+              "pns": {
+                "position": "absolute",
+                "left": "-5%",
+                "leftTo": "5%",
+                "right": "auto",
+                "rightTo": "auto",
+                "bottom": 0,
+                "bottomTo": "",
+                "top": "auto",
+                "topTo": "",
+                "zIndex": 1,
+                "zIndexTo": 1,
+                "width": "auto",
+                "widthTo": "auto",
+                "height": "85%",
+                "heightTo": "85%",
+                "speed": 50,
+                "blur": "0px",
+                "blurTo": "0px",
+                "brightness": "1",
+                "brightnessTo": "1"
+              },
+              "element": {
+                "class": "chr-textElement",
+                "type": "div",
+                "backgroundColor": "rgba(0, 0, 0, 0.75)",
+                "padding": "10px 10px",
+                "borderRadius": "10px",
+                "width": "350px",
+                "height": "auto",
+                "left": "auto",
+                "right": "-10%",
+                "bottom": "auto",
+                "top": "-5%",
+                "zIndex": 2,
+                "position": "absolute",
+                "border": ".5px solid #ff002d",
+                "pointer": {
+                  "position": "absolute",
+                  "width": "80px",
+                  "height": "80px",
+                  "borderleft": "1px solid #ff002d",
+                  "bottom": "-100px",
+                  "left": "-40px",
+                  "zIndex": -5,
+                  "transform": "rotate(45deg)"
+                }
+              },
+              "actions": ["chat"]
+            },
+            {
+              "persona": {
+                "name": "Destiny",
+                "location": "City-Central",
+                "job": "Identity Agent",
+                "dialogue": {
+                    "intro": "You haven't purchased your Digisette yet? You can still get one at the YUMI Marketplace."
+                },
+                "images":
+                  {
+                    "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Destiny-1.png"
+                  }
+              },
+              "pns": {
+                "position": "absolute",
+                "left": "auto",
+                "right": "-5%",
+                "leftTo": "auto",
+                "rightTo": "30%",
+                "bottom": 0,
+                "top": "auto",
+                "zIndex": 0,
+                "width": "auto",
+                "height": "66%",
+                "speed": 50,
+                "blur": "4px",
+                "brightness": "0.4"
+              },
+              "actions": [""]
+            }
+          ],
+          "elements": [
+            {
+              "id": "plugWallet",
+              "src": "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/plugWallet.png",
+              "type": "div",
+              "innerType": "img",
+              "width": "20%",
+              "height": "auto",
+              "left": "40%",
+              "top": "45%",
+              "zIndex": "1",
+              "position": "absolute",
+              "shadow": true,
+              "shadowEffect": "blur(50px)",
+              "action": "`${connectPlugWallet()}`"
+            },
+            {
+              "id": "bitfinityWallet",
+              "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/BFWallet.png",
+              "type": "div",
+              "second": true,
+              "innerType": "img",
+              "width": "20%",
+              "height": "auto",
+              "left": "65%",
+              "top": "45%",
+              "zIndex": "2",
+              "position": "absolute",
+              "shadow": true,
+              "shadowEffect": "blur(50px)"
+            }
+          ]
+        }
+      ],
+      "Scenario2": [],
+      "Scenario3": []
+    }
+  }
+}

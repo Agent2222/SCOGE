@@ -3,8 +3,8 @@ import { universe } from "./universe.js";
 
 // import { idlFactory } from "./declarations/universe_backend/;universe_backend.did.js";
 import { Configuration, OpenAIApi } from "openai";
-window.dtmenuOpen = true;
-window.dtfullMenuOpen = true;
+window.dtmenuOpen = false;
+window.dtfullMenuOpen = false;
 const VITE_ScogeI = import.meta.env.VITE_ScogeI;
 const soundtrack2 = new SoundtrackManager();
 // const suIDL = idlFactory;
@@ -134,17 +134,6 @@ class getUniMenu extends HTMLElement {
     this.shadow.getElementById("beaconNoti").style.display = "none";
   }
 
-  // Send Feedback
-  sendFeedback(event) {
-      // Event.preventDefault(); // Prevent the form from being submitted the traditional way
-      event.preventDefault();
-      var email = this.shadow.getElementById('feedbackEmailInput').value;
-      var feedback = this.shadow.getElementById('feedbackInput').value;
-      // Validate the form values here, if necessary
-      // Submit the form
-      this.shadow.getElementById('feedbackForm').submit();
-  }
-
   closeFullMenu() {
     const menu = this.shadow.querySelector("#uniMenu");
     const fullMenu = this.shadow.querySelector("#fullMenu");
@@ -162,6 +151,17 @@ class getUniMenu extends HTMLElement {
        window.dtfullMenuOpen = false;
     // soundtrack2.stop('menuExit1');
     // soundtrack2.play('menuExit1');
+  }
+
+  // Send Feedback
+  sendFeedback(event) {
+    // Event.preventDefault(); // Prevent the form from being submitted the traditional way
+    event.preventDefault();
+    var email = this.shadow.getElementById('feedbackEmailInput').value;
+    var feedback = this.shadow.getElementById('feedbackInput').value;
+    // Validate the form values here, if necessary
+    // Submit the form
+    this.shadow.getElementById('feedbackForm').submit();
   }
 
   toggleFullScreen() {
@@ -659,9 +659,11 @@ class getUniMenu extends HTMLElement {
             }
             #uniMenu {
               width: 260px;
-              height: auto;
+              height: 10%;
               border-top-left-radius: 10px;
               border-bottom-left-radius: 10px;
+              border-top-right-radius: 10px;
+              border-bottom-right-radius: 10px;
               z-index: 7;
               position: relative;
               top: 36px;
@@ -670,6 +672,7 @@ class getUniMenu extends HTMLElement {
               border-left: 2px solid #ff002d;
               border-bottom: 2px solid #ff002d;
               border-top: 2px solid #ff002d;
+              border-right: 2px solid #ff002d;
               font-family: "BS-R";
               font-size: 16px;
               display: none;
@@ -718,7 +721,7 @@ class getUniMenu extends HTMLElement {
             #uniMenuIcon {
               font-size: 2em;
               justify-self: end;
-              transform: rotate(180deg);
+              transform: rotate(0deg);
               cursor: pointer;
               transition: all 0.5s ease;
             }
@@ -728,7 +731,7 @@ class getUniMenu extends HTMLElement {
             #menuItems {
               display: grid;
               width: 100%;
-              height: auto;
+              height: 0%;
               grid-template-columns: 1fr;
               grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
               transition: all 0.5s ease;
@@ -757,7 +760,7 @@ class getUniMenu extends HTMLElement {
               transform: translateX(40px);
             }
             #fullMenu {
-              width: 500px;
+              width: 0px;
               height: 100%;
               position: absolute;
               left: 260px;
@@ -781,7 +784,7 @@ class getUniMenu extends HTMLElement {
               border-top-right-radius: 10px;
               border-bottom-right-radius: 10px;
               transform-origin: left;
-              transform: scaleX(1);
+              transform: scaleX(0);
               transition: all 0.5s ease;
               border-right: 2px solid white;
               border-bottom: 2px solid white;
@@ -1659,6 +1662,7 @@ class getUniMenu extends HTMLElement {
               margin:0px;
               animation: refresh 20s infinite;
               animation-timing-function: linear;
+              animation-play-state: paused;
               pointer-events: none;
             }
             @keyframes refresh {

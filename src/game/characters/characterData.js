@@ -2,11 +2,33 @@ export var CharacterData = {
   CityCentral: [
     {
       name: "Alex",
-      role: "City-Central Identity Agent",
+      role: "City-Central - Identity Agent",
       dialogue: {
-        intro: "Hello, welcome to City Central. I'm Alex, an Identity Agent. I'm here to help you get started with your new identity.",
+        intro:
+          "Hello, welcome to City Central. I'm Alex, your Identity Agent. I'm here to help you get started with your new wallet.",
       },
-      images: ["https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-1.png"]
+      images: [
+        {
+          default: {
+            link: "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-1.png",
+          },
+        },
+      ]
+    },
+    {
+      name: "Destiny",
+      role: "City-Central - Identity Agent",
+      dialogue: {
+        intro:
+          "You haven't purchased your Digisette yet? You can still get one at the YUMI Marketplace.",
+      },
+      images: [
+        {
+          default: {
+            link: "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Destiny-1.png",
+          },
+        },
+      ]
     },
   ],
 };

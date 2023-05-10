@@ -19,6 +19,7 @@
     opacity: 0%;
     transition: opacity 1s;
     image-rendering: pixelated;
+    filter: blur(10px);
   }
   #camera {
     width: 100%;
@@ -257,10 +258,11 @@
     text-align: center;
   }
 
-  /* .uniEvents {
-    animation: whiteBoxInnerGlow 2s infinite;
-    animation-play-state: paused;
-  } */
+  .uniEvents {
+    opacity: 0;
+    /* animation: whiteBoxInnerGlow 2s infinite;
+    animation-play-state: paused; */
+  }
   
   @keyframes whiteBoxGlow {
     0% {
@@ -777,4 +779,70 @@
     background-color: var(--accent);
     color: black;
     font-family: "BS-B";
+  }
+
+  .chr-textElement {
+    font-family: "BS-R";
+    font-size: .9em;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    line-height: 1.5em;
+  }
+
+  .sceneElement {
+    transition: .3s all;
+    cursor: pointer !important;
+    opacity: 0%;
+    transform-origin: center;
+  }
+
+  .sceneElement:hover {
+    scale: 1.2;
+  }
+
+  #element1Shadow {
+    transition: 1.5s all;
+    opacity: 70%;
+    cursor: pointer !important;
+  }
+
+  .sceneElement:hover > #element1Shadow {
+    transform: scale(1.22);
+    opacity: 100%;
+  }
+
+  #viewEditor {
+    transition: .3s all;
+    cursor: pointer;
+  }
+
+  #viewEditor:hover {
+    border: 1px solid var(--accent) !important;
+  }
+
+  .currentScene {
+    overflow: hidden;
+    container-type: inline-size;
+  }
+
+  /* .chr-textElement {
+    transition: .3s all;
+  }
+
+  .chr-textElement:hover {
+    scale: 1.02;
+  } */
+
+  @container (width <= 900px) {
+    .chr-textElement p{
+      width: 100%;
+      right: -400% !important;
+    }
+    .chr-textElement {
+      position: absolute;
+      overflow: visible;
+      width: 55% !important;
+      font-size: .8em;
+      right: -10% !important;
+    }
   }
