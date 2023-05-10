@@ -1,4 +1,7 @@
+import { gsap } from "gsap";
+
 export const connectPlugWallet = async (whitelist, host) => {
+  var view = document.querySelector(".currentScene");
   if (window.ic === undefined) {
     console.log("Plug not found - Get Plug Wallet");
     // connectError();
@@ -31,9 +34,35 @@ export const connectPlugWallet = async (whitelist, host) => {
           console.error("Connect Wallet", e);
         });
       console.log("pk",plugpublicKey);
+      gsap.to(view, { 
+        opacity: 0, 
+        filter: "blur(10px)",
+        scale: 1.5,
+        duration: 1, 
+        onComplete: () => {
+          view?.remove();
+        } 
+      });
+      document.getElementById("universe").style.filter = "blur(0px)";
+      document.querySelectorAll(".uniEvents").forEach((el) => {
+        el.style.opacity = 1;
+      });
     } else if (connected === true) {
       // Scenario - User has a plug wallet and is connected
+      gsap.to(view, { 
+        opacity: 0, 
+        filter: "blur(10px)",
+        scale: 1.5,
+        duration: 1, 
+        onComplete: () => {
+          view?.remove();
+        } 
+      });
       console.log("Connected");
+      document.getElementById("universe").style.filter = "blur(0px)";
+      document.querySelectorAll(".uniEvents").forEach((el) => {
+        el.style.opacity = 1;
+      });
     }
   }
 };

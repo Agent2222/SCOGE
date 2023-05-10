@@ -21,7 +21,6 @@ import { Principal } from '@dfinity/principal';
 // import the closeCampaign function from dt-campaign.js
 import { mintingScreen } from "../src/mint.js";
 // import { dialogue } from "./game/dialogue.js";
-// import { getGameProgress } from "../src/game/levels/ch1";
 import { gsap } from "gsap";
 import { TextPlugin } from "gsap/TextPlugin";
 import { Configuration, OpenAIApi } from "openai";
@@ -137,7 +136,7 @@ window.checkKeys = async (event) => {
     // document.getElementById("uniBut").addEventListener("click", universeSystem);
     window.universeSystem();
     // document.getElementById("uniBut").setAttribute("onclick", "universeSystem()");
-    soundtrack.play("scoge1");
+    // soundtrack.play("scoge1");
   }
 }
 
@@ -877,7 +876,8 @@ window.loadShop = async () => {
     document.getElementById("divLoadBG2").style.display = "none";
   });
   if (window.urlParamsActive === true) {
-    window.povOpen(document.getElementById(window.viewThisProduct));
+    var productElement = document.getElementById(viewThisProduct);
+    window.povOpen(productElement);
     window.history.replaceState({}, document.title, "/" + "index.html");
   }
   commerce.cart.empty();
@@ -1542,15 +1542,18 @@ window.closeInvestor = () => {
 }
 
 // URL PARAMS OPEN SHOP
+var viewThisProduct = "";
 window.getParamsDesktop = () => {
   const params = new URLSearchParams(location.search)
-  // viewThisProduct = params.get("Product");
-  // urlParamsActive = true;
+  viewThisProduct = params.get("Product");
+  window.urlParamsActive = true;
   window.investorsView = params.get("Investors");
   if (window.investorsView === "true") {
     window.activateInvestors();
   }
-  // toggleShop();
+  if (viewThisProduct != null) {
+    window.toggleShop();
+  }
 }
 
 // -----------------------------------------------
@@ -2226,7 +2229,7 @@ window.removeItemsNotEqualToValue = (value) => {
 portal();
 // ------ Seek End
 // ------ Simple Typing
-class Typing {
+export class Typing {
   constructor(text, elementId, speed = 50) {
     this.text = text;
     this.element = document.getElementById(elementId);

@@ -1,12 +1,12 @@
 export class Scenario {
-    constructor(props) {
-      this.props = props;
+    constructor(sceneCategory) {
+      this.sceneCategory = sceneCategory;
       this.scenes = [];
       this.currentSceneIndex = 0;
     }
   
-    addScene(scene) {
-      this.scenes.push(scene);
+    addScenes(...scenes) {
+      this.scenes.push(...scenes);
     }
   
     show() {
@@ -22,7 +22,11 @@ export class Scenario {
     load() {
       // Load the resources for all scenes in the scenario
       for (const scene of this.scenes) {
+        // if () {
+        //   //
+        // }
         scene.load();
+        // console.log("Wallet Found", this.scene.conditions[0]());
       }
     }
   
