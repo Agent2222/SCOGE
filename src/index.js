@@ -1868,7 +1868,7 @@ window.seek = (e) => {
       window.digiPre = false;
       window.convoHist(seekCard);
       window.seekType = "discover";
-      var baseText = "Tell me about Bankoo.";
+      var baseText = "Tell me about T.A.O.S City";
       var baseAnswer = "World";
       window.systemSpeak(baseText, baseAnswer);
       break;
@@ -1969,7 +1969,7 @@ window.systemSpeak = async (selection, answer) => {
         model: "gpt-3.5-turbo",
         messages: [{role: "user", content: `Provide some information from ${focus} in a brief sentence, 20 words max.`}],
         top_p: 1.0,
-        max_tokens: 30,
+        max_tokens: 35,
       }).catch((error) => {
         console.log(error);
       });
