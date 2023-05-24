@@ -8,7 +8,10 @@ import { connectPlugWallet, createActor1 } from "./wallets.js";
 import { Scenario } from "./game/scenarios/scenarios.js";
 import { DialogueScene } from "./game/scenarios/DialogueScene.js";
 import { gsap } from "gsap";
+import { Buffer } from "buffer";
 import { getAllUserNFTs } from "@psychedelic/dab-js";
+
+window.Buffer = Buffer;
 
 export var gaNft = getAllUserNFTs;
 
