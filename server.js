@@ -1,10 +1,21 @@
 const { createServer } = require('http');
 const { Server } = require('socket.io');
 
+// const httpServer = createServer();
+// const io = new Server(httpServer, {
+//   cors: {
+//     origin: 'http://localhost:3000',
+//     methods: ['GET', 'POST'],
+//   },
+// });
+
+const org = import.meta.env.VITE_Org;
+const portEv = import.meta.env.VITE_Port;
+
 const httpServer = createServer();
 const io = new Server(httpServer, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: org,
     methods: ['GET', 'POST'],
   },
 });
@@ -38,6 +49,10 @@ io.on('connection', (socket) => {
   // Other event handlers...
 });
 
-httpServer.listen(3001, () => {
-  console.log('Socket.IO server listening at http://localhost:3001');
+// httpServer.listen(3001, () => {
+//   console.log('Socket.IO server listening at http://localhost:3001');
+// });
+const port = portEv || 3001;
+httpServer.listen(port, () => {
+  console.log(`Socket.IO server listening at http://localhost:${port}`);
 });

@@ -25,7 +25,10 @@ import { gsap } from "gsap";
 import { TextPlugin } from "gsap/TextPlugin";
 import { Configuration, OpenAIApi } from "openai";
 import { universe } from "./universe.js";
+import { Buffer } from 'buffer';
 // import fleekStorage from "@fleekhq/fleek-storage-js";
+
+window.Buffer = Buffer;
 
 window.entry = () => {
   gsap.to("#introLogo", { duration: 1, opacity: 1, ease: "power2.inOut" });
@@ -669,7 +672,7 @@ window.setupMagazine = () => {
 var currentShopProduct;
 // Open Product POV Screen
 window.povOpen = (obj) => {
-  var currentProduct = obj.id;
+  var currentProduct = obj?.id;
   // window.mainMenuPosition("black","0%","0%","0%","0%");
   currentShopProduct = allProducts[0].filter((product) => {
     return product.id.includes(`${currentProduct}`);
@@ -1546,12 +1549,15 @@ var viewThisProduct = "";
 window.getParamsDesktop = () => {
   const params = new URLSearchParams(location.search)
   viewThisProduct = params.get("Product");
+ if (params.size > 0) {
   window.urlParamsActive = true;
+ }
   window.investorsView = params.get("Investors");
   if (window.investorsView === "true") {
     window.activateInvestors();
   }
   if (viewThisProduct != null) {
+    console.log("Checker", viewThisProduct);
     window.toggleShop();
   }
 }
@@ -1968,7 +1974,7 @@ window.systemSpeak = async (selection, answer) => {
       window.completion2 = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
         messages: [{role: "user", content: `Provide some information from ${focus} in a brief sentence, 20 words max.`}],
-        top_p: 1.0,
+        temperature: 0.5,
         max_tokens: 35,
       }).catch((error) => {
         console.log(error);

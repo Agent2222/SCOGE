@@ -1,6 +1,7 @@
 import { Scenario } from "./Scenarios.js";
 import { Character } from "../characters/Character.js";
 import { connectPlugWallet } from "../../wallets.js";
+import { connectBitFinityWallet } from "../../wallets.js";
 import { gsap } from "gsap";
 
 export class DialogueScene extends Scenario {
@@ -123,9 +124,15 @@ export class DialogueScene extends Scenario {
         el.appendChild(el3Img);
         // Actions
         el.addEventListener("click", () => {
-          const funct = new Function(element.action.replace("`${connectPlugWallet()}`", connectPlugWallet()));
+          if (element.action === "connectPlugWallet()") {
+            const funct = new Function(element.action.replace("connectPlugWallet()", connectPlugWallet()));
+            funct();
+          }
+          if (element.action === "connectBitfinityWallet()") {
+            const funct = new Function(element.action.replace("`${ connectBitFinityWallet()}`", connectBitFinityWallet()));
+            funct();
+          }
           // this.scene.elements[0].action();
-          funct();
         });
         this.elements.push(el);
       });

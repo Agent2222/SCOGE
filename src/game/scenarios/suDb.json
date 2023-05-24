@@ -152,7 +152,7 @@
               "position": "absolute",
               "shadow": true,
               "shadowEffect": "blur(50px)",
-              "action": "`${connectPlugWallet()}`"
+              "action": "connectPlugWallet()"
             },
             {
               "id": "bitfinityWallet",
@@ -167,7 +167,8 @@
               "zIndex": "2",
               "position": "absolute",
               "shadow": true,
-              "shadowEffect": "blur(50px)"
+              "shadowEffect": "blur(50px)",
+              "action": "connectBitfinityWallet()"
             }
           ]
         },

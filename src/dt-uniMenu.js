@@ -1865,7 +1865,7 @@ class getUniMenu extends HTMLElement {
                 <div id="inventoryBody">
                   <div class="inventory-tabs it1">
                     <div class="inventory-text">
-                      <span class="itHead">Land:</span>
+                      <span class="itHead">Domain/s:</span>
                       <span class="inventoryInnerText">
                        you own.
                       </span>
