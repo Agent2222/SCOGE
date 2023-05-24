@@ -1,4 +1,9 @@
 import { gsap } from "gsap";
+import { gaNft } from './universe.js';
+import { Principal } from '@dfinity/principal';
+
+
+const canister = "7mfck-baaaa-aaaah-acuqq-cai";
 
 export const connectPlugWallet = async (whitelist, host) => {
   var view = document.querySelector(".currentScene");
@@ -59,6 +64,84 @@ export const connectPlugWallet = async (whitelist, host) => {
         } 
       });
       console.log("Connected");
+      const agent = window.ic.plug?.sessionManager?.sessionData?.agent
+      const getNFTCollections = async () => {
+        
+      const principal = 'qpbuq-myqvw-yoaff-265ad-5g6xu-wx5dl-zzd7y-y6oak-zo4uf-x3ozb-dqe';
+      const collections = await gaNft({ 
+          agent: agent,
+          user: Principal.fromText(principal) 
+      });
+      console.log(collections);
+      }
+      getNFTCollections();
+      document.getElementById("universe").style.filter = "blur(0px)";
+      document.querySelectorAll(".uniEvents").forEach((el) => {
+        el.style.opacity = 1;
+      });
+    }
+  }
+};
+
+// Bitfinity Wallet
+export const connectBitFinityWallet = async (whitelist, host) => {
+  var view = document.querySelector(".currentScene");
+  if (window.ic === undefined) {
+    console.log("Plug not found - Get BitFinity Wallet");
+    // connectError();
+    // Scenario - New User. User Does not have a plug wallet
+    return;
+  } else {
+    // Scenario - Returning User
+    const connected = await window.ic.infinityWallet.isConnected().catch((e) => {
+      console.error(e);
+    });
+
+    // // Callback to print sessionData
+    // const onConnectionUpdate = () => {
+    //     console.log(window.ic.plug.sessionManager.sessionData)
+    // }
+
+    if (connected === false) {
+      // Scenario - User has a plug wallet but is not connected
+      console.log("Not Connected");
+      console.log(whitelist, host);
+      const bitpublicKey = await window.ic.infinityWallet
+        .requestConnect({
+          whitelist: whitelist,
+          timeout: 50000,
+        })
+        .catch((e) => {
+          //   var error = {e};
+          //   connectError(error);
+          console.error("Connect Wallet", e);
+        });
+      console.log("pk",bitpublicKey);
+      gsap.to(view, { 
+        opacity: 0, 
+        filter: "blur(10px)",
+        scale: 1.5,
+        duration: 1, 
+        onComplete: () => {
+          view?.remove();
+        } 
+      });
+      document.getElementById("universe").style.filter = "blur(0px)";
+      document.querySelectorAll(".uniEvents").forEach((el) => {
+        el.style.opacity = 1;
+      });
+    } else if (connected === true) {
+      // Scenario - User has a plug wallet and is connected
+      gsap.to(view, { 
+        opacity: 0, 
+        filter: "blur(10px)",
+        scale: 1.5,
+        duration: 1, 
+        onComplete: () => {
+          view?.remove();
+        } 
+      });
+      console.log("Connected");
       document.getElementById("universe").style.filter = "blur(0px)";
       document.querySelectorAll(".uniEvents").forEach((el) => {
         el.style.opacity = 1;
@@ -75,9 +158,9 @@ export const createActor1 = async (can, idl) => {
       interfaceFactory: idl,
     })
     .catch((e) => {
-      console.log("creatActor", e);
+      console.log("creatActorError", e);
     });
-    console.log(suUiActor);
+    console.log("Actor",suUiActor);
     return suUiActor;
 };
 

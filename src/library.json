@@ -11,9 +11,7 @@
     "World": {
         "Chapter 1 Events": " On the outskirts of T.A.O.S City lie several old-world desolate mansions inhabited by self-exiled creators known to many as oracles. Migrants from nations in stark contrast to T.A.O.S City often seek these oracles to aid in their assimilation into the vast city, and avoid conviction from a predatory group of conservative citizens known as enforcers. Successful assimilated migrants tend to travel for days to visit several oracles, each specializing in a single task. Unsuccessful, convicted migrants have described the oracle experience as a process of remembering something they had long forgotten. A process to reacclimate." ,
         "Chapter 2 Events": "In T.A.O.S City, the Enforcers at City-Central received notice of suspicious activity at a recent migrant, Alan Kallstrom's spa business. Reality Re-creations (RR), a form of surveillance, was deployed at a surveillance briefing. The RR revealed several events where spa clients, who were total strangers to each other, were seen touching, hugging, and even kissing each other. Upon further investigation, the Enforcers identified the clients as victims of the highly classified SoulLink Beta. The perpetrators, two X-class trial patients; high-profile elusive suspect Allastar and highly monitored release patient Evie. Unfortunately for the Enforcers, the audio from the Reality Re-creations was scrambled, preventing them from gaining insight into what they believe was critical and highly sensitive information.",
-        "Planet": "SCOGÉ takes place on The Planet of Bankoo",
-        "Known Cities": ["T.A.O.S City"],
-        "Known Countries": ["Alansana", "Seeloo"] 
+        "Known Cities": ["T.A.O.S City"]
     },
     "Info": {
         "Brand Name definition": [

@@ -8,6 +8,92 @@ import { connectPlugWallet, createActor1 } from "./wallets.js";
 import { Scenario } from "./game/scenarios/scenarios.js";
 import { DialogueScene } from "./game/scenarios/DialogueScene.js";
 import { gsap } from "gsap";
+import { getAllUserNFTs } from "@psychedelic/dab-js";
+
+export var gaNft = getAllUserNFTs;
+
+var testState = {
+  whitelistPrincipals: [
+    {
+      principal: "ryjl3-tyaaa-aaaaa-aaaba-cai",
+      name: "ryjl3-tyaaa-aaaaa-aaaba-cai",
+    },
+  ],
+  admins: ["ryjl3-tyaaa-aaaaa-aaaba-cai"],
+  hasPlug: false,
+  hasBitfinity: false,
+  hasDigisette: false,
+  metaJson: {
+    category: "megaLord",
+    name: "Digisette Pre-Alpha",
+    description: "Limited edition pre-alpha 1 of 450 Digisette.",
+    url: `https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/SCOGE-Yumi-LaunchCollection Logo.jpg`,
+    attributes: [
+      {
+        ringType: "",
+        domains: [
+          {
+            number: 0,
+            lord: "",
+            rank: 0,
+            power: 0,
+            defense: 0,
+            xp: 0,
+            functions: [],
+            positiveEvents: 0,
+            negativeEvents: 0,
+            privacy: false,
+            sanitize: false,
+          },
+        ],
+        rank: 0,
+        powerUps: [0],
+        progress: 0,
+        xp: 0,
+        linked: false,
+        earthName: "",
+        bankooName: "",
+        email: "",
+        earthImage: "",
+        earthText: "",
+        bankooImage: "",
+        bankooText: "",
+        ownedStyles: [0],
+        discovered: [""],
+        discoveredProgress: 0.0,
+        power: 0,
+        mental: 0,
+        physical: 0,
+        health: 0,
+        speed: 0,
+        sight: 0,
+        endurance: 0,
+        playerLocation: 0,
+        soundLevel: 0,
+        musicLevel: 0,
+        fsOn: false,
+        notiOn: false,
+        networkClass: "",
+        network: [""],
+        story: {
+          title: "",
+          text: "",
+          imagesUri: [""],
+          videoUri: "",
+        },
+        ancestorsNames: [""],
+        ancestorsImages: [""],
+        battles: 0,
+        battleRank: 0.0,
+        soul: 0.0,
+        inventory: [0],
+      },
+    ],
+    mimeType: "image",
+    thumb: `example`,
+    timestamp: +new Date(),
+  },
+};
 
 // Init Soundtrack
 export async function universe() {
@@ -201,7 +287,7 @@ export async function universe() {
 
     if (lcCheck()) {
       editorButton();
-    } 
+    }
     //
   };
 
@@ -221,16 +307,16 @@ export async function universe() {
     viewEditor.style.borderRadius = "10px";
     viewEditor.style.border = "1px solid #ff002d";
     viewEditor.addEventListener("click", async () => {
-      const editorModule = await import('../editor.js');
-        var editorState = editorModule.editor(editorActive);
-        if (editorState === false) {
-          editorActive = false;  
-        } else {
-          editorActive = true;
-        }
+      const editorModule = await import("../editor.js");
+      var editorState = editorModule.editor(editorActive);
+      if (editorState === false) {
+        editorActive = false;
+      } else {
+        editorActive = true;
+      }
     });
 
-    document.getElementById("main").appendChild(viewEditor);  
+    document.getElementById("main").appendChild(viewEditor);
   };
 
   // Admin UI
@@ -652,18 +738,22 @@ export async function universe() {
       }
       var viewEditor = document.getElementById("viewEditor");
       var char = document.getElementById("selection");
-      var leftSel =  Math.floor(window.innerWidth - Number(char.style.left.replace("px", "")));
-      var topSel =  Math.floor(Number(char.style.top.replace("px", "")))
+      var leftSel = Math.floor(
+        window.innerWidth - Number(char.style.left.replace("px", ""))
+      );
+      var topSel = Math.floor(Number(char.style.top.replace("px", "")));
       console.log(leftSel, topSel);
-      var bottomSel =  Math.floor(window.innerHeight - Number(char.style.top.replace("px", "")));
+      var bottomSel = Math.floor(
+        window.innerHeight - Number(char.style.top.replace("px", ""))
+      );
 
       if (leftSel < 100 && topSel < 100) {
-          viewEditor.style.top = "auto";
-          viewEditor.style.bottom = "5%";
+        viewEditor.style.top = "auto";
+        viewEditor.style.bottom = "5%";
       }
       if (leftSel < 100 && bottomSel < 100) {
-          viewEditor.style.top = "5%";
-          viewEditor.style.bottom = "auto";
+        viewEditor.style.top = "5%";
+        viewEditor.style.bottom = "auto";
       }
     });
   };
@@ -704,7 +794,7 @@ export async function universe() {
   <br><br>
   This is the story of one such migrant, and their journey to find the Oracles, to discover the truth about themselves, and to make a place for themselves in the world of T.A.O.S City. It is a story of struggle and sacrifice, of hope and perseverance, and of the power of the human spirit to overcome even the greatest of challenges.
   </p>`;
-    var tempCont2 = `
+  var tempCont2 = `
   <div class="cannonIcon">
   <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
   </div>
@@ -713,7 +803,7 @@ export async function universe() {
     <video id="tempVid" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Chapter2-Prologue-1-HD.mp4" controls></video>
   </div>
   `;
-    var tempCont3 = `
+  var tempCont3 = `
   <div class="cannonIcon">
   <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
   </div>
@@ -722,7 +812,7 @@ export async function universe() {
     <video id="tempVid2" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/nightout.mp4" controls></video>
   </div>
   `;
-    var chatDomTemplate = `
+  var chatDomTemplate = `
   <div class="cannonIcon">
     <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
   </div>
@@ -889,7 +979,7 @@ export async function universe() {
             shadow.getElementById("fm-profile").style.display = "none";
             shadow.getElementById(
               "fm-enhancements"
-            ).innerHTML = `<img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/universe/nft-shop.webp" alt="NFT Shop" id="nftShop">`;
+            ).innerHTML = `<img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/DIGISHOP.png" alt="NFT Shop" id="nftShop">`;
             shadow.getElementById("nftShop").addEventListener("click", () => {
               document.getElementById("getNfts").toggleNftScreen();
               canvas.style.filter = "blur(5px)";
@@ -1540,8 +1630,11 @@ export async function universe() {
   });
 
   const lcCheck = () => {
-    return window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  }
+    return (
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1"
+    );
+  };
 
   // TOOLTIP
   // window.elementHelp = async (e) => {
