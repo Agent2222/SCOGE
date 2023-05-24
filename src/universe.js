@@ -9,9 +9,17 @@ import { Scenario } from "./game/scenarios/scenarios.js";
 import { DialogueScene } from "./game/scenarios/DialogueScene.js";
 import { gsap } from "gsap";
 import { Buffer } from "buffer";
-import { getAllUserNFTs } from "@psychedelic/dab-js";
 
 window.Buffer = Buffer;
+
+let getAllUserNFTs;
+
+import("@psychedelic/dab-js").then((dab) => {
+  getAllUserNFTs = dab.getAllUserNFTs;
+}).catch((err) => {
+  console.log(err);
+});
+
 
 export var gaNft = getAllUserNFTs;
 
