@@ -1670,7 +1670,7 @@ export const newScenario = async (name) => {
   var scenes = [];
   // fetch scns.json and load it into the editor
   try {
-    const response = await fetch("../src/game/scenarios/suDb.json");
+    const response = await fetch(`${import.meta.env.BASE_URL}src/suDb.json`);
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
@@ -1684,6 +1684,7 @@ export const newScenario = async (name) => {
   //     scenes.push(new DialogueScene(scns[name][i]));
   //   }
   // }
+  console.log(data);
   for (var i = 0; i < data.SUD.Scenarios[name].length; i++) {
     if (data.SUD.Scenarios[name][i].conditions[0] === true) {
       scenes.push(new DialogueScene(data.SUD.Scenarios[name][i]));
