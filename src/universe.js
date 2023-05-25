@@ -1540,7 +1540,7 @@ export async function universe() {
 
   // SOCKET IO
 
-  const socket = io("http://localhost:3001");
+  const socket = io("http://scoge.co");
 
   // Set the socket.io instance for the chat room
   const roomName = "alphaTestersChat";
