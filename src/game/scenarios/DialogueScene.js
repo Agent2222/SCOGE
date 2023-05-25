@@ -4,6 +4,7 @@ import { connectPlugWallet } from "../../wallets.js";
 import { connectBitFinityWallet } from "../../wallets.js";
 import { gsap } from "gsap";
 
+
 export class DialogueScene extends Scenario {
   constructor(scene) {
     super(scene);

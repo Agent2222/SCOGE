@@ -1,7 +1,5 @@
 import { gsap } from "gsap";
-import { gaNft } from './universe.js';
 import { Principal } from '@dfinity/principal';
-
 
 const canister = "7mfck-baaaa-aaaah-acuqq-cai";
 
@@ -26,7 +24,7 @@ export const connectPlugWallet = async (whitelist, host) => {
     if (connected === false) {
       // Scenario - User has a plug wallet but is not connected
       console.log("Not Connected");
-      console.log(whitelist, host);
+      console.log("W/H", whitelist, host);
       const plugpublicKey = await window.ic.plug
         .requestConnect({
           whitelist: whitelist,
@@ -67,10 +65,10 @@ export const connectPlugWallet = async (whitelist, host) => {
       const agent = window.ic.plug?.sessionManager?.sessionData?.agent
       const getNFTCollections = async () => {
         
-      const principal = 'qpbuq-myqvw-yoaff-265ad-5g6xu-wx5dl-zzd7y-y6oak-zo4uf-x3ozb-dqe';
-      const collections = await gaNft({ 
+      const principal = 'qpbuq-myqvw-yoaff-265ad-5g6xu-wx5dl-zzd7y-y6oak-zo4uf-x3ozb-dqe'
+      const collections = await window.getAllUserNFTs({ 
           agent: agent,
-          user: Principal.fromText(principal) 
+          user: principal
       });
       console.log(collections);
       }

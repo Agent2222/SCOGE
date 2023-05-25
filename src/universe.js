@@ -12,16 +12,11 @@ import { Buffer } from "buffer";
 
 window.Buffer = Buffer;
 
-let getAllUserNFTs;
-
 import("@psychedelic/dab-js").then((dab) => {
-  getAllUserNFTs = dab.getAllUserNFTs;
+  window.getAllUserNFTs = dab.getAllUserNFTs;
 }).catch((err) => {
   console.log(err);
 });
-
-
-export var gaNft = getAllUserNFTs;
 
 var testState = {
   whitelistPrincipals: [
@@ -1675,7 +1670,7 @@ export const newScenario = async (name) => {
   var scenes = [];
   // fetch scns.json and load it into the editor
   try {
-    const response = await fetch("/src/game/scenarios/suDb.json");
+    const response = await fetch("../src/game/scenarios/suDb.json");
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
