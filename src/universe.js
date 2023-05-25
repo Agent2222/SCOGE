@@ -1670,7 +1670,7 @@ export const newScenario = async (name) => {
   var scenes = [];
   // fetch scns.json and load it into the editor
   try {
-    const response = await fetch("../src/suDb.json");
+    const response = await fetch("../suDb.json");
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
