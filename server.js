@@ -6,6 +6,8 @@ const io = new Server(httpServer, {
   cors: {
     origin: ['https://www.scoge.co', 'https://scoge.co'],
     methods: ['GET', 'POST'],
+    allowedHeaders: ['my-custom-header'],
+    credentials: true
   },
 });
 
