@@ -3,7 +3,7 @@ export class uniPlayers {
       this.roomName = roomName;
       this.roomDescription = roomDescription;
       this.players = {};
-      this.io = null;
+      this.channel = null;
     }
   
     static create(roomName, roomDescription) {
@@ -44,15 +44,15 @@ export class uniPlayers {
       playerElement.style.top = player.y + 'px';
     }
   
-    setIo(io) {
-      this.io = io;
-      console.log('io set', this.io);
+    async setChannel(channel) {
+      this.channel = channel;
+      console.log('Channel set', this.channel);
   
-      this.io.on('newPlayer', (data) => {
+      await this.channel.subscribe('newPlayer', (data) => {
         this.addPlayer(data);
       });
   
-      this.io.on('playerMoved', (data) => {
+      await this.channel.subscribe('playerMoved', (data) => {
         this.updatePlayerLocation(data);
       });
     }

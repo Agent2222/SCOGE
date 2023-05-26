@@ -32,6 +32,7 @@
     "@power-elements/stripe-elements": "^3.0.0",
     "@psychedelic/dab-js": "^1.6.0-alpha.2",
     "@stripe/stripe-js": "^1.13.2",
+    "ably": "^1.2.39",
     "audio-context": "^1.0.3",
     "babylonjs": "^5.2.0",
     "babylonjs-inspector": "^5.20.0",
