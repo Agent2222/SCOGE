@@ -1645,6 +1645,8 @@ export async function universe() {
     data.data.playerData.x;
   });
 
+  //
+
   // TOOLTIP
   // window.elementHelp = async (e) => {
   //   document.getElementById("elHelp")?.remove();
