@@ -4,10 +4,8 @@ const { Server } = require('socket.io');
 const httpServer = createServer();
 const io = new Server(httpServer, {
   cors: {
-    origin: ['https://www.scoge.co', 'https://scoge.co'],
+    origin: 'https://localhost:3000',
     methods: ['GET', 'POST'],
-    allowedHeaders: ['my-custom-header'],
-    credentials: true
   },
 });
 

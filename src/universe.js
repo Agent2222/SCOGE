@@ -1,7 +1,6 @@
 // UNIVERSE SYSTEM
 import { SoundtrackManager } from "./soundtrack.js";
 import { idlFactory } from "./declarations/universe_backend/universe_backend.did.js";
-import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
 import { chatRoom } from "./uniHelpers/chat.js";
 import { uniPlayers } from "./uniHelpers/players.js";
 import { connectPlugWallet, createActor1 } from "./wallets.js";
@@ -167,6 +166,12 @@ export async function universe() {
     "http://127.0.0.1:8080/?canisterId=r7inp-6aaaa-aaaaa-aaabq-cai&id=ryjl3-tyaaa-aaaaa-aaaba-cai";
   // BEFORE LAUNCH !!!!!!!!!
   // Rebuilding Actors Across Account Switches
+
+  // MP
+  const VITE_ably = import.meta.env.VITE_ably;
+  const ably = new Ably.Realtime.Promise(VITE_ably);
+  const channel = ably.channels.get("alphaTestersChat");
+  const channel2 = ably.channels.get("lordsInTheCity");
 
   const test = () => {
     console.log("test");
@@ -535,7 +540,7 @@ export async function universe() {
     }
   };
 
-  window.playerPos = () => {
+  window.playerPos = async () => {
     var box = document.getElementById("selection");
     // get position of the canvas element relative to the viewport
     var rect = universeCanvas.getBoundingClientRect();
@@ -569,7 +574,7 @@ export async function universe() {
     //
     window.uniPlayer.x = box.style.left;
     window.uniPlayer.y = box.style.top;
-    socket.emit("players", {
+    await channel2.publish("lords", {
       roomId: room2Name,
       playerId: window.uniPlayer.playerId,
       playerData: window.uniPlayer,
@@ -632,12 +637,14 @@ export async function universe() {
             exploreUI.onmousedown = null;
             document.getElementById("chatInput1").focus();
           });
-        document.getElementById("sendBut").addEventListener("click", () => {
+        document.getElementById("sendBut").addEventListener("click", async () => {
           var messageInput = document.getElementById("chatInput1");
           const message = messageInput.value.trim();
           if (message) {
             window.room1.addMessage(message);
-            socket.emit("newMessage", { roomName, message });
+            await channel.publish("chatRoom1", {
+              roomMessage: message,
+            });
             messageInput.value = "";
           }
         });
@@ -651,6 +658,13 @@ export async function universe() {
       document.getElementById("selection").innerHTML = "";
       exploreUI.innerHTML = "";
     }
+  };
+
+  const lcCheck = () => {
+    return (
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1"
+    );
   };
 
   window.moveSelection = () => {
@@ -1538,37 +1552,35 @@ export async function universe() {
   //   // (npc, tone, lines)
   // ]);
 
-  // SOCKET IO
+  // Multiplayer
+  await ably.connection.once("connected");
+  console.log("Connected to Ably!");
 
-  const socket = io("https://www.scoge.co:3001");
-
-  // Set the socket.io instance for the chat room
   const roomName = "alphaTestersChat";
   const roomDescription = "1st Chat Room for Alpha Testers";
   window.room1 = chatRoom.create(roomName, roomDescription);
-  window.room1.setIo(socket);
+  window.room1.setIo(ably);
 
-  // Test Beacon Config
-  // var beacons = [window.room1];
+  // get the channel to subscribe to
 
-  // Receive and display messages
-  socket.on("newMessage", (data) => {
-    console.log("Here 2", { data });
+  await channel.subscribe("chatRoom1", (message) => {
+    console.log(message)
+    console.log("Received a greeting message in realtime: " + message.data.roomMessage);
     console.log(window.room1);
-    window.room1.addMessage(data.message);
+    window.room1.addMessage(message.data.roomMessage);
     const messageElement = document.createElement("div");
     const messagesDiv = document.getElementById("chatRoom1");
     messageElement.setAttribute("class", "chatMessageContainer");
     // messageElement.innerText = `${data.sender}: ${data.message}`;
     messageElement.innerHTML = `
-    <div class="messageAvatar self">
-      <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
-    </div>
-    <div class="messageBody">
-      <div class="messageSender">Damion</div>
-      <p class="messageText">${data.message}</p>
-    </div>
-    `;
+  <div class="messageAvatar self">
+    <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+  </div>
+  <div class="messageBody">
+    <div class="messageSender">Damion</div>
+    <p class="messageText">${message.data.roomMessage}</p>
+  </div>
+  `;
     messagesDiv?.appendChild(messageElement);
     if (window.dtfullMenuOpen === false && window.chatActive === false) {
       document
@@ -1581,19 +1593,19 @@ export async function universe() {
         .getElementById("uniEvent4")
         .setAttribute("style", "animation: whiteBoxInnerGlow 2s infinite;");
       newBeacon.setAttribute("class", "beacon tut");
-      newBeacon.setAttribute("data-message", `${data.message}`);
+      newBeacon.setAttribute("data-message", `${message.data}`);
       newBeacon.addEventListener("click", (e) => {
         document.getElementById("getUniMenu").openBeaconMessage(e);
       });
       newBeacon.innerHTML = `
-          <div class="beaconOrigin">
-            <div class="beaconIdenIcon">!</div>
-            <div class="beaconSender">${data.roomName}</div>
-          </div>
-          <div class="beaconPreview">
-            ${data.message.substring(0, 25)}...
-          </div>
-      `;
+        <div class="beaconOrigin">
+          <div class="beaconIdenIcon">!</div>
+          <div class="beaconSender">${message.data}</div>
+        </div>
+        <div class="beaconPreview">
+          ${message.data.substring(0, 25)}...
+        </div>
+    `;
       document
         .getElementById("getUniMenu")
         .shadowRoot.getElementById("beaconsBody")
@@ -1602,7 +1614,6 @@ export async function universe() {
   });
 
   // Universe Players
-  // Set the socket.io instance for the chat room
   const room2Name = "alphaTesters";
   const room2Description = "Alpha Testers";
   window.uniPlayer = {
@@ -1612,35 +1623,27 @@ export async function universe() {
     y: 0,
   };
   window.room2 = uniPlayers.create(room2Name, room2Description);
-  window.room2.setIo(socket);
+  window.room2.setChannel(channel2);
   var playerInt = false;
   var otherPlayers = [];
 
-  // Receive and display messages
-  socket.on("players", (data) => {
+  await channel2.subscribe("lords", (data) => {
     if (playerInt === false) {
-      var player1 = uniPlayers.create(data.playerId, data.playerData);
-      player1.renderPlayer(data.playerData);
-      otherPlayers.push(data.playerData.playerId);
+      var player1 = uniPlayers.create(data.data.playerId, data.data.playerData);
+      player1.renderPlayer(data.data.playerData);
+      otherPlayers.push(data.data.playerData.playerId);
       playerInt = true;
       return;
     }
-    if (otherPlayers.includes(data.playerData.playerId) === false) {
-      otherPlayers.push(data.playerData.playerId);
-      window.room2.renderPlayer(data.playerData);
+    if (otherPlayers.includes(data.data.playerData.playerId) === false) {
+      otherPlayers.push(data.data.playerData.playerId);
+      window.room2.renderPlayer(data.data.playerData);
     }
-    document.getElementById(`${data.playerData.playerId}`).style.top =
-      data.playerData.y;
-    document.getElementById(`${data.playerData.playerId}`).style.left =
-      data.playerData.x;
+    document.getElementById(`${data.data.playerData.playerId}`).style.top =
+    data.data.playerData.y;
+    document.getElementById(`${data.data.playerData.playerId}`).style.left =
+    data.data.playerData.x;
   });
-
-  const lcCheck = () => {
-    return (
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1"
-    );
-  };
 
   // TOOLTIP
   // window.elementHelp = async (e) => {
@@ -1658,6 +1661,7 @@ export async function universe() {
   // document.addEventListener("click", (e) => {
   //   window.elementHelp(e);
   // });
+  // const VITE_canister = import.meta.env.VITE_universe_backend_canister_Id;
 
   return {
     dragElement,
@@ -1672,14 +1676,7 @@ export const newScenario = async (name) => {
   const data = await import('./sudb.json').catch((error) => {
     console.log(error);
   });
-  // const dataMain = JSON.stringify(data.default);
-  // //
-  // for (var i = 0; i < scns[name].length; i++) {
-  //   if (scns[name][i].conditions[0]() != true) {
-  //     scenes.push(new DialogueScene(scns[name][i]));
-  //   }
-  // }
-  // console.log(dataMain);
+  //
   for (var i = 0; i < data.SUD.Scenarios[name].length; i++) {
     if (data.SUD.Scenarios[name][i].conditions[0] === true) {
       scenes.push(new DialogueScene(data.SUD.Scenarios[name][i]));
