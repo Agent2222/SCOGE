@@ -4,6 +4,10 @@ import { connectPlugWallet } from "../../wallets.js";
 import { connectBitFinityWallet } from "../../wallets.js";
 import { gsap } from "gsap";
 
+const canister = "7mfck-baaaa-aaaah-acuqq-cai";
+const local = "http://localhost:3000/";
+const can2 = "ryjl3-tyaaa-aaaaa-aaaba-cai";
+const whitelist = [can2];
 
 export class DialogueScene extends Scenario {
   constructor(scene) {
@@ -126,11 +130,11 @@ export class DialogueScene extends Scenario {
         // Actions
         el.addEventListener("click", () => {
           if (element.action === "connectPlugWallet()") {
-            const funct = new Function(element.action.replace("connectPlugWallet()", connectPlugWallet()));
+            const funct = new Function(element.action.replace("connectPlugWallet()", connectPlugWallet(whitelist, local)));
             funct();
           }
           if (element.action === "connectBitfinityWallet()") {
-            const funct = new Function(element.action.replace("`${ connectBitFinityWallet()}`", connectBitFinityWallet()));
+            const funct = new Function(element.action.replace("` connectBitFinityWallet()}`", connectBitFinityWallet(whitelist, local)));
             funct();
           }
           // this.scene.elements[0].action();

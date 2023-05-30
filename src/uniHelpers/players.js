@@ -1,13 +1,12 @@
 export class uniPlayers {
-    constructor(roomName, roomDescription) {
-      this.roomName = roomName;
-      this.roomDescription = roomDescription;
+    constructor(playerGroup) {
+      this.playerGroupName = playerGroup;
       this.players = {};
       this.channel = null;
     }
   
-    static create(roomName, roomDescription) {
-      return new uniPlayers(roomName, roomDescription);
+    static create(playerGroup) {
+      return new uniPlayers(playerGroup);
     }
   
     addPlayer(playerData) {
