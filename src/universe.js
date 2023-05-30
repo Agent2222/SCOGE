@@ -735,6 +735,9 @@ export async function universe() {
         if (e.keyCode == 32) {
           window.exploreOpenHelper();
         }
+        /////////////////////////
+        ////// TEMP
+        /////////////////////////
         if (e.keyCode == 88) {
           document.getElementById("universe").style.filter = "blur(0px)";
           document.querySelectorAll(".uniEvents").forEach((el) => {
