@@ -162,14 +162,16 @@ export async function universe() {
   const host =
     "https://a4gq6-oaaaa-aaaab-qaa4q-cai.raw.ic0.app/?id=wnunb-baaaa-aaaag-aaoya-cai";
   const local = "http://localhost:8080/";
-  const localhost =
-    "http://127.0.0.1:8080/?canisterId=r7inp-6aaaa-aaaaa-aaabq-cai&id=ryjl3-tyaaa-aaaaa-aaaba-cai";
+  const localhost = "http://127.0.0.1:8080/?canisterId=r7inp-6aaaa-aaaaa-aaabq-cai&id=ryjl3-tyaaa-aaaaa-aaaba-cai";
   // BEFORE LAUNCH !!!!!!!!!
   // Rebuilding Actors Across Account Switches
 
   // MP
   const VITE_ably = import.meta.env.VITE_ably;
-  const ably = new Ably.Realtime.Promise(VITE_ably);
+  const ably = new Ably.Realtime({
+    key: VITE_ably,
+    clientId: "Test"
+  });
   const channel = ably.channels.get("alphaTestersChat");
   const channel2 = ably.channels.get("lordsInTheCity");
 
@@ -574,12 +576,13 @@ export async function universe() {
     //
     window.uniPlayer.x = box.style.left;
     window.uniPlayer.y = box.style.top;
-    await channel2.publish("lords", {
-      roomId: room2Name,
-      playerId: window.uniPlayer.playerId,
-      playerData: window.uniPlayer,
-    });
+    // await channel2.publish("lords", {
+    //   roomId: room2Name,
+    //   playerId: window.uniPlayer.playerId,
+    //   playerData: window.uniPlayer,
+    // });
     //
+    channel2.presence.update({ data: window.uniPlayer });
     if (
       `${position}` === tempLandEx[0] ||
       `${position}` === tempLandEx[1] ||
@@ -731,6 +734,13 @@ export async function universe() {
         // if space bar is pressed open the explore UI
         if (e.keyCode == 32) {
           window.exploreOpenHelper();
+        }
+        if (e.keyCode == 88) {
+          document.getElementById("universe").style.filter = "blur(0px)";
+          document.querySelectorAll(".uniEvents").forEach((el) => {
+            el.style.opacity = 1;
+          });
+          document.getElementById("currentSceneView_scene1").style.display = "none";
         }
       }
     });
@@ -922,12 +932,12 @@ export async function universe() {
       } else {
         // Add switch case for different domain functions(catgories)
         exploreUI.style.width = "540px";
-        exploreUI.style.height = "810px";
+        exploreUI.style.height = "80%";
         if (window.domainType === "chat") {
           window.chatActive = true;
-          document
-            .getElementById("uniEvent4")
-            .setAttribute("style", "animation: none;");
+          // document
+          //   .getElementById("uniEvent4")
+          //   .setAttribute("style", "animation: none;");
         }
         // window.deactivateDrag();
         // BELOW TEMP OPTION
@@ -1627,24 +1637,32 @@ export async function universe() {
   var playerInt = false;
   var otherPlayers = [];
 
-  await channel2.subscribe("lords", (data) => {
+  channel2.presence.subscribe("enter", (member) => {
+    console.log("A NEW PLAYER HAS ARRIVED", member.data);
+  });
+  channel2.presence.subscribe("update", (member) => {
     if (playerInt === false) {
-      var player1 = uniPlayers.create(data.data.playerId, data.data.playerData);
-      player1.renderPlayer(data.data.playerData);
-      otherPlayers.push(data.data.playerData.playerId);
+      var playerGroup1 = uniPlayers.create("PlayerGroup1");
+      playerGroup1.renderPlayer(member.data.data);
+      otherPlayers.push(member.data.data.playerId);
       playerInt = true;
       return;
     }
-    if (otherPlayers.includes(data.data.playerData.playerId) === false) {
-      otherPlayers.push(data.data.playerData.playerId);
-      window.room2.renderPlayer(data.data.playerData);
+    if (otherPlayers.includes(member.data.data.playerId) === false) {
+      otherPlayers.push(member.data.data.playerId);
+      window.room2.renderPlayer(member.data.data);
     }
-    document.getElementById(`${data.data.playerData.playerId}`).style.top =
-    data.data.playerData.y;
-    document.getElementById(`${data.data.playerData.playerId}`).style.left =
-    data.data.playerData.x;
+    document.getElementById(`${member.data.data.playerId}`).style.top =
+    member.data.data.y;
+    document.getElementById(`${member.data.data.playerId}`).style.left =
+    member.data.data.x;
+  });
+  channel2.presence.subscribe("leave", (member) => {
+    console.log("MemberData", member.data);
+    document.getElementById(`${member.data.data.playerId}`).remove();
   });
 
+  channel2.presence.enter(window.uniPlayer);
   //
 
   // TOOLTIP

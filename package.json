@@ -4,7 +4,7 @@
   "scripts": {
     "start": "vite",
     "server": "node server.js",
-    "dev": "concurrently \"npm run start\" \"npm run server\"",
+    "dev": "npm run start",
     "build": "vite build",
     "serve": "npm run build && vite preview",
     "watch": "ic-dfx-watch",
