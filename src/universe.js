@@ -11,12 +11,6 @@ import { Buffer } from "buffer";
 
 window.Buffer = Buffer;
 
-import("@psychedelic/dab-js").then((dab) => {
-  window.getAllUserNFTs = dab.getAllUserNFTs;
-}).catch((err) => {
-  console.log(err);
-});
-
 var testState = {
   whitelistPrincipals: [
     {
@@ -738,13 +732,13 @@ export async function universe() {
         /////////////////////////
         ////// TEMP
         /////////////////////////
-        if (e.keyCode == 88) {
-          document.getElementById("universe").style.filter = "blur(0px)";
-          document.querySelectorAll(".uniEvents").forEach((el) => {
-            el.style.opacity = 1;
-          });
-          document.getElementById("currentSceneView_scene1").style.display = "none";
-        }
+        // if (e.keyCode == 88) {
+        //   document.getElementById("universe").style.filter = "blur(0px)";
+        //   document.querySelectorAll(".uniEvents").forEach((el) => {
+        //     el.style.opacity = 1;
+        //   });
+        //   document.getElementById("currentSceneView_scene1").style.display = "none";
+        // }
       }
     });
     // scroll the camera element when the selection box reaches the edge of the window screen size
