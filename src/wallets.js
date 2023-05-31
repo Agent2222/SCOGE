@@ -4,6 +4,16 @@ import { HttpAgent } from "@dfinity/agent";
 
 const canister = "7mfck-baaaa-aaaah-acuqq-cai";
 
+const getAllUserNFTs = async () => {
+  try {
+    const dab = await import("@psychedelic/dab-js");
+    return dab.getAllUserNFTs;
+  } catch (err) {
+    console.log(err);
+    throw err; // Re-throw the error to handle it further if needed
+  }
+};
+
 export const connectPlugWallet = async (whitelist, host) => {
   var view = document.querySelector(".currentScene");
   if (window.ic === undefined) {
@@ -13,7 +23,7 @@ export const connectPlugWallet = async (whitelist, host) => {
     return;
   } else {
     // Scenario - Returning User
-    console.log(window.ic.plug.isConnected());
+    console.log(window.ic.plug?.isConnected());
     const connected = await window.ic.plug.isConnected().catch((e) => {
       console.error(e);
     });
@@ -81,7 +91,7 @@ const getNFTCollections = async () => {
   let principal = await window.ic.plug.getPrincipal()
   principal = principal.toString();
   console.log("Principal", principal);
-  const collections = await window.getAllUserNFTs(
+  const collections = await getAllUserNFTs(
     {
       user: principal
     }
@@ -161,7 +171,7 @@ export const connectBitFinityWallet = async (whitelist, host) => {
         // const principal = 'qpbuq-myqvw-yoaff-265ad-5g6xu-wx5dl-zzd7y-y6oak-zo4uf-x3ozb-dqe';
         const principal = await window.ic.plug.getPrincipal()
         console.log("Principal", principal);
-        const collections = await window.getAllUserNFTs({
+        const collections = await getAllUserNFTs({
           user: principal,
         }).then((res) => {
           console.log("NFTs", res);
