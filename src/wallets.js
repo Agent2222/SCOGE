@@ -1,17 +1,24 @@
 import { gsap } from "gsap";
 import { Principal } from "@dfinity/principal";
 import { HttpAgent } from "@dfinity/agent";
+import idlFactory from "../src/uniHelpers/erc721.did.js";
+import { getAllUserNFTs } from "@psychedelic/dab-js";
 
 const canister = "7mfck-baaaa-aaaah-acuqq-cai";
 
-const getAllUserNFTs = async () => {
+const getNFTCollections = async () => {
+  const principal = 'qpbuq-myqvw-yoaff-265ad-5g6xu-wx5dl-zzd7y-y6oak-zo4uf-x3ozb-dqe';
+  let agent = new HttpAgent({ host: "https://ic0.app" });
   try {
-    const dab = await import("@psychedelic/dab-js");
-    return dab.getAllUserNFTs;
+    const collections = await getAllUserNFTs({
+      agent: agent,
+      user: principal,
+    });
+  
+    console.log("NFTs", collections);
   } catch (err) {
-    console.log(err);
-    throw err; // Re-throw the error to handle it further if needed
-  }
+    console.log("NFTs Error", err);
+  }  
 };
 
 export const connectPlugWallet = async (whitelist, host) => {
@@ -23,7 +30,7 @@ export const connectPlugWallet = async (whitelist, host) => {
     return;
   } else {
     // Scenario - Returning User
-    console.log(window.ic.plug?.isConnected());
+    // console.log(window.ic.plug.isConnected());
     const connected = await window.ic.plug.isConnected().catch((e) => {
       console.error(e);
     });
@@ -84,28 +91,27 @@ export const connectPlugWallet = async (whitelist, host) => {
   }
 };
 
-const getNFTCollections = async () => {
-  const agent = window.ic.plug?.sessionManager?.sessionData?.agent;
-  // const principal = 'qpbuq-myqvw-yoaff-265ad-5g6xu-wx5dl-zzd7y-y6oak-zo4uf-x3ozb-dqe';
-  console.log("Agent", agent);
-  let principal = await window.ic.plug.getPrincipal()
-  principal = principal.toString();
-  console.log("Principal", principal);
-  const collections = await getAllUserNFTs(
-    {
-      user: principal
-    }
-  ).then((res) => {
-    console.log("NFTs", res);
-  }).catch((e) => {
-    console.log("NFTs Error", e);
-  });
-  console.log("NFT Collections", collections);
-};
 
 //////////////////////////////////////////////////
 // Bitfinity Wallet
 //////////////////////////////////////////////////
+
+const getNFTCollectionsBit = async () => {
+  const principal = 'gdcab-izhzj-7yhxv-ym7jd-wduwn-2nlcy-em7ts-6q7zs-kf5z4-swdod-nqe';
+  let agent = new HttpAgent({ host: "https://ic0.app" });
+  
+  // Call the function directly with the required parameters
+  try {
+    const collections = await getAllUserNFTs({
+      agent: agent,
+      user: principal,
+    });
+  
+    console.log("NFTs", collections);
+  } catch (err) {
+    console.log("NFTs Error", err);
+  }  
+};
 
 export const connectBitFinityWallet = async (whitelist, host) => {
   var view = document.querySelector(".currentScene");
@@ -116,7 +122,7 @@ export const connectBitFinityWallet = async (whitelist, host) => {
     return;
   } else {
     // Scenario - Returning User
-    const connected = await window.ic.infinityWallet
+    const connected = await window.ic.bitfinityWallet
       .isConnected()
       .catch((e) => {
         console.error(e);
@@ -129,7 +135,6 @@ export const connectBitFinityWallet = async (whitelist, host) => {
 
     if (connected === false) {
       // Scenario - User has a plug wallet but is not connected
-      console.log("Not Connected");
       console.log(whitelist, host);
       const bitpublicKey = await window.ic.bitfinityWallet
         .requestConnect({
@@ -151,6 +156,7 @@ export const connectBitFinityWallet = async (whitelist, host) => {
           view?.remove();
         },
       });
+      getNFTCollectionsBit();
       document.getElementById("universe").style.filter = "blur(0px)";
       document.querySelectorAll(".uniEvents").forEach((el) => {
         el.style.opacity = 1;
@@ -166,18 +172,6 @@ export const connectBitFinityWallet = async (whitelist, host) => {
           view?.remove();
         },
       });
-      const agent = window.ic.plug?.sessionManager?.sessionData?.agent;
-      const getNFTCollectionsBit = async () => {
-        // const principal = 'qpbuq-myqvw-yoaff-265ad-5g6xu-wx5dl-zzd7y-y6oak-zo4uf-x3ozb-dqe';
-        const principal = await window.ic.plug.getPrincipal()
-        console.log("Principal", principal);
-        const collections = await getAllUserNFTs({
-          user: principal,
-        }).then((res) => {
-          console.log("NFTs", res);
-        });
-        console.log("NFT Collections", collections);
-      };
       getNFTCollectionsBit();
       console.log("Connected");
       document.getElementById("universe").style.filter = "blur(0px)";
@@ -191,7 +185,7 @@ export const connectBitFinityWallet = async (whitelist, host) => {
 //   // CANISTER (Change in local / production)
 //   // Create Actor
 export const createActor1 = async (can, idl) => {
-  const suUiActor = await window.ic.plug
+  const suUiActor = await window.ic.bitfinityWallet
     .createActor({
       canisterId: can,
       interfaceFactory: idl,
@@ -199,7 +193,6 @@ export const createActor1 = async (can, idl) => {
     .catch((e) => {
       console.log("creatActorError", e);
     });
-  console.log("Actor", suUiActor);
   return suUiActor;
 };
 

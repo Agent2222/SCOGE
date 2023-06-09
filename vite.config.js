@@ -1,11 +1,7 @@
 import { defineConfig } from 'vite'
-import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import dfxJson from "./dfx.json"
 import path from "path"
-import { esbuildCommonjs } from '@originjs/vite-plugin-commonjs'
-import commonjs from '@rollup/plugin-commonjs'
-import { socket } from 'socket.io'
-// import commonjs from '@rollup/plugin-commonjs'
+import nodePolyfills from 'rollup-plugin-polyfill-node'
 
 // List of all aliases for canisters
 const aliases = Object.entries(dfxJson.canisters).reduce(
@@ -34,18 +30,6 @@ export default defineConfig({
     alias: {
       ...aliases,
     },
-    // Added below to fix BabylonJS
-    plugins:[
-      // esbuildCommonjs(['babylonjs']),
-      nodePolyfills({
-        // Whether to polyfill `node:` protocol imports.
-        global: 'global',
-        protocolImports: true,
-      }),
-    ]
-  },
-  define: {
-    global: {},
   },
   build: {
     rollupOptions: {
@@ -57,6 +41,9 @@ export default defineConfig({
         dir: "dist/",
         format: "esm"
       },
+      plugins: [
+        nodePolyfills(),
+      ],
       // https://rollupjs.org/guide/en/#big-list-of-options
     },
     chunkSizeWarningLimit: 1000000,

@@ -44,6 +44,7 @@ export class Character {
       // Dialogue Pointer
       var dialoguePointer = document.createElement("div");
       dialoguePointer.classList.add("dialoguePointer");
+      dialoguePointer.setAttribute("id", `${this.persona.name}_pointer`);
       dialoguePointer.style.position = "absolute";
       dialoguePointer.style.width = this.details.element.pointer.width;
       dialoguePointer.style.height = this.details.element.pointer.height;
@@ -77,7 +78,6 @@ export class Character {
     var characterCont = document.createElement("div");
     var characterImg = document.createElement("img");
     var charPersona = this.details.persona;
-    console.log(charPersona);
     characterCont.classList.add(this.details.element?.class);
     characterCont.setAttribute("id", `char_${charPersona.name}`);
     characterCont.style.height = this.details.pns.height;

@@ -7,3 +7,5 @@ node_modules
 build/models/Room44/Room44.gltf
 .dfx
 editor.js
+server.js
+```
