@@ -7,9 +7,6 @@ import { connectPlugWallet, createActor1 } from "./wallets.js";
 import { Scenario } from "./game/scenarios/scenarios.js";
 import { DialogueScene } from "./game/scenarios/DialogueScene.js";
 import { gsap } from "gsap";
-import { Buffer } from "buffer";
-
-window.Buffer = Buffer;
 
 var testState = {
   whitelistPrincipals: [
@@ -170,7 +167,6 @@ export async function universe() {
   const channel2 = ably.channels.get("lordsInTheCity");
 
   const test = () => {
-    console.log("test");
     document.addEventListener("keydown", function (e) {
       if (e.keyCode === 80) {
         newScenario("Intro");
@@ -315,11 +311,14 @@ export async function universe() {
     viewEditor.style.border = "1px solid #ff002d";
     viewEditor.addEventListener("click", async () => {
       const editorModule = await import("../editor.js");
-      var editorState = editorModule.editor(editorActive);
+      var editorState = await editorModule.editor(editorActive);
       if (editorState === false) {
         editorActive = false;
-      } else {
+        return;
+      }
+      if (editorState === true) {
         editorActive = true;
+        return;
       }
     });
 
@@ -568,15 +567,13 @@ export async function universe() {
       Math.round(boxRect.top) + 2
     }`;
     //
-    window.uniPlayer.x = box.style.left;
-    window.uniPlayer.y = box.style.top;
-    // await channel2.publish("lords", {
-    //   roomId: room2Name,
-    //   playerId: window.uniPlayer.playerId,
-    //   playerData: window.uniPlayer,
-    // });
-    //
-    channel2.presence.update({ data: window.uniPlayer });
+    if (window.uniPlayer) {
+      window.uniPlayer.x = box.style.left;
+      window.uniPlayer.y = box.style.top;
+      channel2.presence.update({ data: window.uniPlayer });
+    }
+    // window.uniPlayer.x = box?.style.left;
+    // window.uniPlayer.y = box?.style.top;
     if (
       `${position}` === tempLandEx[0] ||
       `${position}` === tempLandEx[1] ||
@@ -729,16 +726,16 @@ export async function universe() {
         if (e.keyCode == 32) {
           window.exploreOpenHelper();
         }
-        /////////////////////////
-        ////// TEMP
-        /////////////////////////
-        // if (e.keyCode == 88) {
-        //   document.getElementById("universe").style.filter = "blur(0px)";
-        //   document.querySelectorAll(".uniEvents").forEach((el) => {
-        //     el.style.opacity = 1;
-        //   });
-        //   document.getElementById("currentSceneView_scene1").style.display = "none";
-        // }
+        ///////////////////////
+        //// TEMP
+        ///////////////////////
+        if (e.keyCode == 88) {
+          document.getElementById("universe").style.filter = "blur(0px)";
+          document.querySelectorAll(".uniEvents").forEach((el) => {
+            el.style.opacity = 1;
+          });
+          document.getElementById("currentSceneView_scene1").style.display = "none";
+        }
       }
     });
     // scroll the camera element when the selection box reaches the edge of the window screen size
@@ -769,7 +766,6 @@ export async function universe() {
         window.innerWidth - Number(char.style.left.replace("px", ""))
       );
       var topSel = Math.floor(Number(char.style.top.replace("px", "")));
-      console.log(leftSel, topSel);
       var bottomSel = Math.floor(
         window.innerHeight - Number(char.style.top.replace("px", ""))
       );
@@ -1705,3 +1701,20 @@ export const newScenario = async (name) => {
   scenario.show();
   return scenario;
 };
+
+// Instantiate Editor Scenario
+export const newEditorScenario = async (name,scene) => {
+  var scenario = new Scenario();
+  var scenes = [];
+  // fetch scns.json and load it into the editor
+  const data = await import('./sudb.json').catch((error) => {
+    console.log(error);
+  });
+  //
+  scenes.push(new DialogueScene(data.SUD.Scenarios[name][scene]));
+  scenario.addScenes(...scenes);
+  scenario.load();
+  // check conditions
+  scenario.show();
+  return scenario;
+}

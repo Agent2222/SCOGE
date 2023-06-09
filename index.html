@@ -18,6 +18,11 @@
         <link rel="shortcut icon" type="image/png" href="/assets/images/favicon.png">
         <link href="./src/wScoge.css" rel="stylesheet">
         <link href="./src/uni.css" rel="stylesheet">
+        <script type="module">
+            import { Buffer } from "buffer";
+            window.Buffer = Buffer;
+            window.global = window;
+          </script>   
         <script src="./src/index.js" type="module"></script>
         <script src="https://cdn.ably.com/lib/ably.min-1.js"></script>
     </head>
@@ -28,7 +33,7 @@
         <!-- End Google Tag Manager (noscript) -->
         <div id="subText1" class="dialogue"><p></p></div>
         <div id="subText2" class="dialogue"><span class="answerOptions" id="st2Ans1"></span><span class="answerOptions" id="st2Ans2"></span><span class="answerOptions" id="st2Ans3"></span></div>
-        <scoge-investors invest="invest" id="getInvestors" style="display: none;"></scoge-investors>
+        <!-- <scoge-investors invest="invest" id="getInvestors" style="display: none;"></scoge-investors> -->
         <scoge-rsvp rsvps="rsvp" id="rsvpModal" style="display:none;"></scoge-rsvp>
         <mint-screen mint="mint1" style="display:block;" id="getNfts"></mint-screen>
         <scoge-UniMenu uniMenu="uniMenu" id="getUniMenu"></scoge-UniMenu>

@@ -1,47 +1,31 @@
-// const { createServer } = require('http');
-// const { Server } = require('socket.io');
+const express = require('express');
+const fs = require('fs');
+const cors = require('cors');
+const app = express();
 
-// const httpServer = createServer();
-// const io = new Server(httpServer, {
-//   cors: {
-//     origin: 'https://localhost:3000',
-//     methods: ['GET', 'POST'],
-//   },
-// });
+app.use(cors());
+app.use(express.json());
 
-// io.on('connection', (socket) => {
-//   console.log('A user connected');
+// Route to handle the file overwrite operation
+app.post('/save-json', (req, res) => {
+  const jsonData = req.body;
 
-//   socket.on('newMessage', (data) => {
-//     const { roomName, message } = data;
-//     console.log(`New message in room ${roomName}: ${message}`);
+  // Convert the modified JSON data back to a string
+  const modifiedJsonString = JSON.stringify(jsonData);
 
-//     // Broadcast the message to all clients
-//     io.emit('newMessage', {roomName, message});
-//   });
+  // Overwrite the file on the server
+  fs.writeFile('src/sudb.json', modifiedJsonString, err => {
+    if (err) {
+      console.error('Error saving JSON data:', err);
+      res.status(500).send('Error saving JSON data');
+    } else {
+      console.log('JSON data saved successfully');
+      res.send('JSON data saved successfully');
+    }
+  });
+});
 
-//   const players = {};
-
-//   socket.on('players', (data) => {
-//     const { roomId, playerId, playerData } = data;
-//     if (!players[playerId]) {
-//       players[playerId] = { roomId };
-//     }
-//     players[playerId] = { ...players[playerId], ...playerData };
-//     socket.to(roomId).emit('playerUpdate', players);
-//     console.log(`New message in room ${roomId}: ${playerId}`);
-//     // Broadcast the message to all clients
-//     io.emit('players', data);
-//     console.log('players', players);
-//   });
-
-//   // Other event handlers...
-// });
-
-// // httpServer.listen(3001, () => {
-// //   console.log('Socket.IO server listening at http://localhost:3001');
-// // });
-// const port = 3001;
-// httpServer.listen(port, () => {
-//   console.log(`Socket.IO server listening at http://localhost:${port}`);
-// });
+// Start the server
+app.listen(3001, () => {
+  console.log('Server is running on http://localhost:3001');
+});

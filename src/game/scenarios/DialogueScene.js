@@ -1,4 +1,5 @@
-import { Scenario } from "./Scenarios.js";
+
+import { Scenario } from "../scenarios/Scenarios.js";
 import { Character } from "../characters/Character.js";
 import { connectPlugWallet } from "../../wallets.js";
 import { connectBitFinityWallet } from "../../wallets.js";
@@ -102,6 +103,7 @@ export class DialogueScene extends Scenario {
         const el = document.createElement("div");
         const el3Img = document.createElement("img");
         el.classList.add("sceneElement");
+        el.setAttribute("id", `${element.id}-cont`);
         el.style.zIndex = 11;
         el.style.position = element.position;
         el.style.top = element.top;
@@ -109,7 +111,7 @@ export class DialogueScene extends Scenario {
         el.style.left = element.left;
         el.style.width = element.width;
         el.style.height = element.height;
-        el3Img.setAttribute("id", element.id);
+        el3Img.setAttribute("id", `${element.id}-img`);
         el3Img.style.width = "100%";
         el3Img.style.height = "100%";
         el3Img.style.position = "absolute";
@@ -129,15 +131,15 @@ export class DialogueScene extends Scenario {
         el.appendChild(el3Img);
         // Actions
         el.addEventListener("click", () => {
-          if (element.action === "connectPlugWallet()") {
-            const funct = new Function(element.action.replace("connectPlugWallet()", connectPlugWallet(whitelist, local)));
-            funct();
+          const actions = {
+            "connectPlugWallet()": () => connectPlugWallet(whitelist, local),
+            "connectBitfinityWallet()": () => connectBitFinityWallet(whitelist, local),
+            // add other actions here
+          };
+        
+          if (actions[element.action]) {
+            actions[element.action]();
           }
-          if (element.action === "connectBitfinityWallet()") {
-            const funct = new Function(element.action.replace("` connectBitFinityWallet()}`", connectBitFinityWallet(whitelist, local)));
-            funct();
-          }
-          // this.scene.elements[0].action();
         });
         this.elements.push(el);
       });

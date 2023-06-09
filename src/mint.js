@@ -142,13 +142,15 @@ class mintingScreen extends HTMLElement {
         to: user,
         metadata: metaData.length === 0 ? [] : metaData,
     };
+
     const IDL = await createActor1(canister, idlFactory);
     var minter = await IDL.availableCycles();
-    // var mint = await IDL.mintNFT(params);
+    var mint = await IDL.mintNFT(params);
+    var tokens = await IDL.tokens(user);
     // d
     // let res = await createActor1(canister, idlFactory).mintNFT(params);
-    console.log("Mint Test", minter);
-    return minter;
+    console.log("Mint Test", tokens);
+    return tokens;
 } 
 
   // Get Wallet Start

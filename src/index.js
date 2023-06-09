@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 //
 import Commerce from "@chec/commerce.js";
+import { Buffer } from "buffer";
+window.Buffer = window.Buffer || Buffer;
 // import loadStripe from "stripe";
 // import Stripe from "stripe";
 // import * as BABYLON from "@babylonjs/core";
@@ -17,7 +19,6 @@ import { SoundtrackManager } from "./soundtrack.js";
 import { portal } from "./portal.js";
 import { HttpAgent } from "@dfinity/agent";
 import { Principal } from '@dfinity/principal';
-// import { getAllUserNFTs } from '@psychedelic/dab-js';
 // import the closeCampaign function from dt-campaign.js
 import { mintingScreen } from "../src/mint.js";
 // import { dialogue } from "./game/dialogue.js";
@@ -25,10 +26,6 @@ import { gsap } from "gsap";
 import { TextPlugin } from "gsap/TextPlugin";
 import { Configuration, OpenAIApi } from "openai";
 import { universe } from "./universe.js";
-import { Buffer } from 'buffer';
-// import fleekStorage from "@fleekhq/fleek-storage-js";
-
-window.Buffer = Buffer;
 
 window.entry = () => {
   gsap.to("#introLogo", { duration: 1, opacity: 1, ease: "power2.inOut" });
