@@ -1880,7 +1880,7 @@ window.seek = (e) => {
       if (window.conversationHistory[0] != "seekOpt5") {
         window.convoHist(seekCard);
         window.seekType = "mailing";
-        let baseText = "I want community?";
+        let baseText = "How do I keep up?";
         let baseAnswer = "Keep up by joining our mailing list.";
         window.systemSpeak(baseText, baseAnswer);
       } else {
