@@ -4,8 +4,8 @@ var currentAudio = null;
 var currenttrack = 0;
 var trackList = [
   {
-    artist:"SCOGÉ Radio - Broadcast 1",
-    link:"https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeSounds/IFSTFAW-Mix.mp3"
+    artist:"SCOGÉ Radio - Broadcast S3E3",
+    link:"https://scoge.s3.us-east-2.amazonaws.com/SCOGE-Radio-S3-E3.mp3"
   }, 
 ]
 

@@ -63,7 +63,7 @@ class mintingScreen extends HTMLElement {
         category: categoryList[2],
         name: 'Digisette Pre-Alpha',
         description: 'Limited edition pre-alpha 1 of 450 Digisette.',
-        url: `https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/SCOGE-Yumi-LaunchCollection Logo.jpg`,
+        url: `https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/SCOGE-Digisette-Alpha-Collection.jpg`,
         attributes: [
           {
             ringType: "",
