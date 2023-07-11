@@ -2239,7 +2239,7 @@ class getUniMenu extends HTMLElement {
               #uniMenuIcon {
                 display: none;
                 color: #ff002d !important;
-                transform: scale(1.5);
+                transform: scale(2) !important;
               }
 
               #loadingText {
