@@ -2188,6 +2188,10 @@ class getUniMenu extends HTMLElement {
               object-fit: contain;
             }
 
+            #loadingText {
+              display: none;
+            }
+
             @media screen and (max-width: 800px) {
               #uniMenu {
                 width: 80%;
@@ -2207,11 +2211,11 @@ class getUniMenu extends HTMLElement {
                 border-right: 2px solid #ff002d;
                 font-family: "BS-R";
                 font-size: 16px;
-                display: none;
                 transition: height 0.5s ease;
                 overflow: hidden;
                 margin-bottom: 20%;
                 font-family: "BS-R";
+                display: none;
               }
               #menuHeader {
                 display: grid;
@@ -2233,7 +2237,19 @@ class getUniMenu extends HTMLElement {
                 top: 0;
               }
               #uniMenuIcon {
+                display: none;
                 color: #ff002d !important;
+                transform: scale(1.5);
+              }
+
+              #loadingText {
+                display: block;
+                position: absolute;
+                top: 10%;
+                right: 5%;
+                letter-spacing: 1px;
+                animation: blink 2s ease-in-out infinite;
+                font-family: "BS-R";
               }
 
               #fullMenu {
@@ -2345,10 +2361,6 @@ class getUniMenu extends HTMLElement {
 
               #beaconAction2 {
                 width: 70%;
-              }
-
-              #uniMenu {
-                font-family: "BS-R";
               }
 
               #beaconBG {
@@ -2594,6 +2606,7 @@ class getUniMenu extends HTMLElement {
             <div id="menuHeader">
               <div id="topMenu">
                <img id="uniMenuLogo" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/SCOGÉ_Logo-red.png" draggable="false">
+               <div id="loadingText">Loading...</div>
                <div id="uniMenuIcon">&#8682;</div>
               </div>
               <div id="uniVersion">

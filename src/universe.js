@@ -1026,6 +1026,9 @@ export async function universe() {
               shadow.getElementById("fashionShop").addEventListener("click", () => {
                 window.shopping();
               });
+              shadow.getElementById("nftShop").addEventListener("click", () => {
+                window.open('https://twitter.com/YumiMarketplace/status/1673888214690729984');
+              });
             } else {
               shadow.getElementById(
                 "fm-enhancements"

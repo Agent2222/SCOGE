@@ -241,6 +241,8 @@ window.sizeInit = () => {
     // document.getElementById("main").appendChild(node)
     // document.getElementById("uniBut").style.display = "none";
     window.isMobile = true;
+    document.getElementById("getUniMenu").shadowRoot.getElementById("uniMenuIcon").style.display = "block";
+    document.getElementById("getUniMenu").shadowRoot.getElementById("loadingText").style.display = "none";
     var videoEls = document.querySelectorAll(".videoEl");
     videoEls.forEach((videoEl) => {
       videoEl.setAttribute("class", "mobileVideo");
