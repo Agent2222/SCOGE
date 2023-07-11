@@ -12,6 +12,7 @@ import { getUniMenu } from "../src/dt-uniMenu.js";
 import { scogeRsvp } from "../src/scoge-rsvp.js";
 import { dtMusic } from "./dt-scogeMusic.js";
 import { dtInvestors } from "../src/dt-investors";
+import { dtGallery } from "../src/dt-gallery.js";
 import { dialogueBox } from "../src/dialogueBox.js";
 import { MainDialogue } from "./typing.js";
 import { SeekDialogue } from "./seeking.js";
@@ -29,13 +30,10 @@ import { universe } from "./universe.js";
 
 window.entry = () => {
   gsap.to("#introLogo", { duration: 1, opacity: 1, ease: "power2.inOut" });
-  gsap.to("#intro", { duration: 1, opacity: 0, ease: "power2.inOut", delay: 1.5 });
+  // gsap.to("#intro", { duration: 1, opacity: 0, ease: "power2.inOut", delay: 1.5 });
   gsap.to(".welcomeOptions", { duration: 1, opacity: 1, ease: "power2.inOut", delay: 2 });
   gsap.to("#wOpt1", { duration: 2, translateX: 0, ease: "power2.inOut", delay: 1.5 });
   gsap.to("#wOpt2", { duration: 2, translateX: 0, ease: "power2.inOut", delay: 1.5 });
-  setTimeout(() => {
-    document.getElementById("welcome").style.pointerEvents = "auto";
-  }, 3000);
 }
 
 window.entry();
@@ -45,6 +43,11 @@ const VITE_StripeKey = import.meta.env.VITE_StripeKey;
 const fleekP = import.meta.env.VITE_fleekP;
 const fleekS = import.meta.env.VITE_fleekS;
 const VITE_ScogeI = import.meta.env.VITE_ScogeI;
+const VITE_ably = import.meta.env.VITE_ably;
+  window.ably = new Ably.Realtime({
+  key: VITE_ably,
+  clientId: "Test"
+})
 
 // Globals
 var notiActive = false;
@@ -66,6 +69,7 @@ window.investorsView = false;
 window.urlParamsActive = false;
 window.inUniverse = false;
 window.productsloaded = false;
+window.currentMenuTab = null;
 var ci = "false";
 
 // Init Commerce
@@ -116,35 +120,85 @@ window.sysCheck = () => {
 }
 
 
-window.checkKeys = async (event) => {
-  if (event.key === "i" && ci === "false") {
-    ci = "true";
+// window.checkKeys = async (event) => {
+//   if (event.key === "i" && ci === "false") {
+//     ci = "true";
+//     window.dbm = true;
+//     setTimeout(()=> {
+//       ci = "false";
+//     } , 1000);
+//   }
+//   if (event.key === "c" && ci === "true") {
+//     ci = "bankoo";
+//     // Init Universe
+//     universe();
+//     // DAB IS DEAD?? ALT??
+//     //   window.getAllUserNFTs = await import('@psychedelic/dab-js').then(module => {
+//     //   return module.getAllUserNFTs;
+//     // });
+//     // document.getElementById("uniBut").removeEventListener("click", systemNoti);
+//     // document.getElementById("uniBut").addEventListener("click", universeSystem);
+//     window.universeSystem();
+//     // document.getElementById("uniBut").setAttribute("onclick", "universeSystem()");
+//     // soundtrack.play("scoge1");
+//   }
+// }
+
+// // Init Check
+// window.sysCheck();
+
+const uncover = () => {
+  universe();
+  var logos = document.querySelectorAll(".bcClass");
+  logos.forEach((logo) => {
+    logo.addEventListener("click", () => {
+      gsap.to("#power", { duration: .1, zIndex: 10, ease: "expo.out" });
+      gsap.to("#bc1", { duration: 1.8, left: "0%", ease: "expo.out" });
+      gsap.to("#bc1", { duration: 1.8, top: "5%", ease: "expo.out" });
+      gsap.to("#bc1", { delay: .2, duration: 1.8, transform: "rotate(40deg)", ease: "expo.out" });
+      gsap.to("#bc2", { duration: 2, left: "85%", ease: "expo.out" });
+      gsap.to("#bc2", { duration: 1, top: "20%", ease: "expo.out" });
+      gsap.to("#bc2", { duration: 1.8, transform: "rotate(-50deg)", ease: "expo.out" });
+      gsap.to("#bc3", { duration: 1, left: "40%", ease: "expo.out" });
+      gsap.to("#bc3", { duration: 2, top: "85%", ease: "expo.out" });
+      gsap.to("#bc3", { duration: 1, transform: "rotate(-50deg)", ease: "expo.out" });
+      gsap.to("#bc1", { duration: .5, cursor: "default", ease: "expo.out" });
+      gsap.to("#bc2", { duration: .5, cursor: "default", ease: "expo.out" });
+      gsap.to("#bc3", { duration: .5, cursor: "default", ease: "expo.out" });
+    });
+  });
+
+  document.getElementById("power").addEventListener("click", () => {
     window.dbm = true;
-    setTimeout(()=> {
-      ci = "false";
-    } , 1000);
-  }
-  if (event.key === "c" && ci === "true") {
-    ci = "bankoo";
-    // Init Universe
-    universe();
-    // DAB IS DEAD?? ALT??
-    //   window.getAllUserNFTs = await import('@psychedelic/dab-js').then(module => {
-    //   return module.getAllUserNFTs;
-    // });
-    // document.getElementById("uniBut").removeEventListener("click", systemNoti);
-    // document.getElementById("uniBut").addEventListener("click", universeSystem);
-    window.universeSystem();
-    // document.getElementById("uniBut").setAttribute("onclick", "universeSystem()");
-    // soundtrack.play("scoge1");
-  }
+    // ci = "bankoo";
+    gsap.to("#intro", { duration: 2, opacity: 0});
+    if (ci === "false") {
+      window.galleryActive = true;
+      window.view = "gallery";
+      window.universeSystem();
+      document.getElementById("portalVideo").style.display = "block";
+      document.getElementById("portalVideo2").style.display = "block";
+      document.getElementById("seekModal").style.pointerEvents = "auto";
+      gsap.to('#videoGallery', {duration: 2, opacity: 1, y: 0, ease: "power2.out"});
+      gsap.to("#videoGallery", { duration: 1, scale: 1, ease: "power2.inOut"});
+      gsap.to("#videoGallery", { duration: 1, filter: "blur(0px)", ease: "power2.inOut"});
+      ci = "true";
+      window.trackMouse();
+      window.trackMouseMove();
+      document.getElementById("pv2").src = "https://scoge.s3.us-east-2.amazonaws.com/Videos/Ch2-Act1-sm.mp4";
+      document.getElementById("portalVideo2")?.play();
+    }
+  });
 }
 
-// Init Check
-window.sysCheck();
+uncover();
 
 // Check Size on Resize
 window.addEventListener("resize", function () {
+   // refresh the page
+   if (window.currentMenuTab != "settings") {
+    window.location.reload();
+   }
   if (window.matchMedia("(max-width: 768px)").matches) {
     var shopMenuBut = document.getElementById("shopBut");
     //
@@ -159,15 +213,19 @@ window.addEventListener("resize", function () {
     document.getElementById("tandc").style.display = "none";
     document.getElementById("tandc").style.opacity = "0%";
     shopActive = "closed";
+    window.isMobile = true;
     window.termsOpen = false;
+    document.getElementById("getUniMenu").shadowRoot.getElementById("uniMenu").style.overflowX = "hidden";
     //
   } else {
+     // refresh the page
+    //  window.location.reload();
     // Desktop
     document.getElementById("shop").style.opacity = "100%";
     document.getElementById("shop").style.visibility = "visible";
     document.getElementById("mobileShop").style.display = "none";
     window.isMobile = false;
-    window.logoMove(6, 3, 16, 1);
+    // window.logoMove(6, 3, 16, 1);
   }
 });
 
@@ -188,12 +246,6 @@ window.sizeInit = () => {
       videoEl.setAttribute("class", "mobileVideo");
     });
   } else {
-    mandala.addEventListener("mouseover", () => {
-      window.openPeek();
-    })
-    mandala.addEventListener("mouseeout", () => {
-      window.closePeek();
-    });
     // Desktop
     // document.getElementById("uniBut").style.opacity = "100%";
     // window.getParamsDesktop();
@@ -204,7 +256,6 @@ window.onload = () => {
   window.sizeInit();
   window.loadShop();
   window.getParamsDesktop();
-  window.initFilterActions();
 }
 
 window.shopping = () => {
@@ -1604,168 +1655,6 @@ window.dialogue = new SeekDialogue('',[{
   ]
 }]) 
 
-window.openSeek = () => {
-  var seekModal = document.getElementById("seekModal");
-  var mandala = document.getElementById("manBG");
-  document.getElementById("seekModal").style.display = "grid";
-  // create the GSAP animation
-  if (seeking === false) {
-    setTimeout(()=>{
-      window.dialogue.start(0, 'sysResp');
-      setTimeout(()=>{
-        gsap.to(mandala, { duration: 1, opacity: 1, ease: "power2.inOut"});
-        gsap.fromTo(seekOptCards, {
-          scale: .7, // initial scale of .9
-          opacity: 0, // initial opacity of 0
-        }, {
-          duration: .3, // animation duration in seconds
-          scale: 1, // scale all elements to 1
-          opacity: 1, // make all elements visible
-          ease: "power4.out", // animation easing
-          stagger: {
-            each: 0.2, // stagger each element by 0.1 seconds
-          },
-        });
-      },1400)
-    },1000)
-    cards.forEach(card => {
-      card.addEventListener("click", (e) => {
-        window.seek(e);
-      })
-    });
-    seeking = true;
-  }
-  seekModal.style.pointerEvents = "auto";
-  gsap.to("#seekModal", { duration: .3, opacity: 1, ease: "power2.inOut"});
-  gsap.to("#seekModal", { duration: .3, scale: 1, ease: "power2.inOut"});
-  gsap.to("#seekModal", { duration: .3, filter: "blur(0px)", ease: "power2.inOut"});
-  if (window.isMobile != true) {
-    mandala.addEventListener("mouseover", () => {
-      window.openPeek();
-    })
-    mandala.addEventListener("mouseout", () => {
-      window.closePeek();
-    });
-  }
-  
-  seekActive = true;
-  peeking = false;
-  window.trackMouse();
-  window.trackMouseMove();
-}
-
-// define the seekOptCard elements as a variable
-const seekOptCards = document.querySelectorAll('.seekOptCard');
-
-window.closeSeek = () => {
-  if (window.view === "seeking") {
-  seekActive = false;
-  gsap.to("#seekModal", { duration: .3, filter: "blur(5px)", ease: "power2.inOut"});
-  gsap.to("#seekModal", { duration: .3, opacity: 0, ease: "power2.inOut"});
-  gsap.to("#seekModal", { duration: .3, scale: 1.1, ease: "power2.inOut"});
-  setTimeout(()=>{
-    document.getElementById("seekModal").style.pointerEvents = "none";
-    document.getElementById("seekModal").style.display = "none";
-  },500)
-  gsap.to(".seekContent", { duration: 1, filter: "blur(0px)", ease: "power2.inOut"});
-  gsap.to("#seekModal", { duration: .4, backgroundColor: "rgba(15,15,18,1)", ease: "power2.inOut"});
-  gsap.to(".seekContent", { duration: 1, opacity: 1, ease: "power2.inOut"});
-  peeking = false;
-  seekActive = false;
-  return;
-}
-  if (window.view === "gallery") {
-    gsap.to("#seekGallery", { duration: 1, opacity: 0, ease: "power2.inOut"});
-    gsap.to("#seekGallery", { duration: 1, scale: 1.5, ease: "power2.inOut"});
-    gsap.to("#videoGallery", { duration: 1, opacity: 0, ease: "power2.inOut"});
-    gsap.to("#videoGallery", { duration: 1, scale: 1.5, ease: "power2.inOut"});
-    gsap.to("#seekOpt", { duration: 1, opacity: 1, ease: "power2.inOut"});
-    gsap.to("#seekResp", { duration: 1, opacity: 1, ease: "power2.inOut"});
-    gsap.to('#manBG', {duration: 1, backgroundColor: '', y: 0, ease: "power2.out"});
-    gsap.to('#manBG', {duration: 1, border: '1px solid var(--secondary)', y: 0, ease: "power2.out"});
-    gsap.to('#manBG', {duration: 1, scale: 1, y: 0, ease: "power2.out"});
-    document.getElementById("seekBody").style.pointerEvents = "auto";
-    document.getElementById("manBG").style.pointerEvents = "auto";
-    document.getElementById("seekGallery").style.pointerEvents = "none";
-    document.getElementById("videoGallery").style.pointerEvents = "none";
-    setTimeout(()=>{
-      document.getElementById("portalVideo").style.display = "none";
-      document.getElementById("portalVideo2").style.display = "none";
-    } , 1000)
-    document.getElementById("portalVideo2").pause()
-    document.getElementById("portalVideo").pause()
-    window.view = "seeking";
-    window.viewingPg = false;
-    gsap.to("#tooltip", {opacity: 0, duration: 0.5, ease: "power2.out"});
-    document.getElementById("tooltip").style.display = "none";
-    document.getElementById("homeTip").innerHTML = "HOME";
-    gsap.to('#dropdown', {duration: 1, opacity: 0, y: 0, ease: "power2.out"});
-    gsap.to('#soundToggle', {duration: 1, opacity: 0, y: 0, ease: "power2.out"});
-    document.getElementById("dropdown").style.pointerEvents = "none";
-    document.getElementById("soundToggle").style.pointerEvents = "none";
-    return;
-  }
-}
-
-window.closePeek = () => {
-  if (peeking === true && seekActive === true && window.view === "seeking") {
-    gsap.to(".seekContent", { duration: .1, filter: "blur(0px)", ease: "power2.inOut"});
-    gsap.to("#seekModal", { duration: .1, backgroundColor: "rgba(15,15,18,1)", ease: "power2.inOut"});
-    gsap.to(".seekContent", { duration: .1, opacity: 1, ease: "power2.inOut"});
-    seekActive = true;
-    peeking = false;
-    return;
-  }
-  if (peeking === true && seekActive === true && window.galleryType === "images") {
-    gsap.to("#seekGallery", { duration: .1, filter: "blur(0px)", ease: "power2.inOut"});
-    gsap.to("#seekGallery", { duration: .1, opacity: 1, ease: "power2.inOut"});
-    gsap.to("#seekOpt", { duration: .2, opacity: 0, ease: "power2.inOut"});
-    gsap.to("#seekResp", { duration: .2, opacity: 0, ease: "power2.inOut"});
-    seekActive = true;
-    peeking = false;
-    return;
-  }
-  if (peeking === true && seekActive === true && window.galleryType === "video") {
-    gsap.to("#videoGallery", { duration: .1, filter: "blur(0px)", ease: "power2.inOut"});
-    gsap.to("#videoGallery", { duration: .1, opacity: 1, ease: "power2.inOut"});
-    gsap.to("#seekOpt", { duration: .2, opacity: 0, ease: "power2.inOut"});
-    gsap.to("#seekResp", { duration: .2, opacity: 0, ease: "power2.inOut"});
-    seekActive = true;
-    peeking = false;
-    return;
-  }
-}
-window.openPeek = () => {
-  if (peeking === false && seekActive === true && window.view === "seeking") {
-    gsap.to(".seekContent", { duration: .2, filter: "blur(5px)", ease: "power2.inOut"});
-    gsap.to(".seekContent", { duration: .2, opacity: .5, ease: "power2.inOut"});
-    gsap.to("#seekModal", { duration: .2, backgroundColor: "rgba(15,15,18,.5)", ease: "power2.inOut"});
-    seekActive = true;
-    peeking = true;
-    return;
-  }
-  if (peeking === false && seekActive === true && window.galleryType === "images") {
-    gsap.to("#seekGallery", { duration: .2, filter: "blur(5px)", ease: "power2.inOut"});
-    gsap.to("#seekGallery", { duration: .2, opacity: .5, ease: "power2.inOut"});
-    gsap.to("#seekOpt", { duration: .2, opacity: .5, ease: "power2.inOut"});
-    gsap.to("#seekResp", { duration: .2, opacity: .5, ease: "power2.inOut"});
-    seekActive = true;
-    peeking = true;
-    window.view = "gallery";
-    return;
-  }
-  if (peeking === false && seekActive === true && window.galleryType === "video") {
-    gsap.to("#videoGallery", { duration: .2, filter: "blur(5px)", ease: "power2.inOut"});
-    gsap.to("#videoGallery", { duration: .2, opacity: .5, ease: "power2.inOut"});
-    gsap.to("#seekOpt", { duration: .2, opacity: .5, ease: "power2.inOut"});
-    gsap.to("#seekResp", { duration: .2, opacity: .5, ease: "power2.inOut"});
-    seekActive = true;
-    peeking = true;
-    window.view = "gallery";
-    return;
-  }
-}
-
 gsap.registerPlugin(TextPlugin);
 window.transitionWords = (element, fromWord, toWord, duration) => {
   // Get the DOM element for the text
@@ -1811,272 +1700,6 @@ window.transitionWords = (element, fromWord, toWord, duration) => {
     }, i * (duration / maxLength));
   }
 }
-
-window.seek = (e) => {
-  var seekCard = e.target.classList[1];
-  var blinking = document.querySelectorAll(".blink")
-  // var opg = new SeekDialogue();
-  blinking.forEach((e) => {
-    e.classList.remove("blink");
-  })
-  switch (seekCard) {
-    case "seekOpt1":
-      window.digiPre = false;
-      if (window.conversationHistory[0] === "seekOpt1") {
-        // opg.openGallery();
-        var reminder = document.querySelectorAll(".visualSubMenu");
-        var selected = reminder[0];
-        gsap.to(selected, { duration: .5, backgroundColor: "#94be8c", ease: "power2.inOut"});
-        gsap.to(selected, { duration: .5, color: "black", ease: "power2.inOut"});
-        gsap.to(selected, { duration: .8, backgroundColor: "", ease: "power2.inOut", delay: .8});
-        gsap.to(selected, { duration: .8, color: "", ease: "power2.inOut", delay: .8});
-        return;
-      } else {
-        window.convoHist(seekCard);
-        window.seekType = "content";
-        let baseText = "Show me some visuals.";
-        let baseAnswer = "Which would you like to see?";
-        window.systemSpeak(baseText, baseAnswer);
-        window.galleryActive = true;
-      }
-      break;
-    case "seekOpt2":
-      window.digiPre = false;
-      if (window.conversationHistory[0] != "seekOpt2") {
-        window.convoHist(seekCard);
-        window.seekType = "content";
-        let baseText = "I want to listen to music";
-        let baseAnswer = "Now playing 'SCOGÉ Radio'.";
-        window.systemSpeak(baseText, baseAnswer);
-      } else {
-        var mi = document.querySelector("scoge-music").shadowRoot.querySelector("#musicInterface");
-        gsap.to(mi, { duration: .5, backgroundColor: "red", ease: "power2.inOut"});
-        setTimeout(() => {
-          gsap.to(mi, { duration: .5, backgroundColor: "rgba(0,0,0,0)", ease: "power2.inOut"});
-        }, 500);    
-      }
-      break;
-    case "seekOpt3":
-      if (window.conversationHistory[0] != "seekOpt3") {
-        window.convoHist(seekCard);
-        window.seekType = "form";
-        let baseText = "What is Digisette?";
-        let baseAnswer = "Digisette";
-        window.systemSpeak(baseText, baseAnswer);
-      } else {
-        document.getElementById("genInput")?.focus();
-      }
-      break;
-    case "seekOpt4":
-      window.digiPre = false;
-      window.convoHist(seekCard);
-      window.seekType = "discover";
-      var baseText = "Tell me about T.A.O.S City";
-      var baseAnswer = "World";
-      window.systemSpeak(baseText, baseAnswer);
-      break;
-    case "seekOpt5":
-      window.digiPre = false;
-      if (window.conversationHistory[0] != "seekOpt5") {
-        window.convoHist(seekCard);
-        window.seekType = "mailing";
-        let baseText = "How do I keep up?";
-        let baseAnswer = "Keep up by joining our mailing list.";
-        window.systemSpeak(baseText, baseAnswer);
-      } else {
-        document.getElementById("genInput")?.focus();
-      }
-      break;
-    case "seekOpt6":
-      window.digiPre = false;
-      if (window.conversationHistory[0] != "seekOpt6") {
-        window.convoHist(seekCard);
-        window.seekType = "info";
-        let  baseText = "Tell me about 'SCOGÉ' the brand.";
-        let baseAnswer = "Sure, what would you like to know?";
-        window.systemSpeak(baseText, baseAnswer);
-      } else {
-        let reminder = document.querySelectorAll(".infoSubMenu");
-        let selected = reminder[0];
-        gsap.to(selected, { duration: .5, backgroundColor: "#94be8c", ease: "power2.inOut"});
-        gsap.to(selected, { duration: .5, color: "black", ease: "power2.inOut"});
-        gsap.to(selected, { duration: .8, backgroundColor: "", ease: "power2.inOut", delay: .8});
-        gsap.to(selected, { duration: .8, color: "", ease: "power2.inOut", delay: .8});
-      }
-      break;
-  }
-}
-
-window.convoHist = (cat) => {
-  if (window.conversationHistory[0] === cat) {
-    window.sameConvo = true;
-  } else {
-    window.conversationHistory[0] = cat;
-    window.sameConvo = false;
-  }
-}
-
-window.systemSpeak = async (selection, answer) => {
-  try {
-    document.getElementById("convoCont").style.display = "block";
-    setTimeout(() => {  
-      document.getElementById("convoCont").style.animationPlayState = "paused"; 
-      document.getElementById("convoCont").style.animation = "blink 1s infinite;";
-      document.getElementById("Reqerror").style.display = "block";
-      setTimeout(() => {
-        document.getElementById("Reqerror").style.display = "none";
-        document.getElementById("convoCont").style.animationPlayState = "running"; 
-        gsap.to("#convoCont", { duration: 1, opacity: 0, ease: "power2.inOut"});
-      }, 3000);
-  }, 6000);
-    // document.getElementById("convoCont").style.display = "none";
-    const configuration = new Configuration({
-    apiKey: VITE_ScogeI,
-    });
-    const openai = new OpenAIApi(configuration);
-    if (window.sameConvo === true) {
-      window.completion = await openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
-        messages: [{role: "user", content: `Say tell me more in 5 words or less. Don't use quotation marks.`}],
-        max_tokens: 15,
-      }).catch((error) => {
-        console.log(error);
-      });
-    } else {
-      window.completion = await openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
-        messages: [{role: "user", content: `Compose a different version of this request '${selection}' Don't make it a question.`}],
-        max_tokens: 10,
-      }).catch((error) => {
-        console.log(error);
-      });
-    }
-    if (window.seekType === "content" || window.seekType === "info" || window.seekType === "mailing") {
-      window.completion2 = await openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
-        messages: [{role: "user", content: `Compose a different version of this answer '${answer}'.`}],
-        top_p: 1.0,
-        max_tokens: 15,
-        stop: ["."],
-      }).catch((error) => {
-        console.log(error);
-      });
-    } else if (window.seekType === "discover") {
-      const data = await import('./library.json').catch((error) => {
-        console.log(error);
-      });
-      const obj = JSON.stringify(data.default);
-      var selected = JSON.parse(obj);
-      var focus = JSON.stringify(selected[answer]);
-      window.completion2 = await openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
-        messages: [{role: "user", content: `Provide some information from ${focus} in a brief sentence, 20 words max.`}],
-        temperature: 0.5,
-        max_tokens: 35,
-      }).catch((error) => {
-        console.log(error);
-      });
-    } else if (window.seekType === "form") {
-      const data = await import('./library.json').catch((error) => {
-        console.log(error);
-      });
-      const obj = JSON.stringify(data.default);
-      let selected = JSON.parse(obj);
-      let focus = JSON.stringify(selected[answer]);
-      window.completion2 = await openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
-        messages: [{role: "user", content: `Provide some information from ${focus} in a brief sentence, 20 words max, Include information from any key value pair. Then ask to 'join the MAILING LIST below'.`}],
-        top_p: 1.0,
-        max_tokens: 30,
-      }).catch((error) => {
-        console.log(error);
-      });
-    } else if (window.seekType === "contact") {
-      const data = await import('./library.json');
-      const obj = JSON.stringify(data.default);
-      let selected = JSON.parse(obj);
-      let focus = JSON.stringify(selected[answer]);
-      window.completion2 = await openai.createChatCompletion({
-          model: "gpt-3.5-turbo",
-          messages: [{role: "user", content: `Provide information from ${focus} in a brief sentence, 20 words max, Do not include an opening statement, Alternatively they can 'send a Message below'.`}],
-          top_p: 1.0,
-          max_tokens: 20,
-        }).catch((error) => {
-          console.log(error);
-        });
-    } else {
-      window.completion2 = await openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
-        messages: [{role: "user", content: `Compose a different version of this answer '${answer}'.`}],
-        max_tokens: 10,
-      }).catch((error) => {
-        console.log(error);
-      });
-    }
-    if (window.completion2 != undefined) {
-      document.getElementById("convoCont").style.display = "none";
-    }
-    //
-    let userDialogue = new SeekDialogue('',[{
-      text: `${window.completion.data.choices[0].message.content ?? selection}`,
-      choices: [
-        {
-          text: "Ok, here they are.",
-          action: () => {
-            window.dialogue.start(0, 'sysResp');
-          }
-        },
-      ]
-    },
-    ])
-    //
-    window.dialogue = new SeekDialogue('',[{
-      text: 'What $ do you seek%?',
-      choices: [
-        {
-          text: "I seek the truth.",
-          action: () => {
-            window.dialogue.start(0, 'sysResp');
-          }
-        },
-      ]
-    },
-    {
-      text: `${window.completion2.data.choices[0].message.content ?? answer}`,
-      choices: [
-        {
-          text: "I seek the truth.",
-          action: () => {
-            window.dialogue.start(0, 'sysResp');
-          }
-        },
-      ]
-    }
-  ]) 
-    userDialogue.start(0, 'userResp');
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-let timeout;
-const myContainer = document.querySelector('#seekResp');
-window.autoSmoothScrollToBottom = (container) => {
-  if (container.scrollHeight > container.clientHeight) {
-    var scroll = gsap.timeline();
-    scroll.to(container, {
-      duration: 2,
-      scrollTop: container.scrollHeight - container.clientHeight - 10,
-      ease: "power2.out"
-    });
-  }
-}
-
-myContainer.addEventListener('DOMSubtreeModified', function() {
-  timeout = setTimeout(() => {
-    window.autoSmoothScrollToBottom(myContainer);
-  }, 250); // debounce time set to 250ms
-});
 
 window.sub = () => {
   var form = document.querySelector("#subGeneral");
@@ -2154,19 +1777,15 @@ window.viewingPg = false;
 
 window.trackMouse = (e) => {
   // Get the tooltip element
-  if (window.viewingPg === true) {
-    if (window.galleryType == "images" || window.galleryType == "video" && window.view === "gallery") {
       var tooltip = document.getElementById("tooltip");
       // Set the tooltip position to the mouse position
-      tooltip.style.left = (e.clientX - 40) + "px";
-      tooltip.style.top = (e.clientY - 20) + "px";
+      tooltip.style.left = (e?.clientX - 40) + "px";
+      tooltip.style.top = (e?.clientY - 20) + "px";
       gsap.to("#tooltip", {opacity: 1, duration: 0.5, ease: "power2.out"});
       if (mouseMoving === false) {
         gsap.to("#tooltip", {opacity: 0, duration: 0.5, ease: "power2.out", delay: 2});
       }
       tooltip.style.display = "block";
-    }
-  }
 }
 
 window.trackMouseMove = () => {
@@ -2177,56 +1796,6 @@ window.trackMouseMove = () => {
       mouseMoving = false;
     }, 2000);
   });
-}
-
-window.initFilterActions = () => {
-  var filters = document.querySelectorAll(".visualFilters");
-  var btn = document.querySelector(".dropbtn").innerHTML;
-  filters.forEach((filter) => {
-    filter.addEventListener("click", (e) => {
-      var selected = e.target;
-      e.preventDefault();
-      switch (selected.id) {
-        case "filter1":
-          window.removeItemsNotEqualToValue("DY1");
-          window.transitionWords('#dBtn', `${btn}____`, 'DISCOVERY 1', 2);
-        break
-        case "filter2":
-          window.removeItemsNotEqualToValue("CH1");
-          window.transitionWords('#dBtn', `${btn}____`, 'CHAPTER 1', 2);
-        break
-        case "filter3":
-          window.removeItemsNotEqualToValue("CH2");
-          window.transitionWords('#dBtn', `${btn}____`, 'CHAPTER 2', 2);
-        break
-        case "filter4":
-          window.removeItemsNotEqualToValue("ART");
-          window.transitionWords('#dBtn', `${btn}____`, 'ARTWORK', 2);
-        break
-        case "filter5":
-          window.filteredVideos = window.shuffleArray(window.videoFiles);
-          window.filteredImages = window.shuffleArray(window.imageFiles);
-          window.transitionWords('#dBtn', `${btn}____`, 'RANDOM', 2);
-          portal.showNextMedia();
-        break
-      }
-    });
-  });
-}
-
-window.removeItemsNotEqualToValue = (value) => {
-  window.filteredVideos = window.shuffleArray(window.videoFiles);
-  window.filteredImages = window.shuffleArray(window.imageFiles);
-  for (let i = window.filteredImages.length - 1; i >= 0; i--) {
-    if (window.filteredImages[i].publicUrl.includes(value) === false) {
-      window.filteredImages.splice(i, 1);
-    }
-  }
-  for (let i = window.filteredVideos.length - 1; i >= 0; i--) {
-    if (window.filteredVideos[i].publicUrl.includes(value) === false) {
-      window.filteredVideos.splice(i, 1);
-    }
-  }
 }
 
 portal();

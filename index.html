@@ -34,6 +34,7 @@
         <div id="subText1" class="dialogue"><p></p></div>
         <div id="subText2" class="dialogue"><span class="answerOptions" id="st2Ans1"></span><span class="answerOptions" id="st2Ans2"></span><span class="answerOptions" id="st2Ans3"></span></div>
         <!-- <scoge-investors invest="invest" id="getInvestors" style="display: none;"></scoge-investors> -->
+         <scoge-gallery gallery="gallery" id="collectionGallery" style="display: block;"></scoge-gallery>
         <scoge-rsvp rsvps="rsvp" id="rsvpModal" style="display:none;"></scoge-rsvp>
         <mint-screen mint="mint1" style="display:block;" id="getNfts"></mint-screen>
         <scoge-UniMenu uniMenu="uniMenu" id="getUniMenu"></scoge-UniMenu>
@@ -153,7 +154,24 @@
         </div>
         <!-------------------------------------------------------------------------->
         <div id="intro">
-            <img id="introLogo" style="opacity: 0%;" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/scoge-bankoo-logo-medium2.png" width=""/>
+            <div id="brandClips">
+                <div class="entryLogos" id="bc1">
+                    <img class="bcClass" style="width: 100%;" src="./assets/images/scoge-logo-1.png"/>
+                </div>
+                <div class="entryLogos" id="bc2">
+                    <img class="bcClass" style="width: 100%;" src="./assets/images/scoge-logo-2.png"/>
+                </div>
+                <div class="entryLogos" id="bc3" >
+                    <img class="bcClass" style="width: 100%;" src="./assets/images/scoge-logo-3.png"/>
+                </div>
+                <div class="entryLogos" id="bc4" >
+                    <img class="bcClass" style="width: 100%;" src="./assets/images/DGS-pa-1.png"/>
+                </div>
+            </div>
+            <div id="introTextCont">
+                <div class="introText" id="power">&#9211;</div>
+                <div id="clippingBox"></div>
+            </div>
         </div>
         <div id="logo" onclick="sayScoge();" style="opacity: 0%;">
             <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/scoge-bankoo-logo-medium2.png"/>
@@ -165,58 +183,15 @@
         <div id="seekModal">
             <div id="tooltip" style="position: absolute; display: none;">NEXT |></div>             
             <div id="seekBody">
-                <div id="seekResp" class="seekContent">
-                    <!-- <p class="userResp">Show me some images.</p> -->
-                </div>
-                <div id="seekOpt" class="seekContent">
-                    <div class="seekOptCard seekOpt1" id="seek1">VISUAL</div>
-                    <div class="seekOptCard seekOpt2" id="seek2">RADIO</div>
-                    <div class="seekOptCard seekOpt3" id="seek3">DIGISETTE</div>
-                    <div class="seekOptCard seekOpt4" id="seek4">TAOS CITY</div>
-                    <div class="seekOptCard seekOpt5" id="seek5">NEWS</div>
-                    <div class="seekOptCard seekOpt6" id="seek6">INFO</div>
-                </div>
-                <div id="mandala">
-                    <div id="manFG" class="manCirc">
-                    </div>
-                    <div id="manBG" class="manCirc" onclick="closeSeek()">
-                        <div id="homeTip" class="homeT" style="position: absolute; display: block;">HOME</div>
-                    </div>
-                </div>
-                <div id="simpleNoti"></div>
-                <div id="soundToggle">- SOUND OFF -</div>  
-                <div id="dropdown">
-                    <button class="dropbtn" id="dBtn">[FILTER]</button>
-                    <div class="dropdown-content">
-                        <a id="filter1" class="visualFilters">DISCOVERY 1</a>
-                        <a id="filter2" class="visualFilters">CHAPTER 1</a>
-                        <a id="filter3" class="visualFilters">CHAPTER 2</a>
-                        <a id="filter4" class="visualFilters">ARTWORK</a>
-                        <a id="filter5" class="visualFilters">RANDOM</a>
-                    </div>
-                </div>
+                <!-- <div id="simpleNoti"></div> -->
                 <div id="videoGallery">
                     <video id="portalVideo" class="videoEl" autoplay="false" loop="true" muted="true" playsinline="true" style="display:none;">
                         <source src="" type="video/mp4">
                     </video>
-                    <video id="portalVideo2" class="videoEl" autoplay="false" loop="true" muted="true" playsinline="true" style="display:none;">
-                        <source src="" type="video/mp4">
+                    <video id="portalVideo2" class="videoEl" loop="true" autoplay muted="true" playsinline="true" style="display:none;">
+                        <source id="pv2" src="https://scoge.s3.us-east-2.amazonaws.com/Videos/Ch2-Act1-sm.mp4" type="video/mp4">
                     </video>
                 </div>
-                <div id="seekGallery">
-                    <img id="portalImg" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/scoge-campaign-1.webp"/>
-                    <img id="portalImg2" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/scoge-taos-city-1.webp"/>
-                </div>
-            </div>
-        </div>
-        <div id="welcome">
-            <div class="welcomeOptions" id="wOpt1" onclick="shopping()">
-                <div id="menuShop" class="welcomeOpt">SHOP</div>
-                <div class="menuEffect">SHOP</div>
-            </div>
-            <div class="welcomeOptions" id="wOpt2" onclick="openSeek()">
-                <div id="menuSeek" class="welcomeOpt">SEEK</div>
-                <div class="menuEffect">SEEK</div>
             </div>
         </div>
         <canvas style="width: 100%; height: 100%; display: block;" id="renderCanvas"></canvas>

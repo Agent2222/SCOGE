@@ -130,59 +130,6 @@ export class SeekDialogue {
                 gsap.to('#subGeneral2', {duration: 1, opacity: 1, y: 0, ease: "power2.out"});
                 window.sub2();
               }
-              // Gallery
-              if (window.conversationHistory[0] === "seekOpt1") {
-                document.querySelector('.visualSubMenuContainer')?.remove();
-                this.newElement3 = document.createElement('div');
-                this.newElement3.innerHTML = `
-                <div class="visualSubMenu">IMAGES</div>
-                <div class="visualSubMenu">VIDEO</div>
-                `;
-                this.newElement3.classList.add('visualSubMenuContainer');
-                this.contentBox.appendChild(this.newElement3);
-                gsap.to('.visualSubMenuContainer', {duration: 1, opacity: 1, y: 0, ease: "power2.out"});
-                gsap.to('.visualSubMenuContainer', {duration: 1, scale: 1, y: 0, ease: "power2.out"});
-                this.choices = document.querySelectorAll('.visualSubMenu');
-                this.choices.forEach((choice) => {
-                  choice.addEventListener('click', (e) => {
-                    this.openGallery(e);
-                  });
-                });
-                // gsap.to('#subGeneral2', {duration: 1, opacity: 1, y: 0, ease: "power2.out"});
-              }
-              // Info
-              if (window.conversationHistory[0] === "seekOpt6") {
-                document.querySelector('.infoSubMenuContainer')?.remove();
-                this.newElement4 = document.createElement('div');
-                this.newElement4.innerHTML = `
-                <div class="infoSubMenu">ABOUT</div>
-                <div class="infoSubMenu">CREDITS</div>
-                <div class="infoSubMenu">CONTACT</div>
-                `;
-                this.newElement4.classList.add('infoSubMenuContainer');
-                this.contentBox.appendChild(this.newElement4);
-                gsap.to('.infoSubMenuContainer', {duration: 1, opacity: 1, y: 0, ease: "power2.out"});
-                gsap.to('.infoSubMenuContainer', {duration: 1, scale: 1, y: 0, ease: "power2.out"});
-                this.choices2 = document.querySelectorAll('.infoSubMenu');
-                this.choices2.forEach((choice) => {
-                  choice.addEventListener('click', (e) => {
-                    this.infoTopics(e);
-                  });
-                });
-                // gsap.to('#subGeneral2', {duration: 1, opacity: 1, y: 0, ease: "power2.out"});
-              }
-              // Sound
-              if (window.conversationHistory[0] === "seekOpt2") {
-                document.querySelector('.musicContainer')?.remove();
-                this.newElement5 = document.createElement('div');
-                this.newElement5.innerHTML = `
-                <scoge-music></scoge-music>
-                `;
-                this.newElement5.classList.add('musicContainer');
-                this.contentBox.appendChild(this.newElement5);
-                // gsap.to('#subGeneral2', {duration: 1, opacity: 1, y: 0, ease: "power2.out"});
-              }
-              //
             }
             // check if the sentence is complete
             if (this.i === this.words.length) {
@@ -191,28 +138,6 @@ export class SeekDialogue {
                 setTimeout(() => {
                   window.dialogue.choose(0);
                 }, 800);
-              }
-              // Digisette Zoom 
-              if (window.conversationHistory[0] === "seekOpt3" && window.digiPre === false) {
-                if (window.digiPre === false) {
-                window.digiPre = true;
-                var vid3 = document.createElement("video");
-                vid3.setAttribute("id", "portalVideoExt");
-                vid3.setAttribute("src", "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeVideos/Digisette/Digisette-ZoomSpin.mp4");
-                vid3.setAttribute("muted", "true");
-                vid3.setAttribute("playsinline", "true");
-                vid3.setAttribute("autoplay", "false");
-                document.getElementById("videoGallery").appendChild(vid3);
-                vid3.play();
-                }
-                // document.getElementById("videoGallery").style.display = "block";
-                gsap.to("#videoGallery", { duration: 2, filter: "blur(0px)", ease: "power2.inOut"});
-                document.getElementById("videoGallery").style.opacity = "1";
-                gsap.to('#portalVideoExt', {duration: 2, opacity: 1, y: 0, ease: "power2.out"});
-                vid3.onended = function() {
-                  vid3.remove();
-                  document.getElementById("videoGallery").style.opacity = "0";
-                }
               }
             }
             this.type();
@@ -309,36 +234,6 @@ export class SeekDialogue {
         }
         return;
       }
-
-      infoTopics(e) {
-        this.selected = e.target.innerHTML;
-        window.view = "gallery";
-        switch (this.selected) {
-          case "ABOUT":
-            window.seekType = "discover";
-            var baseText = "Tell me more about 'SCOGÉ' the brand.";
-            var baseAnswer = "Info";
-            window.systemSpeak(baseText, baseAnswer);
-            break;
-          case "CREDITS":
-            window.seekType = "discover";
-            var baseText2 = "Name some people and their roles credited to have worked with SCOGÉ?";
-            var baseAnswer2 = "Credits";
-            window.systemSpeak(baseText2, baseAnswer2);
-            break;
-          case "CONTACT":
-            if (window.seekType != "contact") {
-              window.seekType = "contact";
-              let baseText = "How do I contact you?";
-              let baseAnswer = "Contact";
-              window.systemSpeak(baseText, baseAnswer);
-            } else {
-              document.getElementById("genInput2").focus();
-            }
-            break;
-        }
-        return;
-      }
     
       choose(index) {
         const choice = this.lines[0].choices[index];
@@ -353,20 +248,3 @@ export class SeekDialogue {
         }
       }
   }
-  
-
-// const element = document.getElementById('dialogueModal').shadowRoot.getElementById('diaMain');
-// element.innerHTML = '';
-// const string = 'Hello, world *this* is a test';
-// const options = {
-//   speed: 50,
-//   specialText1: "specialText1",
-//   specialText2: "specialText2",
-// };
-
-// const typing = new Typing('Hello, World! ^This is $] some special text1 *And this $is some special $text2', element, options);
-
-// typing.type();
-
-// $ is delay
-// ] is line break
