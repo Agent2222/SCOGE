@@ -356,25 +356,25 @@ class mintingScreen extends HTMLElement {
          <style>
             @font-face {
                 font-family: "BS-B";
-                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Bold.svg");
+                src: url("https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Bold.svg");
                 font-weight: bold;
                 font-style: normal;
             }
             @font-face {
                 font-family: "BS-R";
-                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.svg");
+                src: url("https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.svg");
                 font-weight: normal;
                 font-style: normal;
             }
             @font-face {
                 font-family: "BS-SB";
-                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-SemiBold.svg");
+                src: url("https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-SemiBold.svg");
                 font-weight: 600;
                 font-style: normal;
             }
             @font-face {
                 font-family: "BS-I";
-                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Italic.svg");
+                src: url("https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Italic.svg");
                 font-weight: normal;
                 font-style: italic;
             }
@@ -402,7 +402,7 @@ class mintingScreen extends HTMLElement {
               position: fixed;
               left: 0;
               top: 0;
-              background-image: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/test/Screen Shot 2022-06-16 at 9.29.19 PM.png");
+              background-image: url("https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/test/Screen Shot 2022-06-16 at 9.29.19 PM.png");
               background-size: cover;
               filter: blur(9px);
               z-index: 6;
@@ -580,12 +580,12 @@ class mintingScreen extends HTMLElement {
               opacity: 100% !important;
             }
          </style>
-         <video id="videoM" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/videos/Alpha-End-Scoge.mp4">
+         <video id="videoM" src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/videos/Alpha-End-Scoge.mp4">
          </video>
          <div id="mainScreen">
             <div id="innerScreen">
               <div id="nftAssetGallery">
-                <img class="pills" id="red" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Yellow-DigiGel-1.png"/>
+                <img class="pills" id="red" style="opacity:31%;" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Yellow-DigiGel-1.png"/>
                 <img class="pills" id="black" style="transform:scale(1.4);" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png"/>
                 <img class="pills" id="blue" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/shop-temp-1.png"/>
               </div>

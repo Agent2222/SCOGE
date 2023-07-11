@@ -139,7 +139,7 @@ export const scns = {
           position: "absolute",
           shadow: true,
           shadowEffect: "blur(50px)",
-          src: "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/plugWallet.png",
+          src: "https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/plugWallet.png",
           action: function () {
             console.log("Connect Wallet");
             return connectPlugWallet();
@@ -241,7 +241,7 @@ export const scns = {
           position: "absolute",
           shadow: true,
           shadowEffect: "blur(50px)",
-          src: "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/plugWallet.png",
+          src: "https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/plugWallet.png",
           action: function () {
             return connectPlugWallet();
           },

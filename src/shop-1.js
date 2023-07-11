@@ -770,7 +770,7 @@ class mobileShop1 extends HTMLElement {
               this.noti1();
               this.shadow.getElementById("noti").innerHTML = `
                 <div id="orderConfirmed">
-                    <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/bankoo-map.png"/>
+                    <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/bankoo-map.png"/>
                     <h2>Order Placed!</h2>
                     <h3>Thank you for shopping at SCOGÉ.</h3>
                     <h4>Your order confirmation number is:<br><span class="active" id="confirmNumber">${order.customer_reference}</span></h4>
@@ -850,25 +850,25 @@ class mobileShop1 extends HTMLElement {
          <style>
             @font-face {
                 font-family: "BS-B";
-                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Bold.svg");
+                src: url("https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Bold.svg");
                 font-weight: bold;
                 font-style: normal;
             }
             @font-face {
                 font-family: "BS-R";
-                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.svg");
+                src: url("https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.svg");
                 font-weight: normal;
                 font-style: normal;
             }
             @font-face {
                 font-family: "BS-SB";
-                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-SemiBold.svg");
+                src: url("https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-SemiBold.svg");
                 font-weight: 600;
                 font-style: normal;
             }
             @font-face {
                 font-family: "BS-I";
-                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Italic.svg");
+                src: url("https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Italic.svg");
                 font-weight: normal;
                 font-style: italic;
             }
@@ -1479,7 +1479,7 @@ class mobileShop1 extends HTMLElement {
             <div id="noti">
             </div>
             <div id="header">
-                <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/SCOGÉ Logo-red.png"/>
+                <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/SCOGÉ Logo-red.png"/>
                 <div id="returnButton">
                     RETURN
                 </div>
@@ -1510,7 +1510,7 @@ class mobileShop1 extends HTMLElement {
                         <input class="checkoutInput" id="inputZC" placeholder="Post / Zip Code" value="">
                         <input class="checkoutInput" id="inputSP" value="$0 Free Ship">
                         <input class="checkoutInput" id="inputSA" placeholder="Shipping Address (If different from billing)" value="">
-                        <img id="stripeLogo" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/stripe.png"/>
+                        <img id="stripeLogo" src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/stripe.png"/>
                         <div class="input11" id="card-element"></div>
                    </div>
                     <div id="cartItems">
@@ -1554,7 +1554,7 @@ class mobileShop1 extends HTMLElement {
                 </div>
                 <div id="mb2">
                     <div id="mainImage">
-                        <img id="scroll" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/scroll.png"/>
+                        <img id="scroll" src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/scroll.png"/>
                         <img id="mainImageCont" src="">
                     </div>
                     <div id="allImages">

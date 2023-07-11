@@ -211,7 +211,7 @@ export async function universe() {
         }
       };
       img.src =
-        "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/scoge-taos-city-universe.jpg";
+        "https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/scoge-taos-city-universe.jpg";
       cam.scrollTo(990, 0);
       // prevent scrolling under scrollto(990,0) and activate scrolling over scrollto(990,0)
       cam.addEventListener(
@@ -612,7 +612,7 @@ export async function universe() {
           // messageElement.innerText = `${data.sender}: ${data.message}`;
           mEl.innerHTML = `
         <div class="messageAvatar self">
-          <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+          <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
         </div>
         <div class="messageBody">
           <div class="messageSender">Damion</div>
@@ -807,7 +807,7 @@ export async function universe() {
   };
 
   var tempCont1 = `<div class="cannonIcon">
-  <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
+  <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
   </div>
   <h1>Ch.1 - Reacclimate</h1>
   <p>In the distant land of T.A.O.S City, there exists a hidden world of self-exiled creators, known as the Oracles. These Oracles reside in ancient, desolate mansions on the outskirts of the city, and possess a wealth of knowledge and experience that is sought after by migrants from far-off lands. These migrants come to T.A.O.S City in search of a new life, but often find themselves lost and alone in a vast and unfamiliar place. They turn to the Oracles for guidance, seeking to avoid the wrath of the city's enforcers, a powerful and ruthless group of conservative citizens.
@@ -818,25 +818,25 @@ export async function universe() {
   </p>`;
   var tempCont2 = `
   <div class="cannonIcon">
-  <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
+  <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
   </div>
   <div id="tempVidHead">Ch.2 - Prologue 1</div>
   <div id="tempVidCon">
-    <video id="tempVid" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Chapter2-Prologue-1-HD.mp4" controls></video>
+    <video id="tempVid" src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Chapter2-Prologue-1-HD.mp4" controls></video>
   </div>
   `;
   var tempCont3 = `
   <div class="cannonIcon">
-  <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
+  <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
   </div>
   <div id="tempVidHead2">Speak Easy</div>
   <div id="tempVidCon2">
-    <video id="tempVid2" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/nightout.mp4" controls></video>
+    <video id="tempVid2" src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/nightout.mp4" controls></video>
   </div>
   `;
   var chatDomTemplate = `
   <div class="cannonIcon">
-    <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
+    <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
   </div>
   <div class="domainFunction">
     <div class="domainHeader">
@@ -845,7 +845,7 @@ export async function universe() {
     </div>
     <div class="domainInfo">
       <div class="domainLordImg">
-        <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+        <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
       </div>
       <div class="domainInfoBlockRight">
         <div class="domainLordText">
@@ -864,7 +864,7 @@ export async function universe() {
     <div class="chatRoom" id="chatRoom1">
       <div class="chatMessageContainer">
         <div class="messageAvatar self">
-          <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+          <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
         </div>
         <div class="messageBody">
           <div class="messageSender">Damion</div>
@@ -873,7 +873,7 @@ export async function universe() {
       </div>
       <div class="chatMessageContainer">
         <div class="messageAvatar self">
-          <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/red-s1.jpg"/>
+          <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/red-s1.jpg"/>
         </div>
         <div class="messageBody">
           <div class="messageSender">Violet</div>
@@ -1587,7 +1587,7 @@ export async function universe() {
     // messageElement.innerText = `${data.sender}: ${data.message}`;
     messageElement.innerHTML = `
   <div class="messageAvatar self">
-    <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+    <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
   </div>
   <div class="messageBody">
     <div class="messageSender">Damion</div>
