@@ -1,16 +1,9 @@
-//
 export class SoundtrackManager {
   constructor() {
     this.tracks = {};
     this.trackList = [
       // MOVING
-      // { key: 'menuMove', src: 'https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/scoge-menu1-move.wav', artist: 'Menu', title: 'menuMove' },
-      // { key: 'menuMove2', src: 'https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/scoge-menu1-move2.wav', artist: 'Menu', title: 'menuMove2' },
       { key: 'menuMove3', src: 'https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/scoge-menu1-move-3.wav', artist: 'Menu', title: 'menuMove3' },
-      // { key: 'menuMove4', src: 'https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/scoge-menu1-move-4.wav', artist: 'Menu', title: 'menuMove4' },
-      // ENTERING
-      // { key: 'menuEnter1', src: 'https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/scoge-menu1-enter-1.wav', artist: 'Menu', title: 'menuEnter1' },
-      // { key: 'menuEnter2', src: 'https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/scoge-menu1-enter-2.wav', artist: 'Menu', title: 'menuEnter2' },
       { key: 'menuEnter3', src: 'https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/scoge-menu1-enter-3.wav', artist: 'Menu', title: 'menuEnter3' },
       // LOADING
       { key: 'menuLoading1', src: 'https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/scoge-menu1-loading-1.wav', artist: 'Menu', title: 'menuLoading1' },
@@ -27,17 +20,30 @@ export class SoundtrackManager {
     });
   }
 
-  play(key) {
-    this.tracks[key].play();
+  async play(key) {
+    try {
+      await this.tracks[key].play();
+    } catch (error) {
+      // console.error('Failed to play audio:', error);
+    }
   }
 
-  pause(key) {
-    this.tracks[key].pause();
+  async pause(key) {
+    try {
+      await this.tracks[key].pause();
+    } catch (error) {
+      // console.error('Failed to pause audio:', error);
+    }
+    // this.tracks[key].pause();
   }
 
   stop(key) {
-    this.tracks[key].pause();
-    this.tracks[key].currentTime = 0;
+    try {
+      this.tracks[key].pause();
+      this.tracks[key].currentTime = 0;
+    } catch (error) {
+      console.error('Failed to stop audio:', error);
+    }
   }
 
   setVolume(key, volume) {
@@ -48,5 +54,3 @@ export class SoundtrackManager {
     this.tracks[key].loop = true;
   }  
 }
-
-  

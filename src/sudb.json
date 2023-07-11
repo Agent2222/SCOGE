@@ -46,8 +46,12 @@
           "position": 1,
           "type": "dialogue",
           "bg": "rgba(0, 0, 0, 0.75)",
-          "activated": "Condition, Land, PopUp, Scene Gates",
-          "conditions": [true],
+          "activated": {
+            "land": 9120,
+            "gate": 0,
+            "pop": false,
+            "scn": [1,4]
+          },
           "characters": [
             {
               "persona": {
@@ -55,6 +59,7 @@
                 "location": "City-Central",
                 "job": "Identity Agent",
                 "dialogue": {
+                  "pPosition": "left",
                   "intro": "Hello, welcome to City Central. I'm Alex, your Identity Agent. I'm here to help you get started with your new wallet.",
                   "annoyed": "I'm sorry, I can't help you until you plug in your wallet."
                 },
@@ -121,6 +126,7 @@
                 "location": "City-Central",
                 "job": "Identity Agent",
                 "dialogue": {
+                  "pPosition": "left",
                   "intro": "You haven't purchased your Digisette yet? You can still get one at the YUMI Marketplace."
                 },
                 "images": {
@@ -209,7 +215,6 @@
           "type": "dialogue",
           "bg": "rgba(0, 0, 0, 0.75)",
           "activated": "Uni-204",
-          "conditions": [true],
           "characters": [
             {
               "persona": {
@@ -217,6 +222,7 @@
                 "location": "City-Central",
                 "job": "Identity Agent",
                 "dialogue": {
+                  "pPosition": "left",
                   "intro": "Hello, welcome to City Central. I'm Alex, your Identity Agent. I'm here to help you get started with your new wallet."
                 },
                 "images": {
@@ -279,6 +285,7 @@
                 "location": "City-Central",
                 "job": "Identity Agent",
                 "dialogue": {
+                  "pPosition": "left",
                   "intro": "You haven't purchased your Digisette yet? You can still get one at the YUMI Marketplace."
                 },
                 "images": {

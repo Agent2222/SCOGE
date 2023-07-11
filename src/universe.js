@@ -102,13 +102,13 @@ export async function universe() {
   var expBox = document.getElementById("explore");
   var pinUi = document
     .getElementById("getUniMenu")
-    .shadowRoot.getElementById("pinMenu");
+    .shadowRoot?.getElementById("pinMenu");
   var locked = document
     .getElementById("getUniMenu")
-    .shadowRoot.getElementById("locked");
+    .shadowRoot?.getElementById("locked");
   var moveMenu = document
     .getElementById("getUniMenu")
-    .shadowRoot.getElementById("uniMenu");
+    .shadowRoot?.getElementById("uniMenu");
   var playerPos = { x: 0, y: 0 };
   var selectionPos = { x: 0, y: 0 };
   var selectionBoxPosition = { x: 0, y: 0 };
@@ -146,7 +146,7 @@ export async function universe() {
     nftsLoaded: false,
   };
   // eslint-disable-next-line no-unused-vars
-  const VITE_canister = import.meta.env.VITE_universe_backend_canister_Id;
+  // const VITE_canister = import.meta.env.VITE_universe_backend_canister_Id;
   const can2 = "ryjl3-tyaaa-aaaaa-aaaba-cai";
   const whitelist = [can2];
   // eslint-disable-next-line no-unused-vars
@@ -158,13 +158,9 @@ export async function universe() {
   // Rebuilding Actors Across Account Switches
 
   // MP
-  const VITE_ably = import.meta.env.VITE_ably;
-  const ably = new Ably.Realtime({
-    key: VITE_ably,
-    clientId: "Test"
-  });
-  const channel = ably.channels.get("alphaTestersChat");
-  const channel2 = ably.channels.get("lordsInTheCity");
+
+  const channel = window.ably.channels.get("alphaTestersChat");
+  const channel2 = window.ably.channels.get("lordsInTheCity");
 
   const test = () => {
     document.addEventListener("keydown", function (e) {
@@ -188,19 +184,21 @@ export async function universe() {
     var uniCtx = universeCanvas.getContext("2d");
     var img = document.createElement("img");
     var cam = document.getElementById("camera");
-    soundtrack.stop("menuEntrance1");
+    // soundtrack.stop("menuEntrance1");
     soundtrack.play("menuEntrance1");
     // Check for browser support
     if (
       navigator.userAgent.includes("Brave") ||
       navigator.userAgent.includes("Firefox") ||
-      navigator.userAgent.includes("Chrome")
+      navigator.userAgent.includes("Chrome") ||
+      navigator.userAgent.includes("Safari")
     ) {
       // The browser is Brave, Firefox, or Chrome
       document.querySelector("#universe").style.display = "block";
-      setTimeout(() => {
-        document.querySelector("#universe").style.opacity = "100%";
-      }, 100);
+      // REACTIVATE THIS
+      // setTimeout(() => {
+      //   document.querySelector("#universe").style.opacity = "100%";
+      // }, 100);
       img.onload = function () {
         uniCtx.drawImage(img, 0, 0, img.width, img.height);
         // make a 18px by 18px grid overlay
@@ -279,9 +277,9 @@ export async function universe() {
       document.getElementById("camera").appendChild(uniEvent4);
       // Intro Scene
       window.adminUI();
-      window.openLocationCard();
-      window.playerPos();
-      window.currentSx = newScenario("Intro");
+      // window.openLocationCard();
+      // window.playerPos();
+      // window.currentSx = newScenario("Intro");
       //
     } else {
       // The browser is not Brave, Firefox, or Chrome
@@ -335,7 +333,8 @@ export async function universe() {
     var selectPosBoxDiv = document.createElement("div");
     var playerCordDiv = document.createElement("div");
     var playerScreenCoor = document.createElement("div");
-    document.getElementById("selection").style.display = "block";
+    // REACTIVATE THIS
+    // document.getElementById("selection").style.display = "block";
     uiWindow.id = "adminUI";
     columnDiv.id = "DebugColumn";
     rowDiv.id = "DebugRow";
@@ -973,9 +972,14 @@ export async function universe() {
     // MenuSounds
     text.forEach((el) => {
       el.addEventListener("mouseout", () => {
-        soundtrack.setVolume("menuMove3", 0.5);
-        soundtrack.stop("menuMove3");
-        soundtrack.play("menuMove3");
+        soundtrack?.setVolume("menuMove3", 0.5);
+        // soundtrack?.stop("menuMove3");
+        if (soundtrack?.paused) {
+          soundtrack?.play("menuMove3");
+        } else {
+          // soundtrack?.stop("menuMove3");
+          soundtrack?.play("menuMove3");
+        }
       });
     });
     //
@@ -985,12 +989,18 @@ export async function universe() {
       }
       el.addEventListener("click", () => {
         window.clearAndSelectMenu(el.id);
-        soundtrack.stop("menuEnter3");
-        soundtrack.play("menuEnter3");
+        if (soundtrack.paused) {
+          soundtrack.play("menuEnter3");
+        } else {
+          soundtrack.stop("menuEnter3");
+          soundtrack.play("menuEnter3");
+        }
       });
       switch (el.id) {
         case "uniMenuShop":
           el.addEventListener("click", (e) => {
+            window.currentMenuTab = "shop";
+            shadow.getElementById("romOffline").style.display = "none";
             dragElement(moveMenu, true);
             shadow.getElementById("fm-enhancements").style.display = "grid";
             shadow.getElementById("fm-header-headline").style.opacity = "0%";
@@ -1000,14 +1010,34 @@ export async function universe() {
             shadow.getElementById("fm-feedback").style.display = "none";
             shadow.getElementById("fm-settings").style.display = "none";
             shadow.getElementById("fm-profile").style.display = "none";
-            shadow.getElementById(
-              "fm-enhancements"
-            ).innerHTML = `<img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/DIGISHOP.png" alt="NFT Shop" id="nftShop">`;
-            shadow.getElementById("nftShop").addEventListener("click", () => {
-              document.getElementById("getNfts").toggleNftScreen();
-              canvas.style.filter = "blur(5px)";
-              shadow.getElementById("uniMenu").style.filter = "blur(10px)";
-            });
+            if (window.isMobile === true) {
+              shadow.getElementById(
+                "fm-enhancements"
+              ).innerHTML = `
+              <div class="mobileShopOpts" id="fashionShop">
+                <div class="mShopLabel">CLOTHING</div>
+                <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/shop-temp-1.png" alt="NFT Shop">
+              </div>
+              <div class="mobileShopOpts" id="nftShop">
+                <div class="mShopLabel">DIGISETTE</div>
+                <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png" alt="NFT Shop">
+              </div>
+              `;
+              shadow.getElementById("fashionShop").addEventListener("click", () => {
+                window.shopping();
+              });
+            } else {
+              shadow.getElementById(
+                "fm-enhancements"
+              ).innerHTML = `
+              <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/DIGISHOP-1.png" alt="NFT Shop" id="nftShop">
+              `;
+              shadow.getElementById("nftShop").addEventListener("click", () => {
+                document.getElementById("getNfts").toggleNftScreen();
+                canvas.style.filter = "blur(5px)";
+                shadow.getElementById("uniMenu").style.filter = "blur(10px)";
+              });
+            }
             shadow.getElementById("fm-inventory").style.display = "none";
             shadow.getElementById("menuLoadingScreen").style.display = "none";
             shadow.getElementById("menuMessage").style.display = "none";
@@ -1016,6 +1046,8 @@ export async function universe() {
           break;
         case "uniMenuItems":
           el.addEventListener("click", (e) => {
+            window.currentMenuTab = "inventory";
+            shadow.getElementById("romOffline").style.display = "none";
             window.headlineSwtich(e);
             setTimeout(() => {
               window.headlineSwtich(e);
@@ -1055,16 +1087,19 @@ export async function universe() {
                     .getElementById("getUniMenu")
                     .shadowRoot.getElementById("fm-menu1"),
                 };
-                document.getElementById("getUniMenu").switchMenuTabs(selEl);
-                el.setAttribute("class", "mmen-active it selectedMenu");
+                // document.getElementById("getUniMenu").switchMenuTabs(selEl);
+                // el.setAttribute("class", "mmen-active it selectedMenu");
+                el.setAttribute("class", "it selectedMenu");
               } else {
-                el.setAttribute("class", "men-active it");
+                el.setAttribute("class", "men-deactive it");
               }
             });
           });
           break;
         case "uniMenuProfile":
           el.addEventListener("click", (e) => {
+            window.currentMenuTab = "profile";
+            shadow.getElementById("romOffline").style.display = "block";
             window.headlineSwtich(e);
             setTimeout(() => {
               window.headlineSwtich(e);
@@ -1088,7 +1123,7 @@ export async function universe() {
                     .getElementById("getUniMenu")
                     .shadowRoot.getElementById("fm-menu1"),
                 };
-                document.getElementById("getUniMenu").switchMenuTabs(selEl);
+                // document.getElementById("getUniMenu").switchMenuTabs(selEl);
                 el.setAttribute("class", "mmen-active ht selectedMenu");
               }
             });
@@ -1097,6 +1132,8 @@ export async function universe() {
           break;
         case "uniMenuSettings":
           el.addEventListener("click", (e) => {
+            window.currentMenuTab = "settings";
+            shadow.getElementById("romOffline").style.display = "none";
             shadow.getElementById("fm-beacons").style.display = "none";
             shadow.getElementById("fm-inventory").style.display = "none";
             shadow.getElementById("fm-feedback").style.display = "none";
@@ -1115,6 +1152,8 @@ export async function universe() {
           break;
         case "uniMenuBeacons":
           el.addEventListener("click", (e) => {
+            window.currentMenuTab = "beacons";
+            shadow.getElementById("romOffline").style.display = "none";
             dragElement(moveMenu, true);
             document
               .getElementById("getUniMenu")
@@ -1139,18 +1178,20 @@ export async function universe() {
                     .getElementById("getUniMenu")
                     .shadowRoot.getElementById("fm-menu1"),
                 };
-                document.getElementById("getUniMenu").switchMenuTabs(selEl);
+                // document.getElementById("getUniMenu").switchMenuTabs(selEl);
                 el.setAttribute("class", "mmen-active ht selectedMenu");
               } else {
-                el.setAttribute("class", "men-active ht");
+                el.setAttribute("class", "men-deactive ht");
               }
             });
           });
           break;
         case "uniMenuFeedback":
           el.addEventListener("click", (e) => {
+            window.currentMenuTab = "feedback";
+            shadow.getElementById("romOffline").style.display = "none";
             shadow.getElementById("feedbackHeadline").innerHTML =
-              "Help make T.A.O.S City better.";
+              "Help us make T.A.O.S City better.";
             shadow.getElementById("fm-beacons").style.display = "none";
             shadow.getElementById("fm-inventory").style.display = "none";
             shadow.getElementById("fm-enhancements").style.display = "none";
@@ -1174,10 +1215,8 @@ export async function universe() {
           break;
         case "uniMenuExit":
           el.addEventListener("click", () => {
-            window.showMenu();
-            dragElement(moveMenu, true);
-            soundtrack.stop("menuExitSys1");
-            soundtrack.play("menuExitSys1");
+            window.currentMenuTab = "signin";
+            shadow.getElementById("romOffline").style.display = "block";
           });
           break;
       }
@@ -1200,15 +1239,15 @@ export async function universe() {
       .shadowRoot.getElementById("fm-menu3");
     switch (selected) {
       case "menuInventory":
-        h1.innerHTML = "Land & Enhancements";
-        h2.innerHTML = "Assets";
-        h3.innerHTML = "Sync";
+        h1.innerHTML = "Collections";
+        h2.innerHTML = "Land & Gels";
+        h3.innerHTML = "Assets";
         h1.style.opacity = "100%";
         h1.style.userSelect = "auto";
         h2.style.opacity = "100%";
         h2.style.userSelect = "auto";
-        h3.style.opacity = "0%";
-        h3.style.userSelect = "none";
+        h3.style.opacity = "100%";
+        h3.style.userSelect = "auto";
         break;
       case "menuProfile":
         h1.innerHTML = "Earth";
@@ -1223,7 +1262,7 @@ export async function universe() {
       case "menuBeacons":
         h1.innerHTML = "All";
         h2.innerHTML = "Domain";
-        h3.innerHTML = "Citizen";
+        h3.innerHTML = "Lords";
         h1.style.opacity = "100%";
         h1.style.userSelect = "auto";
         h2.style.opacity = "100%";
@@ -1247,27 +1286,31 @@ export async function universe() {
 
   // Clear and select menu items
   window.clearAndSelectMenu = (e) => {
+    var shadow = document.getElementById("getUniMenu").shadowRoot;
     var uniMenu = document
       .getElementById("getUniMenu")
       .shadowRoot.querySelectorAll(".menuTabs");
     uniMenu.forEach((el) => {
-      if (el.id === e && el.id !== "uniMenuExit") {
+      if (el.id === e) {
         el.setAttribute("class", "menuTabs selectedMenu2");
-        document
-          .getElementById("getUniMenu")
-          .shadowRoot.getElementById(`${el.id}Svg`)
-          .childNodes.forEach((el) => {
-            el.style.stroke = "white";
-            // el.style.fill = "white";
-          });
+        shadow.getElementById(`${el.id}Svg`).childNodes.forEach((el) => {
+            if (el.nodeName === "path") {
+              // Found the <path> element
+              // Perform your desired actions on it
+              el.style.stroke = "white";
+              el.style.fill = "white";
+            }
+        })
       } else {
         el.setAttribute("class", "menuTabs");
         document
           .getElementById("getUniMenu")
           .shadowRoot.getElementById(`${el.id}Svg`)
           .childNodes.forEach((el) => {
-            el.style.stroke = "#ff002d";
-            el.style.fill = "#ff002d";
+            if (el.nodeName === "path") {
+              el.style.stroke = "#ff002d";
+              el.style.fill = "#ff002d";
+            }
           });
       }
     });
@@ -1283,46 +1326,13 @@ export async function universe() {
     document.getElementById("uniEvent2").style.display = "block";
     document.getElementById("uniEvent3").style.display = "block";
     document.getElementById("uniEvent4").style.display = "block";
-    document.getElementById("welcome").style.display = "none";
-    document.getElementById("welcome").style.pointerEvents = "none";
+    // document.getElementById("welcome").style.display = "none";
+    // document.getElementById("welcome").style.pointerEvents = "none";
     document.getElementById("intro").style.display = "none";
-    document.getElementById("intro").style.opacity = "0%";
-    document.getElementById("introLogo").style.userSelect = "none";
-    document.getElementById("introLogo").style.pointerEvents = "none";
-    document.getElementById("introLogo").style.cursor = "pointer";
-  };
-
-  // Show default menu
-  window.showMenu = () => {
-    var moveMenu = document
-      .getElementById("getUniMenu")
-      .shadowRoot.getElementById("uniMenu");
-    document.querySelector("#universe").style.opacity = "0%";
-    setTimeout(() => {
-      document.querySelector("#universe").style.display = "none";
-    }, 1000);
-
-    // remove playerPos div
-    document.getElementById("selection").style.display = "none";
-    document.getElementById("uniEvent")?.remove();
-    document.getElementById("uniEvent2").remove();
-    document.getElementById("uniEvent3").remove();
-    document.getElementById("uniEvent4").remove();
-    // hide the selection box
-    document.getElementById("explore").style.display = "none";
-    previewUI.style.transform = "scale(0)";
-    moveMenu.style.display = "none";
-    document.getElementById("adminUI").remove();
-    document.getElementById("welcome").style.display = "grid";
-    document.getElementById("welcome").style.pointerEvents = "auto";
-    document.getElementById("intro").style.display = "grid";
-    document.getElementById("intro").style.opacity = "100%";
-    document.getElementById("introLogo").style.userSelect = "auto";
-    document.getElementById("introLogo").style.pointerEvents = "auto";
-    document.getElementById("introLogo").style.cursor = "pointer";
-    document.getElementById("introLogo").addEventListener("click", () => {
-      window.universeSystem();
-    });
+    // document.getElementById("intro").style.opacity = "0%";
+    // document.getElementById("introLogo").style.userSelect = "none";
+    // // document.getElementById("introLogo").style.pointerEvents = "none";
+    // document.getElementById("introLogo").style.cursor = "pointer";
   };
 
   // Open inventory / wallet
@@ -1556,13 +1566,13 @@ export async function universe() {
   // ]);
 
   // Multiplayer
-  await ably.connection.once("connected");
+  await window.ably.connection.once("connected");
   console.log("Connected to Ably!");
 
   const roomName = "alphaTestersChat";
   const roomDescription = "1st Chat Room for Alpha Testers";
   window.room1 = chatRoom.create(roomName, roomDescription);
-  window.room1.setIo(ably);
+  window.room1.setIo(window.ably);
 
   // get the channel to subscribe to
 
@@ -1630,9 +1640,9 @@ export async function universe() {
   var playerInt = false;
   var otherPlayers = [];
 
-  channel2.presence.subscribe("enter", (member) => {
-    console.log("A NEW PLAYER HAS ARRIVED", member.data);
-  });
+  // channel2.presence.subscribe("enter", (member) => {
+  //   console.log("A NEW PLAYER HAS ARRIVED", member.data);
+  // });
   channel2.presence.subscribe("update", (member) => {
     if (playerInt === false) {
       var playerGroup1 = uniPlayers.create("PlayerGroup1");
@@ -1655,7 +1665,7 @@ export async function universe() {
     document.getElementById(`${member.data.data.playerId}`).remove();
   });
 
-  channel2.presence.enter(window.uniPlayer);
+  // channel2.presence.enter(window.uniPlayer);
   //
 
   // TOOLTIP
@@ -1691,7 +1701,7 @@ export const newScenario = async (name) => {
   });
   //
   for (var i = 0; i < data.SUD.Scenarios[name].length; i++) {
-    if (data.SUD.Scenarios[name][i].conditions[0] === true) {
+    if (data.SUD.Scenarios[name][i].activated.gate === 0) {
       scenes.push(new DialogueScene(data.SUD.Scenarios[name][i]));
     }
   }

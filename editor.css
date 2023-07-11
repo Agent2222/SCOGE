@@ -426,6 +426,14 @@
     letter-spacing: 1px;
 }
 
+.Attgates {
+    display: grid !important;
+    grid-template-columns: 30% 30% 10% 30% !important;
+    grid-template-rows: 1fr !important;
+    align-items: center;
+    justify-items: start;
+}
+
 .attInput {
     width: 100%;
     height: 100%;
@@ -629,6 +637,7 @@
 .sliderAttribute:hover {
     opacity: 1;
     font-size: 1em;
+    color: var(--accent);
 }
 
 .txtAttribute {
@@ -662,6 +671,7 @@
 .txtAttribute:hover {
     opacity: 1;
     font-size: 1em;
+    color: var(--accent);
 }
 
 #chElAtt {
@@ -780,4 +790,75 @@ label::before {
 
 #aiAsstSelectScope:focus {
     outline: none;
+}
+
+.warningBG {
+    background-color: rgba(0,0,0,0.9);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-items: center;
+    overflow: hidden;
+}
+
+#warningBlock {
+    width: 20%;
+    height: 20%;
+    background-color: rgba(0,0,0,0.9);
+    border: .5px solid #ff002d;
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 80% 20%;
+    overflow: hidden;
+}
+
+#warningBGButtons {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-items: center;
+    border-top: .5px solid #ff002d;
+}
+
+#warningBGButtons button:hover {
+    cursor: pointer;
+    color: var(--secondary);
+    background-color: #ff002d;
+    font-family: "BS-B";
+}
+
+#warningBGButtons button {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    color: #ff002d;
+    font-family: "BS-R";
+    transition: .3s all;
+    font-size: 1.2em;
+    letter-spacing: 1px;
+}
+
+#warningBGYes:hover {
+    cursor: pointer;
+    color: black !important;
+    background-color:  var(--accent) !important;
+    font-family: "BS-B";
+}
+
+#warningBGText {
+    padding: 5%;
+    font-size: 2.5em;
+    color: var(--accent);
 }

@@ -5,6 +5,7 @@ import { Principal } from "@dfinity/principal";
 var availablePill = false;
 var mainScreenOpen = false;
 const canister = "7mfck-baaaa-aaaah-acuqq-cai";
+var Nftlink = "https://twitter.com/YumiMarketplace/status/1673888214690729984";
 
 var alphaCollectionImage = "";
 
@@ -234,6 +235,10 @@ class mintingScreen extends HTMLElement {
     return res;
   }
 
+  openLink() {
+    window.open(Nftlink);
+  };
+
   // Switch Pills
   pillSelection = (e) => {
     var selected = String(e.target.id);
@@ -248,7 +253,7 @@ class mintingScreen extends HTMLElement {
       red: "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Yellow-DigiGel-1.png",
       black:
         "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png",
-      blue: "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/White-DigiGel-1.png",
+      blue: "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/shop-temp-1.png",
       white: "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/White-DigiGel-1.png"
     };
     switch (selected) {
@@ -259,18 +264,22 @@ class mintingScreen extends HTMLElement {
         pills[0].setAttribute("id", "blue");
         pills[1].setAttribute("id", "red");
         pills[2].setAttribute("id", "black");
+        // this.shadow
+        //   .getElementById("mintButton")
+        //   .removeEventListener("click", this.reacc);
+        // this.shadow
+        //   .getElementById("mintButton")
+        //   .addEventListener("click", () => this.mintNFT(`qpbuq-myqvw-yoaff-265ad-5g6xu-wx5dl-zzd7y-y6oak-zo4uf-x3ozb-dqe`));
         this.shadow
-          .getElementById("mintButton")
-          .removeEventListener("click", this.reacc);
-        this.shadow
-          .getElementById("mintButton")
-          .addEventListener("click", () => this.mintNFT(`qpbuq-myqvw-yoaff-265ad-5g6xu-wx5dl-zzd7y-y6oak-zo4uf-x3ozb-dqe`));
+        .getElementById("mintButton")
+        .removeEventListener("click", window.shopping);
+        this.shadow.getElementById("mintButton").removeEventListener("click", this.openLink);
         desc.innerHTML = "YOU'LL BE ABLE TO AFFECT REALITY WITH THIS.";
-        cost.innerHTML = "IT’LL COST YOU 10 [ICP].";
-        button.innerHTML = "UNAVAILABLE";
+        cost.innerHTML = "*ENHANCEMENT GEL FOR DIGISETTE RINGS";
+        button.innerHTML = "COMING SOON";
         button.style.color = "#ff002d";
-        buttonbg.style.backgroundColor = "black";
-        buttonbg.style.border = "1px solid black";
+        buttonbg.style.backgroundColor = "transparent";
+        buttonbg.style.border = "1px solid #ff002d";
         availablePill = false;
         // screen.style.boxShadow = "inset 0 0 100px rgba(0,0,0,.9)";
         // screen.style.backgroundColor = "rgba(145,212,202,.4)";
@@ -282,16 +291,16 @@ class mintingScreen extends HTMLElement {
         pills[0].setAttribute("id", "red");
         pills[1].setAttribute("id", "black");
         pills[2].setAttribute("id", "blue");
-        desc.innerHTML = "A GIFT FROM THE ORACLE'S";
-        // desc.innerHTML = "HERE’S A TEMPORARY PILL YOU CAN TAKE.";
-        cost.innerHTML = "IT WONT COST YOU A THING.";
-        button.innerHTML = "TAKE IT";
+        desc.innerHTML = "DIGISETTE RING - (PREMIUM LIMITED NFT)";
+        cost.innerHTML = "EXCLUSIVELY ON YUMI MARKETPLACE";
+        button.innerHTML = "BUY";
         this.shadow
           .getElementById("mintButton")
-          .addEventListener("click", this.reacc);
+          .removeEventListener("click", window.shopping);
+        this.shadow.getElementById("mintButton").addEventListener("click", this.openLink);
         button.style.color = "";
         availablePill = true;
-        buttonbg.style.border = "";
+        buttonbg.style.border = "1px solid var(--accent)";
         buttonbg.style.backgroundColor = "";
         // screen.style.boxShadow = "inset 0 0 100px rgba(0,0,0,.9)";
         // screen.style.backgroundColor = "rgba(0,0,0,.4)";
@@ -303,15 +312,16 @@ class mintingScreen extends HTMLElement {
         pills[0].setAttribute("id", "black");
         pills[1].setAttribute("id", "blue");
         pills[2].setAttribute("id", "red");
+        this.shadow.getElementById("mintButton").removeEventListener("click", this.openLink);
         this.shadow
           .getElementById("mintButton")
-          .removeEventListener("click", this.reacc);
-        desc.innerHTML = "THIS IS WHAT YOU'LL NEED TO REMEMBER.";
-        cost.innerHTML = "IT’LL COST YOU 5 [ICP].";
-        button.innerHTML = "UNAVAILABLE";
-        button.style.color = "#ff002d";
-        buttonbg.style.backgroundColor = "black";
-        buttonbg.style.border = "none";
+          .addEventListener("click", window.shopping);
+        desc.innerHTML = "MEN'S AND WOMEN'S COLLECTIONS";
+        cost.innerHTML = "TOPS, BOTTOMS, & ACCESSORIES";
+        button.innerHTML = "SHOP";
+        button.style.color = "";
+        buttonbg.style.backgroundColor = "";
+        buttonbg.style.border = "1px solid var(--accent)";
         availablePill = false;
         // screen.style.boxShadow = "inset 0 0 100px rgba(0,0,0,.9)";
         // screen.style.backgroundColor = "rgba(164,219,251,.4)";
@@ -323,15 +333,16 @@ class mintingScreen extends HTMLElement {
   connectedCallback() {
     this.render();
     // this.loadShop();
+    this.shadow.getElementById("mintButton").addEventListener("click", this.openLink);
     this.shadow
       .getElementById("svgBox")
       .addEventListener("click", this.toggleNftScreen.bind(this));
     this.shadow.querySelectorAll(".pills").forEach((pill) => {
       pill.addEventListener("click", this.pillSelection);
     });
-    this.shadow
-      .getElementById("mintButton")
-      .addEventListener("click", this.reacc);
+    // this.shadow
+    //   .getElementById("mintButton")
+    //   .addEventListener("click", this.reacc);
     // this.hereTest = this.test();
     // Add Event handlers to rendered html below
     // Must use this.shadow to access dom.
@@ -562,6 +573,7 @@ class mintingScreen extends HTMLElement {
             }
             .pills {
               transition: .5s all;
+              cursor: pointer;
             }
             .pills:hover {
               transform: scale(1.1);
@@ -573,21 +585,21 @@ class mintingScreen extends HTMLElement {
          <div id="mainScreen">
             <div id="innerScreen">
               <div id="nftAssetGallery">
-                <img class="pills" id="red" style="opacity:31%;" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Yellow-DigiGel-1.png"/>
-                <img class="pills" id="black" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png"/>
-                <img class="pills" id="blue" style="opacity:31%;" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/White-DigiGel-1.png"/>
+                <img class="pills" id="red" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Yellow-DigiGel-1.png"/>
+                <img class="pills" id="black" style="transform:scale(1.4);" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png"/>
+                <img class="pills" id="blue" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/shop-temp-1.png"/>
               </div>
               <div id="mintUiActions">
                 <div id="mintUiActionsInner">
                   <div id="texts">
                     <span class="spacer"></span>
-                    <span id="desc">A GIFT FROM THE ORACLE'S</span>
-                    <span class="active" id="cost">IT WONT COST YOU A THING.</span>
+                    <span id="desc">DIGISETTE RING - (PREMIUM LIMITED NFT)</span>
+                    <span class="active" id="cost">EXCLUSIVELY ON YUMI MARKETPLACE</span>
                     <span class="spacer"></span>
                   </div>
                   <div id="buttons">
                     <div id="mintButton">
-                      <span id="button">TAKE IT</span>
+                      <span id="button">BUY</span>
                     </div>
                   </div>
                 </div>

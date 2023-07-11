@@ -5,6 +5,14 @@
   font-weight: normal;
   src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/Athelas-Regular.woff") format("woff");
 }
+
+@font-face {
+  font-family: "GM-I";
+  src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/DMSans-Italic.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
 @font-face {
   font-family: "BS-B";
   src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Bold.eot");
@@ -84,7 +92,7 @@
 }
 
 :root {
-  --black : #0f0f12;
+  --black : black;
   --primary: #ff002d;
   --secondary: #b5d3d1;
   --accent: #94be8c;
@@ -298,7 +306,7 @@ canvas {
   position: fixed;
   right: -70%;
   bottom: 0;
-  z-index: 5;
+  z-index: 15;
   overflow-x: visible !important;
   overflow-y: visible;
   display: block;
@@ -1010,7 +1018,7 @@ canvas {
 
 #logo {
   position: absolute;
-  z-index: 5;
+  z-index: 15;
   width: 14%;
   left: 3%;
   top: 6%;
@@ -1024,17 +1032,106 @@ canvas {
   height: 100%;
   left: 0;
   top: 0;
-  user-select: none;
+  margin: 0;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
   align-items: center;
   justify-items: center;
+  font-family: "BS-R";
+}
+
+.introText {
+  width: auto;
+  height: auto;
+  position: absolute;
+  z-index: 5;
+  opacity: 100%;
+  transition: .3s all;
+  font-size: 3em;
+  color: #ff002d !important;
+  cursor: pointer !important;
+}
+
+#introTextCont {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  justify-items: center;
+}
+
+#clippingBox {
+  width: 99%;
+  height: 99%;
+  position: absolute;
+  z-index: 5;
+  border: 1px solid #ff002d;
+  transform: scaleY(0) scaleX(0);
+  transition: 1s all;
+  user-select: none;
   pointer-events: none;
 }
-/* #logo:hover ~ #bankooMapCont {
-  right: 42%;
-} */
+
+.introText:hover {
+  color: var(--accent) !important;
+  /* transform: scale(1.2); */
+}
+
+#brandClips {
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  position: fixed;
+  z-index: 10;
+  /* user-select: none;
+  pointer-events: none; */
+}
+
+.entryLogos {
+  height: 40%;
+  width: 10%;
+  position: absolute;
+  /* transition: 1s all; */
+  user-select: none;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+#bc1 {
+  left: 43%;
+  top: 22%;
+  z-index: 3;
+  transform: rotate(20deg);
+}
+
+#bc2 {
+  left: 48%;
+  top: 27%;
+  z-index: 2;
+  width: 17%;
+  transform: rotate(-120deg);
+}
+
+#bc3 {
+  width: 15%;
+  left: 40%;
+  top: 32%;
+  z-index: 1;
+  transform: rotate(-80deg);
+}
+
+#bc4 {
+  width: 20%;
+  left: 35%;
+  top: 38%;
+  z-index: -10;
+  transform: rotate(-90deg);
+  cursor: default;
+}
+
 #logo img {
   width: 100%;
   /* filter: blur(90px); */
@@ -1302,7 +1399,6 @@ a:active {
   letter-spacing: 10px;
   font-family: "BS-R";
   transition: .5s all;
-  pointer-events: none;
 }
 .welcomeOptions {
   width: 100%;
@@ -1370,8 +1466,9 @@ a:active {
   font-family: "BS-R";
   transition: .3s all;
   background-color: var(--black);
-  opacity: 0%;
+  opacity: 100%;
   pointer-events: none;
+  scale: 1.05;
 }
 #seekBody {
   height: 85%;
@@ -1381,6 +1478,7 @@ a:active {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 65% 15% 20%;
+  user-select: none;
 }
 #seekResp {
   overflow-y: scroll;
@@ -1659,7 +1757,7 @@ a:active {
   position: fixed;
   left: -2%;
   top: 0px;
-  z-index: -1;
+  z-index: 4;
   opacity: 0%;
   transform: scale(1.5);
   cursor: pointer;
@@ -1780,6 +1878,8 @@ a:active {
 #tooltip {
   pointer-events: none;
   user-select: none;
+  z-index: 11;
+  display: none;
 }
 .homeT {
   pointer-events: none;
@@ -1905,44 +2005,34 @@ a:active {
 /* Seek End */
 /* MEDIA */
 @media screen and (max-width: 800px) {
-  #uniBut {
-    display: none !important;
-  }
 }
 @media screen and (max-height: 600px) {
-  #uniBut {
-    display: none !important;
-  }
 }
 @media screen and (max-width: 1024px) {
-  #uniBut {
+  #bc1 {
+    transform: rotate(-120deg) scale(3) !important;
+  }
+  #bc2 {
+    transform: rotate(-60deg) scale(3) !important;
+    z-index: 10;
+  }
+  #bc3 {
+    transform: rotate(0deg) scale(3) !important;
+  }
+  #bc4 {
+    transform: rotate(-90deg) scale(3.5) !important;
+    left: 25%;
+  }
+  #viewEditor {
     display: none;
+  }
+  #uniMenu {
+    width: 10% !important;
   }
   #logo {
     width: 50% !important;
     left: 5%;
     top: 5%;
-  }
-  #gMenu div {
-    left: 0%;
-    width: auto !important;
-  }
-  #settingsMenu {
-    width: 80%;
-    height: 52%;
-    position: fixed;
-    z-index: 3;
-    right: 0%;
-    padding: 10%;
-    font-size: 18px;
-    margin-top: 38%;
-    padding-bottom: 36%;
-    overflow: scroll;
-    border-bottom:.5px solid #94be8c;
-    border-top:.5px solid #94be8c;
-    display: none;
-    background-image:none;
-    background-color: rgba(0, 0, 0, 0.8);
   }
   #ctc {
     width: 80%;
@@ -1955,19 +2045,6 @@ a:active {
   }
   #shop {
     display: none;
-  }
-  #bg2 {
-    display: flex;
-    height: 100% !important;
-    /* width: auto; */
-    /* grid-template-columns: 1fr;
-    grid-template-rows: 1fr; */
-    justify-content: center;
-    align-content: center;
-  }
-  #bg2 img {
-    width: auto;
-    height: 100% !important;
   }
   #gMenu {
     width: auto;
@@ -2002,118 +2079,16 @@ a:active {
     grid-template-columns: 1fr;
     grid-template-rows: 65% 20% 15%;
   }
-  .manCirc {
-    width: 50px;
-    height: 50px;
-    border: 1px solid var(--secondary);
-    border-radius: 50%;
-    position: absolute;
-    transition: .5s all;
-    cursor: pointer;
-    opacity: 0%;
-  }
-  #seekOpt {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: center;
-    gap: 14px 14px;
-    font-size: 1em;
-    letter-spacing: 10px;
-    font-family: "BS-R";
-    transition: .5s all;
-    font-size: .8em;
-  }
-  .seekOptCard {
-    flex-basis: calc(100% / 2 - 10px);
-    text-align: center;
-    font-size: 1em;
-    letter-spacing: 10px;
-  }
-  .seekOptCard:nth-child(3), .seekOptCard:nth-child(4) {
-    margin: 0 0;
-  }
+
   .mobileVideo {
-    transform: scale(2.1) rotate(90deg);
+    transform: scale(4) !important;
     width: 100% !important;
     position: absolute;
     left: 0 !important;
     top: 0 !important;
   }
   .videoEl {
-    transform: scale(1) rotate(0deg) !important;
-  }
-  .visualSubMenu, .infoSubMenu {
-    float: left;
-    padding: 2% 4%;
-    border: 1px solid var(--accent);
-    color: var(--accent);
-    margin-right: 5%;
-    margin-bottom: 4%;
-    letter-spacing: 8px;
-    text-align: center;
-    font-size: .8em;
-    cursor: pointer;
-  }
-  .musicContainer {
-    width: 100%;
-    height: auto;
-    margin-top: 3%;
-  }
-  .infoSubMenuContainer, .visualSubMenuContainer {
-    width: 100% !important;
-    height: 15% !important;
-    margin-bottom: 2%;
-  }
-  .dropdown {
-    position: fixed !important;
-    width: 50% !important;
-    left: 25% !important;
-    top: 5% !important;
-    user-select: auto !important;
-    pointer-events: auto !important;
-    transform: rotate(0deg) !important;
-    z-index: 3 !important;
-    background-color: var(--black);
-  }
-  #logo {
-    pointer-events: none;
-  }
-  .videodropdown {
-    position: fixed !important;
-    width: 50% !important;
-    right: -15% !important;
-    left: auto !important;
-    top: 12% !important;
-    transform: rotate(90deg) !important;
-    user-select: auto !important;
-    pointer-events: auto !important;; 
-    z-index: 3 !important;
-  }
-  #soundToggle {
-    position: fixed;
-    width: 50%;
-    left: auto;
-    right: -15% !important;
-    bottom: 10%;
-    top: auto;
-    font-family: "BS-B";
-    font-size: .8em;
-    transform: rotate(90deg) !important;
-  }
-  #convoCont {
-    position: fixed;
-    top: 35%;
-    left: 35%;
-    width: 30%;
-    height: auto;
-    z-index: 6;
-    animation: blink 1s infinite;
-    cursor: pointer;
-    transition: .3s all;
-    display: none;
+    transform: scale(1.2) rotate(0deg) !important;
   }
   #portalVideoExt {
     position: fixed !important;
@@ -2122,7 +2097,7 @@ a:active {
     left: 0px !important;
     height: 100% !important;
     z-index: 6;
-    transform: rotate(90deg) scale(2.1);
+    transform: scale(2.1);
   }
   #tooltip {
     pointer-events: none;

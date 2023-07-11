@@ -2,7 +2,6 @@
 // import fleekStorage from "@fleekhq/fleek-storage-js";
 
 export async function portal() {
-    const gallery = document.getElementById('seekGallery');
     const gallery2 = document.getElementById('videoGallery');
     const video = document.getElementById('seekVideo');
     const img1 = document.getElementById('portalImg');
@@ -35,7 +34,6 @@ export async function portal() {
   // }).catch((err) => {
   //   console.log(err);
   // });
-
 
   const setupImages = await import('./imgassetdb.json').catch((error) => {
     console.log(error);
@@ -85,33 +83,34 @@ export async function portal() {
     let nextVMedia = null;
     let currentV = 0;
   
-    function showNextMedia() {    
+    async function showNextMedia() {    
       // check if video or image gallery 
-        if (window.galleryType === "images") {
-            img1.style.transition = "1s all";
-            img2.style.transition = "1s all";
-            currentMediaIndex = (currentMediaIndex + 1) % numMedia;
-            currentMedia = window.filteredImages[currentMediaIndex];
-            nextMediaIndex = (currentMediaIndex + 1) % numMedia;
-            nextMedia = window.filteredImages[nextMediaIndex];
-          // set up the next media to display
-            if (current === 0) {
-                img1.style.opacity = "0%";
-                img2.style.opacity = "100%";
-                img1.src = nextMedia.publicUrl;
-                current = 1;
-                return;
-            } else {
-                img1.style.opacity = "100%";
-                img2.style.opacity = "0%";
-                current = 0;
-                // img1.src = currentMedia.publicUrl;
-                // setTimeout(() => {
-                img2.src = nextMedia.publicUrl;
-                // }, 1300)
-                return;
-            }
-        } else if (window.galleryType === "video") {
+        // if (window.galleryType === "images") {
+        //     img1.style.transition = "1s all";
+        //     img2.style.transition = "1s all";
+        //     currentMediaIndex = (currentMediaIndex + 1) % numMedia;
+        //     currentMedia = window.filteredImages[currentMediaIndex];
+        //     nextMediaIndex = (currentMediaIndex + 1) % numMedia;
+        //     nextMedia = window.filteredImages[nextMediaIndex];
+        //   // set up the next media to display
+        //     if (current === 0) {
+        //         img1.style.opacity = "0%";
+        //         img2.style.opacity = "100%";
+        //         img1.src = nextMedia.publicUrl;
+        //         current = 1;
+        //         return;
+        //     } else {
+        //         img1.style.opacity = "100%";
+        //         img2.style.opacity = "0%";
+        //         current = 0;
+        //         // img1.src = currentMedia.publicUrl;
+        //         // setTimeout(() => {
+        //         img2.src = nextMedia.publicUrl;
+        //         // }, 1300)
+        //         return;
+        //     }
+        // } else 
+        if (window.galleryType === "video") {
             video1.style.transition = "1s all";
             video2.style.transition = "1s all";
             currentVMediaIndex = (currentVMediaIndex + 1) % numVMedia;
@@ -124,8 +123,14 @@ export async function portal() {
                 video2.style.opacity = "100%";
                 window.currentVideo = video2;
                 window.hiddenVideo = video1;
-                video2.play();
-                video1.pause();
+                try {
+                  await video2.play();
+                  video1.pause();
+                } catch (error) {
+                  console.log(error);
+                }
+                // video2.play();
+                // video1.pause();
                 video1.currentTime = 0;
                 video2.currentTime = 0;
                 currentV = 1;
@@ -152,8 +157,8 @@ export async function portal() {
                 video2.currentTime = 0;
                 video1.currentTime = 0;
                 currentV = 0;
-                video1.src = currentVMedia.publicUrl;
-                video1.play();
+                video1.src = currentVMedia?.publicUrl;
+                // video1.play();
                 video2.pause();
                 if (video1.src.includes("POR")) {
                   video1.setAttribute("class","videoEl")
@@ -193,15 +198,9 @@ export async function portal() {
     }
   
     // add event listener to switch to the next media on click
-    gallery.addEventListener('click', () => {
-        showNextMedia();
-    });
     gallery2.addEventListener('click', () => {
         showNextMedia();
     });
-    document.getElementById('soundToggle').addEventListener('click', () => {
-        window.toggleSound();
-    }); 
   
     // show the first media
     showNextMedia();

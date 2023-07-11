@@ -1,5 +1,7 @@
 import { SoundtrackManager } from "./soundtrack.js";
 import { universe } from "./universe.js";
+import { gsap } from "gsap";
+// import fleekStorage from "@fleekhq/fleek-storage-js";
 
 // import { idlFactory } from "./declarations/universe_backend/;universe_backend.did.js";
 import { Configuration, OpenAIApi } from "openai";
@@ -7,12 +9,15 @@ window.dtmenuOpen = false;
 window.dtfullMenuOpen = false;
 const VITE_ScogeI = import.meta.env.VITE_ScogeI;
 const soundtrack2 = new SoundtrackManager();
+const fleekP = import.meta.env.VITE_fleekP;
+const fleekS = import.meta.env.VITE_fleekS;
+
 // const suIDL = idlFactory;
 // console.log({suIDL});
 var nmcProps = {
   // ** Visual Identifier **
   ringType: "",
-  landRank: 0, 
+  landRank: 0,
   rank: 0,
   powerUps: [0],
   progress: 0,
@@ -49,10 +54,10 @@ var nmcProps = {
   // ** Land Info **
   landNumber: 0,
   story: {
-      title: "",
-      text: "",
-      imagesUri: [""],
-      videoURI: "",
+    title: "",
+    text: "",
+    imagesUri: [""],
+    videoURI: "",
   },
   // bankooImage: [0],
   bankooText: [""],
@@ -66,6 +71,10 @@ class getUniMenu extends HTMLElement {
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
+    this.shopSource = `<img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/shop-temp-1.png" alt="NFT Shop" id="nftShop"><img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png" alt="NFT Shop" id="nftShop">`;
+    this.defaultSource = `<img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/DIGISHOP-1.png" alt="NFT Shop" id="nftShop">`
+    this.beacons = null;
+    this.digiLink = "https://twitter.com/YumiMarketplace/status/1673888214690729984";
   }
 
   get uniMenu() {
@@ -86,6 +95,61 @@ class getUniMenu extends HTMLElement {
     }
   }
 
+  parseCSV(csvData) {
+    const lines = csvData.split('\n');
+    const headers = lines[0].split(',').map(header => header.trim());
+    const result = [];
+  
+    for (let i = 1; i < lines.length; i++) {
+      const currentLine = lines[i].split(',');
+      if (currentLine.length !== headers.length) {
+        continue; // Skip lines with mismatched data
+      }
+      const rowData = {};
+      for (let j = 0; j < headers.length; j++) {
+        const value = currentLine[j].trim();
+        rowData[headers[j]] = value;
+      }
+      result.push(rowData);
+    }
+  
+    return result;
+  }
+
+  // Beacons
+  // async getBeacons() {
+  //   fetch('https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeData/beacons1.csv')
+  // .then(response => response.text())
+  // .then(data => {
+  //   // Parse and process the data as needed
+  //   this.beacons = this.parseCSV(data);
+  //   var beaconPage = this.shadow.getElementById("beaconsBody")
+  //   this.beacons.forEach((beacon) => {
+  //     var beaconEl = document.createElement("div");
+  //     beaconEl.setAttribute("class", "beacon tut");
+  //     beaconEl.setAttribute("data-headline", beacon.Headline);
+  //     beaconEl.setAttribute("data-message", beacon.Body);
+  //     beaconEl.innerHTML = `
+  //     <div class="beaconOrigin">
+  //       <div class="beaconIdenIcon">!</div>
+  //       <div class="beaconSender">${beacon.Sender}</div>
+  //     </div>
+  //     <div class="beaconPreview">
+  //       ${beacon.Preview}
+  //     </div>
+  //   </div>
+  //     `;
+  //     beaconEl.addEventListener("click", (e) => {
+  //       this.openBeaconMessage(e);
+  //     });
+  //     beaconPage.appendChild(beaconEl);
+  //   });
+  // })
+  // .catch(error => {
+  //   console.error(error);
+  // });
+  // }
+
   // open menu
   toggleMenu() {
     const menu = this.shadow.querySelector("#uniMenu");
@@ -93,23 +157,58 @@ class getUniMenu extends HTMLElement {
     const menuItems = this.shadow.querySelector("#menuItems");
     const menuHeader = this.shadow.querySelector("#menuHeader");
     const refresh = this.shadow.querySelector("#refresh");
-    if (window.dtmenuOpen === false) {
-      menuIcon.style.transform = "rotate(180deg)";
-      menu.style.height = "auto";
-      menuHeader.style.height = "100%";
-      window.dtmenuOpen = true;
-      return;
+    // Mobile Menu
+    if (window.isMobile === true) {
+      if (window.dtmenuOpen === false) {
+        this.closeFullMenu();
+        menuIcon.style.transform = "rotate(180deg)";
+        menuHeader.style.height = "20%";
+        setTimeout(() => {
+          menu.style.maxHeight = "70%";
+          menu.style.top = "15vh";
+        }, 150);
+        window.dtmenuOpen = true;
+        menu.style.transition = "all 0.3s ease-in-out";
+        return;
+      } else {
+        // Desktop Menu
+        this.closeFullMenu();
+        menuHeader.style.height = "100%";
+        menu.style.maxHeight = "12%";
+        menu.style.top = "80vh";
+        menuIcon.style.transform = "rotate(0deg)";
+        menuItems.style.maxHeight = "0%";
+        menuItems.style.overflow = "hidden";
+        window.dtmenuOpen = false;
+        refresh.style.animationPlayState = "paused";
+        return;
+      }
     } else {
-      menuHeader.style.height = "100%";
-      setTimeout(() => { menu.style.height = "10%"; }, 150);
-      // menu.style.height = "10%";
-      menuIcon.style.transform = "rotate(0deg)";
-      menuItems.style.height = "0%";
-      menuItems.style.overflow = "hidden";
-      window.dtmenuOpen = false;
-      refresh.style.animationPlayState = "paused";
-      this.closeFullMenu();
-      return;
+      // Desktop Menu
+      if (window.dtmenuOpen === false) {
+        this.closeFullMenu();
+        menuIcon.style.transform = "rotate(180deg)";
+        menu.style.transition = "all 0.3s ease-in-out";
+        // menu.style.maxHeight = "50%";
+        setTimeout(() => {
+          menuHeader.style.height = "100%";
+          window.dtmenuOpen = true;
+          menu.setAttribute("class", "collapsed");
+        }, 150);
+        return;
+      } else {
+        this.closeFullMenu();
+        menuHeader.style.height = "20%";
+        setTimeout(() => {
+          menu.removeAttribute("class", "collapsed");
+        }, 150);
+        menuIcon.style.transform = "rotate(0deg)";
+        menuItems.style.maxHeight = "0%";
+        menuItems.style.overflow = "hidden";
+        window.dtmenuOpen = false;
+        refresh.style.animationPlayState = "paused";
+        return;
+      }
     }
   }
   // open full menu
@@ -119,19 +218,34 @@ class getUniMenu extends HTMLElement {
     const fullMenuBg = this.shadow.querySelector("#fullMenuBG");
     const menuItems = this.shadow.querySelector("#menuItems");
     const refresh = this.shadow.querySelector("#refresh");
-    if (window.dtfullMenuOpen === false) {
-      menu.style.overflowX = "visible";
-      fullMenu.style.width = "500px";
-      fullMenuBg.style.transform = "scaleX(1)";
-      menu.style.borderBottomRightRadius = "0px";
-      menu.style.borderTopRightRadius = "0px";
-      menu.style.borderRight = "0px solid black";
-      window.dtfullMenuOpen = true;
-      refresh.style.display = "block";
-      refresh.style.animationPlayState = "running";
-      return;
+    if (window.isMobile === true) {
+      this.toggleMenu();
+      this.shadow.appendChild(fullMenu);
+      if (window.dtfullMenuOpen === false) {
+        // menu.style.overflowX = "visible";
+        fullMenu.style.height = "100%";
+        fullMenuBg.style.transform = "scaleY(1)";
+        window.dtfullMenuOpen = true;
+        refresh.style.display = "block";
+        refresh.style.animationPlayState = "running";
+        return;
+      }
+      this.shadow.getElementById("beaconNoti").style.display = "none";
+    } else {
+      if (window.dtfullMenuOpen === false) {
+        menu.style.overflowX = "visible";
+        fullMenu.style.width = "500px";
+        fullMenuBg.style.transform = "scaleX(1)";
+        menu.style.borderBottomRightRadius = "0px";
+        menu.style.borderTopRightRadius = "0px";
+        menu.style.borderRight = "0px solid black";
+        window.dtfullMenuOpen = true;
+        refresh.style.display = "block";
+        refresh.style.animationPlayState = "running";
+        return;
+      }
+      this.shadow.getElementById("beaconNoti").style.display = "none";
     }
-    this.shadow.getElementById("beaconNoti").style.display = "none";
   }
 
   closeFullMenu() {
@@ -139,7 +253,16 @@ class getUniMenu extends HTMLElement {
     const fullMenu = this.shadow.querySelector("#fullMenu");
     const fullMenuBg = this.shadow.querySelector("#fullMenuBG");
     const refresh = this.shadow.querySelector("#refresh");
-    fullMenu.style.width = "0px";
+    if (window.isMobile === true) {
+      //  Mobile
+      fullMenu.style.height = "0%";
+      fullMenuBg.style.transform = "scaleY(0)";
+      refresh.style.animationPlayState = "paused";
+      refresh.style.display = "none";
+      window.dtfullMenuOpen = false;
+    } else {
+      // Desktop
+      fullMenu.style.width = "0px";
       fullMenuBg.style.transform = "scaleX(0)";
       refresh.style.animationPlayState = "paused";
       refresh.style.display = "none";
@@ -147,21 +270,22 @@ class getUniMenu extends HTMLElement {
         menu.style.borderBottomRightRadius = "10px";
         menu.style.borderTopRightRadius = "10px";
         menu.style.borderRight = "2px solid #ff002d";
-       }, 500);
-       window.dtfullMenuOpen = false;
-    // soundtrack2.stop('menuExit1');
-    // soundtrack2.play('menuExit1');
+      }, 500);
+      window.dtfullMenuOpen = false;
+      // soundtrack2.stop('menuExit1');
+      // soundtrack2.play('menuExit1');
+    }
   }
 
   // Send Feedback
   sendFeedback(event) {
     // Event.preventDefault(); // Prevent the form from being submitted the traditional way
     event.preventDefault();
-    var email = this.shadow.getElementById('feedbackEmailInput').value;
-    var feedback = this.shadow.getElementById('feedbackInput').value;
+    var email = this.shadow.getElementById("feedbackEmailInput").value;
+    var feedback = this.shadow.getElementById("feedbackInput").value;
     // Validate the form values here, if necessary
     // Submit the form
-    this.shadow.getElementById('feedbackForm').submit();
+    this.shadow.getElementById("feedbackForm").submit();
   }
 
   toggleFullScreen() {
@@ -169,7 +293,7 @@ class getUniMenu extends HTMLElement {
       document.documentElement.requestFullscreen();
     } else {
       if (document.exitFullscreen) {
-        document.exitFullscreen(); 
+        document.exitFullscreen();
       }
     }
   }
@@ -231,36 +355,36 @@ class getUniMenu extends HTMLElement {
     proImg2.style.filter = "blur(5px)";
     proImg2.style.filter = "brightness(0.2)";
     // Img Upload
-    const fileInput = document.createElement('input');
-    fileInput.type = 'file';
-    fileInput.accept = 'image/*';
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = "image/*";
 
-    fileInput.addEventListener('change', (event) => {
+    fileInput.addEventListener("change", (event) => {
       const file = event.target.files[0];
       if (file) {
         // Do something with the file, e.g., upload it to a server or display it
-        console.log('Selected file:', file);
+        console.log("Selected file:", file);
 
         // Display the selected image in the 'proImg' element
         const reader = new FileReader();
         reader.onload = (e) => {
-          const blob = new Blob([e.target.result], {type: file.type});
-          console.log('Blob:', blob);
+          const blob = new Blob([e.target.result], { type: file.type });
+          console.log("Blob:", blob);
           const url = URL.createObjectURL(blob);
           proImg2.src = url;
           proImg2.style.filter = "brightness(1)";
-        
+
           // Store the Blob object for later use (e.g., for saving)
-         this.imageBlob = blob;
+          this.imageBlob = blob;
         };
-        
+
         reader.readAsArrayBuffer(file);
       }
     });
-    proImg.addEventListener('click', () => {
+    proImg.addEventListener("click", () => {
       fileInput.click();
     });
-    proSave.addEventListener('click', () => {
+    proSave.addEventListener("click", () => {
       this.saveProfileTemp();
     });
   }
@@ -270,7 +394,7 @@ class getUniMenu extends HTMLElement {
     // Convert Text
     // Convert Image
   }
-  
+
   // Helper function to read a Blob as an ArrayBuffer
   readBlobAsArrayBuffer(blob) {
     return new Promise((resolve, reject) => {
@@ -280,11 +404,11 @@ class getUniMenu extends HTMLElement {
       reader.readAsArrayBuffer(blob);
     });
   }
-  
+
   // Temp Save Profile
   async saveProfileTemp() {
     let proImg = this.shadow.getElementById("proImgSect");
-    let proImg2 = this.shadow.getElementById("proImg")
+    let proImg2 = this.shadow.getElementById("proImg");
     let proImg3 = this.shadow.getElementById("editImgIcon");
     let proText = this.shadow.getElementById("profileDesc");
     let proEdit = this.shadow.getElementById("proEdit");
@@ -293,7 +417,7 @@ class getUniMenu extends HTMLElement {
     let proIden = this.shadow.getElementById("proLabelIdentity");
     let proEmail = this.shadow.getElementById("proLabelEmail");
     const blob = this.imageBlob;
-    
+
     // Convert blob to array of arrays to match the expected type
     const arrayBuffer = await this.readBlobAsArrayBuffer(blob);
     const CHUNK_SIZE = 1024; // set the chunk size as per your requirements
@@ -302,43 +426,52 @@ class getUniMenu extends HTMLElement {
     for (let i = 0; i < uint8Array.length; i += CHUNK_SIZE) {
       byteChunks.push(uint8Array.slice(i, i + CHUNK_SIZE));
     }
-    const vectorOfVectors = byteChunks.map(byteChunk => Array.from(byteChunk));
+    const vectorOfVectors = byteChunks.map((byteChunk) =>
+      Array.from(byteChunk)
+    );
 
     const configuration = new Configuration({
       apiKey: VITE_ScogeI,
-      });
-      const openai = new OpenAIApi(configuration);
-      var convertedToBankoo = await openai.createChatCompletion({
-          model: "gpt-3.5-turbo",
-          messages: [{role: "user", content: `Convert ${proText.value} to speak from a futuristic sci-fi perspective`}],
-          max_tokens: 40,
-        }).catch((error) => {
-          console.log(error);
-        });     
-        
-      const openai2 = new OpenAIApi(configuration);
-      const newImage = await openai2.createImage({
-        prompt: convertedToBankoo.data.choices[0].message.content,
-        n: 1,
-        size: "512x512"
+    });
+    const openai = new OpenAIApi(configuration);
+    var convertedToBankoo = await openai
+      .createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [
+          {
+            role: "user",
+            content: `Convert ${proText.value} to speak from a futuristic sci-fi perspective`,
+          },
+        ],
+        max_tokens: 40,
+      })
+      .catch((error) => {
+        console.log(error);
       });
 
-    console.log('newImage:', newImage);
+    const openai2 = new OpenAIApi(configuration);
+    const newImage = await openai2.createImage({
+      prompt: convertedToBankoo.data.choices[0].message.content,
+      n: 1,
+      size: "512x512",
+    });
+
+    console.log("newImage:", newImage);
     document.getElementById("GenImgCont")?.remove();
     var ImageCont = document.createElement("div");
     var newImageCont = document.createElement("img");
     var genPara = document.createElement("p");
     genPara.innerHTML = convertedToBankoo.data.choices[0].message.content;
-    newImageCont.src = newImage.data.data[0].url
+    newImageCont.src = newImage.data.data[0].url;
     ImageCont.appendChild(newImageCont);
     ImageCont.appendChild(genPara);
     ImageCont.setAttribute("id", "GenImgCont");
-    ImageCont.addEventListener('click', () => {
+    ImageCont.addEventListener("click", () => {
       ImageCont.remove();
     });
     document.getElementById("camera").appendChild(ImageCont);
 
-    console.log('byteArray:', vectorOfVectors);
+    console.log("byteArray:", vectorOfVectors);
     // Alias
     nmcProps.alias = proName.value;
     // Email
@@ -355,23 +488,32 @@ class getUniMenu extends HTMLElement {
     // Send
     var prin = await window.ic.bitfinityWallet.getPrincipal();
     console.log(nmcProps);
-    window.suUiActor.updateTemp(prin,0,[(nmcProps)])
+    window.suUiActor.updateTemp(prin, 0, [nmcProps]);
     console.log("Saved Temp Profile");
   }
 
   // Open Beacon Messgae
-  openBeaconMessage(e) {
+  async openBeaconMessage(e) {
     // Temp Filler
-    var data = e.target.getAttribute("data-message");
+    var data = await e.target.getAttribute("data-message");
+    var data2 = await e.target.getAttribute("data-headline");
     var selected = e.target;
     document.getElementById("beaconPan")?.remove();
     var beaconEl = document.createElement("div");
     var messageData = data;
+    var messageData2 = data2;
+    // document.querySelectorAll(".beaconLines").forEach((line) => {
+    //   line.style.animationPlayState = "running";
+    // });
+    document
+      .getElementById("collectionGallery")
+      .shadowRoot.getElementById("collectionGallery").style.transform =
+      "scaleX(0)";
     beaconEl.setAttribute("class", "beaconPanel");
     beaconEl.setAttribute("id", "beaconPan");
     beaconEl.innerHTML = `
     <div id="beaconBody">
-        <div id="beaconTutHead">NEW DOMAIN BEACON!</div>
+        <div id="beaconTutHead">${messageData2}</div>
         <div id="beaconTutBody">${messageData}</div>
         <div id="beaconTutActions">
             <div class="beaconActions" id="beaconAction1">INVESTIGATE</div>
@@ -379,25 +521,45 @@ class getUniMenu extends HTMLElement {
         </div>
     </div>
     <div id="beaconTutIcon">
-        <svg id="uniMenuBeaconsSvg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.71 52.83"><defs><style>.cls-1{fill:#ff002d;}</style></defs><path class="cls-1" d="M32.35,16.19a.65.65,0,0,1-.64-.65V3.93a.65.65,0,1,1,1.29,0V15.54A.65.65,0,0,1,32.35,16.19Z"/><path class="cls-1" d="M32.35,51.26a.65.65,0,0,1-.64-.65V39A.65.65,0,1,1,33,39V50.61A.66.66,0,0,1,32.35,51.26Z"/><path class="cls-1" d="M55.69,27.92H44.08a.65.65,0,1,1,0-1.3H55.69a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M20.63,27.92H9a.65.65,0,0,1-.64-.65A.65.65,0,0,1,9,26.62H20.63a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M40.64,19.63a.7.7,0,0,1-.46-.19.66.66,0,0,1,0-.92L48.4,10.3a.65.65,0,0,1,.92.92L41.1,19.44A.68.68,0,0,1,40.64,19.63Z"/><path class="cls-1" d="M15.85,44.42a.63.63,0,0,1-.46-.19.66.66,0,0,1,0-.92l8.22-8.21a.64.64,0,0,1,.91.91l-8.21,8.22A.63.63,0,0,1,15.85,44.42Z"/><path class="cls-1" d="M48.86,44.42a.63.63,0,0,1-.46-.19L40.18,36a.65.65,0,0,1,.92-.91l8.22,8.21a.66.66,0,0,1,0,.92A.65.65,0,0,1,48.86,44.42Z"/><path class="cls-1" d="M24.06,19.63a.65.65,0,0,1-.45-.19l-8.22-8.22a.65.65,0,0,1,.92-.92l8.21,8.22a.64.64,0,0,1,0,.92A.66.66,0,0,1,24.06,19.63Z"/></svg>
+        <svg class="beaconLines" id="uniMenuBeaconsSvg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.71 52.83"><defs><style>.cls-1{fill:#ff002d;}</style></defs><path class="cls-1" d="M32.35,16.19a.65.65,0,0,1-.64-.65V3.93a.65.65,0,1,1,1.29,0V15.54A.65.65,0,0,1,32.35,16.19Z"/><path class="cls-1" d="M32.35,51.26a.65.65,0,0,1-.64-.65V39A.65.65,0,1,1,33,39V50.61A.66.66,0,0,1,32.35,51.26Z"/><path class="cls-1" d="M55.69,27.92H44.08a.65.65,0,1,1,0-1.3H55.69a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M20.63,27.92H9a.65.65,0,0,1-.64-.65A.65.65,0,0,1,9,26.62H20.63a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M40.64,19.63a.7.7,0,0,1-.46-.19.66.66,0,0,1,0-.92L48.4,10.3a.65.65,0,0,1,.92.92L41.1,19.44A.68.68,0,0,1,40.64,19.63Z"/><path class="cls-1" d="M15.85,44.42a.63.63,0,0,1-.46-.19.66.66,0,0,1,0-.92l8.22-8.21a.64.64,0,0,1,.91.91l-8.21,8.22A.63.63,0,0,1,15.85,44.42Z"/><path class="cls-1" d="M48.86,44.42a.63.63,0,0,1-.46-.19L40.18,36a.65.65,0,0,1,.92-.91l8.22,8.21a.66.66,0,0,1,0,.92A.65.65,0,0,1,48.86,44.42Z"/><path class="cls-1" d="M24.06,19.63a.65.65,0,0,1-.45-.19l-8.22-8.22a.65.65,0,0,1,.92-.92l8.21,8.22a.64.64,0,0,1,0,.92A.66.66,0,0,1,24.06,19.63Z"/></svg>
     </div>
     <div id="beaconBG">
-        <svg id="uniMenuBeaconsSvg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.71 52.83"><defs><style>.cls-1{fill:#ff002d;}</style></defs><path class="cls-1" d="M32.35,16.19a.65.65,0,0,1-.64-.65V3.93a.65.65,0,1,1,1.29,0V15.54A.65.65,0,0,1,32.35,16.19Z"/><path class="cls-1" d="M32.35,51.26a.65.65,0,0,1-.64-.65V39A.65.65,0,1,1,33,39V50.61A.66.66,0,0,1,32.35,51.26Z"/><path class="cls-1" d="M55.69,27.92H44.08a.65.65,0,1,1,0-1.3H55.69a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M20.63,27.92H9a.65.65,0,0,1-.64-.65A.65.65,0,0,1,9,26.62H20.63a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M40.64,19.63a.7.7,0,0,1-.46-.19.66.66,0,0,1,0-.92L48.4,10.3a.65.65,0,0,1,.92.92L41.1,19.44A.68.68,0,0,1,40.64,19.63Z"/><path class="cls-1" d="M15.85,44.42a.63.63,0,0,1-.46-.19.66.66,0,0,1,0-.92l8.22-8.21a.64.64,0,0,1,.91.91l-8.21,8.22A.63.63,0,0,1,15.85,44.42Z"/><path class="cls-1" d="M48.86,44.42a.63.63,0,0,1-.46-.19L40.18,36a.65.65,0,0,1,.92-.91l8.22,8.21a.66.66,0,0,1,0,.92A.65.65,0,0,1,48.86,44.42Z"/><path class="cls-1" d="M24.06,19.63a.65.65,0,0,1-.45-.19l-8.22-8.22a.65.65,0,0,1,.92-.92l8.21,8.22a.64.64,0,0,1,0,.92A.66.66,0,0,1,24.06,19.63Z"/></svg>
-        <svg id="uniMenuBeaconsSvg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.71 52.83"><defs><style>.cls-1{fill:#ff002d;}</style></defs><path class="cls-1" d="M32.35,16.19a.65.65,0,0,1-.64-.65V3.93a.65.65,0,1,1,1.29,0V15.54A.65.65,0,0,1,32.35,16.19Z"/><path class="cls-1" d="M32.35,51.26a.65.65,0,0,1-.64-.65V39A.65.65,0,1,1,33,39V50.61A.66.66,0,0,1,32.35,51.26Z"/><path class="cls-1" d="M55.69,27.92H44.08a.65.65,0,1,1,0-1.3H55.69a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M20.63,27.92H9a.65.65,0,0,1-.64-.65A.65.65,0,0,1,9,26.62H20.63a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M40.64,19.63a.7.7,0,0,1-.46-.19.66.66,0,0,1,0-.92L48.4,10.3a.65.65,0,0,1,.92.92L41.1,19.44A.68.68,0,0,1,40.64,19.63Z"/><path class="cls-1" d="M15.85,44.42a.63.63,0,0,1-.46-.19.66.66,0,0,1,0-.92l8.22-8.21a.64.64,0,0,1,.91.91l-8.21,8.22A.63.63,0,0,1,15.85,44.42Z"/><path class="cls-1" d="M48.86,44.42a.63.63,0,0,1-.46-.19L40.18,36a.65.65,0,0,1,.92-.91l8.22,8.21a.66.66,0,0,1,0,.92A.65.65,0,0,1,48.86,44.42Z"/><path class="cls-1" d="M24.06,19.63a.65.65,0,0,1-.45-.19l-8.22-8.22a.65.65,0,0,1,.92-.92l8.21,8.22a.64.64,0,0,1,0,.92A.66.66,0,0,1,24.06,19.63Z"/></svg>
+        <svg class="beaconLines" id="uniMenuBeaconsSvg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.71 52.83"><defs><style>.cls-1{fill:#ff002d;}</style></defs><path class="cls-1" d="M32.35,16.19a.65.65,0,0,1-.64-.65V3.93a.65.65,0,1,1,1.29,0V15.54A.65.65,0,0,1,32.35,16.19Z"/><path class="cls-1" d="M32.35,51.26a.65.65,0,0,1-.64-.65V39A.65.65,0,1,1,33,39V50.61A.66.66,0,0,1,32.35,51.26Z"/><path class="cls-1" d="M55.69,27.92H44.08a.65.65,0,1,1,0-1.3H55.69a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M20.63,27.92H9a.65.65,0,0,1-.64-.65A.65.65,0,0,1,9,26.62H20.63a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M40.64,19.63a.7.7,0,0,1-.46-.19.66.66,0,0,1,0-.92L48.4,10.3a.65.65,0,0,1,.92.92L41.1,19.44A.68.68,0,0,1,40.64,19.63Z"/><path class="cls-1" d="M15.85,44.42a.63.63,0,0,1-.46-.19.66.66,0,0,1,0-.92l8.22-8.21a.64.64,0,0,1,.91.91l-8.21,8.22A.63.63,0,0,1,15.85,44.42Z"/><path class="cls-1" d="M48.86,44.42a.63.63,0,0,1-.46-.19L40.18,36a.65.65,0,0,1,.92-.91l8.22,8.21a.66.66,0,0,1,0,.92A.65.65,0,0,1,48.86,44.42Z"/><path class="cls-1" d="M24.06,19.63a.65.65,0,0,1-.45-.19l-8.22-8.22a.65.65,0,0,1,.92-.92l8.21,8.22a.64.64,0,0,1,0,.92A.66.66,0,0,1,24.06,19.63Z"/></svg>
+        <svg class="beaconLines" id="uniMenuBeaconsSvg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.71 52.83"><defs><style>.cls-1{fill:#ff002d;}</style></defs><path class="cls-1" d="M32.35,16.19a.65.65,0,0,1-.64-.65V3.93a.65.65,0,1,1,1.29,0V15.54A.65.65,0,0,1,32.35,16.19Z"/><path class="cls-1" d="M32.35,51.26a.65.65,0,0,1-.64-.65V39A.65.65,0,1,1,33,39V50.61A.66.66,0,0,1,32.35,51.26Z"/><path class="cls-1" d="M55.69,27.92H44.08a.65.65,0,1,1,0-1.3H55.69a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M20.63,27.92H9a.65.65,0,0,1-.64-.65A.65.65,0,0,1,9,26.62H20.63a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M40.64,19.63a.7.7,0,0,1-.46-.19.66.66,0,0,1,0-.92L48.4,10.3a.65.65,0,0,1,.92.92L41.1,19.44A.68.68,0,0,1,40.64,19.63Z"/><path class="cls-1" d="M15.85,44.42a.63.63,0,0,1-.46-.19.66.66,0,0,1,0-.92l8.22-8.21a.64.64,0,0,1,.91.91l-8.21,8.22A.63.63,0,0,1,15.85,44.42Z"/><path class="cls-1" d="M48.86,44.42a.63.63,0,0,1-.46-.19L40.18,36a.65.65,0,0,1,.92-.91l8.22,8.21a.66.66,0,0,1,0,.92A.65.65,0,0,1,48.86,44.42Z"/><path class="cls-1" d="M24.06,19.63a.65.65,0,0,1-.45-.19l-8.22-8.22a.65.65,0,0,1,.92-.92l8.21,8.22a.64.64,0,0,1,0,.92A.66.66,0,0,1,24.06,19.63Z"/></svg>
     </div>
     `;
-    document.getElementById("camera").appendChild(beaconEl);
-    document.getElementById("beaconPan").style.display = "block";
-    document.getElementById("beaconAction2")?.addEventListener("click", () => {
-      document.getElementById("beaconPan")?.remove();
-    });
-    document.getElementById("beaconAction1")?.addEventListener("click", () => {
-      document.getElementById("beaconPan")?.remove();
-      selected.querySelector(".beaconIdenIcon").style.opacity = "0";
-    });
+    if (window.isMobile === true) {
+      // mobile
+      var shad = document.getElementById("getUniMenu").shadowRoot;
+      shad.getElementById("fullMenu").appendChild(beaconEl);
+      shad.getElementById("beaconPan").style.display = "block";
+      shad.getElementById("beaconAction2")?.addEventListener("click", () => {
+        shad.getElementById("beaconPan")?.remove();
+        selected.querySelector(".beaconIdenIcon").style.opacity = "0";
+      });
+      shad.getElementById("beaconAction1")?.addEventListener("click", () => {
+        shad.getElementById("beaconPan")?.remove();
+        shad.querySelector(".beaconIdenIcon").style.opacity = "0";
+      });
+    } else {
+      // desktop
+      document.getElementById("camera").appendChild(beaconEl);
+      document.getElementById("beaconPan").style.display = "block";
+      document
+        .getElementById("beaconAction2")
+        ?.addEventListener("click", () => {
+          document.getElementById("beaconPan")?.remove();
+        });
+      document
+        .getElementById("beaconAction1")
+        ?.addEventListener("click", () => {
+          document.getElementById("beaconPan")?.remove();
+          selected.querySelector(".beaconIdenIcon").style.opacity = "0";
+        });
+    }
   }
 
-  // Switch Menu Tabs 
+  // Switch Menu Tabs
   switchMenuTabs(e) {
     var selectedTab = e.target.id;
     var tabClass = e.target.classList[1];
@@ -407,7 +569,7 @@ class getUniMenu extends HTMLElement {
     // var currentTab = this.shadow.querySelector(".currentTab");
     switch (selectedTab) {
       case "fm-menu1":
-        this.shadow.querySelector(`.${tabClass}1`).style.display = "grid";
+        this.shadow.querySelector(`.${tabClass}1`).style.display = "block";
         this.shadow.querySelector(`.${tabClass}2`).style.display = "none";
         this.shadow.querySelector(`.${tabClass}3`).style.display = "none";
         tab1.setAttribute("class", `men-active ${tabClass} selectedMenu`);
@@ -429,13 +591,43 @@ class getUniMenu extends HTMLElement {
         tab1.setAttribute("class", `men-active ${tabClass}`);
         tab2.setAttribute("class", `men-active ${tabClass}`);
         tab3.setAttribute("class", `men-active ${tabClass} selectedMenu`);
-        break; 
+        break;
     }
+  }
+
+  // View Gallery
+  viewGallery() {
+    this.shadow.querySelectorAll(".collectionTab").forEach((element) => {
+      element.addEventListener("click", (e) => {
+        document
+          .getElementById("collectionGallery")
+          .shadowRoot.getElementById("collectionGallery").style.transform =
+          "scaleX(1)";
+        document
+          .getElementById("collectionGallery")
+          .shadowRoot.getElementById("collectionGallery").style.opacity = "1";
+        document.getElementById("collectionGallery")?.selectCollection(e);
+        this.shadow.querySelectorAll(".collectionTab").forEach((element) => {
+          if (e.target.id === element.id) {
+            element.setAttribute("class", "collectionTab collectionTabActive");
+          } else {
+            element.setAttribute("class", "collectionTab");
+          }
+        });
+      });
+    });
   }
 
   connectedCallback() {
     this.render();
-    this.shadow.getElementById("fsToggle").addEventListener("click", () => {this.toggleFullScreen();});
+    this.viewGallery();
+    this.shadow.getElementById("gdBuyBut").addEventListener("click", () => {
+      // open new tab and go to link
+      window.open(this.digiLink);
+    });
+    this.shadow.getElementById("fsToggle").addEventListener("click", () => {
+      this.toggleFullScreen();
+    });
     this.shadow.querySelector("#uniMenuIcon").addEventListener("click", () => {
       this.toggleMenu();
     });
@@ -443,55 +635,60 @@ class getUniMenu extends HTMLElement {
       this.closeFullMenu();
     });
     this.tabs = this.shadow.querySelectorAll(".menuTabs");
-    this.tabs.forEach(element => {
-      if (element.id != "uniMenuExit") {
-        element.addEventListener("click", () => {
-          this.openFullMenu();
-        });
-      } else {
-        element.addEventListener("click", () => {
-          this.closeFullMenu();
-          window.dtfullMenuOpen = false;
-        });
-      }
-    });
-    this.headerTabs = this.shadow.querySelectorAll(".men-active")
-    this.headerTabs.forEach(element => {
-      element.addEventListener("click", (e) => {
-        this.switchMenuTabs(e);
+    this.tabs.forEach((element) => {
+      element.addEventListener("click", () => {
+        this.openFullMenu();
       });
     });
+    this.headerTabs = this.shadow.querySelectorAll(".men-active");
+    // this.headerTabs.forEach((element) => {
+    //   element.addEventListener("click", (e) => {
+    //     this.switchMenuTabs(e);
+    //   });
+    // });
     this.form = this.shadow.querySelector("#feedbackForm");
     this.form.addEventListener("submit", (event) => {
       event.preventDefault();
       this.shadow.getElementById("menuLoadingScreen2").style.display = "grid";
       let data = new FormData(this.form);
-      fetch("https://script.google.com/macros/s/AKfycbxOuAozKPY70nQqWzkD_mYHnd954KrUZuRnGNrmGnA4j3l3nSMYuNssqiJMqn7Z4u064w/exec", {
-        method: "POST",
-        body: data,
-        mode: "cors"
-      }).then(res => res.text()).then(data => {
-        this.form.reset();
-        this.shadow.getElementById("menuLoadingScreen2").style.display = "none";
-        this.shadow.getElementById("feedbackHeadline").style.color = "var(--accent)";
-        this.shadow.getElementById("feedbackHeadline").innerHTML = "Outstanding feedback citizen!";
-        setTimeout(() => {
-          this.shadow.getElementById("feedbackHeadline").style.color = "var(--primary)";
-          this.shadow.getElementById("feedbackHeadline").innerHTML = "This City needs more people like you!";
-        }, 3000);
+      fetch(
+        "https://script.google.com/macros/s/AKfycbxOuAozKPY70nQqWzkD_mYHnd954KrUZuRnGNrmGnA4j3l3nSMYuNssqiJMqn7Z4u064w/exec",
+        {
+          method: "POST",
+          body: data,
+          mode: "cors",
+        }
+      )
+        .then((res) => res.text())
+        .then((data) => {
+          this.form.reset();
+          this.shadow.getElementById("menuLoadingScreen2").style.display =
+            "none";
+          this.shadow.getElementById("feedbackHeadline").style.color =
+            "var(--accent)";
+          this.shadow.getElementById("feedbackHeadline").innerHTML =
+            "Outstanding feedback citizen!";
+          setTimeout(() => {
+            this.shadow.getElementById("feedbackHeadline").style.color =
+              "var(--primary)";
+            this.shadow.getElementById("feedbackHeadline").innerHTML =
+              "This City needs more people like you!";
+          }, 3000);
+        });
+    });
+    this.shadow
+      .querySelector("#menuMessageBody")
+      .addEventListener("click", () => {
+        var el = {
+          target: this.shadow.querySelector("#fm-menu2"),
+        };
+        var el2 = {
+          target: this.shadow.querySelector("#menuBeacons"),
+        };
+        this.shadow.querySelector("#uniMenuBeacons").click(el);
+        // this.switchMenuTabs(el);
+        window.headlineSwtich(el2);
       });
-    });
-    this.shadow.querySelector("#menuMessageBody").addEventListener("click", () => {
-      var el = {
-        target: this.shadow.querySelector("#fm-menu2")
-      }
-      var el2 = {
-        target: this.shadow.querySelector("#menuBeacons")
-      }
-      this.shadow.querySelector("#uniMenuBeacons").click(el);
-      this.switchMenuTabs(el);
-      window.headlineSwtich(el2);
-    });
     // this.shadow.querySelector("#switch23").addEventListener("click", () => {
     //   var el = {
     //     target: this.shadow.querySelector("#fm-menu3")
@@ -502,9 +699,8 @@ class getUniMenu extends HTMLElement {
       pinMenu();
     });
     this.beacons = this.shadow.querySelectorAll(".beacon");
-    this.beacons.forEach(element => {
+    this.beacons.forEach((element) => {
       element.addEventListener("click", (e) => {
-        console.log(e.target);
         this.openBeaconMessage(e);
       });
     });
@@ -512,6 +708,7 @@ class getUniMenu extends HTMLElement {
     this.shadow.getElementById("proEdit").addEventListener("click", (e) => {
       this.editProfile(e);
     });
+    // this.getBeacons();
     // Add methods above this method
     // Ex. btn.addEventListener('click', this.method.bind(this))
     // NOTE: Render clears all code because of innerHtml
@@ -528,7 +725,7 @@ class getUniMenu extends HTMLElement {
             }
             @font-face {
                 font-family: "BS-R";
-                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.svg");
+                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.ttf");
                 font-weight: normal;
                 font-style: normal;
             }
@@ -543,6 +740,12 @@ class getUniMenu extends HTMLElement {
                 src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Italic.svg");
                 font-weight: normal;
                 font-style: italic;
+            }
+            @font-face {
+              font-family: "GM-I";
+              src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/DMSans-Italic.ttf");
+              font-weight: normal;
+              font-style: italic;
             }
             a {
               text-decoration: underline;
@@ -621,7 +824,7 @@ class getUniMenu extends HTMLElement {
               width: 16px;
               border-radius: 50%;
             }
-                    
+
             .active {
               color: var(--secondary);
               cursor: pointer;
@@ -659,14 +862,14 @@ class getUniMenu extends HTMLElement {
             }
             #uniMenu {
               width: 260px;
-              height: 10%;
+              max-height: 60%;
               border-top-left-radius: 10px;
               border-bottom-left-radius: 10px;
               border-top-right-radius: 10px;
               border-bottom-right-radius: 10px;
               z-index: 7;
               position: relative;
-              top: 36px;
+              top: 25vh;
               left: 36px;
               background-color: rgba(0, 0, 0, 0.7);
               border-left: 2px solid #ff002d;
@@ -677,14 +880,43 @@ class getUniMenu extends HTMLElement {
               font-size: 16px;
               display: none;
               transition: height 0.5s ease;
+              overflow-x: hidden;
+              margin-bottom: 20%;
+              font-family: "BS-R";
             }
             #uniMenuLogo {
               width: 100%;
             }
+
+            #uniMenu.collapsed {
+              width: 260px;
+              max-height: 10%;
+              border-top-left-radius: 10px;
+              border-bottom-left-radius: 10px;
+              border-top-right-radius: 10px;
+              border-bottom-right-radius: 10px;
+              z-index: 7;
+              position: relative;
+              top: 25vh;
+              left: 36px;
+              background-color: rgba(0, 0, 0, 0.7);
+              border-left: 2px solid #ff002d;
+              border-bottom: 2px solid #ff002d;
+              border-top: 2px solid #ff002d;
+              border-right: 2px solid #ff002d;
+              font-family: "BS-R";
+              font-size: 16px;
+              display: block;
+              transition: height 0.5s ease;
+              overflow: hidden;
+              margin-bottom: 20%;
+              font-family: "BS-R";
+            }
+
             #menuHeader {
               display: grid;
               width: 88%;
-              height: 100%;
+              height: 20%;
               overflow: hidden;
               grid-template-columns: 1fr;
               grid-template-rows: 70% 30%;
@@ -692,12 +924,13 @@ class getUniMenu extends HTMLElement {
               justify-items: center;
               border-radius: 10px 10px 0 0;
               z-index: 6;
-              position: relative;
+              position: absolute;
               padding: 2% 6%;
-              margin-bottom: 6%;
               transition: all 0.5s ease;
               cursor: move;
               user-select: none;
+              sticky: top;
+              top: 0;
             }
             #uniVersion {
               display: grid;
@@ -731,20 +964,26 @@ class getUniMenu extends HTMLElement {
             #menuItems {
               display: grid;
               width: 100%;
-              height: 0%;
+              height: 100%;
               grid-template-columns: 1fr;
-              grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
+              grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr !important; 
               transition: all 0.5s ease;
               // overflow: hidden;
               transition: all 0.5s ease;
               border-bottom-left-radius: 10px;
               z-index: 6;
               position: relative;
+              margin-top: 34%;
               cursor: pointer;
-              overflow: hidden;
+              overflow-y: hidden;
+              overflow-x: hidden;
             }
             #menuItems div {
               padding: 5px 10px;
+            }
+
+            #menuItems svg {
+              width: 80%;
             }
             #menuItems > div:hover {
               background-color: #ff002d !important;
@@ -752,6 +991,14 @@ class getUniMenu extends HTMLElement {
             }
             #menuItems > div:hover .cls-1 {
               stroke: white !important;
+            }
+            #menuItems > #uniMenuExit:hover .cls-1 {
+              stroke: white !important;
+              fill: white !important;
+            }
+            #menuItems > #uniMenuShop:hover .cls-1 {
+              stroke: white !important;
+              fill: white !important;
             }
             .uniMenuTxt {
               transition: all 0.5s ease;
@@ -848,6 +1095,15 @@ class getUniMenu extends HTMLElement {
               border: .2px solid var(--primary);
               color: var(--secondary);
             }
+            .men-deactive {
+              background-color: rgba(0, 0, 0, 0.8);
+              border: .2px solid var(--primary);
+              color: var(--secondary);
+              opacity: .2 !important;
+              cursor: default !important;
+              user-select: none !important;
+              pointer-events: none !important;
+            }
             #fm-header-headline:hover > .men-active:hover {
               background-color: #ff002d;
               color: white;
@@ -860,12 +1116,9 @@ class getUniMenu extends HTMLElement {
               grid-template-rows: 1fr;
               align-items: center;
               justify-items: center;
+              cursor: pointer;
             }
-            #fm-enhancements img {
-              width: 100%;
-              height: auto;
-              object-fit: contain;
-            }
+
             #fm-inventory {
               width: 100%;
               height: 84%;
@@ -937,13 +1190,46 @@ class getUniMenu extends HTMLElement {
               // opacity: .6;
             }
             .it1 {
-              width: 100%;
+              width: 94%;
               height: 100%;
-              display: grid;
-              grid-template-columns: 1fr;
-              grid-template-rows: 10% 40% 10% 40%;
+              display: block;
+              overflow: hidden;
+              letter-spacing: 1px;
+              font-size: .9em;
+              padding-left: 6%;
+              padding-top: 3%;
               overflow: hidden;
             }
+
+            .collectionTab {
+              width: 100%;
+              height: 15%;
+              padding-bottom: 10px;
+              cursor: pointer;
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-template-rows: 1fr;
+              align-items: center;
+              transition: all 0.5s ease;
+              display: grid;
+              grid-template-columns: 10% 90%;
+              grid-template-rows: 1fr;
+            }
+
+            .collectionTabActive {
+              color: var(--accent);
+              background-color: rgba(0, 0, 0, 0.8);
+              letter-spacing: 5px;
+              padding-left: 40px;
+            }
+
+            .collectionTab:hover {
+              color: var(--accent);
+              background-color: rgba(0, 0, 0, 0.8);
+              letter-spacing: 5px;
+              padding-left: 40px;
+            }
+
             .itHead {
               margin: 0px;
             }
@@ -1001,9 +1287,6 @@ class getUniMenu extends HTMLElement {
             .selectedMenu2 {
               background-color: #ff002d;
               color: white;
-            }
-            #uniMenuBeaconsSvg path {
-              stroke: white;
             }
             #inventory-cta {
               height: 100%;
@@ -1172,7 +1455,7 @@ class getUniMenu extends HTMLElement {
               color: var(--secondary);
             }
             .ht1 {
-              display: grid;
+              display: block !important;
             }
             .ht2 {
               width: 80%;
@@ -1281,6 +1564,7 @@ class getUniMenu extends HTMLElement {
               font-weight: 600;
               text-align: center;
               user-select: none;
+              float: right;
             }
             
             #fm-feedback #feedbackButton:hover {
@@ -1362,6 +1646,7 @@ class getUniMenu extends HTMLElement {
               grid-template-columns: 40% 1fr;
               grid-template-rows: 1fr;
               padding-right: 6%;
+              cursor: pointer;
             }
             .settingsSectionsSlider > div {
               width: 100%;
@@ -1629,8 +1914,10 @@ class getUniMenu extends HTMLElement {
             #profileDesc {
               color: var(--secondary);
             }
-            #notiTogSect {
+            #notiTogSect, .settingsSectionsSlider, .saveButs {
               opacity: 30%;
+              user-select: none;
+              pointer-events: none;
             }
             #notiToggle {
               user-select: none;
@@ -1776,6 +2063,528 @@ class getUniMenu extends HTMLElement {
               fill: var(--accent);
               height: 35%;
             }
+
+            #romOffline {
+              width: 80%;
+              height: 80%;
+              position: absolute;
+              top: 0;
+              left: 0;
+              background-color: rgba(0, 0, 0, 0.9);
+              z-index: 7;
+              padding: 10%;
+              display: none;
+              font-family: "GM-I";
+            }
+
+            #dgromD1 {
+              font-family: "GM-I";
+              font-size: .8em;
+              color: white;
+              width: 75%;
+              height: 5%;
+              padding-left: 25%;
+              letter-spacing: 1px;
+              float: left;
+            }
+
+            #dgromD2 {
+              width: 100%;
+              height: 10%;
+              margin-top: 0;
+              padding-top: 0;
+              float: left;
+              position: relative;
+            }
+
+            .offline {
+              position: absolute;
+              font-family: "GM-I";
+              font-size: 2.5em;
+              color: #ff002d;
+              width: 70%;
+              height: 100%;
+              padding-left: 30%;
+              letter-spacing: 1px;
+            }
+
+            #dgromD2-2 {
+              transform: scaleX(1.8) scaleY(.9);
+              filter: blur(6px);
+              opacity: 0.8;
+            }
+
+            #dgromD3 {
+              width: 90%;
+              height: 20%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              padding: 5%;
+              float: left;
+            }
+
+            #dgromD3 img {
+              height: 100%;
+            }
+
+            #gdLoginBut {
+              transform: scale(0.8);
+              color: var(--primary);
+              border-left: 1px solid var(--primary);
+              border-right: 1px solid var(--primary);
+              opacity: 0.5;
+              cursor: default;
+            }
+
+            #dgromD4 {
+              float: left;
+              width: 90%;
+              height: 35%;
+              padding: 5%;
+              margin-top: 10%;
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-template-rows: 1fr 1fr;
+              justify-items: center;
+              align-items: center;
+              row-gap: 15%;
+            }
+
+            .romLogButtons {
+              width: 60%;
+              height: 90%;
+              background-color: rgba(0, 0, 0, 0.8);
+              border-radius: 5px;
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-template-rows: 1fr;
+              justify-items: center;
+              align-items: center;
+              color: var(--accent);
+              letter-spacing: 1px;
+              font-size: .9em;
+              border-left: 1px solid var(--accent);
+              border-right: 1px solid var(--accent);
+              transition: 0.3s all ease-in-out;
+              cursor: pointer;
+            }
+
+            #gdBuyBut:hover {
+              background-color: var(--accent);
+              color: black;
+              font-family: "BS-B";
+              letter-spacing: 2px;
+            }
+
+            .cDot {
+              color: var(--accent);
+              padding-right: 5px;
+            }
+            
+             #fm-enhancements img {
+              width: 90%;
+              height: auto;
+              object-fit: contain;
+            }
+
+            @media screen and (max-width: 800px) {
+              #uniMenu {
+                width: 80%;
+                max-height: 12%;
+                border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
+                border-top-right-radius: 10px;
+                border-bottom-right-radius: 10px;
+                z-index: 7;
+                position: relative;
+                top: 80vh;
+                left: 36px;
+                background-color: rgba(0, 0, 0, 0.7);
+                border-left: 2px solid #ff002d;
+                border-bottom: 2px solid #ff002d;
+                border-top: 2px solid #ff002d;
+                border-right: 2px solid #ff002d;
+                font-family: "BS-R";
+                font-size: 16px;
+                display: none;
+                transition: height 0.5s ease;
+                overflow: hidden;
+                margin-bottom: 20%;
+                font-family: "BS-R";
+              }
+              #menuHeader {
+                display: grid;
+                width: 88%;
+                height: 100%;
+                overflow: hidden;
+                grid-template-columns: 1fr;
+                grid-template-rows: 70% 30%;
+                align-items: center;
+                justify-items: center;
+                border-radius: 10px 10px 0 0;
+                z-index: 6;
+                position: absolute;
+                padding: 2% 6%;
+                transition: all 0.5s ease;
+                cursor: move;
+                user-select: none;
+                sticky: top;
+                top: 0;
+              }
+              #uniMenuIcon {
+                color: #ff002d !important;
+              }
+
+              #fullMenu {
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 0%;
+                position: absolute;
+                z-index: 5;
+                // transformOrigin: top !important;
+                font-family: "BS-R";
+              }
+
+              #romOffline {
+                width: 80%;
+                height: 90%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-color: rgba(0, 0, 0, 0.9);
+                z-index: 7;
+                padding-left: 10%;
+                padding-right: 10%;
+                padding-bottom: 15%;
+                display: none;
+                font-family: "GM-I";
+              }
+
+              #uniMenuIcon2 {
+                display: none;
+              }
+
+              .collectionTab {
+                font-size: 1.2em;
+                height: 10%;
+                padding-botton: 5px !important;
+              }
+
+              .beacon {
+                width: 85%;
+                height: 60px;
+              }
+
+              #fm-settings {
+                width: 95%;
+                height: 84%;
+                display: none;
+                padding: 5%;
+                color: var(--secondary);
+                position: absolute;
+              }
+
+              #feedbackForm {
+                margin-top: 10%;
+              }
+
+              #fm-feedback {
+                position: absolute;
+                height: 100%;
+                width: 90%;
+                margin: 20px auto;
+                padding-top: 10px;
+                padding-left: 5%;
+                padding-right: 5%;
+                display: none;
+                grid-template-columns: 1fr;
+                grid-template-rows: 10% 80%;
+              }
+
+              #fm-feedback textarea {
+                width: 100%;
+                height: 50% !important;
+                padding: 12px 20px;
+              }
+
+              #feedbackButton {
+               width: 50% !important;
+               margin-left: 25% !important;
+               float: left !important;
+               transform: scale(1.3) !important;
+              }
+
+              .beacon {
+                z-index: 15;
+              }
+
+              /* BEACON TUT */
+              .beaconPanel {
+                width: 90%;
+                height: 68%;
+                position: fixed;
+                z-index: 4;
+                right: 5%;
+                top: 5%;
+                background-color: rgba(0, 0, 0, 0.8);
+                border-bottom: 1px solid var(--accent);
+                border-top: 1px solid var(--accent);
+                /* box-shadow: 0px -10px 10px -10px var(--accent); */
+                box-shadow: 0px 10px 10px -10px var(--accent),  0px -10px 10px -10px var(--accent), inset 0px 10px 10px -10px var(--accent), inset 0px -10px 10px -10px var(--accent);
+                border-radius: 10px;
+                display: none;
+                user-select: auto;
+                pointer-events: auto;
+              }
+
+              #beaconAction1 {
+                display: none;
+              }
+
+              #beaconAction2 {
+                width: 70%;
+              }
+
+              #uniMenu {
+                font-family: "BS-R";
+              }
+
+              #beaconBG {
+                width: 100%;
+                height: 100%;
+                justify-items: center;
+                align-items: center;
+                position: absolute;
+                overflow: hidden;
+              }
+
+              #beaconBG svg {
+              opacity: .1;
+              stroke: none;
+              pointer-events: none;
+              user-select: none;
+              }
+
+              #beaconBG svg path {
+                stroke: rgb(0, 0, 0, 0.9);
+                stroke-width: 1px;
+                fill: var(--accent);
+              }
+
+              #beaconBG svg:nth-child(1) {
+                position: absolute;
+                z-index: 2;
+                width: 100%;
+                height: 100%;
+                justify-self: center;
+                transform: scale(2);
+                animation: Scale 10s infinite;
+                animation-play-state: running;
+              }
+
+              #beaconBG svg:nth-child(2) {
+                position: absolute;
+                z-index: 2;
+                width: 100%;
+                height: 100%;
+                justify-self: center;
+                transform: rotate(25deg) scale(.9);
+                animation: Scale2 10s infinite;
+                animation-play-state: running;
+              }
+
+              @keyframes Scale {
+                0% {
+                  transform: scale(2.3);
+                  opacity: .15;
+                }
+                50% {
+                  transform: scale(1.7);
+                  opacity: .1;
+                }
+                100% {
+                  transform: scale(2.3);
+                  opacity: .15;
+                }
+              }
+
+              @keyframes Scale2 {
+                0% {
+                  transform: scale(2) rotate(25deg);
+                  opacity: .1;
+                }
+                50% {
+                  transform: scale(3) rotate(25deg);
+                  opacity: .1.6;
+                }
+                100% {
+                  transform: scale(2) rotate(25deg) ;
+                  opacity: .1;
+                }
+              }
+
+              #beaconTutIcon {
+                position: absolute;
+                width: 50px;
+                height: 50px;
+                left: 45%;
+                bottom: -30px;
+                padding: 5px;
+                border: 1px solid var(--accent);
+                box-shadow: 0px 0px 5px 1px var(--accent);
+                background-color: rgb(0, 0, 0, 0.9);
+                border-radius: 50%;
+                overflow: hidden;
+                display: grid;
+                justify-items: center;
+                align-items: center;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr;
+                transition: transform .5s;
+                cursor: pointer;
+              }
+
+              #beaconBody{
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                z-index: 3;
+              }
+
+              #beaconTutHead {
+                height: 15%;
+                font-family: "BS-R";
+                font-size: 1.1em;
+                letter-spacing: 2px;
+                width: 100%;
+                display: flex;
+                text-align: center;
+                align-items: end;
+                justify-content: center;
+              }
+
+              #beaconTutBody {
+                height: 45%;
+                font-family: "BS-R";
+                color: var(--secondary);
+                font-size: .9em;
+                width: 90%;
+                letter-spacing: 1px;
+                padding-left: 5%;
+                padding-right: 5%;
+                display: flex;
+                text-align: left;
+                align-items: center;
+                justify-content: center;
+                font-size: 1rem;
+              }
+              
+              #beaconTutActions {
+                height: 30%;
+                font-family: "BS-R";
+                font-size: .9em;
+                letter-spacing: 2px;
+                width: 100%;
+                display: flex;
+                text-align: center;
+                align-items: center;
+                justify-content: center;
+              }
+
+              .beaconActions {
+                width: 25%;
+                height: 30%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: "BS-R";
+                font-size: .9em;
+                letter-spacing: 2px;
+                color: var(--accent);
+                border: 1px solid var(--accent);
+                cursor: pointer;
+                transition: .3s all;
+              }
+              .portalsBlock {
+                width: 100%;
+                height: 100%;
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-template-rows: 1fr;
+                justify-items: center;
+                align-items: center;
+              }
+
+              .portalsBlock > a {
+                fill: var(--secondary);
+                transition: .3s all;
+                cursor: pointer;
+                padding-top: 20px;
+              }
+
+              #fm-enhancements {
+                width: 100%;
+                height: 74%;
+                display: none;
+                position: absolute;
+                top: 0;
+                left: 0;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr 1fr !important;
+                align-items: start;
+                justify-items: center;
+                cursor: pointer;
+              }
+
+              .mobileShopOpts {
+                width: auto;
+                height: 90%;
+                padding: 5%;
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr;
+                justify-items: center;
+                align-items: center;
+                font-family: "GM-I";
+                letter-spacing: 1px;
+              }
+
+              .mShopLabel {
+                position: absolute;
+              }
+
+              #nftShop img {
+                height: auto !important;
+                width: 70% !important;
+              }
+
+
+              #fashionShop img {
+                height: auto !important;
+                width: 75% !important;
+              }
+
+              #fashionShop div {
+                justify-self: start !important;
+                padding-left: 10% !important;
+              }
+
+              #nftShop div {
+                justify-self: end !important;
+                padding-right: 10% !important;
+              }
+
+              #dgromD4 {
+                height: 20%;
+                width: 95%;
+                padding: 5%;
+                margin-top: 20%;
+              }
+              
+            }
+
          </style>
          <div id="uniMenu">
          <div id="beaconNoti">
@@ -1794,9 +2603,14 @@ class getUniMenu extends HTMLElement {
             <div id="menuItems">
               <div id="uniMenuShop" class="menuTabs">
                 <div>
-                  <svg id="uniMenuShopSvg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 61.6 52.83"><defs><style>.cls-1{fill:none;stroke:#ff002d;stroke-miterlimit:10;stroke-width:1.5px;}</style></defs><path class="cls-1" d="M49.63,6.44l2.66,2.65a7.31,7.31,0,0,1,0,10.3L38.67,33,25.73,20.05,39.34,6.44A7.28,7.28,0,0,1,49.63,6.44Z"/><path class="cls-1" d="M14.72,46.66,12.07,44a7.28,7.28,0,0,1,0-10.29L25.68,20.1l13,12.95L25,46.66A7.31,7.31,0,0,1,14.72,46.66Z"/></svg>
+                  <svg id="uniMenuShopSvg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+                  <defs>
+                  <style>.cls-1{fill:none;stroke:#ff002d;stroke-miterlimit:10;}.cls-2{fill:#ff002d;}</style>
+                  </defs>
+                  <path class="cls-1" d="M289.4,192.1c24.7-36.5,65.7-58.8,110.6-58.8c73.7,0,133.3,59.7,133.3,133.3v82.4c0,9.2,7.5,16.7,16.7,16.7c9.2,0,16.7-7.5,16.7-16.7v-11.6c10,5.8,16.7,16.5,16.7,28.9c0,18.4-14.9,33.3-33.3,33.3s-33.3-14.9-33.3-33.3c0-9.2-7.5-16.7-16.7-16.7s-16.7,7.5-16.7,16.7c0,36.8,29.9,66.7,66.7,66.7s66.7-29.9,66.7-66.7c0-31.1-21.3-57.2-50.1-64.6v-35.1v0h116.7c9.2,0,16.7,7.4,16.7,16.7V650c0,9.2-7.4,16.7-16.7,16.7H116.7c-9.2,0-16.7-7.4-16.7-16.7V283.3c0-9.2,7.4-16.7,16.7-16.7h116.7v83.4c0,9.2,7.5,16.7,16.7,16.7s16.7-7.5,16.7-16.7v-12.6c10,5.8,16.7,16.5,16.7,28.9c0,18.4-14.9,33.3-33.3,33.3c-18.4,0-33.3-14.9-33.3-33.3c0-9.2-7.5-16.7-16.7-16.7c-9.2,0-16.7,7.5-16.7,16.7c0,36.8,29.9,66.7,66.7,66.7s66.7-29.9,66.7-66.7c0-31.1-21.3-57.2-50.1-64.6v-35.2h215.5c9.2,0,16.7-7.5,16.7-16.7s-7.5-16.7-16.7-16.7H116.7c-27.6,0-50,22.4-50,50V650c0,27.6,22.4,50,50,50h566.7c27.6,0,50-22.4,50-50V283.3c0-27.6-22.4-50-50-50h-120C547.9,157.3,480.6,100,400,100c-56,0-107.4,27.9-138.2,73.5c-5.2,7.6-3.1,18,4.5,23.1C273.9,201.8,284.3,199.8,289.4,192.1z"/>
+                  </svg>
                 </div>
-                <div class="uniMenuTxt" id="menuEnhancements">Enhancements</div>
+                <div class="uniMenuTxt" id="menuEnhancements">Shop</div>
               </div>
               <div id="uniMenuItems" class="menuTabs">
                 <div>
@@ -1810,7 +2624,7 @@ class getUniMenu extends HTMLElement {
                 </div>
                 <div class="uniMenuTxt" id="menuProfile">Profile</div>
               </div>
-              <div id="uniMenuBeacons" class="menuTabs selectedMenu2">
+              <div id="uniMenuBeacons" class="menuTabs">
                 <div>
                   <svg id="uniMenuBeaconsSvg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.71 52.83"><defs><style>.cls-1{fill:#ff002d;}</style></defs><path class="cls-1" d="M32.35,16.19a.65.65,0,0,1-.64-.65V3.93a.65.65,0,1,1,1.29,0V15.54A.65.65,0,0,1,32.35,16.19Z"/><path class="cls-1" d="M32.35,51.26a.65.65,0,0,1-.64-.65V39A.65.65,0,1,1,33,39V50.61A.66.66,0,0,1,32.35,51.26Z"/><path class="cls-1" d="M55.69,27.92H44.08a.65.65,0,1,1,0-1.3H55.69a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M20.63,27.92H9a.65.65,0,0,1-.64-.65A.65.65,0,0,1,9,26.62H20.63a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M40.64,19.63a.7.7,0,0,1-.46-.19.66.66,0,0,1,0-.92L48.4,10.3a.65.65,0,0,1,.92.92L41.1,19.44A.68.68,0,0,1,40.64,19.63Z"/><path class="cls-1" d="M15.85,44.42a.63.63,0,0,1-.46-.19.66.66,0,0,1,0-.92l8.22-8.21a.64.64,0,0,1,.91.91l-8.21,8.22A.63.63,0,0,1,15.85,44.42Z"/><path class="cls-1" d="M48.86,44.42a.63.63,0,0,1-.46-.19L40.18,36a.65.65,0,0,1,.92-.91l8.22,8.21a.66.66,0,0,1,0,.92A.65.65,0,0,1,48.86,44.42Z"/><path class="cls-1" d="M24.06,19.63a.65.65,0,0,1-.45-.19l-8.22-8.22a.65.65,0,0,1,.92-.92l8.21,8.22a.64.64,0,0,1,0,.92A.66.66,0,0,1,24.06,19.63Z"/></svg>
                 </div>
@@ -1826,16 +2640,45 @@ class getUniMenu extends HTMLElement {
                 <div>
                   <svg id="uniMenuFeedbackSvg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.71 52.83"><defs><style>.cls-1{fill:none;stroke:#ff002d;stroke-miterlimit:10;stroke-width:1.5px;}</style></defs><path class="cls-1" d="M14.08,41.05h23L48.9,49a1.27,1.27,0,0,0,2-1V40.42c2.3-1,5.08-3.09,5.08-5.92V11.87a6.56,6.56,0,0,0-6.54-6.55H14.08a6.55,6.55,0,0,0-6.54,6.55V34.5A6.55,6.55,0,0,0,14.08,41.05Z"/><line class="cls-1" x1="15.21" y1="14.75" x2="47.49" y2="14.75"/><line class="cls-1" x1="15.21" y1="21.75" x2="47.49" y2="21.75"/><line class="cls-1" x1="15.6" y1="28.74" x2="47.88" y2="28.74"/></svg>
                 </div>
-                <div class="uniMenuTxt" id="menuFeedback">Feedback</div>
+                <div class="uniMenuTxt" id="menuFeedback">Newsletter</div>
               </div>
               <div id="uniMenuExit" class="menuTabs">
                 <div>
-                  <svg id="uniMenuExitSvg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65.05 52.83"><defs><style>.cls-1{fill:#ff002d;}</style></defs><path class="cls-1" d="M57.56,50.14H22.43a.64.64,0,0,1-.63-.64V32.61a.64.64,0,1,1,1.27,0V48.86H56.93V4.24H23.07V21.45a.64.64,0,1,1-1.27,0V3.6A.64.64,0,0,1,22.43,3H57.56a.64.64,0,0,1,.64.64V49.5A.64.64,0,0,1,57.56,50.14Z"/><path class="cls-1" d="M35.38,27.66H8.07a.64.64,0,1,1,0-1.27H35.38a.64.64,0,0,1,0,1.27Z"/><path class="cls-1" d="M13.89,32.39a.63.63,0,0,1-.37-.12L6.88,27.54a.64.64,0,0,1,0-1l6.64-4.73a.63.63,0,0,1,.89.15.65.65,0,0,1-.15.89L8.35,27l5.91,4.2a.64.64,0,0,1-.37,1.16Z"/></svg>
+                  <svg version="1.1" id="uniMenuExitSvg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                  viewBox="0 0 800 800" style="enable-background:new 0 0 800 800;" xml:space="preserve">
+                <style type="text/css">
+                  .cls-1{fill:#FF002D;}
+                </style>
+                <path class="cls-1" d="M650,175l-7.5-7.5C600,120,537.5,105,537.5,105C462.5,82.5,345,132.5,240,235c-87.5,82.5-140,182.5-140,257.5
+                  c0,10.1,2.5,20,2.5,30c5,50,37.5,102.5,64.9,127.5c35.1,35,80,52.5,130,52.5c82.5,0,180.1-47.6,270-132.5
+                  C707.5,432.5,742.5,270,650,175z M250,542.5c0-32.5,35-100,110-175c72.6-72.5,147.6-92.5,182.5-100c-17.5,47.6-55,105-110,160.1
+                  c-52.5,50-112.5,89.9-165,110C262.5,540,255,540,250,542.5z M275,270c82.5-82.5,170-122.6,225-122.6c17.5,0,32.5,5.1,42.5,15
+                  c10.1,10,15,30,12.5,52.5c-30,2.4-132.5,19.9-230,117.5C262.5,395,197.5,485,202.5,547.5c-15,0-30.1-5-37.5-12.5
+                  c-5.1-5-10.1-12.5-12.5-22.5c0,0-2.5-12.5-2.5-20C152.5,430,200,342.5,275,270z M532.5,532.5c-120,120-257.5,152.4-330,82.5
+                  c-5.1-5.1-10.1-10.1-15-17.6c5,2.5,12.5,2.5,20,2.5c22.5,0,50-5,77.4-15C345,562.5,410,520,467.5,462.5C555,375,605,275,605,202.5
+                  l2.5,2.4l7.5,5C685,282.5,650,417.5,532.5,532.5z"/>
+                </svg>
                 </div>
-                <div class="uniMenuTxt">Exit</div>
+                <div class="uniMenuTxt">Log In</div>
               </div>
             </div>
             <div id="fullMenu">
+              <div id="romOffline">
+                <div id="dgromD1">
+                  DIGISETTE ROM
+                </div>
+                <div id="dgromD2">
+                  <div class="offline" id="dgromD2-1">OFFLINE</div>
+                  <div class="offline" id="dgromD2-2">OFFLINE</div>
+                </div>
+                <div id="dgromD3">
+                  <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette-offline.png" alt="SCOGE Logo" id="dgromOffLogo">
+                </div>
+                <div id="dgromD4">
+                  <div class="romLogButtons" id="gdLoginBut">LOG IN</div>
+                  <div class="romLogButtons" id="gdBuyBut">GET DIGISETTE</div>
+                </div>
+              </div>
               <div id="menuMessage">
                 <div>
                   <div id="menuMessageHead">WALLET MISSING</div>
@@ -1852,18 +2695,23 @@ class getUniMenu extends HTMLElement {
                 <div id="fm-header-headline">
                   <span id="fm-menu1" class="men-active ht selectedMenu">All</span>
                   <span id="fm-menu2" class="men-active ht">Domain</span>
-                  <span id="fm-menu3" class="men-active ht">Citizen</span>
+                  <span id="fm-menu3" class="men-active ht">Lords</span>
                 </div>
                 <div id="uniMenuIcon2">
                   &#8682;
                 </div>
               </div>
               <div id="fm-enhancements">
-                <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/universe/nft-shop.webp" alt="NFT Shop" id="nftShop">
+                ${this.shopSource}
               </div>
               <div id="fm-inventory">
                 <div id="inventoryBody">
                   <div class="inventory-tabs it1">
+                      <div class="collectionTab" id="collection3"><span class="cDot">&#9658;</span>FW23 - Ch.2 ALAN & EVIE</div>
+                      <div class="collectionTab" id="collection2"><span class="cDot">&#9658;</span>SS23 - Ch.1 REACCLIMATE</div>
+                      <div class="collectionTab" id="collection1"><span class="cDot">&#9658;</span>FW22 - Discovery 1</div>
+                  </div>
+                  <div class="inventory-tabs it2">
                     <div class="inventory-text">
                       <span class="itHead">Domain/s:</span>
                       <span class="inventoryInnerText">
@@ -1900,13 +2748,9 @@ class getUniMenu extends HTMLElement {
                       </div>
                     </div>
                   </div>
-                  <div class="inventory-tabs it2">
-                    <div id="assetsCont">
-                    </div>
-                  </div>
                   <div class="inventory-tabs it3" style="display:none;"></div>
                 </div>
-                <div id="inventory-cta">
+                <div id="inventory-cta" style="display:none;">
                   <div id="invCtaBut">USE</div>
                 </div>
               </div>
@@ -2005,13 +2849,13 @@ class getUniMenu extends HTMLElement {
                 <div class="settingsSectionsSlider">
                   <div>Sound</div>
                   <div>
-                    <input type="range" min="0" max="5" value="3" class="soundSlider1" id="myRange">
+                    <input type="range" min="0" max="5" value="2" class="soundSlider1" id="myRange">
                   </div>
                 </div>
                 <div class="settingsSectionsSlider">
                   <div>Music</div>
                   <div>
-                    <input type="range" min="0" max="5" value="3" class="soundSlider1" id="myRange">
+                    <input type="range" min="0" max="5" value="0" class="soundSlider1" id="myRange">
                   </div>
                 </div>
                 <!--
@@ -2025,32 +2869,52 @@ class getUniMenu extends HTMLElement {
                 </div>
               </div>
               <div id="fm-beacons">
-                <div class="beacon-tabs" id="beaconsBody">
-                  <div class="beacon tut">
+                <div class="beacon-tabs ht1" id="beaconsBody">
+                  <div class="beacon tut" data-headline="ROM ACTIVATED" data-message="Welcome to the SCOGÉ Digisette Demo-ROM! Through this demo, you'll gain direct access to our latest collections and most recent comms.<br><br>Full access SCOGÉ Digisettes grant you one domain, Lord status throughout T.A.O.S City, and the Digisette system. This is a once in a lifetime oppurtunity to experience and develop this city like never before.">
                     <div class="beaconOrigin">
                       <div class="beaconIdenIcon">!</div>
                       <div class="beaconSender">CITY-CENTRAL</div>
                     </div>
                     <div class="beaconPreview">
-                      Welcome to T.A.O.S City. Learn how to...
+                      Your Digisette ROM is activated!
                     </div>
                   </div>
-                  <div class="beacon tut" data-message="Hello Test">
+                  <div class="beacon tut" data-headline="OUR NAVIGATOR" data-message="SCOGÉ™ is a fashion label founded by designer Starnilas Oge. Oge practices a Meta-Analytical Psychology best described as Subreality Archeology - An approach where history, geography, and ecology of an alternate world are realized and understood through the production of the world's material culture. Oge studied at The Fashion Institute of Technology in NYC before launching the SCOGÉ™ label.">
                     <div class="beaconOrigin">
                       <div class="beaconIdenIcon">!</div>
-                      <div class="beaconSender">CITY-CENTRAL</div>
+                      <div class="beaconSender">SCOGÉ HQ</div>
                     </div>
                     <div class="beaconPreview">
-                      Register your Digisette at...
+                      Meet our Navigator.
                     </div>
                   </div>
-                  <div class="beacon tut">
+                  <div class="beacon tut" data-headline="ICP ONLINE" data-message="SCOGÉ Digisette systems are powered by T.A.O.S City's #1 decentralized IP service provider, The Internet Computer.">
+                  <div class="beaconOrigin">
+                    <div class="beaconIdenIcon">!</div>
+                    <div class="beaconSender">DFINITY</div>
+                  </div>
+                  <div class="beaconPreview">
+                    Your Internet Service is online.
+                  </div>
+                </div>
+                  <div class="beacon tut" data-headline="- UNKNOWN SENDER -" data-message="<div class='portalsBlock'>
+                      <a href='https://twitter.com/_scoge_' target='_blank' class='portals'>
+                       <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path d='M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z'/></svg>
+                      </a>
+                      <a href='https://www.instagram.com/_scoge_/' target='_blank' class='portals'>
+                       <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path d='M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z'/></svg>
+                      </a>
+                      <a href='https://www.youtube.com/channel/UC9NMfsERer_0QAjAxszFFpQ' target='_blank' class='portals'>
+                       <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path d='M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z'/></svg>
+                      </a>
+                     </div>
+                  ">
                     <div class="beaconOrigin">
                       <div class="beaconIdenIcon">!</div>
-                      <div class="beaconSender">CITY-CENTRAL</div>
+                      <div class="beaconSender">CLASSIFIED</div>
                     </div>
                     <div class="beaconPreview">
-                      Public enhancements are now...
+                      We need to talk!
                     </div>
                   </div>
                 </div>
@@ -2064,10 +2928,10 @@ class getUniMenu extends HTMLElement {
                   <div id="loading" class="loadinScreen">SENDING...</div>
                   <div class="loadIcon"></div>
                 </div>
-                <div id="feedbackHeadline">Help make T.A.O.S City better.</div>
+                <div id="feedbackHeadline">Help us make T.A.O.S City better.</div>
                 <form id="feedbackForm">
                   <input type="email" name="Email" id="feedbackEmailInput" placeholder="Email" maxlength="45">
-                  <textarea id="feedbackInput" name="FeedbackText" placeholder="Enter your feedback here..." maxlength="320"></textarea>
+                  <textarea id="feedbackInput" name="FeedbackText" placeholder="Enter feedback, Subscribe, or Contact City-Central here.." maxlength="320"></textarea>
                   <input id="feedbackButton" type="submit">
                 </form>
               </div>
