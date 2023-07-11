@@ -102,7 +102,7 @@ class dtMusic extends HTMLElement {
          <style>
             @font-face {
                 font-family: "BS-R";
-                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.svg");
+                src: url("https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.svg");
                 font-weight: normal;
                 font-style: normal;
             }
@@ -188,7 +188,7 @@ class dtMusic extends HTMLElement {
             }
          </style>
          <div id="musicInterface">
-            <img id="cat" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/cat.gif" alt="cat" width="70px" height="70px">
+            <img id="cat" src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/cat.gif" alt="cat" width="70px" height="70px">
             <div style="margin:0;" id="trackName">${trackname}</div>
             <div style="color:var(--accent); cursor:default;">|</div>
             <div>

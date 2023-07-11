@@ -31,7 +31,7 @@ export async function initAbly() {
     // messageElement.innerText = `${data.sender}: ${data.message}`;
     messageElement.innerHTML = `
   <div class="messageAvatar self">
-    <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+    <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
   </div>
   <div class="messageBody">
     <div class="messageSender">Damion</div>

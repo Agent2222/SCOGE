@@ -164,8 +164,8 @@ class getUniMenu extends HTMLElement {
         menuIcon.style.transform = "rotate(180deg)";
         menuHeader.style.height = "20%";
         setTimeout(() => {
-          menu.style.maxHeight = "70%";
-          menu.style.top = "15vh";
+          menu.style.maxHeight = "80%";
+          menu.style.top = "10vh";
         }, 150);
         window.dtmenuOpen = true;
         menu.style.transition = "all 0.3s ease-in-out";
@@ -719,7 +719,7 @@ class getUniMenu extends HTMLElement {
          <style>
             @font-face {
                 font-family: "BS-B";
-                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Bold.svg");
+                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Bold.svg");
                 font-weight: bold;
                 font-style: normal;
             }
@@ -731,13 +731,13 @@ class getUniMenu extends HTMLElement {
             }
             @font-face {
                 font-family: "BS-SB";
-                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-SemiBold.svg");
+                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-SemiBold.svg");
                 font-weight: 600;
                 font-style: normal;
             }
             @font-face {
                 font-family: "BS-I";
-                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Italic.svg");
+                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Italic.svg");
                 font-weight: normal;
                 font-style: italic;
             }
@@ -2552,12 +2552,12 @@ class getUniMenu extends HTMLElement {
               }
 
               .mShopLabel {
-                position: absolute;
+                position: absolute !important;
               }
 
               #nftShop img {
                 height: auto !important;
-                width: 70% !important;
+                width: 50% !important;
               }
 
 
@@ -2593,7 +2593,7 @@ class getUniMenu extends HTMLElement {
             <div id="refresh"></div>
             <div id="menuHeader">
               <div id="topMenu">
-               <img id="uniMenuLogo" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/SCOGÉ_Logo-red.png" draggable="false">
+               <img id="uniMenuLogo" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/SCOGÉ_Logo-red.png" draggable="false">
                <div id="uniMenuIcon">&#8682;</div>
               </div>
               <div id="uniVersion">
@@ -2737,13 +2737,13 @@ class getUniMenu extends HTMLElement {
                             ADD NEW
                           </div>
                           <div class="Inventory-Image-Cont">
-                            <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+                            <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
                           </div>
                           <div class="Inventory-Image-Cont">
-                            <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+                            <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
                           </div>
                           <div class="Inventory-Image-Cont">
-                            <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+                            <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
                           </div>
                       </div>
                     </div>
@@ -2783,7 +2783,7 @@ class getUniMenu extends HTMLElement {
                         </g>
                       </g>
                     </svg>               
-                    <img id="proImg" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/TAOS-CITY-IDC.png">
+                    <img id="proImg" src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/TAOS-CITY-IDC.png">
                   </div>
                   <div id="proInfo">
                     <div class="proInfoSect">

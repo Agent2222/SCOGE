@@ -1043,9 +1043,9 @@ class dtGallery extends HTMLElement {
                 <div id="galInfo">
                 </div>
                 <div id="galGridImages">
-                  <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGE%CC%81-CH1-IMG-POR-2.jpg" alt="gallery">
-                  <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGE%CC%81-CH1-IMG-POR-2.jpg" alt="gallery">
-                  <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGE%CC%81-CH1-IMG-POR-2.jpg" alt="gallery">
+                  <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGE%CC%81-CH1-IMG-POR-2.jpg" alt="gallery">
+                  <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGE%CC%81-CH1-IMG-POR-2.jpg" alt="gallery">
+                  <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGE%CC%81-CH1-IMG-POR-2.jpg" alt="gallery">
                 </div>
               </div>
               <div id="galleryMainImages"></div>
