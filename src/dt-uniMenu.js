@@ -161,7 +161,7 @@ class getUniMenu extends HTMLElement {
     if (window.isMobile === true) {
       if (window.dtmenuOpen === false) {
         this.closeFullMenu();
-        menuIcon.style.transform = "rotate(180deg)";
+        menuIcon.style.transform = "scale(2.1) rotate(180deg)";
         menuHeader.style.height = "20%";
         setTimeout(() => {
           menu.style.maxHeight = "80%";
@@ -176,7 +176,7 @@ class getUniMenu extends HTMLElement {
         menuHeader.style.height = "100%";
         menu.style.maxHeight = "12%";
         menu.style.top = "80vh";
-        menuIcon.style.transform = "rotate(0deg)";
+        menuIcon.style.transform = "scale(2.1) rotate(0deg)";
         menuItems.style.maxHeight = "0%";
         menuItems.style.overflow = "hidden";
         window.dtmenuOpen = false;
@@ -2239,7 +2239,8 @@ class getUniMenu extends HTMLElement {
               #uniMenuIcon {
                 display: none;
                 color: #ff002d !important;
-                transform: scale(2) !important;
+                transform: scale(2.1);
+                padding-right: 8pt;
               }
 
               #loadingText {
