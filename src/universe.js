@@ -187,12 +187,12 @@ export async function universe() {
     // soundtrack.stop("menuEntrance1");
     soundtrack.play("menuEntrance1");
     // Check for browser support
-    if (
-      navigator.userAgent.includes("Brave") ||
-      navigator.userAgent.includes("Firefox") ||
-      navigator.userAgent.includes("Chrome") ||
-      navigator.userAgent.includes("Safari")
-    ) {
+    // if (
+    //   navigator.userAgent.includes("Brave") ||
+    //   navigator.userAgent.includes("Firefox") ||
+    //   navigator.userAgent.includes("Chrome") ||
+    //   navigator.userAgent.includes("Safari")
+    // ) {
       // The browser is Brave, Firefox, or Chrome
       document.querySelector("#universe").style.display = "block";
       // REACTIVATE THIS
@@ -281,10 +281,10 @@ export async function universe() {
       // window.playerPos();
       // window.currentSx = newScenario("Intro");
       //
-    } else {
-      // The browser is not Brave, Firefox, or Chrome
-      alert("The browser is not Brave, Firefox, or Chrome");
-    }
+    // } else {
+    //   // The browser is not Brave, Firefox, or Chrome
+    //   alert("The browser is not Brave, Firefox, or Chrome");
+    // }
 
     if (lcCheck()) {
       editorButton();
