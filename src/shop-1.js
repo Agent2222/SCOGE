@@ -1479,7 +1479,7 @@ class mobileShop1 extends HTMLElement {
             <div id="noti">
             </div>
             <div id="header">
-                <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/SCOGÉ Logo-red.png"/>
+                <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/SCOGÉ_Logo-red.png"/>
                 <div id="returnButton">
                     RETURN
                 </div>
