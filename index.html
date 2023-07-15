@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <!-- Google Tag Manager -->
-         <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-T4MBLTK');</script>
-        <!-- End Google Tag Manager -->
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
         <title>SCOG&Eacute; | Official Website</title>
@@ -27,14 +20,11 @@
         <script src="https://cdn.ably.com/lib/ably.min-1.js"></script>
     </head>
     <body id="main" onmousemove="trackMouse(event)">
-        <!-- Google Tag Manager (noscript) -->
-        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T4MBLTK"
-            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-        <!-- End Google Tag Manager (noscript) -->
         <div id="subText1" class="dialogue"><p></p></div>
         <div id="subText2" class="dialogue"><span class="answerOptions" id="st2Ans1"></span><span class="answerOptions" id="st2Ans2"></span><span class="answerOptions" id="st2Ans3"></span></div>
         <!-- <scoge-investors invest="invest" id="getInvestors" style="display: none;"></scoge-investors> -->
          <scoge-gallery gallery="gallery" id="collectionGallery" style="display: block;"></scoge-gallery>
+        <uni-consensus active="true" id="compConsensus"></uni-consensus>
         <scoge-rsvp rsvps="rsvp" id="rsvpModal" style="display:none;"></scoge-rsvp>
         <mint-screen mint="mint1" style="display:block;" id="getNfts"></mint-screen>
         <scoge-UniMenu uniMenu="uniMenu" id="getUniMenu"></scoge-UniMenu>
@@ -127,7 +117,7 @@
                             <input class="shopFormInput" id="input10" type="text" placeholder="Full Shipping Address (If different from Billing Address)">
                             <div class="shopFormInput input11" id="card-element"></div>
                             <div class="checkoutRow">
-                                <img id="stripeLogo" src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/stripe.png"/>
+                                <img id="stripeLogo" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/stripe.png"/>
                                 <div id="totalPrice">
                                     <span>Total:</span>
                                     <span id="carTotal">$</span>
@@ -174,11 +164,11 @@
             </div>
         </div>
         <div id="logo" onclick="sayScoge();" style="opacity: 0%;">
-            <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/scoge-bankoo-logo-medium2.png"/>
+            <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/scoge-bankoo-logo-medium2.png"/>
         </div>
         <div id="convoCont">
             <div id="Reqerror">REQUEST ERROR: Please Try Again.</div>
-            <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch.png"/>
+            <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch.png"/>
         </div>
         <div id="seekModal">
             <div id="tooltip" style="position: absolute; display: none;">NEXT |></div>             
@@ -198,10 +188,7 @@
         <div id="mainCont" style="width: 83%; height: 100%; margin: 0; display: flex; justify-content: center;">
             <scoge-dialogue dialogue="dialogue" id="dialogueModal" style="display:none;"></scoge-dialogue>
         </div>
-        <nav id="gMenu">
-            <div id="investBut" class="mainMenuBut" style="display:none;" onclick="openInvestors()">INVESTORS</div>    
-            <!-- <div id="rsvpBut" class="mainMenuBut" onclick="rsvp()">FW23-RSVP</div>-->
-        </nav>
+        <babylon extends="minimal" id="digModel" model.url="https://scoge.s3.us-east-2.amazonaws.com/3d/digisette-ring.-viewglb.glb" camera.behaviors.auto-rotate.type="none" lights.light1.type="2" lights.light1.shadow-enabled="true" display="none"></babylon>
         <div class="action-lines-overlay"></div>
         <div id="camera">
             <div id="selection"></div>
@@ -212,6 +199,7 @@
         <div id="previewUI"></div>
         <div id="exploreUI"></div>
         <div id="shopBG"></div>
+
     </body>
     <script src="https://js.stripe.com/v3/"></script>
 </html>
