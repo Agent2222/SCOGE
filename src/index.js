@@ -27,6 +27,8 @@ import { gsap } from "gsap";
 import { TextPlugin } from "gsap/TextPlugin";
 import { Configuration, OpenAIApi } from "openai";
 import { universe } from "./universe.js";
+import { uniConsensus } from "./uni-c-consensus.js";
+import "babylonjs-viewer";
 
 window.entry = () => {
   gsap.to("#introLogo", { duration: 1, opacity: 1, ease: "power2.inOut" });

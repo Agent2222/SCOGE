@@ -175,7 +175,7 @@ class getUniMenu extends HTMLElement {
         this.closeFullMenu();
         menuHeader.style.height = "100%";
         menu.style.maxHeight = "12%";
-        menu.style.top = "80vh";
+        menu.style.top = "70vh";
         menuIcon.style.transform = "scale(2.1) rotate(0deg)";
         menuItems.style.maxHeight = "0%";
         menuItems.style.overflow = "hidden";
@@ -629,6 +629,9 @@ class getUniMenu extends HTMLElement {
       this.toggleFullScreen();
     });
     this.shadow.querySelector("#uniMenuIcon").addEventListener("click", () => {
+      this.toggleMenu();
+    });
+    this.shadow.querySelector("#uniMenuLogo").addEventListener("click", () => {
       this.toggleMenu();
     });
     this.shadow.querySelector("#uniMenuIcon2").addEventListener("click", () => {
@@ -2202,7 +2205,7 @@ class getUniMenu extends HTMLElement {
                 border-bottom-right-radius: 10px;
                 z-index: 7;
                 position: relative;
-                top: 80vh;
+                top: 70vh;
                 left: 36px;
                 background-color: rgba(0, 0, 0, 0.7);
                 border-left: 2px solid #ff002d;
@@ -2340,7 +2343,7 @@ class getUniMenu extends HTMLElement {
               /* BEACON TUT */
               .beaconPanel {
                 width: 90%;
-                height: 68%;
+                height: 58%;
                 position: fixed;
                 z-index: 4;
                 right: 5%;
@@ -2751,13 +2754,13 @@ class getUniMenu extends HTMLElement {
                             ADD NEW
                           </div>
                           <div class="Inventory-Image-Cont">
-                            <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+                            <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
                           </div>
                           <div class="Inventory-Image-Cont">
-                            <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+                            <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
                           </div>
                           <div class="Inventory-Image-Cont">
-                            <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+                            <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
                           </div>
                       </div>
                     </div>
@@ -2797,7 +2800,7 @@ class getUniMenu extends HTMLElement {
                         </g>
                       </g>
                     </svg>               
-                    <img id="proImg" src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/TAOS-CITY-IDC.png">
+                    <img id="proImg" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/TAOS-CITY-IDC.png">
                   </div>
                   <div id="proInfo">
                     <div class="proInfoSect">

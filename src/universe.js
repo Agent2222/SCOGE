@@ -211,7 +211,7 @@ export async function universe() {
         }
       };
       img.src =
-        "https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/scoge-taos-city-universe.jpg";
+        "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/scoge-taos-city-universe.jpg";
       cam.scrollTo(990, 0);
       // prevent scrolling under scrollto(990,0) and activate scrolling over scrollto(990,0)
       cam.addEventListener(
@@ -1397,7 +1397,6 @@ export async function universe() {
   // player state
   const playerState = async () => {
     var shadow = document.getElementById("getUniMenu").shadowRoot;
-    console.log(window.suUiActor);
     const admin = await window.suUiActor
       .adminUser()
       .catch((e) => {
@@ -1570,7 +1569,7 @@ export async function universe() {
 
   // Multiplayer
   await window.ably.connection.once("connected");
-  console.log("Connected to Ably!");
+  // console.log("Connected to Ably!");
 
   const roomName = "alphaTestersChat";
   const roomDescription = "1st Chat Room for Alpha Testers";
@@ -1580,9 +1579,9 @@ export async function universe() {
   // get the channel to subscribe to
 
   await channel.subscribe("chatRoom1", (message) => {
-    console.log(message)
-    console.log("Received a greeting message in realtime: " + message.data.roomMessage);
-    console.log(window.room1);
+    // console.log(message)
+    // console.log("Received a greeting message in realtime: " + message.data.roomMessage);
+    // console.log(window.room1);
     window.room1.addMessage(message.data.roomMessage);
     const messageElement = document.createElement("div");
     const messagesDiv = document.getElementById("chatRoom1");
@@ -1664,7 +1663,7 @@ export async function universe() {
     member.data.data.x;
   });
   channel2.presence.subscribe("leave", (member) => {
-    console.log("MemberData", member.data);
+    // console.log("MemberData", member.data);
     document.getElementById(`${member.data.data.playerId}`).remove();
   });
 

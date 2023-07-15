@@ -196,27 +196,27 @@ class mintingScreen extends HTMLElement {
   };
 
   // Reacc
-  reacc = () => {
-    var vid = this.shadow.getElementById("videoM");
-    vid.style.transition = "5s all";
-    vid.play();
-    vid.style.display = "block";
-    setTimeout(() => {
-      vid.style.opacity = "100%";
-    }, 500);
-    setTimeout(() => {
-      document.getElementById("getUniMenu").toggleMenu();
-      document.getElementById("getNfts").toggleNftScreen();
-    }, 5000);
-    vid.onended = function () {
-      document.getElementById("updatesModal").style.display = "block";
-      vid.style.transition = "1s all";
-      vid.style.opacity = "0%";
-      setTimeout(() => {
-        vid.style.display = "none";
-      }, 1000);
-    };
-  };
+  // reacc = () => {
+  //   var vid = this.shadow.getElementById("videoM");
+  //   vid.style.transition = "5s all";
+  //   vid.play();
+  //   vid.style.display = "block";
+  //   setTimeout(() => {
+  //     vid.style.opacity = "100%";
+  //   }, 500);
+  //   setTimeout(() => {
+  //     document.getElementById("getUniMenu").toggleMenu();
+  //     document.getElementById("getNfts").toggleNftScreen();
+  //   }, 5000);
+  //   vid.onended = function () {
+  //     document.getElementById("updatesModal").style.display = "block";
+  //     vid.style.transition = "1s all";
+  //     vid.style.opacity = "0%";
+  //     setTimeout(() => {
+  //       vid.style.display = "none";
+  //     }, 1000);
+  //   };
+  // };
 
   reload = () => {
     location.reload;
@@ -543,16 +543,6 @@ class mintingScreen extends HTMLElement {
               opacity: 100% !important;
               transform: scale(1.1);
             }
-            #videoM {
-              height: 100%;
-              position: fixed;
-              left: 0;
-              top: 0;
-              z-index: 10;
-              display: none;
-              opacity: 0%;
-              transition: 5s all;
-            }
             a {
               color: #ff002d;
               letter-spacing: 2px;
@@ -580,7 +570,6 @@ class mintingScreen extends HTMLElement {
               opacity: 100% !important;
             }
          </style>
-         <video id="videoM" src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/videos/Alpha-End-Scoge.mp4">
          </video>
          <div id="mainScreen">
             <div id="innerScreen">
