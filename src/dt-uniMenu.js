@@ -631,9 +631,6 @@ class getUniMenu extends HTMLElement {
     this.shadow.querySelector("#uniMenuIcon").addEventListener("click", () => {
       this.toggleMenu();
     });
-    this.shadow.querySelector("#uniMenuLogo").addEventListener("click", () => {
-      this.toggleMenu();
-    });
     this.shadow.querySelector("#uniMenuIcon2").addEventListener("click", () => {
       this.closeFullMenu();
     });
