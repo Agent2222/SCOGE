@@ -28,7 +28,37 @@ import { TextPlugin } from "gsap/TextPlugin";
 import { Configuration, OpenAIApi } from "openai";
 import { universe } from "./universe.js";
 import { uniConsensus } from "./uni-c-consensus.js";
-import "babylonjs-viewer";
+import { uni3dViewer } from "./uni-c-3dModel.js";
+
+// // Check size on Start
+window.sizeInit = () => {
+  var mandala = document.getElementById("manBG");
+  if (window.matchMedia("(max-width: 768px)").matches) {
+    // Mobile
+    // const node = document.createElement('mobile-shop1')
+    // node.setAttribute("product","product1");
+    // node.setAttribute("id","mobileShop");
+    // node.setAttribute("style","display:none;");
+    // document.getElementById("main").appendChild(node)
+    // document.getElementById("uniBut").style.display = "none";
+    window.isMobile = true;
+    document.getElementById("getUniMenu").shadowRoot.getElementById("uniMenuIcon").style.display = "block";
+    document.getElementById("getUniMenu").shadowRoot.getElementById("loadingText").style.display = "none";
+    var videoEls = document.querySelectorAll(".videoEl");
+    videoEls.forEach((videoEl) => {
+      videoEl.setAttribute("class", "mobileVideo");
+    });
+    console.log("Mobile");
+  } else {
+    // Desktop
+    // document.getElementById("uniBut").style.opacity = "100%";
+    // window.getParamsDesktop();
+  }
+};
+
+setTimeout(() => {
+  window.sizeInit();
+}, 1000);
 
 window.entry = () => {
   gsap.to("#introLogo", { duration: 1, opacity: 1, ease: "power2.inOut" });
@@ -187,6 +217,7 @@ const uncover = () => {
       ci = "true";
       window.trackMouse();
       window.trackMouseMove();
+      document.getElementById("tooltip").style.display = "block";
       document.getElementById("pv2").src = "https://scoge.s3.us-east-2.amazonaws.com/Videos/Ch2-Act1-sm.mp4";
       document.getElementById("portalVideo2")?.play();
     }
@@ -231,33 +262,8 @@ window.addEventListener("resize", function () {
   }
 });
 
-// // Check size on Start
-window.sizeInit = () => {
-  var mandala = document.getElementById("manBG");
-  if (window.matchMedia("(max-width: 768px)").matches) {
-    // Mobile
-    // const node = document.createElement('mobile-shop1')
-    // node.setAttribute("product","product1");
-    // node.setAttribute("id","mobileShop");
-    // node.setAttribute("style","display:none;");
-    // document.getElementById("main").appendChild(node)
-    // document.getElementById("uniBut").style.display = "none";
-    window.isMobile = true;
-    document.getElementById("getUniMenu").shadowRoot.getElementById("uniMenuIcon").style.display = "block";
-    document.getElementById("getUniMenu").shadowRoot.getElementById("loadingText").style.display = "none";
-    var videoEls = document.querySelectorAll(".videoEl");
-    videoEls.forEach((videoEl) => {
-      videoEl.setAttribute("class", "mobileVideo");
-    });
-  } else {
-    // Desktop
-    // document.getElementById("uniBut").style.opacity = "100%";
-    // window.getParamsDesktop();
-  }
-};
-
 window.onload = () => {
-  window.sizeInit();
+  // window.sizeInit();
   window.loadShop();
   window.getParamsDesktop();
 }
@@ -1789,7 +1795,7 @@ window.trackMouse = (e) => {
       if (mouseMoving === false) {
         gsap.to("#tooltip", {opacity: 0, duration: 0.5, ease: "power2.out", delay: 2});
       }
-      tooltip.style.display = "block";
+      // tooltip.style.display = "block";
 }
 
 window.trackMouseMove = () => {
