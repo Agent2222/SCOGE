@@ -175,7 +175,7 @@ class getUniMenu extends HTMLElement {
         this.closeFullMenu();
         menuHeader.style.height = "100%";
         menu.style.maxHeight = "12%";
-        menu.style.top = "70vh";
+        menu.style.top = "75vh";
         menuIcon.style.transform = "scale(2.1) rotate(0deg)";
         menuItems.style.maxHeight = "0%";
         menuItems.style.overflow = "hidden";
@@ -2202,7 +2202,7 @@ class getUniMenu extends HTMLElement {
                 border-bottom-right-radius: 10px;
                 z-index: 7;
                 position: relative;
-                top: 70vh;
+                top: 75vh;
                 left: 36px;
                 background-color: rgba(0, 0, 0, 0.7);
                 border-left: 2px solid #ff002d;
@@ -2340,7 +2340,7 @@ class getUniMenu extends HTMLElement {
               /* BEACON TUT */
               .beaconPanel {
                 width: 90%;
-                height: 58%;
+                height: 68%;
                 position: fixed;
                 z-index: 4;
                 right: 5%;
