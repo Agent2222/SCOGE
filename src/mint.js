@@ -5,7 +5,7 @@ import { Principal } from "@dfinity/principal";
 var availablePill = false;
 var mainScreenOpen = false;
 const canister = "7mfck-baaaa-aaaah-acuqq-cai";
-var Nftlink = "https://twitter.com/YumiMarketplace/status/1673888214690729984";
+var Nftlink = "https://yumi.io/launchpad/detail/hmz4w-fiaaa-aaaah-admlq-cai";
 
 var alphaCollectionImage = "";
 

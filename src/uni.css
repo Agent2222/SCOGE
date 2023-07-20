@@ -864,6 +864,49 @@
     scale: 1.02;
   } */
 
+  /* DIALOGUE SCENE */
+
+  .choices {
+    width: 18%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20%;
+    position: fixed;
+    bottom: 8%;
+    right: 8%;
+    align-items: center;
+    font-family: "BS-R";
+    z-index: 11;
+    transition: .5s all ease-in-out;
+  }
+
+  .choice {
+    width: 100%;
+    height: 35pt;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    font-family: "BS-R";
+    padding-right: 10%;
+    border: 1px solid #ff002d;
+    letter-spacing: .5em;
+    cursor: pointer;
+    transition: .3s all;
+    font-size: .9em;
+    margin-bottom: 5%;
+  }
+
+  .choice:hover {
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: "BS-B";
+    letter-spacing: .8em;
+  } 
+
+  /* DIALOGUE SCENE END */
+
   @container (width <= 900px) {
     .chr-textElement p{
       width: 100%;

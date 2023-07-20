@@ -1,5 +1,5 @@
 import { SoundtrackManager } from "./soundtrack.js";
-import { universe } from "./universe.js";
+// import { universe } from "./universe.js";
 import { gsap } from "gsap";
 // import fleekStorage from "@fleekhq/fleek-storage-js";
 
@@ -74,7 +74,7 @@ class getUniMenu extends HTMLElement {
     this.shopSource = `<img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/shop-temp-1.png" alt="NFT Shop" id="nftShop"><img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png" alt="NFT Shop" id="nftShop">`;
     this.defaultSource = `<img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/DIGISHOP-1.png" alt="NFT Shop" id="nftShop">`
     this.beacons = null;
-    this.digiLink = "https://twitter.com/YumiMarketplace/status/1673888214690729984";
+    this.digiLink = "https://yumi.io/launchpad/detail/hmz4w-fiaaa-aaaah-admlq-cai";
   }
 
   get uniMenu() {

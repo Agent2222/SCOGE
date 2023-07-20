@@ -66,6 +66,11 @@ window.entry = () => {
   gsap.to(".welcomeOptions", { duration: 1, opacity: 1, ease: "power2.inOut", delay: 2 });
   gsap.to("#wOpt1", { duration: 2, translateX: 0, ease: "power2.inOut", delay: 1.5 });
   gsap.to("#wOpt2", { duration: 2, translateX: 0, ease: "power2.inOut", delay: 1.5 });
+  // <uni-consensus active="false" id="compConsensus"></uni-consensus>
+  var consensusBlock = document.createElement("uni-consensus");
+  consensusBlock.setAttribute("active", "false");
+  consensusBlock.setAttribute("id", "compConsensus");
+  document.getElementById("main").appendChild(consensusBlock);
 }
 
 window.entry();

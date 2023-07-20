@@ -7,7 +7,7 @@
         "job": "Identity Agent",
         "dialogue": "Hello, welcome to City Central. I'm Alex, your Identity Agent. I'm here to help you get started with your new wallet.",
         "images": {
-          "default": "https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-1.png"
+          "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-1.png"
         }
       },
       {
@@ -32,7 +32,7 @@
     "Elements": [
       {
         "id": "plugWallet",
-        "src": "https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/plugWallet.png"
+        "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/plugWallet.png"
       },
       {
         "id": "bitWallet",
@@ -64,7 +64,7 @@
                   "annoyed": "I'm sorry, I can't help you until you plug in your wallet."
                 },
                 "images": {
-                  "default": "https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-1.png",
+                  "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-1.png",
                   "alt": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-2.png"
                 }
               },
@@ -154,7 +154,7 @@
           "elements": [
             {
               "id": "plugWallet",
-              "src": "https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/plugWallet.png",
+              "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/plugWallet.png",
               "type": "div",
               "innerType": "img",
               "width": "20%",
@@ -207,6 +207,10 @@
               "brightnessTo": "1.0",
               "action": "connectBitfinityWallet()"
             }
+          ],
+          "choices": [
+            "WHAT WALLET?",
+            "LEAVE ->"
           ]
         },
         {
@@ -214,7 +218,12 @@
           "position": 2,
           "type": "dialogue",
           "bg": "rgba(0, 0, 0, 0.75)",
-          "activated": "Uni-204",
+          "activated": {
+            "land": 9120,
+            "gate": 0,
+            "pop": false,
+            "scn": [1,4]
+          },
           "characters": [
             {
               "persona": {
@@ -226,7 +235,7 @@
                   "intro": "Hello, welcome to City Central. I'm Alex, your Identity Agent. I'm here to help you get started with your new wallet."
                 },
                 "images": {
-                  "default": "https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-1.png"
+                  "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-1.png"
                 }
               },
               "pns": {
@@ -313,7 +322,7 @@
           "elements": [
             {
               "id": "plugWallet",
-              "src": "https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/plugWallet.png",
+              "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/plugWallet.png",
               "type": "div",
               "innerType": "img",
               "width": "20%",
@@ -341,6 +350,10 @@
               "shadow": true,
               "shadowEffect": "blur(50px)"
             }
+          ],
+          "choices": [
+            "WHAT WALLET?",
+            "LEAVE ->"
           ]
         }
       ],

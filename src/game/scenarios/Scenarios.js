@@ -13,6 +13,10 @@ export class Scenario {
       // Show the current scene on the page
       this.scenes[this.currentSceneIndex].show();
     }
+
+    transition() {
+      this.scenes[this.currentSceneIndex].transition();
+    }
   
     hide() {
       // Hide the current scene on the page
@@ -46,7 +50,7 @@ export class Scenario {
   
     nextScene() {
       // Hide the current scene
-      this.scenes[this.currentSceneIndex].hide();
+      // this.scenes[this.currentSceneIndex].hide();
   
       // Advance to the next scene
       this.currentSceneIndex++;
@@ -58,7 +62,8 @@ export class Scenario {
       }
   
       // Show the next scene
-      this.show();
+      // this.show();
+      this.transition();
     }
   
     prevScene() {
