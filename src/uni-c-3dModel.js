@@ -53,7 +53,6 @@ class uni3dViewer extends HTMLElement {
 
                     // enable scene glow
                     var gl = new BABYLON.GlowLayer("glow", scene);
-                    console.log(mesh);
 
                     // enable gltf lighting
                     var lightMain = new BABYLON.DirectionalLight("dir01", new BABYLON.Vector3(0, -0.5, 1.0), scene);

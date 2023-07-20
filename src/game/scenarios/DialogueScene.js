@@ -4,6 +4,7 @@ import { Character } from "../characters/Character.js";
 import { connectPlugWallet } from "../../wallets.js";
 import { connectBitFinityWallet } from "../../wallets.js";
 import { gsap } from "gsap";
+import { newScenario } from "../../universe.js";
 
 const canister = "7mfck-baaaa-aaaah-acuqq-cai";
 const local = "http://localhost:3000/";
@@ -34,6 +35,7 @@ export class DialogueScene extends Scenario {
 
   // shows the scene on the page
   show() {
+    if (!document.getElementById("currentSceneView")) {
     this.isVisible = true;
     if (this.onShow) this.onShow();
     // Append BG to body
@@ -54,11 +56,50 @@ export class DialogueScene extends Scenario {
         character.sayDialogue(character.name);
       }
     });
+    }
   }
+
+  transition() {
+    // Create an array of IDs for characters in the scene
+    const chInSc = this.scene.characters.map((character) => `char_${character.persona.name}`);
+  
+    // Iterate through .charContainer elements and remove if not in the scene
+    document.querySelectorAll(".charContainer").forEach((char) => {
+      if (!chInSc.includes(char.id)) {
+        //  not found in the scene
+        gsap.to(char, {
+          duration: 1,
+          transform: "translateX(10vw)",
+          opacity: 0,
+          ease: "power4.out",
+        });
+        setTimeout(() => {
+          char.remove();
+        }, 1000);
+      } else {
+        //  found in the scene - Moving
+      }
+    });
+
+    this.characters.forEach((character) => {
+      
+      document.querySelectorAll(".charContainer").forEach((char) => {
+        if (!chInSc.includes(char.id)) {
+          character.enterScene(char.id);
+        }
+      });
+
+      if (character.details.actions[0] === "chat") {
+        character.sayDialogue(character.name);
+      }
+    });
+    
+  }
+  
 
   // hides the scene on the page
   hide() {
-    var view = document.getElementById(`currentSceneView_${this.scene.name}`);
+    var view = document.getElementById(`currentSceneView`);
     gsap.to(view, {
       opacity: 0,
       filter: "blur(10px)",
@@ -76,9 +117,10 @@ export class DialogueScene extends Scenario {
   // loads the scene resources (e.g. images, data, etc.)
   load() {
     if (this.isLoading) return;
+    if (!document.getElementById(`currentSceneView`)){
     this.cScene = document.createElement("div");
     this.cScene.classList.add("currentScene");
-    this.cScene.setAttribute("id", `currentSceneView_${this.scene.name}`);
+    this.cScene.setAttribute("id", `currentSceneView`);
     this.cScene.style.zIndex = 10;
     this.cScene.style.position = "absolute";
     this.cScene.style.top = 0;
@@ -87,6 +129,7 @@ export class DialogueScene extends Scenario {
     this.cScene.style.height = "100%";
     this.cScene.style.backgroundColor = this.scene.bg;
     this.cScene.style.opacity = 0;
+    }
     if (this.scene.characters) {
       // this.scene.characters.forEach((character) => {
       //   const char = new Character(character);
@@ -150,6 +193,36 @@ export class DialogueScene extends Scenario {
         this.conditions.push(conditionStat);
       });
     }
+    
+    // Choices
+    if (!document.getElementById("choices")) {
+     var choices = document.createElement("div");
+    choices.classList.add("choices");
+    choices.setAttribute("id", "choices");
+    this.scene.choices.forEach((choice) => {
+      var choiceCont = document.createElement("div");
+      choiceCont.classList.add("choice");
+      choiceCont.setAttribute("id", `choice${this.scene.choices.length + 1}`);
+      choiceCont.innerText = choice;
+      choices.appendChild(choiceCont);
+      if (choice.includes("LEAVE")) {
+        choiceCont.addEventListener("click", () => {
+          this.hide();
+        });
+        this.cScene.appendChild(choices);
+        return;
+      } 
+      else {
+        choiceCont.addEventListener("click", () => {
+          // newScenario.scenario.nextScene();
+          window.testScn.nextScene();
+        });
+        this.cScene.appendChild(choices);
+      }
+    });
+  } else {
+    // Change Choices
+  }
     //
     // this.isLoading = true;
     // this.image = new Image();

@@ -163,9 +163,9 @@ export async function universe() {
   const channel2 = window.ably.channels.get("lordsInTheCity");
 
   const test = () => {
-    document.addEventListener("keydown", function (e) {
+    document.addEventListener("keydown", async function (e) {
       if (e.keyCode === 80) {
-        newScenario("Intro");
+        window.testScn = await newScenario("Intro");
       }
       // if (e.keyCode === 77) {
       //   var character = document.querySelector(".character");

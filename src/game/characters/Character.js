@@ -78,7 +78,7 @@ export class Character {
     var characterCont = document.createElement("div");
     var characterImg = document.createElement("img");
     var charPersona = this.details.persona;
-    characterCont.classList.add(this.details.element?.class);
+    characterCont.classList.add(`charContainer`);
     characterCont.setAttribute("id", `char_${charPersona.name}`);
     characterCont.style.height = this.details.pns.height;
     characterCont.style.width = this.details.pns.width;
@@ -96,7 +96,7 @@ export class Character {
     // characterCont.style.filter = `blur(${this.details.pns.blur})`;
     characterImg.style.filter = `brightness(${this.details.pns.brightness}) blur(${this.details.pns.blur})`;
     characterCont.appendChild(characterImg);
-    document.getElementById(`currentSceneView_${this.scene}`)?.appendChild(characterCont);
+    document.getElementById(`currentSceneView`)?.appendChild(characterCont);
     gsap.to(characterCont, {
       duration: 1,
       delay: 1,
