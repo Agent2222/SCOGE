@@ -31,6 +31,7 @@ export class DialogueScene extends Scenario {
     this.cScene = null;
     this.conditions = [];
     this.elements = [];
+    this.chInSc = [];
   }
 
   // shows the scene on the page
@@ -60,12 +61,11 @@ export class DialogueScene extends Scenario {
   }
 
   transition() {
-    // Create an array of IDs for characters in the scene
-    const chInSc = this.scene.characters.map((character) => `char_${character.persona.name}`);
-  
-    // Iterate through .charContainer elements and remove if not in the scene
+
     document.querySelectorAll(".charContainer").forEach((char) => {
-      if (!chInSc.includes(char.id)) {
+      
+      // Remove who isnt in the next scene
+      if (!this.chInSc.includes(char.id)) {
         //  not found in the scene
         gsap.to(char, {
           duration: 1,
@@ -75,24 +75,58 @@ export class DialogueScene extends Scenario {
         });
         setTimeout(() => {
           char.remove();
+          // remove ch id from chInSc
+          this.chInSc = this.chInSc.filter((ch) => ch != `char_${char.id}`);
         }, 1000);
-      } else {
-        //  found in the scene - Moving
       }
+
+      // Add who is in the next scene except the ones already in the scene
+      if (this.chInSc.includes(char.id)) {
+        this.characters.forEach((character) => {
+          if (`char_${character.persona.name}` === char.id) {
+
+            // Already in the scene
+            gsap.to(char, {
+              duration: 1,
+              height: character.details.pns.height,
+              zIndex: character.details.pns.zIndex,
+            });
+            char.children[0].style.filter = `brightness(${character.details.pns.brightness}) blur(${character.details.pns.blur})`
+            character.sayDialogue(char.id);
+
+            // Remove Dialogue if not chat
+            if (character.details.actions[0] != "chat") {
+              gsap.to(document.getElementById(`${char.id.replace("char_","")}_dialogue`), {
+                duration: 1,
+                transform: "scale(0)",
+                ease: "power4.out",
+              });
+              setTimeout(() => {
+                document.getElementById(`${char.id.replace("char_","")}_dialogue`).remove();
+              }, 1000);
+            }
+
+            return;
+            
+          } 
+
+          // find if char is in the scene and not in the chInSc if so add
+          this.chInSc.forEach((ch) => {
+            if (character.persona.name != ch) {
+              console.log(`"Not in the scene" ${char.id}`);
+              if (!document.getElementById(`char_${character.persona.name}`)) {
+                character.enterScene(character.persona.name);
+              }
+              return;
+            }
+          });
+
+        });
+      }
+
     });
 
-    this.characters.forEach((character) => {
-      
-      document.querySelectorAll(".charContainer").forEach((char) => {
-        if (!chInSc.includes(char.id)) {
-          character.enterScene(char.id);
-        }
-      });
-
-      if (character.details.actions[0] === "chat") {
-        character.sayDialogue(character.name);
-      }
-    });
+    // Do the same for elements
     
   }
   
@@ -237,6 +271,7 @@ export class DialogueScene extends Scenario {
     //   if (this.onImageError) this.onImageError();
     // };
     // this.image.src = this.props.imageURL;
+    this.chInSc = this.scene.characters.map((character) => `char_${character.persona.name}`);
   }
 
   // handles any errors that occur during loading

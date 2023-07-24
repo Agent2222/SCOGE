@@ -1,5 +1,4 @@
 - Add show functionality to transition (DialogueScene)
 - Add element transitions.
 - Fix Plug Wallet
-- Update Digisette Buy link (https://yumi.io/launchpad/detail/hmz4w-fiaaa-aaaah-admlq-cai)
 - Submit Website to Dfinity 
