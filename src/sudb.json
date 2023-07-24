@@ -52,6 +52,7 @@
             "pop": false,
             "scn": [1,4]
           },
+          "buttons": ["CONTINUE", "WHAT WALLET?","LEAVE ->"],
           "characters": [
             {
               "persona": {
@@ -60,12 +61,14 @@
                 "job": "Identity Agent",
                 "dialogue": {
                   "pPosition": "left",
-                  "intro": "Hello, welcome to City Central. I'm Alex, your Identity Agent. I'm here to help you get started with your new wallet.",
+                  "intro": "Hello, welcome to City Central HOLO-Support. I'm Digisette Agent Alex. You'll need a wallet to get started. Get one of these and come back when you're ready.",
+                  "2nd": "You'll need a wallet to get started. Here's a coulple of options. Select the one you want to use.",
                   "annoyed": "I'm sorry, I can't help you until you plug in your wallet."
                 },
                 "images": {
-                  "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-1.png",
-                  "alt": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-2.png"
+                  "halo": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-1.png",
+                  "alt": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-2.png",
+                  "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-3HM1.png"
                 }
               },
               "pns": {
@@ -130,7 +133,8 @@
                   "intro": "You haven't purchased your Digisette yet? You can still get one at the YUMI Marketplace."
                 },
                 "images": {
-                  "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Destiny-1.png"
+                  "halo": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Destiny-1.png",
+                  "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Destiny-1-HALO.png"
                 }
               },
               "pns": {
@@ -224,10 +228,11 @@
             "pop": false,
             "scn": [1,4]
           },
+          "buttons": ["CONTINUE", "WHAT WALLET?","LEAVE ->"],
           "characters": [
             {
               "persona": {
-                "name": "Andrew",
+                "name": "Alex",
                 "location": "City-Central",
                 "job": "Identity Agent",
                 "dialogue": {
@@ -235,29 +240,29 @@
                   "intro": "Hello, welcome to City Central. I'm Alex, your Identity Agent. I'm here to help you get started with your new wallet."
                 },
                 "images": {
-                  "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-1.png"
+                  "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-3HM1.png"
                 }
               },
               "pns": {
                 "position": "absolute",
                 "left": "-5%",
-                "leftTo": "5%",
+                "leftTo": "10%",
                 "right": "auto",
                 "rightTo": "auto",
                 "bottom": 0,
                 "bottomTo": "",
                 "top": "auto",
                 "topTo": "",
-                "zIndex": 1,
+                "zIndex": 0,
                 "zIndexTo": 1,
                 "width": "auto",
                 "widthTo": "auto",
-                "height": "85%",
+                "height": "65%",
                 "heightTo": "85%",
                 "speed": 50,
-                "blur": "0px",
+                "blur": "5px",
                 "blurTo": "0px",
-                "brightness": "1",
+                "brightness": "0.5",
                 "brightnessTo": "1"
               },
               "element": {
@@ -286,7 +291,7 @@
                   "transform": "rotate(45deg)"
                 }
               },
-              "actions": ["chat"]
+              "actions": [""]
             },
             {
               "persona": {
@@ -294,8 +299,8 @@
                 "location": "City-Central",
                 "job": "Identity Agent",
                 "dialogue": {
-                  "pPosition": "left",
-                  "intro": "You haven't purchased your Digisette yet? You can still get one at the YUMI Marketplace."
+                  "pPosition": "right",
+                  "intro": "Hi! Sorry, my colleague is a bit too.. concise. You must be new here. Welcome to T.A.O.S City! I remember when I got my first wallet. It was exciting and nerve wrecking! I'm Destiny, by the way."
                 },
                 "images": {
                   "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Destiny-1.png"
@@ -309,14 +314,43 @@
                 "rightTo": "30%",
                 "bottom": 0,
                 "top": "auto",
-                "zIndex": 0,
+                "zIndex": 20,
                 "width": "auto",
-                "height": "66%",
-                "speed": 50,
-                "blur": "4px",
-                "brightness": "0.4"
+                "height": "86%",
+                "speed": 1,
+                "blur": "0px",
+                "brightness": "1"
               },
-              "actions": [""]
+              "element": {
+                "class": "chr-textElement",
+                "type": "div",
+                "backgroundColor": "rgba(0, 0, 0, 0.75)",
+                "padding": "10px 10px",
+                "borderRadius": "10px",
+                "borderTop": "0.5px solid rgb(255, 0, 45)",
+                "borderBottom": "0.5px solid rgb(255, 0, 45)",
+                "width": "350px",
+                "height": "auto",
+                "left": "auto",
+                "right": "-70%",
+                "bottom": "auto",
+                "top": "-5%",
+                "zIndex": 2,
+                "position": "absolute",
+                "border": ".5px solid #ff002d",
+                "pointer": {
+                  "position": "absolute",
+                  "width": "50px",
+                  "height": "50px",
+                  "borderleft": "1px solid #ff002d",
+                  "bottom": "-60px",
+                  "left": "auto",
+                  "right": "50%",
+                  "zIndex": -5,
+                  "transform": "rotate(45deg)"
+                }
+              },
+              "actions": ["chat"]
             }
           ],
           "elements": [

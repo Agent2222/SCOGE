@@ -19,8 +19,10 @@ export class Scenario {
     }
   
     hide() {
+      console.log(this.currentSceneIndex);
+      console.log(this.scenes);
       // Hide the current scene on the page
-      this.scenes[this.currentSceneIndex].hide();
+      this.scenes[this.currentSceneIndex - 1].hide();
     }
   
     load() {

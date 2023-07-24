@@ -58,6 +58,8 @@ window.sizeInit = () => {
 
 setTimeout(() => {
   window.sizeInit();
+  window.loadShop();
+  // window.getParamsDesktop();
 }, 1000);
 
 window.entry = () => {
@@ -103,7 +105,7 @@ window.dbm = false;
 window.shoploaded = false;
 window.viewThisProduct = "";
 window.investorsView = false;
-window.urlParamsActive = false;
+window.urlParamsActive = null;
 window.inUniverse = false;
 window.productsloaded = false;
 window.currentMenuTab = null;
@@ -269,7 +271,7 @@ window.addEventListener("resize", function () {
 
 window.onload = () => {
   // window.sizeInit();
-  window.loadShop();
+  // window.loadShop();
   window.getParamsDesktop();
 }
 
@@ -946,6 +948,10 @@ window.loadShop = async () => {
     window.povOpen(productElement);
     window.history.replaceState({}, document.title, "/" + "index.html");
   }
+  if (window.urlParamsActive === "shop") {
+    window.povOpen(productElement);
+    window.history.replaceState({}, document.title, "/" + "index.html");
+  }
   commerce.cart.empty();
 };
 
@@ -1612,7 +1618,10 @@ var viewThisProduct = "";
 window.getParamsDesktop = () => {
   const params = new URLSearchParams(location.search)
   viewThisProduct = params.get("Product");
- if (params.size > 0) {
+  if (params.size > 0 && window.urlParamsActive === "shop") {
+    window.urlParamsActive = "shop";
+  }
+ if (params.size > 0 && viewThisProduct != "shop") {
   window.urlParamsActive = true;
  }
   window.investorsView = params.get("Investors");

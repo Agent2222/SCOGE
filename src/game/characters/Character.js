@@ -16,7 +16,7 @@ export class Character {
       dialogueCont.classList.add(this.details.element.class);
       dialogueCont.setAttribute("id", `${this.persona.name}_dialogue`);
       var textContent = document.createElement("p");
-      textContent.setAttribute("id", this.details.element.class);
+      textContent.setAttribute("id", `${this.details.element.class}_${this.persona.name}`);
       dialogueCont.style.backgroundColor = this.details.element.backgroundColor;
       dialogueCont.style.height = this.details.element.height;
       dialogueCont.style.width = this.details.element.width;
@@ -36,11 +36,11 @@ export class Character {
       dialogueCont.style.padding = this.details.element.padding;
       dialogueCont.style.transform = "scale(0)";
       dialogueCont.style.transformOrigin = "bottom left";
-      dialogueCont.addEventListener("click", () => {
-        // newScenario.scenario.nextScene();
-        // console.log(window.currentsSx);
-        window.currentSx.nextScene();
-      });
+      // dialogueCont.addEventListener("click", () => {
+      //   // newScenario.scenario.nextScene();
+      //   // console.log(window.currentsSx);
+      //   window.currentSx.nextScene();
+      // });
       // Dialogue Pointer
       var dialoguePointer = document.createElement("div");
       dialoguePointer.classList.add("dialoguePointer");
@@ -65,7 +65,7 @@ export class Character {
       dialogueCont.appendChild(dialoguePointer);
       var dialogueText = new Typing(
         this.persona.dialogue.intro,
-        this.details.element.class,
+        `${this.details.element.class}_${this.persona.name}`,
         this.speed = this.details.pns.speed
       );
       setTimeout(() => {
