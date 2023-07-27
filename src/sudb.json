@@ -61,9 +61,13 @@
                 "job": "Identity Agent",
                 "dialogue": {
                   "pPosition": "left",
-                  "intro": "Hello, welcome to City Central HOLO-Support. I'm Digisette Agent Alex. You'll need a wallet to get started. Get one of these and come back when you're ready.",
-                  "2nd": "You'll need a wallet to get started. Here's a coulple of options. Select the one you want to use.",
-                  "annoyed": "I'm sorry, I can't help you until you plug in your wallet."
+                  "multi": false,
+                  "text": [
+                  {
+                    "action": null,
+                    "txt":"Hello, welcome to City Central HOLO-Support. I'm Digisette Agent Alex. You'll need a wallet to get started. Get one of these and come back when you're ready."
+                  }
+                ]
                 },
                 "images": {
                   "halo": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-1.png",
@@ -130,7 +134,8 @@
                 "job": "Identity Agent",
                 "dialogue": {
                   "pPosition": "left",
-                  "intro": "You haven't purchased your Digisette yet? You can still get one at the YUMI Marketplace."
+                  "multi": false,
+                  "text": []
                 },
                 "images": {
                   "halo": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Destiny-1.png",
@@ -237,7 +242,8 @@
                 "job": "Identity Agent",
                 "dialogue": {
                   "pPosition": "left",
-                  "intro": "Hello, welcome to City Central. I'm Alex, your Identity Agent. I'm here to help you get started with your new wallet."
+                  "multi": false,
+                  "text": []
                 },
                 "images": {
                   "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-3HM1.png"
@@ -300,7 +306,29 @@
                 "job": "Identity Agent",
                 "dialogue": {
                   "pPosition": "right",
-                  "intro": "Hi! Sorry, my colleague is a bit too.. concise. You must be new here. Welcome to T.A.O.S City! I remember when I got my first wallet. It was exciting and nerve wrecking! I'm Destiny, by the way."
+                  "multi": true,
+                  "text": [
+                    {
+                      "action":"document.getElementById('bitWallet-cont').style.scale = '0';",
+                      "txt":"Hi! Sorry, my colleague is a bit too.. concise. You must be new here. Welcome to T.A.O.S City! I remember when I got my first wallet. It was exciting and nerve wrecking! I'm Destiny, by the way."
+                    },
+                    {
+                      "action": null,
+                      "txt": "So, wallets like Plug help you store your assets, like Digisette's and more. You can use them to buy and sell things, and to interact with other lords in T.A.O.S City."
+                    },
+                    {
+                      "action": null,
+                      "txt": "There are many different types of wallets, but they all do the same thing. For starters use Plug, and when you're ready, you can explore others."
+                    },
+                    {
+                      "action": null,
+                      "txt": "Once you have a wallet, be sure to store your seed phrase somewhere safe. You'll need it to recover your wallet if you lose it."
+                    },
+                    {
+                      "action": null,
+                      "txt": "I keep mine in a safe at home, but you can also write it down and store it somewhere safe. Just don't lose it!"
+                    }
+                ]
                 },
                 "images": {
                   "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Destiny-1.png"
@@ -309,9 +337,9 @@
               "pns": {
                 "position": "absolute",
                 "left": "auto",
-                "right": "-5%",
+                "right": "5%",
                 "leftTo": "auto",
-                "rightTo": "30%",
+                "rightTo": "20%",
                 "bottom": 0,
                 "top": "auto",
                 "zIndex": 20,

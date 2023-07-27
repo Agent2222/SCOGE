@@ -29,6 +29,7 @@ import { Configuration, OpenAIApi } from "openai";
 import { universe } from "./universe.js";
 import { uniConsensus } from "./uni-c-consensus.js";
 import { uni3dViewer } from "./uni-c-3dModel.js";
+import { checkInitialState } from "../src/game/SceneManager.js";
 
 // // Check size on Start
 window.sizeInit = () => {
@@ -73,6 +74,7 @@ window.entry = () => {
   consensusBlock.setAttribute("active", "false");
   consensusBlock.setAttribute("id", "compConsensus");
   document.getElementById("main").appendChild(consensusBlock);
+  checkInitialState();
 }
 
 window.entry();
@@ -1800,16 +1802,13 @@ var mouseMoving = false;
 window.viewingPg = false;
 
 window.trackMouse = (e) => {
-  // Get the tooltip element
       var tooltip = document.getElementById("tooltip");
-      // Set the tooltip position to the mouse position
       tooltip.style.left = (e?.clientX - 40) + "px";
       tooltip.style.top = (e?.clientY - 20) + "px";
       gsap.to("#tooltip", {opacity: 1, duration: 0.5, ease: "power2.out"});
       if (mouseMoving === false) {
         gsap.to("#tooltip", {opacity: 0, duration: 0.5, ease: "power2.out", delay: 2});
       }
-      // tooltip.style.display = "block";
 }
 
 window.trackMouseMove = () => {
@@ -1823,23 +1822,30 @@ window.trackMouseMove = () => {
 }
 
 portal();
-// ------ Seek End
-// ------ Simple Typing
+
 export class Typing {
   constructor(text, elementId, speed = 50) {
     this.text = text;
     this.element = document.getElementById(elementId);
     this.currentIndex = 0;
     this.delay = speed;
+    this.onTypingComplete = null; // The callback function for typing completion
+    this.action = null;
   }
 
   start() {
+    if (this.action) {
+      this.action();
+    }
     this.intervalId = setInterval(() => {
       if (this.currentIndex < this.text.length) {
         this.element.textContent += this.text.charAt(this.currentIndex);
         this.currentIndex++;
       } else {
         clearInterval(this.intervalId);
+        if (this.onTypingComplete) {
+          this.onTypingComplete(); // Trigger the callback if it exists
+        }
       }
     }, this.delay);
   }

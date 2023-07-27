@@ -8,11 +8,13 @@ export class Character {
     this.scene = sceneName;
     this.details = character;
     this.persona = character.persona;
+    this.currentDialogue = 0;
   }
 
   sayDialogue() {
     if (this.details.actions[0] === "chat") {
-      var dialogueCont = document.createElement(this.details.element.type);
+      if (!document.getElementById(`${this.persona.name}_dialogue`)) {
+        var dialogueCont = document.createElement(this.details.element.type);
       dialogueCont.classList.add(this.details.element.class);
       dialogueCont.setAttribute("id", `${this.persona.name}_dialogue`);
       var textContent = document.createElement("p");
@@ -63,14 +65,53 @@ export class Character {
       });
       dialogueCont.appendChild(textContent);
       dialogueCont.appendChild(dialoguePointer);
+      }
       var dialogueText = new Typing(
-        this.persona.dialogue.intro,
+        this.persona.dialogue.text[this.currentDialogue].txt,
         `${this.details.element.class}_${this.persona.name}`,
         this.speed = this.details.pns.speed
       );
+      dialogueText.action = () => {
+        eval(this.persona.dialogue.text[this.currentDialogue].action);
+      }
       setTimeout(() => {
         dialogueText.start();
+        if (this.currentDialogue === this.persona.dialogue.text.length) {
+          // Remove Choice button
+        }
       }, 1800);
+
+      dialogueText.onTypingComplete = () => {
+        if (this.persona.dialogue.multi === true && this.currentDialogue < this.persona.dialogue.text.length) {
+          this.currentDialogue++;
+          const element = document.getElementById("choice1");
+          const newElement = element.cloneNode(true); 
+          element.parentNode.replaceChild(newElement, element);
+          setTimeout(() => {
+            newElement.innerHTML = "NEXT";
+          }, 1000);
+          newElement.addEventListener("click", () => {
+            document.getElementById(`${this.persona.name}_dialogue`).remove();
+            document.getElementById("choice1").style.animation = "";
+            this.sayDialogue();
+          });
+
+          document.getElementById("choice1").style.animation = "blinkingChoice 2s infinite";
+          
+          if (this.currentDialogue === this.persona.dialogue.text.length) {
+            setTimeout(() => {
+              document.getElementById("choice1").remove();
+            }, 800);
+            setTimeout(() => {
+              gsap.to(dialogueCont, {
+                duration: 1,
+                transform: "scale(0)",
+                ease: "power4.out",
+              });
+            }, 5000);
+          }
+        }
+      };
     }
   }
 
