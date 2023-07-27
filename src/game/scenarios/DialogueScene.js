@@ -90,7 +90,16 @@ export class DialogueScene extends Scenario {
               duration: 1,
               height: character.details.pns.height,
               zIndex: character.details.pns.zIndex,
+              right: character.details.pns.rightTo,
             });
+
+            document.querySelectorAll(".sceneElement").forEach((ch) => {
+              gsap.to(ch, {
+                translateX: "-15vw",
+                ease: "ease-in-out",
+              });
+            });
+
             char.children[0].style.filter = `brightness(${character.details.pns.brightness}) blur(${character.details.pns.blur})`
             character.sayDialogue(char.id);
 
@@ -233,10 +242,10 @@ export class DialogueScene extends Scenario {
      var choices = document.createElement("div");
     choices.classList.add("choices");
     choices.setAttribute("id", "choices");
-    this.scene.choices.forEach((choice) => {
+    this.scene.choices.forEach((choice, index) => {
       var choiceCont = document.createElement("div");
       choiceCont.classList.add("choice");
-      choiceCont.setAttribute("id", `choice${this.scene.choices.length + 1}`);
+      choiceCont.setAttribute("id", `choice${index + 1}`);
       choiceCont.innerText = choice;
       choices.appendChild(choiceCont);
       if (choice.includes("LEAVE")) {
@@ -245,7 +254,7 @@ export class DialogueScene extends Scenario {
         });
         this.cScene.appendChild(choices);
         return;
-      } 
+      }
       else {
         choiceCont.addEventListener("click", () => {
           // newScenario.scenario.nextScene();

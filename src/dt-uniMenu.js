@@ -2129,12 +2129,9 @@ class getUniMenu extends HTMLElement {
             }
 
             #gdLoginBut {
-              transform: scale(0.8);
               color: var(--primary);
               border-left: 1px solid var(--primary);
               border-right: 1px solid var(--primary);
-              opacity: 0.5;
-              cursor: default;
             }
 
             #dgromD4 {
@@ -2175,6 +2172,15 @@ class getUniMenu extends HTMLElement {
               color: black;
               font-family: "BS-B";
               letter-spacing: 2px;
+              scale: 1.1;
+            }
+
+            #gdLoginBut:hover {
+              background-color: var(--primary);
+              color: var(--secondary);
+              font-family: "BS-B";
+              letter-spacing: 2px;
+              scale: 1.1;
             }
 
             .cDot {
@@ -2689,7 +2695,7 @@ class getUniMenu extends HTMLElement {
                   <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette-offline.png" alt="SCOGE Logo" id="dgromOffLogo">
                 </div>
                 <div id="dgromD4">
-                  <div class="romLogButtons" id="gdLoginBut">LOG IN</div>
+                  <div class="romLogButtons" id="gdLoginBut">LOG-IN ACTIVE 7/31</div>
                   <div class="romLogButtons" id="gdBuyBut">GET DIGISETTE</div>
                 </div>
               </div>

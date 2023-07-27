@@ -1027,7 +1027,7 @@ export async function universe() {
                 window.shopping();
               });
               shadow.getElementById("nftShop").addEventListener("click", () => {
-                window.open('https://twitter.com/YumiMarketplace/status/1673888214690729984');
+                window.open('https://yumi.io/launchpad/detail/hmz4w-fiaaa-aaaah-admlq-cai');
               });
             } else {
               shadow.getElementById(

@@ -878,7 +878,7 @@
     right: 8%;
     align-items: center;
     font-family: "BS-R";
-    z-index: 11;
+    z-index: 31;
     transition: .5s all ease-in-out;
   }
 
@@ -904,6 +904,23 @@
     font-family: "BS-B";
     letter-spacing: .8em;
   } 
+
+  @keyframes blinkingChoice {
+    0% {
+      border: 1px solid var(--accent);
+      color: var(--accent);
+    }
+    50% {
+      background-color: var(--accent);
+      color: black;
+      font-family: "BS-B";
+      letter-spacing: 1em; 
+    }
+    100% {
+      border: 1px solid var(--accent);
+      color: var(--accent);
+    }
+  }
 
   /* DIALOGUE SCENE END */
 
