@@ -1,25 +1,32 @@
 - Add element transitions.
 - Fix Plug Wallet
-- Submit Website to Dfinity 
-- Add onTypingComplete method to characters (Check if characters have multiple things to say for this.)
 - Transition to city view when wallet connected.
 - Initiate Domain Setup scene (Land and Profile)
-- Apply for final milestone review
-- Gather AirDrop and Whitelist addresses. 
 - Create Grant Extension Proposal
+- Contact investor met on LinkedIn
+- Create Chapter Screens
 
+- Check for wallet / digisette
+    - If no wallet/Digisette then Scenario 1
+        - Initial Scene
+        - Learn Wallet Scene
+        - Learn Digisette Scene
+    - If wallet but no Digiseete then Scenario 2
+        - Get Digisette
+        - Learn Digisette
+    - If wallet and Digisette Enter Universe
+        - Navigator instructions scene
+    - If domain not setup then Scenario 3
+        - Profile Setup
+        - Land Area choice
+        - Domain Function Selection
 
+- Initiate MiniGames / Chapters
+    - The Guide
+        Scenario 4
+        Catch the guide randomization game. Gives the player the first bit of the developing storyline.
+    - Surveyor
+        Test for player to gain surveryor status, which gives them extrat enhancements
 
-
-- Check for wallet
-    - If no wallet then Scenario 1
-    - Else then Scenario2
-
-- Check if connected
-    - If connected Scnario 3
-
-- Check for Digisette
-    - If wallet nft includes digisette then Scenario 3
-
-- Check for Domain Setup
-    - If digisette profile metadata is empty then Scenario 4
+** Random notes
+CloudHall 12

@@ -13,6 +13,7 @@ export class SoundtrackManager {
       { key: 'menuEntrance1', src: 'https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/scoge-menu1-enterance-1.wav', artist: 'Menu', title: 'menuEntrance1' },
       { key: 'menuExitSys1', src: 'https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/scoge-menu1-exitSys-1.wav', artist: 'Menu', title: 'menuExitSys1' },
       { key: 'scoge1', src: 'https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/main/scoge-soleil.wav', artist: 'Main', title: 'scoge1' },
+      { key: 'pegasus', src: 'https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Soundtrack/Pegasus.mp3', artist: 'Soundtrack', title: 'pegasus' },
     ];
 
     this.trackList.forEach(track => {

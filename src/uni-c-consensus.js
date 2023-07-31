@@ -57,8 +57,8 @@ class uniConsensus extends HTMLElement {
                 comments: []
             }
         }
-        this.startDate = "8|15|23";
-        this.endDate =  "9|15|23";
+        this.startDate = "6|15|23";
+        this.endDate =  "7|15|23";
     }
 
     get active() {
@@ -74,7 +74,6 @@ class uniConsensus extends HTMLElement {
     }
 
     attributeChangedCallback(name, oldVal, newVal) {
-        console.log(name);
         if (name === 'true') {
             this.render();
         }
@@ -82,18 +81,19 @@ class uniConsensus extends HTMLElement {
             this.shadow.host.style.transition = "all .4s ease-in-out";
             this.shadow.host.style.transform = "scale(1.5)";
             this.shadow.host.style.opacity = "0";
-            // this.shadow.getElementById('avatarImg').style.animmationPlayState = "paused";
-            // this.shadow.getElementById('vaL').style.animmationPlayState = "paused";
-            // this.shadow.getElementById('vaR').style.animmationPlayState = "paused";
             setTimeout(() => {
                 this.shadow.host.style.display = "none";
             }, 300);
+            document.getElementById('ringView').appendChild(this.shadow.getElementById('dgr'));
         }
         if (newVal === 'true') {
+            this.shadow.getElementById('digisetteRing').appendChild(document.getElementById('dgr'));
             this.shadow.host.style.display = "block";
             this.shadow.host.style.transition = "all .4s ease-in-out";
-            this.shadow.host.style.transform = "scale(1)";
-            this.shadow.host.style.opacity = "1";
+            setTimeout(() => {
+                this.shadow.host.style.transform = "scale(1)";
+                this.shadow.host.style.opacity = "1";
+            }, 200);
             this.shadow.getElementById('avatarImg').style.animmationPlayState = "running";
             this.shadow.getElementById('vaL').style.animmationPlayState = "running";
             this.shadow.getElementById('vaR').style.animmationPlayState = "running";
@@ -258,6 +258,8 @@ class uniConsensus extends HTMLElement {
                     left: 0;
                     background-color: rgba(168,206,196,0.15);
                     z-index: 100;
+                    opacity: 0;
+                    transform: scale(1.5);
                 }
                 ::-webkit-scrollbar {
                     width: 1.5px;
@@ -362,7 +364,7 @@ class uniConsensus extends HTMLElement {
                     height: 25pt;
                     background: black;
                     border-radius: 50%;
-                    border: 1px solid #ff002d;
+                    border: 2px solid #ff002d;
                     cursor: pointer;
                     user-select: none;
                     pointer-events: none;
@@ -803,7 +805,6 @@ class uniConsensus extends HTMLElement {
             <div id="view">
                 <div id="voteSection">
                     <div id="digisetteRing">
-                        <uni-3dviewer active="false"></uni-3dviewer>
                     </div>
                     <div id="votingHeader">
                         Citizens Production Consensus Portal
@@ -857,7 +858,7 @@ class uniConsensus extends HTMLElement {
                     </div>
                     <div id="votesProgress">
                         <div id="voteSliderCont">
-                            <input type="range" min="0" max="100" value="0" class="slider" id="myRange">
+                            <input type="range" min="0" max="100" value="100" class="slider" id="myRange">
                             <div id="Sliderdetail">
                                 <div id="vsStart">START: ${this.startDate}</div>
                                 <div id="vsEnd">END: ${this.endDate}</div>
@@ -899,7 +900,7 @@ class uniConsensus extends HTMLElement {
                         <div id="votingButton">
                             <div id="cta">
                                 <div class="voteArrow" id="vaL">>></div>
-                                <div id="voteText">CAST VOTE</div>
+                                <div id="voteText">VOTING CLOSED</div>
                                 <div class="voteArrow" id="vaR"><<</div>
                             </div>
                         </div>

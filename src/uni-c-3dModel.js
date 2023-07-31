@@ -7,14 +7,24 @@ class uni3dViewer extends HTMLElement {
         this.shadow = this.attachShadow({ mode: 'open' });
     }
 
+    get active() {
+        return this.getAttr('active');
+    }
+
+    set active(val) {
+        this.setAttr('active', val);
+    }
+
     static get observedAttributes() {
         return ['active'];
     }
 
     attributeChangedCallback(name, oldVal, newVal) {
-        if (name === 'true') {
-            this.newScene();
-            // this.render();
+        if (newVal === 'true') {
+            this.render();
+            setTimeout(() => {
+                this.newScene();
+            }, 2000);
         }
     }
 
@@ -88,9 +98,11 @@ class uni3dViewer extends HTMLElement {
 
     connectedCallback() {
         this.render();
-        setTimeout(() => {
-            this.newScene();
-        }, 2000);
+        if (this.getAttribute('active') === 'true') {
+            setTimeout(() => {
+                this.newScene();
+            }, 2000);
+        }
     }
 
     render() {

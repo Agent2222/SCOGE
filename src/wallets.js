@@ -3,19 +3,30 @@ import { Principal } from "@dfinity/principal";
 import { HttpAgent } from "@dfinity/agent";
 import idlFactory from "../src/uniHelpers/erc721.did.js";
 import { getAllUserNFTs } from "@psychedelic/dab-js";
+import { enterTaosCity } from "./universe.js";
 
 const canister = "7mfck-baaaa-aaaah-acuqq-cai";
 
-const getNFTCollections = async () => {
-  const principal = 'qpbuq-myqvw-yoaff-265ad-5g6xu-wx5dl-zzd7y-y6oak-zo4uf-x3ozb-dqe';
+export const getNFTCollections = async () => {
+  // const principal = 'qpbuq-myqvw-yoaff-265ad-5g6xu-wx5dl-zzd7y-y6oak-zo4uf-x3ozb-dqe';
+  
+  const principal = window.ic.plug.getPrincipal();
+  var textV = Principal.fromUint8Array(principal._arr).toString();
   let agent = new HttpAgent({ host: "https://ic0.app" });
   try {
     const collections = await getAllUserNFTs({
       agent: agent,
-      user: principal,
+      user: textV,
     });
   
-    console.log("NFTs", collections);
+    // console.log("NFTs", collections);
+
+    // Find an NFT with the name "Panda Queen" and print its "description"
+    const digisette = collections.find((nft) => nft.name === "Digisette Pre-Alpha");
+    
+    if (digisette !== undefined) {
+      return true;
+    }
   } catch (err) {
     console.log("NFTs Error", err);
   }  
@@ -30,10 +41,12 @@ export const connectPlugWallet = async (whitelist, host) => {
     return;
   } else {
     // Scenario - Returning User
-    // console.log(window.ic.plug.isConnected());
-    const connected = await window.ic.plug.isConnected().catch((e) => {
+    let connected = false;
+    try {
+      connected = await window.ic.plug.isConnected();
+    } catch (e) {
       console.error(e);
-    });
+    }
 
     // Callback to print sessionData
     const onConnectionUpdate = () => {
@@ -42,8 +55,8 @@ export const connectPlugWallet = async (whitelist, host) => {
 
     if (connected === false) {
       // Scenario - User has a plug wallet but is not connected
-      console.log("Not Connected");
-      console.log("W/H", whitelist, host);
+      // console.log("Not Connected");
+      // console.log("W/H", whitelist, host);
       const plugpublicKey = await window.ic.plug
         .requestConnect({
           whitelist: whitelist,
@@ -65,11 +78,13 @@ export const connectPlugWallet = async (whitelist, host) => {
           view?.remove();
         },
       });
-      getNFTCollections();
-      document.getElementById("universe").style.filter = "blur(0px)";
-      document.querySelectorAll(".uniEvents").forEach((el) => {
-        el.style.opacity = 1;
-      });
+      // const nftCheck = await getNFTCollections();
+      console.log("NFT Check", nftCheck);
+      // document.getElementById("universe").style.filter = "blur(0px)";
+      enterTaosCity();
+      // document.querySelectorAll(".uniEvents").forEach((el) => {
+      //   el.style.opacity = 1;
+      // });
     } else if (connected === true) {
       // Scenario - User has a plug wallet and is connected
       gsap.to(view, {
@@ -82,15 +97,18 @@ export const connectPlugWallet = async (whitelist, host) => {
         },
       });
       console.log("Connected");
-      getNFTCollections();
+      const nftCheck = await getNFTCollections();
+      console.log("NFT Check", nftCheck);
       document.getElementById("universe").style.filter = "blur(0px)";
-      document.querySelectorAll(".uniEvents").forEach((el) => {
-        el.style.opacity = 1;
-      });
+      enterTaosCity();
+      // document.querySelectorAll(".uniEvents").forEach((el) => {
+      //   el.style.opacity = 1;
+      // });
     }
   }
 };
 
+export const nftCheck = getNFTCollections();
 
 //////////////////////////////////////////////////
 // Bitfinity Wallet
@@ -195,6 +213,8 @@ export const createActor1 = async (can, idl) => {
     });
   return suUiActor;
 };
+
+// export function verifyDigisette() {}
 
 //   // player state
 //   const playerState = async () => {

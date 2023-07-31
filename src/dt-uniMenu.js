@@ -1,10 +1,14 @@
 import { SoundtrackManager } from "./soundtrack.js";
+import { story } from "./game/SceneManager.js";
+import { newScenario, loading, endLoading } from "./universe.js";
+import { getNFTCollections } from "./wallets.js";
 // import { universe } from "./universe.js";
 import { gsap } from "gsap";
 // import fleekStorage from "@fleekhq/fleek-storage-js";
 
 // import { idlFactory } from "./declarations/universe_backend/;universe_backend.did.js";
 import { Configuration, OpenAIApi } from "openai";
+import { myFirstDrug } from "./universe.js";
 window.dtmenuOpen = false;
 window.dtfullMenuOpen = false;
 const VITE_ScogeI = import.meta.env.VITE_ScogeI;
@@ -86,13 +90,50 @@ class getUniMenu extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["uniMenu"];
+    return ["unimenu"];
   }
 
   attributeChangedCallback(prop, oldVal, newVal) {
-    if (prop === "uniMenu") {
-      this.render();
+    if (newVal === "taoscity") {
+      this.loggedIn();
+      this.headerTabs.forEach((element) => {
+        element.addEventListener("click", (e) => {
+          this.switchMenuTabs(e);
+        });
+      });
+      // Remove offline message
     }
+  }
+
+  loggedIn() {
+    this.shadow.getElementById("uniMenuExit").style.display = "none";
+    this.shadow.getElementById("uniMenuCloudHall").style.display = "grid";
+    // Temp Domain Dev Show
+    this.shadow.querySelectorAll(".romOffline").forEach((off) => {
+      off.style.display = "none";
+    });
+    this.shadow.getElementById("domainUnDev").style.display = "block";
+    this.shadow.getElementById("unDev1").innerHTML = "WELCOME TO YOUR DIGISETTE SYSTEM";
+    // Temp
+    myFirstDrug();
+    // this.shadow.getElementById("beaconNoti").style.display = "block";
+    var beaconPage = this.shadow.getElementById("beaconsBody");
+    var beaconEl = document.createElement("div");
+    beaconEl.setAttribute("class", "beacon tut");
+    beaconEl.setAttribute("data-headline", "UNKNOWN ITEM DETECTED");
+    beaconEl.setAttribute("data-message", "An unknown item has been detected on you.<br>Unable to identify its origin. Someone was able to get pass our sensors.<br><br> Classification: Trash.<br><br>Sending a snapshot to Scogé HQ for further analysis.");
+    beaconEl.innerHTML = `<div class="beaconOrigin">
+    <div class="beaconIdenIcon">!</div>
+    <div class="beaconSender">SYSTEM ALERT</div>
+  </div>
+  <div class="beaconPreview">
+    Unknown item detected.
+  </div>`;
+    beaconEl.addEventListener("click", (e) => {
+      this.openBeaconMessage(e);
+      // Add scenario
+    });
+    beaconPage.appendChild(beaconEl);
   }
 
   parseCSV(csvData) {
@@ -114,6 +155,40 @@ class getUniMenu extends HTMLElement {
     }
   
     return result;
+  }
+
+  musicLevel() {
+    this.shadow.getElementById("myRange2").addEventListener("input", (e) => {
+      switch (e.target.value) {
+        case "0":
+        soundtrack2.setVolume("pegasus", 0.0);
+        soundtrack2.loop("pegasus");
+        soundtrack2.pause("pegasus");
+        e.target.value = 0;
+        break;
+        case "1":
+        soundtrack2.setVolume("pegasus", 0.1);
+        soundtrack2.play("pegasus");
+        e.target.value = 1;
+        break;
+        case "2":
+        soundtrack2.setVolume("pegasus", 0.25);
+        e.target.value = 2;
+        break;
+        case "3":
+        soundtrack2.setVolume("pegasus", 0.50);
+        e.target.value = 3;
+        break;
+        case "4":
+        soundtrack2.setVolume("pegasus", 0.75);
+        e.target.value = 4;
+        break;
+        case "5":
+        soundtrack2.setVolume("pegasus", 1);
+        e.target.value = 5;
+        break;
+      }
+    });
   }
 
   // Beacons
@@ -516,7 +591,7 @@ class getUniMenu extends HTMLElement {
         <div id="beaconTutHead">${messageData2}</div>
         <div id="beaconTutBody">${messageData}</div>
         <div id="beaconTutActions">
-            <div class="beaconActions" id="beaconAction1">INVESTIGATE</div>
+            <div class="beaconActions" data-action="${data2}" id="beaconAction1">INVESTIGATE</div>
             <div class="beaconActions" id="beaconAction2">"OK, GOT IT!"</div>
         </div>
     </div>
@@ -552,9 +627,13 @@ class getUniMenu extends HTMLElement {
         });
       document
         .getElementById("beaconAction1")
-        ?.addEventListener("click", () => {
+        ?.addEventListener("click", (e) => {
           document.getElementById("beaconPan")?.remove();
           selected.querySelector(".beaconIdenIcon").style.opacity = "0";
+          var action = e.target.getAttribute("data-action");
+          if (action === "UNKNOWN ITEM DETECTED") {
+            newScenario("StangeNote");
+          }
         });
     }
   }
@@ -575,6 +654,9 @@ class getUniMenu extends HTMLElement {
         tab1.setAttribute("class", `men-active ${tabClass} selectedMenu`);
         tab2.setAttribute("class", `men-active ${tabClass}`);
         tab3.setAttribute("class", `men-active ${tabClass}`);
+        if (tabClass === "ct") {
+          this.shadow.querySelector(`.${tabClass}1`).style.display = "grid";
+        }
         break;
       case "fm-menu2":
         this.shadow.querySelector(`.${tabClass}1`).style.display = "none";
@@ -583,6 +665,9 @@ class getUniMenu extends HTMLElement {
         tab1.setAttribute("class", `men-active ${tabClass}`);
         tab2.setAttribute("class", `men-active ${tabClass} selectedMenu`);
         tab3.setAttribute("class", `men-active ${tabClass}`);
+        if (tabClass === "ct") {
+            document.getElementById("compConsensus").setAttribute("active", "true");
+        }
         break;
       case "fm-menu3":
         this.shadow.querySelector(`.${tabClass}1`).style.display = "none";
@@ -621,6 +706,28 @@ class getUniMenu extends HTMLElement {
   connectedCallback() {
     this.render();
     this.viewGallery();
+    this.musicLevel();
+    this.shadow.getElementById("domainUnDev").addEventListener("click", () => {
+      story("DomainDevelopment");
+    });
+    this.shadow.getElementById("cloudHallGarmentImg").addEventListener("click", () => {
+      document.getElementById("compConsensus").setAttribute("active", "true");
+    });
+    this.shadow.getElementById("gdLoginBut").addEventListener("click", async () => {
+      // Temp
+      if (window.ic) {
+        loading();
+        const check = await getNFTCollections();
+        endLoading(); 
+        if (check === true) {
+          story("Intro");
+        } else {
+          story("Intro");
+        }
+      } else {
+        story("DigisetteIntro");
+      }
+    });
     this.shadow.getElementById("gdBuyBut").addEventListener("click", () => {
       // open new tab and go to link
       window.open(this.digiLink);
@@ -996,6 +1103,10 @@ class getUniMenu extends HTMLElement {
               stroke: white !important;
               fill: white !important;
             }
+            #menuItems > #uniMenuCloudHall:hover .cls-1 {
+              stroke: white !important;
+              fill: white !important;
+            }
             #menuItems > #uniMenuShop:hover .cls-1 {
               stroke: white !important;
               fill: white !important;
@@ -1070,6 +1181,11 @@ class getUniMenu extends HTMLElement {
             #uniMenuIcon2:hover {
               color: white;
             }
+
+            #uniMenuCloudHall {
+              display: none;
+            }
+
             #fm-header-headline {
               width: 100%;
               height: 100%;
@@ -1915,9 +2031,9 @@ class getUniMenu extends HTMLElement {
               color: var(--secondary);
             }
             #notiTogSect, .settingsSectionsSlider, .saveButs {
-              opacity: 30%;
-              user-select: none;
-              pointer-events: none;
+              // opacity: 30%;
+              // user-select: none;
+              // pointer-events: none;
             }
             #notiToggle {
               user-select: none;
@@ -2108,7 +2224,7 @@ class getUniMenu extends HTMLElement {
               letter-spacing: 1px;
             }
 
-            #dgromD2-2 {
+            #dgromD2-2{
               transform: scaleX(1.8) scaleY(.9);
               filter: blur(6px);
               opacity: 0.8;
@@ -2126,6 +2242,107 @@ class getUniMenu extends HTMLElement {
 
             #dgromD3 img {
               height: 100%;
+            }
+
+            #domainUnDev {
+              width: 80%;
+              height: 90%;
+              position: absolute;
+              top: 0;
+              left: 0;
+              background-color: rgba(0, 0, 0, 0.9);
+              z-index: 7;
+              padding-left: 10%;
+              padding-right: 10%;
+              padding-top: 10%;
+              display: none;
+              font-family: "GM-I";
+            }
+
+            #unDev1 {
+              font-family: "GM-I";
+              font-size: .8em;
+              color: white;
+              width: 75%;
+              height: 5%;
+              padding-left: 25%;
+              letter-spacing: 1px;
+              float: left;
+            }
+
+            #unDev2 {
+              width: 100%;
+              height: 10%;
+              margin-top: 0;
+              padding-top: 0;
+              float: left;
+              position: relative;
+            }
+
+            #unDev2-2 {
+              transform: scaleX(1.5) scaleY(.9) translateX(10px);
+              filter: blur(6px);
+              opacity: 0.8;
+            }
+
+            #unDev3 {
+              width: 90%;
+              height: 20%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              padding: 5%;
+              float: left;
+              position: absolute;
+              bottom: 0;
+              left: 0;
+            }
+
+            #unDev3 img {
+              width: 100%;
+            }
+
+
+            #unDev4 {
+              width: 90%;
+              height: 50%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              padding: 5%;
+              float: left;
+              text-align: center;
+            }
+
+            .unReg {
+              position: absolute;
+              font-family: "GM-I";
+              font-size: 1.5em;
+              color: #ff002d;
+              width: 90%;
+              height: 100%;
+              padding-left: 10%;
+              letter-spacing: 1px;
+            }
+
+
+            .ddLogButtons {
+              width: 60%;
+              height: 30%;
+              background-color: rgba(0, 0, 0, 0.8);
+              border-radius: 5px;
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-template-rows: 1fr;
+              justify-items: center;
+              align-items: center;
+              color: var(--accent);
+              letter-spacing: 1px;
+              font-size: .9em;
+              border-left: 1px solid var(--accent);
+              border-right: 1px solid var(--accent);
+              transition: 0.3s all ease-in-out;
+              cursor: pointer;
             }
 
             #gdLoginBut {
@@ -2146,6 +2363,44 @@ class getUniMenu extends HTMLElement {
               justify-items: center;
               align-items: center;
               row-gap: 15%;
+            }
+
+            #ddLogo {
+              animation: domainWF 20s ease-in-out infinite;
+              pointer-events: none;
+              user-select: none;
+            }
+
+            @keyframes domainWF {
+              0% {
+                transform: scale(1);
+                opacity: 0;
+              }
+              10% {
+                opacity: 1;
+              }
+              70% {
+                opacity: 1;
+              }
+              100% {
+                transform: scale(7) translateX(5%) translateY(5%);
+                opacity: 0;
+              }
+            }
+
+            @keyframes domainWFFlicker {
+              0% {
+                filter: blur(0px) contrast(.9);
+              }
+              10% {
+                filter: blur(.2px)  contrast(.8);
+              }
+              70% {
+                filter: blur(0px) contrast(1);
+              }
+              100% {
+                filter: blur(.5px);
+              }
             }
 
             .romLogButtons {
@@ -2197,6 +2452,75 @@ class getUniMenu extends HTMLElement {
             #loadingText {
               display: none;
             }
+
+            #fm-cloudHall {
+              width: 100%;
+              height: 100%;
+            }
+
+            #cloudHallBody {
+              width: 100%;
+              height: 100%;
+              display: grid;
+            }
+
+            .ct1 {
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-template-rows: 20% 80%;
+              width: 100%;
+              height: 80%;
+              margin-top: 20%;
+              align-items: center;
+              justify-content: center;
+            }
+
+            #cloudHallImg {
+              width: 60%;
+              align-self: center;
+              justify-self: center;
+              opacity: .7;
+            }
+
+            #cloudHallText {
+              width: 100%;
+              height: 100%;
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-template-rows: 1fr;
+              align-items: center;
+              justify-content: center;
+              text-align: center;
+              color: var(--accent);
+              letter-spacing: 2px;
+            }
+
+
+            .ct2 {
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-template-rows: 1fr;
+              width: 100%;
+              height: 80%;
+              margin-top: 20%;
+              align-items: center;
+              justify-content: center;
+              cursor: pointer;
+            }
+
+            #cloudHallGarmentImg {
+              height: 100%;
+              align-self: center;
+              justify-self: center;
+              opacity: .7;
+              cursor: pointer;
+              transition: 0.3s all ease-in-out;
+            }
+
+            #cloudHallGarmentImg:hover {
+              scale: 1.1;
+            }
+
 
             @media screen and (max-width: 800px) {
               #uniMenu {
@@ -2681,6 +3005,25 @@ class getUniMenu extends HTMLElement {
                 </div>
                 <div class="uniMenuTxt">Log In</div>
               </div>
+              <div id="uniMenuCloudHall" class="menuTabs">
+                <div>
+                  <svg version="1.1" id="uniMenuCloudHallSvg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                  viewBox="0 0 800 800" style="enable-background:new 0 0 800 800;" xml:space="preserve">
+                <style type="text/css">
+                  .cls-1{fill:#FF002D;}
+                </style>
+                <path class="cls-1" d="M650,175l-7.5-7.5C600,120,537.5,105,537.5,105C462.5,82.5,345,132.5,240,235c-87.5,82.5-140,182.5-140,257.5
+                  c0,10.1,2.5,20,2.5,30c5,50,37.5,102.5,64.9,127.5c35.1,35,80,52.5,130,52.5c82.5,0,180.1-47.6,270-132.5
+                  C707.5,432.5,742.5,270,650,175z M250,542.5c0-32.5,35-100,110-175c72.6-72.5,147.6-92.5,182.5-100c-17.5,47.6-55,105-110,160.1
+                  c-52.5,50-112.5,89.9-165,110C262.5,540,255,540,250,542.5z M275,270c82.5-82.5,170-122.6,225-122.6c17.5,0,32.5,5.1,42.5,15
+                  c10.1,10,15,30,12.5,52.5c-30,2.4-132.5,19.9-230,117.5C262.5,395,197.5,485,202.5,547.5c-15,0-30.1-5-37.5-12.5
+                  c-5.1-5-10.1-12.5-12.5-22.5c0,0-2.5-12.5-2.5-20C152.5,430,200,342.5,275,270z M532.5,532.5c-120,120-257.5,152.4-330,82.5
+                  c-5.1-5.1-10.1-10.1-15-17.6c5,2.5,12.5,2.5,20,2.5c22.5,0,50-5,77.4-15C345,562.5,410,520,467.5,462.5C555,375,605,275,605,202.5
+                  l2.5,2.4l7.5,5C685,282.5,650,417.5,532.5,532.5z"/>
+                </svg>
+                </div>
+                <div class="uniMenuTxt" id="menuCloudHall">CloudHall 12</div>
+              </div>
             </div>
             <div id="fullMenu">
               <div id="romOffline">
@@ -2695,8 +3038,23 @@ class getUniMenu extends HTMLElement {
                   <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette-offline.png" alt="SCOGE Logo" id="dgromOffLogo">
                 </div>
                 <div id="dgromD4">
-                  <div class="romLogButtons" id="gdLoginBut">LOG-IN ACTIVE 7/31</div>
+                  <div class="romLogButtons" id="gdLoginBut">LOG-IN (PRE-ALPHA)</div>
                   <div class="romLogButtons" id="gdBuyBut">GET DIGISETTE</div>
+                </div>
+              </div>
+               <div id="domainUnDev">
+                <div id="unDev1">
+                  DIGISETTE ROM
+                </div>
+                <div id="unDev2">
+                  <div class="unReg" id="unDev2-1">REGISTER YOUR DOMAIN</div>
+                  <div class="unReg" id="unDev2-2">REGISTER YOUR DOMAIN</div>
+                </div>
+                <div id="unDev4">
+                  <div class="ddLogButtons" id="gdBuyBut">Visit T.C. Domain Development Center</div>
+                </div>
+                <div id="unDev3">
+                  <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/graphics/domain-wireframe.png" alt="Domain Development" id="ddLogo">
                 </div>
               </div>
               <div id="menuMessage">
@@ -2875,7 +3233,7 @@ class getUniMenu extends HTMLElement {
                 <div class="settingsSectionsSlider">
                   <div>Music</div>
                   <div>
-                    <input type="range" min="0" max="5" value="0" class="soundSlider1" id="myRange">
+                    <input type="range" min="0" max="5" value="0" class="soundSlider1" id="myRange2">
                   </div>
                 </div>
                 <!--
@@ -2885,7 +3243,7 @@ class getUniMenu extends HTMLElement {
                 </div>
                 -->
                 <div class="saveButs">
-                  <div>Save</div>
+                  <div id="settingsSave">Save</div>
                 </div>
               </div>
               <div id="fm-beacons">
@@ -2908,7 +3266,7 @@ class getUniMenu extends HTMLElement {
                       Meet our Navigator.
                     </div>
                   </div>
-                  <div class="beacon tut" data-headline="ICP ONLINE" data-message="SCOGÉ Digisette systems are powered by T.A.O.S City's #1 decentralized IP service provider, The Internet Computer.">
+                <div class="beacon tut" data-headline="ICP ONLINE" data-message="SCOGÉ Digisette systems are powered by T.A.O.S City's #1 decentralized IP service provider, The Internet Computer.">
                   <div class="beaconOrigin">
                     <div class="beaconIdenIcon">!</div>
                     <div class="beaconSender">DFINITY</div>
@@ -2941,7 +3299,7 @@ class getUniMenu extends HTMLElement {
                 <div class="beacon-tabs ht2">
                 </div>
                 <div class="beacon-tabs ht3">
-              </div>
+                </div>
               </div>
               <div id="fm-feedback">
                 <div id="menuLoadingScreen2" class="LoadBox">
@@ -2954,6 +3312,19 @@ class getUniMenu extends HTMLElement {
                   <textarea id="feedbackInput" name="FeedbackText" placeholder="Enter feedback, Subscribe, or Contact City-Central here.." maxlength="320"></textarea>
                   <input id="feedbackButton" type="submit">
                 </form>
+              </div>
+              <div id="fm-cloudHall">
+                <div id="cloudHallBody">
+                  <div class="cloudHall-tabs ct1">
+                    <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/graphics/tc-dd-seal.png" alt="CloudHall 12" id="cloudHallImg">
+                    <div id="cloudHallText">GRAND COUNCIL CENTER<br>- UNDER CONSTRUCTION -</div>
+                  </div>
+                  <div class="cloudHall-tabs ct2">
+                    <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/avatar/avatar-base1.png" alt="CloudHall 12" id="cloudHallGarmentImg">
+                  </div>
+                  <div class="cloudHall-tabs ct3">
+                  </div>
+                </div>
               </div>
             </div>
             <div id="fullMenuBG"></div>

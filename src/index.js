@@ -26,7 +26,7 @@ import { mintingScreen } from "../src/mint.js";
 import { gsap } from "gsap";
 import { TextPlugin } from "gsap/TextPlugin";
 import { Configuration, OpenAIApi } from "openai";
-import { universe } from "./universe.js";
+import { enterTaosCity, universe } from "./universe.js";
 import { uniConsensus } from "./uni-c-consensus.js";
 import { uni3dViewer } from "./uni-c-3dModel.js";
 import { checkInitialState } from "../src/game/SceneManager.js";
@@ -49,6 +49,9 @@ window.sizeInit = () => {
     videoEls.forEach((videoEl) => {
       videoEl.setAttribute("class", "mobileVideo");
     });
+    document.getElementById("getUniMenu").shadowRoot.getElementById("gdLoginBut").style.pointerEvents = "none";
+    document.getElementById("getUniMenu").shadowRoot.getElementById("gdLoginBut").style.userSelect = "none";
+    document.getElementById("getUniMenu").shadowRoot.getElementById("gdLoginBut").innerHTML = "(LOGIN) DESKTOP ONLY";
     console.log("Mobile");
   } else {
     // Desktop
@@ -64,11 +67,11 @@ setTimeout(() => {
 }, 1000);
 
 window.entry = () => {
-  gsap.to("#introLogo", { duration: 1, opacity: 1, ease: "power2.inOut" });
-  // gsap.to("#intro", { duration: 1, opacity: 0, ease: "power2.inOut", delay: 1.5 });
-  gsap.to(".welcomeOptions", { duration: 1, opacity: 1, ease: "power2.inOut", delay: 2 });
-  gsap.to("#wOpt1", { duration: 2, translateX: 0, ease: "power2.inOut", delay: 1.5 });
-  gsap.to("#wOpt2", { duration: 2, translateX: 0, ease: "power2.inOut", delay: 1.5 });
+  // gsap.to("#introLogo", { duration: 1, opacity: 1, ease: "power2.inOut" });
+  // // gsap.to("#intro", { duration: 1, opacity: 0, ease: "power2.inOut", delay: 1.5 });
+  // gsap.to(".welcomeOptions", { duration: 1, opacity: 1, ease: "power2.inOut", delay: 2 });
+  // gsap.to("#wOpt1", { duration: 2, translateX: 0, ease: "power2.inOut", delay: 1.5 });
+  // gsap.to("#wOpt2", { duration: 2, translateX: 0, ease: "power2.inOut", delay: 1.5 });
   // <uni-consensus active="false" id="compConsensus"></uni-consensus>
   var consensusBlock = document.createElement("uni-consensus");
   consensusBlock.setAttribute("active", "false");
@@ -111,6 +114,7 @@ window.urlParamsActive = null;
 window.inUniverse = false;
 window.productsloaded = false;
 window.currentMenuTab = null;
+window.tempIn = false;
 var ci = "false";
 
 // Init Commerce
@@ -217,6 +221,7 @@ const uncover = () => {
       window.galleryActive = true;
       window.view = "gallery";
       window.universeSystem();
+      // enterTaosCity();
       document.getElementById("portalVideo").style.display = "block";
       document.getElementById("portalVideo2").style.display = "block";
       document.getElementById("seekModal").style.pointerEvents = "auto";
