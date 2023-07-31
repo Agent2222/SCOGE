@@ -5,11 +5,14 @@ import { connectPlugWallet } from "../../wallets.js";
 import { connectBitFinityWallet } from "../../wallets.js";
 import { gsap } from "gsap";
 import { newScenario } from "../../universe.js";
+import { openNote1 } from "../../game/SceneManager.js";
 
-const canister = "7mfck-baaaa-aaaah-acuqq-cai";
-const local = "http://localhost:3000/";
-const can2 = "ryjl3-tyaaa-aaaaa-aaaba-cai";
-const whitelist = [can2];
+// const canister = "7mfck-baaaa-aaaah-acuqq-cai";
+const local = "http://127.0.0.1:8080/";
+const canLocal = "bd3sg-teaaa-aaaaa-qaaba-cai";
+const deploy = "https://uqjdj-siaaa-aaaag-aaoxq-cai.icp0.io/";
+const canDeploy = "wnunb-baaaa-aaaag-aaoya-cai";
+const whitelist = [canLocal];
 
 export class DialogueScene extends Scenario {
   constructor(scene) {
@@ -198,6 +201,7 @@ export class DialogueScene extends Scenario {
         el.style.width = element.width;
         el.style.height = element.height;
         el3Img.setAttribute("id", `${element.id}-img`);
+        el3Img.setAttribute("class", "sceneElementImg");
         el3Img.style.width = "100%";
         el3Img.style.height = "100%";
         el3Img.style.position = "absolute";
@@ -208,6 +212,7 @@ export class DialogueScene extends Scenario {
           const el2Img = document.createElement("img");
           el2Img.src = element.src;
           el2Img.setAttribute("id", "element1Shadow");
+          el2Img.setAttribute("class", "sceneElementImg");
           el3Img.src = element.src;
           el2Img.style.width = "100%";
           el2Img.style.height = "auto";
@@ -220,6 +225,10 @@ export class DialogueScene extends Scenario {
           const actions = {
             "connectPlugWallet()": () => connectPlugWallet(whitelist, local),
             "connectBitfinityWallet()": () => connectBitFinityWallet(whitelist, local),
+            "openNote1()": () => openNote1(),
+            "getDigisette()": () => {
+              window.open("https://yumi.io/launchpad/detail/hmz4w-fiaaa-aaaah-admlq-cai", "_blank");
+            }
             // add other actions here
           };
         
@@ -258,7 +267,8 @@ export class DialogueScene extends Scenario {
       else {
         choiceCont.addEventListener("click", () => {
           // newScenario.scenario.nextScene();
-          window.testScn.nextScene();
+          // window.testScn.nextScene();
+          window.currentScenario.nextScene();
         });
         this.cScene.appendChild(choices);
       }
@@ -280,7 +290,7 @@ export class DialogueScene extends Scenario {
     //   if (this.onImageError) this.onImageError();
     // };
     // this.image.src = this.props.imageURL;
-    this.chInSc = this.scene.characters.map((character) => `char_${character.persona.name}`);
+    this.chInSc = this.scene.characters?.map((character) => `char_${character.persona.name}`);
   }
 
   // handles any errors that occur during loading

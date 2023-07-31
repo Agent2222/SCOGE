@@ -27,6 +27,24 @@
         "images": {
           "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Destiny-1.png"
         }
+      },
+      {
+        "name": "Lucien",
+        "location": "Digisette Showroom",
+        "job": "Digisette associate",
+        "dialogue": "You haven't purchased your Digisette yet? You can still get one at the YUMI Marketplace.",
+        "images": {
+          "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-2.png"
+        }
+      },
+      {
+        "name": "Lesli",
+        "location": "Digisette Domain Development",
+        "job": "DD associate",
+        "dialogue": "You haven't purchased your Digisette yet? You can still get one at the YUMI Marketplace.",
+        "images": {
+          "default": " https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Lesli-1.png"
+        }
       }
     ],
     "Elements": [
@@ -65,7 +83,7 @@
                   "text": [
                   {
                     "action": null,
-                    "txt":"Hello, welcome to City Central HOLO-Support. I'm Digisette Agent Alex. You'll need a wallet to get started. Get one of these and come back when you're ready."
+                    "txt":"Hello, welcome to City Central HOLO-Support. I'm Digisette Agent Alex. You'll need a PLUG wallet to get started. Make sure your DIGISETTE is in this wallet, and click the Holo when ready."
                   }
                 ]
                 },
@@ -186,35 +204,6 @@
               "shadowEffectTo": "0px",
               "brightnessTo": "1.0",
               "action": "connectPlugWallet()"
-            },
-            {
-              "id": "bitWallet",
-              "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/BFWallet.png",
-              "type": "div",
-              "second": true,
-              "innerType": "img",
-              "width": "20%",
-              "height": "auto",
-              "left": "65%",
-              "right": "auto",
-              "top": "45%",
-              "bottom": "auto",
-              "zIndex": "2",
-              "speed": 0.9,
-              "position": "absolute",
-              "shadow": true,
-              "shadowEffect": "50px",
-              "brightness": "1.0",
-              "leftTo": "65%",
-              "rightTo": "auto",
-              "topTo": "45%",
-              "bottomTo": "auto",
-              "widthTo": "20%",
-              "heightTo": "auto",
-              "zIndexTo": "2",
-              "shadowEffectTo": "0px",
-              "brightnessTo": "1.0",
-              "action": "connectBitfinityWallet()"
             }
           ],
           "choices": [
@@ -318,7 +307,7 @@
                     },
                     {
                       "action": null,
-                      "txt": "There are many different types of wallets, but they all do the same thing. For starters use Plug, and when you're ready, you can explore others."
+                      "txt": "There are many different types of wallets, but they all do the same thing. For starters use Plug. Let us know if we should add any others."
                     },
                     {
                       "action": null,
@@ -396,21 +385,6 @@
               "shadow": true,
               "shadowEffect": "blur(50px)",
               "action": "`${connectPlugWallet()}`"
-            },
-            {
-              "id": "bitWallet",
-              "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/BFWallet.png",
-              "type": "div",
-              "second": true,
-              "innerType": "img",
-              "width": "20%",
-              "height": "auto",
-              "left": "65%",
-              "top": "45%",
-              "zIndex": "2",
-              "position": "absolute",
-              "shadow": true,
-              "shadowEffect": "blur(50px)"
             }
           ],
           "choices": [
@@ -419,8 +393,277 @@
           ]
         }
       ],
-      "Scenario2": [],
-      "Scenario3": []
+      "DigisetteIntro": [
+        {
+          "name": "noDigisetteDetected",
+          "position": 1,
+          "type": "dialogue",
+          "bg": "rgba(0, 0, 0, 0.75)",
+          "activated": {
+            "land": 9120,
+            "gate": 0,
+            "pop": false,
+            "scn": [1,4]
+          },
+          "buttons": ["CONTINUE", "DIGISETTE?","LEAVE ->"],
+          "characters": [
+            {
+              "persona": {
+                "name": "Lucien",
+                "location": "Digisette Showroom",
+                "job": "Digisette associate",
+                "dialogue": {
+                  "pPosition": "right",
+                  "multi": true,
+                  "text": [
+                  {
+                    "action": null,
+                    "txt":"Doesn't look like you have a DIGISETTE yet. You'll need one to get started. You can get one at the YUMI Marketplace."
+                  },
+                  {
+                    "action": null,
+                    "txt":"DIGISETTE's are the future of this city. Domain management, memory, and entertainment. Not to mention you get Lord status through-out the city!"
+                  }
+                ]
+                },
+                "images": {
+                  "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-2.png"
+                }
+              },
+              "pns": {
+                "position": "absolute",
+                "left": "-5%",
+                "leftTo": "5%",
+                "right": "auto",
+                "rightTo": "auto",
+                "bottom": 0,
+                "bottomTo": 0,
+                "top": "auto",
+                "topTo": "auto",
+                "zIndex": 1,
+                "zIndexTo": 1,
+                "width": "auto",
+                "widthTo": "auto",
+                "height": "85%",
+                "heightTo": "85%",
+                "speed": 1,
+                "blur": "0px",
+                "blurTo": "0px",
+                "brightness": "1",
+                "brightnessTo": "1"
+              },
+              "element": {
+                "class": "chr-textElement",
+                "type": "div",
+                "backgroundColor": "rgba(0, 0, 0, 0.75)",
+                "padding": "10px 10px",
+                "borderRadius": "10px",
+                "borderTop": "0.5px solid rgb(255, 0, 45)",
+                "borderBottom": "0.5px solid rgb(255, 0, 45)",
+                "width": "350px",
+                "height": "auto",
+                "left": "auto",
+                "right": "-10%",
+                "bottom": "auto",
+                "top": "-5%",
+                "zIndex": 2,
+                "position": "absolute",
+                "border": ".5px solid #ff002d",
+                "pointer": {
+                  "position": "absolute",
+                  "width": "50px",
+                  "height": "50px",
+                  "borderleft": "1px solid #ff002d",
+                  "bottom": "-60px",
+                  "left": "-30px",
+                  "zIndex": -5,
+                  "transform": "rotate(45deg)"
+                }
+              },
+              "actions": ["chat"]
+            }
+          ],
+          "elements": [
+            {
+              "id": "digisette",
+              "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png",
+              "type": "div",
+              "innerType": "img",
+              "width": "25%",
+              "height": "auto",
+              "left": "45%",
+              "top": "35%",
+              "zIndex": "1",
+              "speed": 0.9,
+              "position": "absolute",
+              "shadow": true,
+              "shadowEffect": "blur(50px)",
+              "brightness": "1.0",
+              "leftTo": "65%",
+              "rightTo": "auto",
+              "topTo": "45%",
+              "bottomTo": "auto",
+              "widthTo": "20%",
+              "heightTo": "auto",
+              "zIndexTo": "2",
+              "shadowEffectTo": "0px",
+              "brightnessTo": "1.0",
+              "action": "getDigisette()"
+            }
+          ],
+          "choices": [
+            "DIGISETTE?",
+            "LEAVE ->"
+          ]
+        }
+      ],
+      "StangeNote": [
+        {
+          "name": "strangeNote",
+          "position": 1,
+          "type": "dialogue",
+          "bg": "rgba(0, 0, 0, 0.75)",
+          "activated": {
+            "land": 9120,
+            "gate": 0,
+            "pop": false,
+            "scn": [1,4]
+          },
+          "buttons": ["LEAVE ->"],
+          "elements": [
+            {
+              "id": "note1",
+              "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/graphics/tg-artifact-1-1.png",
+              "type": "div",
+              "innerType": "img",
+              "width": "25%",
+              "height": "auto",
+              "left": "35%",
+              "top": "35%",
+              "zIndex": "1",
+              "speed": 0.9,
+              "position": "absolute",
+              "shadow": true,
+              "shadowEffect": "blur(30px)",
+              "brightness": "1.0",
+              "leftTo": "65%",
+              "rightTo": "auto",
+              "topTo": "45%",
+              "bottomTo": "auto",
+              "widthTo": "20%",
+              "heightTo": "auto",
+              "zIndexTo": "2",
+              "shadowEffectTo": "0px",
+              "brightnessTo": "1.0",
+              "action": "openNote1()"
+            }
+          ],
+          "choices": [
+            "LEAVE ->"
+          ]
+        }
+      ],
+      "DomainDevelopment": [
+        {
+          "name": "domanDevelopmentPending",
+          "position": 1,
+          "type": "dialogue",
+          "bg": "rgba(0, 0, 0, 0.75)",
+          "activated": {
+            "land": 9120,
+            "gate": 0,
+            "pop": false,
+            "scn": [1,4]
+          },
+          "buttons": ["CONTINUE", "DIGISETTE?","LEAVE ->"],
+          "characters": [
+            {
+              "persona": {
+                "name": "Lesli",
+                "location": "Digisette Domain Development",
+                "job": "DD associate",
+                "dialogue": {
+                  "pPosition": "right",
+                  "multi": true,
+                  "text": [
+                  {
+                    "action": null,
+                    "txt":"Hello, I'm Lesli Domain Development Associate. DIGISETTE has been getting a lot of attention lately. So we're a bit tied up with Domain Development at the moment."
+                  },
+                  {
+                    "action": null,
+                    "txt":"As we push out DIGISETTE features, we'll be opening up more domains for development. So be sure to check back often."
+                  },
+                  {
+                    "action": null,
+                    "txt":"Also, now's the best time to re-explore the city. There's a lot of new things to see and do. If you find anything weird, or have any suggestions on how we can make this city better, please send feedback! See you around."
+                  }
+                ]
+                },
+                "images": {
+                  "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Lesli-1.png"
+                }
+              },
+              "pns": {
+                "position": "absolute",
+                "left": "-5%",
+                "leftTo": "50%",
+                "right": "auto",
+                "rightTo": "auto",
+                "bottom": 0,
+                "bottomTo": 0,
+                "top": "auto",
+                "topTo": "auto",
+                "zIndex": 1,
+                "zIndexTo": 1,
+                "width": "auto",
+                "widthTo": "auto",
+                "height": "85%",
+                "heightTo": "85%",
+                "speed": 1,
+                "blur": "0px",
+                "blurTo": "0px",
+                "brightness": "1",
+                "brightnessTo": "1"
+              },
+              "element": {
+                "class": "chr-textElement",
+                "type": "div",
+                "backgroundColor": "rgba(0, 0, 0, 0.75)",
+                "padding": "10px 10px",
+                "borderRadius": "10px",
+                "borderTop": "0.5px solid rgb(255, 0, 45)",
+                "borderBottom": "0.5px solid rgb(255, 0, 45)",
+                "width": "350px",
+                "height": "auto",
+                "left": "-90%",
+                "right": "auto",
+                "bottom": "auto",
+                "top": "-5%",
+                "zIndex": 2,
+                "position": "absolute",
+                "border": ".5px solid #ff002d",
+                "pointer": {
+                  "position": "absolute",
+                  "width": "50px",
+                  "height": "50px",
+                  "borderleft": "1px solid #ff002d",
+                  "bottom": "-60px",
+                  "right": "-30px",
+                  "left": "",
+                  "zIndex": -5,
+                  "transform": "rotate(-45deg)"
+                }
+              },
+              "actions": ["chat"]
+            }
+          ],
+          "choices": [
+            "DIGISETTE?",
+            "LEAVE ->"
+          ]
+        }
+      ]
     }
   }
 }

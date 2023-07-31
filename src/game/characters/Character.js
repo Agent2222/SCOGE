@@ -108,7 +108,7 @@ export class Character {
                 transform: "scale(0)",
                 ease: "power4.out",
               });
-            }, 5000);
+            }, 7000);
           }
         }
       };

@@ -8,6 +8,8 @@ import { Scenario } from "./game/scenarios/scenarios.js";
 import { DialogueScene } from "./game/scenarios/DialogueScene.js";
 import { gsap } from "gsap";
 
+const soundtrack = new SoundtrackManager();
+
 var testState = {
   whitelistPrincipals: [
     {
@@ -93,7 +95,6 @@ var testState = {
 
 // Init Soundtrack
 export async function universe() {
-  const soundtrack = new SoundtrackManager();
 
   // US VARS
   var universeCanvas = document.querySelector("#universe");
@@ -127,8 +128,10 @@ export async function universe() {
   var previewOpen = false;
   var typing = false;
   var actor = null;
+  var canon = null;
   window.connected = false;
-  var tempLandEx = ["1435", "3162", "2849", "6208"];
+  var tempLandEx = ["1435", "3162", "2849", "6208", "1980"];
+  window.activeGames = [];
   window.suUiActor = null;
   window.landActivated = false;
   window.chatActive = false;
@@ -160,12 +163,14 @@ export async function universe() {
   // MP
 
   const channel = window.ably.channels.get("alphaTestersChat");
-  const channel2 = window.ably.channels.get("lordsInTheCity");
+  // const channel2 = window.ably.channels.get("lordsInTheCity");
 
   const test = () => {
     document.addEventListener("keydown", async function (e) {
       if (e.keyCode === 80) {
-        window.testScn = await newScenario("Intro");
+        // window.testScn = await newScenario("Intro");
+        // window.testScn = await newScenario("StangeNote");
+        // window.testScn = await newScenario("DigisetteIntro");
       }
       // if (e.keyCode === 77) {
       //   var character = document.querySelector(".character");
@@ -178,7 +183,7 @@ export async function universe() {
       // }
     });
   };
-  test();
+  // test();
 
   window.universeSystem = async () => {
     var uniCtx = universeCanvas.getContext("2d");
@@ -195,10 +200,6 @@ export async function universe() {
     // ) {
       // The browser is Brave, Firefox, or Chrome
       document.querySelector("#universe").style.display = "block";
-      // REACTIVATE THIS
-      // setTimeout(() => {
-      //   document.querySelector("#universe").style.opacity = "100%";
-      // }, 100);
       img.onload = function () {
         uniCtx.drawImage(img, 0, 0, img.width, img.height);
         // make a 18px by 18px grid overlay
@@ -259,28 +260,39 @@ export async function universe() {
       var uniEvent2 = document.createElement("div");
       var uniEvent3 = document.createElement("div");
       var uniEvent4 = document.createElement("div");
+      var uniEvent5 = document.createElement("div");
       //
       uniEvent.id = "uniEvent";
       uniEvent.setAttribute("class", "uniEvents");
-      document.getElementById("camera").appendChild(uniEvent);
+      if (!document.getElementById("uniEvent")) {
+        document.getElementById("camera").appendChild(uniEvent);
+      }
       //
       uniEvent2.id = "uniEvent2";
       uniEvent2.setAttribute("class", "uniEvents");
-      document.getElementById("camera").appendChild(uniEvent2);
+      if (!document.getElementById("uniEvent2")) {
+        document.getElementById("camera").appendChild(uniEvent2);
+      }
       //
       uniEvent3.id = "uniEvent3";
       uniEvent3.setAttribute("class", "uniEvents");
-      document.getElementById("camera").appendChild(uniEvent3);
+      if (!document.getElementById("uniEvent3")) {
+        document.getElementById("camera").appendChild(uniEvent3);
+      }
       //
       uniEvent4.id = "uniEvent4";
       uniEvent4.setAttribute("class", "uniEvents");
-      document.getElementById("camera").appendChild(uniEvent4);
+      if (!document.getElementById("uniEvent4")) {
+        document.getElementById("camera").appendChild(uniEvent4);
+      }
+      //
+      uniEvent5.id = "uniEvent5";
+      uniEvent5.setAttribute("class", "uniEvents");
+      if (!document.getElementById("uniEvent5")) {
+        document.getElementById("camera").appendChild(uniEvent5);
+      }
       // Intro Scene
       window.adminUI();
-      // window.openLocationCard();
-      // window.playerPos();
-      // window.currentSx = newScenario("Intro");
-      //
     // } else {
     //   // The browser is not Brave, Firefox, or Chrome
     //   alert("The browser is not Brave, Firefox, or Chrome");
@@ -551,25 +563,62 @@ export async function universe() {
     };
     var deduct = 170 - convertedBoxPos.x;
     var position = 170 - deduct + convertedBoxPos.y * 170;
+
     document.getElementById(
       "selectPosBox"
     ).innerHTML = `Player Position: ${position}`;
+
     convertedSelPos = 170 - deduct + convertedBoxPos.y * 170;
     cityPosition.x = boxPos.x - 2;
     cityPosition.y = boxPos.y - 2;
+
     document.getElementById(
       "playerCord"
     ).innerHTML = `Player Coordinates: ${cityPosition.x}, ${cityPosition.y}`;
+
     document.getElementById(
       "playerScreenCoor"
     ).innerHTML = `Player Screen Coordinates: ${boxRect.left}, ${
       Math.round(boxRect.top) + 2
     }`;
+
+    // Temp
+    window.activeGames.forEach((game) => {
+      if (game === "The Guide") {
+        const theGuideElement = document.getElementById("theGuide");
+        const selectionElement = document.getElementById("selection");
+      
+        if (!theGuideElement || !selectionElement) {
+          // One of the elements is missing, return false as they can't collide
+          return false;
+        }
+      
+        const theGuideRect = theGuideElement.getBoundingClientRect();
+        const selectionRect = selectionElement.getBoundingClientRect();
+      
+        // Calculate the minimum distance (9 pixels)
+        const minDistance = -18;
+      
+        // Check for collision with minimum distance
+        const isCollidingWithMinDistance = !(
+          theGuideRect.right + minDistance < selectionRect.left ||
+          theGuideRect.left - minDistance > selectionRect.right ||
+          theGuideRect.bottom + minDistance < selectionRect.top ||
+          theGuideRect.top - minDistance > selectionRect.bottom
+        );
+
+      if (isCollidingWithMinDistance) {
+        alert("He he he, Hello There!");
+        myFirstDrug();
+      }
+      }
+    });
+
     //
     if (window.uniPlayer) {
       window.uniPlayer.x = box.style.left;
       window.uniPlayer.y = box.style.top;
-      channel2.presence.update({ data: window.uniPlayer });
+      // channel2.presence.update({ data: window.uniPlayer });
     }
     // window.uniPlayer.x = box?.style.left;
     // window.uniPlayer.y = box?.style.top;
@@ -577,7 +626,8 @@ export async function universe() {
       `${position}` === tempLandEx[0] ||
       `${position}` === tempLandEx[1] ||
       `${position}` === tempLandEx[2] ||
-      `${position}` === tempLandEx[3]
+      `${position}` === tempLandEx[3] ||
+      `${position}` === tempLandEx[4] 
     ) {
       window.landActivated = true;
       document.getElementById("selection").style.animationPlayState = "running";
@@ -590,11 +640,14 @@ export async function universe() {
       //
       if (`${position}` === tempLandEx[0]) {
         window.domainType = "canon";
+        canon = "collection2"
         exploreUI.innerHTML = tempCont1;
         return;
       } else if (`${position}` === tempLandEx[1]) {
-        window.domainType = "world";
-        exploreUI.innerHTML = tempCont2;
+        window.domainType = "canonX";
+        canon = "collection3"
+        // exploreUI.innerHTML = tempCont2;
+        exploreUI.innerHTML = "";
         return;
       } else if (`${position}` === tempLandEx[2]) {
         window.domainType = "world";
@@ -642,6 +695,12 @@ export async function universe() {
           }
         });
         return;
+      } else if (`${position}` === tempLandEx[4]) {
+        window.domainType = "canonX";
+        canon = "collection1"
+        // exploreUI.innerHTML = tempCont2;
+        exploreUI.innerHTML = "";
+        return;
       }
       return;
     } else {
@@ -675,6 +734,10 @@ export async function universe() {
         exploreUI.style.transform = "scale(0)";
         dragElement(document.getElementById("exploreUI"), true);
         if (e.keyCode == 37) {
+          document
+          .getElementById("collectionGallery")
+          .shadowRoot.getElementById("collectionGallery").style.transform =
+          "scaleX(0)";
           if (selectionBoxPosition.x > 0) {
             if (movementPaused == false) {
               selectionBoxPosition.x -= tileSize;
@@ -686,6 +749,10 @@ export async function universe() {
           }
         }
         if (e.keyCode == 38) {
+          document
+          .getElementById("collectionGallery")
+          .shadowRoot.getElementById("collectionGallery").style.transform =
+          "scaleX(0)";
           if (selectionBoxPosition.y > 0) {
             if (movementPaused == false) {
               selectionBoxPosition.y -= tileSize;
@@ -697,6 +764,10 @@ export async function universe() {
           }
         }
         if (e.keyCode == 39) {
+          document
+          .getElementById("collectionGallery")
+          .shadowRoot.getElementById("collectionGallery").style.transform =
+          "scaleX(0)";
           if (selectionBoxPosition.x < window18Width * tileSize - tileSize) {
             if (movementPaused == false) {
               selectionBoxPosition.x += tileSize;
@@ -708,6 +779,10 @@ export async function universe() {
           }
         }
         if (e.keyCode == 40) {
+          document
+          .getElementById("collectionGallery")
+          .shadowRoot.getElementById("collectionGallery").style.transform =
+          "scaleX(0)";
           if (selectionBoxPosition.y < window18Height * tileSize - tileSize) {
             if (movementPaused == false) {
               selectionBoxPosition.y += tileSize;
@@ -730,9 +805,6 @@ export async function universe() {
         ///////////////////////
         if (e.keyCode == 88) {
           document.getElementById("universe").style.filter = "blur(0px)";
-          document.querySelectorAll(".uniEvents").forEach((el) => {
-            el.style.opacity = 1;
-          });
           document.getElementById("currentSceneView_scene1").style.display = "none";
         }
       }
@@ -798,54 +870,57 @@ export async function universe() {
         window.exploreOpenHelper();
       } else {
         var adminUI = document.getElementById("adminUI");
-        adminUI.style.opacity = "1";
-        setTimeout(() => {
+        if (adminUI.style.opacity == "1") {
           adminUI.style.opacity = "0";
-        }, 5000);
+          return;
+        } else {
+          adminUI.style.opacity = "1";
+        }
       }
     });
   };
 
   var tempCont1 = `<div class="cannonIcon">
-  <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
+  <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
   </div>
-  <h1>Ch.1 - Reacclimate</h1>
-  <p>In the distant land of T.A.O.S City, there exists a hidden world of self-exiled creators, known as the Oracles. These Oracles reside in ancient, desolate mansions on the outskirts of the city, and possess a wealth of knowledge and experience that is sought after by migrants from far-off lands. These migrants come to T.A.O.S City in search of a new life, but often find themselves lost and alone in a vast and unfamiliar place. They turn to the Oracles for guidance, seeking to avoid the wrath of the city's enforcers, a powerful and ruthless group of conservative citizens.
+  <div class="canonStory">
+  <h1>Oracle Mansion</h1>
+  <p>In the distant lands of T.A.O.S City, there exists a hidden world of self-exiled creators, known as the Oracles. These Oracles reside in ancient, desolate mansions on the outskirts of the city, and possess a wealth of knowledge and experience that is sought after by migrants from far-off lands. These migrants come to T.A.O.S City in search of a new life, but often find themselves lost and alone in a vast and unfamiliar place. They turn to the Oracles for guidance, seeking to avoid the wrath of the city's enforcers, a powerful and ruthless group of conservative citizens.
   <br><br>
   The journey to visit the Oracles is not an easy one. Many must travel for days, through treacherous and unforgiving terrain, in order to reach the Oracles' remote dwellings. But those who are successful in their quest are rewarded with a profound understanding of themselves and the world around them. The Oracles' teachings help the migrants to remember something that they had long forgotten, and to reacclimate to the new and strange land they now call home.
-  <br><br>
-  This is the story of one such migrant, and their journey to find the Oracles, to discover the truth about themselves, and to make a place for themselves in the world of T.A.O.S City. It is a story of struggle and sacrifice, of hope and perseverance, and of the power of the human spirit to overcome even the greatest of challenges.
-  </p>`;
+  </p>
+  </div>
+  `;
   var tempCont2 = `
   <div class="cannonIcon">
-  <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
+  <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
   </div>
   <div id="tempVidHead">Ch.2 - Prologue 1</div>
   <div id="tempVidCon">
-    <video id="tempVid" src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Chapter2-Prologue-1-HD.mp4" controls></video>
+    <video id="tempVid" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Chapter2-Prologue-1-HD.mp4" controls></video>
   </div>
   `;
   var tempCont3 = `
   <div class="cannonIcon">
-  <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
+  <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
   </div>
   <div id="tempVidHead2">Speak Easy</div>
   <div id="tempVidCon2">
-    <video id="tempVid2" src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/nightout.mp4" controls></video>
+    <video id="tempVid2" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/nightout.mp4" controls></video>
   </div>
   `;
   var chatDomTemplate = `
   <div class="cannonIcon">
-    <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
+    <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
   </div>
   <div class="domainFunction">
     <div class="domainHeader">
-      <div class="doaminOwner">LORD AMINA</div>
+      <div class="doaminOwner">LORD DAMION</div>
       <div class="domainName">TC-BARGE-1</div>
     </div>
     <div class="domainInfo">
       <div class="domainLordImg">
-        <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+        <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
       </div>
       <div class="domainInfoBlockRight">
         <div class="domainLordText">
@@ -864,7 +939,7 @@ export async function universe() {
     <div class="chatRoom" id="chatRoom1">
       <div class="chatMessageContainer">
         <div class="messageAvatar self">
-          <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+          <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
         </div>
         <div class="messageBody">
           <div class="messageSender">Damion</div>
@@ -873,7 +948,7 @@ export async function universe() {
       </div>
       <div class="chatMessageContainer">
         <div class="messageAvatar self">
-          <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/red-s1.jpg"/>
+          <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/red-s1.jpg"/>
         </div>
         <div class="messageBody">
           <div class="messageSender">Violet</div>
@@ -906,7 +981,9 @@ export async function universe() {
         exploreUI.style.left =
           selectionBoxPosition.x - 18 - exploreUISize + "px";
       }
-      exploreUI.style.transform = "scale(1)";
+      if (window.domainType != "canonX") {
+        exploreUI.style.transform = "scale(1)";
+      }
       if (window.landActivated === false) {
         exploreUI.style.width = "128px";
         exploreUI.style.height = "20px";
@@ -917,23 +994,61 @@ export async function universe() {
         }, 6000);
         exploreUI.innerHTML = `
       <div id="unclaimedBox">
-        <div id="unclaimed">UNCLAIMED LAND</div>
+        <div id="unclaimed">UNCLAIMED DOMAIN</div>
       </div>
       `;
         return;
       } else {
         // Add switch case for different domain functions(catgories)
-        exploreUI.style.width = "540px";
-        exploreUI.style.height = "80%";
+        // exploreUI.style.width = "540px";
+        // exploreUI.style.height = "80%";
         if (window.domainType === "chat") {
           window.chatActive = true;
+          exploreUI.style.width = "540px";
+          exploreUI.style.height = "80%";
+          exploreUI.style.top = (100 - (Number(exploreUI.style.height.replace("vh","")))) / 2 + "vh";
           // document
           //   .getElementById("uniEvent4")
           //   .setAttribute("style", "animation: none;");
         }
+
+        if (window.domainType === "world") {
+          exploreUI.style.width = "540px";
+          exploreUI.style.height = "810px";
+          // document
+          //   .getElementById("uniEvent4")
+          //   .setAttribute("style", "animation: none;");
+        }
+
+        if (window.domainType === "canon") {   
+          exploreUI.style.width = "540px";
+          exploreUI.style.height = "60vh";
+          //      
+          document
+          .getElementById("collectionGallery")
+          .shadowRoot.getElementById("collectionGallery").style.transform =
+          "scaleX(1)";
+        document
+          .getElementById("collectionGallery")
+          .shadowRoot.getElementById("collectionGallery").style.opacity = "1";
+          var target =  { target: { id: canon} };
+          document.getElementById("collectionGallery")?.selectCollection(target);
+        }
+
+        if (window.domainType === "canonX") {
+          document
+          .getElementById("collectionGallery")
+          .shadowRoot.getElementById("collectionGallery").style.transform =
+          "scaleX(1)";
+        document
+          .getElementById("collectionGallery")
+          .shadowRoot.getElementById("collectionGallery").style.opacity = "1";
+          var target2 =  { target: { id: canon} };
+        document.getElementById("collectionGallery")?.selectCollection(target2);
+        }
         // window.deactivateDrag();
         // BELOW TEMP OPTION
-        exploreUI.style.top = (window.innerHeight - 810) / 2 + "px";
+        exploreUI.style.top = (100 - (Number(exploreUI.style.height.replace("vh","")))) / 2 + "vh";
         var vid = document.getElementById("tempVid");
         var vid2 = document.getElementById("tempVid2");
         if (vid?.src != "") {
@@ -1002,12 +1117,14 @@ export async function universe() {
             window.currentMenuTab = "shop";
             shadow.getElementById("romOffline").style.display = "none";
             dragElement(moveMenu, true);
+            shadow.getElementById("domainUnDev").style.display = "none";
             shadow.getElementById("fm-enhancements").style.display = "grid";
             shadow.getElementById("fm-header-headline").style.opacity = "0%";
             shadow.getElementById("fm-header-headline").style.pointerEvents =
               "none";
             shadow.getElementById("fm-beacons").style.display = "none";
             shadow.getElementById("fm-feedback").style.display = "none";
+            shadow.getElementById("fm-cloudHall").style.display = "none";
             shadow.getElementById("fm-settings").style.display = "none";
             shadow.getElementById("fm-profile").style.display = "none";
             if (window.isMobile === true) {
@@ -1051,6 +1168,11 @@ export async function universe() {
           el.addEventListener("click", (e) => {
             window.currentMenuTab = "inventory";
             shadow.getElementById("romOffline").style.display = "none";
+            if (window.tempIn === true) {
+              shadow.getElementById("domainUnDev").style.display = "block";
+            } else [
+              shadow.getElementById("domainUnDev").style.display = "none"
+            ]
             window.headlineSwtich(e);
             setTimeout(() => {
               window.headlineSwtich(e);
@@ -1061,6 +1183,7 @@ export async function universe() {
             shadow.getElementById("fm-feedback").style.display = "none";
             shadow.getElementById("fm-settings").style.display = "none";
             shadow.getElementById("fm-inventory").style.display = "grid";
+            shadow.getElementById("fm-cloudHall").style.display = "none";
             shadow.getElementById("fm-enhancements").style.display = "none";
             shadow.getElementById("fm-profile").style.display = "none";
             shadow.getElementById("fm-header").style.display = "grid";
@@ -1102,7 +1225,11 @@ export async function universe() {
         case "uniMenuProfile":
           el.addEventListener("click", (e) => {
             window.currentMenuTab = "profile";
-            shadow.getElementById("romOffline").style.display = "block";
+            if (window.tempIn === false) {
+              shadow.getElementById("romOffline").style.display = "block";
+            } else {
+              shadow.getElementById("domainUnDev").style.display = "block";
+            }
             window.headlineSwtich(e);
             setTimeout(() => {
               window.headlineSwtich(e);
@@ -1112,6 +1239,7 @@ export async function universe() {
             shadow.getElementById("fm-header").style.display = "grid";
             shadow.getElementById("fm-header-headline").style.opacity = "100%";
             shadow.getElementById("fm-beacons").style.display = "none";
+            shadow.getElementById("fm-cloudHall").style.display = "none";
             shadow.getElementById("fm-inventory").style.display = "none";
             shadow.getElementById("fm-feedback").style.display = "none";
             shadow.getElementById("fm-settings").style.display = "none";
@@ -1137,6 +1265,7 @@ export async function universe() {
           el.addEventListener("click", (e) => {
             window.currentMenuTab = "settings";
             shadow.getElementById("romOffline").style.display = "none";
+            shadow.getElementById("domainUnDev").style.display = "none";
             shadow.getElementById("fm-beacons").style.display = "none";
             shadow.getElementById("fm-inventory").style.display = "none";
             shadow.getElementById("fm-feedback").style.display = "none";
@@ -1145,6 +1274,7 @@ export async function universe() {
             shadow.getElementById("fm-settings").style.display = "grid";
             shadow.getElementById("menuLoadingScreen").style.display = "none";
             shadow.getElementById("menuMessage").style.display = "none";
+            shadow.getElementById("fm-cloudHall").style.display = "none";
             shadow.getElementById("fm-header").style.display = "grid";
             shadow.getElementById("fm-header-headline").style.opacity = "0%";
             shadow.getElementById("fm-header-headline").style.pointerEvents =
@@ -1157,6 +1287,7 @@ export async function universe() {
           el.addEventListener("click", (e) => {
             window.currentMenuTab = "beacons";
             shadow.getElementById("romOffline").style.display = "none";
+            shadow.getElementById("domainUnDev").style.display = "none";
             dragElement(moveMenu, true);
             document
               .getElementById("getUniMenu")
@@ -1169,6 +1300,7 @@ export async function universe() {
             shadow.getElementById("fm-profile").style.display = "none";
             shadow.getElementById("menuLoadingScreen").style.display = "none";
             shadow.getElementById("menuMessage").style.display = "none";
+            shadow.getElementById("fm-cloudHall").style.display = "none";
             shadow.getElementById("fm-header").style.display = "grid";
             shadow.getElementById("fm-header-headline").style.opacity = "100%";
             shadow.getElementById("fm-header-headline").style.pointerEvents =
@@ -1193,6 +1325,7 @@ export async function universe() {
           el.addEventListener("click", (e) => {
             window.currentMenuTab = "feedback";
             shadow.getElementById("romOffline").style.display = "none";
+            shadow.getElementById("domainUnDev").style.display = "none";
             shadow.getElementById("feedbackHeadline").innerHTML =
               "Help us make T.A.O.S City better.";
             shadow.getElementById("fm-beacons").style.display = "none";
@@ -1206,6 +1339,7 @@ export async function universe() {
             shadow.getElementById("fm-header-headline").style.pointerEvents =
               "none";
             shadow.getElementById("menuMessage").style.display = "none";
+            shadow.getElementById("fm-cloudHall").style.display = "none";
             shadow.getElementById("fm-feedback").style.display = "grid";
             shadow
               .getElementById("fm-feedback")
@@ -1220,6 +1354,44 @@ export async function universe() {
           el.addEventListener("click", () => {
             window.currentMenuTab = "signin";
             shadow.getElementById("romOffline").style.display = "block";
+          });
+          break;
+        case "uniMenuCloudHall":
+          el.addEventListener("click", (e) => {
+            window.currentMenuTab = "cloudHall";
+            if (window.tempIn === false) {
+              shadow.getElementById("romOffline").style.display = "block";
+            } else {
+              shadow.getElementById("romOffline").style.display = "none";
+              shadow.getElementById("domainUnDev").style.display = "none";
+            }
+            shadow.getElementById("fm-beacons").style.display = "none";
+            shadow.getElementById("fm-inventory").style.display = "none";
+            shadow.getElementById("fm-enhancements").style.display = "none";
+            shadow.getElementById("fm-profile").style.display = "none";
+            shadow.getElementById("fm-settings").style.display = "none";
+            shadow.getElementById("menuMessage").style.display = "none";
+            shadow.getElementById("fm-feedback").style.display = "none";
+            shadow.getElementById("menuLoadingScreen").style.display = "none";
+            shadow.getElementById("fm-header").style.display = "grid";
+            shadow.getElementById("fm-header-headline").style.opacity = "100%";
+            shadow.getElementById("fm-header-headline").style.pointerEvents = "auto";
+            shadow.getElementById("fm-cloudHall").style.display = "grid";
+            headerTabs.forEach((el) => {
+              if (el.id === "fm-menu1") {
+                el.setAttribute("class", "mmen-active ct selectedMenu");
+                var selEl = {
+                  target: document
+                    .getElementById("getUniMenu")
+                    .shadowRoot.getElementById("fm-menu1"),
+                };
+                // document.getElementById("getUniMenu").switchMenuTabs(selEl);
+              } 
+              else {
+                el.setAttribute("class", "men-active ct");
+              }
+            });
+            window.headlineSwtich(e);
           });
           break;
       }
@@ -1273,6 +1445,16 @@ export async function universe() {
         h3.style.opacity = "100%";
         h3.style.userSelect = "auto";
         break;
+      case "menuCloudHall":
+        h1.innerHTML = "Grand Council";
+        h2.innerHTML = "Garment Gaurd";
+        h1.style.opacity = "100%";
+        h1.style.userSelect = "auto";
+        h2.style.opacity = "100%";
+        h2.style.userSelect = "none";
+        h3.style.opacity = "0%";
+        h3.style.userSelect = "none";
+        break;
       case "menuFeedback":
         //
         break;
@@ -1296,6 +1478,7 @@ export async function universe() {
     uniMenu.forEach((el) => {
       if (el.id === e) {
         el.setAttribute("class", "menuTabs selectedMenu2");
+        if (shadow.getElementById(`${el.id}Svg`).hasChildNodes()) {
         shadow.getElementById(`${el.id}Svg`).childNodes.forEach((el) => {
             if (el.nodeName === "path") {
               // Found the <path> element
@@ -1304,8 +1487,13 @@ export async function universe() {
               el.style.fill = "white";
             }
         })
+      }
       } else {
         el.setAttribute("class", "menuTabs");
+        if ( document
+          .getElementById("getUniMenu")
+          .shadowRoot.getElementById(`${el.id}Svg`)
+          .hasChildNodes()) {
         document
           .getElementById("getUniMenu")
           .shadowRoot.getElementById(`${el.id}Svg`)
@@ -1314,7 +1502,7 @@ export async function universe() {
               el.style.stroke = "#ff002d";
               el.style.fill = "#ff002d";
             }
-          });
+          });}
       }
     });
   };
@@ -1365,34 +1553,6 @@ export async function universe() {
     shadow.getElementById("fm-header").style.display = "grid";
     shadow.getElementById("fm-enhancements").style.display = "none";
   };
-
-  // Get NFTs
-  // const getNFTCollections = async () => {
-  //   var agent = window.ic.plug.sessionManager.sessionData.agent;
-  //   var shadow = document.getElementById("getUniMenu").shadowRoot;
-  //   const collections = await getAllUserNFTs(
-  //     {
-  //       agent,
-  //       user: user.principal
-  //     }
-  //   ).then((collection)=>{
-  //     user.nfts = collection;
-  //     var nftDisplay = document.createElement("div");
-  //     var image = document.createElement("img");
-  //     nftDisplay.setAttribute("class", "Inventory-Assets-Cont");
-  //     nftDisplay.appendChild(image);
-  //     image.src = `${user.nfts[0].tokens[0].url}`;
-  //     shadow.getElementById("assetsCont").appendChild(nftDisplay);
-  //     // shadow.getElementById("inventoryInnerText").innerHTML = `${user.nfts[0].description}`;
-  //     shadow.getElementById("menuLoadingScreen").style.display = "none";
-  //     shadow.getElementById("menuLoadingScreen3").style.display = "none";
-  //     soundtrack.stop('menuLoading1');
-  //     uiState.nftsLoaded = true;
-  //   }).catch((e) => {
-  //     var error = {e}
-  //     connectError("getAllUserNFTs",error);
-  //   });
-  // }
 
   // player state
   const playerState = async () => {
@@ -1589,7 +1749,7 @@ export async function universe() {
     // messageElement.innerText = `${data.sender}: ${data.message}`;
     messageElement.innerHTML = `
   <div class="messageAvatar self">
-    <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+    <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
   </div>
   <div class="messageBody">
     <div class="messageSender">Damion</div>
@@ -1638,34 +1798,34 @@ export async function universe() {
     y: 0,
   };
   window.room2 = uniPlayers.create(room2Name, room2Description);
-  window.room2.setChannel(channel2);
+  // window.room2.setChannel(channel2);
   var playerInt = false;
   var otherPlayers = [];
 
   // channel2.presence.subscribe("enter", (member) => {
   //   console.log("A NEW PLAYER HAS ARRIVED", member.data);
   // });
-  channel2.presence.subscribe("update", (member) => {
-    if (playerInt === false) {
-      var playerGroup1 = uniPlayers.create("PlayerGroup1");
-      playerGroup1.renderPlayer(member.data.data);
-      otherPlayers.push(member.data.data.playerId);
-      playerInt = true;
-      return;
-    }
-    if (otherPlayers.includes(member.data.data.playerId) === false) {
-      otherPlayers.push(member.data.data.playerId);
-      window.room2.renderPlayer(member.data.data);
-    }
-    document.getElementById(`${member.data.data.playerId}`).style.top =
-    member.data.data.y;
-    document.getElementById(`${member.data.data.playerId}`).style.left =
-    member.data.data.x;
-  });
-  channel2.presence.subscribe("leave", (member) => {
-    // console.log("MemberData", member.data);
-    document.getElementById(`${member.data.data.playerId}`).remove();
-  });
+  // channel2.presence.subscribe("update", (member) => {
+  //   if (playerInt === false) {
+  //     var playerGroup1 = uniPlayers.create("PlayerGroup1");
+  //     playerGroup1.renderPlayer(member.data.data);
+  //     otherPlayers.push(member.data.data.playerId);
+  //     playerInt = true;
+  //     return;
+  //   }
+  //   if (otherPlayers.includes(member.data.data.playerId) === false) {
+  //     otherPlayers.push(member.data.data.playerId);
+  //     window.room2.renderPlayer(member.data.data);
+  //   }
+  //   document.getElementById(`${member.data.data.playerId}`).style.top =
+  //   member.data.data.y;
+  //   document.getElementById(`${member.data.data.playerId}`).style.left =
+  //   member.data.data.x;
+  // });
+  // channel2.presence.subscribe("leave", (member) => {
+  //   // console.log("MemberData", member.data);
+  //   document.getElementById(`${member.data.data.playerId}`).remove();
+  // });
 
   // channel2.presence.enter(window.uniPlayer);
   //
@@ -1729,4 +1889,54 @@ export const newEditorScenario = async (name,scene) => {
   // check conditions
   scenario.show();
   return scenario;
+}
+
+export function enterTaosCity() {
+  // Temporary
+  window.tempIn = true;
+  //
+  document.getElementById("dgr").setAttribute("active", "true");
+  document.getElementById("getUniMenu").setAttribute("uniMenu", "taoscity");
+  document.getElementById("camera").style.pointerEvents = "auto";
+  window.openLocationCard();
+  window.playerPos();
+  setTimeout(() => {
+    document.querySelector("#universe").style.opacity = "100%";
+  }, 100);
+   document.getElementById("players").style.display = "block";
+   document.getElementById("selection").style.display = "block";
+   document.querySelectorAll(".uniPlayer").forEach((el) => {
+      el.style.display = "block";
+   });
+}
+
+export function myFirstDrug() {
+  document.querySelectorAll(".uniEvents").forEach((el, index) => {
+    if (el.id === "uniEvent3" || el.id === "uniEvent5") {
+      gsap.to(el, {
+        delay: index * 0.5,  // Increase the delay for each element
+        duration: 1,
+        opacity: 1,
+      });
+    }
+  });  
+} 
+
+export function loading() {
+  var shadow = document.getElementById("getUniMenu").shadowRoot;
+  var loading = shadow.getElementById("menuLoadingScreen");
+  var loading2 = shadow.getElementById("menuLoadingScreen3");
+      loading.style.display = "grid";
+      loading2.style.display = "grid";
+      soundtrack.loop('menuLoading1');
+      soundtrack.play('menuLoading1');
+}
+
+export function endLoading() {
+  var shadow = document.getElementById("getUniMenu").shadowRoot;
+  var loading = shadow.getElementById("menuLoadingScreen");
+  var loading2 = shadow.getElementById("menuLoadingScreen3");
+      loading.style.display = "none";
+      loading2.style.display = "none";
+      soundtrack.stop('menuLoading1');
 }
