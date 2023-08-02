@@ -3013,7 +3013,7 @@ class getUniMenu extends HTMLElement {
                <div id="uniMenuIcon">&#8682;</div>
               </div>
               <div id="uniVersion">
-                Universe - v. 0.0.1
+                Universe - v. 0.0.2
               </div>
             </div>
             <div id="menuItems">
