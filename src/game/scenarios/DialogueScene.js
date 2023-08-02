@@ -9,7 +9,7 @@ import { openNote1 } from "../../game/SceneManager.js";
 // const canister = "7mfck-baaaa-aaaah-acuqq-cai";
 const local = "http://127.0.0.1:8080/";
 const canLocal = "bd3sg-teaaa-aaaaa-qaaba-cai";
-const deploy = "https://uqjdj-siaaa-aaaag-aaoxq-cai.icp0.io/";
+const deploy = "https://ic0.app";
 const canDeploy = "wnunb-baaaa-aaaag-aaoya-cai";
 const whitelist = [canDeploy];
 
@@ -222,7 +222,7 @@ export class DialogueScene extends Scenario {
         // Actions
         el.addEventListener("click", () => {
           const actions = {
-            "connectPlugWallet()": () => connectPlugWallet(whitelist, local),
+            "connectPlugWallet()": () => connectPlugWallet(whitelist, deploy),
             "connectBitfinityWallet()": () => connectBitFinityWallet(whitelist, deploy),
             "openNote1()": () => openNote1(),
             "getDigisette()": () => {

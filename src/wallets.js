@@ -77,7 +77,7 @@ export const connectPlugWallet = async (whitelist, host) => {
           //   connectError(error);
           console.error("Connect Wallet", e);
         });
-      // console.log("pk", plugpublicKey);
+      console.log("pk", plugpublicKey);
       gsap.to(view, {
         opacity: 0,
         filter: "blur(10px)",
