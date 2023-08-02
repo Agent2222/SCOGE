@@ -7,8 +7,9 @@ import { connectPlugWallet, createActor1 } from "./wallets.js";
 import { Scenario } from "./game/scenarios/scenarios.js";
 import { DialogueScene } from "./game/scenarios/DialogueScene.js";
 import { gsap } from "gsap";
+import { story } from "./game/SceneManager.js";
 
-const soundtrack = new SoundtrackManager();
+export const soundtrack = new SoundtrackManager();
 
 var testState = {
   whitelistPrincipals: [
@@ -101,9 +102,6 @@ export async function universe() {
   var exploreUI = document.querySelector("#exploreUI");
   var previewUI = document.getElementById("previewUI");
   var expBox = document.getElementById("explore");
-  var pinUi = document
-    .getElementById("getUniMenu")
-    .shadowRoot?.getElementById("pinMenu");
   var locked = document
     .getElementById("getUniMenu")
     .shadowRoot?.getElementById("locked");
@@ -407,7 +405,7 @@ export async function universe() {
       "Selected Tile: " + (170 - deduct + 170 * selectionPos.y);
     playerNum = 170 - deduct + 170 * selectionPos.y;
     convertedCursorPos = 170 - deduct + 170 * selectionPos.y;
-    previewUI.innerHTML = "Land " + playerNum;
+    previewUI.innerHTML = "Domain " + playerNum;
     previewUI.style.color = "blue";
     // move explore box to pointer and snap to nearest grid position
     expBox.style.left = e.clientX - expBox.offsetWidth / 2 + "px";
@@ -462,60 +460,12 @@ export async function universe() {
   };
 
   // DRAG
-  function dragElement(elmnt, on) {
-    var pos1 = 0,
-      pos2 = 0,
-      pos3 = 0,
-      pos4 = 0;
-    if (on === false) {
-      return;
-    }
-    pinUi.style.borderTop = "2px solid rgba(225, 225, 225, 0.8)";
-    pinUi.style.borderLeft = "2px solid rgba(225, 225, 225, 0.8)";
-    pinUi.style.filter = "blur(0px)";
-    pinUi.setAttribute("class", "unpinned");
-    locked.style.opacity = "0";
-    if (document.getElementById(elmnt.id + "header")) {
-      // if present, the header is where you move the DIV from:
-      document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
-    } else {
-      // otherwise, move the DIV from anywhere inside the DIV:
-      elmnt.onmousedown = dragMouseDown;
-    }
-
-    function dragMouseDown(e) {
-      e = e || window.event;
-      e.preventDefault();
-      // get the mouse cursor position at startup:
-      pos3 = e.clientX;
-      pos4 = e.clientY;
-      document.onmouseup = closeDragElement;
-      // call a function whenever the cursor moves:
-      document.onmousemove = elementDrag;
-    }
-
-    function elementDrag(e) {
-      e = e || window.event;
-      e.preventDefault();
-      // calculate the new cursor position:
-      pos1 = pos3 - e.clientX;
-      pos2 = pos4 - e.clientY;
-      pos3 = e.clientX;
-      pos4 = e.clientY;
-      // set the element's new position:
-      elmnt.style.top = elmnt.offsetTop - pos2 + "px";
-      elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
-    }
-
-    function closeDragElement() {
-      // stop moving when mouse button is released:
-      document.onmouseup = null;
-      document.onmousemove = null;
-    }
-  }
 
   // Deactivate Menu Drag
   window.deactivateDrag = () => {
+    var pinUi = document
+    .getElementById("getUniMenu")
+    .shadowRoot?.getElementById("pinMenu");
     moveMenu.onmousedown = null;
     document.onmouseup = null;
     document.onmousemove = null;
@@ -527,6 +477,9 @@ export async function universe() {
 
   // Pin Menu
   window.pinMenu = () => {
+    var pinUi = document
+    .getElementById("getUniMenu")
+    .shadowRoot?.getElementById("pinMenu");
     if (pinUi.getAttribute("class") == "pinned") {
       dragElement(moveMenu, true);
       pinUi.setAttribute("class", "unpinned");
@@ -608,7 +561,7 @@ export async function universe() {
         );
 
       if (isCollidingWithMinDistance) {
-        alert("He he he, Hello There!");
+        story("FoundTheGuide");
         myFirstDrug();
       }
       }
@@ -1415,7 +1368,7 @@ export async function universe() {
     switch (selected) {
       case "menuInventory":
         h1.innerHTML = "Collections";
-        h2.innerHTML = "Land & Gels";
+        h2.innerHTML = "Domains & Gels";
         h3.innerHTML = "Assets";
         h1.style.opacity = "100%";
         h1.style.userSelect = "auto";
@@ -1908,6 +1861,13 @@ export function enterTaosCity() {
    document.querySelectorAll(".uniPlayer").forEach((el) => {
       el.style.display = "block";
    });
+   var powerUp = document.createElement("div");
+   powerUp.setAttribute("id", "powerUp1");
+   powerUp.setAttribute("class", "powerUps");
+  powerUp.innerHTML = `
+  <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/graphics/crglove.png"/>
+  `
+  document.getElementById("camera").appendChild(powerUp);
 }
 
 export function myFirstDrug() {
@@ -1939,4 +1899,62 @@ export function endLoading() {
       loading.style.display = "none";
       loading2.style.display = "none";
       soundtrack.stop('menuLoading1');
+}
+
+export function dragElement(elmnt, on) {
+  var locked = document
+  .getElementById("getUniMenu")
+  .shadowRoot?.getElementById("locked");
+  var pinUi = document
+  .getElementById("getUniMenu")
+  .shadowRoot?.getElementById("pinMenu");
+  var pos1 = 0,
+    pos2 = 0,
+    pos3 = 0,
+    pos4 = 0;
+  if (on === false) {
+    return;
+  }
+  pinUi.style.borderTop = "2px solid rgba(225, 225, 225, 0.8)";
+  pinUi.style.borderLeft = "2px solid rgba(225, 225, 225, 0.8)";
+  pinUi.style.filter = "blur(0px)";
+  pinUi.setAttribute("class", "unpinned");
+  locked.style.opacity = "0";
+  if (document.getElementById(elmnt.id + "header")) {
+    // if present, the header is where you move the DIV from:
+    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+  } else {
+    // otherwise, move the DIV from anywhere inside the DIV:
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = elmnt.offsetTop - pos2 + "px";
+    elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
+  }
+
+  function closeDragElement() {
+    // stop moving when mouse button is released:
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
 }

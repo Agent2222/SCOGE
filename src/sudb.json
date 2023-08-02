@@ -45,6 +45,15 @@
         "images": {
           "default": " https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Lesli-1.png"
         }
+      },
+      {
+        "name": "The Guide",
+        "location": "",
+        "job": "",
+        "dialogue": "",
+        "images": {
+          "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/TheGuide-1.png"
+        }
       }
     ],
     "Elements": [
@@ -204,6 +213,32 @@
               "shadowEffectTo": "0px",
               "brightnessTo": "1.0",
               "action": "connectPlugWallet()"
+            },
+            {
+              "id": "stoicWallet",
+              "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/stoicWalletCS.png",
+              "type": "div",
+              "innerType": "img",
+              "width": "20%",
+              "height": "auto",
+              "left": "65%",
+              "top": "45%",
+              "zIndex": "1",
+              "speed": 0.9,
+              "position": "absolute",
+              "shadow": true,
+              "shadowEffect": "blur(50px)",
+              "brightness": "1.0",
+              "leftTo": "65%",
+              "rightTo": "auto",
+              "topTo": "45%",
+              "bottomTo": "auto",
+              "widthTo": "20%",
+              "heightTo": "auto",
+              "zIndexTo": "2",
+              "shadowEffectTo": "0px",
+              "brightnessTo": "1.0",
+              "action": "connectStoicWallet()"
             }
           ],
           "choices": [
@@ -298,7 +333,7 @@
                   "multi": true,
                   "text": [
                     {
-                      "action":"document.getElementById('bitWallet-cont').style.scale = '0';",
+                      "action":"document.getElementById('stoicWallet-cont').style.scale = '0';",
                       "txt":"Hi! Sorry, my colleague is a bit too.. concise. You must be new here. Welcome to T.A.O.S City! I remember when I got my first wallet. It was exciting and nerve wrecking! I'm Destiny, by the way."
                     },
                     {
@@ -385,6 +420,22 @@
               "shadow": true,
               "shadowEffect": "blur(50px)",
               "action": "`${connectPlugWallet()}`"
+            },
+            {
+              "id": "stoicWallet",
+              "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/stoicWalletCS.png",
+              "type": "div",
+              "innerType": "img",
+              "width": "20%",
+              "height": "auto",
+              "left": "65%",
+              "top": "45%",
+              "zIndex": "1",
+              "speed": 0.9,
+              "position": "absolute",
+              "shadow": true,
+              "shadowEffect": "blur(50px)",
+              "action": "connectStoicWallet()"
             }
           ],
           "choices": [
@@ -588,11 +639,11 @@
                   "text": [
                   {
                     "action": null,
-                    "txt":"Hello, I'm Lesli Domain Development Associate. DIGISETTE has been getting a lot of attention lately. So we're a bit tied up with Domain Development at the moment."
+                    "txt":"Hello, I'm Lesli, Domain-Development Associate. DIGISETTE has been getting a lot of attention lately. So we're a bit tied up with Domain Development at the moment."
                   },
                   {
                     "action": null,
-                    "txt":"As we push out DIGISETTE features, we'll be opening up more domains for development. So be sure to check back often."
+                    "txt":"As we push out DIGISETTE features, we'll be opening up more domains for development. Be sure to check back often, and keep an ear out for birdy's that tweet #SCOGEHQBeacon."
                   },
                   {
                     "action": null,
@@ -606,10 +657,10 @@
               },
               "pns": {
                 "position": "absolute",
-                "left": "-5%",
-                "leftTo": "50%",
-                "right": "auto",
-                "rightTo": "auto",
+                "left": "auto",
+                "leftTo": "auto",
+                "right": "-5%",
+                "rightTo": "30%",
                 "bottom": 0,
                 "bottomTo": 0,
                 "top": "auto",
@@ -648,9 +699,8 @@
                   "width": "50px",
                   "height": "50px",
                   "borderleft": "1px solid #ff002d",
-                  "bottom": "-60px",
-                  "right": "-30px",
-                  "left": "",
+                  "bottom": "-50px",
+                  "left": "105%",
                   "zIndex": -5,
                   "transform": "rotate(-45deg)"
                 }
@@ -660,6 +710,225 @@
           ],
           "choices": [
             "DIGISETTE?",
+            "LEAVE ->"
+          ]
+        }
+      ],
+      "FoundTheGuide": [
+        {
+          "name": "foundTheGuide",
+          "position": 1,
+          "type": "dialogue",
+          "bg": "rgba(0, 0, 0, 0.75)",
+          "activated": {
+            "land": 9120,
+            "gate": 0,
+            "pop": false,
+            "scn": [1,4]
+          },
+          "buttons": ["LEAVE ->"],
+          "characters": [
+            {
+              "persona": {
+                "name": "Lesli",
+                "location": "Digisette Domain Development",
+                "job": "DD associate",
+                "dialogue": {
+                  "pPosition": "right",
+                  "multi": true,
+                  "text": [
+                  {
+                    "action": "setTimeout(() => {window.currentScenario.scenes[0].hide()}, 2000)",
+                    "txt":"He he he! Hello. Beautiful city right!?"
+                  }
+                ]
+                },
+                "images": {
+                  "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/TheGuide-1.png"
+                }
+              },
+              "pns": {
+                "position": "absolute",
+                "left": "auto",
+                "leftTo": "auto",
+                "right": "-5%",
+                "rightTo": "30%",
+                "bottom": 0,
+                "bottomTo": 0,
+                "top": "auto",
+                "topTo": "auto",
+                "zIndex": 1,
+                "zIndexTo": 1,
+                "width": "auto",
+                "widthTo": "auto",
+                "height": "85%",
+                "heightTo": "85%",
+                "speed": 1,
+                "blur": "0px",
+                "blurTo": "0px",
+                "brightness": "1",
+                "brightnessTo": "1"
+              },
+              "element": {
+                "class": "chr-textElement",
+                "type": "div",
+                "backgroundColor": "rgba(0, 0, 0, 0.75)",
+                "padding": "10px 10px",
+                "borderRadius": "10px",
+                "borderTop": "0.5px solid rgb(255, 0, 45)",
+                "borderBottom": "0.5px solid rgb(255, 0, 45)",
+                "width": "350px",
+                "height": "auto",
+                "left": "-90%",
+                "right": "auto",
+                "bottom": "auto",
+                "top": "-5%",
+                "zIndex": 2,
+                "position": "absolute",
+                "border": ".5px solid #ff002d",
+                "pointer": {
+                  "position": "absolute",
+                  "width": "50px",
+                  "height": "50px",
+                  "borderleft": "1px solid #ff002d",
+                  "bottom": "-50px",
+                  "left": "105%",
+                  "zIndex": -5,
+                  "transform": "rotate(-45deg)"
+                }
+              },
+              "actions": ["chat"]
+            }
+          ],
+          "choices": [
+            "LEAVE ->"
+          ]
+        }
+      ],
+      "Controls": [
+        {
+          "name": "noDigisetteDetected",
+          "position": 1,
+          "type": "dialogue",
+          "bg": "rgba(0, 0, 0, 0.9)",
+          "activated": {
+            "land": 9120,
+            "gate": 0,
+            "pop": false,
+            "scn": [1,4]
+          },
+          "buttons": ["CONTINUE", "DIGISETTE?","LEAVE ->"],
+          "characters": [
+            {
+              "persona": {
+                "name": "Destiny",
+                "location": "City-Central",
+                "job": "Identity Agent",
+                "dialogue": {
+                  "pPosition": "right",
+                  "multi": true,
+                  "text": [
+                  {
+                    "action": null,
+                    "txt":"Thanks for using City-Central Holo Support. So, navigating the city with a DIGISETTE can be tricky at first. But don't worry, you'll get the hang of it."
+                  },
+                  {
+                    "action": "document.querySelectorAll('.sceneElementImg').forEach((el) => { el.src='https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/arrowsnspace.png'; el.style.top = '45%' });",
+                    "txt":"You can move around the city by just thinking it, or simply using the ARROW-KEYS on your system. When you get close to another Lord or something important, you'll see an action symbol. Send a mental pulse or simply press the SPACE-BAR to interact with it."
+                  },
+                  {
+                    "action": "document.querySelectorAll('.sceneElementImg').forEach((el) => { el.src='https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/click.png'; el.style.top = '0%'; el.style.width = '28%' });",
+                    "txt":"Last but not least, you can preview any domain by sending an overwatch beacons, or simply CLICKING it. That's it! You're ready to re-explore the city. Once the other Lords are online, you'll be able to interact with them too."
+                  }
+                ]
+                },
+                "images": {
+                  "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Destiny-1-HALO.png"
+                }
+              },
+              "pns": {
+                "position": "absolute",
+                "left": "auto",
+                "leftTo": "auto",
+                "right": "-5%",
+                "rightTo": "20%",
+                "bottom": "-20%",
+                "bottomTo": 0,
+                "top": "auto",
+                "topTo": "auto",
+                "zIndex": 1,
+                "zIndexTo": 1,
+                "width": "auto",
+                "widthTo": "auto",
+                "height": "110%",
+                "heightTo": "85%",
+                "speed": 1,
+                "blur": "0px",
+                "blurTo": "0px",
+                "brightness": "1",
+                "brightnessTo": "1"
+              },
+              "element": {
+                "class": "chr-textElement",
+                "type": "div",
+                "backgroundColor": "rgba(0, 0, 0, 0.75)",
+                "padding": "10px 10px",
+                "borderRadius": "10px",
+                "borderTop": "0.5px solid rgb(255, 0, 45)",
+                "borderBottom": "0.5px solid rgb(255, 0, 45)",
+                "width": "350px",
+                "height": "auto",
+                "left": "-50%",
+                "right": "auto",
+                "bottom": "auto",
+                "top": "-5%",
+                "zIndex": 2,
+                "position": "absolute",
+                "border": ".5px solid #ff002d",
+                "pointer": {
+                  "position": "absolute",
+                  "width": "50px",
+                  "height": "50px",
+                  "borderleft": "1px solid #ff002d",
+                  "bottom": "-40px",
+                  "left": "100%",
+                  "zIndex": -5,
+                  "transform": "rotate(-45deg)"
+                }
+              },
+              "actions": ["chat"]
+            }
+          ],
+          "elements": [
+            {
+              "id": "avatar",
+              "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/char-template.png",
+              "type": "div",
+              "innerType": "img",
+              "width": "30%",
+              "height": "auto",
+              "left": "15%",
+              "top": "25%",
+              "zIndex": "1",
+              "speed": 0.9,
+              "position": "absolute",
+              "shadow": true,
+              "shadowEffect": "blur(50px)",
+              "brightness": "1.0",
+              "leftTo": "65%",
+              "rightTo": "auto",
+              "topTo": "45%",
+              "bottomTo": "auto",
+              "widthTo": "20%",
+              "heightTo": "auto",
+              "zIndexTo": "2",
+              "shadowEffectTo": "0px",
+              "brightnessTo": "1.0",
+              "action": ""
+            }
+          ],
+          "choices": [
+            "NEXT", 
             "LEAVE ->"
           ]
         }

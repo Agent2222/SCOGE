@@ -3,33 +3,44 @@ import { Principal } from "@dfinity/principal";
 import { HttpAgent } from "@dfinity/agent";
 import idlFactory from "../src/uniHelpers/erc721.did.js";
 import { getAllUserNFTs } from "@psychedelic/dab-js";
-import { enterTaosCity } from "./universe.js";
+import { endLoading, enterTaosCity, loading } from "./universe.js";
+import { soundtrack } from "./universe.js";
+import { story } from "./game/SceneManager.js";
+import {StoicIdentity} from "ic-stoic-identity";
 
 const canister = "7mfck-baaaa-aaaah-acuqq-cai";
 
 export const getNFTCollections = async () => {
   // const principal = 'qpbuq-myqvw-yoaff-265ad-5g6xu-wx5dl-zzd7y-y6oak-zo4uf-x3ozb-dqe';
-  
-  const principal = window.ic.plug.getPrincipal();
-  var textV = Principal.fromUint8Array(principal._arr).toString();
-  let agent = new HttpAgent({ host: "https://ic0.app" });
-  try {
-    const collections = await getAllUserNFTs({
-      agent: agent,
-      user: textV,
+  var isConnected = await window.ic.plug.isConnected();
+  if (isConnected === false) {
+    return false;
+  } else {
+    const principal = await window.ic.plug.getPrincipal().catch((e) => {
+      console.log("Get Principal", e);
     });
-  
-    // console.log("NFTs", collections);
-
-    // Find an NFT with the name "Panda Queen" and print its "description"
-    const digisette = collections.find((nft) => nft.name === "Digisette Pre-Alpha");
+    var textV = Principal.fromUint8Array(principal._arr).toString();
+    let agent = new HttpAgent({ host: "https://ic0.app" });
+    try {
+      const collections = await getAllUserNFTs({
+        agent: agent,
+        user: textV,
+      });
     
-    if (digisette !== undefined) {
-      return true;
-    }
-  } catch (err) {
-    console.log("NFTs Error", err);
-  }  
+      // console.log("NFTs", collections);
+  
+      // Find an NFT with the name "Panda Queen" and print its "description"
+      var digisette = collections.find((nft) => nft.name === "Digisette Pre-Alpha");
+      
+      if (digisette !== undefined) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err) {
+      console.log("NFTs Error", err);
+    }    
+  }
 };
 
 export const connectPlugWallet = async (whitelist, host) => {
@@ -55,8 +66,6 @@ export const connectPlugWallet = async (whitelist, host) => {
 
     if (connected === false) {
       // Scenario - User has a plug wallet but is not connected
-      // console.log("Not Connected");
-      // console.log("W/H", whitelist, host);
       const plugpublicKey = await window.ic.plug
         .requestConnect({
           whitelist: whitelist,
@@ -68,7 +77,7 @@ export const connectPlugWallet = async (whitelist, host) => {
           //   connectError(error);
           console.error("Connect Wallet", e);
         });
-      console.log("pk", plugpublicKey);
+      // console.log("pk", plugpublicKey);
       gsap.to(view, {
         opacity: 0,
         filter: "blur(10px)",
@@ -78,13 +87,16 @@ export const connectPlugWallet = async (whitelist, host) => {
           view?.remove();
         },
       });
-      // const nftCheck = await getNFTCollections();
+      loading();
+      const nftCheck = await getNFTCollections().then((nftCheck) => {
+        endLoading(); 
+        if (nftCheck === true) {
+          enterTaosCity();
+        } else {
+          story("DigisetteIntro");
+        }
+      });
       console.log("NFT Check", nftCheck);
-      // document.getElementById("universe").style.filter = "blur(0px)";
-      enterTaosCity();
-      // document.querySelectorAll(".uniEvents").forEach((el) => {
-      //   el.style.opacity = 1;
-      // });
     } else if (connected === true) {
       // Scenario - User has a plug wallet and is connected
       gsap.to(view, {
@@ -100,12 +112,33 @@ export const connectPlugWallet = async (whitelist, host) => {
       const nftCheck = await getNFTCollections();
       console.log("NFT Check", nftCheck);
       document.getElementById("universe").style.filter = "blur(0px)";
-      enterTaosCity();
-      // document.querySelectorAll(".uniEvents").forEach((el) => {
-      //   el.style.opacity = 1;
-      // });
     }
   }
+};
+
+export const connectStoicWallet = async (canisterId) => {
+  StoicIdentity.load().then(async identity => {
+    if (identity !== false) {
+      //ID is a already connected wallet!
+    } else {
+      //No existing connection, lets make one!
+      identity = await StoicIdentity.connect();
+    }
+    
+    //Lets display the connected principal!
+    console.log(identity.getPrincipal().toText());
+    
+    //Create an actor canister
+    const actor = HttpAgent.createActor(idlFactory, {
+      agent: new HttpAgent({
+        identity,
+      }),
+      canisterId,
+    });
+    
+    //Disconnect after
+    StoicIdentity.disconnect();
+  })
 };
 
 export const nftCheck = getNFTCollections();
@@ -239,66 +272,66 @@ export const createActor1 = async (can, idl) => {
 //     }
 //   }
 
-//   // Error
-//   const connectError = async (error) => {
-//     var shadow = document.getElementById("getUniMenu").shadowRoot;
-//     shadow.getElementById("menuLoadingScreen").style.display = "none";
-//     shadow.getElementById("menuLoadingScreen3").style.display = "none";
-//     soundtrack.stop('menuLoading1');
-//     soundtrack.setVolume('menuError1', 0.4);
-//     soundtrack.play('menuError1');
-//     shadow.getElementById("menuMessage").style.display = "grid";
-//     switch (error.e.result?.error_code || error.e.message) {
-//       case "IC0501":
-//         shadow.getElementById("menuMessage").innerHTML = `
-//         <div>
-//           <div id="menuMessageHead">MAINTENANCE ERROR</div>
-//           <div id="menuMessageText">We're on it!</div>
-//           <div id="menuMessageBody">City Central has been notified and will resolve the issue. In the meantime, try refreshing your connection and attempting again.</div>
-//         </div>`
-//         break;
-//       case "The agent creation was rejected.":
-//         shadow.getElementById("menuMessage").innerHTML = `
-//         <div>
-//           <div id="menuMessageHead">DISCONNECTED WALLET</div>
-//           <div id="menuMessageText">You'll need it to continue.</div>
-//           <div id="menuMessageBody" style="text-decoration:none;width:70% !important;margin-left:15%;cursor:default;">T.A.O.S City's Plug wallet is the best of its class. Share any concerns with City Central in the <span style="text-decoration:underline;color: var(--accent);cursor:pointer;">Feedback</span> section.</div>
-//           </div>
-//         </div>`
-//         shadow.querySelector("#menuMessageBody").addEventListener("click", () => {
-//           var el = {
-//             target: shadow.querySelector("#fm-menu2")
-//           }
-//           // var el2 = {
-//           //   target: shadow.querySelector("#menuHelp")
-//           // }
-//           shadow.querySelector("#uniMenuFeedback").click(el);
-//         });
-//         break;
-//       default:
-//         shadow.getElementById("menuMessage").innerHTML = `
-//         <div>
-//           <div id="menuMessageHead">NEURAL CHIP ERROR</div>
-//           <div id="menuMessageText">We're on it!</div>
-//           <div id="menuMessageBody" style="text-decoration:none;width:70% !important;margin-left:15%;">Seems like something went wrong with your Digisette. LX-Comm has been notified. In the meantime, try <span style="color:var(--accent);"><a href="#" onclick="location.reload()">refreshing</a></span> your connection and attempting again.</div>
-//         </div>`
-//         break;
-//     }
-//     // Canister Error
-//     // Default No Wallet Error
-//     // Alternative General Something Went Wrong Error
-//     // shadow.getElementById("menuMessage").innerHTML = `
-//     //     <div>
-//     //     <div id="menuMessageHead">${errors.error}</div>
-//     //     <div id="menuMessageText">${errors.message}</div>
-//     //     <div id="menuMessageBody">${errors.body}</div>
-//     //     <div id="menuMessageCTA">${errors.cta}</div>
-//     //   </div>
-//     // `
-//     // if (errors.etaActive === false) {
-//     //   shadow.getElementById("menuMessageCTA").style.display = "none";
-//     // }
-//   }
+  // Error
+  export const connectError = async (error) => {
+    var shadow = document.getElementById("getUniMenu").shadowRoot;
+    shadow.getElementById("menuLoadingScreen").style.display = "none";
+    shadow.getElementById("menuLoadingScreen3").style.display = "none";
+    soundtrack.stop('menuLoading1');
+    soundtrack.setVolume('menuError1', 0.4);
+    soundtrack.play('menuError1');
+    shadow.getElementById("menuMessage").style.display = "grid";
+    switch (error.e.result?.error_code || error.e.message) {
+      case "IC0501":
+        shadow.getElementById("menuMessage").innerHTML = `
+        <div>
+          <div id="menuMessageHead">MAINTENANCE ERROR</div>
+          <div id="menuMessageText">We're on it!</div>
+          <div id="menuMessageBody">City Central has been notified and will resolve the issue. In the meantime, try refreshing your connection and attempting again.</div>
+        </div>`
+        break;
+      case "The agent creation was rejected.":
+        shadow.getElementById("menuMessage").innerHTML = `
+        <div>
+          <div id="menuMessageHead">DISCONNECTED WALLET</div>
+          <div id="menuMessageText">You'll need it to continue.</div>
+          <div id="menuMessageBody" style="text-decoration:none;width:70% !important;margin-left:15%;cursor:default;">T.A.O.S City's Plug wallet is the best of its class. Share any concerns with City Central in the <span style="text-decoration:underline;color: var(--accent);cursor:pointer;">Feedback</span> section.</div>
+          </div>
+        </div>`
+        shadow.querySelector("#menuMessageBody").addEventListener("click", () => {
+          var el = {
+            target: shadow.querySelector("#fm-menu2")
+          }
+          // var el2 = {
+          //   target: shadow.querySelector("#menuHelp")
+          // }
+          shadow.querySelector("#uniMenuFeedback").click(el);
+        });
+        break;
+      default:
+        shadow.getElementById("menuMessage").innerHTML = `
+        <div>
+          <div id="menuMessageHead">NEURAL CHIP ERROR</div>
+          <div id="menuMessageText">We're on it!</div>
+          <div id="menuMessageBody" style="text-decoration:none;width:70% !important;margin-left:15%;">Seems like something went wrong with your Digisette. LX-Comm has been notified. In the meantime, try <span style="color:var(--accent);"><a href="#" onclick="location.reload()">refreshing</a></span> your connection and attempting again.</div>
+        </div>`
+        break;
+    }
+    // Canister Error
+    // Default No Wallet Error
+    // Alternative General Something Went Wrong Error
+    // shadow.getElementById("menuMessage").innerHTML = `
+    //     <div>
+    //     <div id="menuMessageHead">${errors.error}</div>
+    //     <div id="menuMessageText">${errors.message}</div>
+    //     <div id="menuMessageBody">${errors.body}</div>
+    //     <div id="menuMessageCTA">${errors.cta}</div>
+    //   </div>
+    // `
+    // if (errors.etaActive === false) {
+    //   shadow.getElementById("menuMessageCTA").style.display = "none";
+    // }
+  }
 
 //   const attn = async (error) => {
 //     let data = new FormData();

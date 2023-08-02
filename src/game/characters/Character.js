@@ -108,7 +108,10 @@ export class Character {
                 transform: "scale(0)",
                 ease: "power4.out",
               });
-            }, 7000);
+              setTimeout(() => {
+                window.currentScenario.scenes[0].hide();
+              }, 300);
+            }, 8000);
           }
         }
       };
