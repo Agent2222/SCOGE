@@ -1,7 +1,9 @@
 import { SoundtrackManager } from "./soundtrack.js";
 import { story } from "./game/SceneManager.js";
-import { newScenario, loading, endLoading } from "./universe.js";
+import { newScenario, loading, endLoading, dragElement } from "./universe.js";
 import { getNFTCollections } from "./wallets.js";
+import { enterTaosCity } from "./universe.js";
+import { connectError } from "./wallets.js";
 // import { universe } from "./universe.js";
 import { gsap } from "gsap";
 // import fleekStorage from "@fleekhq/fleek-storage-js";
@@ -79,6 +81,26 @@ class getUniMenu extends HTMLElement {
     this.defaultSource = `<img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/DIGISHOP-1.png" alt="NFT Shop" id="nftShop">`
     this.beacons = null;
     this.digiLink = "https://yumi.io/launchpad/detail/hmz4w-fiaaa-aaaah-admlq-cai";
+    this.variableDataMessages = [
+      {
+        name: "Intro",
+        from: "CITY-CENTRAL",
+        head: "ROM ACTIVATED",
+        preview: "Your Digisette ROM is activated!",
+        message: "Welcome to the SCOGÉ Digisette Demo-ROM! Through this demo, you'll gain direct access to our latest collections and most recent comms.<br><br>Full access SCOGÉ Digisettes grant you one domain, Lord status throughout T.A.O.S City, and the Digisette system. This is a once in a lifetime oppurtunity to experience and develop this city like never before.",
+        buttonText: "HOLO-SUPPORT",
+        action: "controls()",
+      },
+      {
+        name: "Intro",
+        from: "CITY-CENTRAL",
+        head: "DIGISETTE SYSTEM ONLINE",
+        preview: "Welcome to Digisette!",
+        message: "Welcome to the SCOGÉ Digisette System. Your Digisette is now online and ready for use.<br><br>Contact our Holo-Support team below for control assistance.",
+        buttonText: "HOLO-SUPPORT",
+        action: "controls()",
+      }
+    ];
   }
 
   get uniMenu() {
@@ -103,9 +125,51 @@ class getUniMenu extends HTMLElement {
       });
       // Remove offline message
     }
+    // if (newVal === "loggedIn") {
+    //   this.variableDataMessages.shift();
+    //   this.render();
+    //   this.loggedIn();
+    //   this.headerTabs.forEach((element) => {
+    //     element.addEventListener("click", (e) => {
+    //       this.switchMenuTabs(e);
+    //     });
+    //   });
+    //   // Remove offline message
+    // }
+  }
+
+  updateVarBeacon() {
+    var beaconPage = this.shadow.getElementById("beaconsBody");
+    var beaconEl = document.createElement("div");
+    beaconEl.setAttribute("class", "beacon tut");
+    beaconEl.id = "newvarBeacon";
+    beaconEl.setAttribute("data-headline", this.variableDataMessages[1].head);
+    beaconEl.setAttribute("data-message", this.variableDataMessages[1].message);
+    beaconEl.innerHTML = `
+        <div class="beaconOrigin">
+          <div class="beaconIdenIcon">!</div>
+          <div class="beaconSender">${this.variableDataMessages[0].from}</div>
+        </div>
+        <div class="beaconPreview">
+          ${this.variableDataMessages[0].preview}
+        </div>`
+    beaconPage.appendChild(beaconEl);
+    beaconEl.addEventListener("click", (e) => {
+      this.openBeaconMessage(e);
+      setTimeout(() => {
+        var ba1 = document.getElementById("beaconAction1");
+        ba1.innerHTML = this.variableDataMessages[1].buttonText;
+        ba1.addEventListener("click", () => {
+          story("Controls");
+        });
+      }, 300);
+    });
   }
 
   loggedIn() {
+      this.updateVarBeacon();
+      var newBeacon = this.shadow.getElementById("newvarBeacon")
+      this.shadow.getElementById("varBeacon").replaceWith(newBeacon);
     this.shadow.getElementById("uniMenuExit").style.display = "none";
     this.shadow.getElementById("uniMenuCloudHall").style.display = "grid";
     // Temp Domain Dev Show
@@ -121,7 +185,7 @@ class getUniMenu extends HTMLElement {
     var beaconEl = document.createElement("div");
     beaconEl.setAttribute("class", "beacon tut");
     beaconEl.setAttribute("data-headline", "UNKNOWN ITEM DETECTED");
-    beaconEl.setAttribute("data-message", "An unknown item has been detected on you.<br>Unable to identify its origin. Someone was able to get pass our sensors.<br><br> Classification: Trash.<br><br>Sending a snapshot to Scogé HQ for further analysis.");
+    beaconEl.setAttribute("data-message", "An unknown item has been detected on you.<br>Unable to identify its origin. Someone was able to get pass our sensors.<br><br> Classification: Trash.<br><br>Sending a snapshot to SCOGÉ HQ for further analysis.");
     beaconEl.innerHTML = `<div class="beaconOrigin">
     <div class="beaconIdenIcon">!</div>
     <div class="beaconSender">SYSTEM ALERT</div>
@@ -614,11 +678,13 @@ class getUniMenu extends HTMLElement {
       });
       shad.getElementById("beaconAction1")?.addEventListener("click", () => {
         shad.getElementById("beaconPan")?.remove();
+        // this.shadow.getElementById(".beaconAction1").innerHTML = "INVESTIGATE";
         shad.querySelector(".beaconIdenIcon").style.opacity = "0";
       });
     } else {
       // desktop
       document.getElementById("camera").appendChild(beaconEl);
+      dragElement(beaconEl, true);
       document.getElementById("beaconPan").style.display = "block";
       document
         .getElementById("beaconAction2")
@@ -717,14 +783,19 @@ class getUniMenu extends HTMLElement {
       // Temp
       if (window.ic) {
         loading();
-        const check = await getNFTCollections();
+        const check = await getNFTCollections().catch((error) => {
+          connectError(error);
+        });
         endLoading(); 
         if (check === true) {
-          story("Intro");
+          // Connected and Includes digisette
+          enterTaosCity();
         } else {
+          // Not Connected. Unknown if digisette is included
           story("Intro");
         }
       } else {
+          // No IC/Wallet detected in browser
         story("DigisetteIntro");
       }
     });
@@ -2684,6 +2755,7 @@ class getUniMenu extends HTMLElement {
                 display: none;
                 user-select: auto;
                 pointer-events: auto;
+                cursor: drag;
               }
 
               #beaconAction1 {
@@ -3248,13 +3320,13 @@ class getUniMenu extends HTMLElement {
               </div>
               <div id="fm-beacons">
                 <div class="beacon-tabs ht1" id="beaconsBody">
-                  <div class="beacon tut" data-headline="ROM ACTIVATED" data-message="Welcome to the SCOGÉ Digisette Demo-ROM! Through this demo, you'll gain direct access to our latest collections and most recent comms.<br><br>Full access SCOGÉ Digisettes grant you one domain, Lord status throughout T.A.O.S City, and the Digisette system. This is a once in a lifetime oppurtunity to experience and develop this city like never before.">
+                  <div class="beacon tut" id="varBeacon" data-headline="${this.variableDataMessages[0].head}" data-message="${this.variableDataMessages[0].message}">
                     <div class="beaconOrigin">
                       <div class="beaconIdenIcon">!</div>
-                      <div class="beaconSender">CITY-CENTRAL</div>
+                      <div class="beaconSender">${this.variableDataMessages[0].from}</div>
                     </div>
                     <div class="beaconPreview">
-                      Your Digisette ROM is activated!
+                      ${this.variableDataMessages[0].preview}
                     </div>
                   </div>
                   <div class="beacon tut" data-headline="OUR NAVIGATOR" data-message="SCOGÉ™ is a fashion label founded by designer Starnilas Oge. Oge practices a Meta-Analytical Psychology best described as Subreality Archeology - An approach where history, geography, and ecology of an alternate world are realized and understood through the production of the world's material culture. Oge studied at The Fashion Institute of Technology in NYC before launching the SCOGÉ™ label.">

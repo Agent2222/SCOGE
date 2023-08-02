@@ -155,6 +155,31 @@
     pointer-events: none;
   }
 
+  .powerUps {
+    width: 150px;
+    height: 150px;
+    bottom: 4%;
+    right: 14%;
+    position: fixed;
+    z-index: 10;
+    pointer-events: none;
+    scale: .8;
+    opacity: .7;
+    pointer-events: auto;
+    user-select: auto;
+    transition: .3s all;
+  }
+
+  .powerUps:hover {
+    scale: 1;
+    opacity: 1;
+  }
+
+  .powerUps img {
+    width: 100%;
+    height: 100%;
+  }
+
   .cannonIcon {
     width: auto;
     height: 30px;
@@ -967,10 +992,16 @@
     align-items: center;
     position: fixed;
     z-index: 10;
-    pointer-events: none;
     position: fixed;
     bottom: 1%;
     right:-7%;
+    pointer-events: none;
+    user-select: none;
+    transition: .3s all;
+  }
+
+  #ringView:hover {
+    transform: scale(1.1);
   }
   /* DIGISETTE RING END */
 

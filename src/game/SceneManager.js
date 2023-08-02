@@ -40,6 +40,12 @@ export async function story(scenario) {
     case "DomainDevelopment":
         window.currentScenario = await newScenario(scenario);
     break;
+    case "FoundTheGuide":
+        window.currentScenario = await newScenario(scenario);
+    break;
+    case "Controls":
+        window.currentScenario = await newScenario(scenario);
+    break;
   }
 }
 
@@ -228,7 +234,7 @@ export function paper() {
     var ml = uniMenu.getElementById("myRange2");
     uniMenu.getElementById("settingsSave").addEventListener("click", () => {
         if (fs.checked === true && no.checked === false && sl.value === "4" && ml.value === "3") {
-            alert("You got it right!");
+            alert("Hello? How did you get activate this connct.. Nevermind. Looks like the paper that was slipped onto you was from a person citizens refer to as The Guide. He's usually found in the throughout city wearing a bright orange staw hat. If he found you, you might find him again. - SCOGÉ HQ");
               if (!document.getElementById("theGuide")) {
                 window.guide = new theGuide(-50, -50);
                 window.guide.appear();

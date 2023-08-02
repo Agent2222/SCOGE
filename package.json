@@ -17,6 +17,7 @@
     "@rollup/plugin-commonjs": "^21.1.0",
     "eslint": "^7.21.0",
     "ic-dfx-utils": "^0.0.14",
+    "ic-stoic-identity": "^2.0.0",
     "vite": "^2.9.5"
   },
   "dependencies": {

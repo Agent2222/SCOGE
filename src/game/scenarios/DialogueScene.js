@@ -1,8 +1,7 @@
 
 import { Scenario } from "../scenarios/Scenarios.js";
 import { Character } from "../characters/Character.js";
-import { connectPlugWallet } from "../../wallets.js";
-import { connectBitFinityWallet } from "../../wallets.js";
+import { connectPlugWallet, connectBitFinityWallet, connectStoicWallet } from "../../wallets.js";
 import { gsap } from "gsap";
 import { newScenario } from "../../universe.js";
 import { openNote1 } from "../../game/SceneManager.js";
