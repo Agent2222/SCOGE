@@ -11,7 +11,7 @@ const local = "http://127.0.0.1:8080/";
 const canLocal = "bd3sg-teaaa-aaaaa-qaaba-cai";
 const deploy = "https://uqjdj-siaaa-aaaag-aaoxq-cai.icp0.io/";
 const canDeploy = "wnunb-baaaa-aaaag-aaoya-cai";
-const whitelist = [canLocal];
+const whitelist = [canDeploy];
 
 export class DialogueScene extends Scenario {
   constructor(scene) {
@@ -223,7 +223,7 @@ export class DialogueScene extends Scenario {
         el.addEventListener("click", () => {
           const actions = {
             "connectPlugWallet()": () => connectPlugWallet(whitelist, local),
-            "connectBitfinityWallet()": () => connectBitFinityWallet(whitelist, local),
+            "connectBitfinityWallet()": () => connectBitFinityWallet(whitelist, deploy),
             "openNote1()": () => openNote1(),
             "getDigisette()": () => {
               window.open("https://yumi.io/launchpad/detail/hmz4w-fiaaa-aaaah-admlq-cai", "_blank");
