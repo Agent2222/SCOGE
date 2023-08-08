@@ -21,7 +21,7 @@
     float: left;
     border-bottom: .5px solid #ff002d;
     display: grid;
-    grid-template-columns: 10% 15% 10% 10% 55%;
+    grid-template-columns: 10% 15% 10% 10% 35% 10%;
     grid-template-rows: 1fr;
     align-items: center;
     justify-items: center;
@@ -861,4 +861,14 @@ label::before {
     padding: 5%;
     font-size: 2.5em;
     color: var(--accent);
+}
+
+#mapperBut {
+    transition: .3s all;
+}
+
+#mapperBut:hover {
+    cursor: pointer;
+    color: var(--accent);
+    letter-spacing: 2px;
 }

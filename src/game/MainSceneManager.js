@@ -1,7 +1,7 @@
 import LoaderManager from "./LoaderManager.js";
 import * as BABYLON from "@babylonjs/core";
 import * as utils from "./utils.js";
-import initNoti2 from "../index.js";
+// import initNoti2 from "../index.js";
 import 'babylonjs-inspector';
 
 export default class MainSceneManager {

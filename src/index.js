@@ -26,7 +26,7 @@ import { mintingScreen } from "../src/mint.js";
 import { gsap } from "gsap";
 import { TextPlugin } from "gsap/TextPlugin";
 import { Configuration, OpenAIApi } from "openai";
-import { enterTaosCity, universe } from "./universe.js";
+import { universe } from "./universe.js";
 import { uniConsensus } from "./uni-c-consensus.js";
 import { uni3dViewer } from "./uni-c-3dModel.js";
 import { checkInitialState } from "../src/game/SceneManager.js";
@@ -192,7 +192,7 @@ window.sysCheck = () => {
 // // Init Check
 // window.sysCheck();
 
-const uncover = () => {
+function uncover() {
   universe();
   var logos = document.querySelectorAll(".bcClass");
   logos.forEach((logo) => {

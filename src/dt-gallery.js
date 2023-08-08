@@ -322,15 +322,6 @@ class dtGallery extends HTMLElement {
           names: ["Brian Felix"],
         },
         {
-          category: "2ND FILM CREW",
-          names: [
-            "Mehow",
-            "Andrew Wonder",
-            "John Henri Coene",
-            "Albert Covington"
-          ],
-        },
-        {
           category: "TALENT",
           names: [
             "JJ Pinckney",
