@@ -9,7 +9,7 @@ import { openNote1 } from "../../game/SceneManager.js";
 // const canister = "7mfck-baaaa-aaaah-acuqq-cai";
 const local = "http://127.0.0.1:8080/";
 const canLocal = "bd3sg-teaaa-aaaaa-qaaba-cai";
-const deploy = "https://ic0.app";
+const deploy = "https://ic0.io";
 const canDeploy = "wnunb-baaaa-aaaag-aaoya-cai";
 const whitelist = [canDeploy];
 
