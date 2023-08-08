@@ -1005,6 +1005,26 @@
   }
   /* DIGISETTE RING END */
 
+  .it3 {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .nftElement {
+    width: 30pt;
+    height: 30pt;
+    background-color: aqua;
+  }
+
+  .nftElement img {
+    display: none;
+    width: 100%;
+    height: 100%;
+  }
+
+
+
   @container (width <= 900px) {
     .chr-textElement p{
       width: 100%;

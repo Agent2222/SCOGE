@@ -127,6 +127,8 @@ export async function universe() {
   var typing = false;
   var actor = null;
   var canon = null;
+  window.sendButActive = false;
+  window.playerOnline = false;
   window.connected = false;
   var tempLandEx = ["1435", "3162", "2849", "6208", "1980"];
   window.activeGames = [];
@@ -161,7 +163,7 @@ export async function universe() {
   // MP
 
   const channel = window.ably.channels.get("alphaTestersChat");
-  // const channel2 = window.ably.channels.get("lordsInTheCity");
+  const channel2 = window.ably.channels.get("lordsInTheCity");
 
   const test = () => {
     document.addEventListener("keydown", async function (e) {
@@ -571,7 +573,7 @@ export async function universe() {
     if (window.uniPlayer) {
       window.uniPlayer.x = box.style.left;
       window.uniPlayer.y = box.style.top;
-      // channel2.presence.update({ data: window.uniPlayer });
+      channel2.presence.update({ data: window.uniPlayer });
     }
     // window.uniPlayer.x = box?.style.left;
     // window.uniPlayer.y = box?.style.top;
@@ -618,10 +620,10 @@ export async function universe() {
           // messageElement.innerText = `${data.sender}: ${data.message}`;
           mEl.innerHTML = `
         <div class="messageAvatar self">
-          <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+          <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/avatar/avatar-chat.png"/>
         </div>
         <div class="messageBody">
-          <div class="messageSender">Damion</div>
+          <div class="messageSender">Unidentified Lord</div>
           <p class="messageText">${message}</p>
         </div>
       `;
@@ -1119,17 +1121,47 @@ export async function universe() {
           break;
         case "uniMenuItems":
           el.addEventListener("click", (e) => {
+            window.headlineSwtich(e);
+            shadow.querySelector(`.it3`).style.display = "none";
             window.currentMenuTab = "inventory";
             shadow.getElementById("romOffline").style.display = "none";
             if (window.tempIn === true) {
               shadow.getElementById("domainUnDev").style.display = "block";
+              
+              headerTabs.forEach((el) => {
+                if (el.id === "fm-menu2") {
+                  var selEl = {
+                    target: document
+                      .getElementById("getUniMenu")
+                      .shadowRoot.getElementById("fm-menu2")
+                  };
+                  selEl.target.style.display = "block";
+                  shadow.getElementById("fm-menu1").style.display = "none";
+                  shadow.querySelector(".it1").style.display = "none";
+                  shadow.querySelector(".it2").style.display = "grid";
+                  el.setAttribute("class", "it selectedMenu");
+                } else {
+                  el.setAttribute("class", "men-active it");
+                }
+              });
+              //
             } else [
+              headerTabs.forEach((el) => {
+                if (el.id === "fm-menu1") {
+                  var selEl = {
+                    target: document
+                      .getElementById("getUniMenu")
+                      .shadowRoot.getElementById("fm-menu1"),
+                  };
+                  // document.getElementById("getUniMenu").switchMenuTabs(selEl);
+                  // el.setAttribute("class", "mmen-active it selectedMenu");
+                  el.setAttribute("class", "it selectedMenu");
+                } else {
+                  el.setAttribute("class", "men-deactive it");
+                }
+              }),
               shadow.getElementById("domainUnDev").style.display = "none"
             ]
-            window.headlineSwtich(e);
-            setTimeout(() => {
-              window.headlineSwtich(e);
-            }, 500);
             dragElement(moveMenu, true);
             window.openInventory();
             shadow.getElementById("fm-beacons").style.display = "none";
@@ -1159,31 +1191,21 @@ export async function universe() {
                 el.style.stroke = "#ff002d";
               });
             //
-            headerTabs.forEach((el) => {
-              if (el.id === "fm-menu1") {
-                var selEl = {
-                  target: document
-                    .getElementById("getUniMenu")
-                    .shadowRoot.getElementById("fm-menu1"),
-                };
-                // document.getElementById("getUniMenu").switchMenuTabs(selEl);
-                // el.setAttribute("class", "mmen-active it selectedMenu");
-                el.setAttribute("class", "it selectedMenu");
-              } else {
-                el.setAttribute("class", "men-deactive it");
-              }
-            });
+            setTimeout(() => {
+              window.headlineSwtich(e);
+            }, 500);
           });
           break;
         case "uniMenuProfile":
           el.addEventListener("click", (e) => {
+            window.headlineSwtich(e);
+            shadow.getElementById("fm-menu1").style.display = "block";
             window.currentMenuTab = "profile";
             if (window.tempIn === false) {
               shadow.getElementById("romOffline").style.display = "block";
             } else {
               shadow.getElementById("domainUnDev").style.display = "block";
             }
-            window.headlineSwtich(e);
             setTimeout(() => {
               window.headlineSwtich(e);
             }, 500);
@@ -1216,6 +1238,7 @@ export async function universe() {
           break;
         case "uniMenuSettings":
           el.addEventListener("click", (e) => {
+            window.headlineSwtich(e);
             window.currentMenuTab = "settings";
             shadow.getElementById("romOffline").style.display = "none";
             shadow.getElementById("domainUnDev").style.display = "none";
@@ -1232,12 +1255,13 @@ export async function universe() {
             shadow.getElementById("fm-header-headline").style.opacity = "0%";
             shadow.getElementById("fm-header-headline").style.pointerEvents =
               "none";
-            window.headlineSwtich(e);
             window.deactivateDrag();
           });
           break;
         case "uniMenuBeacons":
           el.addEventListener("click", (e) => {
+            window.headlineSwtich(e);
+            shadow.getElementById("fm-menu1").style.display = "block";
             window.currentMenuTab = "beacons";
             shadow.getElementById("romOffline").style.display = "none";
             shadow.getElementById("domainUnDev").style.display = "none";
@@ -1258,7 +1282,6 @@ export async function universe() {
             shadow.getElementById("fm-header-headline").style.opacity = "100%";
             shadow.getElementById("fm-header-headline").style.pointerEvents =
               "all";
-            window.headlineSwtich(e);
             headerTabs.forEach((el) => {
               if (el.id === "fm-menu1") {
                 var selEl = {
@@ -1276,6 +1299,7 @@ export async function universe() {
           break;
         case "uniMenuFeedback":
           el.addEventListener("click", (e) => {
+            // window.headlineSwtich(e);
             window.currentMenuTab = "feedback";
             shadow.getElementById("romOffline").style.display = "none";
             shadow.getElementById("domainUnDev").style.display = "none";
@@ -1299,7 +1323,6 @@ export async function universe() {
               .addEventListener("click", () => {
                 window.deactivateDrag();
               });
-            window.headlineSwtich(e);
             window.deactivateDrag();
           });
           break;
@@ -1311,6 +1334,8 @@ export async function universe() {
           break;
         case "uniMenuCloudHall":
           el.addEventListener("click", (e) => {
+            window.headlineSwtich(e);
+            shadow.getElementById("fm-menu1").style.display = "block";
             window.currentMenuTab = "cloudHall";
             if (window.tempIn === false) {
               shadow.getElementById("romOffline").style.display = "block";
@@ -1344,7 +1369,9 @@ export async function universe() {
                 el.setAttribute("class", "men-active ct");
               }
             });
-            window.headlineSwtich(e);
+            setTimeout(() => {
+              window.headlineSwtich(e);
+            }, 1000);
           });
           break;
       }
@@ -1682,7 +1709,7 @@ export async function universe() {
 
   // Multiplayer
   await window.ably.connection.once("connected");
-  // console.log("Connected to Ably!");
+  console.log("Connected!");
 
   const roomName = "alphaTestersChat";
   const roomDescription = "1st Chat Room for Alpha Testers";
@@ -1701,14 +1728,14 @@ export async function universe() {
     messageElement.setAttribute("class", "chatMessageContainer");
     // messageElement.innerText = `${data.sender}: ${data.message}`;
     messageElement.innerHTML = `
-  <div class="messageAvatar self">
-    <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
-  </div>
-  <div class="messageBody">
-    <div class="messageSender">Damion</div>
-    <p class="messageText">${message.data.roomMessage}</p>
-  </div>
-  `;
+    <div class="messageAvatar self">
+      <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/avatar/avatar-chat.png"/>
+    </div>
+    <div class="messageBody">
+      <div class="messageSender">Unidentified Lord</div>
+      <p class="messageText">${message.data.roomMessage}</p>
+    </div>
+    `;
     messagesDiv?.appendChild(messageElement);
     if (window.dtfullMenuOpen === false && window.chatActive === false) {
       document
@@ -1741,7 +1768,8 @@ export async function universe() {
     }
   });
 
-  // Universe Players
+ if (window.playerOnline === false) {
+    // Universe Players
   const room2Name = "alphaTesters";
   const room2Description = "Alpha Testers";
   window.uniPlayer = {
@@ -1751,37 +1779,41 @@ export async function universe() {
     y: 0,
   };
   window.room2 = uniPlayers.create(room2Name, room2Description);
-  // window.room2.setChannel(channel2);
+  window.room2.setChannel(channel2);
   var playerInt = false;
   var otherPlayers = [];
 
-  // channel2.presence.subscribe("enter", (member) => {
-  //   console.log("A NEW PLAYER HAS ARRIVED", member.data);
-  // });
-  // channel2.presence.subscribe("update", (member) => {
-  //   if (playerInt === false) {
-  //     var playerGroup1 = uniPlayers.create("PlayerGroup1");
-  //     playerGroup1.renderPlayer(member.data.data);
-  //     otherPlayers.push(member.data.data.playerId);
-  //     playerInt = true;
-  //     return;
-  //   }
-  //   if (otherPlayers.includes(member.data.data.playerId) === false) {
-  //     otherPlayers.push(member.data.data.playerId);
-  //     window.room2.renderPlayer(member.data.data);
-  //   }
-  //   document.getElementById(`${member.data.data.playerId}`).style.top =
-  //   member.data.data.y;
-  //   document.getElementById(`${member.data.data.playerId}`).style.left =
-  //   member.data.data.x;
-  // });
-  // channel2.presence.subscribe("leave", (member) => {
-  //   // console.log("MemberData", member.data);
-  //   document.getElementById(`${member.data.data.playerId}`).remove();
-  // });
+  channel2.presence.subscribe("enter", (member) => {
+    // console.log("A NEW PLAYER HAS ARRIVED", member.data);
+    console.log("A NEW PLAYER HAS ARRIVED");
+  });
+  channel2.presence.subscribe("update", (member) => {
+    if (playerInt === false) {
+      var playerGroup1 = uniPlayers.create("PlayerGroup1");
+      playerGroup1.renderPlayer(member.data.data);
+      otherPlayers.push(member.data.data.playerId);
+      playerInt = true;
+      return;
+    }
+    if (otherPlayers.includes(member.data.data.playerId) === false) {
+      otherPlayers.push(member.data.data.playerId);
+      window.room2.renderPlayer(member.data.data);
+    }
+    document.getElementById(`${member.data.data.playerId}`).style.top =
+    member.data.data.y;
+    document.getElementById(`${member.data.data.playerId}`).style.left =
+    member.data.data.x;
+  });
+  channel2.presence.subscribe("leave", (member) => {
+    // console.log("MemberData", member.data);
+    document.getElementById(`${member.data.data.playerId}`).remove();
+  });
 
-  // channel2.presence.enter(window.uniPlayer);
-  //
+  channel2.presence.enter(window.uniPlayer);
+  window.playerOnline = true;
+  return;
+  }
+  
 
   // TOOLTIP
   // window.elementHelp = async (e) => {
@@ -1846,8 +1878,14 @@ export const newEditorScenario = async (name,scene) => {
 
 export function enterTaosCity() {
   // Temporary
+  soundtrack.setVolume("pegasus", 1);
+  soundtrack.play("pegasus");
   window.tempIn = true;
   //
+  var uniMenu = document.getElementById("getUniMenu").shadowRoot;
+  setTimeout(() => {
+    document.getElementById("seekModal").style.display = "none";
+  }, 2000);
   document.getElementById("dgr").setAttribute("active", "true");
   document.getElementById("getUniMenu").setAttribute("uniMenu", "taoscity");
   document.getElementById("camera").style.pointerEvents = "auto";
@@ -1868,6 +1906,7 @@ export function enterTaosCity() {
   <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/graphics/crglove.png"/>
   `
   document.getElementById("camera").appendChild(powerUp);
+  // uniMenu.getElementById("it1").style.display = "none";
 }
 
 export function myFirstDrug() {

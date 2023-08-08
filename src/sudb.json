@@ -64,6 +64,10 @@
       {
         "id": "bitWallet",
         "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/BFWallet.png"
+      },
+      {
+        "id": "digisette",
+        "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png"
       }
     ],
     "Scenarios": {
@@ -72,7 +76,7 @@
           "name": "scene1",
           "position": 1,
           "type": "dialogue",
-          "bg": "rgba(0, 0, 0, 0.75)",
+          "bg": "rgba(0, 0, 0, 0.9)",
           "activated": {
             "land": 9120,
             "gate": 0,
@@ -92,7 +96,7 @@
                   "text": [
                   {
                     "action": null,
-                    "txt":"Hello, welcome to City Central HOLO-Support. I'm Digisette Agent Alex. You'll need a PLUG wallet to get started. Make sure your DIGISETTE is in this wallet, and click the Holo when ready."
+                    "txt":"Welcome to Digisette HOLO-Support. Choose a wallet to login with. Make sure your DIGISETTE is in this wallet, and click the Holo when ready."
                   }
                 ]
                 },
@@ -216,7 +220,7 @@
             },
             {
               "id": "stoicWallet",
-              "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/stoicWalletCS.png",
+              "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/stoicWallet.png",
               "type": "div",
               "innerType": "img",
               "width": "20%",
@@ -242,7 +246,7 @@
             }
           ],
           "choices": [
-            "WHAT WALLET?",
+            "DIGISETTE?",
             "LEAVE ->"
           ]
         },
@@ -333,16 +337,16 @@
                   "multi": true,
                   "text": [
                     {
-                      "action":"document.getElementById('stoicWallet-cont').style.scale = '0';",
-                      "txt":"Hi! Sorry, my colleague is a bit too.. concise. You must be new here. Welcome to T.A.O.S City! I remember when I got my first wallet. It was exciting and nerve wrecking! I'm Destiny, by the way."
+                      "action":"document.getElementById('stoicWallet-cont').style.scale = '0'; document.getElementById('plugWallet-img').src='https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png'; document.getElementById('element1Shadow').src='https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png'; document.getElementById('plugWallet-cont').style.scale = 1.2; document.getElementById('plugWallet-cont').style.left = '38%'; document.getElementById('plugWallet-cont').style.top = '35%'; window.newElLink = true",
+                      "txt":"Hi! Sorry, my colleague is a bit too brief. You must be new here. Digisette's are the future of this city. Domain management, memory, and entertainment. Not to mention you get Lord status through-out the city!"
                     },
                     {
                       "action": null,
-                      "txt": "So, wallets like Plug help you store your assets, like Digisette's and more. You can use them to buy and sell things, and to interact with other lords in T.A.O.S City."
+                      "txt": "To get a Digisette head over to the YUMI Marketplace. Just click the Holo image on my left when you're ready."
                     },
                     {
                       "action": null,
-                      "txt": "There are many different types of wallets, but they all do the same thing. For starters use Plug. Let us know if we should add any others."
+                      "txt": "Make sure you use one of our preffered wallets. We recommend Stoic or Plug. In the future we'll be adding more wallet options."
                     },
                     {
                       "action": null,
@@ -361,9 +365,9 @@
               "pns": {
                 "position": "absolute",
                 "left": "auto",
-                "right": "5%",
+                "right": "10%",
                 "leftTo": "auto",
-                "rightTo": "20%",
+                "rightTo": "30%",
                 "bottom": 0,
                 "top": "auto",
                 "zIndex": 20,
@@ -384,10 +388,10 @@
                 "width": "350px",
                 "height": "auto",
                 "left": "auto",
-                "right": "-70%",
+                "right": "-80%",
                 "bottom": "auto",
                 "top": "-5%",
-                "zIndex": 2,
+                "zIndex": 0,
                 "position": "absolute",
                 "border": ".5px solid #ff002d",
                 "pointer": {
@@ -407,8 +411,8 @@
           ],
           "elements": [
             {
-              "id": "plugWallet",
-              "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/plugWallet.png",
+              "id": "digisette",
+              "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png",
               "type": "div",
               "innerType": "img",
               "width": "20%",
@@ -419,23 +423,7 @@
               "position": "absolute",
               "shadow": true,
               "shadowEffect": "blur(50px)",
-              "action": "`${connectPlugWallet()}`"
-            },
-            {
-              "id": "stoicWallet",
-              "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/stoicWalletCS.png",
-              "type": "div",
-              "innerType": "img",
-              "width": "20%",
-              "height": "auto",
-              "left": "65%",
-              "top": "45%",
-              "zIndex": "1",
-              "speed": 0.9,
-              "position": "absolute",
-              "shadow": true,
-              "shadowEffect": "blur(50px)",
-              "action": "connectStoicWallet()"
+              "action": ""
             }
           ],
           "choices": [

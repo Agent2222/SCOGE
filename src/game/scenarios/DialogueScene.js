@@ -1,7 +1,7 @@
 
 import { Scenario } from "../scenarios/Scenarios.js";
 import { Character } from "../characters/Character.js";
-import { connectPlugWallet, connectBitFinityWallet, connectStoicWallet } from "../../wallets.js";
+import { connectPlugWallet, connectStoicWallet } from "../../wallets.js";
 import { gsap } from "gsap";
 import { newScenario } from "../../universe.js";
 import { openNote1 } from "../../game/SceneManager.js";
@@ -223,7 +223,7 @@ export class DialogueScene extends Scenario {
         el.addEventListener("click", () => {
           const actions = {
             "connectPlugWallet()": () => connectPlugWallet(whitelist, deploy),
-            "connectBitfinityWallet()": () => connectBitFinityWallet(whitelist, deploy),
+            "connectStoicWallet()": () => connectStoicWallet(whitelist),
             "openNote1()": () => openNote1(),
             "getDigisette()": () => {
               window.open("https://yumi.io/launchpad/detail/hmz4w-fiaaa-aaaah-admlq-cai", "_blank");
@@ -231,8 +231,10 @@ export class DialogueScene extends Scenario {
             // add other actions here
           };
         
-          if (actions[element.action]) {
+          if (actions[element.action] && window.newElLink == null) {
             actions[element.action]();
+          } else {
+            window.open('https://yumi.io/launchpad/detail/hmz4w-fiaaa-aaaah-admlq-cai', "_blank");
           }
         });
         this.elements.push(el);

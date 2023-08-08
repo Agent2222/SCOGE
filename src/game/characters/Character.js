@@ -79,7 +79,7 @@ export class Character {
         if (this.currentDialogue === this.persona.dialogue.text.length) {
           // Remove Choice button
         }
-      }, 1800);
+      }, 1000);
 
       dialogueText.onTypingComplete = () => {
         if (this.persona.dialogue.multi === true && this.currentDialogue < this.persona.dialogue.text.length) {
