@@ -24,9 +24,11 @@
   },
   "dfx": "0.14.2",
   "networks": {
-    "local": {
-      "bind": "127.0.0.1:8080",
-      "type": "ephemeral"
+    "icp0.io": {
+      "providers": [
+        "https://ic0.app"
+      ],
+      "type": "persistent"
     }
   },
   "version": 1
