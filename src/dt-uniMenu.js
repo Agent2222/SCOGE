@@ -168,6 +168,8 @@ class getUniMenu extends HTMLElement {
 
   loggedIn() {
       this.updateVarBeacon();
+      soundtrack2.loop("pegasus");
+      soundtrack2.play("pegasus");
       var newBeacon = this.shadow.getElementById("newvarBeacon")
       this.shadow.getElementById("varBeacon").replaceWith(newBeacon);
     this.shadow.getElementById("uniMenuExit").style.display = "none";
@@ -3317,7 +3319,7 @@ class getUniMenu extends HTMLElement {
                 <div class="settingsSectionsSlider">
                   <div>Music</div>
                   <div>
-                    <input type="range" min="0" max="5" value="0" class="soundSlider1" id="myRange2">
+                    <input type="range" min="0" max="5" value="5" class="soundSlider1" id="myRange2">
                   </div>
                 </div>
                 <!--
