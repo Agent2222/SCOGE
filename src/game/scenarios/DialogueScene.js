@@ -222,7 +222,7 @@ export class DialogueScene extends Scenario {
         // Actions
         el.addEventListener("click", () => {
           const actions = {
-            // "connectPlugWallet()": () => connectPlugWallet(whitelist, deploy),
+            "connectPlugWallet()": () => connectPlugWallet(whitelist, deploy),
             "connectStoicWallet()": () => connectStoicWallet(whitelist),
             "openNote1()": () => openNote1(),
             "getDigisette()": () => {
