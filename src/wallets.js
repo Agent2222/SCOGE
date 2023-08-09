@@ -11,10 +11,10 @@ const canister = "7mfck-baaaa-aaaah-acuqq-cai";
 
 export async function getNFTCollections(principal) {
   // const principal = 'qpbuq-myqvw-yoaff-265ad-5g6xu-wx5dl-zzd7y-y6oak-zo4uf-x3ozb-dqe';
-  var isConnected = await window.ic.plug.isConnected();
-  if (isConnected === false) {
-    return false;
-  } else {
+  // var isConnected = await window.ic.plug.isConnected();
+  // if (isConnected === false) {
+  //   return false;
+  // } else {
     // Variable Wallet principal 
     // const principal = await window.ic.plug.getPrincipal().catch((e) => {
     //   console.log("Get Principal", e);
@@ -53,10 +53,10 @@ export async function getNFTCollections(principal) {
     } catch (err) {
       console.log("NFTs Error", err);
     }    
-  }
-};
+  // }
+}
 
-export const connectPlugWallet = async (whitelist, host) => {
+export async function connectPlugWallet(whitelist, host) {
   var view = document.querySelector(".currentScene");
   if (window.ic === undefined) {
     console.log("Plug not found - Get Plug Wallet");
@@ -140,7 +140,7 @@ export const connectPlugWallet = async (whitelist, host) => {
       document.getElementById("universe").style.filter = "blur(0px)";
     }
   }
-};
+}
 
 export const connectStoicWallet = async (canisterId) => {
   var view = document.querySelector(".currentScene");

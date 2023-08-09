@@ -3317,7 +3317,7 @@ class getUniMenu extends HTMLElement {
                 <div class="settingsSectionsSlider">
                   <div>Music</div>
                   <div>
-                    <input type="range" min="0" max="5" value="5" class="soundSlider1" id="myRange2">
+                    <input type="range" min="0" max="5" value="0" class="soundSlider1" id="myRange2">
                   </div>
                 </div>
                 <!--
