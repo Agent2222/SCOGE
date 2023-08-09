@@ -872,3 +872,94 @@ label::before {
     color: var(--accent);
     letter-spacing: 2px;
 }
+
+#mapperUI {
+    width: 18%;
+    height: 90%;
+    position: fixed;
+    top: 5%;
+    left: 2%;
+    background-color: rgba(0,0,0,0.9);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 5pt;
+}
+
+#domainStats {
+    width: 100%;
+    height: 20%;
+    float: left;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    align-items: center;
+    justify-items: start;
+    overflow: hidden;
+}
+
+#domainRegion {
+    width: 100%;
+    height: 16%;
+    float: left;
+    display: grid;
+    border-bottom: .5px solid #ff002d;
+    grid-template-columns: 1fr;
+    grid-template-rows: 80% 20%;
+    align-items: center;
+    justify-items: start;
+    overflow: hidden;
+}
+
+#labels {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+    transition: .3s all;
+}
+
+.label {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    font-family: "BS-B";
+    transition: .3s all;
+}
+
+#lb1 {
+    background-color: brown;
+}
+#lb2 {
+    background-color: cadetblue;
+}
+#lb3 {
+   background-color: purple;
+}
+#lb4 {
+    background-color: darkolivegreen;
+}
+#lb5 {
+    background-color: yellow;
+}
+#lb6 {
+    background-color: blue;
+}
+#lb7 {
+    background-color: red;
+}
+#lb8 {
+    background-color: orange;
+}
+#lb9 {
+    background-color: gray;
+}
+#lb10 {
+    background-color: darkslategray;
+}

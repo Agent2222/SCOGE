@@ -3,7 +3,6 @@ import { SoundtrackManager } from "./soundtrack.js";
 import { idlFactory } from "./declarations/universe_backend/universe_backend.did.js";
 import { chatRoom } from "./uniHelpers/chat.js";
 import { uniPlayers } from "./uniHelpers/players.js";
-import { connectPlugWallet, createActor1 } from "./wallets.js";
 import { Scenario } from "./game/scenarios/scenarios.js";
 import { DialogueScene } from "./game/scenarios/DialogueScene.js";
 import { gsap } from "gsap";
@@ -1878,8 +1877,6 @@ export const newEditorScenario = async (name,scene) => {
 
 export function enterTaosCity() {
   // Temporary
-  soundtrack.setVolume("pegasus", 1);
-  soundtrack.play("pegasus");
   window.tempIn = true;
   //
   var uniMenu = document.getElementById("getUniMenu").shadowRoot;

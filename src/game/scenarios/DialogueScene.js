@@ -222,7 +222,7 @@ export class DialogueScene extends Scenario {
         // Actions
         el.addEventListener("click", () => {
           const actions = {
-            "connectPlugWallet()": () => connectPlugWallet(whitelist, deploy),
+            // "connectPlugWallet()": () => connectPlugWallet(whitelist, deploy),
             "connectStoicWallet()": () => connectStoicWallet(whitelist),
             "openNote1()": () => openNote1(),
             "getDigisette()": () => {
@@ -232,6 +232,7 @@ export class DialogueScene extends Scenario {
           };
         
           if (actions[element.action] && window.newElLink == null) {
+            console.log("Action: ", element.action);
             actions[element.action]();
           } else {
             window.open('https://yumi.io/launchpad/detail/hmz4w-fiaaa-aaaah-admlq-cai', "_blank");
