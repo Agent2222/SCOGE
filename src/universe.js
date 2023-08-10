@@ -1560,21 +1560,21 @@ export async function universe() {
 
   // CANISTER (Change in local / production)
   // Create Actor
-  const createActor = async () => {
-    // Create an actor to interact with the NNS Canister
-    // we pass the NNS Canister id and the interface factory
-    window.user.principal = await window.ic.bitfinityWallet.getPrincipal();
-    // console.log(window.ic.infinityWallet);
-    window.suUiActor = await window.ic.bitfinityWallet
-      .createActor({
-        canisterId: can2,
-        interfaceFactory: suIDL,
-        host: "http://localhost:8080/",
-      })
-      .catch((e) => {
-        console.log("creatActor", e);
-      });
-  };
+  // const createActor = async () => {
+  //   // Create an actor to interact with the NNS Canister
+  //   // we pass the NNS Canister id and the interface factory
+  //   window.user.principal = await window.ic.bitfinityWallet.getPrincipal();
+  //   // console.log(window.ic.infinityWallet);
+  //   window.suUiActor = await window.ic.bitfinityWallet
+  //     .createActor({
+  //       canisterId: can2,
+  //       interfaceFactory: suIDL,
+  //       host: "http://localhost:8080/",
+  //     })
+  //     .catch((e) => {
+  //       console.log("creatActor", e);
+  //     });
+  // };
 
   // Error
   const connectError = async (error) => {
@@ -1880,6 +1880,9 @@ export function enterTaosCity() {
   window.tempIn = true;
   //
   var uniMenu = document.getElementById("getUniMenu").shadowRoot;
+  //
+  uniMenu.getElementById("uniMenuTxt").innerHTML = "CONTACT CC";
+  //
   setTimeout(() => {
     document.getElementById("seekModal").style.display = "none";
   }, 2000);
