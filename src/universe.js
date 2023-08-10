@@ -1881,7 +1881,7 @@ export function enterTaosCity() {
   //
   var uniMenu = document.getElementById("getUniMenu").shadowRoot;
   //
-  uniMenu.getElementById("uniMenuTxt").innerHTML = "CONTACT CC";
+  // uniMenu.getElementById("uniMenuTxt").innerHTML = "CONTACT CC";
   //
   setTimeout(() => {
     document.getElementById("seekModal").style.display = "none";
