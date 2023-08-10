@@ -47,8 +47,8 @@ class uniConsensus extends HTMLElement {
                 comments: []
             },
             vcTshirt: {
-                votes: 0,
-                percent: 0,
+                votes: 75,
+                percent: 25,
                 comments: []
             },
             vcShorts: {

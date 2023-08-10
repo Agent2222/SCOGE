@@ -27,7 +27,7 @@ export async function getNFTCollections(principal) {
         user: textV,
       });
     
-      // console.log("NFTs", collections);
+      console.log("NFTs", collections);
       if (collections !== undefined) {
         collections.forEach((nft) => {
           var nftElement = document.createElement("div");
@@ -77,10 +77,6 @@ export async function connectPlugWallet(whitelist, host) {
       console.log(window.ic.plug.sessionManager.sessionData);
     };
 
-      const principal = await window.ic.plug.getPrincipal().catch((e) => {
-      console.log("Get Principal", e);
-    });
-
     if (connected === false) {
       // Scenario - User has a plug wallet but is not connected
       const plugpublicKey = await window.ic.plug
@@ -95,6 +91,10 @@ export async function connectPlugWallet(whitelist, host) {
           console.error("Connect Wallet", e);
         });
       console.log("pk", plugpublicKey);
+
+      const principal = await window.ic.plug.getPrincipal().catch((e) => {
+        console.log("Get Principal", e);
+      });
       gsap.to(view, {
         opacity: 0,
         filter: "blur(10px)",

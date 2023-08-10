@@ -887,20 +887,75 @@ label::before {
     border-radius: 5pt;
 }
 
+#mapperHeader {
+    width: 100%;
+    height: 5%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    border-bottom: .5px solid #ff002d;
+}
+
+#mapperTitle {
+    padding-left: 20%;
+    justify-self: start;
+    align-self: center;
+}
+
+
+#mapperClose {
+    padding-right: 20%;
+    justify-self: end;
+    align-self: center;
+    scale: 1.2;
+    transition: .3s all;
+}
+
+#mapperClose:hover {
+    cursor: pointer;
+    scale: 1.8;
+    padding-right: 15%;
+}
+
 #domainStats {
     width: 100%;
     height: 20%;
     float: left;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-items: start;
+    overflow: hidden;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.mLeftSect {
+    width: 80%;
+    height: 100%;
+    display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto;
     align-items: center;
     justify-items: start;
-    overflow: hidden;
+    padding-left: 20%;
+}
+
+.mRightSect {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    align-items: center;
+    justify-items: start;
+    color: var(--secondary);
 }
 
 #domainRegion {
     width: 100%;
-    height: 16%;
+    height: 20%;
     float: left;
     display: grid;
     border-bottom: .5px solid #ff002d;
@@ -922,6 +977,15 @@ label::before {
     transition: .3s all;
 }
 
+#labelDesc {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-items: start;
+}
+
 .label {
     height: 100%;
     width: 100%;
@@ -931,6 +995,17 @@ label::before {
     color: black;
     font-family: "BS-B";
     transition: .3s all;
+    overflow: hidden;
+}
+
+#mapperSelected {
+    width: 80%;
+    height: 100%;
+    padding-left: 20%;
+}
+
+#mapperSelectedSel {
+    color: var(--secondary);
 }
 
 #lb1 {
@@ -962,4 +1037,107 @@ label::before {
 }
 #lb10 {
     background-color: darkslategray;
+}
+
+#mapperSelectors {
+    width: 100%;
+    height: 12%;
+    margin-top: 10%;
+    float: left;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    align-items: start;
+    justify-items: start;
+}
+
+#mapperSelectorLabels {
+    width: 80%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    align-items: center;
+    justify-items: start;
+    padding-left: 20%;
+}
+
+#mapperSelectorValues {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    align-items: center;
+    justify-items: start;
+}
+
+.mapperButs {
+    width: 100%;
+    height: 10%;
+    float: left;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-items: center;
+    margin-top: 10%;
+    text-align: center;
+    padding: 2%;
+    position: absolute;
+}
+
+#saveBut {
+    bottom: 0%;
+}
+
+#clearBut {
+    bottom: 8%;
+}
+
+#mapperSaveBut {
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    transition: .3s all;
+    font-size: 1.2em;
+    letter-spacing: 1px;
+    padding: 3% 15%;
+    border-radius: 5px;
+}
+
+#mapperSaveBut:hover {
+    cursor: pointer;
+    color: black;
+    font-family: "BS-B";
+    background-color: var(--accent);
+}
+
+#mapperClearBut {
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    transition: .3s all;
+    font-size: 1.2em;
+    letter-spacing: 1px;
+    padding: 3% 15%;
+    border-radius: 5px;
+}
+
+#mapperClearBut:hover {
+    cursor: pointer;
+    color: black;
+    font-family: "BS-B";
+    background-color: var(--primary);
+}
+
+#mapperVis {
+    width: 95%;
+    height: 10%;
+    float: left;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    align-items: center;
+    justify-items: center;
+    margin-top: 8%;
+    text-align: center;
 }
