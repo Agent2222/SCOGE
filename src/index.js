@@ -244,7 +244,8 @@ uncover();
 window.addEventListener("resize", function () {
    // refresh the page
    if (window.currentMenuTab != "settings" && window.matchMedia("(min-width: 800px)").matches) {
-    window.location.reload();
+    // window.location.reload();
+    window.reloaduniverseSystem(); 
    }
   if (window.matchMedia("(max-width: 768px)").matches) {
     var shopMenuBut = document.getElementById("shopBut");

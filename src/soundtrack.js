@@ -14,6 +14,17 @@ export class SoundtrackManager {
       { key: 'menuExitSys1', src: 'https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/scoge-menu1-exitSys-1.wav', artist: 'Menu', title: 'menuExitSys1' },
       { key: 'scoge1', src: 'https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/main/scoge-soleil.wav', artist: 'Main', title: 'scoge1' },
       { key: 'pegasus', src: 'https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Soundtrack/Pegasus.mp3', artist: 'Soundtrack', title: 'pegasus' },
+      { key: 'running-2', src: 'https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/running-4.wav', artist: 'movement', title: 'running-2' },
+      { key: 'discovered-1', src: 'https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/discovered-2.wav', artist: 'movement', title: 'discovered-1' },
+      { key: 'explore-1', src: 'https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/explore-1.wav', artist: 'movement', title: 'explore-1' },
+      { key: 'dgOnline-1', src: 'https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/digisette-online-1.wav', artist: 'main', title: 'dgOnline-1' },
+      { key: 'combatOff-1', src: 'https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/combat-offline-1.wav', artist: 'system', title: 'combatOff-1' },
+      { key: 'combatOff-2', src: 'https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/combat-offline-2.wav', artist: 'system', title: 'combatOff-2' },
+      { key: 'openwindow-1', src: 'https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/open-window-1.wav', artist: 'system', title: 'openwindow-1' },
+      { key: 'closewindow-1', src: 'https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/close-window-2.wav', artist: 'system', title: 'closewindow-1' },
+      { key: 'typing-1', src: 'https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/typing-1wav.wav', artist: 'system', title: 'typing-1' },
+      { key: 'sendmessage-1', src: 'https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/sendmessage-1.wav', artist: 'system', title: 'sendmessage-1' },
+      { key: 'newmessage-1', src: '  https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/newmessage.wav', artist: 'system', title: 'newmessage-1' },
     ];
 
     this.trackList.forEach(track => {

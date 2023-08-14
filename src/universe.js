@@ -130,6 +130,11 @@ export async function universe() {
   window.playerOnline = false;
   window.connected = false;
   var tempLandEx = ["1435", "3162", "2849", "6208", "1980"];
+  var playing = {
+    startVolume: 0.2,
+    fullVolume: 0.6,
+    running: false,
+  }
   window.activeGames = [];
   window.suUiActor = null;
   window.landActivated = false;
@@ -303,6 +308,29 @@ export async function universe() {
     //
   };
 
+
+  window.reloaduniverseSystem = async () => {
+    var uniCtx = universeCanvas.getContext("2d");
+    var img = document.createElement("img");
+    var cam = document.getElementById("camera");
+      img.onload = function () {
+        // clear canvas
+        uniCtx.clearRect(0, 0, universeCanvas.width, universeCanvas.height);
+        uniCtx.drawImage(img, 0, 0, img.width, img.height);
+        // make a 18px by 18px grid overlay
+        uniCtx.fillStyle = "rgba(255, 255, 255, 0.08)";
+        for (var x = 0; x < img.width; x += tileSize) {
+          uniCtx.fillRect(x, 0, 1, img.height);
+        }
+        for (var y = 0; y < img.height; y += tileSize) {
+          uniCtx.fillRect(0, y, img.width, 1);
+        }
+      };
+      img.src =
+        "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/scoge-taos-city-universe.jpg";
+      cam.scrollTo(990, 0);
+  };
+
   var editorActive = false;
 
   // Editor Button
@@ -397,6 +425,9 @@ export async function universe() {
     // get mouse position
     document.getElementById("explore").style.display = "block";
     var rect = universeCanvas.getBoundingClientRect();
+    if (exploreUI.style.transform === "scale(1)" && window.landActivated === true) {
+      soundtrack.play("closewindow-1")
+    }
     exploreUI.style.transform = "scale(0)";
     selectionPos.x = Math.round((e.clientX - (rect.left + 9)) / tileSize);
     selectionPos.y = Math.round((e.clientY - (rect.top + 9)) / tileSize);
@@ -530,6 +561,10 @@ export async function universe() {
       "playerCord"
     ).innerHTML = `Player Coordinates: ${cityPosition.x}, ${cityPosition.y}`;
 
+    playerCoor.x = cityPosition.x;
+    playerCoor.y = cityPosition.y;
+    domain = position;
+
     document.getElementById(
       "playerScreenCoor"
     ).innerHTML = `Player Screen Coordinates: ${boxRect.left}, ${
@@ -583,6 +618,9 @@ export async function universe() {
       `${position}` === tempLandEx[3] ||
       `${position}` === tempLandEx[4] 
     ) {
+      soundtrack.loop("discovered-1")
+      soundtrack.setVolume("discovered-1", 0.8)
+      soundtrack.play("discovered-1")
       window.landActivated = true;
       document.getElementById("selection").style.animationPlayState = "running";
       document.getElementById("selection").style.animation =
@@ -645,6 +683,8 @@ export async function universe() {
             await channel.publish("chatRoom1", {
               roomMessage: message,
             });
+            soundtrack.setVolume("sendmessage-1", 0.8)
+            soundtrack.play("sendmessage-1")
             messageInput.value = "";
           }
         });
@@ -658,6 +698,8 @@ export async function universe() {
       }
       return;
     } else {
+      soundtrack.stop("discovered-1")
+      window.domainType = "canon";
       window.landActivated = false;
       document.getElementById("selection").style.animationPlayState = "paused";
       document.getElementById("selection").style.animation = "none";
@@ -684,13 +726,37 @@ export async function universe() {
     selectionBoxPosition.y = topCenter * tileSize;
     // make a event listeniner for arrow keys and move the selection box 18px in the direction of the arrow key pressed starting from its current position if window is not scrolling. Stop from moving at the edge of the window screen size.
     document.addEventListener("keydown", function (e) {
+      var coll = document
+      .getElementById("collectionGallery")
+      .shadowRoot.getElementById("collectionGallery");
+
+      soundtrack.setVolume("closewindow-1", 0.4)
+      soundtrack.setVolume("typing-1", 0.8)
+
       if (window.chatActive != true) {
-        exploreUI.style.transform = "scale(0)";
         dragElement(document.getElementById("exploreUI"), true);
+        // if (e.keyCode == 27) {
+        //   document.getElementById("getUniMenu").toggleFullScreen();
+        // }
         if (e.keyCode == 37) {
-          document
-          .getElementById("collectionGallery")
-          .shadowRoot.getElementById("collectionGallery").style.transform =
+          // LEFT
+          if (playing.running === false) {
+            soundtrack.setVolume("running-2", playing.startVolume)
+            setTimeout(() => {
+              soundtrack.setVolume("running-2", playing.fullVolume)
+            }, 1000);
+            soundtrack.loop("running-2")
+            soundtrack.play("running-2")
+            playing.running = true;
+          }
+          if (coll.style.transform == "scaleX(1)") {
+            soundtrack.play("closewindow-1")
+          }
+          if (exploreUI.style.transform === "scale(1)" && window.landActivated === true) {
+            soundtrack.play("closewindow-1")
+          }
+          exploreUI.style.transform = "scale(0)";
+          coll.style.transform =
           "scaleX(0)";
           if (selectionBoxPosition.x > 0) {
             if (movementPaused == false) {
@@ -703,9 +769,24 @@ export async function universe() {
           }
         }
         if (e.keyCode == 38) {
-          document
-          .getElementById("collectionGallery")
-          .shadowRoot.getElementById("collectionGallery").style.transform =
+          // UP
+          if (playing.running === false) {
+            soundtrack.setVolume("running-2", playing.startVolume)
+            setTimeout(() => {
+              soundtrack.setVolume("running-2", playing.fullVolume)
+            }, 1000);
+            soundtrack.loop("running-2")
+            soundtrack.play("running-2")
+            playing.running = true;
+          }
+          if (coll.style.transform == "scaleX(1)") {
+            soundtrack.play("closewindow-1")
+          }
+          if (exploreUI.style.transform === "scale(1)" && window.landActivated === true) {
+            soundtrack.play("closewindow-1")
+          }
+          exploreUI.style.transform = "scale(0)";
+          coll.style.transform =
           "scaleX(0)";
           if (selectionBoxPosition.y > 0) {
             if (movementPaused == false) {
@@ -718,9 +799,24 @@ export async function universe() {
           }
         }
         if (e.keyCode == 39) {
-          document
-          .getElementById("collectionGallery")
-          .shadowRoot.getElementById("collectionGallery").style.transform =
+          // RIGHT
+          if (playing.running === false) {
+            soundtrack.setVolume("running-2", playing.startVolume)
+            setTimeout(() => {
+              soundtrack.setVolume("running-2", playing.fullVolume)
+            }, 1000);
+            soundtrack.loop("running-2")
+            soundtrack.play("running-2")
+            playing.running = true;
+          }
+          if (coll.style.transform == "scaleX(1)") {
+            soundtrack.play("closewindow-1")
+          }
+          if (exploreUI.style.transform === "scale(1)" && window.landActivated === true) {
+            soundtrack.play("closewindow-1")
+          }
+          exploreUI.style.transform = "scale(0)";
+         coll.style.transform =
           "scaleX(0)";
           if (selectionBoxPosition.x < window18Width * tileSize - tileSize) {
             if (movementPaused == false) {
@@ -733,9 +829,24 @@ export async function universe() {
           }
         }
         if (e.keyCode == 40) {
-          document
-          .getElementById("collectionGallery")
-          .shadowRoot.getElementById("collectionGallery").style.transform =
+          // DOWN
+          if (playing.running === false) {
+            soundtrack.setVolume("running-2", playing.startVolume)
+            setTimeout(() => {
+              soundtrack.setVolume("running-2", playing.fullVolume)
+            }, 1000);
+            soundtrack.loop("running-2")
+            soundtrack.play("running-2")
+            playing.running = true;
+          }
+          if (coll.style.transform == "scaleX(1)") {
+            soundtrack.play("closewindow-1")
+          }
+          if (exploreUI.style.transform === "scale(1)" && window.landActivated === true) {
+            soundtrack.play("closewindow-1")
+          }
+          exploreUI.style.transform = "scale(0)";
+          coll.style.transform =
           "scaleX(0)";
           if (selectionBoxPosition.y < window18Height * tileSize - tileSize) {
             if (movementPaused == false) {
@@ -753,6 +864,7 @@ export async function universe() {
         // if space bar is pressed open the explore UI
         if (e.keyCode == 32) {
           window.exploreOpenHelper();
+          soundtrack.stop("discovered-1")
         }
         ///////////////////////
         //// TEMP
@@ -760,6 +872,11 @@ export async function universe() {
         if (e.keyCode == 88) {
           document.getElementById("universe").style.filter = "blur(0px)";
           document.getElementById("currentSceneView_scene1").style.display = "none";
+        }
+      } else {
+        if (e.keyCode != 37 || e.keyCode != 38 || e.keyCode != 39 || e.keyCode != 40 && typing == true) {
+          soundtrack.stop("typing-1")
+          soundtrack.play("typing-1")
         }
       }
     });
@@ -804,6 +921,25 @@ export async function universe() {
         viewEditor.style.bottom = "auto";
       }
     });
+    
+    document.addEventListener("keyup", function (e) {
+      if (e.keyCode == 37) {
+        soundtrack.stop("running-2")
+        playing.running = false;
+      }
+      if (e.keyCode == 38) {
+        soundtrack.stop("running-2")
+        playing.running = false;
+      }
+      if (e.keyCode == 39) {
+        soundtrack.stop("running-2")
+        playing.running = false;
+      }
+      if (e.keyCode == 40) {
+        soundtrack.stop("running-2")
+        playing.running = false;
+      }
+    });
   };
 
   window.initSelection = () => {
@@ -833,7 +969,10 @@ export async function universe() {
       }
     });
   };
-
+  var tempContx = `
+  <div id="unclaimedBox">
+  <div id="unclaimed">UNCLAIMED DOMAIN</div>
+</div>`
   var tempCont1 = `<div class="cannonIcon">
   <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
   </div>
@@ -924,6 +1063,7 @@ export async function universe() {
   // Explore Open Helper
   window.exploreOpenHelper = () => {
     // scale exploreUI to 1 and position it 18px to the right of the selection box if the space to the right of the selection box is greater than the width of the exploreUI element, if not position it 18px to the left of the selection box.
+    soundtrack.setVolume("openwindow-1", 0.4);
     var exploreUISize = document.getElementById("exploreUI").offsetWidth;
     if (typing === false) {
       if (
@@ -939,6 +1079,9 @@ export async function universe() {
         exploreUI.style.transform = "scale(1)";
       }
       if (window.landActivated === false) {
+        setTimeout(() => {
+          soundtrack.play("explore-1")
+        } , 100);
         exploreUI.style.width = "128px";
         exploreUI.style.height = "20px";
         exploreUI.style.top = selectionBoxPosition.y - 92 + "px";
@@ -956,11 +1099,12 @@ export async function universe() {
         // Add switch case for different domain functions(catgories)
         // exploreUI.style.width = "540px";
         // exploreUI.style.height = "80%";
+        soundtrack.play("openwindow-1");
         if (window.domainType === "chat") {
           window.chatActive = true;
           exploreUI.style.width = "540px";
           exploreUI.style.height = "80%";
-          exploreUI.style.top = (100 - (Number(exploreUI.style.height.replace("vh","")))) / 2 + "vh";
+          exploreUI.style.top = (100 - (Number(exploreUI.style.height.replace("%","")))) / 2 + "vh";
           // document
           //   .getElementById("uniEvent4")
           //   .setAttribute("style", "animation: none;");
@@ -969,6 +1113,7 @@ export async function universe() {
         if (window.domainType === "world") {
           exploreUI.style.width = "540px";
           exploreUI.style.height = "810px";
+          soundtrack.play("openwindow-1");
           // document
           //   .getElementById("uniEvent4")
           //   .setAttribute("style", "animation: none;");
@@ -977,6 +1122,7 @@ export async function universe() {
         if (window.domainType === "canon") {   
           exploreUI.style.width = "540px";
           exploreUI.style.height = "60vh";
+          soundtrack.play("openwindow-1");
           //      
           document
           .getElementById("collectionGallery")
@@ -990,6 +1136,7 @@ export async function universe() {
         }
 
         if (window.domainType === "canonX") {
+          soundtrack.play("openwindow-1");
           document
           .getElementById("collectionGallery")
           .shadowRoot.getElementById("collectionGallery").style.transform =
@@ -1736,6 +1883,8 @@ export async function universe() {
     </div>
     `;
     messagesDiv?.appendChild(messageElement);
+    // soundtrack.setVolume("newmessage-1", 0.8);
+    // soundtrack.play("newmessage-1");
     if (window.dtfullMenuOpen === false && window.chatActive === false) {
       document
         .getElementById("getUniMenu")
@@ -1878,6 +2027,9 @@ export const newEditorScenario = async (name,scene) => {
 export function enterTaosCity() {
   // Temporary
   window.tempIn = true;
+  soundtrack.play("menuEntrance1");
+  soundtrack.setVolume("dgOnline-1", 0.4);
+  soundtrack.play("dgOnline-1");
   //
   var uniMenu = document.getElementById("getUniMenu").shadowRoot;
   //
@@ -1906,6 +2058,11 @@ export function enterTaosCity() {
   <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/graphics/crglove.png"/>
   `
   document.getElementById("camera").appendChild(powerUp);
+  powerUp.addEventListener("click", () => {
+    soundtrack.setVolume("combatOff-1", 0.7);
+    soundtrack.setVolume("combatOff-2", 0.7);
+    soundtrack.play(`combatOff-${Math.floor(Math.random() * 2) + 1}`);
+  });
   // uniMenu.getElementById("it1").style.display = "none";
 }
 
@@ -1997,3 +2154,10 @@ export function dragElement(elmnt, on) {
     document.onmousemove = null;
   }
 }
+
+export var playerCoor = {
+  x: 0,
+  y: 0,
+}
+
+export var domain = null;

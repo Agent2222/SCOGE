@@ -1015,7 +1015,7 @@ label::before {
     background-color: cadetblue;
 }
 #lb3 {
-   background-color: purple;
+   background-color: purple !important;
 }
 #lb4 {
     background-color: darkolivegreen;
