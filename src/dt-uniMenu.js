@@ -112,7 +112,7 @@ class getUniMenu extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["unimenu"];
+    return ["unimenu", "fullscreen"];
   }
 
   attributeChangedCallback(prop, oldVal, newVal) {
@@ -123,8 +123,13 @@ class getUniMenu extends HTMLElement {
           this.switchMenuTabs(e);
         });
       });
+    // if (prop === "fullscreen" && newVal === "true") {
+    //   this.shadow.getElementById("fsSlider").classList.add("active");
+    // } else {
+    //   this.shadow.getElementById("fsSlider").classList.remove("active");
+    // }
       // Remove offline message
-    }
+   }
     // if (newVal === "loggedIn") {
     //   this.variableDataMessages.shift();
     //   this.render();
@@ -432,9 +437,11 @@ class getUniMenu extends HTMLElement {
   toggleFullScreen() {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen();
+      document.getElementById("getUniMenu").setAttribute("fullscreen", "true");
     } else {
       if (document.exitFullscreen) {
         document.exitFullscreen();
+        document.getElementById("getUniMenu").setAttribute("fullscreen", "false");
       }
     }
   }
@@ -3033,7 +3040,7 @@ class getUniMenu extends HTMLElement {
                <div id="uniMenuIcon">&#8682;</div>
               </div>
               <div id="uniVersion">
-                Universe - v. 0.0.3
+                Universe - v. 0.0.4
               </div>
             </div>
             <div id="menuItems">
@@ -3295,9 +3302,9 @@ class getUniMenu extends HTMLElement {
                 <div class="settingsSections">
                   <div>Toggle Fullscreen</div>
                   <div class="toggleBoxes">
-                    <label class="switch">
+                    <label class="switch" id="fsToggleLabel">
                     <input type="checkbox" id="fsToggle">
-                    <span class="slider round"></span>
+                    <span class="slider round" id="fsSlider"></span>
                     </label>
                   </div>
                 </div>

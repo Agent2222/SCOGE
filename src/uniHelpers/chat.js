@@ -11,7 +11,7 @@ export class chatRoom {
     }
 
     callback(changes) {
-      console.log('Array has been modified:', changes);
+      // console.log('Array has been modified:', changes);
     }
   
     addMessage(message) {

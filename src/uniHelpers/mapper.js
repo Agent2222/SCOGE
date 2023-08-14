@@ -1,3 +1,84 @@
+import { playerCoor, domain } from "../universe.js";
+
+var canvas = document.getElementById("universe");
+var ctx = canvas.getContext("2d");
+var mapperFillOpacity = 0.5;
+var img = document.createElement("img");
+var mapping = {}
+var key = {
+    1: {
+        region: "LX Industry",
+        color: "brown",
+        id: "1b1"
+    },
+    2: {
+        region: "West Wing River",
+        color: "cadetblue",
+        id: "1b2"
+    },
+    3: {
+        region: "Outerlands",
+        color: "purple",
+        id: "1b3"
+    },
+    4: {
+        region: "The 12th",
+        color: "darkolivegreen",
+        id: "1b4"
+    },
+    5: {
+        region: "Ports of Alansana",
+        color: "yellow",
+        id: "1b5"
+    },
+    6: {
+        region: "Falcons Heart",
+        color: "blue",
+        id: "1b6"
+    },
+    7: {
+        region: "East Wing River",
+        color: "red",
+        id: "1b7"
+    },
+    8: {
+        region: "Sustainer Town",
+        color: "orange",
+        id: "1b8"
+    },
+    9: {
+        region: "Alans Isles",
+        color: "gray",
+        id: "1b9"
+    },
+    0: {
+        region: "City Central",
+        color: "darkslategray",
+        id: "1b0"
+    },
+}
+
+function clearSquare() {
+    ctx.clearRect(playerCoor.x, playerCoor.y, 18, 18);
+    img.onload = function () {
+        ctx.drawImage(img, playerCoor.x, playerCoor.y, 18, 18, playerCoor.x, playerCoor.y, 18, 18);
+    };
+    img.src = "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/scoge-taos-city-universe.jpg";
+}
+
+function mapMapping(domain, region, owner, funct, material, visibility, privacy, chapter) {
+    var d = {
+        region: region,
+        owner: owner,
+        function: funct,
+        material: material,
+        visibility: visibility,
+        privacy: privacy,
+        chapter: chapter,
+    }
+    mapping[domain] = d;
+}
+
 export function activateMapper() {
     var mapperBut = document.getElementById("mapperBut");
     var camera = document.getElementById("camera");
@@ -110,7 +191,7 @@ export function activateMapper() {
             </div>
             <div id="mapperVis">
                 <div id="mapperVisLabel">Overlay Visibility</div>
-                <input type="range" min="0" max="100" value="50" class="slider" id="mapperVisSlider">
+                <input type="range" min="0" max="1" step="0.1" value="${mapperFillOpacity}" class="slider" id="mapperVisSlider">
             </div>
             <div class="mapperButs" id="clearBut">
                 <div id="mapperClearBut">RESET</div>
@@ -124,6 +205,94 @@ export function activateMapper() {
         document.getElementById("mapperClose").addEventListener("click", () => {
             window.mapperActive = false;
             document.getElementById("mapperUI").remove();
+        });
+        document.addEventListener("keydown", (e) => {
+            // 1 key
+            var selectedName = document.getElementById("mapperSelectedSel");
+            if (e.keyCode == 49) {
+                clearSquare();
+                ctx.fillStyle = key[1].color;
+                selectedName.innerHTML = key[1].region;
+                ctx.globalAlpha = mapperFillOpacity;
+                ctx.fillRect(playerCoor.x, playerCoor.y, 18, 18);
+            }
+            // 2 key
+            if (e.keyCode == 50) {
+                clearSquare();
+                ctx.fillStyle = key[2].color;
+                selectedName.innerHTML = key[2].region;
+                ctx.globalAlpha = mapperFillOpacity;
+                ctx.fillRect(playerCoor.x, playerCoor.y, 18, 18);
+                var d1 = domain;
+                var d2 = domain
+                mapMapping(d2, "Falcons Heart", null, null, "Oracles Mansion", false, false, "All");
+                console.log(mapping);
+            }
+            // 3 key
+            if (e.keyCode == 51) {
+                clearSquare();
+                ctx.fillStyle = key[3].color;
+                selectedName.innerHTML = key[3].region;
+                ctx.globalAlpha = mapperFillOpacity;
+                ctx.fillRect(playerCoor.x, playerCoor.y, 18, 18);
+            }
+            // 4 key
+            if (e.keyCode == 52) {
+                clearSquare();
+                ctx.fillStyle = key[4].color;
+                selectedName.innerHTML = key[4].region;
+                ctx.globalAlpha = mapperFillOpacity;
+                ctx.fillRect(playerCoor.x, playerCoor.y, 18, 18);
+            }
+            // 5 key
+            if (e.keyCode == 53) {
+                clearSquare();
+                ctx.fillStyle = key[5].color;
+                selectedName.innerHTML = key[5].region;
+                ctx.globalAlpha = mapperFillOpacity;
+                ctx.fillRect(playerCoor.x, playerCoor.y, 18, 18);
+            }
+            // 6 key
+            if (e.keyCode == 54) {
+                clearSquare();
+                ctx.fillStyle = key[6].color;
+                selectedName.innerHTML = key[6].region;
+                ctx.globalAlpha = mapperFillOpacity;
+                ctx.fillRect(playerCoor.x, playerCoor.y, 18, 18);
+            }
+            // 7 key
+            if (e.keyCode == 55) {
+                clearSquare();
+                ctx.fillStyle = key[7].color;
+                selectedName.innerHTML = key[7].region;
+                ctx.globalAlpha = mapperFillOpacity;
+                ctx.globalCompositeOperation = "multiply"; // Set the blend mode
+                ctx.fillRect(playerCoor.x, playerCoor.y, 18, 18);
+            }
+            // 8 key
+            if (e.keyCode == 56) {
+                clearSquare();
+                ctx.fillStyle = key[8].color;
+                selectedName.innerHTML = key[8].region;
+                ctx.globalAlpha = mapperFillOpacity;
+                ctx.fillRect(playerCoor.x, playerCoor.y, 18, 18);
+            }
+            // 9 key
+            if (e.keyCode == 57) {
+                clearSquare();
+                ctx.fillStyle = key[9].color;
+                selectedName.innerHTML = key[9].region;
+                ctx.globalAlpha = mapperFillOpacity;
+                ctx.fillRect(playerCoor.x, playerCoor.y, 18, 18);
+            }
+            // 0 key
+            if (e.keyCode == 48) {
+                clearSquare();
+                ctx.fillStyle = key[0].color;
+                selectedName.innerHTML = key[0].region;
+                ctx.globalAlpha = mapperFillOpacity;
+                ctx.fillRect(playerCoor.x, playerCoor.y, 18, 18);
+            }
         });
     }
 }
