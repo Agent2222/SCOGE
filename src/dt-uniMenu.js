@@ -331,10 +331,13 @@ class getUniMenu extends HTMLElement {
       }
     } else {
       // Desktop Menu
+      var moveMenu = document.getElementById("getUniMenu").shadowRoot?.getElementById("uniMenu");
+      // dragElement(moveMenu, true);
       if (window.dtmenuOpen === false) {
+        dragElement(moveMenu, true);
         this.closeFullMenu();
         menuIcon.style.transform = "rotate(180deg)";
-        menu.style.transition = "all 0.3s ease-in-out";
+        // menu.style.transition = "all 0.3s ease-in-out";
         // menu.style.maxHeight = "50%";
         setTimeout(() => {
           menuHeader.style.height = "100%";
@@ -342,7 +345,9 @@ class getUniMenu extends HTMLElement {
           menu.setAttribute("class", "collapsed");
         }, 150);
         return;
-      } else {
+      } 
+      else {
+        dragElement(moveMenu, true);
         this.closeFullMenu();
         menuHeader.style.height = "20%";
         setTimeout(() => {
@@ -3040,7 +3045,7 @@ class getUniMenu extends HTMLElement {
                <div id="uniMenuIcon">&#8682;</div>
               </div>
               <div id="uniVersion">
-                Universe - v. 0.0.4
+                Universe - v. 0.0.5
               </div>
             </div>
             <div id="menuItems">

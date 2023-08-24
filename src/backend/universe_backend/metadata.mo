@@ -110,4 +110,12 @@ module {
         total_unique_holders : Nat;
         total_supply : Nat;
     };
+
+    public type Domain = {
+        id : Nat;
+        owner : ?Text;
+        health : ?Nat64;
+        strength : ?Nat64;
+        endurance : ?Nat64;
+    };
 }

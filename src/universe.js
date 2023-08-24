@@ -93,9 +93,38 @@ var testState = {
   },
 };
 
+
+export const attn = async (error, np) => {
+  let data = new FormData();
+  if (error != undefined) {
+    data.append("Email", "ATTN: RELOAD");
+    data.append("FeedbackText", `${error.e.props.Message}`);
+  }
+  if (np != undefined) {
+    data.append("Email", "ATTN: ENTER TAOS CITY");
+    data.append("FeedbackText", `${np}`);
+  }
+  fetch(
+    "https://script.google.com/macros/s/AKfycbxOuAozKPY70nQqWzkD_mYHnd954KrUZuRnGNrmGnA4j3l3nSMYuNssqiJMqn7Z4u064w/exec",
+    {
+      method: "POST",
+      body: data,
+      mode: "cors",
+    }
+  ).then((res) => res.text());
+};
+
+  // MP
+
+export var channelex ;
+export var channel2ex ;
+
 // Init Soundtrack
 export async function universe() {
-
+  const channel = window.ably.channels.get("alphaTestersChat");
+  const channel2 = window.ably.channels.get("lordsInTheCity");
+  channelex = channel;
+  channel2ex = channel2;
   // US VARS
   var universeCanvas = document.querySelector("#universe");
   var exploreUI = document.querySelector("#exploreUI");
@@ -135,6 +164,10 @@ export async function universe() {
     fullVolume: 0.6,
     running: false,
   }
+  window.spoke = {
+    spokeAcclimatePlaying: false,
+    spokeAcclimate: false,
+  }
   window.activeGames = [];
   window.suUiActor = null;
   window.landActivated = false;
@@ -163,11 +196,6 @@ export async function universe() {
   const localhost = "http://127.0.0.1:8080/?canisterId=r7inp-6aaaa-aaaaa-aaabq-cai&id=ryjl3-tyaaa-aaaaa-aaaba-cai";
   // BEFORE LAUNCH !!!!!!!!!
   // Rebuilding Actors Across Account Switches
-
-  // MP
-
-  const channel = window.ably.channels.get("alphaTestersChat");
-  const channel2 = window.ably.channels.get("lordsInTheCity");
 
   const test = () => {
     document.addEventListener("keydown", async function (e) {
@@ -634,6 +662,18 @@ export async function universe() {
         window.domainType = "canon";
         canon = "collection2"
         exploreUI.innerHTML = tempCont1;
+        document.querySelector(".listen").addEventListener("click", () => {
+          if (window.spoke.spokeAcclimatePlaying === false) {
+            soundtrack.play("reacclimate-1");
+            document.querySelector(".listen").innerHTML = "STOP";
+            window.spoke.spokeAcclimatePlaying = true;
+            return;
+          } else {
+            soundtrack.stop("reacclimate-1");
+            document.querySelector(".listen").innerHTML = "LISTEN";
+            window.spoke.spokeAcclimatePlaying = false;
+          }
+        });
         return;
       } else if (`${position}` === tempLandEx[1]) {
         window.domainType = "canonX";
@@ -740,6 +780,8 @@ export async function universe() {
         // }
         if (e.keyCode == 37) {
           // LEFT
+          soundtrack.stop("reacclimate-1");
+          window.uniPlayer.emote = "";
           if (playing.running === false) {
             soundtrack.setVolume("running-2", playing.startVolume)
             setTimeout(() => {
@@ -770,6 +812,8 @@ export async function universe() {
         }
         if (e.keyCode == 38) {
           // UP
+          soundtrack.stop("reacclimate-1");
+          window.uniPlayer.emote = "";
           if (playing.running === false) {
             soundtrack.setVolume("running-2", playing.startVolume)
             setTimeout(() => {
@@ -800,6 +844,8 @@ export async function universe() {
         }
         if (e.keyCode == 39) {
           // RIGHT
+          soundtrack.stop("reacclimate-1");
+          window.uniPlayer.emote = "";
           if (playing.running === false) {
             soundtrack.setVolume("running-2", playing.startVolume)
             setTimeout(() => {
@@ -830,6 +876,8 @@ export async function universe() {
         }
         if (e.keyCode == 40) {
           // DOWN
+          soundtrack.stop("reacclimate-1");
+          window.uniPlayer.emote = "";
           if (playing.running === false) {
             soundtrack.setVolume("running-2", playing.startVolume)
             setTimeout(() => {
@@ -865,6 +913,8 @@ export async function universe() {
         if (e.keyCode == 32) {
           window.exploreOpenHelper();
           soundtrack.stop("discovered-1")
+          window.uniPlayer.emote = "";
+          soundtrack.stop("reacclimate-1");
         }
         ///////////////////////
         //// TEMP
@@ -977,6 +1027,7 @@ export async function universe() {
   <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
   </div>
   <div class="canonStory">
+  <div class="listen">[ STOP ]</div>
   <h1>Oracle Mansion</h1>
   <p>In the distant lands of T.A.O.S City, there exists a hidden world of self-exiled creators, known as the Oracles. These Oracles reside in ancient, desolate mansions on the outskirts of the city, and possess a wealth of knowledge and experience that is sought after by migrants from far-off lands. These migrants come to T.A.O.S City in search of a new life, but often find themselves lost and alone in a vast and unfamiliar place. They turn to the Oracles for guidance, seeking to avoid the wrath of the city's enforcers, a powerful and ruthless group of conservative citizens.
   <br><br>
@@ -1123,6 +1174,12 @@ export async function universe() {
           exploreUI.style.width = "540px";
           exploreUI.style.height = "60vh";
           soundtrack.play("openwindow-1");
+          setTimeout(() => {
+            if (window.spoke.spokeAcclimate === false) {
+              soundtrack.play("reacclimate-1");
+              window.spoke.spokeAcclimatePlaying = true;
+            }
+          }, 200);
           //      
           document
           .getElementById("collectionGallery")
@@ -1689,7 +1746,7 @@ export async function universe() {
         console.log("Get Admin", { e });
         var error = { e };
         if (window.dmb === false) {
-          attn(error);
+          attn(error, null);
         }
       })
       .catch((error) => {
@@ -1784,20 +1841,6 @@ export async function universe() {
     // if (errors.etaActive === false) {
     //   shadow.getElementById("menuMessageCTA").style.display = "none";
     // }
-  };
-
-  const attn = async (error) => {
-    let data = new FormData();
-    data.append("Email", "ATTN: RELOAD");
-    data.append("FeedbackText", `${error.e.props.Message}`);
-    fetch(
-      "https://script.google.com/macros/s/AKfycbxOuAozKPY70nQqWzkD_mYHnd954KrUZuRnGNrmGnA4j3l3nSMYuNssqiJMqn7Z4u064w/exec",
-      {
-        method: "POST",
-        body: data,
-        mode: "cors",
-      }
-    ).then((res) => res.text());
   };
 
   // Upcoming
@@ -1925,6 +1968,7 @@ export async function universe() {
     playerName: "Damion",
     x: 0,
     y: 0,
+    emote: null,
   };
   window.room2 = uniPlayers.create(room2Name, room2Description);
   window.room2.setChannel(channel2);
@@ -1951,6 +1995,26 @@ export async function universe() {
     member.data.data.y;
     document.getElementById(`${member.data.data.playerId}`).style.left =
     member.data.data.x;
+    // Update Emote if changed
+    if (document.getElementById(`${member.data.data.playerId}`)) {
+      if (
+        document
+          .getElementById(`${member.data.data.playerId}`)
+          .getAttribute("emote") !== member.data.data.emote
+      ) {
+        document
+          .getElementById(`${member.data.data.playerId}`)
+          .setAttribute("emote", member.data.data.emote);
+          document
+          .getElementById(`${member.data.data.playerId}`)
+          .innerHTML = `<div class="playerEmote" style="position: absolute; top: 9px; left: 9px; width: 28px; height: 28px; z-index:10; background-color:black; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: #fff; font-weight: 700;">${member.data.data.emote}</div>`;
+      }
+      if (document
+        .getElementById(`${member.data.data.playerId}`)
+        .getAttribute("emote") === "") {
+          document.getElementById(`${member.data.data.playerId}`).innerHTML = "";
+      }
+    }
   });
   channel2.presence.subscribe("leave", (member) => {
     // console.log("MemberData", member.data);
@@ -2026,6 +2090,9 @@ export const newEditorScenario = async (name,scene) => {
 
 export function enterTaosCity() {
   // Temporary
+  if (window.dmb === false) {
+    attn(null, "New Player Logged In");
+  }
   window.tempIn = true;
   soundtrack.play("menuEntrance1");
   soundtrack.setVolume("dgOnline-1", 0.4);
@@ -2043,6 +2110,7 @@ export function enterTaosCity() {
   document.getElementById("camera").style.pointerEvents = "auto";
   window.openLocationCard();
   window.playerPos();
+  document.getElementById("compEmoter").setAttribute("active", "true");
   setTimeout(() => {
     document.querySelector("#universe").style.opacity = "100%";
   }, 100);

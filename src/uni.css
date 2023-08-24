@@ -259,6 +259,22 @@
     overflow: scroll;
   }
 
+  .listen {
+    color: var(--accent);
+    font-size: .8em;
+    position: absolute;
+    right: 5%;
+    top: 7.5%;
+    font-family: "BS-R";
+    transition: .3s all;
+    cursor: pointer;
+  }
+
+  .listen:hover {
+    color: var(--accent);
+    letter-spacing: 5px;
+  }
+
   #exploreUI p {
     margin-top: 0px;
     font-family: "BS-R";

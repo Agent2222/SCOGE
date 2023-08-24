@@ -25,6 +25,7 @@ export class SoundtrackManager {
       { key: 'typing-1', src: 'https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/typing-1wav.wav', artist: 'system', title: 'typing-1' },
       { key: 'sendmessage-1', src: 'https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/sendmessage-1.wav', artist: 'system', title: 'sendmessage-1' },
       { key: 'newmessage-1', src: '  https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/newmessage.wav', artist: 'system', title: 'newmessage-1' },
+      { key: 'reacclimate-1', src: 'https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/reacclimate-1_01.mp3', artist: 'canon', title: 'reacclimate-1' },
     ];
 
     this.trackList.forEach(track => {
@@ -35,6 +36,12 @@ export class SoundtrackManager {
   async play(key) {
     try {
       await this.tracks[key].play();
+      // when the track ends make window.spokeAcclimate = true;
+      this.tracks[key].addEventListener('ended', () => {
+        if (key === 'reacclimate-1') {
+          window.spoke.spokeAcclimate = true;
+        }
+      });
     } catch (error) {
       // console.error('Failed to play audio:', error);
     }
