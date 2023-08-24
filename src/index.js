@@ -14,6 +14,7 @@ import { dtMusic } from "./dt-scogeMusic.js";
 import { dtInvestors } from "../src/dt-investors";
 import { dtGallery } from "../src/dt-gallery.js";
 import { dialogueBox } from "../src/dialogueBox.js";
+import { uniMenuAgent } from "../src/uni-c-miniAgent.js";
 import { MainDialogue } from "./typing.js";
 import { SeekDialogue } from "./seeking.js";
 import { SoundtrackManager } from "./soundtrack.js";
@@ -29,7 +30,9 @@ import { Configuration, OpenAIApi } from "openai";
 import { universe } from "./universe.js";
 import { uniConsensus } from "./uni-c-consensus.js";
 import { uni3dViewer } from "./uni-c-3dModel.js";
+import { uniDomainDev } from "./uni-c-domaindev.js";
 import { checkInitialState } from "../src/game/SceneManager.js";
+import { emoter } from "./uniComponents/emoter.js";
 
 // // Check size on Start
 window.sizeInit = () => {

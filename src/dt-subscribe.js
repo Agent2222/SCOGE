@@ -63,7 +63,7 @@ class dtSubscribe extends HTMLElement {
          <style>
             @font-face {
                 font-family: "BS-R";
-                src: url("https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.svg");
+                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.svg");
                 font-weight: normal;
                 font-style: normal;
             }

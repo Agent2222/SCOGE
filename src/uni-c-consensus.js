@@ -84,7 +84,9 @@ class uniConsensus extends HTMLElement {
             setTimeout(() => {
                 this.shadow.host.style.display = "none";
             }, 300);
-            document.getElementById('ringView').appendChild(this.shadow.getElementById('dgr'));
+            if (this.shadow.getElementById('dgr')) {
+                document.getElementById('ringView')?.appendChild(this.shadow.getElementById('dgr'));
+            }
         }
         if (newVal === 'true') {
             this.shadow.getElementById('digisetteRing').appendChild(document.getElementById('dgr'));

@@ -4,6 +4,10 @@
       "main": "src/backend/universe_backend/main.mo",
       "type": "motoko"
     },
+    "taoscity": {
+      "main": "src/backend/universe_backend/taos.mo",
+      "type": "motoko"
+    },
     "assets": {
       "dependencies": [
         "universe_backend"
