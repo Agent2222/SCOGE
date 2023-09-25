@@ -712,7 +712,7 @@ class getUniMenu extends HTMLElement {
         selected.querySelector(".beaconIdenIcon").style.opacity = "0";
       });
       if (headline1.innerHTML === "H/L ZONE 5") {
-        document.getElementById("beaconAction2").style.marginTop = "8%";
+        // document.getElementById("beaconAction2").style.marginTop = "8%";
         this.vidInvestigate();
       }
       shad.getElementById("beaconAction1")?.addEventListener("click", () => {
