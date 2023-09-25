@@ -702,6 +702,102 @@
           ]
         }
       ],
+      "DomainDevelopmentSetup": [
+        {
+          "name": "domanDevelopmentSetup",
+          "position": 1,
+          "type": "dialogue",
+          "bg": "rgba(0, 0, 0, 0.75)",
+          "activated": {
+            "land": 9120,
+            "gate": 0,
+            "pop": false,
+            "scn": [1,4]
+          },
+          "buttons": ["CONTINUE", "DIGISETTE?","LEAVE ->"],
+          "characters": [
+            {
+              "persona": {
+                "name": "Lesli",
+                "location": "Digisette Domain Development",
+                "job": "DD associate",
+                "dialogue": {
+                  "pPosition": "right",
+                  "multi": true,
+                  "text": [
+                  {
+                    "action": null,
+                    "txt":"Hello, welcome to T.A.O.S City Domain-Development. Let's get you setup with a domain."
+                  },
+                  {
+                    "action": "setTimeout(() => {window.currentScenario.scenes[0].hide(); setTimeout(() => {document.getElementById('compDomainDev').setAttribute('active','true'); pinMenu()},200)}, 3000)",
+                    "txt":"You can explore the city during this process. I'll help you through your Digisette. Let's get started!"
+                  }
+                ]
+                },
+                "images": {
+                  "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Lesli-1.png"
+                }
+              },
+              "pns": {
+                "position": "absolute",
+                "left": "auto",
+                "leftTo": "auto",
+                "right": "-5%",
+                "rightTo": "30%",
+                "bottom": 0,
+                "bottomTo": 0,
+                "top": "auto",
+                "topTo": "auto",
+                "zIndex": 1,
+                "zIndexTo": 1,
+                "width": "auto",
+                "widthTo": "auto",
+                "height": "85%",
+                "heightTo": "85%",
+                "speed": 1,
+                "blur": "0px",
+                "blurTo": "0px",
+                "brightness": "1",
+                "brightnessTo": "1"
+              },
+              "element": {
+                "class": "chr-textElement",
+                "type": "div",
+                "backgroundColor": "rgba(0, 0, 0, 0.75)",
+                "padding": "10px 10px",
+                "borderRadius": "10px",
+                "borderTop": "0.5px solid rgb(255, 0, 45)",
+                "borderBottom": "0.5px solid rgb(255, 0, 45)",
+                "width": "350px",
+                "height": "auto",
+                "left": "-90%",
+                "right": "auto",
+                "bottom": "auto",
+                "top": "-5%",
+                "zIndex": 2,
+                "position": "absolute",
+                "border": ".5px solid #ff002d",
+                "pointer": {
+                  "position": "absolute",
+                  "width": "50px",
+                  "height": "50px",
+                  "borderleft": "1px solid #ff002d",
+                  "bottom": "-50px",
+                  "left": "105%",
+                  "zIndex": -5,
+                  "transform": "rotate(-45deg)"
+                }
+              },
+              "actions": ["chat"]
+            }
+          ],
+          "choices": [
+            "DIGISETTE?",
+            "LEAVE ->"
+          ]
+        }
+      ],
       "FoundTheGuide": [
         {
           "name": "foundTheGuide",

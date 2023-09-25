@@ -9,6 +9,12 @@ import {StoicIdentity} from "ic-stoic-identity";
 
 const canister = "7mfck-baaaa-aaaah-acuqq-cai";
 
+export var lord = {
+  principal: null,
+  balance: null,
+  nfts: null,
+};
+
 export async function getNFTCollections(principal) {
   // const principal = 'qpbuq-myqvw-yoaff-265ad-5g6xu-wx5dl-zzd7y-y6oak-zo4uf-x3ozb-dqe';
   // var isConnected = await window.ic.plug.isConnected();
@@ -95,6 +101,9 @@ export async function connectPlugWallet(whitelist, host) {
       const principal = await window.ic.plug.getPrincipal().catch((e) => {
         console.log("Get Principal", e);
       });
+
+      lord.principal = principal;
+
       gsap.to(view, {
         opacity: 0,
         filter: "blur(10px)",
@@ -128,6 +137,9 @@ export async function connectPlugWallet(whitelist, host) {
       const principal = await window.ic.plug.getPrincipal().catch((e) => {
         console.log("Get Principal", e);
       });
+
+      lord.principal = principal;
+
       loading();
       getNFTCollections(principal).then((nftCheck) => {
         endLoading();
@@ -164,6 +176,9 @@ export const connectStoicWallet = async (canisterId) => {
     //Lets display the connected principal!
     canisterId = canisterId[0];
   const principal = identity.getPrincipal()
+
+  lord.principal = principal;
+
   console.log("Principal", principal);
 
   loading();

@@ -76,6 +76,7 @@ var nmcProps = {
 class getUniMenu extends HTMLElement {
   constructor() {
     super();
+    this.domainIntroSeen = false;
     this.shadow = this.attachShadow({ mode: "open" });
     this.shopSource = `<img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/shop-temp-1.png" alt="NFT Shop" id="nftShop"><img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png" alt="NFT Shop" id="nftShop">`;
     this.defaultSource = `<img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/DIGISHOP-1.png" alt="NFT Shop" id="nftShop">`
@@ -99,6 +100,15 @@ class getUniMenu extends HTMLElement {
         message: "Welcome to the SCOGÉ Digisette System. Your Digisette is now online and ready for use.<br><br>Contact our Holo-Support team below for control assistance.",
         buttonText: "HOLO-SUPPORT",
         action: "controls()",
+      },
+      {
+        name: "Video",
+        from: "UNKNOWN",
+        head: "H/L ZONE 5",
+        preview: "Holding / Loading Zone 5",
+        message: `<iframe id="ytVideo" width="100%" height="315"  style="z-index:-1; user-select:none;" src="https://www.youtube-nocookie.com/embed/ZxxTNwgL37s?si=fBzvjh4a2fzZ4M0V&amp;controls=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`,
+        buttonText: "VIEW",
+        action: "viewRR()",
       }
     ];
   }
@@ -645,6 +655,10 @@ class getUniMenu extends HTMLElement {
     console.log("Saved Temp Profile");
   }
 
+  vidInvestigate() {
+    document.getElementById("beaconAction1").remove();
+  }
+
   // Open Beacon Messgae
   async openBeaconMessage(e) {
     // Temp Filler
@@ -664,10 +678,16 @@ class getUniMenu extends HTMLElement {
       "scaleX(0)";
     beaconEl.setAttribute("class", "beaconPanel");
     beaconEl.setAttribute("id", "beaconPan");
+    var messageBody1 = "";
+    if (e.target.id === "videoBeacon") {
+      messageBody1 = `${this.variableDataMessages[2].message}`;
+    } else {
+      messageBody1 = `<div id="beaconTutBody">${messageData}</div>`;
+    }
     beaconEl.innerHTML = `
     <div id="beaconBody">
         <div id="beaconTutHead">${messageData2}</div>
-        <div id="beaconTutBody">${messageData}</div>
+        ${messageBody1}
         <div id="beaconTutActions">
             <div class="beaconActions" data-action="${data2}" id="beaconAction1">INVESTIGATE</div>
             <div class="beaconActions" id="beaconAction2">"OK, GOT IT!"</div>
@@ -684,12 +704,17 @@ class getUniMenu extends HTMLElement {
     if (window.isMobile === true) {
       // mobile
       var shad = document.getElementById("getUniMenu").shadowRoot;
+      var headline1 = shad.getElementById("beaconTutHead");
       shad.getElementById("fullMenu").appendChild(beaconEl);
       shad.getElementById("beaconPan").style.display = "block";
       shad.getElementById("beaconAction2")?.addEventListener("click", () => {
         shad.getElementById("beaconPan")?.remove();
         selected.querySelector(".beaconIdenIcon").style.opacity = "0";
       });
+      if (headline1.innerHTML === "H/L ZONE 5") {
+        document.getElementById("beaconAction2").style.marginTop = "8%";
+        this.vidInvestigate();
+      }
       shad.getElementById("beaconAction1")?.addEventListener("click", () => {
         shad.getElementById("beaconPan")?.remove();
         // this.shadow.getElementById(".beaconAction1").innerHTML = "INVESTIGATE";
@@ -700,6 +725,11 @@ class getUniMenu extends HTMLElement {
       document.getElementById("camera").appendChild(beaconEl);
       dragElement(beaconEl, true);
       document.getElementById("beaconPan").style.display = "block";
+      var headline2 = document.getElementById("beaconTutHead");
+      if (headline2.innerHTML === "H/L ZONE 5") {
+        document.getElementById("beaconAction2").style.marginTop = "8%";
+        this.vidInvestigate();
+      }
       document
         .getElementById("beaconAction2")
         ?.addEventListener("click", () => {
@@ -708,7 +738,7 @@ class getUniMenu extends HTMLElement {
       document
         .getElementById("beaconAction1")
         ?.addEventListener("click", (e) => {
-          document.getElementById("beaconPan")?.remove();
+          shad.getElementById("beaconPan")?.remove();
           selected.querySelector(".beaconIdenIcon").style.opacity = "0";
           var action = e.target.getAttribute("data-action");
           if (action === "UNKNOWN ITEM DETECTED") {
@@ -790,8 +820,16 @@ class getUniMenu extends HTMLElement {
     this.render();
     this.viewGallery();
     this.musicLevel();
-    this.shadow.getElementById("domainUnDev").addEventListener("click", () => {
-      story("DomainDevelopment");
+    this.shadow.getElementById("gdBuyBut2").addEventListener("click", () => {
+      if (this.domainIntroSeen === false) {
+        story("DomainDevelopmentSetup");
+        this.domainIntroSeen = true;
+        this.shadow.getElementById("gdBuyBut2").innerHTML = "Domain Development";
+        return;
+      } else {
+        document.getElementById("compDomainDev").setAttribute("active", "true");
+        pinMenu();
+      }
     });
     this.shadow.getElementById("cloudHallGarmentImg").addEventListener("click", () => {
       document.getElementById("compConsensus").setAttribute("active", "true");
@@ -2496,7 +2534,7 @@ class getUniMenu extends HTMLElement {
               cursor: pointer;
             }
 
-            #gdBuyBut:hover {
+            #gdBuyBut:hover, #gdBuyBut2:hover {
               background-color: var(--accent);
               color: black;
               font-family: "BS-B";
@@ -2622,8 +2660,53 @@ class getUniMenu extends HTMLElement {
               height: 100%;
               scale: 1.1;
               transition: 0.3s all ease-in-out;
-            }          
+            }       
+            
+            .actionArrows {
+              width: 20%;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 1.8em;
+              color: var(--accent);
+              user-select: none;
+              transition: .3s all;
+          }
 
+          #aaL {
+              animation: pulseArrowLeft 2s infinite ease-out;
+              animation-play-state: playing;
+          }
+
+          #aaR {
+              animation: pulseArrowRight 2s infinite ease-out;
+              animation-play-state: playing;
+          }
+
+          @keyframes pulseArrowLeft {
+              0% {
+                  transform: translateX(10%)  scale(1.2);
+              }
+              50% {
+                  transform: translateX(-30%)  scale(1);
+              }
+              100% {
+                  transform: translateX(10%)  scale(1.2);
+              }
+          }
+
+          @keyframes pulseArrowRight {
+              0% {
+                  transform: translateX(-10%)  scale(1.2);
+              }
+              50% {
+                  transform: translateX(30%)  scale(1);
+              }
+              100% {
+                  transform: translateX(-10%) scale(1.2);
+              }
+          }
 
             @media screen and (max-width: 800px) {
               #uniMenu {
@@ -2891,6 +2974,7 @@ class getUniMenu extends HTMLElement {
                 grid-template-rows: 1fr;
                 transition: transform .5s;
                 cursor: pointer;
+                z-index: 10;
               }
 
               #beaconBody{
@@ -3155,7 +3239,9 @@ class getUniMenu extends HTMLElement {
                   <div class="unReg" id="unDev2-2">REGISTER YOUR DOMAIN</div>
                 </div>
                 <div id="unDev4">
-                  <div class="ddLogButtons" id="gdBuyBut">Visit T.C. Domain Development Center</div>
+                  <span class="actionArrows" id="aaL">>></span>
+                  <div class="ddLogButtons" id="gdBuyBut2">Visit T.C. Domain Development Center</div>
+                  <span class="actionArrows" id="aaR"><<</span>
                 </div>
                 <div id="unDev3">
                   <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/graphics/domain-wireframe.png" alt="Domain Development" id="ddLogo">
@@ -3346,6 +3432,15 @@ class getUniMenu extends HTMLElement {
               </div>
               <div id="fm-beacons">
                 <div class="beacon-tabs ht1" id="beaconsBody">
+                  <div class="beacon tut" id="videoBeacon" data-headline="${this.variableDataMessages[2].head}" data-message="${this.variableDataMessages[0].message}">
+                    <div class="beaconOrigin">
+                      <div class="beaconIdenIcon">!</div>
+                      <div class="beaconSender">${this.variableDataMessages[2].from}</div>
+                    </div>
+                    <div class="beaconPreview">
+                      ${this.variableDataMessages[2].preview}
+                    </div>
+                  </div>
                   <div class="beacon tut" id="varBeacon" data-headline="${this.variableDataMessages[0].head}" data-message="${this.variableDataMessages[0].message}">
                     <div class="beaconOrigin">
                       <div class="beaconIdenIcon">!</div>
