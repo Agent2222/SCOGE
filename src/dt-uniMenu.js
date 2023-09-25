@@ -76,7 +76,7 @@ var nmcProps = {
 class getUniMenu extends HTMLElement {
   constructor() {
     super();
-    this.domainIntroSeen = false;
+    this.domainIntroSeen = null;
     this.shadow = this.attachShadow({ mode: "open" });
     this.shopSource = `<img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/shop-temp-1.png" alt="NFT Shop" id="nftShop"><img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png" alt="NFT Shop" id="nftShop">`;
     this.defaultSource = `<img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/DIGISHOP-1.png" alt="NFT Shop" id="nftShop">`
@@ -821,12 +821,16 @@ class getUniMenu extends HTMLElement {
     this.viewGallery();
     this.musicLevel();
     this.shadow.getElementById("gdBuyBut2").addEventListener("click", () => {
+      if (this.domainIntroSeen === null) {
+        story("DomainDevelopment");
+
+      }
       if (this.domainIntroSeen === false) {
         story("DomainDevelopmentSetup");
         this.domainIntroSeen = true;
         this.shadow.getElementById("gdBuyBut2").innerHTML = "Domain Development";
         return;
-      } else {
+      } else if (this.domainIntroSeen === true) {
         document.getElementById("compDomainDev").setAttribute("active", "true");
         pinMenu();
       }
