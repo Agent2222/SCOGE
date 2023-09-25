@@ -29,6 +29,7 @@ class emoter extends HTMLElement {
     }
 
     openEmotes() {
+        if (window.mapperActive === false) {
         gsap.to(this.shadowRoot.getElementById("main"), {
             duration: .3, 
             ease: "power4.out", 
@@ -45,6 +46,7 @@ class emoter extends HTMLElement {
             });
             this.emotes = false;
         }, 2000);
+        }
     }
 
     activate() {

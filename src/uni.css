@@ -786,6 +786,7 @@
     grid-template-rows: 1fr;
     transition: transform .5s;
     cursor: pointer;
+    z-index: 100;
   }
 
   #beaconTutIcon:hover {
@@ -840,6 +841,8 @@
     text-align: center;
     align-items: center;
     justify-content: center;
+    /* position: absolute;
+    bottom: 5%; */
   }
 
   .beaconActions {
@@ -1067,3 +1070,374 @@
   }
 
   }
+
+ /* --------------------------MAPPER START ------------------*/
+ #mapperBut {
+  transition: .3s all;
+}
+
+#mapperBut:hover {
+  cursor: pointer;
+  color: var(--accent);
+  letter-spacing: 2px;
+}
+
+#mapperUI {
+  width: 18%;
+  height: 90%;
+  position: fixed ;
+  top: 5%;
+  left: 2%;
+  background-color: rgba(0,0,0,0.9);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 5pt;
+}
+
+#mapperHeader {
+  width: 100%;
+  height: 5%;
+  display: grid;
+  grid-template-columns: 50% 15% 35%;
+  grid-template-rows: 1fr;
+  border-bottom: .5px solid #ff002d;
+  font-family: "BS-R";
+}
+
+#mapperJson {
+  width: 100%;
+  height: 100%;
+}
+
+#mapperJson a {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+#mapperTitle {
+  padding-left: 20%;
+  justify-self: start;
+  align-self: center;
+  cursor: pointer;
+}
+
+
+#mapperClose {
+  padding-right: 20%;
+  justify-self: end;
+  align-self: center;
+  scale: 1.2;
+  transition: .3s all;
+}
+
+#mapperClose:hover {
+  cursor: pointer;
+  scale: 1.8;
+  padding-right: 15%;
+}
+
+#domainStats {
+  width: 100%;
+  height: 25%;
+  float: left;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  justify-items: start;
+  overflow: hidden;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.mLeftSect {
+  width: 80%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  align-items: center;
+  justify-items: start;
+  padding-left: 20%;
+}
+
+.mRightSect {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  align-items: center;
+  justify-items: start;
+  color: var(--secondary);
+}
+
+#domainRegion {
+  width: 100%;
+  height: 20%;
+  float: left;
+  display: grid;
+  border-bottom: .5px solid #ff002d;
+  grid-template-columns: 1fr;
+  grid-template-rows: 80% 20%;
+  align-items: center;
+  justify-items: start;
+  overflow: hidden;
+}
+
+#labels {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  transition: .3s all;
+}
+
+#labelDesc {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  justify-items: start;
+}
+
+.label {
+  height: 99%;
+  width: 99%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  font-family: "BS-B";
+  transition: .3s all;
+  overflow: hidden;
+}
+
+.label:hover {
+  cursor: pointer;
+  border: 3px solid lightgreen;
+}
+
+#mapperSelected {
+  width: 80%;
+  height: 100%;
+  padding-left: 20%;
+}
+
+#mapperSelectedSel {
+  color: var(--secondary);
+}
+
+#lb1 {
+  background-color: brown;
+}
+#lb2 {
+  background-color: cadetblue;
+}
+#lb3 {
+ background-color: purple !important;
+}
+#lb4 {
+  background-color: darkolivegreen;
+}
+#lb5 {
+  background-color: yellow;
+}
+#lb6 {
+  background-color: blue;
+}
+#lb7 {
+  background-color: red;
+}
+#lb8 {
+  background-color: orange;
+}
+#lb9 {
+  background-color: gray;
+}
+#lb0 {
+  background-color: darkslategray;
+}
+
+#mapperSelectors {
+  width: 100%;
+  height: 12%;
+  margin-top: 10%;
+  float: left;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  align-items: start;
+  justify-items: start;
+}
+
+#mapperSelectorLabels {
+  width: 80%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  align-items: center;
+  justify-items: start;
+  padding-left: 20%;
+}
+
+#terrainSelector:hover, #sectorSelector:hover {
+  cursor: pointer;
+  color: var(--accent);
+  font-family: "BS-B";
+}
+
+#mapperSelectorValues {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  align-items: center;
+  justify-items: start;
+}
+
+.mapperButs {
+  width: 100%;
+  height: 10%;
+  float: left;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  justify-items: center;
+  margin-top: 10%;
+  text-align: center;
+  padding: 2%;
+  font-family: "BS-R";
+}
+
+#saveBut {
+  bottom: 0%;
+}
+
+#clearBut {
+  bottom: 8%;
+}
+
+#mapperSaveBut1, #mapperSaveBut2 {
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  transition: .3s all;
+  font-size: 1.2em;
+  letter-spacing: 1px;
+  padding: 3% 15%;
+  width: 64%;
+}
+
+#mapperSaveBut1:hover, #mapperSaveBut2:hover {
+  cursor: pointer;
+  color: black;
+  font-family: "BS-B";
+  background-color: var(--accent);
+}
+
+#mapperClearBut1, #mapperClearBut2 {
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  transition: .3s all;
+  font-size: 1.2em;
+  letter-spacing: 1px;
+  padding: 3% 15%;
+  width: 64%;
+}
+
+#mapperClearBut1:hover, #mapperClearBut2:hover {
+  cursor: pointer;
+  color: black;
+  font-family: "BS-B";
+  background-color: var(--primary);
+}
+
+#mapperVis {
+  width: 100%;
+  height: 25%;
+  float: left;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  align-items: center;
+  justify-items: center;
+  margin-top: 18%;
+  text-align: center;
+}
+
+#mapperUpload {
+  width: 90%;
+  height: 100%;
+  display: flex;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  justify-items: center;
+  text-align: center;
+  font-family: "BS-R";
+}
+
+#mapperDecisionButtons {
+  margin-top: 5%;
+  width: 100%;
+  height: 15%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+#opacitySect {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  align-items: center;
+  justify-items: center;
+  text-align: center;
+  font-family: "BS-R";
+}
+
+#mapperTypeLoader {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  align-items: center;
+  justify-items: center;
+  text-align: center;
+  font-family: "BS-R";
+}
+
+#mapperTypeLoaderBut {
+  align-items: center;
+  justify-items: center;
+  text-align: center;
+  font-family: "BS-R";
+  padding: 5% 20%;
+  border: 1px solid var(--accent);
+  color: #94be8c;
+}
+
+#mapperTypeLoaderBut:hover {
+  cursor: pointer;
+  color: black;
+  font-family: "BS-B";
+  background-color: var(--accent);
+}
+ 
+ /* --------------------------MAPPER END --------------------*/

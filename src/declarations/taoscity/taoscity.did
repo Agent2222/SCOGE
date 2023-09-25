@@ -1,0 +1,50 @@
+type taoscity = 
+ service {
+   batchUpdateDomains: (vec Domain, principal) -> () oneway;
+   clearDomain: (nat, Domain, principal) -> () oneway;
+   getAllDomains: (nat, nat) -> (vec Domain) query;
+   getDomain: (nat) -> (Result) query;
+   getDomainByPID: (text) -> (vec Domain) query;
+   getDomainsTotalSupply: () -> (nat) query;
+   getOwnedDomains: () -> (vec Domain) query;
+   getUnOwnedDomains: () -> (vec Domain) query;
+   initTaosCity: (principal) -> () oneway;
+   updateDomain: (nat, Domain, principal) -> (Result);
+ };
+type Result = 
+ variant {
+   err: NftError;
+   ok: Domain;
+ };
+type NftError = 
+ variant {
+   ExistedNFT;
+   NotFound;
+   OperatorNotFound;
+   Other: text;
+   OwnerNotFound;
+   SelfApprove;
+   SelfTransfer;
+   TokenNotFound;
+   UnauthorizedOperator;
+   UnauthorizedOwner;
+ };
+type Domain = 
+ record {
+   chapter: text;
+   endurance: nat64;
+   function: text;
+   health: nat64;
+   id: nat;
+   material: text;
+   owner: text;
+   privacy: bool;
+   region: text;
+   sector: nat;
+   strength: nat64;
+   terrain: text;
+   visibility: bool;
+   x: text;
+   y: text;
+ };
+service : () -> taoscity

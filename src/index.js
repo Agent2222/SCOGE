@@ -33,6 +33,7 @@ import { uni3dViewer } from "./uni-c-3dModel.js";
 import { uniDomainDev } from "./uni-c-domaindev.js";
 import { checkInitialState } from "../src/game/SceneManager.js";
 import { emoter } from "./uniComponents/emoter.js";
+import { tooltip } from "./uniHelpers/tooltip.js";
 
 // // Check size on Start
 window.sizeInit = () => {
@@ -168,29 +169,29 @@ window.sysCheck = () => {
 }
 
 
-// window.checkKeys = async (event) => {
-//   if (event.key === "i" && ci === "false") {
-//     ci = "true";
-//     window.dbm = true;
-//     setTimeout(()=> {
-//       ci = "false";
-//     } , 1000);
-//   }
-//   if (event.key === "c" && ci === "true") {
-//     ci = "bankoo";
-//     // Init Universe
-//     universe();
-//     // DAB IS DEAD?? ALT??
-//     //   window.getAllUserNFTs = await import('@psychedelic/dab-js').then(module => {
-//     //   return module.getAllUserNFTs;
-//     // });
-//     // document.getElementById("uniBut").removeEventListener("click", systemNoti);
-//     // document.getElementById("uniBut").addEventListener("click", universeSystem);
-//     window.universeSystem();
-//     // document.getElementById("uniBut").setAttribute("onclick", "universeSystem()");
-//     // soundtrack.play("scoge1");
-//   }
-// }
+window.checkKeys = async (event) => {
+  if (event.key === "i" && ci === "false") {
+    ci = "true";
+    window.dbm = true;
+    setTimeout(()=> {
+      ci = "false";
+    } , 1000);
+  }
+  if (event.key === "c" && ci === "true") {
+    ci = "bankoo";
+    // Init Universe
+    universe();
+    // DAB IS DEAD?? ALT??
+    //   window.getAllUserNFTs = await import('@psychedelic/dab-js').then(module => {
+    //   return module.getAllUserNFTs;
+    // });
+    // document.getElementById("uniBut").removeEventListener("click", systemNoti);
+    // document.getElementById("uniBut").addEventListener("click", universeSystem);
+    window.universeSystem();
+    // document.getElementById("uniBut").setAttribute("onclick", "universeSystem()");
+    // soundtrack.play("scoge1");
+  }
+}
 
 // // Init Check
 // window.sysCheck();
@@ -234,7 +235,9 @@ function uncover() {
       ci = "true";
       window.trackMouse();
       window.trackMouseMove();
-      document.getElementById("tooltip").style.display = "block";
+      if (document.getElementById("tooltip")) {
+        document.getElementById("tooltip").style.display = "block"; 
+      }
       document.getElementById("pv2").src = "https://scoge.s3.us-east-2.amazonaws.com/Videos/Ch2-Act1-sm.mp4";
       document.getElementById("portalVideo2")?.play();
     }
@@ -1811,6 +1814,7 @@ var mouseMoving = false;
 window.viewingPg = false;
 
 window.trackMouse = (e) => {
+    if (document.getElementById("tooltip")) {
       var tooltip = document.getElementById("tooltip");
       tooltip.style.left = (e?.clientX - 40) + "px";
       tooltip.style.top = (e?.clientY - 20) + "px";
@@ -1818,6 +1822,7 @@ window.trackMouse = (e) => {
       if (mouseMoving === false) {
         gsap.to("#tooltip", {opacity: 0, duration: 0.5, ease: "power2.out", delay: 2});
       }
+    }
 }
 
 window.trackMouseMove = () => {
@@ -1862,4 +1867,35 @@ export class Typing {
 
 
 window.galleryHelp = new Typing("Click to move forward.", "simpleNoti", speed = 80);
+
+export class TypingPlus {
+  constructor(text, element, speed = 50) {
+    this.text = text;
+    this.element = element;
+    this.currentIndex = 0;
+    this.delay = speed;
+    this.onTypingComplete = null; // The callback function for typing completion
+    this.action = null;
+  }
+
+  start() {
+    if (this.action) {
+      this.action();
+    }
+    this.intervalId = setInterval(() => {
+      if (this.currentIndex < this.text.length) {
+        this.element.textContent += this.text.charAt(this.currentIndex);
+        soundtrack.setVolume("typing-1", 0.8);
+        soundtrack.stop("typing-1");
+        soundtrack.play("typing-1");
+        this.currentIndex++;
+      } else {
+        clearInterval(this.intervalId);
+        if (this.onTypingComplete) {
+          this.onTypingComplete(); // Trigger the callback if it exists
+        }
+      }
+    }, this.delay);
+  }
+}
 // ------ Simple Typing End

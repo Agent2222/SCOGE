@@ -2,6 +2,7 @@ import Text "mo:base/Text";
 import Buffer "mo:base/Buffer";
 import Nat64 "mo:base/Nat64";
 import Nat8 "mo:base/Nat8";
+import Bool "mo:base/Bool";
 module {    
 
     public type Metadata = {
@@ -113,9 +114,19 @@ module {
 
     public type Domain = {
         id : Nat;
-        owner : ?Text;
-        health : ?Nat64;
-        strength : ?Nat64;
-        endurance : ?Nat64;
+        x : Text;
+        y : Text;
+        owner : Text;
+        region : Text;
+        sector : Nat;
+        function: Text;
+        material : Text;
+        visibility : Bool;
+        privacy : Bool;
+        chapter : Text;
+        health : Nat64;
+        strength : Nat64;
+        endurance : Nat64;
+        terrain: Text;
     };
 }

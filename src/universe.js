@@ -7,6 +7,7 @@ import { Scenario } from "./game/scenarios/scenarios.js";
 import { DialogueScene } from "./game/scenarios/DialogueScene.js";
 import { gsap } from "gsap";
 import { story } from "./game/SceneManager.js";
+import { activateMapper } from "../src/uniHelpers/mapper";
 
 export const soundtrack = new SoundtrackManager();
 
@@ -93,6 +94,7 @@ var testState = {
   },
 };
 
+export var domainNumber = null;
 
 export const attn = async (error, np) => {
   let data = new FormData();
@@ -155,6 +157,10 @@ export async function universe() {
   var typing = false;
   var actor = null;
   var canon = null;
+  var tipActive = false;
+  var tipInit = false;
+  var tipInit2 = false;
+  window.compPosition = "right";
   window.sendButActive = false;
   window.playerOnline = false;
   window.connected = false;
@@ -176,12 +182,6 @@ export async function universe() {
   // window.getAllUserNFTs = {};i
   // export const suIDL = idlFactory;
   const suIDL = idlFactory;
-  window.user = {
-    principal: null,
-    balance: null,
-    pk: null,
-    nfts: null,
-  };
   var uiState = {
     nftsLoaded: false,
   };
@@ -246,17 +246,17 @@ export async function universe() {
       img.src =
         "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/scoge-taos-city-universe.jpg";
       cam.scrollTo(990, 0);
-      // prevent scrolling under scrollto(990,0) and activate scrolling over scrollto(990,0)
-      cam.addEventListener(
-        "scroll",
-        function () {
-          if (cam.scrollLeft < 990) {
-            cam.scrollTo(990, 0);
-          }
-          cam.style.overflowY = "hidden";
-        },
-        { passive: false }
-      );
+      // prevent scrolling under scrollto(990,0) and activate scrolling over scrollto(990,0) Sectors
+      // cam.addEventListener(
+      //   "scroll",
+      //   function () {
+      //     if (cam.scrollLeft < 990 && lcCheck() === true) {
+      //       cam.scrollTo(990, 0);
+      //     }
+      //     cam.style.overflowY = "hidden";
+      //   },
+      //   { passive: false }
+      // );
       // disable scrolling with mouse wheel
       cam.addEventListener(
         "wheel",
@@ -332,6 +332,7 @@ export async function universe() {
 
     if (lcCheck()) {
       editorButton();
+      mapperButton();
     }
     //
   };
@@ -390,43 +391,74 @@ export async function universe() {
     document.getElementById("main").appendChild(viewEditor);
   };
 
+  // Mapper Button 
+  const mapperButton = () => {
+    if (!document.getElementById("viewMapper")) {
+      var viewMapper = document.createElement("div");
+      viewMapper.id = "viewMapper";
+      viewMapper.style.right = "6%";
+      viewMapper.style.top = "3%";
+      viewMapper.style.position = "fixed";
+      viewMapper.style.zIndex = "501";
+      viewMapper.style.width = "40px";
+      viewMapper.style.height = "40px";
+      viewMapper.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
+      viewMapper.style.borderRadius = "10px";
+      viewMapper.style.border = "1px solid var(--secondary)";
+      document.getElementById("main").appendChild(viewMapper);
+    }
+      // Mapper
+      if (viewMapper) {
+        viewMapper.addEventListener("click", () => {
+          activateMapper();
+      });
+      }
+
+  };
+
   // Admin UI
   window.adminUI = () => {
-    var uiWindow = document.createElement("div");
-    var columnDiv = document.createElement("div");
-    var rowDiv = document.createElement("div");
-    var selectionPosDiv = document.createElement("div");
-    var pixelPosDiv = document.createElement("div");
-    var selectPosBoxDiv = document.createElement("div");
-    var playerCordDiv = document.createElement("div");
-    var playerScreenCoor = document.createElement("div");
-    // REACTIVATE THIS
-    // document.getElementById("selection").style.display = "block";
-    uiWindow.id = "adminUI";
-    columnDiv.id = "DebugColumn";
-    rowDiv.id = "DebugRow";
-    selectionPosDiv.id = "selectionPos";
-    pixelPosDiv.id = "pixelPos";
-    selectPosBoxDiv.id = "selectPosBox";
-    playerCordDiv.id = "playerCord";
-    playerScreenCoor.id = "playerScreenCoor";
-    uiWindow.appendChild(pixelPosDiv);
-    uiWindow.appendChild(columnDiv);
-    uiWindow.appendChild(rowDiv);
-    uiWindow.appendChild(selectionPosDiv);
-    uiWindow.appendChild(selectPosBoxDiv);
-    uiWindow.appendChild(playerCordDiv);
-    uiWindow.appendChild(playerScreenCoor);
-    document.getElementById("main").appendChild(uiWindow);
+    if (!document.getElementById("adminUI")) {
+      var uiWindow = document.createElement("div");
+      var columnDiv = document.createElement("div");
+      var rowDiv = document.createElement("div");
+      var selectionPosDiv = document.createElement("div");
+      var pixelPosDiv = document.createElement("div");
+      var selectPosBoxDiv = document.createElement("div");
+      var playerCordDiv = document.createElement("div");
+      var playerScreenCoor = document.createElement("div");
+      // REACTIVATE THIS
+      // document.getElementById("selection").style.display = "block";
+      uiWindow.id = "adminUI";
+      columnDiv.id = "DebugColumn";
+      rowDiv.id = "DebugRow";
+      selectionPosDiv.id = "selectionPos";
+      pixelPosDiv.id = "pixelPos";
+      selectPosBoxDiv.id = "selectPosBox";
+      playerCordDiv.id = "playerCord";
+      playerScreenCoor.id = "playerScreenCoor";
+      uiWindow.appendChild(pixelPosDiv);
+      uiWindow.appendChild(columnDiv);
+      uiWindow.appendChild(rowDiv);
+      uiWindow.appendChild(selectionPosDiv);
+      uiWindow.appendChild(selectPosBoxDiv);
+      uiWindow.appendChild(playerCordDiv);
+      uiWindow.appendChild(playerScreenCoor);
+      document.getElementById("main").appendChild(uiWindow);
+    }
     dragElement(document.getElementById("adminUI"), true);
     dragElement(document.getElementById("exploreUI"), true);
-    selectionPosDiv.innerHTML = "Selected Tile:";
-    columnDiv.innerHTML = "Column:";
-    rowDiv.innerHTML = "Row:";
-    pixelPosDiv.innerHTML = "X: , Y:";
-    selectPosBoxDiv.innerHTML = "SelBoxTile:";
-    playerCordDiv.innerHTML = "Player Coordinates:";
-    playerScreenCoor.innerHTML = "Player Screen Coord:";
+    if (selectPosBoxDiv) {
+      selectionPosDiv.innerHTML = "Selected Tile:";
+    }
+    if (columnDiv) {
+      columnDiv.innerHTML = "Column:"; 
+      rowDiv.innerHTML = "Row:";
+      pixelPosDiv.innerHTML = "X: , Y:";
+      selectPosBoxDiv.innerHTML = "SelBoxTile:";
+      playerCordDiv.innerHTML = "Player Coordinates:";
+      playerScreenCoor.innerHTML = "Player Screen Coord:";
+    }
     window.initSelection();
     window.moveSelection();
     window.moveMenu();
@@ -548,7 +580,7 @@ export async function universe() {
     if (pinUi.getAttribute("class") == "unpinned") {
       window.deactivateDrag();
       pinUi.setAttribute("class", "pinned");
-      moveMenu.style.transition = "1s";
+      moveMenu.style.transition = ".5s";
       moveMenu.style.top = "36px";
       moveMenu.style.left = "36px";
       document.getElementById("getUniMenu").toggleMenu();
@@ -765,6 +797,45 @@ export async function universe() {
     selectionBoxPosition.x = leftCenter * tileSize;
     selectionBoxPosition.y = topCenter * tileSize;
     // make a event listeniner for arrow keys and move the selection box 18px in the direction of the arrow key pressed starting from its current position if window is not scrolling. Stop from moving at the edge of the window screen size.
+
+    // Help Tooltip
+    if (tipInit === false) {
+      tipInit = true;
+    document.addEventListener('keyup', (e) => {
+      if (e.keyCode == 72) {
+        if (tipActive === false) {
+          tipActive = true;
+          document.getElementById("stt").setAttribute("active", "true");
+          return
+        } else {
+          tipActive = false;
+          document.getElementById("stt").setAttribute("active", "false");
+        }
+      }
+    });
+  }
+
+  if (tipInit2 === false) {
+    tipInit2 = true;
+  document.addEventListener("mousemove", (e) => {  
+    // get element under mouse click
+    var element = document.elementFromPoint(e.clientX, e.clientY);
+    if (e.target.shadowRoot) {
+      var innerElement = element.shadowRoot?.elementFromPoint(e.clientX, e.clientY);
+      if (innerElement) {
+          element = innerElement;
+      }
+    }
+    //
+    if (tipActive === true && element.hasAttribute("data-help")) {
+      document.getElementById("stt").placeTip(element)
+      document.getElementById("stt").updateData(element)
+    } else {
+      document.getElementById("stt").hideTip();
+    }
+  });
+}
+  
     document.addEventListener("keydown", function (e) {
       var coll = document
       .getElementById("collectionGallery")
@@ -930,26 +1001,61 @@ export async function universe() {
         }
       }
     });
-    // scroll the camera element when the selection box reaches the edge of the window screen size
+    // scroll the camera element when the selection box reaches the edge of the window screen size (Update with sector activations)
     document.addEventListener("keydown", function (e) {
+      var ddev = document.getElementById("compDomainDev");
       if (e.keyCode == 37) {
+        // LEFT
         if (selectionBoxPosition.x == 0) {
           document.getElementById("camera").scrollLeft -= tileSize;
         }
+
+        // check if selectionBoxPosition.x is less than 40% of the window width
+        if (selectionBoxPosition.x < window18Width * 0.4 * tileSize) {
+          window.compPosition = "right";
+          if (ddev.getAttribute("active") == "true") {
+            ddev.right();
+            return;
+          }
+        }
       }
       if (e.keyCode == 38) {
-        if (selectionBoxPosition.y == 0) {
-          document.getElementById("camera").scrollTop -= tileSize;
+        // UP
+        if (lcCheck() === true) {
+          if (selectionBoxPosition.y <= 9) {
+            document.getElementById("camera").scrollTop -= tileSize;
+          }
+        } else {
+          if (selectionBoxPosition.y == 0) {
+            document.getElementById("camera").scrollTop -= tileSize;
+          }
         }
       }
       if (e.keyCode == 39) {
+        // RIGHT
         if (selectionBoxPosition.x == window18Width * tileSize - tileSize) {
           document.getElementById("camera").scrollLeft += tileSize;
         }
+        
+        // check if selectionBoxPosition.x is greater than 60% of the window width
+        if (selectionBoxPosition.x > window18Width * 0.6 * tileSize) {
+          window.compPosition = "left";
+          if (ddev.getAttribute("active") == "true") {
+            ddev.left();
+            return;
+          }
+        }
       }
       if (e.keyCode == 40) {
-        if (selectionBoxPosition.y == window18Height * tileSize - tileSize) {
-          document.getElementById("camera").scrollTop += tileSize;
+        // DOWN
+        if (lcCheck() === true) {
+          if (selectionBoxPosition.y >= window18Height * tileSize - tileSize) {
+            document.getElementById("camera").scrollTop += tileSize;
+          }
+        } else {
+          if (selectionBoxPosition.y == window18Height * tileSize - tileSize) {
+            document.getElementById("camera").scrollTop += tileSize;
+          }
         }
       }
       var viewEditor = document.getElementById("viewEditor");
@@ -1752,14 +1858,14 @@ export async function universe() {
       .catch((error) => {
         console.log(error);
       });
-    if (admin === window.user.principal) {
-      console.log("Admin Logged in");
-    } else {
-      shadow.getElementById("menuLoadingScreen").style.display = "none";
-      shadow.getElementById("menuLoadingScreen3").style.display = "none";
-      soundtrack.stop("menuLoading1");
-      uiState.nftsLoaded = true;
-    }
+    // if (admin === lord.principal) {
+    //   console.log("Admin Logged in");
+    // } else {
+    //   shadow.getElementById("menuLoadingScreen").style.display = "none";
+    //   shadow.getElementById("menuLoadingScreen3").style.display = "none";
+    //   soundtrack.stop("menuLoading1");
+    //   uiState.nftsLoaded = true;
+    // }
   };
 
   // CANISTER (Change in local / production)
@@ -2090,6 +2196,9 @@ export const newEditorScenario = async (name,scene) => {
 
 export function enterTaosCity() {
   // Temporary
+  setTimeout(() => {
+    document.getElementById("seekModal").remove();
+  }, 1000);
   if (window.dmb === false) {
     attn(null, "New Player Logged In");
   }
@@ -2102,9 +2211,9 @@ export function enterTaosCity() {
   //
   // uniMenu.getElementById("uniMenuTxt").innerHTML = "CONTACT CC";
   //
-  setTimeout(() => {
-    document.getElementById("seekModal").style.display = "none";
-  }, 2000);
+  // setTimeout(() => {
+  //   document.getElementById("seekModal").style.display = "none";
+  // }, 2000);
   document.getElementById("dgr").setAttribute("active", "true");
   document.getElementById("getUniMenu").setAttribute("uniMenu", "taoscity");
   document.getElementById("camera").style.pointerEvents = "auto";

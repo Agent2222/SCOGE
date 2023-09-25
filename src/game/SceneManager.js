@@ -40,6 +40,9 @@ export async function story(scenario) {
     case "DomainDevelopment":
         window.currentScenario = await newScenario(scenario);
     break;
+    case "DomainDevelopmentSetup":
+        window.currentScenario = await newScenario(scenario);
+    break;
     case "FoundTheGuide":
         window.currentScenario = await newScenario(scenario);
     break;
