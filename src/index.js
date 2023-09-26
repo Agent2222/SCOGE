@@ -238,7 +238,7 @@ function uncover() {
       if (document.getElementById("tooltip")) {
         document.getElementById("tooltip").style.display = "block"; 
       }
-      document.getElementById("pv2").src = "https://scoge.s3.us-east-2.amazonaws.com/Videos/Ch2-Act1-sm.mp4";
+      document.getElementById("pv2").src = "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeVideos/GeneralVideo/SCOGE%CC%81-CH2-VID-LAN-98.mp4";
       document.getElementById("portalVideo2")?.play();
     }
   });
