@@ -57,10 +57,14 @@ class tooltip extends HTMLElement {
 
     attributeChangedCallback(name, oldValue, newValue) {
         if (newValue === "true") {
-            this.shadowRoot.getElementById("main").style.display = "grid";
+            if (this.shadowRoot.getElementById("main")) {
+                this.shadowRoot.getElementById("main").style.display = "grid";
+            }
         }
         if (newValue === "false") {
-            this.shadowRoot.getElementById("main").style.display = "none";
+            if (this.shadowRoot.getElementById("main")) {
+                this.shadowRoot.getElementById("main").style.display = "none";
+            }   
         }
     }
 

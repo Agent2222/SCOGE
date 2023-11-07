@@ -34,7 +34,10 @@
         <div id="subText1" class="dialogue"><p></p></div>
         <div id="subText2" class="dialogue"><span class="answerOptions" id="st2Ans1"></span><span class="answerOptions" id="st2Ans2"></span><span class="answerOptions" id="st2Ans3"></span></div>
         <!-- <scoge-investors invest="invest" id="getInvestors" style="display: none;"></scoge-investors> -->
-         <scoge-gallery gallery="gallery" id="collectionGallery" style="display: block;"></scoge-gallery>
+        <!-- SHOP 2 ------>
+        <scoge-shop active="false" id="shop2"></scoge-shop>
+        <!-- SHOP 2 END -->
+        <scoge-gallery gallery="gallery" id="collectionGallery" style="display: block;"></scoge-gallery>
         <uni-consensus active="false" id="compConsensus"></uni-consensus>
         <uni-c-domaindev active="false" id="compDomainDev"></uni-c-domaindev>
         <uni-c-emoter active="false" id="compEmoter"></uni-c-emoter>
@@ -42,120 +45,6 @@
         <mint-screen mint="mint1" style="display:block;" id="getNfts"></mint-screen>
         <scoge-UniMenu uniMenu="uniMenu" fullscreen="false" id="getUniMenu"></scoge-UniMenu>
         <scoge-tooltip active="true" id="stt"></scoge-tooltip>
-        <mobile-shop1 product="product1" style="display:none;" id="mobileShop"></mobile-shop1>
-        <div id="shop">
-            <!-- Shop Icon -->
-            <div id="shopIcon" onclick="toggleShop();">
-                ( 0 )
-            </div>
-            <!-- 6 Checkbox inputs to filter shop products -->
-            <div id="shopFilter">
-                <label for="all">All</label>
-                <input type="checkbox" id="all" name="all" value="all" checked onclick="filterShop(this);">
-                <label for="gifts">Gifts</label>
-                <input type="checkbox" id="gifts" name="gifts" value="gifts" onclick="filterShop(this);">
-                <label for="tops">Tops</label>
-                <input type="checkbox" id="tops" name="tops" value="tops" onclick="filterShop(this);">
-                <label for="bottoms">Bottoms</label>
-                <input type="checkbox" id="bottoms" name="bottoms" value="bottoms" onclick="filterShop(this);">
-                <!-- <label for="dresses">Dresses</label>
-                <input type="checkbox" id="dresses" name="dresses" value="dresses" onclick="filterShop(this);"> -->
-                <label for="accessories">Accessories</label>
-                <input type="checkbox" id="accessories" name="accessories" value="accessories" onclick="filterShop(this);">
-                <label for="art">Artwork</label>
-                <input type="checkbox" id="art" name="art" value="art" onclick="filterShop(this);">
-            </div>  
-            <div id="divLoadBG2">
-                <div class="loader"></div>
-            </div>
-            <div id="povLeft">
-                <img id="scroll" src="assets/images/scroll.png"/>
-                <div id="povImageColumnRight"></div>
-                <div id="shopScroll">
-                    <div id="povImageColumnLeft"></div>
-                </div>
-            </div>
-            <div id="povRight">
-                <div id="orderConfirm" onclick="toggleShop();">
-                </div>
-                <div id="divLoadBG">
-                    <div class="loader"></div>
-                </div>
-                <div id="tandc" onclick="toggleTerms()">
-                </div>
-                <div id="shopProductDetails">
-                    <div id="sPDLeft">
-                        <p id="shopProductName"><span class="blue" style="cursor: pointer;" onclick="toggleTerms()">(É)</span></p>
-                        <p id="shopProductDesc"></p>
-                        <p id="shopProductAvailable"></p>
-                    </div>
-                    <div id="sPDRight">
-                        <p id="shopProductPrice"></p>
-                        <p id="shopProductSizeGuide" onmouseover="sizeGuideOn()" onmouseout="sizeGuideOff()">Size Guide</p>
-                        <div id="shopProductSizes">
-                            <span class="shopProduct" id="Small" onclick="selectSize(this)">S</span><span class="shopProduct" id="Medium" onclick="selectSize(this)">M</span><span class="shopProduct" id="Large" onclick="selectSize(this)">L</span><span class="shopProduct" id="XLarge" onclick="selectSize(this)">XL</span><span class="shopProduct" id="2XLarge" onclick="selectSize(this)">2XL</span><span class="shopProduct" id="3XLarge" onclick="selectSize(this)">3XL</span><span class="shopProduct" id="SingleSize" onclick="selectSize(this)">Single Size</span>
-                        </div>
-                        <div id="addToBagBut">Select a size</div>
-                    </div>
-                </div>
-                <div id="shopCheckoutDetails">
-                    <div id="bagHeader">
-                        <span id="leftHeadDeet">SHOPPING BAG</span>
-                        <span id="rightHeadDeet" onclick="toggleTerms()">Info, Terms & Conditions</span>
-                    </div>
-                    <div id="shoppingBag">
-                    </div>
-                    <div id="checkoutForm">
-                        <div class="checkoutFormHead">
-                            <span id="secured">SECURED CHECKOUT</span>
-                            <span id="crypto" onmouseover="ccsOn()" onmouseout="ccsOff()">Pay with Crypto</span>
-                        </div>
-                        <div id="cryptoCheckout"></div>
-                        <form id="inputFormUsd">
-                            <input class="shopFormInput" id="input1" type="text" placeholder="First Name">
-                            <input class="shopFormInput" id="input2" type="text" placeholder="Last Name">
-                            <input class="shopFormInput" id="input3" type="text" placeholder="Billing Address">
-                            <select class="shopFormInput" id="input9" type="text" placeholder="Country" value="" onchange="states()">
-                                <option value="Select Country" title="Select">Select Country</option>
-                                <option value="US" title="US">US</option>
-                                <option value="US" title="US2">US - Next Day Air</option>
-                            </select>
-                            <input class="shopFormInput" id="input5" type="email" placeholder="Email">
-                            <select class="shopFormInput" id="input7" type="text" placeholder="State" value="US-NY">
-                                <option value="Select State" title="Select">Select State</option>
-                                <option value="Select Country First">Select Country First</option>
-                            </select>
-                            <input class="shopFormInput" id="input6" type="text" placeholder="Town / City">
-                            <input class="shopFormInput" id="input4" type="text" value="$0.00 Free Shipping" placeholder="Shipping Fee">
-                            <input class="shopFormInput" id="input8" type="text" placeholder="Post / Zip Code">
-                            <input class="shopFormInput" id="input10" type="text" placeholder="Full Shipping Address (If different from Billing Address)">
-                            <div class="shopFormInput input11" id="card-element"></div>
-                            <div class="checkoutRow">
-                                <img id="stripeLogo" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/stripe.png"/>
-                                <div id="totalPrice">
-                                    <span>Total:</span>
-                                    <span id="carTotal">$</span>
-                                </div>
-                                <div id="purchaseButton" onclick="checkOut()">
-                                    CHECKOUT
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div id="productView">
-                <div id="shopLeft">
-                </div>
-                <div id="shopRight"></div>
-            </div>
-            <div id="allShopProducts">
-                <div id="sectionDesc">
-                    <h2>All Products</h2>
-                    <h4>SCOGÉ Shop - Collection pieces, gifts and more.</h4>
-                </div>
-            </div>
-        </div>
         <!-------------------------------------------------------------------------->
         <div id="intro">
             <div id="brandClips">

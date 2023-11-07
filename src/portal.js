@@ -204,4 +204,10 @@ export async function portal() {
   
     // show the first media
     showNextMedia();
+    // video1.addEventListener("ended", () => {
+    //   showNextMedia();
+    // });
+    // video2.addEventListener("ended", () => {
+    //   showNextMedia();
+    // });
   }

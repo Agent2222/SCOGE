@@ -46,6 +46,8 @@ class emoter extends HTMLElement {
             });
             this.emotes = false;
         }, 2000);
+        } else {
+            alert("Activated");
         }
     }
 

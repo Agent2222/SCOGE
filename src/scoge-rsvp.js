@@ -62,7 +62,7 @@ class scogeRsvp extends HTMLElement {
       let guest = this.shadow.querySelector("input[name='Guest']:checked");
       let data = new FormData(this.form);
       data.append("Guest", guest.value);
-      fetch("https://script.google.com/macros/s/AKfycbyDZnFn4Yy7zbQM1KB7uXDt3_WUmI7TuUT9b-Iips7lHf0mfOGs9s-B4V1M80LznyuIoA/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbxfLIe8mWJvibSTBd6-sOzjJsmQzYT1BftMiscDKOvkuTZ4WrKjBIyO5m6nWZwQUY577w/exec?focus=rsvps", {
         method: "POST",
         body: data,
         mode: "cors"

@@ -167,7 +167,7 @@ export class DialogueScene extends Scenario {
     this.cScene = document.createElement("div");
     this.cScene.classList.add("currentScene");
     this.cScene.setAttribute("id", `currentSceneView`);
-    this.cScene.style.zIndex = 10;
+    this.cScene.style.zIndex = 11;
     this.cScene.style.position = "absolute";
     this.cScene.style.top = 0;
     this.cScene.style.left = 0;
