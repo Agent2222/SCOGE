@@ -306,7 +306,7 @@ class getUniMenu extends HTMLElement {
   // }
 
   // open menu
-  toggleMenu() {
+  toggleMenu(e) {
     const menu = this.shadow.querySelector("#uniMenu");
     const menuIcon = this.shadow.querySelector("#uniMenuIcon");
     const menuItems = this.shadow.querySelector("#menuItems");
@@ -332,7 +332,13 @@ class getUniMenu extends HTMLElement {
         this.closeFullMenu();
         menuHeader.style.height = "100%";
         menu.style.maxHeight = "12%";
-        menu.style.top = "2vh";
+        if (e.target.id === "menuEnhancements") {
+          menu.style.top = "2vh";
+        } else if (e.target.id === "uniMenuShop") {
+          menu.style.top = "2vh";
+        } else {
+          menu.style.top = "80vh";
+        }
         menuIcon.style.transform = "scale(2.1) rotate(0deg)";
         menuItems.style.maxHeight = "0%";
         menuItems.style.overflow = "hidden";
@@ -377,14 +383,14 @@ class getUniMenu extends HTMLElement {
     }
   }
   // open full menu
-  openFullMenu() {
+  openFullMenu(e) {
     const menu = this.shadow.querySelector("#uniMenu");
     const fullMenu = this.shadow.querySelector("#fullMenu");
     const fullMenuBg = this.shadow.querySelector("#fullMenuBG");
     const menuItems = this.shadow.querySelector("#menuItems");
     const refresh = this.shadow.querySelector("#refresh");
     if (window.isMobile === true) {
-      this.toggleMenu();
+      this.toggleMenu(e);
       this.shadow.appendChild(fullMenu);
       if (window.dtfullMenuOpen === false) {
         // menu.style.overflowX = "visible";
@@ -860,8 +866,8 @@ class getUniMenu extends HTMLElement {
     });
     this.tabs = this.shadow.querySelectorAll(".menuTabs");
     this.tabs.forEach((element) => {
-      element.addEventListener("click", () => {
-        this.openFullMenu();
+      element.addEventListener("click", (e) => {
+        this.openFullMenu(e);
       });
     });
     this.headerTabs = this.shadow.querySelectorAll(".men-active");
@@ -2741,7 +2747,7 @@ class getUniMenu extends HTMLElement {
                 border-bottom-right-radius: 10px;
                 z-index: 11;
                 position: absolute;
-                top: 2vh;
+                top: 80vh;
                 left: 36px;
                 background-color: rgba(0, 0, 0, 0.7);
                 border-left: 2px solid #ff002d;
@@ -2756,6 +2762,8 @@ class getUniMenu extends HTMLElement {
                 font-family: "BS-R";
                 display: none;
               }
+
+              
               #menuHeader {
                 display: grid;
                 width: 88%;
