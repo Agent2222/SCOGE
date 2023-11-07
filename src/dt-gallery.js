@@ -946,7 +946,7 @@ class dtGallery extends HTMLElement {
                 right: auto !important;
                 left: 5% !important;
                 top: 5% !important;
-                z-index: 10 !important;
+                z-index: 20 !important;
               }
 
           #scale {
