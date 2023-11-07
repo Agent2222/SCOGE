@@ -53,7 +53,7 @@ class uni3dViewer extends HTMLElement {
             // make background transparent
             scene.clearColor = new BABYLON.Color4(0, 0, 0, 0);
             // add glb model to scene
-            var digisette = BABYLON.SceneLoader.ImportMesh("", "https://scoge.s3.us-east-2.amazonaws.com/3d/digisette-ring-1.glb", "", scene, function (meshes) {
+            var digisette = BABYLON.SceneLoader.ImportMesh("", "./assets/nfts/digisette-ring-1.glb", "", scene, function (meshes) {
                    // Get the first mesh from the imported meshes array
                     var mesh = meshes[0];
 

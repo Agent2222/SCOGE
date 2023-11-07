@@ -107,7 +107,7 @@ export const attn = async (error, np) => {
     data.append("FeedbackText", `${np}`);
   }
   fetch(
-    "https://script.google.com/macros/s/AKfycbxOuAozKPY70nQqWzkD_mYHnd954KrUZuRnGNrmGnA4j3l3nSMYuNssqiJMqn7Z4u064w/exec",
+    "https://script.google.com/macros/s/AKfycbxfLIe8mWJvibSTBd6-sOzjJsmQzYT1BftMiscDKOvkuTZ4WrKjBIyO5m6nWZwQUY577w/exec?focus=feedback",
     {
       method: "POST",
       body: data,
@@ -164,6 +164,7 @@ export async function universe() {
   window.sendButActive = false;
   window.playerOnline = false;
   window.connected = false;
+  window.mapperActive = false;
   var tempLandEx = ["1435", "3162", "2849", "6208", "1980"];
   var playing = {
     startVolume: 0.2,
@@ -844,7 +845,7 @@ export async function universe() {
       soundtrack.setVolume("closewindow-1", 0.4)
       soundtrack.setVolume("typing-1", 0.8)
 
-      if (window.chatActive != true) {
+      if (window.chatActive != true && window.tempIn === true) {
         dragElement(document.getElementById("exploreUI"), true);
         // if (e.keyCode == 27) {
         //   document.getElementById("getUniMenu").toggleFullScreen();
@@ -994,7 +995,7 @@ export async function universe() {
           document.getElementById("universe").style.filter = "blur(0px)";
           document.getElementById("currentSceneView_scene1").style.display = "none";
         }
-      } else {
+      } else if (window.chatActive === true && window.tempIn === true) {
         if (e.keyCode != 37 || e.keyCode != 38 || e.keyCode != 39 || e.keyCode != 40 && typing == true) {
           soundtrack.stop("typing-1")
           soundtrack.play("typing-1")
@@ -1392,35 +1393,40 @@ export async function universe() {
             shadow.getElementById("fm-settings").style.display = "none";
             shadow.getElementById("fm-profile").style.display = "none";
             if (window.isMobile === true) {
-              shadow.getElementById(
-                "fm-enhancements"
-              ).innerHTML = `
-              <div class="mobileShopOpts" id="fashionShop">
-                <div class="mShopLabel">CLOTHING</div>
-                <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/shop-temp-1.png" alt="NFT Shop">
-              </div>
-              <div class="mobileShopOpts" id="nftShop">
-                <div class="mShopLabel">DIGISETTE</div>
-                <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png" alt="NFT Shop">
-              </div>
-              `;
-              shadow.getElementById("fashionShop").addEventListener("click", () => {
-                window.shopping();
-              });
-              shadow.getElementById("nftShop").addEventListener("click", () => {
-                window.open('https://yumi.io/launchpad/detail/hmz4w-fiaaa-aaaah-admlq-cai');
-              });
+              window.dtmenuOpen = false;
+              document.getElementById("shop2").setAttribute("active","true");
+              // shadow.getElementById(
+              //   "fm-enhancements"
+              // ).innerHTML = `
+              // <div class="mobileShopOpts" id="fashionShop">
+              //   <div class="mShopLabel">CLOTHING</div>
+              //   <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/shop-temp-1.png" alt="NFT Shop">
+              // </div>
+              // <div class="mobileShopOpts" id="nftShop">
+              //   <div class="mShopLabel">DIGISETTE</div>
+              //   <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png" alt="NFT Shop">
+              // </div>
+              // `;
+              // shadow.getElementById("fashionShop").addEventListener("click", () => {
+              //   window.shopping();
+              // });
+              // shadow.getElementById("nftShop").addEventListener("click", () => {
+              //   window.open('https://yumi.io/launchpad/detail/hmz4w-fiaaa-aaaah-admlq-cai');
+              // });
             } else {
-              shadow.getElementById(
-                "fm-enhancements"
-              ).innerHTML = `
-              <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/DIGISHOP-1.png" alt="NFT Shop" id="nftShop">
-              `;
-              shadow.getElementById("nftShop").addEventListener("click", () => {
-                document.getElementById("getNfts").toggleNftScreen();
-                canvas.style.filter = "blur(5px)";
-                shadow.getElementById("uniMenu").style.filter = "blur(10px)";
-              });
+              window.dtmenuOpen = false;
+              pinMenu();
+              document.getElementById("shop2").setAttribute("active","true");
+              // shadow.getElementById(
+              //   "fm-enhancements"
+              // ).innerHTML = `
+              // <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/DIGISHOP-1.png" alt="NFT Shop" id="nftShop">
+              // `;
+              // shadow.getElementById("nftShop").addEventListener("click", () => {
+              //   document.getElementById("getNfts").toggleNftScreen();
+              //   canvas.style.filter = "blur(5px)";
+              //   shadow.getElementById("uniMenu").style.filter = "blur(10px)";
+              // });
             }
             shadow.getElementById("fm-inventory").style.display = "none";
             shadow.getElementById("menuLoadingScreen").style.display = "none";
@@ -2156,6 +2162,10 @@ export async function universe() {
   };
 }
 
+export const newPlayer = async () => {
+  //
+}
+
 // Instantiate scenario
 export const newScenario = async (name) => {
   var scenario = new Scenario();
@@ -2214,6 +2224,7 @@ export function enterTaosCity() {
   // setTimeout(() => {
   //   document.getElementById("seekModal").style.display = "none";
   // }, 2000);
+  uniMenu.getElementById("menuFeedback").innerHTML = "City Central";
   document.getElementById("dgr").setAttribute("active", "true");
   document.getElementById("getUniMenu").setAttribute("uniMenu", "taoscity");
   document.getElementById("camera").style.pointerEvents = "auto";

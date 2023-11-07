@@ -2,7 +2,7 @@ import { SoundtrackManager } from "./soundtrack.js";
 import { story } from "./game/SceneManager.js";
 import { newScenario, loading, endLoading, dragElement } from "./universe.js";
 import { getNFTCollections } from "./wallets.js";
-import { enterTaosCity } from "./universe.js";
+// import { enterTaosCity } from "./universe.js";
 import { connectError } from "./wallets.js";
 // import { universe } from "./universe.js";
 import { gsap } from "gsap";
@@ -78,7 +78,6 @@ class getUniMenu extends HTMLElement {
     super();
     this.domainIntroSeen = null;
     this.shadow = this.attachShadow({ mode: "open" });
-    this.shopSource = `<img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/shop-temp-1.png" alt="NFT Shop" id="nftShop"><img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png" alt="NFT Shop" id="nftShop">`;
     this.defaultSource = `<img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/DIGISHOP-1.png" alt="NFT Shop" id="nftShop">`
     this.beacons = null;
     this.digiLink = "https://yumi.io/launchpad/detail/hmz4w-fiaaa-aaaah-admlq-cai";
@@ -186,7 +185,7 @@ class getUniMenu extends HTMLElement {
       soundtrack2.loop("pegasus");
       soundtrack2.play("pegasus");
       var newBeacon = this.shadow.getElementById("newvarBeacon")
-      this.shadow.getElementById("varBeacon").replaceWith(newBeacon);
+      this.shadow.getElementById("varBeacon")?.replaceWith(newBeacon);
     this.shadow.getElementById("uniMenuExit").style.display = "none";
     this.shadow.getElementById("uniMenuCloudHall").style.display = "grid";
     // Temp Domain Dev Show
@@ -316,6 +315,7 @@ class getUniMenu extends HTMLElement {
     // Mobile Menu
     if (window.isMobile === true) {
       if (window.dtmenuOpen === false) {
+        document.getElementById("shop2").setAttribute("active","false");
         this.closeFullMenu();
         menuIcon.style.transform = "scale(2.1) rotate(180deg)";
         menuHeader.style.height = "20%";
@@ -325,18 +325,20 @@ class getUniMenu extends HTMLElement {
         }, 150);
         window.dtmenuOpen = true;
         menu.style.transition = "all 0.3s ease-in-out";
+        this.shadowRoot.getElementById("uniMenuShop").style.visibility = "visible";
         return;
       } else {
         // Desktop Menu
         this.closeFullMenu();
         menuHeader.style.height = "100%";
         menu.style.maxHeight = "12%";
-        menu.style.top = "75vh";
+        menu.style.top = "2vh";
         menuIcon.style.transform = "scale(2.1) rotate(0deg)";
         menuItems.style.maxHeight = "0%";
         menuItems.style.overflow = "hidden";
         window.dtmenuOpen = false;
         refresh.style.animationPlayState = "paused";
+        this.shadowRoot.getElementById("uniMenuShop").style.visibility = "hidden";
         return;
       }
     } else {
@@ -344,7 +346,6 @@ class getUniMenu extends HTMLElement {
       var moveMenu = document.getElementById("getUniMenu").shadowRoot?.getElementById("uniMenu");
       // dragElement(moveMenu, true);
       if (window.dtmenuOpen === false) {
-        dragElement(moveMenu, true);
         this.closeFullMenu();
         menuIcon.style.transform = "rotate(180deg)";
         // menu.style.transition = "all 0.3s ease-in-out";
@@ -354,9 +355,11 @@ class getUniMenu extends HTMLElement {
           window.dtmenuOpen = true;
           menu.setAttribute("class", "collapsed");
         }, 150);
+        this.shadowRoot.getElementById("uniMenuShop").style.opacity = "0";
         return;
       } 
       else {
+        document.getElementById("shop2").setAttribute("active","false");
         dragElement(moveMenu, true);
         this.closeFullMenu();
         menuHeader.style.height = "20%";
@@ -368,6 +371,7 @@ class getUniMenu extends HTMLElement {
         menuItems.style.overflow = "hidden";
         window.dtmenuOpen = false;
         refresh.style.animationPlayState = "paused";
+        this.shadowRoot.getElementById("uniMenuShop").style.opacity = "1";
         return;
       }
     }
@@ -872,7 +876,7 @@ class getUniMenu extends HTMLElement {
       this.shadow.getElementById("menuLoadingScreen2").style.display = "grid";
       let data = new FormData(this.form);
       fetch(
-        "https://script.google.com/macros/s/AKfycbxOuAozKPY70nQqWzkD_mYHnd954KrUZuRnGNrmGnA4j3l3nSMYuNssqiJMqn7Z4u064w/exec",
+        "https://script.google.com/macros/s/AKfycbxfLIe8mWJvibSTBd6-sOzjJsmQzYT1BftMiscDKOvkuTZ4WrKjBIyO5m6nWZwQUY577w/exec?focus=feedback",
         {
           method: "POST",
           body: data,
@@ -1087,8 +1091,8 @@ class getUniMenu extends HTMLElement {
               border-bottom-left-radius: 10px;
               border-top-right-radius: 10px;
               border-bottom-right-radius: 10px;
-              z-index: 7;
-              position: relative;
+              z-index: 11;
+              position: absolute;
               top: 25vh;
               left: 36px;
               background-color: rgba(0, 0, 0, 0.7);
@@ -1115,8 +1119,8 @@ class getUniMenu extends HTMLElement {
               border-bottom-left-radius: 10px;
               border-top-right-radius: 10px;
               border-bottom-right-radius: 10px;
-              z-index: 7;
-              position: relative;
+              z-index: 11;
+              position: absolute;
               top: 25vh;
               left: 36px;
               background-color: rgba(0, 0, 0, 0.7);
@@ -1779,6 +1783,7 @@ class getUniMenu extends HTMLElement {
                         
             #fm-feedback #feedbackInput {
               width: 100%;
+              font-family: "BS-R";
               height: 150px; /* increase the height of the feedback input */
             }
             
@@ -2462,9 +2467,9 @@ class getUniMenu extends HTMLElement {
             }
 
             #gdLoginBut {
-              color: var(--primary);
-              border-left: 1px solid var(--primary);
-              border-right: 1px solid var(--primary);
+              color: var(--accent);
+              border-left: 1px solid var(--accent);
+              border-right: 1px solid var(--accent);
             }
 
             #dgromD4 {
@@ -2538,7 +2543,21 @@ class getUniMenu extends HTMLElement {
               cursor: pointer;
             }
 
-            #gdBuyBut:hover, #gdBuyBut2:hover {
+            #gdBuyBut {
+              color: var(--primary);
+              border-left: 1px solid var(--primary);
+              border-right: 1px solid var(--primary);
+            }
+
+            #gdBuyBut:hover {
+              background-color: var(--primary);
+              color: var(--secondary);
+              font-family: "BS-B";
+              letter-spacing: 2px;
+              scale: 1.1;
+            }
+
+            #gdBuyBut2:hover {
               background-color: var(--accent);
               color: black;
               font-family: "BS-B";
@@ -2547,8 +2566,8 @@ class getUniMenu extends HTMLElement {
             }
 
             #gdLoginBut:hover {
-              background-color: var(--primary);
-              color: var(--secondary);
+              background-color: var(--accent);
+              color: black;
               font-family: "BS-B";
               letter-spacing: 2px;
               scale: 1.1;
@@ -2720,9 +2739,9 @@ class getUniMenu extends HTMLElement {
                 border-bottom-left-radius: 10px;
                 border-top-right-radius: 10px;
                 border-bottom-right-radius: 10px;
-                z-index: 7;
-                position: relative;
-                top: 75vh;
+                z-index: 11;
+                position: absolute;
+                top: 2vh;
                 left: 36px;
                 background-color: rgba(0, 0, 0, 0.7);
                 border-left: 2px solid #ff002d;
@@ -3133,7 +3152,7 @@ class getUniMenu extends HTMLElement {
                <div id="uniMenuIcon">&#8682;</div>
               </div>
               <div id="uniVersion">
-                Universe - v. 0.0.5
+                Universe - v. 0.0.6
               </div>
             </div>
             <div id="menuItems">
@@ -3274,7 +3293,6 @@ class getUniMenu extends HTMLElement {
                 </div>
               </div>
               <div id="fm-enhancements">
-                ${this.shopSource}
               </div>
               <div id="fm-inventory">
                 <div id="inventoryBody">
@@ -3463,15 +3481,6 @@ class getUniMenu extends HTMLElement {
                       Meet our Navigator.
                     </div>
                   </div>
-                <div class="beacon tut" data-headline="ICP ONLINE" data-message="SCOGÉ Digisette systems are powered by T.A.O.S City's #1 decentralized IP service provider, The Internet Computer.">
-                  <div class="beaconOrigin">
-                    <div class="beaconIdenIcon">!</div>
-                    <div class="beaconSender">DFINITY</div>
-                  </div>
-                  <div class="beaconPreview">
-                    Your Internet Service is online.
-                  </div>
-                </div>
                   <div class="beacon tut" data-headline="- SOCIAL ANOMALIES -" data-message="<div class='portalsBlock'>
                       <a href='https://twitter.com/_scoge_' target='_blank' class='portals'>
                        <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path d='M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z'/></svg>
