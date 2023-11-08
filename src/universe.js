@@ -165,6 +165,7 @@ export async function universe() {
   window.playerOnline = false;
   window.connected = false;
   window.mapperActive = false;
+  window.loggedIn = false;
   var tempLandEx = ["1435", "3162", "2849", "6208", "1980"];
   var playing = {
     startVolume: 0.2,
@@ -2209,8 +2210,9 @@ export function enterTaosCity() {
   setTimeout(() => {
     document.getElementById("seekModal").remove();
   }, 1000);
-  if (window.dmb === false) {
+  if (window.loggedIn === false) {
     attn(null, "New Player Logged In");
+    window.loggedIn = true;
   }
   window.tempIn = true;
   soundtrack.play("menuEntrance1");
