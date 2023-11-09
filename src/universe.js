@@ -1619,8 +1619,13 @@ export async function universe() {
             window.currentMenuTab = "feedback";
             shadow.getElementById("romOffline").style.display = "none";
             shadow.getElementById("domainUnDev").style.display = "none";
-            shadow.getElementById("feedbackHeadline").innerHTML =
-              "Help us make T.A.O.S City better.";
+            if (window.loggedIn === true) {
+              shadow.getElementById("feedbackHeadline").innerHTML =
+              "Help us make T.A.O.S City better";
+            } else {
+              shadow.getElementById("feedbackHeadline").innerHTML =
+              "News from; and a direct line to HQ.";
+            }
             shadow.getElementById("fm-beacons").style.display = "none";
             shadow.getElementById("fm-inventory").style.display = "none";
             shadow.getElementById("fm-enhancements").style.display = "none";
@@ -2207,6 +2212,7 @@ export const newEditorScenario = async (name,scene) => {
 
 export function enterTaosCity() {
   // Temporary
+  window.loggedIn = true;
   setTimeout(() => {
     document.getElementById("seekModal").remove();
   }, 1000);
@@ -2233,7 +2239,10 @@ export function enterTaosCity() {
   // setTimeout(() => {
   //   document.getElementById("seekModal").style.display = "none";
   // }, 2000);
+  
   uniMenu.getElementById("menuFeedback").innerHTML = "City Central";
+  uniMenu.getElementById("feedbackHeadline").innerHTML = "Help us make T.A.O.S City better.";
+  uniMenu.getElementById("feedbackInput").placeholder = "Send feedback, or Contact City-Central here.";
   document.getElementById("dgr").setAttribute("active", "true");
   document.getElementById("getUniMenu").setAttribute("uniMenu", "taoscity");
   document.getElementById("camera").style.pointerEvents = "auto";
