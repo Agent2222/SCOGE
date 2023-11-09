@@ -80,7 +80,7 @@ class getUniMenu extends HTMLElement {
     this.shadow = this.attachShadow({ mode: "open" });
     this.defaultSource = `<img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/DIGISHOP-1.png" alt="NFT Shop" id="nftShop">`
     this.beacons = null;
-    this.digiLink = "https://yumi.io/launchpad/detail/hmz4w-fiaaa-aaaah-admlq-cai";
+    this.digiLink = "https://yumi.io/launchpad/hmz4w-fiaaa-aaaah-admlq-cai";
     this.variableDataMessages = [
       {
         name: "Intro",
@@ -332,9 +332,13 @@ class getUniMenu extends HTMLElement {
         this.closeFullMenu();
         menuHeader.style.height = "100%";
         menu.style.maxHeight = "12%";
-        if (e.target.id === "menuEnhancements") {
+        if (e?.target.id === "menuEnhancements") {
           menu.style.top = "2vh";
-        } else if (e.target.id === "uniMenuShop") {
+        } else if (e?.target.id === "uniMenuShop") {
+          menu.style.top = "2vh";
+        } else if (e?.target.id === "uniMenuShopSvg") {
+          menu.style.top = "2vh";
+        } else if (e?.target.id === "uniMenuIcon") {
           menu.style.top = "2vh";
         } else {
           menu.style.top = "80vh";
@@ -3480,7 +3484,7 @@ class getUniMenu extends HTMLElement {
                       ${this.variableDataMessages[0].preview}
                     </div>
                   </div>
-                  <div class="beacon tut" data-headline="OUR NAVIGATOR" data-message="SCOGÉ™ is a fashion label founded by designer Starnilas Oge. Oge practices a Meta-Analytical Psychology best described as Subreality Archeology - An approach where history, geography, and ecology of an alternate world are realized and understood through the production of the world's material culture. Oge studied at The Fashion Institute of Technology in NYC before launching the SCOGÉ™ label.">
+                  <div class="beacon tut" data-headline="NAVIGATOR" data-message="SCOGÉ™ is a fashion label founded by designer Starnilas Oge. Oge practices a Meta-Analytical Psychology best described as Subreality Archeology - An approach where history, geography, and ecology of an alternate world are realized and understood through the production of the world's material culture. Oge studied at The Fashion Institute of Technology in NYC before launching the SCOGÉ™ label.">
                     <div class="beaconOrigin">
                       <div class="beaconIdenIcon">!</div>
                       <div class="beaconSender">SCOGÉ HQ</div>
@@ -3506,7 +3510,7 @@ class getUniMenu extends HTMLElement {
                       <div class="beaconSender">CLASSIFIED</div>
                     </div>
                     <div class="beaconPreview">
-                      We need to talk!
+                      Approved channels.
                     </div>
                   </div>
                 </div>
@@ -3523,7 +3527,7 @@ class getUniMenu extends HTMLElement {
                 <div id="feedbackHeadline">Help us make T.A.O.S City better.</div>
                 <form id="feedbackForm">
                   <input type="email" name="Email" id="feedbackEmailInput" placeholder="Email" maxlength="45">
-                  <textarea id="feedbackInput" name="FeedbackText" placeholder="Enter feedback, Subscribe, or Contact City-Central here.." maxlength="320"></textarea>
+                  <textarea id="feedbackInput" name="FeedbackText" placeholder="Enter feedback, Subscribe, or Contact City-Central here." maxlength="320"></textarea>
                   <input id="feedbackButton" type="submit">
                 </form>
               </div>

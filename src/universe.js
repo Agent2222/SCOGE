@@ -2210,7 +2210,14 @@ export function enterTaosCity() {
   setTimeout(() => {
     document.getElementById("seekModal").remove();
   }, 1000);
-  if (window.loggedIn === false) {
+  const lcCheck = () => {
+    return (
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1"
+    );
+  };
+  var check = lcCheck();
+  if (window.loggedIn === false && check != true) {
     attn(null, "New Player Logged In");
     window.loggedIn = true;
   }
