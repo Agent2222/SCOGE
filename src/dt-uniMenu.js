@@ -87,7 +87,7 @@ class getUniMenu extends HTMLElement {
         from: "CITY-CENTRAL",
         head: "ROM ACTIVATED",
         preview: "Your Digisette ROM is activated!",
-        message: "Welcome to the SCOGÉ Digisette Demo-ROM! Through this demo, you'll gain direct access to our latest collections and most recent comms.<br><br>Full access SCOGÉ Digisettes grant you one domain, Lord status throughout T.A.O.S City, and the Digisette system. This is a once in a lifetime oppurtunity to experience and develop this city like never before.",
+        message: "You are currently using the SCOGÉ Digisette ROM, providing limited access to their latest collections and most recent beacons.<br><br>Full access is granted to Digisette holders—the new guard of T.A.O.S City Lords. Visit the shop to *purchase your Digisette today. (*Select garments come equipped with a Digisette).",
         buttonText: "HOLO-SUPPORT",
         action: "controls()",
       },
@@ -3207,7 +3207,7 @@ class getUniMenu extends HTMLElement {
                 <div>
                   <svg id="uniMenuFeedbackSvg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.71 52.83"><defs><style>.cls-1{fill:none;stroke:#ff002d;stroke-miterlimit:10;stroke-width:1.5px;}</style></defs><path class="cls-1" d="M14.08,41.05h23L48.9,49a1.27,1.27,0,0,0,2-1V40.42c2.3-1,5.08-3.09,5.08-5.92V11.87a6.56,6.56,0,0,0-6.54-6.55H14.08a6.55,6.55,0,0,0-6.54,6.55V34.5A6.55,6.55,0,0,0,14.08,41.05Z"/><line class="cls-1" x1="15.21" y1="14.75" x2="47.49" y2="14.75"/><line class="cls-1" x1="15.21" y1="21.75" x2="47.49" y2="21.75"/><line class="cls-1" x1="15.6" y1="28.74" x2="47.88" y2="28.74"/></svg>
                 </div>
-                <div class="uniMenuTxt" id="menuFeedback">Newsletter</div>
+                <div class="uniMenuTxt" id="menuFeedback">Emissary</div>
               </div>
               <div id="uniMenuExit" class="menuTabs">
                 <div>
@@ -3251,7 +3251,7 @@ class getUniMenu extends HTMLElement {
             <div id="fullMenu">
               <div id="romOffline">
                 <div id="dgromD1">
-                  DIGISETTE ROM
+                  DIGISETTE SYSTEM
                 </div>
                 <div id="dgromD2">
                   <div class="offline" id="dgromD2-1">OFFLINE</div>
@@ -3484,7 +3484,7 @@ class getUniMenu extends HTMLElement {
                       ${this.variableDataMessages[0].preview}
                     </div>
                   </div>
-                  <div class="beacon tut" data-headline="NAVIGATOR" data-message="SCOGÉ™ is a fashion label founded by designer Starnilas Oge. Oge practices a Meta-Analytical Psychology best described as Subreality Archeology - An approach where history, geography, and ecology of an alternate world are realized and understood through the production of the world's material culture. Oge studied at The Fashion Institute of Technology in NYC before launching the SCOGÉ™ label.">
+                  <div class="beacon tut" data-headline="SCOGÉ" data-message="SCOGÉ™ is a fashion label founded by designer Starnilas Oge. Oge practices a Meta-Analytical Psychology best described as Subreality Archeology - An approach where history, geography, and ecology of an alternate world are realized and understood through the production of the world's material culture. Oge studied at The Fashion Institute of Technology in NYC before launching the SCOGÉ™ label.">
                     <div class="beaconOrigin">
                       <div class="beaconIdenIcon">!</div>
                       <div class="beaconSender">SCOGÉ HQ</div>
@@ -3524,10 +3524,10 @@ class getUniMenu extends HTMLElement {
                   <div id="loading" class="loadinScreen">SENDING...</div>
                   <div class="loadIcon"></div>
                 </div>
-                <div id="feedbackHeadline">Help us make T.A.O.S City better.</div>
+                <div id="feedbackHeadline">News from; and a direct line to HQ.</div>
                 <form id="feedbackForm">
-                  <input type="email" name="Email" id="feedbackEmailInput" placeholder="Email" maxlength="45">
-                  <textarea id="feedbackInput" name="FeedbackText" placeholder="Enter feedback, Subscribe, or Contact City-Central here." maxlength="320"></textarea>
+                  <input type="email" name="Email" id="feedbackEmailInput" placeholder="Email:" maxlength="45">
+                  <textarea id="feedbackInput" name="FeedbackText" placeholder="Message: (Optional)" maxlength="320"></textarea>
                   <input id="feedbackButton" type="submit">
                 </form>
               </div>
