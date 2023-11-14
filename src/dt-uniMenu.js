@@ -1750,7 +1750,7 @@ class getUniMenu extends HTMLElement {
             }
             
             #fm-feedback #feedbackHeadline {
-              font-size: 24px;
+              font-size: 20px;
               font-weight: 600;
               margin-bottom: 20px;
               background-color: transparent;
@@ -3524,7 +3524,7 @@ class getUniMenu extends HTMLElement {
                   <div id="loading" class="loadinScreen">SENDING...</div>
                   <div class="loadIcon"></div>
                 </div>
-                <div id="feedbackHeadline">News from; and a direct line to HQ.</div>
+                <div id="feedbackHeadline">News from; and a direct line to SCOGÉ.</div>
                 <form id="feedbackForm">
                   <input type="email" name="Email" id="feedbackEmailInput" placeholder="Email:" maxlength="45">
                   <textarea id="feedbackInput" name="FeedbackText" placeholder="Message: (Optional)" maxlength="320"></textarea>

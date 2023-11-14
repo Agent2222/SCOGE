@@ -14,6 +14,10 @@ class scogeShop extends HTMLElement {
         this.rsentadded = false;
         this.externalOpen = null;
         this.sliding = false;
+        this.largeGalOpen = false;
+        this.selectedLook = null;
+        this.lookCollection = null;
+        this.currentProduct = null;
     }
 
     get active() {
@@ -110,6 +114,11 @@ async getProducts() {
         var productCont = document.createElement("div");
         var productImg = document.createElement("img");
         var shadowImg = document.createElement("img");
+        var loading = document.createElement("div");
+        var line = document.createElement("div");
+        loading.classList.add("loadingSpinner");
+        loading.id = `load_${product.Id}`;
+        line.classList.add("loadingLine");
         var container = this.shadowRoot.getElementById("products");
         productCont.classList.add("productCont");
         shadowImg.classList.add("shadow");
@@ -119,14 +128,19 @@ async getProducts() {
         shadowImg.loading = "lazy";
         productImg.src = product.Look1;
         shadowImg.src = product.Look1;
+        loading.appendChild(line);
+        productCont.appendChild(loading);
         productCont.appendChild(productImg);
         productCont.appendChild(shadowImg);
         container.appendChild(productCont);
+        this.shadowRoot.getElementById(`load_${product.Id}`).style.display = "grid";
         if (productImg.complete) {
             productImg.classList.add("loaded");
+            this.shadowRoot.getElementById(`load_${product.Id}`).style.display = "none";
         } else {
             productImg.addEventListener("load", () => {
                 productImg.classList.add("loaded");
+                this.shadowRoot.getElementById(`load_${product.Id}`).style.display = "none";
             });
         }
         if (viewImgImg.complete) {
@@ -165,22 +179,28 @@ async getProducts() {
         explore.id = `explore`;
         //
         var item = this.products[Number(e.target.id.replace("look_",""))- 1];
+        this.selectedLook = item;
         var ch = this.shadowRoot.getElementById("chapter");
         switch (item.Chapter) {
             case 0:
                 ch.innerHTML = "Prelude - Discovery 1";
+                this.lookCollection = "Prelude - Discovery 1";
             break;
             case 1:
                 ch.innerHTML = "Chapter 1. Reacclimate";
+                this.lookCollection = "Chapter 1. Reacclimate";
             break;
             case 2:
                 ch.innerHTML = "Chapter 2. Alan & Evie";
+                this.lookCollection = "Chapter 2. Alan & Evie";
             break;
             case 3:
                 ch.innerHTML = "Chapter 3. Digisette";
+                this.lookCollection = "Chapter 3. Digisette";
             break;
             default:
                 ch.innerHTML = "Core";
+                this.lookCollection = "Core";
             break;
         }
         if (this.requestOpen === true) {
@@ -191,19 +211,28 @@ async getProducts() {
             explore.innerHTML = `
             <div class="productCTA">
                 <div class="productImgInner" id="Product1Img">
-                    <img class="exImg" loading="lazy" src='${item.Product1}'/>
+                    <div class="loadingSpinner" id="load_P1" style="display: none;">
+                        <div class="loadingLine"></div>
+                    </div>
+                    <img class="exImg" id="pp1" loading="lazy" src='${item.Product1}'/>
                 </div>
                 <div id="Product1" class="rcta" data-name="${item?.P1Name}" data-look="${Number(e.target.id.replace("look_",""))- 1}" data-p="P1">REQUEST</div>
             </div>
             <div class="productCTA">
                 <div class="productImgInner" id="Product2Img">
-                    <img class="exImg" loading="lazy" src="${item.Product2}"/>
+                    <div class="loadingSpinner" id="load_P2" style="display: none;">
+                        <div class="loadingLine"></div>
+                    </div>
+                    <img class="exImg" id="pp2" loading="lazy" src="${item.Product2}"/>
                 </div>
                 <div id="Product2" class="rcta" data-name="${item?.P2Name}" data-look="${Number(e.target.id.replace("look_",""))- 1}" data-p="P2">REQUEST</div>
             </div>
             <div class="productCTA">
                 <div class="productImgInner" id="Product3Img">
-                    <img class="exImg" loading="lazy" src="${item.Product3}"/>
+                    <div class="loadingSpinner" id="load_P3" style="display: none;">
+                        <div class="loadingLine"></div>
+                    </div>
+                    <img class="exImg" id="pp3" loading="lazy" src="${item.Product3}"/>
                 </div>
                 <div id="Product3" class="rcta" data-name="${item?.P3Name}" data-look="${Number(e.target.id.replace("look_",""))- 1}" data-p="P3">REQUEST</div>
             </div>
@@ -213,13 +242,19 @@ async getProducts() {
             explore.innerHTML = `
             <div class="productCTA">
                 <div class="productImgInner" id="Product1Img">
-                    <img class="exImg" loading="lazy" src="${item?.Product1}"/>
+                    <div class="loadingSpinner" id="load_P1" style="display: none;">
+                        <div class="loadingLine"></div>
+                    </div>
+                    <img class="exImg" id="pp1" loading="lazy" src="${item?.Product1}"/>
                 </div>
                 <div id="Product1" class="rcta" data-name="${item?.P1Name}" data-look="${Number(e.target.id.replace("look_",""))- 1}" data-p="P1">REQUEST</div>
             </div>
             <div class="productCTA">
                 <div class="productImgInner" id="Product2Img">
-                    <img class="exImg" loading="lazy" src="${item?.Product2}"/>
+                    <div class="loadingSpinner" id="load_P2" style="display: none;">
+                        <div class="loadingLine"></div>
+                    </div>
+                    <img class="exImg" id="pp2" loading="lazy" src="${item?.Product2}"/>
                 </div>
                 <div id="Product2" class="rcta" data-name="${item?.P2Name}" data-look="${Number(e.target.id.replace("look_",""))- 1}" data-p="P2">REQUEST</div>
             </div>
@@ -229,7 +264,10 @@ async getProducts() {
             explore.innerHTML = `
             <div class="productCTA">
                 <div class="productImgInner" id="Product1Img">
-                    <img class="exImg" loading="lazy" src="${item?.Product1}"/>
+                    <div class="loadingSpinner" id="load_P1" style="display: none;">
+                        <div class="loadingLine"></div>
+                    </div>
+                    <img class="exImg" id="pp1" loading="lazy" src="${item?.Product1}"/>
                 </div>
                 <div id="Product1" class="rcta" data-name="${item?.P1Name}" data-look="${Number(e.target.id.replace("look_",""))- 1}" data-p="P1">REQUEST</div>
             </div>
@@ -262,12 +300,39 @@ async getProducts() {
         setTimeout(() => {
             explore.style.transform = "scaleX(1)";
             var imgs = this.shadowRoot.querySelectorAll(".exImg");
+            if (this.shadowRoot.getElementById(`load_P1`)) {
+                this.shadowRoot.getElementById(`load_P1`).style.display = "grid";
+            }
+            if (this.shadowRoot.getElementById(`load_P2`)) {
+                this.shadowRoot.getElementById(`load_P2`).style.display = "grid";
+            }
+            if (this.shadowRoot.getElementById(`load_P3`)) {
+                this.shadowRoot.getElementById(`load_P3`).style.display = "grid";
+            }
             imgs.forEach((imgEl) => {
                 if (imgEl.complete) {
                     imgEl.classList.add("loaded");
+                    if (this.shadowRoot.getElementById(`load_P1`)) {
+                        this.shadowRoot.getElementById(`load_P1`).style.display = "none";
+                    }
+                    if (this.shadowRoot.getElementById(`load_P2`)) {
+                        this.shadowRoot.getElementById(`load_P2`).style.display = "none";
+                    }
+                    if (this.shadowRoot.getElementById(`load_P3`)) {
+                        this.shadowRoot.getElementById(`load_P3`).style.display = "none";
+                    }
                 } else {
                     imgEl.addEventListener("load", () => {
                         imgEl.classList.add("loaded");
+                        if (this.shadowRoot.getElementById(`load_P1`)) {
+                            this.shadowRoot.getElementById(`load_P1`).style.display = "none";
+                        }
+                        if (this.shadowRoot.getElementById(`load_P2`)) {
+                            this.shadowRoot.getElementById(`load_P2`).style.display = "none";
+                        }
+                        if (this.shadowRoot.getElementById(`load_P3`)) {
+                            this.shadowRoot.getElementById(`load_P3`).style.display = "none";
+                        }
                     });
                 }
             })
@@ -283,6 +348,12 @@ async getProducts() {
         buts.forEach((button) => {
             button.addEventListener("click", (e) => {
                 this.toggleRequest(e)
+            })
+        })
+        var exImgs = this.shadowRoot.querySelectorAll(".exImg");
+        exImgs.forEach((el) => {
+            el.addEventListener("click", (e) => {
+                this.largeGalleryToggle(e);
             })
         })
     } else {
@@ -420,6 +491,81 @@ async getProducts() {
     }
   }
 
+  toggleReq() {
+    this.largeGalleryToggle();
+    switch (this.currentProduct) {
+        case 1:
+            this.shadowRoot.getElementById("Product1").click();
+        break;
+        case 2:
+            this.shadowRoot.getElementById("Product2").click();
+        break;
+        case 3:
+            this.shadowRoot.getElementById("Product3").click();
+        break;
+    }
+  }
+
+  largeGalleryToggle(e) {
+    var gal = this.shadowRoot.getElementById("productInfo");
+    //
+    if (e) {
+        var collectionName = this.shadowRoot.getElementById("idCollection");
+        var productName = this.shadowRoot.getElementById("idName");
+        var productDesc = this.shadowRoot.getElementById("idDesc");
+        switch (e.target.id) {
+            case "pp1":
+                collectionName.innerHTML = this.lookCollection;
+                productName.innerHTML = this.selectedLook.P1Name;
+                productDesc.innerHTML = this.selectedLook.P1Details;
+                this.currentProduct = 1;
+            break;
+            case "pp2":
+                collectionName.innerHTML = this.lookCollection;
+                productName.innerHTML = this.selectedLook.P2Name;
+                productDesc.innerHTML = this.selectedLook.P2Details;
+                this.currentProduct = 2;
+            break;
+            case "pp3":
+                collectionName.innerHTML = this.lookCollection;
+                productName.innerHTML = this.selectedLook.P3Name;
+                productDesc.innerHTML = this.selectedLook.P3Details;
+                this.currentProduct = 3;
+            break;
+        }
+    } 
+
+    if (this.largeGalOpen === false) {
+        //
+        var largeImages = this.selectedLook["p" + this.currentProduct + "AltQty"];
+        this.shadowRoot.getElementById("InfoImgs").innerHTML = "";
+        for (let i = 1; i < largeImages + 1; i++) {
+            var img = document.createElement("img");
+            img.src = `https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeShop/alts/P${this.currentProduct}-L${this.selectedLook.Look}-c${this.selectedLook.Chapter}-SCOGE-alt${i}.png`;
+            this.shadowRoot.getElementById("InfoImgs").appendChild(img);
+        }
+        //
+        this.largeGalOpen = true;
+        gsap.to(gal, {
+            scale: 1,
+            duration: 0.5,
+            opacity: 1,
+            pointerEvents: "auto"
+        })
+        return;
+    } else {
+        gsap.to(gal, {
+            scale: 1.5,
+            duration: 0.5,
+            opacity: 0,
+            pointerEvents: "none"
+        })
+        setTimeout(()=> {
+            this.shadowRoot.getElementById("InfoImgs").scrollTop = 0;
+        }, 600)
+        this.largeGalOpen = false;
+    }
+  }
 
   submitRequest() {
     this.form = this.shadowRoot.getElementById("request");
@@ -545,6 +691,8 @@ async getProducts() {
         this.loadShop();
         // this.shadowRoot.getElementById("sliderEl").addEventListener("input", this.progressScript.bind(this));
         this.shadowRoot.getElementById("submitRequest").addEventListener("click", this.submitRequest.bind(this));
+        this.shadowRoot.getElementById("closePI").addEventListener("click", this.largeGalleryToggle.bind(this))
+        this.shadowRoot.getElementById("requestPI").addEventListener("click", this.toggleReq.bind(this));
         // setTimeout(() => {
         //     this.smoothScroll();
         // }, 300)
@@ -688,6 +836,7 @@ async getProducts() {
                 .exImg {
                     opacity: 0;
                     transition: opacity .3s ease-in-out;
+                    cursor: pointer;
                 }
 
                 .loaded {
@@ -792,6 +941,7 @@ async getProducts() {
                     z-index: 3;
                     opacity: 0;
                     transition: opacity .5s ease-in-out;
+                    cursor: pointer;
                 }
 
                 #explore {
@@ -1187,7 +1337,83 @@ async getProducts() {
                   }
 
                   #productInfo {
-                    display:none;  
+                    width: 90%;
+                    height: 100%;
+                    position: fixed;
+                    left: 0%;
+                    top: 0%;
+                    z-index: 12;
+                    background-color: black;
+                    opacity: 0%;
+                    padding-left: 5%;
+                    padding-right: 5%;
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    grid-template-rows: auto;
+                    user-select: none;
+                    pointer-events: none;
+                    scale: 1.5;
+                  }
+                  
+                  #InfoDesc {
+                    width: 20%;
+                    position: absolute;
+                    z-index:5;
+                    top: 2%;
+                    right: 3%;
+                    font-size: 1em;
+                    padding-left: 5%;
+                    padding-top: 2%;
+                    text-align: right;
+                  }
+
+                  #closePI {
+                    position: absolute;
+                    text-align: center;
+                    padding: .6% 2.2%;
+                    border-bottom: 1px solid var(--primary);
+                    z-index:5;
+                    bottom: 5%;
+                    left: 3%;
+                    letter-spacing: 2px;
+                    transition: .3s all;
+                    cursor: pointer;
+                  }
+
+                  #requestPI {
+                    position: absolute;
+                    text-align: center;
+                    padding: .6% 2.2%;
+                    color: var(--accent);
+                    border-bottom: 1px solid var(--accent);
+                    z-index:5;
+                    bottom: 5%;
+                    right: 3%;
+                    letter-spacing: 2px;
+                    transition: .3s all;
+                    cursor: pointer;
+                  }
+
+                  #requestPI:hover {
+                    border: 1px solid var(--accent);
+                    color: var(--accent);
+                    letter-spacing: 4px;
+                  }
+                  
+                  #closePI:hover {
+                    border: 1px solid var(--primary);
+                    letter-spacing: 4px;
+                  }
+
+                  #InfoImgs {
+                    width: 100%;
+                    height: 100%;
+                    overflow-y: scroll;
+                    scroll-behavior: smooth;
+                  }
+
+                  #InfoImgs img {
+                    width: 100%;
                   }
 
                   @keyframes spin {
@@ -1221,7 +1447,43 @@ async getProducts() {
                     }
                   }
 
+                  .loadingSpinner {
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    display: none;
+                    grid-template-columns: 1fr;
+                    grid-template-rows: 1fr;
+                    z-index: 10;
+                    user-select: none;
+                    pointer-events: none;
+                  }
+
+                  .loadingLine {
+                    position: absolute;
+                    width: 50px;
+                    height: 2px;
+                    background-color: red;
+                    justify-self: center;
+                    align-self: center;
+                    animation: spin 4s infinite;
+                  }
+
                 @media screen and (max-width: 800px) {
+                    #InfoImgs {
+                        padding-top: 150px;
+                    }
+
+                    #InfoDesc {
+                        top: auto;
+                        bottom: 150px;
+                        padding-left: 10%;
+                        user-select: none;
+                        pointer-events: none;
+                    }
+
                     .productCont {
                         height: 100%;
                         min-width: 80%;
@@ -1344,8 +1606,16 @@ async getProducts() {
             </style>
             <div id="main">
                 <div id="productInfo">
-                    <div id="InfoDesc"></div>
-                    <div id="InfoImgs"></div>
+                    <div id="InfoDesc">
+                        <div id="idCollection">Test</div><br><br>
+                        <div id="idName">100% Cotton</div><br><br>
+                        <div id="idDesc">Top:</div>
+                    </div>
+                    <div id="InfoImgs">
+                        <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeShop/P2-L4-cC-SCOGE.png"/>
+                    </div>
+                    <div id="closePI">< RETURN</div>
+                    <div id="requestPI">REQUEST</div>
                 </div>
                 <div id="linkOutPage">
                   <div id="loHeader">

@@ -1624,7 +1624,7 @@ export async function universe() {
               "Help us make T.A.O.S City better";
             } else {
               shadow.getElementById("feedbackHeadline").innerHTML =
-              "News from; and a direct line to HQ.";
+              "News from; and a direct line to SCOGÉ.";
             }
             shadow.getElementById("fm-beacons").style.display = "none";
             shadow.getElementById("fm-inventory").style.display = "none";
