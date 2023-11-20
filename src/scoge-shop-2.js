@@ -76,7 +76,7 @@ class scogeShop extends HTMLElement {
 async getProducts() {
     try {
       const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbxfLIe8mWJvibSTBd6-sOzjJsmQzYT1BftMiscDKOvkuTZ4WrKjBIyO5m6nWZwQUY577w/exec?focus=products",
+        "https://script.google.com/macros/s/AKfycbwyfpqK5BOPXAZnGpXc0e6szgHqYwXfX7jajbDNEENP7Et0l36InKzVUECe9ENCBO7uhA/exec?focus=products",
         {
           method: "GET",
           mode: "cors",
@@ -574,7 +574,7 @@ async getProducts() {
       this.shadowRoot.getElementById("menuLoadingScreen2").style.display = "grid";
       let data = new FormData(this.form);
       fetch(
-        "https://script.google.com/macros/s/AKfycbxfLIe8mWJvibSTBd6-sOzjJsmQzYT1BftMiscDKOvkuTZ4WrKjBIyO5m6nWZwQUY577w/exec?focus=requests",
+        "https://script.google.com/macros/s/AKfycbwyfpqK5BOPXAZnGpXc0e6szgHqYwXfX7jajbDNEENP7Et0l36InKzVUECe9ENCBO7uhA/exec?focus=requests",
         {
           method: "POST",
           body: data,

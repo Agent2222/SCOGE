@@ -1748,7 +1748,7 @@ window.sub = () => {
       ease: "none" // use linear easing for a constant speed
     });
     let data = new FormData(form);
-    fetch("https://script.google.com/macros/s/AKfycbxfLIe8mWJvibSTBd6-sOzjJsmQzYT1BftMiscDKOvkuTZ4WrKjBIyO5m6nWZwQUY577w/exec?focus=products", {
+    fetch("https://script.google.com/macros/s/AKfycbwyfpqK5BOPXAZnGpXc0e6szgHqYwXfX7jajbDNEENP7Et0l36InKzVUECe9ENCBO7uhA/exec?focus=products", {
       method: "POST",
       body: data,
       mode: "cors"
@@ -1782,7 +1782,7 @@ window.sub2 = () => {
       ease: "none" // use linear easing for a constant speed
     });
     let data = new FormData(form2);
-    fetch("https://script.google.com/macros/s/AKfycbxfLIe8mWJvibSTBd6-sOzjJsmQzYT1BftMiscDKOvkuTZ4WrKjBIyO5m6nWZwQUY577w/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbwyfpqK5BOPXAZnGpXc0e6szgHqYwXfX7jajbDNEENP7Et0l36InKzVUECe9ENCBO7uhA/exec", {
       method: "POST",
       body: data,
       mode: "cors"
