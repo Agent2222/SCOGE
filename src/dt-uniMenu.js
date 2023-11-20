@@ -719,20 +719,20 @@ class getUniMenu extends HTMLElement {
       // mobile
       var shad = document.getElementById("getUniMenu").shadowRoot;
       var headline1 = shad.getElementById("beaconTutHead");
-      shad.getElementById("fullMenu").appendChild(beaconEl);
-      shad.getElementById("beaconPan").style.display = "block";
-      shad.getElementById("beaconAction2")?.addEventListener("click", () => {
-        shad.getElementById("beaconPan")?.remove();
+      this.shadowRoot.getElementById("fullMenu").appendChild(beaconEl);
+      this.shadowRoot.getElementById("beaconPan").style.display = "block";
+      this.shadowRoot.getElementById("beaconAction2")?.addEventListener("click", () => {
+        this.shadowRoot.getElementById("beaconPan")?.remove();
         selected.querySelector(".beaconIdenIcon").style.opacity = "0";
       });
       if (headline1.innerHTML === "H/L ZONE 5") {
         // document.getElementById("beaconAction2").style.marginTop = "8%";
         this.vidInvestigate();
       }
-      shad.getElementById("beaconAction1")?.addEventListener("click", () => {
-        shad.getElementById("beaconPan")?.remove();
+      this.shadowRoot.getElementById("beaconAction1")?.addEventListener("click", () => {
+        this.shadowRoot.getElementById("beaconPan")?.remove();
         // this.shadow.getElementById(".beaconAction1").innerHTML = "INVESTIGATE";
-        shad.querySelector(".beaconIdenIcon").style.opacity = "0";
+        this.shadowRoot.querySelector(".beaconIdenIcon").style.opacity = "0";
       });
     } else {
       // desktop
@@ -752,7 +752,7 @@ class getUniMenu extends HTMLElement {
       document
         .getElementById("beaconAction1")
         ?.addEventListener("click", (e) => {
-          shad.getElementById("beaconPan")?.remove();
+          this.shadowRoot.getElementById("beaconPan")?.remove();
           selected.querySelector(".beaconIdenIcon").style.opacity = "0";
           var action = e.target.getAttribute("data-action");
           if (action === "UNKNOWN ITEM DETECTED") {
@@ -886,7 +886,7 @@ class getUniMenu extends HTMLElement {
       this.shadow.getElementById("menuLoadingScreen2").style.display = "grid";
       let data = new FormData(this.form);
       fetch(
-        "https://script.google.com/macros/s/AKfycbxfLIe8mWJvibSTBd6-sOzjJsmQzYT1BftMiscDKOvkuTZ4WrKjBIyO5m6nWZwQUY577w/exec?focus=feedback",
+        "https://script.google.com/macros/s/AKfycbzHUtfeNysmMSZvlC7tnfYhpgs_EU_3kx9_6H_VV6le8tPyR4Vlzs8SlfES_8pbK0nb2w/exec?focus=feedback",
         {
           method: "POST",
           body: data,

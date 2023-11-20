@@ -16,9 +16,21 @@ class uniMenuAgent extends HTMLElement {
         this.setAttr('active', val);
     }
 
+    get position() {
+        return this.getAttribute('position');
+    }
+
+    get location() {
+        return this.getAttribute('location');
+    }
 
     static get observedAttributes() {
-        return ["active"];
+        return ["active", "position"];
+    }
+
+    mainLocation() {
+        this.shadowRoot.getElementById("chat").style.backgroundColor = "rgba(0,0,0,0.85)";
+        this.shadowRoot.getElementById("agentProfile").style.backgroundColor = "rgba(0,0,0,0.85)";
     }
 
     left() {
@@ -47,6 +59,17 @@ class uniMenuAgent extends HTMLElement {
 
     attributeChangedCallback(name, oldValue, newValue) {
         if (newValue === "true") {
+            var pos = this.position;
+            if (pos === "left") {
+                setTimeout(()=> {
+                    this.left();
+                }, 100)
+            }
+            if (this.location === "main") {
+                setTimeout(()=> {
+                    this.mainLocation();
+                }, 100)
+            }
             setTimeout(() => {
                 this.shadowRoot.getElementById("agentImg").style.transition = "all .8s ease-in-out";
                 this.shadowRoot.getElementById("agentImg").style.right = "0%";
@@ -121,11 +144,6 @@ class uniMenuAgent extends HTMLElement {
                     cursor: pointer;
                 }
 
-                #agentProfile:hover {
-                    border: 1px solid var(--secondary);
-                    scale: 0.9;
-                }
-
                 #agentChat {
                     height: 100%;
                     width: 100%;
@@ -153,6 +171,31 @@ class uniMenuAgent extends HTMLElement {
                     right: -100%;
                     position: absolute;
                     z-index: 2;
+                }
+
+                #help {
+                    width: 40px;
+                    height: 40px;
+                    position: absolute;
+                    left: 8%;
+                    bottom: 5%;
+                    border-radius: 20px;
+                    background-color: rgba(0, 0, 0, 0.85);
+                    border: 1px solid var(--primary);
+                    z-index: 10;
+                    font-family: "BS-R";
+                    text-align: center;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: all .2s ease-in-out;
+                    cursor: pointer;
+                }
+
+                #help:hover {
+                    border: 1px solid var(--secondary);
+                    scale: 1.1;
+                    color: var(--secondary);
                 }
 
                 #ddLogo {
@@ -183,6 +226,7 @@ class uniMenuAgent extends HTMLElement {
                     <div id="chat">
                     </div>
                 </div>
+                <div id="help">H</div>
                 <div id="agentProfile">
                     <img id="agentImg" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Lesli-1.png" alt="Avatar" style="width:100%">
                     <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/graphics/domain-wireframe.png" alt="Domain Development" id="ddLogo" style="height:100%">

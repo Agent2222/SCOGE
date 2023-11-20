@@ -107,7 +107,7 @@ export const attn = async (error, np) => {
     data.append("FeedbackText", `${np}`);
   }
   fetch(
-    "https://script.google.com/macros/s/AKfycbxfLIe8mWJvibSTBd6-sOzjJsmQzYT1BftMiscDKOvkuTZ4WrKjBIyO5m6nWZwQUY577w/exec?focus=feedback",
+    "https://script.google.com/macros/s/AKfycbwyfpqK5BOPXAZnGpXc0e6szgHqYwXfX7jajbDNEENP7Et0l36InKzVUECe9ENCBO7uhA/exec?focus=feedback",
     {
       method: "POST",
       body: data,
