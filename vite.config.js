@@ -33,9 +33,10 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      // input: {
-      //   main: new URL('index.html', import.meta.url).pathname,
-      // },
+      input: {
+        main: new URL('index.html', import.meta.url).pathname,
+        oge: new URL('oge.html', import.meta.url).pathname
+      },
       output: {
         dir: "dist/",
         format: "esm"

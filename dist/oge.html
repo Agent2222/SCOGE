@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+        <style>
+            @font-face {
+                font-family: "GM-I";
+                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/DMSans-Italic.ttf");
+                font-weight: normal;
+                font-style: italic;
+                }
+
+                @font-face {
+                font-family: "BS-B";
+                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Bold.eot");
+                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Bold.eot?#iefix") format("embedded-opentype"),
+                    url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Bold.woff2") format("woff2"),
+                    url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Bold.woff") format("woff"),
+                    url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Bold.ttf") format("truetype"),
+                    url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Bold.svg#BioSans-Bold") format("svg");
+                font-weight: bold;
+                font-style: normal;
+                }
+
+                @font-face {
+                font-family: "BS-R";
+                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.eot");
+                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.eot?#iefix")
+                    format("embedded-opentype"),
+                    url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.woff2") format("woff2"),
+                    url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.woff") format("woff"),
+                    url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.ttf") format("truetype"),
+                    url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.svg#BioSans-Regular") format("svg");
+                font-weight: normal;
+                font-style: normal;
+                }
+
+                @font-face {
+                font-family: "BS-L";
+                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Light.eot");
+                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Light.eot?#iefix")
+                    format("embedded-opentype"),
+                    url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Light.woff2") format("woff2"),
+                    url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Light.woff") format("woff"),
+                    url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Light.ttf") format("truetype"),
+                    url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Light.svg#BioSans-Light") format("svg");
+                font-weight: 300;
+                font-style: normal;
+                }
+
+                @font-face {
+                font-family: "BS-SB";
+                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-SemiBold.eot");
+                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-SemiBold.eot?#iefix")
+                    format("embedded-opentype"),
+                    url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-SemiBold.woff2") format("woff2"),
+                    url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-SemiBold.woff") format("woff"),
+                    url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-SemiBold.ttf") format("truetype"),
+                    url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-SemiBold.svg#BioSans-SemiBold") format("svg");
+                font-weight: 600;
+                font-style: normal;
+                }
+
+                @font-face {
+                font-family: "BS-I";
+                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Italic.eot");
+                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Italic.eot?#iefix")
+                    format("embedded-opentype"),
+                    url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Italic.woff2") format("woff2"),
+                    url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Italic.woff") format("woff"),
+                    url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Italic.ttf") format("truetype"),
+                    url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Italic.svg#BioSans-Italic") format("svg");
+                font-weight: normal;
+                font-style: italic;
+                }
+
+                @font-face {
+                font-family: "BS-EL";
+                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-ExtraLight.eot");
+                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-ExtraLight.eot?#iefix")
+                    format("embedded-opentype"),
+                    url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-ExtraLight.woff2") format("woff2"),
+                    url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-ExtraLight.woff") format("woff"),
+                    url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-ExtraLight.ttf") format("truetype"),
+                    url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-ExtraLight.svg#BioSans-ExtraLight")
+                    format("svg");
+                font-weight: 200;
+                font-style: normal;
+                }
+
+                :root {
+                --black : black;
+                --primary: #ff002d;
+                --secondary: #b5d3d1;
+                --accent: #94be8c;
+                --regular: "BS-R", sans-serif;
+                --tileSize: 18px;
+                }
+
+                            /* width */
+                ::-webkit-scrollbar {
+                    width: 4px;
+                }
+
+                /* Track */
+                ::-webkit-scrollbar-track {
+                    background: white; 
+                }
+                
+                /* Handle */
+                ::-webkit-scrollbar-thumb {
+                    background: darkgray;
+                }
+
+                /* Handle on hover */
+                ::-webkit-scrollbar-thumb:hover {
+                    background: black; 
+                }
+
+            #cvmain {
+                width: 96%;
+                height: 96%;
+                position: fixed;
+                left: 0;
+                top: 0;
+                padding: 2%;
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: 5% 95%;
+                font-family: "BS-R";
+                user-select: none;
+            }
+
+            a {
+                text-decoration: none;
+                color: black;
+            }
+
+            .dark {
+                background-color: black;
+                color: #ff002d;
+            }
+            .light {
+                background-color: white;
+                color: black;
+            }
+            ul.no-bullets {
+                list-style-type: none;
+                margin: 0;
+                padding-left: 10%;
+                height: 0;
+                overflow: hidden;
+                transition: .3s all;
+                text-align: end;
+            }
+            #hHead {
+                width: 100%;
+                height: 100%;
+                display: grid;
+                grid-template-columns: 80% auto auto auto auto;
+            }
+            #main {
+                width: 100%;
+                height: 98%;
+                padding-top: 2%;
+            }
+            .infoH {
+                justify-self: end;
+                align-self: center;
+                text-transform: uppercase;
+                font-size: .8em;
+                transition: .3s all;
+                cursor: pointer;
+            }
+
+            .infoH:hover {
+                text-decoration: underline;
+            }
+
+            #name {
+                font-size: 2em;
+                font-family: "BS-L";
+                letter-spacing: 1px;
+            }
+            .category {
+                margin-bottom: 2px;
+                transition: .3s all;
+                cursor: pointer;
+                user-select: none;
+                text-transform: uppercase;
+            }
+            #quote {
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+                position: fixed;
+                left: 0;
+                top: 0;
+                font-family: "BS-EL";
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr;
+                justify-items: center;
+                align-items: center;
+                font-style: italic;
+            }
+            #quoteText {
+                width: 60%;
+                padding-left: 20%;
+                font-size: 2em;
+            }
+            #quoteBy {
+                width: 50%;
+                padding-left: 20%;
+                font-size: 1.2em;
+                margin-top: 3%;
+                text-align: right;
+            }
+            #sidebar {
+                width: 15%;
+                height: 93%;
+                float: left;
+            }
+            #loc {
+                position: fixed;
+                right: 6%;
+                bottom: 3%;
+                user-select: none;
+                cursor: default;
+                z-index: 2;
+                pointer-events: none;
+            }
+            #mode {
+                height: 30px;
+                position: fixed;
+                right: 2%;
+                bottom: 2.5%;
+                cursor: pointer;
+                transition: .3s all;
+                z-index: 2;
+                user-select: none;
+            }
+
+            #mode:hover {
+                scale: 1.3;
+            }
+
+            #mode img {
+                height: 100%;
+            }
+            #thought {
+                position: fixed;
+                left: 2%;
+                bottom: 3%;
+                z-index: 2;
+                cursor: pointer;
+                transition: .3s all;
+                user-select: none;
+            }
+            #thought:hover, .category:hover {
+                text-decoration: underline;
+                letter-spacing: 2px;
+            }
+            #content {
+                width: 85%;
+                height: 100%;
+                opacity: 0;
+                float: left;
+                position: relative;
+            }
+            #contentCont {
+                width: 100%;
+                height: 90%;
+                overflow-y: scroll;
+                overflow-x: hidden;
+            }
+            #infoBut {
+                width: 100px;
+                height: 30px;
+                border: 1px solid black;
+                border-radius: 5px;
+                position: absolute;
+                top: 2%;
+                right: 2%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                transition: .3s all;
+                scale: .9;
+                font-size: .9em;
+                display: none;
+            }
+            #infoCont {
+                width: 50%;
+                height: 30%;
+                right: 2%;
+                top: 5%;
+                position: absolute;
+                border: 1px solid black;
+                border-radius: 5px;
+            }
+            #infoBut:hover {
+                text-decoration: underline;
+                letter-spacing: 4px;
+                scale: 1;
+            }
+            #quoteBody {
+                transition: .3s all;
+            }
+            .fade {
+                opacity: .3;
+            }
+            .sidebarItem {
+                opacity: 0;
+            }
+
+            .selectedMenu {
+                letter-spacing: 4px;
+                text-decoration: underline;
+                margin-top: 5%;
+                padding-left: 5%;
+            }
+            .contentImg {
+                width: 98%;
+                padding-left: 2%;
+                overflow: scroll;
+                margin-bottom: 8%;
+            }
+            li {
+                cursor: pointer;
+                transition: .5s all;
+            }
+            li:hover {
+                text-decoration: underline;
+                letter-spacing: 2px;
+            }
+            #menuBut {
+                display: none;
+            }
+            .fadeIn {
+                opacity: 0;
+            }
+            @media screen and (max-width: 800px) {
+                #hHead {
+                width: 100%;
+                height: 100%;
+                display: grid;
+                grid-template-rows: 1fr 1fr;
+                grid-template-columns: 1fr;
+                z-index: 5;
+                }
+                #mode {
+                    height: 4%;
+                    width: auto;
+                    position: fixed;
+                    right: auto;
+                    left: 10%;
+                    text-align: center;
+                    bottom: 5.2%;
+                    cursor: pointer;
+                    transition: .3s all;
+                    z-index: 2;
+                    user-select: none;
+                }
+                #mode:hover {
+                    scale: 1;
+                }
+                #thought {
+                    display: none;
+                }
+                #git, #cv, #social, #loc {
+                    display: none;
+                }
+                #email {
+                    justify-self: start;
+                    margin-top: 2%;
+                    font-size: 1em;
+                }
+                #sidebar {
+                    position: fixed;
+                    left: 0;
+                    bottom: 0;
+                    width: 80%;
+                    height: 60svh;
+                    padding-top: 20svh;
+                    padding-left: 10%;
+                    padding-right: 10%;
+                    padding-bottom: 25svh;
+                    z-index: 3;
+                    background-color: white;
+                    font-size: 1.5em;
+                    opacity: 0;
+                    transition: .5s all;
+                    pointer-events: none;
+                }
+                ul.no-bullets {
+                list-style-type: none;
+                margin: 0;
+                padding-left: 0%;
+                height: 0;
+                transition: .3s all;
+                text-align: end;
+                }
+                .records {
+                    margin-top: 2%;
+                    margin-bottom: 2%;
+                    font-size: .8em !important;
+                }
+                #content {
+                    pointer-events: none;
+                }
+                #menuBut {
+                    display: block;
+                    height: 50px;
+                    width: 50px;
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    grid-template-rows: 1fr 1fr 1fr;
+                    justify-content: center;
+                    align-items: center;
+                    position: fixed;
+                    right: 10%;
+                    bottom: 5%;
+                }
+                #menuBut div {
+                    width: 100%;
+                    height: 2px;
+                    background-color: black;
+                }
+                #content {
+                    width: 100%;
+                    height: 82%;
+                    margin-top: 10%;
+                    margin-bottom: 8%;
+                    overflow-y: scroll;
+                    opacity: 0;
+                    float: left;
+                    position: relative;
+                }
+                #contentCont {
+                    width: 100%;
+                    height: 100%;
+                    overflow-y: scroll;
+                    overflow-x: hidden;
+                    background-color: white;
+                }
+                .contentImg {
+                width: 100% !important;
+                padding-left: 0% !important;
+                overflow: scroll;
+                margin-bottom: 8%;
+            }
+                #infoBut {
+                    display: none;
+                }
+            }
+        </style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    </head>
+    <body id="cvmain" class="light">
+        <div id="quote">
+            <div id="quoteBody">
+                <div id="quoteText">"Every child is an artist. The problem is how to remain an artist once we grow up."</div>
+                <div id="quoteBy">- Pablo Picasso</div>
+            </div>
+        </div>
+        <div id="hHead">
+            <div id="name" class="fadeIn">Starnilas C. Oge</div>
+            <div class="infoH fadeIn" id="cv"><a target="_blank" href="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/port/Starnilas Oge - Resume.pdf">CV</a></div>
+            <div class="infoH fadeIn" id="email"><a target="_blank" href="mailto:starr@scoge.co">Starr@Scoge.co</a></div>
+            <div class="infoH fadeIn" id="social"><a target="_blank" href="https://twitter.com/_scoge_">X</a></div>
+            <div class="infoH fadeIn"><a target="_blank" href="https://github.com/Agent2222" id="git">Github</a></div>
+            <div id="mode" class="fadeIn">
+                <img id="modeImg" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/light.png"/>
+            </div>
+            <div id="menuBut" class="fadeIn">
+                <div id="m1" class="menuBars"></div>
+                <div id="m2"  class="menuBars"></div>
+                <div id="m3"  class="menuBars"></div>
+            </div>
+            <div class="infoH fadeIn" id="loc">New York, NY</div>
+            <div class="infoH fadeIn" id="thought">Thoughts</div>
+        </div>
+        <div id="main">
+            <div id="sidebar">
+            </div>
+            <div id="content">
+                <div id="infoBut" class="light">NOTES</div>
+                <div id="contentCont"></div>
+            </div>
+        </div>
+    </body>
+    <script>
+        var mode = "light";
+        var myThoughtActive = false;
+        var thoughtCount = 0;
+        var oge = null;
+        var menuWaiter = null;
+        var mobileMenuOpen = false;
+        var mobile = false;
+        var notesOpen = false;
+        var thoughts = [
+            {
+                text:"One of the greatest threats leaders of our time face is nepotism. A cuddly oversized curtain of emotion that is inevitably unveiled as the parasite that led to mediocrity.<br><br>Nepotism would have one choosing hugs, over genius."
+            },
+            {
+                text:"Don't reinvent the wheel.<br><br>...<br><br>...But, what if we did?"
+            }
+        ];
+        var quotes = [
+            {
+                text: "Every child is an artist. The problem is how to remain an artist once we grow up.",
+                author: "- Pablo Picasso"
+            }
+        ]
+
+        const toggleMobileMenu = () => {
+                    var m1 = document.getElementById("m1");
+                    var m2 = document.getElementById("m2");
+                    var m3 = document.getElementById("m3");
+                    mobile = true;
+                    if (mobileMenuOpen === false) {
+                        document.getElementById("sidebar").style.opacity = "100%";
+                        document.getElementById("sidebar").style.pointerEvents = "all";
+                        mobileMenuOpen = true;
+                        gsap.to(m1, {
+                            duration: 0.3,
+                            rotate: 45,
+                            translateY: 16
+                        })
+                        gsap.to(m3, {
+                            duration: 0.3,
+                            rotate: -45,
+                            translateY: -16
+                        })
+                        gsap.to(m2, {
+                            opacity: 0
+                        })
+                        return;
+                    } else {
+                        document.getElementById("sidebar").style.opacity = "0%";
+                        document.getElementById("sidebar").style.pointerEvents = "none";
+                        mobileMenuOpen = false;
+                        gsap.to(m1, {
+                        duration: 0.5,
+                        rotate: 0,
+                        translateY: 0
+                    })
+                    gsap.to(m3, {
+                        duration: 0.5,
+                        rotate: 0,
+                        translateY: 0
+                    })
+                    gsap.to(m2, {
+                        opacity: 1
+                    })
+                    }
+        }
+
+        const getOge = async () => {
+            try {
+            const response = await fetch(
+                "https://script.google.com/macros/s/AKfycbwyfpqK5BOPXAZnGpXc0e6szgHqYwXfX7jajbDNEENP7Et0l36InKzVUECe9ENCBO7uhA/exec?focus=oge",
+                {
+                method: "GET",
+                mode: "cors",
+                }
+            );
+        
+            if (response.ok) {
+                const data = await response.json(); // Parse JSON response
+                oge = data;
+                //
+                document.getElementById("menuBut").addEventListener("click", toggleMobileMenu)
+                //
+                oge.forEach((cat)=>{
+                    if (cat.Category != "cv") {
+                        var el = document.createElement("div");
+                        el.innerHTML = cat.Category;
+                        el.classList.add("category");
+                        el.classList.add("sidebarItem");
+                        el.id = "cat" + cat.Category;
+                        el.addEventListener("click", (e) => {
+                            // clearTimeout(menuWaiter);
+                            // menuWaiter = setTimeout(() => {
+                            //     allCats.forEach((c) => {
+                            //         c.classList.remove("selectedMenu");
+                            //         var ul = c.id.replace("cat","ul");
+                            //         document.getElementById(ul).style.transition = ".3s all";
+                            //         document.getElementById(ul).style.height = "0";
+                            //     })
+                            // },8000) 
+                            var allCats = document.querySelectorAll(".category");
+                            allCats.forEach((categ) => {
+                                if (e.target.id === categ.id) {
+                                    var ul = categ.id.replace("cat","ul");
+                                    document.getElementById(ul).style.transition = ".3s all";
+                                    if (mobileMenuOpen === true) {
+                                        document.getElementById(ul).style.height = "45%";
+                                    } else {
+                                        document.getElementById(ul).style.height = "28%";
+                                    }
+                                    categ.classList.add("selectedMenu");
+                                } else {
+                                    var ul = categ.id.replace("cat","ul");
+                                    document.getElementById(ul).style.transition = ".3s all";
+                                    document.getElementById(ul).style.height = "0";
+                                    categ.classList.remove("selectedMenu");
+                                }
+                            })
+                        })
+                        if (!document.getElementById(`cat${cat.Category}`)) {
+                            document.getElementById("sidebar").appendChild(el);
+                        }
+                        var ul = document.createElement("ul");
+                        ul.classList.add("no-bullets");
+                        ul.classList.add("sidebarItem");
+                        ul.id = "ul" + cat.Category;
+                        if (!document.getElementById(`ul${cat.Category}`)) {
+                            document.getElementById("sidebar").appendChild(ul);
+                        }
+                        oge.forEach((record) => {
+                            if (record.Category === el.innerHTML) {
+                                var listItem = document.createElement("li");
+                                listItem.classList.add("records");
+                                var name1 = record.Name.replace("_"," ");
+                                var name2 = name1.replace("_"," ");
+                                var name3 = name2.replace("ux","");
+                                listItem.innerHTML = name3;
+                                listItem.id = Number(record.Id) - 1;
+                                ul.addEventListener("click", (e) => {
+                                    var el =  document.getElementById("content");
+                                    gsap.to(el, {
+                                        duration: .5,
+                                        opacity: 1
+                                    })
+                                    loadMaterial(e);
+                                    // toggleMobileMenu();
+                                    // document.getElementById("content").style.opacity = "1";
+                                })
+                                ul.appendChild(listItem);
+                            }
+                        })
+                    }
+                })
+                var allSide = document.querySelectorAll(".sidebarItem");
+                var rest = document.querySelectorAll(".fadeIn");
+                gsap.to(allSide, {
+                    opacity: 1, 
+                    duration: .3,
+                    stagger: 0.02
+                })
+                gsap.to(rest, {
+                    opacity: 1, 
+                    duration: .3,
+                    stagger: 0.02
+                })
+
+                return data;
+            } else {
+                throw new Error("Failed to fetch data");
+            }
+            } catch (error) {
+            console.error("Error:", error);
+            throw error;
+            }
+        }  
+
+        getOge();
+
+        const openNotes = () => {
+            if (notesOpen === false) {
+                //
+            } else {
+                //
+            }
+        }
+
+        const loadMaterial = (e) => {
+            var select = e.target.id
+            var material = oge[select];
+            // port-name-number.type
+            // If Images
+            if (mobileMenuOpen === true && e.target.classList.contains( "records")) {
+                toggleMobileMenu();
+                document.getElementById("sidebar").style.opacity = "0%";
+                document.getElementById("sidebar").style.pointerEvents = "none";
+                document.getElementById("contentCont").style.pointerEvents = "all";
+            }
+            document.getElementById("contentCont").innerHTML = "";
+            for (let i = 1; i < material.ImgCount + 1; i++) {
+                var img = document.createElement("img");
+                img.classList.add("contentImg");
+                img.src = `https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/port/port-${material.Name}-${i}.png`;
+                document.getElementById("contentCont").appendChild(img);
+            }
+            // If Videos
+        }
+
+        document.getElementById("thought").addEventListener("click", () => {  
+            var el =  document.getElementById("content");
+            gsap.to(el, {
+                duration: .5,
+                opacity: 0
+            })
+            
+            if (myThoughtActive === false) {
+                var sel = document.getElementById("quoteBody");
+                gsap.to(sel, {
+                    opacity:0
+                })
+                myThoughtActive = true;
+                document.getElementById("thought").style.pointerEvents = "none";
+                document.getElementById("thought").classList.add("fade");
+                setTimeout(()=> {
+                    document.getElementById("quoteText").innerHTML = thoughts[thoughtCount].text;
+                    if (thoughtCount < thoughts.length) {
+                        thoughtCount++;   
+                    }
+                    if (thoughtCount === thoughts.length) {
+                        thoughtCount = 0;   
+                    }
+                    document.getElementById("quoteBy").innerHTML = "- Myself";
+                    gsap.to(sel, {
+                        delay: .4,
+                        opacity:1
+                    })
+                    setTimeout(() => {
+                        gsap.to(sel, {
+                            opacity:0
+                        })
+                        setTimeout(()=> {
+                            document.getElementById("quoteText").innerHTML = quotes[0].text;
+                            document.getElementById("quoteBy").innerHTML = quotes[0].author;
+                            gsap.to(sel, {
+                                delay: .4,
+                                opacity:1
+                            })
+                            document.getElementById("thought").style.pointerEvents = "auto";
+                             document.getElementById("thought").classList.remove("fade");
+                            myThoughtActive = false;
+                        }, 1000)
+                    }, 15000)
+                },1000)
+            } 
+        })
+
+        document.getElementById("mode").addEventListener("click",() => {
+            if (mode === "light") {
+                document.getElementById("infoBut").classList.remove("light");
+                document.getElementById("infoBut").classList.add("dark");
+                document.getElementById("infoBut").style.border = "1px solid #ff002d";
+                document.getElementById("cvmain").classList.add("dark");
+                document.getElementById("cvmain").classList.remove("light");
+                document.getElementById("modeImg").src = "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/dark-r.png";
+                document.querySelectorAll("a").forEach((link) => {
+                    link.style.color= "#ff002d";
+                })
+                mode = "dark";
+                    document.querySelectorAll(".menuBars")?.forEach((bar)=> {
+                        bar.style.backgroundColor = "#ff002d";
+                        document.getElementById("sidebar").style.backgroundColor = "black";
+                        document.getElementById("contentCont").style.backgroundColor = "";
+                    })
+                return;
+            } else {
+                    document.querySelectorAll(".menuBars")?.forEach((bar)=> {
+                        bar.style.backgroundColor = "black";
+                        document.getElementById("sidebar").style.backgroundColor = "white";
+                        document.getElementById("contentCont").style.backgroundColor = "";
+                    })
+                document.getElementById("infoBut").classList.add("light");
+                document.getElementById("infoBut").classList.remove("dark");
+                document.getElementById("infoBut").style.border = "1px solid black";
+                document.querySelectorAll("a").forEach((link) => {
+                    link.style.color= "black";
+                })
+                document.getElementById("cvmain").classList.remove("dark");
+                document.getElementById("cvmain").classList.add("light");
+                document.getElementById("modeImg").src = "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/light.png";
+                mode = "light";
+            }
+        })
+    </script>
+</html>
