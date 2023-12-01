@@ -35,7 +35,7 @@ class dtInvestors extends HTMLElement {
       this.shadow.getElementById("investorComp").style.zIndex = "5";
       setTimeout(()=> {
         this.closeInvestor();
-      }, 500)
+      }, 1000)
     }
   }
 
