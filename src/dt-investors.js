@@ -12,7 +12,7 @@ class dtInvestors extends HTMLElement {
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
-    this.open = true;
+    this.open = false;
   }
 
   get invest() {
@@ -342,7 +342,7 @@ class dtInvestors extends HTMLElement {
               background: black;
               position: fixed;
               top: 0;
-              right: 0%;
+              right: -70%;
               z-index: 4;
               font-family: "BS-R";
               padding-top: 2%;
