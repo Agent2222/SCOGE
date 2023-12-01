@@ -2215,6 +2215,7 @@ export function enterTaosCity() {
   window.loggedIn = true;
   setTimeout(() => {
     document.getElementById("seekModal").remove();
+    // document.getElementById("miniAgent").setAttribute("active", "true");
   }, 1000);
   const lcCheck = () => {
     return (

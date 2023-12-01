@@ -1,4 +1,6 @@
 
+import pdf from '../assets/pdf/s-d-23.pdf'
+
 var currentPage = 1;
 var currentBtsPage = 1;
 var inventoryTotal = 2000;
@@ -10,6 +12,7 @@ class dtInvestors extends HTMLElement {
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
+    this.open = true;
   }
 
   get invest() {
@@ -25,76 +28,82 @@ class dtInvestors extends HTMLElement {
   }
 
   attributeChangedCallback(prop, oldVal, newVal) {
-    if (prop === "invest") {
-      this.render();
+    // if (prop === "invest") {
+    //   this.render();
+    // }
+    if (newVal === "active") {
+      this.shadow.getElementById("investorComp").style.zIndex = "5";
+      setTimeout(()=> {
+        this.closeInvestor();
+      }, 500)
     }
   }
 
   // when each menu item is clicked, it will smoothly scroll to the corresponding section 5% above the top of the screen
-  scrollToMenu() {
-    var allMnenuItems = this.shadow.querySelectorAll(".menu-item");
-    allMnenuItems.forEach((item) => {
-      item.addEventListener("click", (e) => {
-        var section = e.target.getAttribute("id");
-        var sectionEl = this.shadow.getElementById(section.replace("Menu","Sect"));
-        var sectionTop = sectionEl.offsetTop;
-        var sectionTopOffset = sectionTop - 200;
-        if (section === "dataMenu") {
-          sectionTopOffset = sectionTop - 0;
-        }
-        if (section === "aboutMenu") {
-          sectionTopOffset = sectionTop - 50;
-        }
-        this.shadow.getElementById("scrollBody").scrollTo({
-          top: sectionTopOffset,
-          behavior: "smooth",
-        });
-        // change the menu item color to secondary color and the rest to primary color
-        allMnenuItems.forEach((item) => {
-          item.style.color = "var(--primary)";
-          item.style.borderBottom = "var(--primary) 1px solid";
-        }
-        );
-        e.target.style.color = "var(--secondary)";
-        e.target.style.borderBottom = "var(--secondary) 1px solid";
-      });
-      // when section is -100px from the top of the screen, change the menu item color to secondary color and the rest to primary color
-      this.shadow.getElementById("scrollBody").addEventListener("scroll", () => {
-        var scrollPos = this.shadow.getElementById("scrollBody").scrollTop;
-        allMnenuItems.forEach((item) => {
-          var section = item.getAttribute("id");
-          var sectionEl = this.shadow.getElementById(section.replace("Menu","Sect"));
-          var sectionTop = sectionEl.offsetTop;
-          if (scrollPos >= sectionTop - 200) {
-            allMnenuItems.forEach((item) => {
-              item.style.color = "var(--primary)";
-              item.style.borderBottom = "var(--primary) 1px solid";
-            });
-            item.style.color = "var(--secondary)";
-            item.style.borderBottom = "var(--secondary) 1px solid";
-          }
-          // if scroll reaches the bottom of the page, change the contact menu item color to secondary color and the rest to primary color
-          if (scrollPos >= this.shadow.getElementById("scrollBody").scrollHeight - this.shadow.getElementById("scrollBody").clientHeight - 100) {
-            allMnenuItems.forEach((item) => {
-              item.style.color = "var(--primary)";
-              item.style.borderBottom = "var(--primary) 1px solid";
-            });
-            this.shadow.getElementById("contactMenu").style.color = "var(--secondary)";
-            this.shadow.getElementById("contactMenu").style.borderBottom = "var(--secondary) 1px solid";
-          }
-        });
-      })
-    }
-    );
-  }
+  // scrollToMenu() {
+  //   var allMnenuItems = this.shadow.querySelectorAll(".menu-item");
+  //   allMnenuItems.forEach((item) => {
+  //     item.addEventListener("click", (e) => {
+  //       var section = e.target.getAttribute("id");
+  //       var sectionEl = this.shadow.getElementById(section.replace("Menu","Sect"));
+  //       var sectionTop = sectionEl.offsetTop;
+  //       var sectionTopOffset = sectionTop - 200;
+  //       if (section === "dataMenu") {
+  //         sectionTopOffset = sectionTop - 0;
+  //       }
+  //       if (section === "aboutMenu") {
+  //         sectionTopOffset = sectionTop - 50;
+  //       }
+  //       this.shadow.getElementById("scrollBody").scrollTo({
+  //         top: sectionTopOffset,
+  //         behavior: "smooth",
+  //       });
+  //       // change the menu item color to secondary color and the rest to primary color
+  //       allMnenuItems.forEach((item) => {
+  //         item.style.color = "var(--primary)";
+  //         item.style.borderBottom = "var(--primary) 1px solid";
+  //       }
+  //       );
+  //       e.target.style.color = "var(--secondary)";
+  //       e.target.style.borderBottom = "var(--secondary) 1px solid";
+  //     });
+  //     // when section is -100px from the top of the screen, change the menu item color to secondary color and the rest to primary color
+  //     this.shadow.getElementById("scrollBody").addEventListener("scroll", () => {
+  //       var scrollPos = this.shadow.getElementById("scrollBody").scrollTop;
+  //       allMnenuItems.forEach((item) => {
+  //         var section = item.getAttribute("id");
+  //         var sectionEl = this.shadow.getElementById(section.replace("Menu","Sect"));
+  //         var sectionTop = sectionEl.offsetTop;
+  //         if (scrollPos >= sectionTop - 200) {
+  //           allMnenuItems.forEach((item) => {
+  //             item.style.color = "var(--primary)";
+  //             item.style.borderBottom = "var(--primary) 1px solid";
+  //           });
+  //           item.style.color = "var(--secondary)";
+  //           item.style.borderBottom = "var(--secondary) 1px solid";
+  //         }
+  //         // if scroll reaches the bottom of the page, change the contact menu item color to secondary color and the rest to primary color
+  //         if (scrollPos >= this.shadow.getElementById("scrollBody").scrollHeight - this.shadow.getElementById("scrollBody").clientHeight - 100) {
+  //           allMnenuItems.forEach((item) => {
+  //             item.style.color = "var(--primary)";
+  //             item.style.borderBottom = "var(--primary) 1px solid";
+  //           });
+  //           this.shadow.getElementById("contactMenu").style.color = "var(--secondary)";
+  //           this.shadow.getElementById("contactMenu").style.borderBottom = "var(--secondary) 1px solid";
+  //         }
+  //       });
+  //     })
+  //   }
+  //   );
+  // }
   
   // A function to move the "campaign" element to right 0%.
   openInvestor() {
     this.shadow.getElementById("investorComp").style.transition = "1s all";
     this.shadow.getElementById("investorComp").style.right = "0%";
-    clearShop();
-    clearSettings();
-    clearFilter();
+    // clearShop();
+    // clearSettings();
+    // clearFilter();
   }
 
   // Close the campaign
@@ -107,7 +116,16 @@ class dtInvestors extends HTMLElement {
     } else {
       // Desktop
       this.shadow.getElementById("investorComp").style.transition = "1s all";
-      this.shadow.getElementById("investorComp").style.right = "-70%";
+      if (this.open === false) {
+        this.shadow.getElementById("investorComp").style.right = "0%";
+        this.shadow.getElementById("campIcon").innerHTML = "X";
+        this.open = true;
+        return;
+      } else {
+        this.shadow.getElementById("investorComp").style.right = "-70%";
+        this.open = false;
+        this.shadow.getElementById("campIcon").innerHTML = "$";
+      }
     }
   }
 
@@ -269,15 +287,15 @@ class dtInvestors extends HTMLElement {
   connectedCallback() {
     this.render();
     // this.pageScroll();
-    document.getElementById("investBut").addEventListener("click", this.openInvestor.bind(this));
+    // document.getElementById("investBut").addEventListener("click", this.openInvestor.bind(this));
     this.shadow.getElementById("campIcon").addEventListener("click", this.closeInvestor.bind(this));
-    this.shadow.getElementById("nextGalleryImg").addEventListener("click", this.nextImage.bind(this));
-    this.shadow.getElementById("preGalleryImg").addEventListener("click", this.previousImage.bind(this));
-    this.shadow.getElementById("nextBtsImg").addEventListener("click", this.nextBtsImage.bind(this));
-    this.shadow.getElementById("preBtsImg").addEventListener("click", this.preBtsImage.bind(this));
-    this.sliders();
-    this.team();
-    this.scrollToMenu();
+    // this.shadow.getElementById("nextGalleryImg").addEventListener("click", this.nextImage.bind(this));
+    // this.shadow.getElementById("preGalleryImg").addEventListener("click", this.previousImage.bind(this));
+    // this.shadow.getElementById("nextBtsImg").addEventListener("click", this.nextBtsImage.bind(this));
+    // this.shadow.getElementById("preBtsImg").addEventListener("click", this.preBtsImage.bind(this));
+    // this.sliders();
+    // this.team();
+    // this.scrollToMenu();
     // Add Event handlers to rendered html below
     // Must use this.shadow to access dom.
     // Add methods above this method
@@ -333,7 +351,7 @@ class dtInvestors extends HTMLElement {
               transition: 1s;
             }
             #header {
-              height: 15%;
+              height: 8%;
               width: 98%;
               float: left;
               padding-left: 2%;
@@ -489,7 +507,7 @@ class dtInvestors extends HTMLElement {
             #menuHead {
               height: 10%;
               padding-right: 8%;
-              display: grid;
+              display: none;
               grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
               grid-template-rows: 1fr;
               align-items: center;
@@ -510,8 +528,7 @@ class dtInvestors extends HTMLElement {
               display: grid;
               grid-template-columns: 1fr;
               grid-template-rows: 1fr;
-              margin-top: 30%;
-              margin-bottom: 0% !important;
+              margin-top: 10%;
             }
             #teamImg {
               width: 100%;
@@ -569,6 +586,7 @@ class dtInvestors extends HTMLElement {
               margin-left: 10%;
               margin-right: 10%;
               padding-left: 2%;
+              display: none;
             }
             #pProjBody {
               width: 100%;
@@ -713,6 +731,10 @@ class dtInvestors extends HTMLElement {
             #contact:hover a {
               color: black;
             }
+            .deckImage {
+              width: 100%;
+              margin-bottom: 10%;
+            }
             @media screen and (max-width: 769px) {
               #head {
                 font-size: 1.8em;
@@ -720,30 +742,30 @@ class dtInvestors extends HTMLElement {
               #contactSect {
                 width: 80%;
                 height: 20%;
-                margin-top: 250px;
+                margin-top: 10%;
                 margin-bottom: 150px;
               }
               #close {
                 width: 100%;
                 height: 40% !important;
-                margin-top: 500px;
+                margin-top: 10%;
               }
               #campIcon {
                 display: none;
               }
               #investorComp {
                 width: 100%;
-                height: 85%;
+                height: 100% !important;
                 background: black;
                 position: fixed;
                 display: grid;
                 grid-template-columns: 1fr;
                 grid-template-rows: auto !important;
-                top: 18%;
+                top: 0%;
                 right: 0%;
+                padding-top: 5%;
                 z-index: 8;
                 font-family: "BS-R";
-                padding-top: 1%;
                 overflow-y: visible;
                 overflow-x: visible;
                 transition: 1s;
@@ -758,6 +780,7 @@ class dtInvestors extends HTMLElement {
                 padding-left: 0%;
                 height: auto !important;
                 padding-top: 0%;
+                display: none;
               }
               .pElement {
                 width: 100%;
@@ -785,7 +808,7 @@ class dtInvestors extends HTMLElement {
               #menuHead {
                 height: 10%;
                 width: 100%;
-                display: grid;
+                display: none;
                 grid-template-columns: 1fr 1fr 1fr 1fr; 
                 grid-template-rows: auto;
                 grid-row-gap: 5px;
@@ -875,111 +898,41 @@ class dtInvestors extends HTMLElement {
             </div>
             <div id="scrollBody">
             <div id="header">
-              <div id="head">Investor Presentation</div>
-              <div id="sub">Version 1 - <span class="acc" style="cursor:pointer;"><a href="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/files/SCOGE-INVESTOR-PRE22-R1.pdf" id="pdfDL" target="_blank">(Download PDF Version)</a></span></div>
+              <div id="head">SCOGÉ Seed Raise</div>
+              <div id="sub"><span class="acc" style="cursor:pointer;"><a href='${pdf}' id="pdfDL" target="_blank">(Download PDF)</a></span></div>
               <div id="menuHead">
                 <div style="color: var(--secondary); border-color:var(--secondary);" id="introMenu" class="menu-item">INTRO</div>
-                <div id="aboutMenu" class="menu-item">ABOUT</div>
-                <div id="productMenu" class="menu-item">PRODUCT</div>
-                <div id="edgeMenu" class="menu-item">EDGE</div>
-                <div id="modelMenu" class="menu-item">MODEL</div>
-                <div id="newsMenu" class="menu-item">NEWS</div>
-                <div id="growthMenu" class="menu-item">GROWTH</div>
-                <div id="tractionMenu" class="menu-item">TRACTION</div>
-                <div id="raiseMenu" class="menu-item">RAISE</div>
-                <div id="dataMenu" class="menu-item">PROJECTIONS</div>
-                <div id="teamMenu" class="menu-item">TEAM</div>
+                <div id="aboutMenu" class="menu-item">PROBLEM</div>
+                <div id="productMenu" class="menu-item">NEWS</div>
+                <div id="edgeMenu" class="menu-item">SOLUTION</div>
+                <div id="modelMenu" class="menu-item">ABOUT</div>
+                <div id="newsMenu" class="menu-item">DREAM</div>
+                <div id="growthMenu" class="menu-item">TRACTION</div>
+                <div id="tractionMenu" class="menu-item">TREND</div>
+                <div id="raiseMenu" class="menu-item">OPPURTUNITY</div>
+                <div id="dataMenu" class="menu-item">MODEL</div>
+                <div id="teamMenu" class="menu-item">RAISE</div>
                 <div id="contactMenu" class="menu-item">CONTACT</div>
               </div>
             </div>
-            <h1 id="introSect">INTRO</h1>
-            <div class="body2" id="waveTest">
-              <span class="acc" style="text-align:center; font-size:1.5em;">SCOGÉ is a new and evolving luxury fashion brand that focuses on catering to an untapped global appetite for styles and stories from under-represented communities.</span><br><br>The brand serves as a powerful symbol of this community, making its members feel seen, valued, and stylish. SCOGÉ has the potential to make a real difference in the lives of its customers through its unique approach to luxury fashion and storytelling. Additionally, a growing trend of underrepresented communities craving more visibility in every market - a trend that can be seen in the popularity of Marvel's box office hit movie 'The Black Panther' and brands like Fenty Beauty - will partially attribute to SCOGÉ's success.
-            </div>
-            <div class="generalImages">
-              <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Banner-World-SCOGE-narrow.webp"/>
-            </div>
-            <div class="body2">
-              Designer luxury brands are novel universes created to satisfy emotional needs. They serve people with a need to express themselves as imaginative and opulent through fashion. People dream, and luxury brands like SCOGÉ turn dreams into reality.
-            </div>
-            <h1 id="aboutSect">ABOUT</h1>
-            <div id="campGallery">
-              <div id="imageInterface">
-                <div id="preGalleryImg" class="arrow">&#9658;</div>
-                <span>|</span>
-                <div id="nextGalleryImg" class="arrow">&#9658;</div>
-              </div>
-              <div id="galleryimg">
-              <img id="gImg" src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-about-1.webp" alt=""/>
-              </div>
-            </div>
-            <div class="body2">
-              SCOGÉ is a mens luxury fashion brand making products for an evolving luxury consumer with an affinity to exploring unique fictional worlds, and avant garde fashion. Our products are inspired by a world we’ve created named bankoo. Each collection of products takes the SCOGÉ customer deeper into this world, satisfying the intrinsic need for exploration, and the extrinsic need for self-expression.<br><br>
-              “Luxury high price is not about tangible benefits,” - The Luxury Strategy: Break the Rules of Marketing to Build Luxury Brands.
-            </div>
-            <h1 id="productSect">PRODUCTS</h1>
-            <div id="looks">
-              <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-full-products-opt1.jpeg" alt=""/>
-            </div>
-            <div class="body2">
-              Our products are sourced and created in NYC, with a dedicated approach to up-cycling unused fabrics, trims and designs from previous seasons. We champion designing within our own world, defining our own trends, and becoming a part of the next guard of luxury fashion.<br><br>"Despite widespread staffing shortages and supply chain issues, the <span class="acc">fashion and apparel industry saw $180.5 billion in e-commerce revenue in 2021</span>, up from $145 billion in 2020." - 2022 Global Ecommerce Report: Fashion and Apparel
-            </div>
-            <h1 id="edgeSect">EDGE</h1>
-            <div class="generalImages">
-              <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-about-3.webp"/>
-            </div>
-            <div class="body2">
-              The products and experiences we create are glimpses into a new bold world. We’ve created our own world, with original places, cultures and stories, our edge is our originality. And each vivid exploration creates an opportunity to develop ip that deeply resonates with our customers. Anyone can make a story about star wars. But there will always be one star wars™            
-            </div>
-            <h1 id="modelSect">MODEL</h1>
-            <div class="body2">
-              We are building a strong luxury brand. Our revenue will come primarily from d2c channels, but we will also work with select, brand-aligned wholesale partners.<br><br>Direct (~75% of revenue) - ordered online or purchased at SCOGÉ retail locations.<br>Wholesale (~25% of revenue) - available at select online and retail distributors.<br><br><span class="acc">Product Cost Range: $25 - $500</span><br><span class="acc">Product Price Range: $100 - $4000</span><br><br>
-              Located blocks away from nyc’s garment district gives us the ability to source fabric and trims on demand. We’ve acquired manufacturing and production equipment to quickly develop and market test products, avoiding slow external sampling. We’ve established lasting relationships with several manufacturers and identified scalable operating systems to handle large scale orders. Our product is shirts, pants, jackets, hats, layered garments, accessories, and some dresses.         
-            </div>
-            <h1 id="newsSect">NEWS</h1>
+            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-1-2.jpg"/>
+            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-2.jpg"/>
             <div id="film">
               <iframe id="yt" width="100%" height="630" src="https://www.youtube.com/embed/f_yQrIwtgYE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
+            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-3.jpg"/>
+            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-4.jpg"/>
+            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-5.jpg"/>
+            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-6.jpg"/>
+            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-7.jpg"/>
+            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-8.jpg"/>
+            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-9.jpg"/>
+            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-10.jpg"/>
+            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-11.jpg"/>
+            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-12.jpg"/>
+            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-13.jpg"/>
             <div class="body2">
-              
-            </div>
-            <div class="body2">
-            “Purchasing high-priced luxury items satisfies consumer’s psychological needs for status and exclusivity. Through their purchases, luxury consumers demonstrate they are members of a prestigious, exclusive tribe.” - forbes
-            </div>
-            <h1 id="growthSect">GROWTH</h1>
-            <div class="body2">
-              In 5 years we’ll grow SCOGÉ into a multi-million dollar global brand. Here’s how:<br><br>
-              <ul>
-                <li>Global tradeshows: Expanding wholesale accounts globally.</li>
-                <li>Global retail: Flagship SCOGÉ experiential retail locations in NYC.</li>
-                <li>Inclusive seasonal fashion shows: 2 fashion presentation shows per year to develop partnerships and demand.</li>
-                <li>Content distribution: Distributing captured content where our customers live online and offline.</li>
-                <li>Leverage creative community: Marketing partnerships to reach extended audiences and customers.</li>
-              </ul>
-            </div>
-            <h1 id="tractionSect">TRACTION</h1>
-            <div class="body2">
-              We’ve participated in the contemporary fashion trade-show liberty fairs, garnering wholesale interest from retailers nationwide, and obtained our first global sales agent. We successfully launched our first experiential retail concept, selling out of several products, and expanding our local community of fashion enthusiasts and creatives customer base.<br><br>After our retail concept we presented our first NYFW runway show, followed by launching our first experiential art exhibition to display exclusive products and expand our community of creative customers. Following our art exhibition, we produced our second and largest NYFW presentation to date. Expanding our visibility to a wider fashion industry audience of fashion editors and wholesalers.
-            </div>
-            <div id="btsGallery">
-              <div id="imageInterface2">
-                <div id="preBtsImg" class="arrow">&#9658;</div>
-                <span>|</span>
-                <div id="nextBtsImg" class="arrow">&#9658;</div>
-              </div>
-              <img id="btsImg" src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/scoge-traction-1.jpg"/>
-            </div>
-            <div class="body2">
-              We have the vision and objective, now we need the team. So far, the development of the SCOGÉ brand is attributed to it’s founder, friendships, and temporary contract help. Help is capital intensive, but delegation is key.<br><br>Right now, we’re focused on three main things:
-              <ol>
-                <li>Developing great products.</li>
-                <li>Retail and offline experiences.</li>
-                <li>Building a team of passionate, creative, and talented individuals.</li>
-              </ol>
-            </div>
-            <h1 id="raiseSect">RAISE</h1>
-            <div class="body2">
-            <span class="acc" style="font-size:24px;">Raise: $2.5m</span><br>Seed round - safe note<br>20% discount<br>$100k Minimum Buy-In<br>$10 million cap<br>5 year runway.
+            <span class="acc" style="font-size:24px;">Use of funds:</span><br>5 year runway.
             </div>
             <div id="runway">
                 <div id=runwayBody>
@@ -1016,7 +969,7 @@ class dtInvestors extends HTMLElement {
                   </div>
                 </div>
             </div>
-            <h1 id="dataSect">PROJECTIONS</h1>
+            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-14.jpg"/>
               <div id="projections">
                 <div id="pProjHead">FINANCIAL PROJECTIONS</div>
                 <div id="pProjBody">
@@ -1076,37 +1029,13 @@ class dtInvestors extends HTMLElement {
                   <div id="finalNumber">$<span id="finalTotal">0</span></div>
                 </div>
               </div>
-            <h1 id="teamSect">TEAM</h1>
-            <div id="team">
-                <div id="teamImg">
-                  <div id="teamMain" class="profile">
-                    <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/profiles/SCOGE-profile-1x1.jpg"/>
-                  </div>
-                  <div id="team2" class="profile advisors">
-                    <img src="https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/profiles/LEX-profile-1x1.webp"/>
-                  </div>
-                </div>
-                <div id="teamInfo">
-                    <div class="body2 acc">
-                      <h2 style="margin-bottom:0px;" id="memberName">Starnilas C. Oge</h2>
-                      <h3 style="margin-top:0px;" id="memberProf">Founder & Creative Director</h3>  
-                    </div>
-                    <div class="body2" id="memberBio">
-                      Founder and Creative Director Starnilas Oge is a self-taught web developer and seasoned fashion designer with a strong background in marketing and brand development. Oge has also developed and directed an artist residency program in Japan for 5 years, giving him a well-rounded perspective on the creative process. Additionally, he has experience working with major consumer brands such as Liberty Fairs and Pearlman Aesthetic Surgery.
-                    </div>
-                    <div class="body2 sec">
-                      Advisor:<br>
-                      Lex Fenwick (The Dow Jones, WSJ)
-                    </div>
-                 </div>
-            </div>
             <div id="close">
               <div class="body2 acc" style="text-align:center; font-size:1.5em;">
-                If you're interested in helping to build the next great luxury fashion brand catering to an untapped global market, join me for a call! I would be more than happy to chat with you and answer any questions you may have.
+                If you're interested in building the next great luxury fashion brand catering to an untapped global market, let's chat.
               </div>
             </div>
             <div id="contactSect">
-              <div id="contact"><a href="https://calendly.com/scoge/30min" target="_black">I'M IN, LET'S CHAT!</a></div>
+              <div id="contact"><a href="https://calendly.com/scoge/30min" target="_black">SCHEDULE CALL</a></div>
             </div>
             </div>
          </div>

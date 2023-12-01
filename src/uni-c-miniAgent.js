@@ -60,6 +60,7 @@ class uniMenuAgent extends HTMLElement {
     attributeChangedCallback(name, oldValue, newValue) {
         if (newValue === "true") {
             var pos = this.position;
+            this.shadowRoot.getElementById("main").style.display = "grid";
             if (pos === "left") {
                 setTimeout(()=> {
                     this.left();
@@ -123,7 +124,7 @@ class uniMenuAgent extends HTMLElement {
                 #main {
                     height: 100%;
                     width: 100%;
-                    display: grid;
+                    display: none;
                     grid-template-columns: 60% 40%;
                     grid-template-rows: 1fr;
                     justify-content: center;
