@@ -226,6 +226,7 @@ function uncover() {
       window.galleryActive = true;
       window.view = "gallery";
       window.universeSystem();
+      document.getElementById("getInvestors").setAttribute("invest","active");
       // enterTaosCity();
       document.getElementById("portalVideo").style.display = "block";
       document.getElementById("portalVideo2").style.display = "block";
@@ -1606,11 +1607,11 @@ window.mainMenuPosition = (bg,p1,p2,p3,p4) => {
 // Open Investors
 window.activateInvestors = () => {
   document.getElementById("getInvestors").style.display = "block";
-  document.getElementById("investBut").style.display = "block";
-  if (window.matchMedia("(max-width: 768px)").matches) {
-    // Mobile
-    document.getElementById("settingsBut").style.display = "none";
-  }
+  // document.getElementById("investBut").style.display = "block";
+  // if (window.matchMedia("(max-width: 768px)").matches) {
+  //   // Mobile
+  //   document.getElementById("settingsBut").style.display = "none";
+  // }
 }
 
 // Open Investors
