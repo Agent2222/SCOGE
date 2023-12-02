@@ -226,6 +226,9 @@ function uncover() {
       window.galleryActive = true;
       window.view = "gallery";
       window.universeSystem();
+      setTimeout(() => {
+        document.getElementById("intro").style.pointerEvents = "none";
+      }, 1000)
       document.getElementById("getInvestors").setAttribute("invest","active");
       // enterTaosCity();
       document.getElementById("portalVideo").style.display = "block";

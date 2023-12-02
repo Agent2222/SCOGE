@@ -1810,10 +1810,10 @@ export async function universe() {
 
   // Hide default menu
   window.hideMenu = () => {
-    var menu4 = document.getElementById("logo");
+    // var menu4 = document.getElementById("logo");
     // slowly fade out the menu and logo elements and make them unclickable
-    menu4.style.opacity = "0";
-    menu4.style.pointerEvents = "none";
+    // menu4.style.opacity = "0";
+    // menu4.style.pointerEvents = "none";
     document.getElementById("uniEvent").style.display = "block";
     document.getElementById("uniEvent2").style.display = "block";
     document.getElementById("uniEvent3").style.display = "block";
@@ -2215,7 +2215,7 @@ export function enterTaosCity() {
   window.loggedIn = true;
   setTimeout(() => {
     document.getElementById("seekModal").remove();
-    // document.getElementById("miniAgent").setAttribute("active", "true");
+    document.getElementById("miniAgent").setAttribute("active", "true");
   }, 1000);
   const lcCheck = () => {
     return (
