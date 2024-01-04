@@ -1,9 +1,17 @@
+import { SoundtrackManager } from "./soundtrack.js";
+
 export class MainDialogue {
     constructor(npc, tone, lines) {
         this.npc = npc;
         this.tone = tone;
         this.lines = lines;
-        this.element = document.getElementById('dialogueModal').shadowRoot.getElementById('diaMain');
+        // this.element = document.getElementById('dialogueModal').shadowRoot.getElementById('diaMain');
+        this.specialText1 = "bold";
+        this.specialText2 = "bright";
+        this.soundtrack = new SoundtrackManager();
+        this.currentDialogue = 0;
+        this.pauseDelay = 500;
+        this.element = document.getElementById("miniAgent").shadowRoot.getElementById("chat");
       }
     
       start() {
@@ -30,6 +38,9 @@ export class MainDialogue {
     
       async type() {
         if (this.i < this.words.length) {
+          this.soundtrack.setVolume("typing-1", 0.8);
+          this.soundtrack.stop("typing-1");
+          this.soundtrack.play("typing-1");
           if (this.j < this.words[this.i].length) {
             let char = this.words[this.i][this.j];
             if (this.words[this.i][0] === '*') {
@@ -43,7 +54,7 @@ export class MainDialogue {
                 this.element.innerHTML += `<span class="${this.specialText2}">${char}</span>`;
               }
             } else if (char === '$') {
-              await this.delay(500);
+              await this.delay(this.pauseDelay);
             } else if (char === ']') {
               this.element.innerHTML = '';
               this.j += 3;
@@ -59,7 +70,49 @@ export class MainDialogue {
             this.element.innerHTML += ' ';
             this.type();
           }
-        }
+        } else {
+            if (this.lines[this.currentDialogue].waiter != null) {
+              //
+            } else {
+              if (this.lines[this.currentDialogue].choices.length > 1) {
+                const spanElement = document.createElement('span');
+                const lineBreak = document.createElement('br');
+                const lineBreak2 = document.createElement('br');
+                spanElement.className = 'continueBut';
+                spanElement.textContent = this.lines[this.currentDialogue].choices[0].text;
+                spanElement.addEventListener("click", () => {
+                  this.lines[this.currentDialogue].choices[0].action();
+                })
+                // Append the new span element to the existing element
+                this.element.appendChild(lineBreak);
+                this.element.appendChild(lineBreak2);
+                this.element.appendChild(spanElement);
+                //
+                const spanElement2 = document.createElement('span');
+                const lineBreak3 = document.createElement('br');
+                const lineBreak4 = document.createElement('br');
+                spanElement.className = 'continueBut';
+                spanElement.textContent = this.lines[this.currentDialogue].choices[1].text;
+                this.element.appendChild(lineBreak3);
+                this.element.appendChild(lineBreak4);
+                this.element.appendChild(spanElement2);
+              } else {
+                // Create a new span element
+                const spanElement = document.createElement('span');
+                const lineBreak = document.createElement('br');
+                const lineBreak2 = document.createElement('br');
+                spanElement.className = 'continueBut';
+                spanElement.textContent = this.lines[this.currentDialogue].choices[0].text;
+                spanElement.addEventListener("click", () => {
+                  this.lines[this.currentDialogue].choices[0].action();
+                })
+                // Append the new span element to the existing element
+                this.element.appendChild(lineBreak);
+                this.element.appendChild(lineBreak2);
+                this.element.appendChild(spanElement);
+              }
+            }
+          }
       }
     
       async delay(ms) {
@@ -84,7 +137,8 @@ export class MainDialogue {
       }
     
       choose(index) {
-        const choice = this.lines[0].choices[index];
+        const choice = this.lines[index].choices[0];
+        this.element.innerHTML = "";
         console.log(choice.text);
         this.lines.shift();
         if (this.lines.length === 0) {
@@ -94,20 +148,21 @@ export class MainDialogue {
         if (choice.action) {
           choice.action();
         }
-        this.typeLine(this.lines[0]);
+        setTimeout(()=> {
+          this.typeLine(this.lines[0]);
+        },500)
       }
   }
   
 
-// const element = document.getElementById('dialogueModal').shadowRoot.getElementById('diaMain');
-// element.innerHTML = '';
-// const string = 'Hello, world *this* is a test';
-// const options = {
-//   speed: 50,
-//   specialText1: "specialText1",
-//   specialText2: "specialText2",
-// };
+/* 
+Key
 
-// const typing = new Typing('Hello, World! ^This is $] some special text1 *And this $is some special $text2', element, options);
+* - Special Text 1 
+^ - Special Text 2
+$ - Pause Delay
+] - New Lines
 
-// typing.type();
+ex - Hello, World! ^This is $] some special text1 *And this $is some special ^text2
+
+*/

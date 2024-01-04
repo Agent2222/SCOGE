@@ -2240,7 +2240,7 @@ export function enterTaosCity() {
   // setTimeout(() => {
   //   document.getElementById("seekModal").style.display = "none";
   // }, 2000);
-  
+  pinMenu();
   uniMenu.getElementById("menuFeedback").innerHTML = "City Central";
   uniMenu.getElementById("feedbackHeadline").innerHTML = "Help us make T.A.O.S City better.";
   uniMenu.getElementById("feedbackInput").placeholder = "Send feedback, or Contact City-Central here.";

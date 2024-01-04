@@ -1874,8 +1874,27 @@ export class TypingPlus {
     this.text = text;
     this.element = element;
     this.currentIndex = 0;
+    this.currentDialogue = 0;
     this.delay = speed;
-    this.onTypingComplete = null; // The callback function for typing completion
+    this.onTypingComplete = () => {
+      if (this.text[this.currentDialogue].waiter === true) {
+        //
+      } else {
+        // Create a new span element
+        const spanElement = document.createElement('span');
+        const lineBreak = document.createElement('br');
+        const lineBreak2 = document.createElement('br');
+        spanElement.className = 'continueBut';
+        spanElement.textContent = '[ CONTINUE ]';
+        spanElement.addEventListener("click", () => {
+          this.next();
+        })
+        // Append the new span element to the existing element
+        this.element.appendChild(lineBreak);
+        this.element.appendChild(lineBreak2);
+        this.element.appendChild(spanElement);
+      }
+    }
     this.action = null;
   }
 
@@ -1898,5 +1917,15 @@ export class TypingPlus {
       }
     }, this.delay);
   }
+
+  next() {
+    //
+    alert("HI")
+  }
+
+  switch() {
+    //
+  }
+
 }
 // ------ Simple Typing End

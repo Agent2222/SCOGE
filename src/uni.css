@@ -1442,4 +1442,14 @@
  
  /* --------------------------MAPPER END --------------------*/
 /* --------------------- MINIVIEW --------------------------- */
+#miniView {
+  width: 38%; 
+  height: 25%; 
+  position: absolute; 
+  z-index: 20; 
+  left: 0%; 
+  bottom: 3%; 
+  border-radius: 10px;
+  pointer-events: none;
+}
 /* --------------------- MINIVIEW END ----------------------- */

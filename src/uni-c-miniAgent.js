@@ -1,11 +1,46 @@
-import { TypingPlus } from "../src//index.js";
+// import { TypingPlus } from "../src//index.js";
+import { SoundtrackManager } from "./soundtrack.js";
+import { MainDialogue } from "./typing.js";
 
 class uniMenuAgent extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({mode: 'open'});
         this.dialogue;
+        this.miniOpen = false;
+        this.soundtrack = new SoundtrackManager();
         this.intro = "Ok, so here's your Digisette Domain Development setup interface. You'll be able setup domain from here.";
+        this.dialogueBank = {
+            intro: [
+                {
+                  text: "Ok, so here's your Digisette Domain Development setup interface. You'll be able setup domain from here.",
+                  waiter: null,
+                  choices: [
+                    {
+                      text: "[ CONTINUE ]",
+                      action: () => this.dialogue.choose(1)
+                    }
+                  ]
+                },
+                {
+                  text: 'What brings you here?',
+                  waiter: null,
+                  choices: [
+                    {
+                      text: "I'm here to buy something.",
+                      action: () => console.log("NPC Name: What would you like to buy?")
+                    },
+                    {
+                      text: "I'm here to sell something.",
+                      action: () => console.log("NPC Name: What would you like to sell?")
+                    }
+                  ]
+                }
+              ],
+            welcomeHelp: [
+                
+            ]
+        }
     }
 
     get active() {
@@ -24,6 +59,7 @@ class uniMenuAgent extends HTMLElement {
         return this.getAttribute('location');
     }
 
+
     static get observedAttributes() {
         return ["active", "position"];
     }
@@ -34,7 +70,7 @@ class uniMenuAgent extends HTMLElement {
     }
 
     left() {
-        var chat = this.shadowRoot.getElementById("chat");
+        const chat = this.shadowRoot.getElementById("chat");
         var agentImg = this.shadowRoot.getElementById("agentProfile");
         var main = this.shadowRoot.getElementById("main");
         main.style.gridTemplateColumns = "40% 60%";
@@ -46,7 +82,7 @@ class uniMenuAgent extends HTMLElement {
     }
 
     right() {
-        var chat = this.shadowRoot.getElementById("chat");
+        const chat = this.shadowRoot.getElementById("chat");
         var agentImg = this.shadowRoot.getElementById("agentProfile");
         var main = this.shadowRoot.getElementById("main");
         main.style.gridTemplateColumns = "60% 40%";
@@ -55,6 +91,28 @@ class uniMenuAgent extends HTMLElement {
         // main.appendChild(chat);
         main.appendChild(agentImg);
         this.shadowRoot.getElementById("agentImg").style.transform = "scaleX(1)"
+    }
+
+    toggle() {
+        console.log(this.miniOpen);
+        if (this.miniOpen === true) {
+            this.shadowRoot.getElementById("chat").style.transform = "scaleX(0)";
+            setTimeout(()=> {
+                this.shadowRoot.getElementById("agentProfile").style.transform = "scale(0)";
+            }, 290)
+            this.miniOpen = false;
+            this.soundtrack.setVolume("closewindow-1", 0.8);
+            this.soundtrack.play("closewindow-1");
+            return;
+        } else {
+            this.soundtrack.setVolume("openwindow-1", 0.8);
+            this.soundtrack.play("openwindow-1");
+            this.shadowRoot.getElementById("agentProfile").style.transform = "scaleX(1)";
+            setTimeout(()=> {
+                this.shadowRoot.getElementById("chat").style.transform = "scaleX(1)";
+            }, 270)
+            this.miniOpen = true;
+        }   
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -77,7 +135,12 @@ class uniMenuAgent extends HTMLElement {
                 var intro = this.intro
                 this,this.shadowRoot.getElementById("ddLogo").style.display = "block";
                 var el = this.shadowRoot.getElementById("chat");
-                this.dialogue = new TypingPlus(intro,el,60);
+                this.shadowRoot.getElementById("help").addEventListener("click", () => {
+                    this.toggle();
+                });
+                // this.dialogue = new TypingPlus(intro,el,60);
+                this.dialogue = new MainDialogue("Kat","neutral", this.dialogueBank['intro'])
+                this.toggle();
                 setTimeout(() => {
                     el.innerHTML = "";
                     if (!window.miniDialogueStarted) {
@@ -86,7 +149,7 @@ class uniMenuAgent extends HTMLElement {
                     } else {
                         this.shadowRoot.getElementById("chat").innerHTML = this.intro;
                     }
-                }, 500);
+                }, 800);
             }, 500);
         }
         if (newValue === "false") {
@@ -130,6 +193,7 @@ class uniMenuAgent extends HTMLElement {
                     justify-content: center;
                     align-items: center;
                     position: relative;
+                    pointer-events: all;
                 }
                 #agentProfile {
                     height: 100%;
@@ -143,6 +207,8 @@ class uniMenuAgent extends HTMLElement {
                     scale: 0.8;
                     transition: all .2s ease-in-out;
                     cursor: pointer;
+                    transition: .3s all;
+                    transform: scale(0);
                 }
 
                 #agentChat {
@@ -167,6 +233,9 @@ class uniMenuAgent extends HTMLElement {
                     font-size: .8em;
                     letter-spacing: 2px;
                     background-color: rgba(0, 0, 0, 0.5);
+                    transform-origin: left;
+                    transform: scale(0);
+                    transition: .3s all;
                 }
                 #agentImg {
                     right: -100%;
@@ -193,10 +262,33 @@ class uniMenuAgent extends HTMLElement {
                     cursor: pointer;
                 }
 
+                .continueBut {
+                    color: var(--accent);
+                    text-align: right;
+                    margin-top: 2%;
+                    float: right;
+                    width: 100%;
+                    cursor: pointer;
+                    transition: .3s all;
+                  }
+
+                  .continueBut:hover {
+                    letter-spacing: 2px;
+                    text-decoration: underline;
+                  }
+
                 #help:hover {
                     border: 1px solid var(--secondary);
                     scale: 1.1;
                     color: var(--secondary);
+                }
+
+                .bright {
+                    color: var(--accent);
+                }
+
+                .bold {
+                    font-family: "BS-B";
                 }
 
                 #ddLogo {
