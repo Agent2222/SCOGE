@@ -8,6 +8,9 @@ export function checkInitialState() {
     digisette: null,
     digisetteBaseStat: null,
   };
+
+  
+
   // Check Wallet
   if (window.ic) {
     //

@@ -834,6 +834,18 @@ class getUniMenu extends HTMLElement {
     this.render();
     this.viewGallery();
     this.musicLevel();
+    // this.shadow.addEventListener('click', function(event) {
+    //   const clickedElement = event.target;
+    //   if (clickedElement) {
+    //     const customEvent = new CustomEvent('elementClicked', {
+    //       detail: {
+    //         elementId: clickedElement.id
+    //       }
+    //     });
+    //     var shadowHost = document.getElementById('getUniMenu');
+    //     shadowHost.dispatchEvent(customEvent);
+    //   }
+    // });
     this.shadow.getElementById("gdBuyBut2").addEventListener("click", () => {
       if (this.domainIntroSeen === null) {
         story("DomainDevelopment");
