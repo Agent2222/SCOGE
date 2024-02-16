@@ -26,7 +26,7 @@
       "packtool": "vessel sources"
     }
   },
-  "dfx": "0.14.3",
+  "dfx": "0.16.1",
   "networks": {
     "icp0.io": {
       "providers": [

@@ -1,3 +1,5 @@
+const dsheet = "https://script.google.com/macros/s/AKfycbzHUtfeNysmMSZvlC7tnfYhpgs_EU_3kx9_6H_VV6le8tPyR4Vlzs8SlfES_8pbK0nb2w/exec";
+
 class scogeRsvp extends HTMLElement {
   constructor() {
     super();
@@ -128,7 +130,7 @@ class scogeRsvp extends HTMLElement {
               left: 0;
               top: 0;
               position: fixed;
-              z-index: 4;
+              z-index: 5;
               overflow: hidden;
             }
             #dimmer {

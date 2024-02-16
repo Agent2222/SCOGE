@@ -13,6 +13,9 @@ import { Configuration, OpenAIApi } from "openai";
 import { myFirstDrug } from "./universe.js";
 window.dtmenuOpen = false;
 window.dtfullMenuOpen = false;
+
+const dsheet = "https://script.google.com/macros/s/AKfycbzHUtfeNysmMSZvlC7tnfYhpgs_EU_3kx9_6H_VV6le8tPyR4Vlzs8SlfES_8pbK0nb2w/exec";
+
 const VITE_ScogeI = import.meta.env.VITE_ScogeI;
 const soundtrack2 = new SoundtrackManager();
 const fleekP = import.meta.env.VITE_fleekP;
