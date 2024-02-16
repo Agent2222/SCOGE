@@ -1009,131 +1009,6 @@ canvas {
   background-color: var(--primary);
 }
 /*         -----------------------------------------------------------------------------         */
-
-#logo {
-  position: absolute;
-  z-index: 15;
-  width: 14%;
-  left: 3%;
-  top: 6%;
-  visibility: visible;
-  user-select: none;
-}
-#intro {
-  position: absolute;
-  z-index: 6;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
-  align-items: center;
-  justify-items: center;
-  font-family: "BS-R";
-}
-
-.introText {
-  width: auto;
-  height: auto;
-  position: absolute;
-  z-index: 5;
-  opacity: 100%;
-  transition: .3s all;
-  font-size: 3em;
-  color: #ff002d !important;
-  cursor: pointer !important;
-}
-
-#introTextCont {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
-  align-items: center;
-  justify-items: center;
-}
-
-#clippingBox {
-  width: 99%;
-  height: 99%;
-  position: absolute;
-  z-index: 5;
-  border: 1px solid #ff002d;
-  transform: scaleY(0) scaleX(0);
-  transition: 1s all;
-  user-select: none;
-  pointer-events: none;
-}
-
-.introText:hover {
-  color: var(--accent) !important;
-  /* transform: scale(1.2); */
-}
-
-#brandClips {
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  position: fixed;
-  z-index: 10;
-  /* user-select: none;
-  pointer-events: none; */
-}
-
-.entryLogos {
-  height: 40%;
-  width: 10%;
-  position: absolute;
-  /* transition: 1s all; */
-  user-select: none;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-#bc1 {
-  left: 43%;
-  top: 22%;
-  z-index: 3;
-  transform: rotate(20deg);
-}
-
-#bc2 {
-  left: 48%;
-  top: 27%;
-  z-index: 2;
-  width: 17%;
-  transform: rotate(-120deg);
-}
-
-#bc3 {
-  width: 15%;
-  left: 40%;
-  top: 32%;
-  z-index: 1;
-  transform: rotate(-80deg);
-}
-
-#bc4 {
-  width: 20%;
-  left: 35%;
-  top: 38%;
-  z-index: -10;
-  transform: rotate(-90deg);
-  cursor: default;
-}
-
-#logo img {
-  width: 100%;
-  /* filter: blur(90px); */
-}
-#intro img {
-  width: 20%;
-  /* filter: blur(90px); */
-}
 #gMenu {
   width: 30%;
   height: auto;
@@ -1177,82 +1052,6 @@ canvas {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #b5d3d1;
   opacity: 1; /* Firefox */
-}
-/* SETTINGS MENU */
-#settingsMenu {
-  width: 35%;
-  height: 92%;
-  position: fixed;
-  display: grid;
-  right: 0%;
-  top: 0%;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
-  justify-items: center;
-  align-items: center;
-  z-index: 3;
-  font-size: 16px;
-  font-family: "BS-R";
-  opacity: 0%;
-  transition: 1s all;
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9),rgba(0, 0, 0, 0.9),rgb(0, 0, 0, 0.9),rgb(0, 0, 0, 0.9));
-  padding-right: 5%;
-  padding-left: 10%;
-  padding-top: 2%;
-  padding-bottom: 5%;
-}
-#settingsBody {
-  color: var(--secondary);
-  font-family: "BS-R";
-  letter-spacing: 1px;
-  line-height: 1.5;
-}
-a:link {
-  text-decoration: underline;
-  color: #ff002d;
-  cursor: inherit;
-  transition: 0.5s all;
-}
-a:hover {
-  color: #b5d3d1;
-}
-.slider {
-  /* -webkit-appearance: none; */
-  width: 20%;
-  height: 2px;
-  background: #ff002d;
-  outline: none;
-  -webkit-transition: 0.2s;
-  transition: opacity 0.2s;
-  margin-left: 5%;
-  justify-items: center;
-}
-
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 15px;
-  height: 15px;
-  border-radius: 15px;
-  background: #b5d3d1;
-  cursor: pointer;
-}
-.slider::-moz-range-thumb {
-  width: 25px;
-  height: 25px;
-  background: #ff002d;
-  cursor: pointer;
-}
-#fsOff {
-  color: #b5d3d1;
-}
-.togFull {
-  transition: 0.5s all;
-  cursor: pointer;
-}
-.togFull:hover {
-  letter-spacing: 4px;
-  color: #b5d3d1;
 }
 /* ENTER SCREEN */
 #enter {
@@ -1587,34 +1386,6 @@ a:active {
   opacity: 0% !important;
   display: none !important;
 }
-#convoCont {
-  position: fixed;
-  top: 30%;
-  left: 40%;
-  width: 20%;
-  height: auto;
-  z-index: 6;
-  animation: blink 1s infinite;
-  cursor: pointer;
-  transition: .3s all;
-  display: none;
-}
-#convoCont:hover {
-  animation: none;
-  transform: scale(1.2);
-}
-#convoCont img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: .3s all;
-}
-#convoCont img:hover {
-  /* border: 2px solid var(--primary); */
-  border-radius: 40%;
-  filter: brightness(.2);
-  filter: contrast(1.2);
-}
 #genCat, #genCat2 {
   visibility: hidden;
   user-select: none;
@@ -1741,7 +1512,6 @@ a:active {
   top: 0px;
   z-index: -1;
   opacity: 0%;
-  transform: scale(1.5);
   cursor: pointer;
   overflow: hidden;
 }
@@ -1753,8 +1523,6 @@ a:active {
   top: 0px;
   z-index: 4;
   opacity: 0%;
-  transform: scale(1.5);
-  cursor: pointer;
   overflow: hidden;
 }
 
@@ -1807,17 +1575,6 @@ a:active {
   animation-play-state: paused;
   opacity: 0%;
 }
-#portalVideo2 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  cursor: pointer;
-  transition: 1s all;
-  opacity: 0%;
-}
 #portalVideo{
   position: absolute;
   width: 100% !important;
@@ -1825,7 +1582,6 @@ a:active {
   top: 0;
   left: 0;
   z-index: -1;
-  cursor: pointer;
   transition: 1s all;
   opacity: 100%;
 }
@@ -1836,7 +1592,6 @@ a:active {
   top: 0;
   left: 0;
   z-index: 0;
-  cursor: pointer;
   transition: 1s all;
   opacity: 0%;
 }
@@ -1976,15 +1731,7 @@ a:active {
   color: var(--accent);
   background-color: var(--black);
 }
-#Reqerror {
-  font-size: 1em;
-  position: absolute;
-  font-family: "BS-B";
-  top: 45%;
-  width: 100%;
-  text-align: center;
-  display: none;
-}
+
 @keyframes mandalaPulse {
   0% {
     box-shadow: 0 0 0 0 rgba(255, 0, 45, 1);
@@ -2082,7 +1829,12 @@ a:active {
     top: 0 !important;
   }
   .videoEl {
-    transform: scale(1.2) rotate(0deg) !important;
+    /* transform: scale(1.2) rotate(0deg) !important; */
+    transform: scale(4) !important;
+    width: 100% !important;
+    position: absolute;
+    left: 0 !important;
+    top: 0 !important;
   }
   #portalVideoExt {
     position: fixed !important;

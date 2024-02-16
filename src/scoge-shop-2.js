@@ -1,6 +1,8 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+const dsheet = "https://script.google.com/macros/s/AKfycbzHUtfeNysmMSZvlC7tnfYhpgs_EU_3kx9_6H_VV6le8tPyR4Vlzs8SlfES_8pbK0nb2w/exec";
+
 gsap.registerPlugin(ScrollTrigger) 
 
 class scogeShop extends HTMLElement {
@@ -76,7 +78,7 @@ class scogeShop extends HTMLElement {
 async getProducts() {
     try {
       const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbwyfpqK5BOPXAZnGpXc0e6szgHqYwXfX7jajbDNEENP7Et0l36InKzVUECe9ENCBO7uhA/exec?focus=products",
+        `${dsheet + "?focus=products"}`,
         {
           method: "GET",
           mode: "cors",

@@ -9,6 +9,8 @@ import { gsap } from "gsap";
 import { story } from "./game/SceneManager.js";
 import { activateMapper } from "../src/uniHelpers/mapper";
 
+const dsheet = "https://script.google.com/macros/s/AKfycbzHUtfeNysmMSZvlC7tnfYhpgs_EU_3kx9_6H_VV6le8tPyR4Vlzs8SlfES_8pbK0nb2w/exec";
+
 export const soundtrack = new SoundtrackManager();
 
 var testState = {
@@ -223,8 +225,6 @@ export async function universe() {
     var uniCtx = universeCanvas.getContext("2d");
     var img = document.createElement("img");
     var cam = document.getElementById("camera");
-    // soundtrack.stop("menuEntrance1");
-    soundtrack.play("menuEntrance1");
     // Check for browser support
     // if (
     //   navigator.userAgent.includes("Brave") ||
@@ -790,7 +790,6 @@ export async function universe() {
   };
 
   window.moveSelection = () => {
-    document.removeEventListener("keydown", window.checkKeys);
     var box = document.getElementById("selection");
     var window18Height = window.innerHeight / tileSize;
     var window18Width = window.innerWidth / tileSize;
@@ -1810,21 +1809,10 @@ export async function universe() {
 
   // Hide default menu
   window.hideMenu = () => {
-    // var menu4 = document.getElementById("logo");
-    // slowly fade out the menu and logo elements and make them unclickable
-    // menu4.style.opacity = "0";
-    // menu4.style.pointerEvents = "none";
     document.getElementById("uniEvent").style.display = "block";
     document.getElementById("uniEvent2").style.display = "block";
     document.getElementById("uniEvent3").style.display = "block";
     document.getElementById("uniEvent4").style.display = "block";
-    // document.getElementById("welcome").style.display = "none";
-    // document.getElementById("welcome").style.pointerEvents = "none";
-    document.getElementById("intro").style.display = "none";
-    // document.getElementById("intro").style.opacity = "0%";
-    // document.getElementById("introLogo").style.userSelect = "none";
-    // // document.getElementById("introLogo").style.pointerEvents = "none";
-    // document.getElementById("introLogo").style.cursor = "pointer";
   };
 
   // Open inventory / wallet
