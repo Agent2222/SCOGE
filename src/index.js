@@ -143,10 +143,10 @@ function uncover() {
       // enterTaosCity();
       document.getElementById("portalVideo").style.display = "block";
       document.getElementById("seekModal").style.pointerEvents = "auto";
-      gsap.to('#videoGallery', {duration: 0, opacity: 1, y: 0, ease: "power2.out"});
+      gsap.to('#videoGallery', {duration: 2, opacity: 1, y: 0, ease: "power2.out"});
       gsap.to("#videoGallery", { duration: 1, filter: "blur(0px)", ease: "power2.inOut"});
       ci = "true";
-      document.getElementById("portalVideo").src = "assets/video/scoge-c2-2.mp4";
+      document.getElementById("portalVideo").src = "https://firebasestorage.googleapis.com/v0/b/fusion-intl.appspot.com/o/tempscoge%2Fscoge-c2-2.mp4?alt=media&token=969b8941-b3ef-417e-8057-2e107db1b706";
       document.getElementById("portalVideo")?.play();
     }
 }
