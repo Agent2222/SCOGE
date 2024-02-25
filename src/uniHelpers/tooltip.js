@@ -31,6 +31,25 @@ class tooltip extends HTMLElement {
             Settings: "This is the Settings of the domain you are currently working on. You can switch between domains by clicking on the Settings.",
             Newsletter: "This is the Newsletter of the domain you are currently working on. You can switch between domains by clicking on the Newsletter.",
             Cloudhall: "This is the Cloudhall of the domain you are currently working on. You can switch between domains by clicking on the Cloudhall.",
+            Mapper: `1. Load Domains First Through Canister or JSON (Choose File Button) / Or RESET ALL if not loading from JSON<br><br>
+            - Number keys individually paint the region onto the tile<br>
+            - Clicking region color block locks the region painting for faster region painting<br>
+            - Click the word Sector to Sector Lock and start painting sectors (click again to unlock)<br>
+            - Click the word Terrain to Terrain Lock and start painting terrain (click again to unlock)<br>
+            - Function, Material, Visibility, Privacy, and Chapter are edited by the owner of the domain<br>
+            - Opacity number changes the opacity of the painted tiles<br><br>
+            - None dropdown next to load button selects which data you want to load for all domains. (All, Events, Domains, Agents)<br>
+              - "None" clears all painted domains (does not delete data)<br>
+              - "All" loads all events, domains, and agents<br>
+              - "Events" loads all events (events are not yet implemented)<br>
+              - "Domains" loads all domains<br>
+              - "Agents" loads all agents (agents are not yet implemented)<br><br>
+            - Reset button resets the selected domain<br>
+            - Save button saves the selected domain<br>
+            - Reset All button resets all domains (!!Reinitializes all domains!!)<br>
+            - Save All button saves all domains (then creates a JSON file for download)<br><br>
+            - JSON link downloads the JSON file of all domains
+            `,
         };
     }
 
@@ -79,6 +98,12 @@ class tooltip extends HTMLElement {
         var tipTop = 0;
         var tipLeft = 0;
 
+        // If the tooltip has more than 10 lines of text, make its height 100%
+        if (this.tipLibrary[e.getAttribute("data-help")].split("<br>").length > 10) {
+            tip.style.height = "80%";
+            tip.style.width = "400pt";
+        }
+
         if (window.compPosition === "left") {
             // Position tooltip above and to the right
             tipTop = rect.top - tipHeight - 10;
@@ -89,10 +114,16 @@ class tooltip extends HTMLElement {
             tipLeft = rect.left - tipWidth - 10;
         }
 
+        // if tooltip height is off the page, move it down
+        if (tipTop < 0) {
+            tipTop = rect.top + rect.height + 10;
+        }
+
         // Convert position values to account for page scroll
         tip.style.top = (tipTop + window.scrollY) + "px";
         tip.style.left = (tipLeft + window.scrollX) + "px";
         tip.style.opacity = 1;
+
     }
 
     hideTip() {

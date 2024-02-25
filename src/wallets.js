@@ -1,11 +1,13 @@
 import { gsap } from "gsap";
 import { Principal } from "@dfinity/principal";
 import { Actor, HttpAgent } from "@dfinity/agent";
-import idlFactory from "../src/uniHelpers/erc721.did.js";
+import idlFactory1 from "../src/uniHelpers/erc721.did.js";
+import { idlFactory } from "../src/declarations/taoscity/taoscity.did.js";
 import { getAllUserNFTs } from "@psychedelic/dab-js";
 import { endLoading, enterTaosCity, loading, soundtrack } from "./universe.js";
 import { story } from "./game/SceneManager.js";
 import {StoicIdentity} from "ic-stoic-identity";
+import { getDigisette } from "./uniHelpers/citycentral.js";
 
 const canister = "7mfck-baaaa-aaaah-acuqq-cai";
 
@@ -50,6 +52,21 @@ export async function getNFTCollections(principal) {
   
       // Find an NFT with the name "Panda Queen" and print its "description"
       var digisette = collections.find((nft) => nft.name === "Digisette Pre-Alpha");
+      console.log("Digisette", digisette);
+
+      // const bigintValue = BigInt(0);
+      // const regularNumber = Number(bigintValue);      
+
+      var dgTest = await getDigisette([Number(digisette.tokens[0].index)]);
+
+      try {
+        const uint8Array = new Uint8Array(dgTest[0][1].nonfungible.metadata[0]);
+        const decoder = new TextDecoder('utf-8');
+        const utf8String = decoder.decode(uint8Array);
+      console.log("Digisette Test", utf8String);
+      } catch (e) {
+        console.log("Digisette Error", e);
+      }
       
       if (digisette !== undefined) {
         return true;
@@ -140,12 +157,28 @@ export async function connectPlugWallet(whitelist, host) {
 
       lord.principal = principal;
 
+      const plugActor = await window.ic.plug.createActor({
+        canisterId: "23tad-vaaaa-aaaag-abvwq-cai",
+        interfaceFactory: idlFactory,
+      });
+
+      const custCheck = await plugActor.isAllowed(principal).then((result) => {
+        console.log("Is Allowed", result);
+        return result;
+      }).catch((error) => {
+        console.error("Error checking permission:", error);
+      });
+
+      // DO THE SAME ABOVE FOR STOIC BELOW
+
       loading();
       getNFTCollections(principal).then((nftCheck) => {
-        endLoading();
         if (nftCheck === true) {
-          enterTaosCity();
+          enterTaosCity(custCheck).then((result) => {
+            endLoading();
+          });
         } else {
+          endLoading();
           story("DigisetteIntro");
         }
       });
@@ -194,7 +227,7 @@ export const connectStoicWallet = async (canisterId) => {
   });
     
     //Create an actor canister
-    const actor = Actor.createActor(idlFactory, {
+    const actor = Actor.createActor(idlFactory1, {
       agent: new HttpAgent({
         identity,
       }),

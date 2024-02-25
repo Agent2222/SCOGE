@@ -1084,12 +1084,12 @@
 
 #mapperUI {
   width: 18%;
-  height: 90%;
+  height: 95%;
   position: fixed ;
-  top: 5%;
+  top: 2.5%;
   left: 2%;
   background-color: rgba(0,0,0,0.9);
-  z-index: 100;
+  z-index: 110;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -1439,6 +1439,29 @@
   font-family: "BS-B";
   background-color: var(--accent);
 }
+
+#mapperSaving {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 100;
+  top: 0%;
+  left: 0%;  
+  display: none;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  justify-items: center;
+  text-align: center;
+  font-family: "BS-R";
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+#savingText {
+  font-size: 24px;
+  letter-spacing: 2px;
+  animation: blinkingChoice 10s infinite;
+}
  
  /* --------------------------MAPPER END --------------------*/
 /* --------------------- MINIVIEW --------------------------- */
@@ -1453,3 +1476,31 @@
   pointer-events: none;
 }
 /* --------------------- MINIVIEW END ----------------------- */
+/* --------------------- LOC HUD --------------------------- */
+#locHud {
+  width: 10%; 
+  height: 3%; 
+  position: fixed; 
+  z-index: 20; 
+  left: 45%; 
+  top: 5%; 
+  pointer-events: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  justify-items: center;
+  text-align: center;
+  font-family: "BS-R";
+  font-size: .8em;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  color: var(--primary);
+  transition: 1s all;
+  opacity: 0;
+  border: .5px solid var(--primary);
+}
+/* --------------------- LOC HUD END ----------------------- */

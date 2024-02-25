@@ -47,6 +47,7 @@ export const idlFactory = ({ IDL }) => {
     'getOwnedDomains' : IDL.Func([], [IDL.Vec(Domain)], ['query']),
     'getUnOwnedDomains' : IDL.Func([], [IDL.Vec(Domain)], ['query']),
     'initTaosCity' : IDL.Func([IDL.Principal], [], ['oneway']),
+    'isAllowed' : IDL.Func([IDL.Principal], [IDL.Bool], ['query']),
     'updateDomain' : IDL.Func([IDL.Nat, Domain, IDL.Principal], [Result], []),
   });
   return taoscity;

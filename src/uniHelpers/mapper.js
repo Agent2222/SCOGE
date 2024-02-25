@@ -7,6 +7,7 @@ import { createActor1 } from "../wallets";
 import { IDL } from '@dfinity/candid';
 import { dragElement } from "../universe.js";
 import { lord } from "../wallets.js";
+// import e from "cors";
 
 var canvas = document.getElementById("universe");
 var ctx = canvas.getContext("2d");
@@ -352,10 +353,12 @@ var $ = (x) => {
 
 export var mapperActive = false;
 
+// DESCRIPTION: CLEARS SQUARE AND REPAINTS IT
 export function clearSquare() {
-    ctx.clearRect(playerCoor.x, playerCoor.y, 18, 18);
+    ctx.clearRect(playerCoor.x, playerCoor.y + 4, 18, 18);
+    // ctx.fillRect(playerCoor.x, playerCoor.y + 4, 18, 18);
     img.onload = function () {
-        ctx.drawImage(img, playerCoor.x, playerCoor.y, 18, 18, playerCoor.x, playerCoor.y, 18, 18);
+        ctx.drawImage(img, playerCoor.x, playerCoor.y + 4, 18, 18, playerCoor.x, playerCoor.y +4, 18, 18);
     };
     img.src = "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/scoge-taos-city-universe.jpg";
 }
@@ -366,6 +369,7 @@ export function activateMapper() {
     var uniEvents = document.querySelectorAll(".uniEvents");
     var uniMenu = document.getElementById("getUniMenu");
     var powerUp = document.getElementById("powerUp1");
+    var miniAgent = document.getElementById("miniAgent");
     var ring = document.getElementById("ringView");
     if (window.mapperActive === true) {
         mapperBut.style.border = "1px solid var(--primary)";
@@ -376,6 +380,8 @@ export function activateMapper() {
         uniMenu.style.pointerEvents = "auto";
         powerUp.style.display = "block";
         ring.style.display = "block";
+        miniAgent.style.opacity = "1";
+        miniAgent.style.pointerEvents = "auto";
         window.mapperActive = false;
         document.getElementById("mapperUI").remove();
         return;
@@ -388,12 +394,17 @@ export function activateMapper() {
         uniMenu.style.pointerEvents = "none";
         powerUp.style.display = "none";
         ring.style.display = "none";
+        miniAgent.style.opacity = "0";
+        miniAgent.style.pointerEvents = "none";
         window.mapperActive = true;
         var mapperUI = document.createElement("div");
         mapperUI.innerHTML = `
+            <div id="mapperSaving">
+               <div id="savingText">SAVING...</div>
+            </div>
             <div id="mapperHeader">
-                <div id="mapperTitle">MAPPER</div>
-                <div id="mapperJson"><a id="jsonLink">JSON</a></div>
+                <div id="mapperTitle" data-help="Mapper">MAPPER</div>
+                <div id="mapperJson"><a id="jsonLink">>JSON<</a></div>
                 <div id="mapperClose">x</div>
             </div>
             <div id="domainStats">
@@ -407,6 +418,7 @@ export function activateMapper() {
                     <div id="domainPrivacyL">Privacy:</div>
                     <div id="domainChapterL">Chapter:</div>
                     <div id="domainTerrainL">Terrain:</div>
+                    <div id="domainRegionL">Region:</div>
                 </div>
                 <div class="mRightSect">
                     <div id="domainNumber">_</div>
@@ -418,6 +430,7 @@ export function activateMapper() {
                     <div id="domainPrivacy">_</div>
                     <div id="domainChapter">_</div>
                     <div id="domainTerrain">_</div>
+                    <div id="domainReg">_</div>
                 </div>
             </div>
             <div id="domainRegion">
@@ -496,7 +509,7 @@ export function activateMapper() {
             </div>
             <div id="mapperVis">
                 <div id="opacitySect">
-                    <div id="mapperVisLabel">Visibility</div>
+                    <div id="mapperVisLabel">Opacity</div>
                     <input type="number" min="0.1" max="0.9" step="0.1" value="${mapperFillOpacity}" id="mapperVisSlider">
                 </div>
                 <div id="mapperTypeLoader">
@@ -582,6 +595,29 @@ export function activateMapper() {
             // If Arrow Keys
             if (e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40) {
                 document.getElementById("domainNumber").innerHTML = domain;
+                document.getElementById("domainSector").innerHTML = mapping[domain].sector;
+                // document.getElementById("domainTerrain").innerHTML = mapping[domain].terrain;
+                switch (mapping[domain].terrain) {
+                    case "W":
+                        document.getElementById("domainTerrain").innerHTML = "Water";
+                        break;
+                    case "N":
+                        document.getElementById("domainTerrain").innerHTML = "Nature";
+                        break;
+                    case "C":
+                        document.getElementById("domainTerrain").innerHTML = "City";
+                        break;
+                    case "H":
+                        document.getElementById("domainTerrain").innerHTML = "Harbor";
+                        break;  
+                    case "I":
+                        document.getElementById("domainTerrain").innerHTML = "Interior";
+                        break;
+                    case "O":
+                        document.getElementById("domainTerrain").innerHTML = "Outerlands";
+                        break;
+                }
+                document.getElementById("domainReg").innerHTML = mapping[domain].region;
                 mapping[domain].id = Number(domain);
                 selectDomain.id = Number(domain);
                 if (regionLock.locked === true) {
@@ -590,7 +626,7 @@ export function activateMapper() {
                     ctx.fillStyle = domainKey[r].color;
                     selectedName.innerHTML = domainKey[r].region;
                     ctx.globalAlpha = mapperFillOpacity;
-                    ctx.fillRect(playerCoor.x, playerCoor.y, 18, 18);
+                    ctx.fillRect(playerCoor.x, playerCoor.y + 4, 18, 18);
                     mapping[domain].region = domainKey[r].region;
                     selectDomain.region = domainKey[r].region;
                     mapping[domain].x = String(playerCoor.x);
@@ -605,7 +641,7 @@ export function activateMapper() {
 
                     ctx.font = "10px Arial";
                     ctx.fillStyle = "yellow";
-                    ctx.fillText(sectorNum, playerCoor.x + 9, playerCoor.y + 9);
+                    ctx.fillText(sectorNum, playerCoor.x + 9, playerCoor.y + 13);
 
                     mapping[domain].sector = Number(sectorNum);
                     selectDomain.sector = Number(sectorNum);
@@ -615,14 +651,17 @@ export function activateMapper() {
                 if (terrainLock.locked === true) {
                     // var t = terrainLock.terrain;
                     var terrainNum = document.getElementById("mapperSelectTerrain").value;
+                    console.log(terrainNum);
                     clearSquare();
 
                     ctx.font = "10px Arial";
                     ctx.fillStyle = "yellow";
-                    ctx.fillText(terrainNum, playerCoor.x + 9, playerCoor.y + 9);
-                    
-                    mapping[domain].terrain = terrainNum || null;
-                    selectDomain.terrain = terrainNum;
+                    // ctx.fillText(terrainNum, playerCoor.x + 9, playerCoor.y + 9);
+                    ctx.fillText(terrainNum, playerCoor.x, playerCoor.y + 13);
+
+                    // mapping[domain].terrain = terrainNum || null;
+                    mapping[domain].terrain = String(terrainNum);
+                    selectDomain.terrain = String(terrainNum);
                     selectDomain.x = String(playerCoor.x);
                     selectDomain.y = String(playerCoor.y);
                 }
@@ -634,7 +673,7 @@ export function activateMapper() {
                 ctx.fillStyle = domainKey[1].color;
                 selectedName.innerHTML = domainKey[1].region;
                 ctx.globalAlpha = mapperFillOpacity;
-                ctx.fillRect(playerCoor.x, playerCoor.y, 18, 18);
+                ctx.fillRect(playerCoor.x, playerCoor.y + 4, 18, 18);
                 mapping[domain].region = domainKey[1].region;
                 selectDomain.region = domainKey[1].region;
                 mapping[domain].x = String(playerCoor.x);
@@ -648,7 +687,7 @@ export function activateMapper() {
                 ctx.fillStyle = domainKey[2].color;
                 selectedName.innerHTML = domainKey[2].region;
                 ctx.globalAlpha = mapperFillOpacity;
-                ctx.fillRect(playerCoor.x, playerCoor.y, 18, 18);
+                ctx.fillRect(playerCoor.x, playerCoor.y + 4, 18, 18);
                 var d1 = domain;
                 var d2 = domain
                 mapping[domain].region = domainKey[2].region;
@@ -666,7 +705,7 @@ export function activateMapper() {
                 ctx.fillStyle = domainKey[3].color;
                 selectedName.innerHTML = domainKey[3].region;
                 ctx.globalAlpha = mapperFillOpacity;
-                ctx.fillRect(playerCoor.x, playerCoor.y, 18, 18);
+                ctx.fillRect(playerCoor.x, playerCoor.y + 4, 18, 18);
                 mapping[domain].region = domainKey[3].region;
                 selectDomain.region = domainKey[3].region;
                 mapping[domain].x = String(playerCoor.x);
@@ -680,7 +719,7 @@ export function activateMapper() {
                 ctx.fillStyle = domainKey[4].color;
                 selectedName.innerHTML = domainKey[4].region;
                 ctx.globalAlpha = mapperFillOpacity;
-                ctx.fillRect(playerCoor.x, playerCoor.y, 18, 18);
+                ctx.fillRect(playerCoor.x, playerCoor.y + 4, 18, 18);
                 mapping[domain].region = domainKey[4].region;
                 selectDomain.region = domainKey[4].region;
                 mapping[domain].x = String(playerCoor.x);
@@ -694,7 +733,7 @@ export function activateMapper() {
                 ctx.fillStyle = domainKey[5].color;
                 selectedName.innerHTML = domainKey[5].region;
                 ctx.globalAlpha = mapperFillOpacity;
-                ctx.fillRect(playerCoor.x, playerCoor.y, 18, 18);
+                ctx.fillRect(playerCoor.x, playerCoor.y + 4, 18, 18);
                 mapping[domain].region = domainKey[5].region;
                 selectDomain.region = domainKey[5].region;
                 mapping[domain].x = String(playerCoor.x);
@@ -708,7 +747,7 @@ export function activateMapper() {
                 ctx.fillStyle = domainKey[6].color;
                 selectedName.innerHTML = domainKey[6].region;
                 ctx.globalAlpha = mapperFillOpacity;
-                ctx.fillRect(playerCoor.x, playerCoor.y, 18, 18);
+                ctx.fillRect(playerCoor.x, playerCoor.y + 4, 18, 18);
                 mapping[domain].region = domainKey[6].region;
                 selectDomain.region = domainKey[6].region;
                 mapping[domain].x = String(playerCoor.x);
@@ -723,7 +762,7 @@ export function activateMapper() {
                 selectedName.innerHTML = domainKey[7].region;
                 ctx.globalAlpha = mapperFillOpacity;
                 // ctx.globalCompositeOperation = "multiply"; // Set the blend mode
-                ctx.fillRect(playerCoor.x, playerCoor.y, 18, 18);
+                ctx.fillRect(playerCoor.x, playerCoor.y + 4, 18, 18);
                 mapping[domain].region = domainKey[7].region;
                 selectDomain.region = domainKey[7].region;
                 mapping[domain].x = String(playerCoor.x);
@@ -737,7 +776,7 @@ export function activateMapper() {
                 ctx.fillStyle = domainKey[8].color;
                 selectedName.innerHTML = domainKey[8].region;
                 ctx.globalAlpha = mapperFillOpacity;
-                ctx.fillRect(playerCoor.x, playerCoor.y, 18, 18);
+                ctx.fillRect(playerCoor.x, playerCoor.y + 4, 18, 18);
                 mapping[domain].region = domainKey[8].region;
                 selectDomain.region = domainKey[8].region;
                 mapping[domain].x = String(playerCoor.x);
@@ -751,7 +790,7 @@ export function activateMapper() {
                 ctx.fillStyle = domainKey[9].color;
                 selectedName.innerHTML = domainKey[9].region;
                 ctx.globalAlpha = mapperFillOpacity;
-                ctx.fillRect(playerCoor.x, playerCoor.y, 18, 18);
+                ctx.fillRect(playerCoor.x, playerCoor.y + 4, 18, 18);
                 mapping[domain].region = domainKey[9].region;
                 selectDomain.region = domainKey[9].region;
                 mapping[domain].x = String(playerCoor.x);
@@ -765,7 +804,7 @@ export function activateMapper() {
                 ctx.fillStyle = domainKey[0].color;
                 selectedName.innerHTML = domainKey[0].region;
                 ctx.globalAlpha = mapperFillOpacity;
-                ctx.fillRect(playerCoor.x, playerCoor.y, 18, 18);
+                ctx.fillRect(playerCoor.x, playerCoor.y + 4, 18, 18);
                 mapping[domain].region = domainKey[0].region;
                 selectDomain.region = domainKey[0].region;
                 mapping[domain].x = String(playerCoor.x);
@@ -825,42 +864,67 @@ async function getDomain(domainNum) {
 
 //////////////
 
-async function loadAllDomains() {
+// async function loadAllDomains() {
+//     var act = await intActor();
+//     var batches = [
+//         10000,
+//         16319
+//     ];
+//     var allDomainsMain = [];
+//     var notComplete = true;
+//     console.log("LOADING ALL DOMAINS");
+//     for (var i = 0; i < batches.length; i++) {
+//         if (batches[i] === 10000) {
+//             try {
+//             var domainBatch1 = await act.getAllDomains(0, 10000)
+//             allDomainsMain = allDomainsMain.concat(domainBatch1)
+//             } catch (err) {
+//                 console.log(err);
+//             }
+//         }
+//         if (batches[i] === 16319) {
+//             try {
+//             var domainBatch2 = await act.getAllDomains(10001, 16318)
+//             allDomainsMain = allDomainsMain.concat(domainBatch2)
+//             mapping = allDomainsMain;
+//             mapping.forEach((mapDomain) => {
+//                 if (mapDomain.region != "null" && mapDomain.x != "0") {
+//                     paintDomain(Number(mapDomain.id));
+//                 }
+//             });
+//             } catch (err) {
+//                 console.log(err);
+//             }
+//         }
+//     }
+//     console.log("LOADED ALL DOMAINS");
+//    return allDomainsMain;
+// }
+
+export async function loadAllDomains() {
     var act = await intActor();
-    var batches = [
-        10000,
-        16319
-    ];
+    // Updated batches array to include a new value for the third batch
+    var batches = [5440, 10880, 16318]; // Assuming 20000 as the start of the third batch
     var allDomainsMain = [];
-    var notComplete = true;
     console.log("LOADING ALL DOMAINS");
     for (var i = 0; i < batches.length; i++) {
-        if (batches[i] === 10000) {
-            try {
-            var domainBatch1 = await act.getAllDomains(0, 10000)
-            allDomainsMain = allDomainsMain.concat(domainBatch1)
-            } catch (err) {
-                console.log(err);
+        try {
+            if (i === 0) { // First batch
+                var domainBatch1 = await act.getAllDomains(0, batches[i]);
+                allDomainsMain = allDomainsMain.concat(domainBatch1);
+            } else { // Subsequent batches
+                var domainBatch = await act.getAllDomains(batches[i - 1] + 1, batches[i]);
+                allDomainsMain = allDomainsMain.concat(domainBatch);
             }
-        }
-        if (batches[i] === 16319) {
-            try {
-            var domainBatch2 = await act.getAllDomains(10001, 16318)
-            allDomainsMain = allDomainsMain.concat(domainBatch2)
-            mapping = allDomainsMain;
-            mapping.forEach((mapDomain) => {
-                if (mapDomain.region != "null" && mapDomain.x != "0") {
-                    paintDomain(Number(mapDomain.id));
-                }
-            });
-            } catch (err) {
-                console.log(err);
-            }
+        } catch (err) {
+            console.log(err);
         }
     }
+    // Additional operations on allDomainsMain, if needed
     console.log("LOADED ALL DOMAINS");
-   return allDomainsMain;
+    return allDomainsMain;
 }
+
 
 //////////////
 
@@ -888,6 +952,7 @@ async function saveAsJson(data) {
 
     let a = document.getElementById('jsonLink');
     a.href = URL.createObjectURL(blob);
+    a.style.color = "var(--accent)";
     a.download = 'tc-bu-data.json';
     a.click();
 }
@@ -896,18 +961,27 @@ async function saveAsJson(data) {
 
 async function saveAll() {
     // Save All
+    document.getElementById("mapperSaving").style.display = "grid";
     console.log("SAVING ALL DOMAINS");
     try {
     var act = await intActor();
+    // console.log(mapping)
     var allDomainsStatus = await act.batchUpdateDomains(mapping, lord.principal).catch((err) => {
         console.log(err);
+        document.getElementById("mapperSaving").style.animation = "none";   
+        setTimeout(() => {
+            document.getElementById("mapperSaving").style.display = "none";
+        }, 10000);
     });
     var allDomainsStatus2 = await loadAllDomains()
     } catch (err) {
         console.log(err);
+        document.getElementById("savingText").innerHTML= "ERROR SAVING - Check Console";
     }
-    saveAsJson(allDomainsStatus2);
+    // saveAsJson(allDomainsStatus2);
+    saveAsJson(mapping);
     console.log("SAVED ALL DOMAINS", allDomainsStatus2);
+    document.getElementById("mapperSaving").style.display = "none";
 }
 
 //////////////
@@ -948,6 +1022,8 @@ async function resetAll() {
     try {
         var act = await intActor();
         var domainsResetStatus = await act.initTaosCity(lord.principal)
+        // Load All
+        // Assign id to each domain
     } catch (err) {
             console.log(err);
     }
@@ -979,6 +1055,16 @@ async function uploadJson() {
                  // You can now use jsonData as your variable
                 //  console.log('JSON data:', jsonData);
                  mapping = jsonData;
+
+                // INITIALIZING MAPPING (**IF STARTING OVER**)
+                //  for (var i = 0; i < mapping.length; i++) {
+                //     mapping[i].id = i;
+                //     mapping[i].sector = 0;
+                //     mapping[i].health = 0;
+                //     mapping[i].strength = 0;
+                //     mapping[i].endurance = 0;
+                //  }
+
                  console.log("Loaded JSON");
                  document.getElementById('output').textContent = "JSON Loaded"
                 //  mapping?.forEach((mapDomain) => {
@@ -1066,7 +1152,7 @@ function paintDomain(dom) {
     ctx.globalAlpha = mapperFillOpacity;
     var x = Number(mapping[dom].x);
     var y = Number(mapping[dom].y);
-    ctx.fillRect( x, y, 18, 18);
+    ctx.fillRect( x, y + 4, 18, 18);
 }
 
 //////////////
@@ -1182,3 +1268,56 @@ function terrainLockFunc() {
 // Map Obatacles
 
 // Add LOAD, CLEAR, EVENT IDENTIFIER
+
+// Initialize Loacation HUD (Region Name, Sector Number, Domain Stats, etc)
+export const initLocationHUD = async (domain, mapping2) => {
+    var element = document.getElementById("locHud");
+    if (!document.getElementById("locHud")) {
+        var hud = document.createElement("div");
+        hud.id = "locHud";
+        document.getElementById("camera").appendChild(hud);
+    } else {
+        if (element.innerHTML != mapping2[domain].region) {
+            element.innerHTML = mapping2[domain].region;
+            setTimeout(() => { 
+                element.style.opacity = 1;
+            }, 300);
+            setTimeout(() => {
+                element.style.opacity = 0;
+            }, 4000);
+        }
+    }
+};
+
+// Domain Function Types(Static elements)
+// Terrain Sounds
+// Terrain Speed Variations
+// Discover Domain Action (Generates new image or video for domain)
+// Domain Highlight Styles
+// Same Domain Player Interaction
+// Initialize NPCS (Static and Dynamic characters)
+
+
+// Base Digisette (Base NFTs)
+
+// Tourist Passes
+
+// Discovered Memory (Based on Digisette)
+
+// Initialize Challenges (Bad Guys, Obstacles, Hot Spots etc)
+
+// Cut Scenee Loader (Builds up over discovery of new areas)
+
+// Cost (Energy, Time, Money, etc to discover new areas)
+
+// Reward (Energy, Time, Money, etc recieved by performing certain task and missions)
+
+// Amplify Domain
+
+// Sabotage Domain
+
+// Domain 9 Axis data
+
+// CH-SC
+
+// Travel Restrictions (Water, Flight, Region, Sector, etc - Based on experience)

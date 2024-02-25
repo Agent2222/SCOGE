@@ -1,5 +1,7 @@
 import * as BABYLON from 'babylonjs';
 import 'babylonjs-loaders';
+// Statics
+import digisetteRing from '../assets/nfts/digisette-ring-1.glb';
 
 class uni3dViewer extends HTMLElement {
     constructor() {
@@ -53,7 +55,7 @@ class uni3dViewer extends HTMLElement {
             // make background transparent
             scene.clearColor = new BABYLON.Color4(0, 0, 0, 0);
             // add glb model to scene
-            var digisette = BABYLON.SceneLoader.ImportMesh("", "./assets/nfts/digisette-ring-1.glb", "", scene, function (meshes) {
+            var digisette = BABYLON.SceneLoader.ImportMesh("", digisetteRing, "", scene, function (meshes) {
                    // Get the first mesh from the imported meshes array
                     var mesh = meshes[0];
 
@@ -78,6 +80,13 @@ class uni3dViewer extends HTMLElement {
                     pointLight02.intensity = 1.4;
                     pointLight03.intensity = 1.4;
                     pointLight04.intensity = 1.2;
+
+                    scene.materials.forEach(function(material) {
+                        if (material.name === "material.002") {
+                          material.emissiveColor = new BABYLON.Color3(255, 0, 0); // RGB for red
+                        }
+                      });
+                      
 
                     // Focus the camera on the imported mesh
                     camera.setTarget(mesh.position);

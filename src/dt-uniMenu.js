@@ -3527,7 +3527,7 @@ class getUniMenu extends HTMLElement {
                   <div id="loading" class="loadinScreen">SENDING...</div>
                   <div class="loadIcon"></div>
                 </div>
-                <div id="feedbackHeadline">News from; and a direct line to SCOGÉ.</div>
+                <div id="feedbackHeadline">Subscribe / Send a message to SCOGÉ.</div>
                 <form id="feedbackForm">
                   <input type="email" name="Email" id="feedbackEmailInput" placeholder="Email:" maxlength="45">
                   <textarea id="feedbackInput" name="FeedbackText" placeholder="Message: (Optional)" maxlength="320"></textarea>

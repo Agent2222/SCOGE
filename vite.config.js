@@ -31,6 +31,7 @@ export default defineConfig({
       ...aliases,
     },
   },
+  assetsInclude: ['**/*.glb'],
   build: {
     rollupOptions: {
       input: {

@@ -7,7 +7,9 @@ import { Scenario } from "./game/scenarios/scenarios.js";
 import { DialogueScene } from "./game/scenarios/DialogueScene.js";
 import { gsap } from "gsap";
 import { story } from "./game/SceneManager.js";
-import { activateMapper } from "../src/uniHelpers/mapper";
+import { activateMapper, initLocationHUD, loadAllDomains } from "../src/uniHelpers/mapper";
+import data from './sudb.json';
+import { digisetteData, updateMetadata } from "./uniHelpers/citycentral.js";
 
 const dsheet = "https://script.google.com/macros/s/AKfycbzHUtfeNysmMSZvlC7tnfYhpgs_EU_3kx9_6H_VV6le8tPyR4Vlzs8SlfES_8pbK0nb2w/exec";
 
@@ -122,6 +124,82 @@ export const attn = async (error, np) => {
 
 export var channelex ;
 export var channel2ex ;
+var mapping2 = [];
+
+var editorActive = false;
+
+  // Test Function Button
+  const testFunctionButton = () => {
+    var testFunction = document.createElement("div");
+    testFunction.id = "testFunction";
+    testFunction.style.right = "2%";
+    testFunction.style.top = "10%";
+    testFunction.style.position = "fixed";
+    testFunction.style.zIndex = "501";
+    testFunction.style.width = "40px";
+    testFunction.style.height = "40px";
+    testFunction.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
+    testFunction.style.borderRadius = "10px";
+    testFunction.style.border = "1px solid #ff002d";
+    testFunction.addEventListener("click", async () => {
+      updateMetadata(0, digisetteData);
+  });
+  document.getElementById("main").appendChild(testFunction);
+  };
+
+  // Editor Button
+  const editorButton = () => {
+    var viewEditor = document.createElement("div");
+    viewEditor.id = "viewEditor";
+    viewEditor.style.right = "2%";
+    viewEditor.style.top = "3%";
+    viewEditor.style.position = "fixed";
+    viewEditor.style.zIndex = "501";
+    viewEditor.style.width = "40px";
+    viewEditor.style.height = "40px";
+    viewEditor.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
+    viewEditor.style.borderRadius = "10px";
+    viewEditor.style.border = "1px solid #ff002d";
+    viewEditor.addEventListener("click", async () => {
+      const editorModule = await import("../editor.js");
+      var editorState = await editorModule.editor(editorActive);
+      if (editorState === false) {
+        editorActive = false;
+        return;
+      }
+      if (editorState === true) {
+        editorActive = true;
+        return;
+      }
+    });
+
+    document.getElementById("main").appendChild(viewEditor);
+  };
+
+  // Mapper Button 
+  const mapperButton = () => {
+    if (!document.getElementById("viewMapper")) {
+      var viewMapper = document.createElement("div");
+      viewMapper.id = "viewMapper";
+      viewMapper.style.right = "6%";
+      viewMapper.style.top = "3%";
+      viewMapper.style.position = "fixed";
+      viewMapper.style.zIndex = "501";
+      viewMapper.style.width = "40px";
+      viewMapper.style.height = "40px";
+      viewMapper.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
+      viewMapper.style.borderRadius = "10px";
+      viewMapper.style.border = "1px solid var(--secondary)";
+      document.getElementById("main").appendChild(viewMapper);
+    }
+      // Mapper
+      if (viewMapper) {
+        viewMapper.addEventListener("click", () => {
+          activateMapper();
+      });
+      }
+
+  };
 
 // Init Soundtrack
 export async function universe() {
@@ -360,62 +438,6 @@ export async function universe() {
       img.src =
         "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/scoge-taos-city-universe.jpg";
       cam.scrollTo(990, 0);
-  };
-
-  var editorActive = false;
-
-  // Editor Button
-  const editorButton = () => {
-    var viewEditor = document.createElement("div");
-    viewEditor.id = "viewEditor";
-    viewEditor.style.right = "2%";
-    viewEditor.style.top = "3%";
-    viewEditor.style.position = "fixed";
-    viewEditor.style.zIndex = "501";
-    viewEditor.style.width = "40px";
-    viewEditor.style.height = "40px";
-    viewEditor.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
-    viewEditor.style.borderRadius = "10px";
-    viewEditor.style.border = "1px solid #ff002d";
-    viewEditor.addEventListener("click", async () => {
-      const editorModule = await import("../editor.js");
-      var editorState = await editorModule.editor(editorActive);
-      if (editorState === false) {
-        editorActive = false;
-        return;
-      }
-      if (editorState === true) {
-        editorActive = true;
-        return;
-      }
-    });
-
-    document.getElementById("main").appendChild(viewEditor);
-  };
-
-  // Mapper Button 
-  const mapperButton = () => {
-    if (!document.getElementById("viewMapper")) {
-      var viewMapper = document.createElement("div");
-      viewMapper.id = "viewMapper";
-      viewMapper.style.right = "6%";
-      viewMapper.style.top = "3%";
-      viewMapper.style.position = "fixed";
-      viewMapper.style.zIndex = "501";
-      viewMapper.style.width = "40px";
-      viewMapper.style.height = "40px";
-      viewMapper.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
-      viewMapper.style.borderRadius = "10px";
-      viewMapper.style.border = "1px solid var(--secondary)";
-      document.getElementById("main").appendChild(viewMapper);
-    }
-      // Mapper
-      if (viewMapper) {
-        viewMapper.addEventListener("click", () => {
-          activateMapper();
-      });
-      }
-
   };
 
   // Admin UI
@@ -804,11 +826,14 @@ export async function universe() {
       tipInit = true;
     document.addEventListener('keyup', (e) => {
       if (e.keyCode == 72) {
+        alert("Help Tooltip ON");
+        document.getElementById("miniAgent").setAttribute("status", "help");
         if (tipActive === false) {
           tipActive = true;
           document.getElementById("stt").setAttribute("active", "true");
           return
         } else {
+          document.getElementById("miniAgent").setAttribute("status", "default");
           tipActive = false;
           document.getElementById("stt").setAttribute("active", "false");
         }
@@ -844,6 +869,11 @@ export async function universe() {
 
       soundtrack.setVolume("closewindow-1", 0.4)
       soundtrack.setVolume("typing-1", 0.8)
+
+      // if keycode is s 
+      if (e.keyCode == 83) {
+        document.getElementById("miniAgent").toggle();
+      }
 
       if (window.chatActive != true && window.tempIn === true) {
         dragElement(document.getElementById("exploreUI"), true);
@@ -1007,6 +1037,7 @@ export async function universe() {
       var ddev = document.getElementById("compDomainDev");
       if (e.keyCode == 37) {
         // LEFT
+        initLocationHUD(domain, mapping2);
         if (selectionBoxPosition.x == 0) {
           document.getElementById("camera").scrollLeft -= tileSize;
         }
@@ -1022,6 +1053,7 @@ export async function universe() {
       }
       if (e.keyCode == 38) {
         // UP
+        initLocationHUD(domain, mapping2);
         if (lcCheck() === true) {
           if (selectionBoxPosition.y <= 9) {
             document.getElementById("camera").scrollTop -= tileSize;
@@ -1034,6 +1066,7 @@ export async function universe() {
       }
       if (e.keyCode == 39) {
         // RIGHT
+        initLocationHUD(domain, mapping2);
         if (selectionBoxPosition.x == window18Width * tileSize - tileSize) {
           document.getElementById("camera").scrollLeft += tileSize;
         }
@@ -1049,6 +1082,7 @@ export async function universe() {
       }
       if (e.keyCode == 40) {
         // DOWN
+        initLocationHUD(domain, mapping2);
         if (lcCheck() === true) {
           if (selectionBoxPosition.y >= window18Height * tileSize - tileSize) {
             document.getElementById("camera").scrollTop += tileSize;
@@ -1623,7 +1657,7 @@ export async function universe() {
               "Help us make T.A.O.S City better";
             } else {
               shadow.getElementById("feedbackHeadline").innerHTML =
-              "News from; and a direct line to SCOGÉ.";
+              "Subscribe / Send a message to SCOGÉ.";
             }
             shadow.getElementById("fm-beacons").style.display = "none";
             shadow.getElementById("fm-inventory").style.display = "none";
@@ -2165,9 +2199,9 @@ export const newScenario = async (name) => {
   var scenario = new Scenario();
   var scenes = [];
   // fetch scns.json and load it into the editor
-  const data = await import('./sudb.json').catch((error) => {
-    console.log(error);
-  });
+  // const data = await import('./sudb.json').catch((error) => {
+  //   console.log(error);
+  // });
   //
   for (var i = 0; i < data.SUD.Scenarios[name].length; i++) {
     if (data.SUD.Scenarios[name][i].activated.gate === 0) {
@@ -2186,9 +2220,9 @@ export const newEditorScenario = async (name,scene) => {
   var scenario = new Scenario();
   var scenes = [];
   // fetch scns.json and load it into the editor
-  const data = await import('./sudb.json').catch((error) => {
-    console.log(error);
-  });
+  // const data = await import('./sudb.json').catch((error) => {
+  //   console.log(error);
+  // });
   //
   scenes.push(new DialogueScene(data.SUD.Scenarios[name][scene]));
   scenario.addScenes(...scenes);
@@ -2198,17 +2232,29 @@ export const newEditorScenario = async (name,scene) => {
   return scenario;
 }
 
-export function enterTaosCity() {
+export async function enterTaosCity(custCheck) {
   // Temporary
   window.loggedIn = true;
+  try {
+    mapping2 = await loadAllDomains();
+  } catch (error) {
+    console.log("Mapping Error", error);
+  }
   setTimeout(() => {
     document.getElementById("seekModal").remove();
     document.getElementById("miniAgent").setAttribute("active", "true");
   }, 1000);
   const lcCheck = () => {
+    if (custCheck === true) {
+      console.log("Custom Check");
+      editorButton();
+      mapperButton();
+      testFunctionButton();
+    }
     return (
       window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1"
+      window.location.hostname === "127.0.0.1" ||
+      custCheck === true
     );
   };
   var check = lcCheck();

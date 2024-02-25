@@ -30,6 +30,21 @@ import { emoter } from "./uniComponents/emoter.js";
 import { tooltip } from "./uniHelpers/tooltip.js";
 import { scogeShop } from "./scoge-shop-2.js";
 
+// Statics
+import mainvid1 from "../assets/video/scoge-c2-1.mp4";
+import mainvid2 from "../assets/video/scoge-c2-2.mp4";
+import main1poster from "../assets/video/scoge-c2-1-poster.jpg";
+
+var staticVids = [mainvid1, mainvid2];
+
+// randomly select a video and assign it to a variable
+var randomStaticVid = staticVids[Math.floor(Math.random() * staticVids.length)];
+
+if (randomStaticVid === mainvid1) {
+  // change poster of portalVideo to match the video
+  document.getElementById("portalVideo").poster = main1poster;
+}
+
 export const dsheet = "https://script.google.com/macros/s/AKfycbzHUtfeNysmMSZvlC7tnfYhpgs_EU_3kx9_6H_VV6le8tPyR4Vlzs8SlfES_8pbK0nb2w/exec";
 
 // // Check size on Start
@@ -131,7 +146,7 @@ const learn = [
 // Check Window Size
 window.isMobile = false;
 
-function uncover() {
+function start() {
   universe();
     window.dbm = true;
     // ci = "bankoo";
@@ -146,12 +161,13 @@ function uncover() {
       gsap.to('#videoGallery', {duration: 2, opacity: 1, y: 0, ease: "power2.out"});
       gsap.to("#videoGallery", { duration: 1, filter: "blur(0px)", ease: "power2.inOut"});
       ci = "true";
-      document.getElementById("portalVideo").src = "https://firebasestorage.googleapis.com/v0/b/fusion-intl.appspot.com/o/tempscoge%2Fscoge-c2-2.mp4?alt=media&token=969b8941-b3ef-417e-8057-2e107db1b706";
+      document.getElementById("portalVideo").src = randomStaticVid;
+      // document.getElementById("portalVideo").src = mainvid2;
       document.getElementById("portalVideo")?.play();
     }
 }
 
-uncover();
+start();
 
 // Check Size on Resize
 window.addEventListener("resize", function () {

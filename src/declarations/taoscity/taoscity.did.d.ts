@@ -1,5 +1,6 @@
 import type { Principal } from '@dfinity/principal';
 import type { ActorMethod } from '@dfinity/agent';
+import type { IDL } from '@dfinity/candid';
 
 export interface Domain {
   'x' : string,
@@ -40,6 +41,9 @@ export interface taoscity {
   'getOwnedDomains' : ActorMethod<[], Array<Domain>>,
   'getUnOwnedDomains' : ActorMethod<[], Array<Domain>>,
   'initTaosCity' : ActorMethod<[Principal], undefined>,
+  'isAllowed' : ActorMethod<[Principal], boolean>,
   'updateDomain' : ActorMethod<[bigint, Domain, Principal], Result>,
 }
 export interface _SERVICE extends taoscity {}
+export declare const idlFactory: IDL.InterfaceFactory;
+export declare const init: ({ IDL }: { IDL: IDL }) => IDL.Type[];

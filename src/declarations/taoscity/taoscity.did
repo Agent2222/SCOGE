@@ -9,6 +9,7 @@ type taoscity =
    getOwnedDomains: () -> (vec Domain) query;
    getUnOwnedDomains: () -> (vec Domain) query;
    initTaosCity: (principal) -> () oneway;
+   isAllowed: (principal) -> (bool) query;
    updateDomain: (nat, Domain, principal) -> (Result);
  };
 type Result = 
