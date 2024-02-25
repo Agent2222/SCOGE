@@ -48,28 +48,29 @@ shared(msg) actor class taoscity() {
     // Constructor //
     /////////////////
     public shared(init_msg) func initTaosCity(caller : Principal) { 
-        assert (allowed(caller));
-        // var batch1 : Nat = 500;
-        var batch : Nat = 16319;
-        // 32.6 Epochs at 500 domains per epoch
-        var x : [var T.Domain] = Array.init<T.Domain>(batch, {
-                id : Nat = 0;
-                x : Text = "0";
-                y : Text = "0";
-                owner : Text = "null";
-                region : Text = "null";
-                sector: Nat = 0;
-                function: Text = "null";
-                material : Text = "null";
-                visibility : Bool = false;
-                privacy : Bool = false;
-                chapter : Text = "null";
-                health : Nat64 = 0;
-                strength : Nat64 = 0;
-                endurance : Nat64 = 0;
-                terrain: Text = "null";
-        });
-      domains_ := x;
+            assert (allowed(caller));
+            // var batch1 : Nat = 500;
+            var batch : Nat = 16319;
+            // 32.6 Epochs at 500 domains per epoch
+            var x : [var T.Domain] = Array.init<T.Domain>(batch, {
+                            id : Nat = 0;
+                            x : Text = "0";
+                            y : Text = "0";
+                            owner : Text = "null";
+                            region : Text = "null";
+                            sector: Nat = 0;
+                            function: Text = "null";
+                            material : Text = "null";
+                            visibility : Bool = false;
+                            privacy : Bool = false;
+                            chapter : Text = "null";
+                            health : Nat64 = 0;
+                            strength : Nat64 = 0;
+                            endurance : Nat64 = 0;
+                            terrain: Text = "null";
+            });
+
+        domains_ := x;
     };
 
     //////////////////
@@ -156,6 +157,11 @@ shared(msg) actor class taoscity() {
         Option.isSome(Array.find(custodians_, func (x: Principal) : Bool {
            return x == id
         }))
+    };
+
+    // isAllowed
+    public query func isAllowed(caller: Principal) : async Bool {
+        return allowed(caller);
     };
 
     // update domain by index

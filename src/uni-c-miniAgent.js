@@ -13,7 +13,7 @@ class uniMenuAgent extends HTMLElement {
         this.dialogueBank = {
             intro: [
                 {
-                  text: "Ok, so here's your Digisette Domain Development setup interface. You'll be able setup domain from here.",
+                  text: "Welcome back. City-Central has been working hard on the upcoming release of the Digisette Domain Development upgrade. It'll be here soon.",
                   waiter: null,
                   choices: [
                     {
@@ -23,7 +23,7 @@ class uniMenuAgent extends HTMLElement {
                   ]
                 },
                 {
-                  text: 'What brings you here?',
+                  text: 'You can still explore the city with your pre-alpha access. If you need help, just ask.',
                   waiter: null,
                   choices: [
                     {
@@ -59,9 +59,12 @@ class uniMenuAgent extends HTMLElement {
         return this.getAttribute('location');
     }
 
+    get status() {
+        return this.getAttribute('location');
+    }
 
     static get observedAttributes() {
-        return ["active", "position"];
+        return ["active", "position", "status"];
     }
 
     mainLocation() {
@@ -103,11 +106,15 @@ class uniMenuAgent extends HTMLElement {
             this.miniOpen = false;
             this.soundtrack.setVolume("closewindow-1", 0.8);
             this.soundtrack.play("closewindow-1");
+            this.shadowRoot.getElementById("chat").style.pointerEvents = "none";
+            this.shadowRoot.getElementById("agentProfile").style.pointerEvents = "none";
             return;
         } else {
             this.soundtrack.setVolume("openwindow-1", 0.8);
             this.soundtrack.play("openwindow-1");
             this.shadowRoot.getElementById("agentProfile").style.transform = "scaleX(1)";
+            this.shadowRoot.getElementById("chat").style.pointerEvents = "all";
+            this.shadowRoot.getElementById("agentProfile").style.pointerEvents = "all";
             setTimeout(()=> {
                 this.shadowRoot.getElementById("chat").style.transform = "scaleX(1)";
             }, 270)
@@ -115,22 +122,9 @@ class uniMenuAgent extends HTMLElement {
         }   
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
-        if (newValue === "true") {
-            var pos = this.position;
-            this.shadowRoot.getElementById("main").style.display = "grid";
-            if (pos === "left") {
-                setTimeout(()=> {
-                    this.left();
-                }, 100)
-            }
-            if (this.location === "main") {
-                setTimeout(()=> {
-                    this.mainLocation();
-                }, 100)
-            }
-            setTimeout(() => {
-                this.shadowRoot.getElementById("agentImg").style.transition = "all .8s ease-in-out";
+
+    engage() {
+        this.shadowRoot.getElementById("agentImg").style.transition = "all .8s ease-in-out";
                 this.shadowRoot.getElementById("agentImg").style.right = "0%";
                 var intro = this.intro
                 this,this.shadowRoot.getElementById("ddLogo").style.display = "block";
@@ -150,15 +144,50 @@ class uniMenuAgent extends HTMLElement {
                         this.shadowRoot.getElementById("chat").innerHTML = this.intro;
                     }
                 }, 800);
-            }, 500);
-        }
-        if (newValue === "false") {
+    }
+
+    activate(newValue) {
+        console.log("activate", newValue);
+        var pos = this.position;
+            this.shadowRoot.getElementById("main").style.display = "grid";
+            if (pos === "left") {
+                setTimeout(()=> {
+                    this.left();
+                }, 100)
+            }
+            if (this.location === "main") {
+                setTimeout(()=> {
+                    this.mainLocation();
+                }, 100)
+            }
+
             setTimeout(() => {
-                this.shadowRoot.getElementById("agentImg").style.transition = "all .8s ease-in-out";
-                this.shadowRoot.getElementById("agentImg").style.right = "-100%";
-                this,this.shadowRoot.getElementById("ddLogo").style.display = "none";
+                this.engage();
             }, 500);
+    }
+
+    deactivate() {
+        setTimeout(() => {
+            this.shadowRoot.getElementById("agentImg").style.transition = "all .8s ease-in-out";
+            this.shadowRoot.getElementById("agentImg").style.right = "-100%";
+            this,this.shadowRoot.getElementById("ddLogo").style.display = "none";
+        }, 500);
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+        if (name === "active") {
+            if (newValue === "true") {
+                this.activate(newValue);
+            }
+            if (newValue === "false") {
+                this.deactivate();
+            }
         }
+        // if (name === "status") {
+        //     if (newValue === "help") {
+        //         alert("Help");
+        //     }
+        // }
     }
 
     connectedCallback() {
@@ -193,7 +222,7 @@ class uniMenuAgent extends HTMLElement {
                     justify-content: center;
                     align-items: center;
                     position: relative;
-                    pointer-events: all;
+                    pointer-events: none;
                 }
                 #agentProfile {
                     height: 100%;
@@ -260,6 +289,7 @@ class uniMenuAgent extends HTMLElement {
                     justify-content: center;
                     transition: all .2s ease-in-out;
                     cursor: pointer;
+                    pointer-events: auto;
                 }
 
                 .continueBut {
@@ -319,7 +349,7 @@ class uniMenuAgent extends HTMLElement {
                     <div id="chat">
                     </div>
                 </div>
-                <div id="help">H</div>
+                <div id="help">S</div>
                 <div id="agentProfile">
                     <img id="agentImg" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Lesli-1.png" alt="Avatar" style="width:100%">
                     <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/graphics/domain-wireframe.png" alt="Domain Development" id="ddLogo" style="height:100%">

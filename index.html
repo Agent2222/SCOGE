@@ -44,7 +44,7 @@
         <scoge-rsvp rsvps="rsvp" id="rsvpModal" style="display:none;"></scoge-rsvp>
         <div id="miniView" style="width: 38%; height: 25%; position: absolute; z-index: 20
         ; left: 0%; bottom: 3%; border-radius: 10px;">
-            <uni-menu-agent active="false" position="left" location="main" id="miniAgent"></uni-menu-agent>
+            <uni-menu-agent active="false" position="left" location="main" status="intro" id="miniAgent"></uni-menu-agent>
         </div>
         <scoge-UniMenu uniMenu="uniMenu" fullscreen="false" id="getUniMenu"></scoge-UniMenu>
         <scoge-tooltip active="true" id="stt"></scoge-tooltip>
@@ -64,6 +64,7 @@
         </div> 
         <div class="action-lines-overlay"></div>
         <div id="camera">
+            <!-- <div id="locHud"></div> -->
             <div id="ringView">
                 <uni-3dviewer active="false" id="dgr"></uni-3dviewer>
             </div>
