@@ -3,7 +3,7 @@ import { SoundtrackManager } from "./soundtrack.js";
 // import { idlFactory } from "./declarations/universe_backend/universe_backend.did.js";
 import { chatRoom } from "./uniHelpers/chat.js";
 import { uniPlayers } from "./uniHelpers/players.js";
-import { Scenario } from "./game/scenarios/scenarios.js";
+import { Scenario } from "./game/scenarios/Scenarios.js";
 import { DialogueScene } from "./game/scenarios/DialogueScene.js";
 import { gsap } from "gsap";
 import { story } from "./game/SceneManager.js";
