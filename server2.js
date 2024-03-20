@@ -2,7 +2,7 @@
 const express = require('express');
 const app = express();
 require('dotenv').config();
-app.use(express.static('src'));
+app.use(express.static('dist'));
 app.use(express.json());
 
 const stripe = require('stripe')(process.env.VITE_StripeKey);
