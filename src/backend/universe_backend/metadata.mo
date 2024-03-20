@@ -129,4 +129,6 @@ module {
         endurance : Nat64;
         terrain: Text;
     };
+
+    //type declarations for HTTP requests, HTTP responses, management canister, etc...
 }

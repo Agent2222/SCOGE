@@ -427,6 +427,7 @@ actor DIP721 {
             logo_ := ?newLogo;
         };
     };
+    
 
     // updateNMC
     // public func updateNmc(tokenId: Nat, principal: Principal, metadata: T.NMCProperties) : async Result.Null{

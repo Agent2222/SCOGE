@@ -25,6 +25,7 @@
           </script>   
         <script src="./src/index.js" type="module"></script>
         <script src="https://cdn.ably.com/lib/ably.min-1.js"></script>
+        <script src="https://js.stripe.com/v3/"></script>
     </head>
     <body id="main">
          <!-- Google Tag Manager (noscript) -->
@@ -35,6 +36,7 @@
         <div id="subText2" class="dialogue"><span class="answerOptions" id="st2Ans1"></span><span class="answerOptions" id="st2Ans2"></span><span class="answerOptions" id="st2Ans3"></span></div>
         <scoge-investors invest="invest" id="getInvestors" style="display: none;"></scoge-investors>
         <!-- SHOP 2 ------>
+        <div id="checkout"></div>
         <scoge-shop active="false" id="shop2"></scoge-shop>
         <!-- SHOP 2 END -->
         <scoge-gallery gallery="gallery" id="collectionGallery" style="display: block;"></scoge-gallery>
@@ -78,5 +80,5 @@
         <div id="shopBG"></div>
 
     </body>
-    <script src="https://js.stripe.com/v3/"></script>
+    <!-- <script src="https://js.stripe.com/v3/"></script> -->
 </html>

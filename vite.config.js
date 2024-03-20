@@ -26,6 +26,13 @@ const aliases = Object.entries(dfxJson.canisters).reduce(
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    proxy: {
+      // Proxy /api requests to your Express server
+      '/create-checkout-session': 'http://www.scoge.co',
+      '/session-status': 'http://www.scoge.co',
+    },
+  },
   resolve: {
     alias: {
       ...aliases,
@@ -36,7 +43,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: new URL('index.html', import.meta.url).pathname,
-        oge: new URL('oge.html', import.meta.url).pathname
+        oge: new URL('oge.html', import.meta.url).pathname,
+        order: new URL('order.html', import.meta.url).pathname
       },
       output: {
         dir: "dist/",

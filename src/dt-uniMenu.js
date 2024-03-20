@@ -315,16 +315,27 @@ class getUniMenu extends HTMLElement {
     const menuItems = this.shadow.querySelector("#menuItems");
     const menuHeader = this.shadow.querySelector("#menuHeader");
     const refresh = this.shadow.querySelector("#refresh");
+    var bagLength = document.getElementById("shop2").bag.length;
+    var checkoutBuilt = document.getElementById("shop2").checkoutBuilt;
+    if (checkoutBuilt === true) {
+      document.getElementById("shop2").hideCheckout();
+      document.getElementById("shop2").endCoSession();
+    }
+    if (bagLength > 0) {
+      if (document.getElementById("altBagIcon")) {
+        document.getElementById("altBagIcon").style.display = "grid";
+      }
+    }
     // Mobile Menu
     if (window.isMobile === true) {
       if (window.dtmenuOpen === false) {
         document.getElementById("shop2").setAttribute("active","false");
         this.closeFullMenu();
-        menuIcon.style.transform = "scale(2.1) rotate(180deg)";
+        menuIcon.style.transform = "scale(1.2) rotate(180deg)";
         menuHeader.style.height = "20%";
         setTimeout(() => {
           menu.style.maxHeight = "80%";
-          menu.style.top = "10vh";
+          menu.style.top = "10svh";
         }, 150);
         window.dtmenuOpen = true;
         menu.style.transition = "all 0.3s ease-in-out";
@@ -336,17 +347,17 @@ class getUniMenu extends HTMLElement {
         menuHeader.style.height = "100%";
         menu.style.maxHeight = "12%";
         if (e?.target.id === "menuEnhancements") {
-          menu.style.top = "2vh";
+          menu.style.top = "2svh";
         } else if (e?.target.id === "uniMenuShop") {
-          menu.style.top = "2vh";
+          menu.style.top = "2svh";
         } else if (e?.target.id === "uniMenuShopSvg") {
-          menu.style.top = "2vh";
+          menu.style.top = "2svh";
         } else if (e?.target.id === "uniMenuIcon") {
-          menu.style.top = "2vh";
+          menu.style.top = "2svh";
         } else {
-          menu.style.top = "80vh";
+          menu.style.top = "75svh";
         }
-        menuIcon.style.transform = "scale(2.1) rotate(0deg)";
+        menuIcon.style.transform = "scale(1.2) rotate(0deg)";
         menuItems.style.maxHeight = "0%";
         menuItems.style.overflow = "hidden";
         window.dtmenuOpen = false;
@@ -372,6 +383,10 @@ class getUniMenu extends HTMLElement {
         return;
       } 
       else {
+        document.getElementById("shop2").shopOpen = false;
+        document.getElementById("shop2").bagOpen = false;
+        document.getElementById("shop2").largeGalOpen = false;
+        document.getElementById("shop2").checkoutOpen = false;
         document.getElementById("shop2").setAttribute("active","false");
         dragElement(moveMenu, true);
         this.closeFullMenu();
@@ -1099,14 +1114,14 @@ class getUniMenu extends HTMLElement {
             }
             #uniMenu {
               width: 260px;
-              max-height: 60%;
+              max-height: 70%;
               border-top-left-radius: 10px;
               border-bottom-left-radius: 10px;
               border-top-right-radius: 10px;
               border-bottom-right-radius: 10px;
               z-index: 11;
               position: absolute;
-              top: 25vh;
+              top: 15vh;
               left: 36px;
               background-color: rgba(0, 0, 0, 0.7);
               border-left: 2px solid #ff002d;
@@ -1124,7 +1139,7 @@ class getUniMenu extends HTMLElement {
             #uniMenuLogo {
               width: 100%;
             }
-
+            
             #uniMenu.collapsed {
               width: 260px;
               max-height: 10%;
@@ -2754,7 +2769,7 @@ class getUniMenu extends HTMLElement {
                 border-bottom-right-radius: 10px;
                 z-index: 11;
                 position: absolute;
-                top: 80vh;
+                top: 75svh;
                 left: 36px;
                 background-color: rgba(0, 0, 0, 0.7);
                 border-left: 2px solid #ff002d;
@@ -2793,7 +2808,7 @@ class getUniMenu extends HTMLElement {
               #uniMenuIcon {
                 display: none;
                 color: #ff002d !important;
-                transform: scale(2.1);
+                transform: scale(1.2);
                 padding-right: 8pt;
               }
 
@@ -3527,7 +3542,7 @@ class getUniMenu extends HTMLElement {
                   <div id="loading" class="loadinScreen">SENDING...</div>
                   <div class="loadIcon"></div>
                 </div>
-                <div id="feedbackHeadline">Subscribe / Send a message to SCOGÉ.</div>
+                <div id="feedbackHeadline">Does SCOGÉ have your Email?</div>
                 <form id="feedbackForm">
                   <input type="email" name="Email" id="feedbackEmailInput" placeholder="Email:" maxlength="45">
                   <textarea id="feedbackInput" name="FeedbackText" placeholder="Message: (Optional)" maxlength="320"></textarea>

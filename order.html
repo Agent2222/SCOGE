@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+        <title>SCOG&Eacute; | Official Website</title>
+        <meta name="description" content="SCOGÉ Order Confirmation.">
+        <link rel="shortcut icon" type="image/png" href="/assets/images/favicon.png">
+        <link href="./src/wScoge.css" rel="stylesheet">
+        <style>
+            body {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                width: 90%;
+                margin: 0;
+                padding-left: 5%;
+                padding-right: 5%;
+                background-color: black;
+                color: #ff002d;
+                font-family: "BS-R";
+            }
+            #l2 {
+                transform: rotate(-90deg);
+                width: auto;
+                height: 50%;
+            }
+            #l2 img {
+                height: 100%;
+            }
+            #buttons {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                margin-top: 5%;
+                border-bottom: 1px solid var(--secondary);
+                padding: 12px 60px;
+                transition: .3s all;
+            }
+
+            #buttons:hover {
+                border: 1px solid var(--secondary);
+            }
+
+            #buttons a {
+                color: var(--secondary);
+            }
+
+            #respText {
+                color: var(--accent);
+            }
+
+            a {
+                color: var(--secondary);
+            }
+
+            #mailScoge {
+                text-decoration: underline;
+            }
+
+        </style>
+        <script type="module">
+            var customerEmail = null;
+            initializeEnd();
+            async function initializeEnd() {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+                if (urlParams.get('session_id') != null){
+                    const sessionId = urlParams.get('session_id');
+                    const response = await fetch(`/session-status?session_id=${sessionId}`);
+                    const session = await response.json();
+                
+                    if (session.status == 'open') {
+                    // window.replace('http://localhost:5173')
+                    document.getElementById('respText').innerHTML = `There was an error processing your order. Please try again.<br> If the problem persists, please email us at <a id="mailScoge" href="mailto:info@scoge.co">info@scoge.co</a> or call us at <a id="mailScoge" href="tel:3478731707">1-347-873-1707</a> for assistance.`;
+                    document.getElementById('header').innerHTML = 'Order Error!';
+                    } else if (session.status == 'complete' && urlParams.get('session_id') != null) {
+                        customerEmail = session.customer_email;
+                        submitRequest();
+                        // Clear url params
+                        window.history.replaceState({}, document.title, "/order.html");
+                    }
+                }
+            }
+
+            function submitRequest() {
+                var data = {
+                    Product: "MADE TO ORDER / AVAILABLE",
+                    Email: "info@scoge.co",
+                    Name: "NEW ORDER",
+                    Requirements: "VERIFY AND SEND ORDER RECIEPT",
+                };
+                // Convert the object to a format suitable for sending (e.g., FormData or JSON)
+                const formData = new FormData();
+                for (const key in data) {
+                    formData.append(key, data[key]);
+                }
+
+                // Alternatively, if your endpoint accepts JSON:
+                // const jsonData = JSON.stringify(data);
+
+                // Use fetch to send the data
+                fetch("https://script.google.com/macros/s/AKfycbwyfpqK5BOPXAZnGpXc0e6szgHqYwXfX7jajbDNEENP7Et0l36InKzVUECe9ENCBO7uhA/exec?focus=requests", {
+                    method: "POST",
+                    body: formData, // or use 'body: jsonData' if sending JSON
+                    mode: "cors",
+                    // If sending JSON, uncomment the following line:
+                    // headers: { 'Content-Type': 'application/json' },
+                })
+                .then(response => response.text()) // or response.json() if the server responds with JSON
+                .then(result => {
+                    console.log('Success:', result);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+
+        </script>
+    </head>
+    <body id="main">
+        <div id="l2">
+            <img src="/assets/images/scoge-logo-2-2.png" alt="SCOGÉ Logo">
+        </div>
+        <div>
+            <h1 id="header">Thank you for your order!</h1>
+            <p id="respText">Your order has been placed and is being processed. You will receive an email confirmation shortly.<br>If you have any questions, please email <a id="mailScoge" href="mailto:info@scoge.co">info@scoge.co</a></p>
+        </div>
+        <div id="buttons">
+            <a href="https://www.scoge.co" class="button">RETURN</a>
+        </div>
+    </body>
+</html>

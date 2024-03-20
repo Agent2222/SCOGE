@@ -21,8 +21,11 @@
            
         
         <script src="https://cdn.ably.com/lib/ably.min-1.js"></script>
-      <script type="module" crossorigin src="/assets/main-7accafe7.js"></script>
-      <link rel="stylesheet" href="/assets/index-9f8b9553.css">
+        <script src="https://js.stripe.com/v3/"></script>
+      <script type="module" crossorigin src="/assets/main-58449136.js"></script>
+      <link rel="modulepreload" crossorigin href="/assets/wScoge-a8d39de1.js">
+      <link rel="stylesheet" href="/assets/wScoge-2ee82168.css">
+      <link rel="stylesheet" href="/assets/index-164a48f4.css">
     </head>
     <body id="main">
          <!-- Google Tag Manager (noscript) -->
@@ -33,6 +36,7 @@
         <div id="subText2" class="dialogue"><span class="answerOptions" id="st2Ans1"></span><span class="answerOptions" id="st2Ans2"></span><span class="answerOptions" id="st2Ans3"></span></div>
         <scoge-investors invest="invest" id="getInvestors" style="display: none;"></scoge-investors>
         <!-- SHOP 2 ------>
+        <div id="checkout"></div>
         <scoge-shop active="false" id="shop2"></scoge-shop>
         <!-- SHOP 2 END -->
         <scoge-gallery gallery="gallery" id="collectionGallery" style="display: block;"></scoge-gallery>
@@ -76,5 +80,5 @@
         <div id="shopBG"></div>
 
     </body>
-    <script src="https://js.stripe.com/v3/"></script>
+    <!-- <script src="https://js.stripe.com/v3/"></script> -->
 </html>
