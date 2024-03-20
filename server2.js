@@ -1,0 +1,45 @@
+// This is your test secret API key.
+const express = require('express');
+const app = express();
+require('dotenv').config();
+app.use(express.static('src'));
+app.use(express.json());
+
+const stripe = require('stripe')(process.env.VITE_StripeKey);
+
+const YOUR_DOMAIN = 'https://www.scoge.co';
+
+app.post('/create-checkout-session', async (req, res) => {
+  const { lineItems } = req.body; 
+  try {
+    const session = await stripe.checkout.sessions.create({
+        ui_mode: 'embedded',
+        metadata: {
+        size: 'Large',
+        },
+        submit_type: 'pay',
+        billing_address_collection: 'auto',
+        shipping_address_collection: {
+        allowed_countries: ['US', 'CA'],
+        },
+        line_items: lineItems,
+        mode: 'payment',
+        return_url: `${YOUR_DOMAIN}/order.html?session_id={CHECKOUT_SESSION_ID}`,
+    });
+
+        res.send({clientSecret: session.client_secret});
+    } catch (error) {
+            res.status(500).send({error: error.message});
+    }
+});
+
+app.get('/session-status', async (req, res) => {
+  const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
+
+  res.send({
+    status: session.status,
+    customer_email: session.customer_details.email
+  });
+});
+
+app.listen(5173, () => console.log('Running on port 5173'));

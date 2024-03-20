@@ -2,6 +2,9 @@
   "assets": {
     "ic": "uqjdj-siaaa-aaaag-aaoxq-cai"
   },
+  "stripe": {
+    "ic": "k64f7-gqaaa-aaaag-ahltq-cai"
+  },
   "taoscity": {
     "ic": "23tad-vaaaa-aaaag-abvwq-cai"
   },

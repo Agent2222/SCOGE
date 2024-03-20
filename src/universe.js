@@ -1,6 +1,6 @@
 // UNIVERSE SYSTEM
 import { SoundtrackManager } from "./soundtrack.js";
-import { idlFactory } from "./declarations/universe_backend/universe_backend.did.js";
+// import { idlFactory } from "./declarations/universe_backend/universe_backend.did.js";
 import { chatRoom } from "./uniHelpers/chat.js";
 import { uniPlayers } from "./uniHelpers/players.js";
 import { Scenario } from "./game/scenarios/scenarios.js";
@@ -263,7 +263,7 @@ export async function universe() {
   window.domainType = "";
   // window.getAllUserNFTs = {};i
   // export const suIDL = idlFactory;
-  const suIDL = idlFactory;
+  // const suIDL = idlFactory;
   var uiState = {
     nftsLoaded: false,
   };
@@ -1657,7 +1657,7 @@ export async function universe() {
               "Help us make T.A.O.S City better";
             } else {
               shadow.getElementById("feedbackHeadline").innerHTML =
-              "Subscribe / Send a message to SCOGÉ.";
+              "Does SCOGÉ have your Email?";
             }
             shadow.getElementById("fm-beacons").style.display = "none";
             shadow.getElementById("fm-inventory").style.display = "none";

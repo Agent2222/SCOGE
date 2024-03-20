@@ -1,0 +1,6 @@
+service : {
+  createCheckoutSession: (text) -> (text);
+  getSecretData: () -> (text) query;
+  getSessionStatus: (text) -> (text);
+  updateSecretData: (text) -> (bool);
+}
