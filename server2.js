@@ -1,13 +1,19 @@
 // This is your test secret API key.
 const express = require('express');
 const app = express();
+import path from 'path';
+import { fileURLToPath } from 'url';
 require('dotenv').config();
 app.use(express.static('dist'));
 app.use(express.json());
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const stripe = require('stripe')(process.env.VITE_StripeKey);
 
 const YOUR_DOMAIN = 'https://www.scoge.co';
+const PORT = process.env.PORT || 5173;
 
 function allowCrossDomain(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
@@ -53,4 +59,4 @@ app.get('/session-status', async (req, res) => {
   });
 });
 
-app.listen(5173, () => console.log('Running on port 5173'));
+app.listen(PORT, () => console.log('Running on port 5173'));
