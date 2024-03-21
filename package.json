@@ -2,7 +2,7 @@
   "name": "scoge",
   "version": "0.0.0",
   "scripts": {
-    "start": "vite",
+    "start": "node server2.js",
     "vite": " npx vite --port=4000",
     "server": "node server.js",
     "server2": "node server2.js",
