@@ -331,7 +331,7 @@ class getUniMenu extends HTMLElement {
       if (window.dtmenuOpen === false) {
         document.getElementById("shop2").setAttribute("active","false");
         this.closeFullMenu();
-        menuIcon.style.transform = "scale(1.5) rotate(180deg)";
+        menuIcon.style.transform = "scale(2.2) rotate(180deg) translateX(10px)";
         menuHeader.style.height = "20%";
         setTimeout(() => {
           menu.style.maxHeight = "80%";
@@ -357,7 +357,7 @@ class getUniMenu extends HTMLElement {
         } else {
           menu.style.top = "75svh";
         }
-        menuIcon.style.transform = "scale(1.5) rotate(0deg)";
+        menuIcon.style.transform = "scale(2.2) rotate(0deg)";
         menuItems.style.maxHeight = "0%";
         menuItems.style.overflow = "hidden";
         window.dtmenuOpen = false;
@@ -1204,7 +1204,7 @@ class getUniMenu extends HTMLElement {
               z-index: 6;
             }
             #uniMenuIcon {
-              font-size: 2em;
+              font-size: 2.5em;
               justify-self: end;
               transform: rotate(0deg);
               cursor: pointer;
@@ -2808,7 +2808,7 @@ class getUniMenu extends HTMLElement {
               #uniMenuIcon {
                 display: none;
                 color: #ff002d !important;
-                transform: scale(1.5);
+                transform: scale(2.2);
                 padding-right: 8pt;
               }
 
