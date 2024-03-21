@@ -898,6 +898,7 @@ buildBag() {
     this.shadowRoot.getElementById("cartItems").style.opacity = "1";
     this.shadowRoot.getElementById("cartItems").style.pointerEvents = "auto";
     this.shadowRoot.getElementById("cartItems").style.scale = "1";
+    this.shadowRoot.getElementById("productInfo").style.pointerEvents = "auto";
     var bagCont = this.shadowRoot.getElementById("cartItems");
     if (document.getElementById("altBagIcon")) {
         document.getElementById("altBagIcon").style.display = "none";
