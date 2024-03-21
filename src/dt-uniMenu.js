@@ -329,6 +329,7 @@ class getUniMenu extends HTMLElement {
     // Mobile Menu
     if (window.isMobile === true) {
       if (window.dtmenuOpen === false) {
+        document.getElementById("shop2").shadowRoot.getElementById("productInfo").style.pointerEvents = "none";
         document.getElementById("shop2").setAttribute("active","false");
         this.closeFullMenu();
         menuIcon.style.transform = "scale(2.2) rotate(180deg) translateX(10px)";
