@@ -9,6 +9,17 @@ const stripe = require('stripe')(process.env.VITE_StripeKey);
 
 const YOUR_DOMAIN = 'https://www.scoge.co';
 
+function allowCrossDomain(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+  res.header('Access-Control-Allow-Headers', 'Content-Type')
+  next()
+}
+
+// Serve any static files
+app.use(allowCrossDomain)
+app.use('/', express.static(__dirname + '/dist'))
+
 app.post('/create-checkout-session', async (req, res) => {
   const { lineItems } = req.body; 
   try {
