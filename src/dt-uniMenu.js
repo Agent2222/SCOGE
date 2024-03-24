@@ -1262,6 +1262,7 @@ class getUniMenu extends HTMLElement {
               transform: rotate(0deg);
               cursor: pointer;
               transition: all 0.5s ease;
+              pointer-events: auto;
             }
             #uniMenuIcon:hover {
               color: white;
