@@ -1274,7 +1274,7 @@ class getUniMenu extends HTMLElement {
               background-color: #ff002d;
               border-radius: 4px;
               margin-top: 10px;
-              user-select: none;
+              pointer-events: none;
             }
 
             // #mi1 {
