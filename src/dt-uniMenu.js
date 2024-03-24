@@ -1263,10 +1263,6 @@ class getUniMenu extends HTMLElement {
               cursor: pointer;
               transition: all 0.5s ease;
               pointer-events: auto;
-              position: absolute;
-              right: 2vh;
-              top: 2vh;
-              z-index: 10;
             }
             #uniMenuIcon:hover {
               color: white;
@@ -1278,7 +1274,7 @@ class getUniMenu extends HTMLElement {
               background-color: #ff002d;
               border-radius: 4px;
               margin-top: 10px;
-              pointer-events: none;
+              user-select: none;
             }
 
             // #mi1 {
@@ -2889,9 +2885,6 @@ class getUniMenu extends HTMLElement {
                 display: none;
                 color: #ff002d !important;
                 padding-right: 8pt;
-                position: absolute;
-                right: 2vh;
-                top: 3vh;
               }
 
               #loadingText {
