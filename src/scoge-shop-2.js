@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger)
 class scogeShop extends HTMLElement {
     constructor() {
         super();
-        this.attachShadow({mode: 'open'});
+        this.shadow = this.attachShadow({mode: 'open'});
         this.requestOpen = false;
         this.requestTogAdded1 = false;
         this.requestTogAdded2 = false;
@@ -1400,24 +1400,8 @@ toggleRequest(e) {
         this.syncedSlide();
     }
 
-    // EXTERNAL CSS
-    // #checkout {
-    //     width: 100%;
-    //     height: 100%;
-    //     position: fixed;
-    //     right: 0;
-    //     top: 0;
-    //     z-index: 10;
-    //     display: grid;
-    //     grid-template-columns: 1fr;
-    //     grid-template-rows: 1fr;
-    //     align-items: center;
-    //     justify-items: center;
-    //     background-color: white;
-    //   }
-
     render() {
-        this.shadowRoot.innerHTML = `
+        this.shadow.innerHTML = `
             <style>
                 // :host {
                 //     display: block;
