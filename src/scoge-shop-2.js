@@ -1387,8 +1387,10 @@ toggleRequest(e) {
 
    async connectedCallback() {
         this.render();
-       await this.getProducts();
+        await this.getProducts();
+        console.log("products",this.products);
         this.loadShop();
+        console.log("shop loaded");
         // this.shadowRoot.getElementById("sliderEl").addEventListener("input", this.progressScript.bind(this));
         this.shadowRoot.getElementById("submitRequest").addEventListener("click", this.submitRequest.bind(this));
         this.shadowRoot.getElementById("returnButLink4").addEventListener("click", this.toggleBag.bind(this))
