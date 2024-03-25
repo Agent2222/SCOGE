@@ -38,11 +38,9 @@ class scogeShop extends HTMLElement {
         // this.stripe = Stripe("pk_live_51IbCVzHMfdeKt5zM7eq7VimKhvoak6vkeati23YVPavrVNnYj4oPiE36KBYpy5LYzudDioM5AONK9r26IRA9Tysy00ibywIvec");
         this.stripeJs = document.createElement('script');
         this.stripeJs.src = 'https://js.stripe.com/v3/';
-        this.stripeJs.onload = () => {
+        document.head.appendChild(this.stripeJs);
             this.stripe = Stripe("pk_live_51IbCVzHMfdeKt5zM7eq7VimKhvoak6vkeati23YVPavrVNnYj4oPiE36KBYpy5LYzudDioM5AONK9r26IRA9Tysy00ibywIvec");
             // Further Stripe-related initialization...
-        };
-        document.head.appendChild(this.stripeJs);
     }
 
     get active() {
