@@ -331,34 +331,32 @@ class getUniMenu extends HTMLElement {
       if (window.dtmenuOpen === false) {
         document.getElementById("shop2").setAttribute("active","false");
         this.closeFullMenu();
-        document.addEventListener('DOMContentLoaded', function() {
-          document.getElementById("shop2").shadowRoot.querySelector("#productInfo").style.pointerEvents = "none";
-            // menuIcon.style.transform = "scale(2.2) rotate(180deg) translateX(10px)";
-          var m1 = this.shadowRoot.getElementById("mi1");
-          var m2 = this.shadowRoot.getElementById("mi2");
-          var m3 = this.shadowRoot.getElementById("mi3");
-          gsap.to(m1, {
+        // document.getElementById("shop2").shadowRoot.querySelector("#productInfo").style.pointerEvents = "none";
+        // menuIcon.style.transform = "scale(2.2) rotate(180deg) translateX(10px)";
+        var m1 = this.shadowRoot.getElementById("mi1");
+        var m2 = this.shadowRoot.getElementById("mi2");
+        var m3 = this.shadowRoot.getElementById("mi3");
+        gsap.to(m1, {
+          duration: 0.5,
+          rotate: 45,
+          translateY: 12
+        })
+        gsap.to(m3, {
             duration: 0.5,
-            rotate: 45,
-            translateY: 12
-          })
-          gsap.to(m3, {
-              duration: 0.5,
-              rotate: -45,
-              translateY: -12
-          })
-          gsap.to(m2, {
-              opacity: 0
-          })
-          menuHeader.style.height = "20%";
-          setTimeout(() => {
-            menu.style.maxHeight = "80%";
-            menu.style.top = "10svh";
-          }, 150);
-          window.dtmenuOpen = true;
-          menu.style.transition = "all 0.3s ease-in-out";
-          this.shadowRoot.getElementById("uniMenuShop").style.visibility = "visible";
-        });
+            rotate: -45,
+            translateY: -12
+        })
+        gsap.to(m2, {
+            opacity: 0
+        })
+        menuHeader.style.height = "20%";
+        setTimeout(() => {
+          menu.style.maxHeight = "80%";
+          menu.style.top = "10svh";
+        }, 150);
+        window.dtmenuOpen = true;
+        menu.style.transition = "all 0.3s ease-in-out";
+        this.shadowRoot.getElementById("uniMenuShop").style.visibility = "visible";
         return;
       } else {
         // Desktop Menu
