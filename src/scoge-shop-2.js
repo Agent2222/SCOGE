@@ -21,6 +21,7 @@ class scogeShop extends HTMLElement {
         this.selectedLook = null;
         this.lookCollection = null;
         this.currentProduct = null;
+        this.shopBuilt = false;
         this.bag = [];
         this.bagOpen = false;
         this.checkoutBuilt = false;
@@ -66,6 +67,13 @@ class scogeShop extends HTMLElement {
     attributeChangedCallback(name, oldValue, newValue) {
         var main = this.shadowRoot.getElementById("main");
         if (newValue === "true") {
+            console.log("Shop Active");
+            if (this.shopBuilt === false) {
+                this.getProducts().then(() => {
+                    this.loadShop();
+                    this.shopBuilt = true;
+                });
+            }
             gsap.to(main, {
                 scale: 1,
                 duration: 0.5,
@@ -1385,12 +1393,12 @@ toggleRequest(e) {
 }
 
 
-   async connectedCallback() {
+    connectedCallback() {
         this.render();
-        await this.getProducts();
-        console.log("products",this.products);
-        this.loadShop();
-        console.log("shop loaded");
+        // await this.getProducts();
+        // console.log("products",this.products);
+        // this.loadShop();
+        // console.log("shop loaded");
         // this.shadowRoot.getElementById("sliderEl").addEventListener("input", this.progressScript.bind(this));
         this.shadowRoot.getElementById("submitRequest").addEventListener("click", this.submitRequest.bind(this));
         this.shadowRoot.getElementById("returnButLink4").addEventListener("click", this.toggleBag.bind(this))
