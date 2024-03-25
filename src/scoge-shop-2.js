@@ -34,6 +34,7 @@ class scogeShop extends HTMLElement {
         this.prodImg = null;
         this.shopOpen = false;
         this.ch = null;
+        this.stripe = null;
         // this.stripe = Stripe("pk_live_51IbCVzHMfdeKt5zM7eq7VimKhvoak6vkeati23YVPavrVNnYj4oPiE36KBYpy5LYzudDioM5AONK9r26IRA9Tysy00ibywIvec");
         this.stripeJs = document.createElement('script');
         this.stripeJs.src = 'https://js.stripe.com/v3/';
@@ -405,8 +406,8 @@ async getProducts() {
       });
     
       const { clientSecret } = await response.json();
-    
-      const checkout = await this.stripeJs.initEmbeddedCheckout({
+      
+      const checkout = await this.stripe.initEmbeddedCheckout({
         clientSecret,
       });
 
@@ -816,7 +817,6 @@ toggleBag() {
         bagPage.style.pointerEvents = "none";
         // this.toggleRequest();
         this.bagOpen = false;
-        console.log("Debug 1");
         // this.shadowRoot.getElementById("addToCart").style.opacity = "100%";
         // this.shadowRoot.getElementById("addToCart").style.pointerEvents = "auto";
         this.shadowRoot.getElementById("cartItems").style.opacity = "0";
@@ -830,7 +830,6 @@ toggleBag() {
         if (icon) {
             icon.style.display = "grid";
         }
-        console.log("Debug 2");
         bagPage.style.opacity = "0";
         bagPage.style.scale = "2";
         bagPage.style.pointerEvents = "none";
@@ -1395,7 +1394,6 @@ toggleRequest(e) {
    async connectedCallback() {
         this.render();
         await this.getProducts();
-        console.log("products",this.products);
         this.loadShop();
         // this.shadowRoot.getElementById("sliderEl").addEventListener("input", this.progressScript.bind(this));
         this.shadowRoot.getElementById("submitRequest").addEventListener("click", this.submitRequest.bind(this));
