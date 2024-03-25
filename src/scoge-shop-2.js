@@ -1385,9 +1385,9 @@ toggleRequest(e) {
 }
 
 
-    connectedCallback() {
+   async connectedCallback() {
         this.render();
-        this.getProducts();
+        await this.getProducts();
         console.log("products",this.products);
         this.loadShop();
         console.log("shop loaded");
@@ -2997,4 +2997,4 @@ toggleRequest(e) {
 
 customElements.define('scoge-shop', scogeShop);
 
-export {scogeShop};
+export { scogeShop };
