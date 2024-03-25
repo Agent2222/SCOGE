@@ -4,6 +4,7 @@ window.Buffer = window.Buffer || Buffer;
 // import * as BABYLON from "@babylonjs/core";
 // import { GameManager } from "./game/GameManger.js";
 import { getUniMenu } from "../src/dt-uniMenu.js";
+import { scogeShop } from "../src/scoge-shop-2.js";
 import { scogeRsvp } from "../src/scoge-rsvp.js";
 import { dtMusic } from "./dt-scogeMusic.js";
 import { dtInvestors } from "../src/dt-investors";
@@ -28,7 +29,6 @@ import { uniDomainDev } from "./uni-c-domaindev.js";
 import { checkInitialState } from "../src/game/SceneManager.js";
 import { emoter } from "./uniComponents/emoter.js";
 import { tooltip } from "./uniHelpers/tooltip.js";
-import { scogeShop } from "./scoge-shop-2.js";
 
 // Statics
 import mainvid1 from "../assets/video/scoge-c2-1.mp4";
