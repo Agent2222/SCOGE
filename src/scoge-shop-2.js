@@ -1385,9 +1385,9 @@ toggleRequest(e) {
 }
 
 
-   async connectedCallback() {
+    connectedCallback() {
         this.render();
-        await this.getProducts();
+        this.getProducts();
         console.log("products",this.products);
         this.loadShop();
         console.log("shop loaded");
