@@ -317,9 +317,6 @@ class getUniMenu extends HTMLElement {
     const refresh = this.shadow.querySelector("#refresh");
     var bagLength = document.getElementById("shop2").bag.length;
     var checkoutBuilt = document.getElementById("shop2").checkoutBuilt;
-    var m1 = this.shadowRoot.getElementById("mi1");
-    var m2 = this.shadowRoot.getElementById("mi2");
-    var m3 = this.shadowRoot.getElementById("mi3");
     if (checkoutBuilt === true) {
       document.getElementById("shop2").hideCheckout();
       document.getElementById("shop2").endCoSession();
@@ -336,6 +333,9 @@ class getUniMenu extends HTMLElement {
         document.getElementById("shop2").setAttribute("active","false");
         this.closeFullMenu();
         // menuIcon.style.transform = "scale(2.2) rotate(180deg) translateX(10px)";
+        var m1 = this.shadowRoot.getElementById("mi1");
+        var m2 = this.shadowRoot.getElementById("mi2");
+        var m3 = this.shadowRoot.getElementById("mi3");
         gsap.to(m1, {
           duration: 0.5,
           rotate: 45,
@@ -374,17 +374,20 @@ class getUniMenu extends HTMLElement {
         } else {
           menu.style.top = "75svh";
         }
-        gsap.to(m1, {
+        var mm1 = this.shadowRoot.getElementById("mi1");
+        var mm2 = this.shadowRoot.getElementById("mi2");
+        var mm3 = this.shadowRoot.getElementById("mi3");
+        gsap.to(mm1, {
           duration: 0.5,
           rotate: 0,
           translateY: 0
         })
-        gsap.to(m3, {
+        gsap.to(mm3, {
             duration: 0.5,
             rotate: 0,
             translateY: 0
         })
-        gsap.to(m2, {
+        gsap.to(mm2, {
             opacity: 1
         })
         menuItems.style.maxHeight = "0%";
@@ -400,17 +403,20 @@ class getUniMenu extends HTMLElement {
       // dragElement(moveMenu, true);
       if (window.dtmenuOpen === false) {
         this.closeFullMenu();
-        gsap.to(m1, {
+        var mmm1 = this.shadowRoot.getElementById("mi1");
+        var mmm2 = this.shadowRoot.getElementById("mi2");
+        var mmm3 = this.shadowRoot.getElementById("mi3");
+        gsap.to(mmm1, {
           duration: 0.5,
           rotate: 0,
           translateY: 0
         })
-        gsap.to(m3, {
+        gsap.to(mmm3, {
             duration: 0.5,
             rotate: 0,
             translateY: 0
         })
-        gsap.to(m2, {
+        gsap.to(mmm2, {
             opacity: 1
         })
         // menu.style.transition = "all 0.3s ease-in-out";
@@ -435,17 +441,20 @@ class getUniMenu extends HTMLElement {
         setTimeout(() => {
           menu.removeAttribute("class", "collapsed");
         }, 150);
-        gsap.to(m1, {
+        var mmmm1 = this.shadowRoot.getElementById("mi1");
+        var mmmm2 = this.shadowRoot.getElementById("mi2");
+        var mmmm3 = this.shadowRoot.getElementById("mi3");
+        gsap.to(mmmm1, {
           duration: 0.5,
           rotate: 45,
           translateY: 12
         })
-        gsap.to(m3, {
+        gsap.to(mmmm3, {
             duration: 0.5,
             rotate: -45,
             translateY: -12
         })
-        gsap.to(m2, {
+        gsap.to(mmmm2, {
             opacity: 0
         })
         menuItems.style.maxHeight = "0%";
