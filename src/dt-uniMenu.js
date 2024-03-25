@@ -315,8 +315,8 @@ class getUniMenu extends HTMLElement {
     const menuItems = this.shadow.querySelector("#menuItems");
     const menuHeader = this.shadow.querySelector("#menuHeader");
     const refresh = this.shadow.querySelector("#refresh");
-    var bagLength = document.getElementById("shop2")?.bag.length;
-    var checkoutBuilt = document.getElementById("shop2")?.checkoutBuilt;
+    var bagLength = document.getElementById("shop2").bag.length;
+    var checkoutBuilt = document.getElementById("shop2").checkoutBuilt;
     if (checkoutBuilt === true) {
       document.getElementById("shop2").hideCheckout();
       document.getElementById("shop2").endCoSession();
@@ -329,27 +329,10 @@ class getUniMenu extends HTMLElement {
     // Mobile Menu
     if (window.isMobile === true) {
       if (window.dtmenuOpen === false) {
-        document.getElementById("shop2").setAttribute("active","true");
-        console.log("Shop Active");
+        document.getElementById("shop2").shadowRoot.getElementById("productInfo").style.pointerEvents = "none";
+        document.getElementById("shop2").setAttribute("active","false");
         this.closeFullMenu();
-        // document.getElementById("shop2").shadowRoot.querySelector("#productInfo").style.pointerEvents = "none";
-        // menuIcon.style.transform = "scale(2.2) rotate(180deg) translateX(10px)";
-        var m1 = this.shadowRoot.getElementById("mi1");
-        var m2 = this.shadowRoot.getElementById("mi2");
-        var m3 = this.shadowRoot.getElementById("mi3");
-        gsap.to(m1, {
-          duration: 0.5,
-          rotate: 45,
-          translateY: 12
-        })
-        gsap.to(m3, {
-            duration: 0.5,
-            rotate: -45,
-            translateY: -12
-        })
-        gsap.to(m2, {
-            opacity: 0
-        })
+        menuIcon.style.transform = "scale(2.2) rotate(180deg) translateX(10px)";
         menuHeader.style.height = "20%";
         setTimeout(() => {
           menu.style.maxHeight = "80%";
@@ -375,27 +358,13 @@ class getUniMenu extends HTMLElement {
         } else {
           menu.style.top = "75svh";
         }
-        var mm1 = this.shadowRoot.getElementById("mi1");
-        var mm2 = this.shadowRoot.getElementById("mi2");
-        var mm3 = this.shadowRoot.getElementById("mi3");
-        gsap.to(mm1, {
-          duration: 0.5,
-          rotate: 0,
-          translateY: 0
-        })
-        gsap.to(mm3, {
-            duration: 0.5,
-            rotate: 0,
-            translateY: 0
-        })
-        gsap.to(mm2, {
-            opacity: 1
-        })
+        menuIcon.style.transform = "scale(2.2) rotate(0deg)";
         menuItems.style.maxHeight = "0%";
         menuItems.style.overflow = "hidden";
         window.dtmenuOpen = false;
         refresh.style.animationPlayState = "paused";
         this.shadowRoot.getElementById("uniMenuShop").style.visibility = "hidden";
+        document.getElementById("shop2").shadowRoot.getElementById("productInfo").style.pointerEvents = "auto";
         return;
       }
     } else {
@@ -404,22 +373,7 @@ class getUniMenu extends HTMLElement {
       // dragElement(moveMenu, true);
       if (window.dtmenuOpen === false) {
         this.closeFullMenu();
-        var mmm1 = this.shadowRoot.getElementById("mi1");
-        var mmm2 = this.shadowRoot.getElementById("mi2");
-        var mmm3 = this.shadowRoot.getElementById("mi3");
-        gsap.to(mmm1, {
-          duration: 0.5,
-          rotate: 0,
-          translateY: 0
-        })
-        gsap.to(mmm3, {
-            duration: 0.5,
-            rotate: 0,
-            translateY: 0
-        })
-        gsap.to(mmm2, {
-            opacity: 1
-        })
+        menuIcon.style.transform = "rotate(180deg)";
         // menu.style.transition = "all 0.3s ease-in-out";
         // menu.style.maxHeight = "50%";
         setTimeout(() => {
@@ -442,22 +396,7 @@ class getUniMenu extends HTMLElement {
         setTimeout(() => {
           menu.removeAttribute("class", "collapsed");
         }, 150);
-        var mmmm1 = this.shadowRoot.getElementById("mi1");
-        var mmmm2 = this.shadowRoot.getElementById("mi2");
-        var mmmm3 = this.shadowRoot.getElementById("mi3");
-        gsap.to(mmmm1, {
-          duration: 0.5,
-          rotate: 45,
-          translateY: 12
-        })
-        gsap.to(mmmm3, {
-            duration: 0.5,
-            rotate: -45,
-            translateY: -12
-        })
-        gsap.to(mmmm2, {
-            opacity: 0
-        })
+        menuIcon.style.transform = "rotate(0deg)";
         menuItems.style.maxHeight = "0%";
         menuItems.style.overflow = "hidden";
         window.dtmenuOpen = false;
@@ -1242,7 +1181,7 @@ class getUniMenu extends HTMLElement {
               position: absolute;
               padding: 2% 6%;
               transition: all 0.5s ease;
-              cursor: grab;
+              cursor: move;
               user-select: none;
               sticky: top;
               top: 0;
@@ -1267,38 +1206,15 @@ class getUniMenu extends HTMLElement {
               z-index: 6;
             }
             #uniMenuIcon {
-              font-size: 1em;
+              font-size: 2.5em;
               justify-self: end;
               transform: rotate(0deg);
               cursor: pointer;
               transition: all 0.5s ease;
-              pointer-events: auto;
             }
             #uniMenuIcon:hover {
               color: white;
             }
-
-            .menuIcon {
-              height: 2px;
-              width: 40px;
-              background-color: #ff002d;
-              border-radius: 4px;
-              margin-top: 10px;
-              user-select: none;
-            }
-
-            // #mi1 {
-            //   transform: rotate(45deg) translateY(14px);
-            // }
-
-            // #mi2 {
-            //   transform: rotate(-45deg) translateY(-5px);
-            // }
-
-            // #mi3 {
-            //   opacity: 0;
-            // }
-          
             #menuItems {
               display: grid;
               width: 100%;
@@ -2894,6 +2810,7 @@ class getUniMenu extends HTMLElement {
               #uniMenuIcon {
                 display: none;
                 color: #ff002d !important;
+                transform: scale(2.2);
                 padding-right: 8pt;
               }
 
@@ -3008,7 +2925,7 @@ class getUniMenu extends HTMLElement {
                 display: none;
                 user-select: auto;
                 pointer-events: auto;
-                cursor: grab;
+                cursor: drag;
               }
 
               #beaconAction1 {
@@ -3264,11 +3181,7 @@ class getUniMenu extends HTMLElement {
               <div id="topMenu">
                <img id="uniMenuLogo" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/SCOGÉ_Logo-red.png" draggable="false">
                <div id="loadingText">Loading...</div>
-               <div id="uniMenuIcon">
-                <div class="menuIcon" id="mi1"></div>
-                <div class="menuIcon" id="mi2"></div>
-                <div class="menuIcon" id="mi3"></div>
-               </div>
+               <div id="uniMenuIcon">&#8682;</div>
               </div>
               <div id="uniVersion">
                 Universe - v. 0.0.6
