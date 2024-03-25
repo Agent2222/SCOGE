@@ -1453,7 +1453,9 @@ toggleRequest(e) {
                     grid-template-rows: 80% 10% 10%;
                     justify-content: center;
                     align-items: center;
-                    position: relative;
+                    position: fixed;
+                    left: 0;
+                    top: 0;
                     overflow: hidden;
                     background-color: rgba(0,0,0,0.90);
                     z-index: 10;
