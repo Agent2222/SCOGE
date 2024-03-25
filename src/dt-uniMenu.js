@@ -315,8 +315,8 @@ class getUniMenu extends HTMLElement {
     const menuItems = this.shadow.querySelector("#menuItems");
     const menuHeader = this.shadow.querySelector("#menuHeader");
     const refresh = this.shadow.querySelector("#refresh");
-    var bagLength = document.getElementById("shop2").bag.length;
-    var checkoutBuilt = document.getElementById("shop2").checkoutBuilt;
+    var bagLength = document.getElementById("shop2")?.bag.length;
+    var checkoutBuilt = document.getElementById("shop2")?.checkoutBuilt;
     if (checkoutBuilt === true) {
       document.getElementById("shop2").hideCheckout();
       document.getElementById("shop2").endCoSession();
@@ -329,9 +329,12 @@ class getUniMenu extends HTMLElement {
     // Mobile Menu
     if (window.isMobile === true) {
       if (window.dtmenuOpen === false) {
-        document.getElementById("shop2").shadowRoot.getElementById("productInfo").style.pointerEvents = "none";
         document.getElementById("shop2").setAttribute("active","false");
         this.closeFullMenu();
+        if (document.getElementById("shop2").shadowRoot.getElementById("productInfo")) {
+          document.getElementById("shop2").shadowRoot.getElementById("productInfo").style.pointerEvents = "none";
+        }
+       
         // menuIcon.style.transform = "scale(2.2) rotate(180deg) translateX(10px)";
         var m1 = this.shadowRoot.getElementById("mi1");
         var m2 = this.shadowRoot.getElementById("mi2");
