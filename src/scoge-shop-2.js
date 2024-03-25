@@ -36,11 +36,13 @@ class scogeShop extends HTMLElement {
         this.ch = null;
         this.stripe = null;
         // this.stripe = Stripe("pk_live_51IbCVzHMfdeKt5zM7eq7VimKhvoak6vkeati23YVPavrVNnYj4oPiE36KBYpy5LYzudDioM5AONK9r26IRA9Tysy00ibywIvec");
-        this.stripeJs = document.createElement('script');
-        this.stripeJs.src = 'https://js.stripe.com/v3/';
-        document.head.appendChild(this.stripeJs);
-            this.stripe = Stripe("pk_live_51IbCVzHMfdeKt5zM7eq7VimKhvoak6vkeati23YVPavrVNnYj4oPiE36KBYpy5LYzudDioM5AONK9r26IRA9Tysy00ibywIvec");
-            // Further Stripe-related initialization...
+        // this.stripeJs = document.createElement('script');
+        // this.stripeJs.src = 'https://js.stripe.com/v3/';
+        // document.head.appendChild(this.stripeJs);
+        // this.stripeJs.onload = () => {
+        //     this.stripe = Stripe("pk_live_51IbCVzHMfdeKt5zM7eq7VimKhvoak6vkeati23YVPavrVNnYj4oPiE36KBYpy5LYzudDioM5AONK9r26IRA9Tysy00ibywIvec");
+        //     // Further Stripe-related initialization...
+        // };
     }
 
     get active() {
@@ -405,7 +407,10 @@ async getProducts() {
     
       const { clientSecret } = await response.json();
       
-      console.log("stripe", await this.stripe);
+      this.stripe = Stripe("pk_live_51IbCVzHMfdeKt5zM7eq7VimKhvoak6vkeati23YVPavrVNnYj4oPiE36KBYpy5LYzudDioM5AONK9r26IRA9Tysy00ibywIvec");
+
+      console.log("Stripe:", this.stripe);
+      
       const checkout = await this.stripe.initEmbeddedCheckout({
         clientSecret,
       });
