@@ -406,7 +406,7 @@ async getProducts() {
     
       const { clientSecret } = await response.json();
     
-      const checkout = await this.stripe.initEmbeddedCheckout({
+      const checkout = await this.stripeJs.initEmbeddedCheckout({
         clientSecret,
       });
 
