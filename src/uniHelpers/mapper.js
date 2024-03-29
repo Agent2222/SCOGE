@@ -821,6 +821,7 @@ export function activateMapper() {
     var live = "https://ic0.app";
     var local = "http://127.0.0.1:4943";
     let agent = new HttpAgent({ host: local });
+    // let agent =  window.ic.plug.agent;
     const actor = Actor.createActor(idlFactory, {
         agent,
         canisterId,

@@ -86,12 +86,6 @@ export const idlFactory = ({ IDL }) => {
     'ok' : IDL.Vec(TokenMetadata),
     'err' : NftError,
   });
-  const Stats = IDL.Record({
-    'cycles' : IDL.Nat,
-    'total_transactions' : IDL.Nat,
-    'total_unique_holders' : IDL.Nat,
-    'total_supply' : IDL.Nat,
-  });
   const SupportedInterface = IDL.Record({
     'Burn' : IDL.Null,
     'Mint' : IDL.Null,
@@ -104,7 +98,6 @@ export const idlFactory = ({ IDL }) => {
     'alphaLedger' : IDL.Func([], [IDL.Nat], ['query']),
     'balanceOf' : IDL.Func([IDL.Principal], [Result], ['query']),
     'custodians' : IDL.Func([], [IDL.Vec(IDL.Principal)], ['query']),
-    'cycles' : IDL.Func([], [IDL.Nat], ['query']),
     'logo' : IDL.Func([], [IDL.Opt(IDL.Text)], ['query']),
     'metadata' : IDL.Func([], [Metadata], ['query']),
     'mint' : IDL.Func(
@@ -126,7 +119,6 @@ export const idlFactory = ({ IDL }) => {
     'setLogo' : IDL.Func([IDL.Text], [], []),
     'setName' : IDL.Func([IDL.Text], [], []),
     'setSymbol' : IDL.Func([IDL.Text], [], []),
-    'stats' : IDL.Func([], [Stats], ['query']),
     'supportedInterfaces' : IDL.Func(
         [],
         [IDL.Vec(SupportedInterface)],
@@ -136,7 +128,6 @@ export const idlFactory = ({ IDL }) => {
     'tempMetaData' : IDL.Func([IDL.Nat], [Result_1], ['query']),
     'tokenMetadata' : IDL.Func([IDL.Nat], [Result_1], ['query']),
     'totalSupply' : IDL.Func([], [IDL.Nat], ['query']),
-    'totalUniqueHolders' : IDL.Func([], [IDL.Nat], ['query']),
     'updateTemp' : IDL.Func(
         [IDL.Principal, IDL.Nat, IDL.Vec(NMCProperties)],
         [Result],

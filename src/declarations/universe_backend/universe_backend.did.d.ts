@@ -71,12 +71,6 @@ export type Result_2 = { 'ok' : Array<TokenMetadata> } |
   { 'err' : NftError };
 export type Result_3 = { 'ok' : [] | [Principal] } |
   { 'err' : NftError };
-export interface Stats {
-  'cycles' : bigint,
-  'total_transactions' : bigint,
-  'total_unique_holders' : bigint,
-  'total_supply' : bigint,
-}
 export interface SupportedInterface {
   'Burn' : null,
   'Mint' : null,
@@ -103,7 +97,6 @@ export interface _SERVICE {
   'alphaLedger' : ActorMethod<[], bigint>,
   'balanceOf' : ActorMethod<[Principal], Result>,
   'custodians' : ActorMethod<[], Array<Principal>>,
-  'cycles' : ActorMethod<[], bigint>,
   'logo' : ActorMethod<[], [] | [string]>,
   'metadata' : ActorMethod<[], Metadata>,
   'mint' : ActorMethod<[Principal, bigint, Array<NMCProperties>], Result>,
@@ -117,14 +110,12 @@ export interface _SERVICE {
   'setLogo' : ActorMethod<[string], undefined>,
   'setName' : ActorMethod<[string], undefined>,
   'setSymbol' : ActorMethod<[string], undefined>,
-  'stats' : ActorMethod<[], Stats>,
   'supportedInterfaces' : ActorMethod<[], Array<SupportedInterface>>,
   'symbol' : ActorMethod<[], [] | [string]>,
   'tempMetaData' : ActorMethod<[bigint], Result_1>,
   'tokenMetadata' : ActorMethod<[bigint], Result_1>,
   'totalSupply' : ActorMethod<[], bigint>,
-  'totalUniqueHolders' : ActorMethod<[], bigint>,
   'updateTemp' : ActorMethod<[Principal, bigint, Array<NMCProperties>], Result>,
 }
 export declare const idlFactory: IDL.InterfaceFactory;
-export declare const init: ({ IDL }: { IDL: IDL }) => IDL.Type[];
+export declare const init: (args: { IDL: typeof IDL }) => IDL.Type[];

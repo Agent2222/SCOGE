@@ -46,4 +46,4 @@ export interface taoscity {
 }
 export interface _SERVICE extends taoscity {}
 export declare const idlFactory: IDL.InterfaceFactory;
-export declare const init: ({ IDL }: { IDL: IDL }) => IDL.Type[];
+export declare const init: (args: { IDL: typeof IDL }) => IDL.Type[];

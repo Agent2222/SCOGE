@@ -1,10 +1,11 @@
+import { enterTaosCity } from "./universe.js";
 class CombinationLock extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
         // Initialize the visible combination to a default value
         this.combination = ['M', 'N', 'O', 'P', 'Q'];
-        this.correctCombination = ['U', 'G', 'V', 'U', 'G']; // The correct combination
+        this.correctCombination = ['A', 'L', 'G', 'S', 'T']; // The correct combination
         this.numLetters = 26; // Number of letters in the alphabet
     }
 
@@ -44,6 +45,7 @@ class CombinationLock extends HTMLElement {
         this.shadowRoot.querySelector('#enter-button').addEventListener('click', () => {
             if (this.combination.join('') === this.correctCombination.join('')) {
                 console.log('Unlocked!');
+                enterTaosCity();
             } else {
                 this.shadowRoot.querySelector('#response').style.display = 'block';
                 setTimeout(() => {
