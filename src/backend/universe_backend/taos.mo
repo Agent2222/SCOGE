@@ -1,5 +1,5 @@
 import Debug "mo:base/Debug";
-import Cycles "mo:base/ExperimentalCycles";
+// import Cycles "mo:base/ExperimentalCycles";
 import T "metadata";
 import Array "mo:base/Array";
 import Iter "mo:base/Iter";
@@ -42,7 +42,7 @@ shared(msg) actor class taoscity() {
     private stable var domains_ : [var T.Domain] = [var];
 
     // Cycles balance storage
-    private stable var cycles_ : Nat = Cycles.balance();
+    // private stable var cycles_ : Nat = Cycles.balance();
 
     /////////////////
     // Constructor //

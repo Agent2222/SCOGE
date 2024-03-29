@@ -14,7 +14,7 @@ import Text "mo:base/Text";
 import Time "mo:base/Time";
 import Bool "mo:base/Bool";
 import T "metadata";
-import Cycles "mo:base/ExperimentalCycles";
+// import Cycles "mo:base/ExperimentalCycles";
 import D "mo:base/Debug";
 import Float64 "mo:base/Float";
 import List "mo:base/List";
@@ -124,9 +124,9 @@ actor DIP721 {
     private stable var upgraded_at_ : Nat64 = Nat64.fromNat(Int.abs(Time.now()));
     private stable var custodians_ : [Principal] = [Principal.fromText(admin), ];
     private stable var symbol_ : ?Text = ?"SCOGÉ";
-    private stable var cycles_ : Nat = Cycles.balance();
-    private stable var total_transactions_ : Nat = Cycles.balance();
-    private stable var total_unique_holders_ : Nat = Cycles.balance();
+    // private stable var cycles_ : Nat = Cycles.balance();
+    // private stable var total_transactions_ : Nat = Cycles.balance();
+    // private stable var total_unique_holders_ : Nat = Cycles.balance();
     private stable var total_supply_ : Nat = digisetteAlphaRings;
     private stable var owner : Text = "qpbuq-myqvw-yoaff-265ad-5g6xu-wx5dl-zzd7y-y6oak-zo4uf-x3ozb-dqe";
     private stable var supportedInterface_ : [SupportedInterface] = [];
@@ -240,14 +240,14 @@ actor DIP721 {
     };
 
     // stats: () -> (Stats) query;
-    public query func stats () : async (T.Stats) {
-        {
-            cycles = cycles_;
-            total_transactions = total_transactions_;
-            total_unique_holders = total_unique_holders_;
-            total_supply = total_supply_;
-        }
-    };
+    // public query func stats () : async (T.Stats) {
+    //     {
+    //         // cycles = cycles_;
+    //         // total_transactions = total_transactions_;
+    //         total_unique_holders = total_unique_holders_;
+    //         total_supply = total_supply_;
+    //     }
+    // };
 
     // logo : () -> (opt text) query;
     public query func logo () : async ?Text {
@@ -275,14 +275,14 @@ actor DIP721 {
     };
 
     // cycles : () -> (nat) query;
-    public query func cycles () : async (Nat) {
-        return cycles_
-    };
+    // public query func cycles () : async (Nat) {
+    //     return cycles_
+    // };
 
     // totalUniqueHolders : () -> (nat) query;
-      public query func totalUniqueHolders () : async (Nat) {
-        return total_unique_holders_
-    };
+    //   public query func totalUniqueHolders () : async (Nat) {
+    //     return total_unique_holders_
+    // };
 
     public query func alphaLedger () : async (Nat) {
         return digisetteAlphaLedger.size();

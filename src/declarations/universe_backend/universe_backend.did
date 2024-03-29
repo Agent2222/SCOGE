@@ -21,13 +21,6 @@ type SupportedInterface =
    Mint: null;
    TransactionHistory: null;
  };
-type Stats = 
- record {
-   cycles: nat;
-   total_supply: nat;
-   total_transactions: nat;
-   total_unique_holders: nat;
- };
 type Result_3 = 
  variant {
    err: NftError;
@@ -120,7 +113,6 @@ service : {
   alphaLedger: () -> (nat) query;
   balanceOf: (principal) -> (Result) query;
   custodians: () -> (vec principal) query;
-  cycles: () -> (nat) query;
   logo: () -> (opt text) query;
   metadata: () -> (Metadata) query;
   mint: (principal, nat, vec NMCProperties) -> (Result);
@@ -134,12 +126,10 @@ service : {
   setLogo: (text) -> ();
   setName: (text) -> ();
   setSymbol: (text) -> ();
-  stats: () -> (Stats) query;
   supportedInterfaces: () -> (vec SupportedInterface) query;
   symbol: () -> (opt text) query;
   tempMetaData: (nat) -> (Result_1) query;
   tokenMetadata: (nat) -> (Result_1) query;
   totalSupply: () -> (nat) query;
-  totalUniqueHolders: () -> (nat) query;
   updateTemp: (principal, nat, vec NMCProperties) -> (Result);
 }

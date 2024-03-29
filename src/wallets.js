@@ -28,7 +28,8 @@ export async function getNFTCollections(principal) {
     //   console.log("Get Principal", e);
     // });
     var textV = Principal.fromUint8Array(principal._arr).toString();
-    let agent = new HttpAgent({ host: "https://ic0.app" });
+    // let agent = new HttpAgent({ host: "https://ic0.app" });
+    let agent = window.ic.plug.agent;
     try {
       const collections = await getAllUserNFTs({
         agent: agent,
