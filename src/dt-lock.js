@@ -88,7 +88,28 @@ class CombinationLock extends HTMLElement {
                     overflow: hidden;
                     font-family: "BS-R", sans-serif;
                 }
+
+                @font-face {
+                    font-family: "BS-B";
+                    src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Bold.svg");
+                    font-weight: bold;
+                    font-style: normal;
+                }
                 
+                @font-face {
+                    font-family: "GM-I";
+                    src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/DMSans-Italic.ttf");
+                    font-weight: normal;
+                    font-style: italic;
+                  }
+
+                  @font-face {
+                    font-family: "BS-R";
+                    src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.ttf");
+                    font-weight: normal;
+                    font-style: normal;
+                }
+
                 #lock-container {
                     display: flex;
                     justify-content: center;

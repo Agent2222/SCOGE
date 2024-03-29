@@ -2803,19 +2803,19 @@ class getUniMenu extends HTMLElement {
             }
 
             #mintBG {
-              background-image: url("./assets/images/digisette-icon.jpg");
+              background-image: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/buttons/digisette-icon.jpg");
             }
 
             #syncBG {
-              background-image: url("./assets/images/sync-icon.jpg");
+              background-image: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/buttons/sync-icon.jpg");
             }
 
             #loginBG {
-              background-image: url("./assets/images/grid.jpg");
+              background-image: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/buttons/grid.jpg");
             }
 
             #patronBG {
-              background-image: url("./assets/images/patron3.jpg");
+              background-image: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/buttons/patron3.jpg");
             }
 
             #dgromD4 {
