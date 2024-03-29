@@ -827,7 +827,7 @@ export function activateMapper() {
         agent,
         canisterId,
     });
-    agent.fetchRootKey();
+    // agent.fetchRootKey();
     return actor;
 }
 
