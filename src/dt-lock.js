@@ -132,7 +132,7 @@ class CombinationLock extends HTMLElement {
                     padding: 5px;
                     user-select: none;
                     cursor: pointer;
-                    font-family: "GM-I";
+                    font-family: "BS-R";
                     margin: 2px;
                 }
 
@@ -144,7 +144,7 @@ class CombinationLock extends HTMLElement {
                     padding: 10px;
                     user-select: none;
                     cursor: pointer;
-                    font-family: "GM-I";
+                    font-family: "BS-R";
                     margin: 1px;
                     opacity: 0.5;
                     transition: opacity 0.3s;
@@ -178,7 +178,7 @@ class CombinationLock extends HTMLElement {
                     user-select: none;
                     position: absolute;
                     bottom: 15%;
-                    font-family: "GM-I";
+                    font-family: "BS-R";
                     letter-spacing: 2px;
                     transition: .3s all;
                 }
