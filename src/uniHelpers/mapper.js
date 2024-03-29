@@ -817,7 +817,8 @@ export function activateMapper() {
 }
 
  const intActor = async () => {
-    var canisterId = "bd3sg-teaaa-aaaaa-qaaba-cai";
+    // var canisterId = "bd3sg-teaaa-aaaaa-qaaba-cai";
+    var canisterId = "23tad-vaaaa-aaaag-abvwq-cai";
     var live = "https://ic0.app";
     var local = "http://127.0.0.1:4943";
     // let agent = new HttpAgent({ host: local });
