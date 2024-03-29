@@ -821,13 +821,13 @@ export function activateMapper() {
     var canisterId = "23tad-vaaaa-aaaag-abvwq-cai";
     var live = "https://ic0.app";
     var local = "http://127.0.0.1:4943";
-    // let agent = new HttpAgent({ host: local });
-    let agent =  window.ic.plug.agent;
+    let agent = new HttpAgent({ host: live });
+    // let agent =  window.ic.plug.agent;
     const actor = Actor.createActor(idlFactory, {
         agent,
         canisterId,
     });
-    // agent.fetchRootKey();
+    agent.fetchRootKey();
     return actor;
 }
 
