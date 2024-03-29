@@ -9,6 +9,7 @@ import { scogeRsvp } from "../src/scoge-rsvp.js";
 import { dtMusic } from "./dt-scogeMusic.js";
 import { dtInvestors } from "../src/dt-investors";
 import { dtGallery } from "../src/dt-gallery.js";
+import { CombinationLock } from "../src/dt-lock.js";
 import { dialogueBox } from "../src/dialogueBox.js";
 import { uniMenuAgent } from "../src/uni-c-miniAgent.js";
 import { MainDialogue } from "./typing.js";

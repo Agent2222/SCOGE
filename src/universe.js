@@ -1360,7 +1360,9 @@ export async function universe() {
     }
   };
 
-  // Move menu
+  //////////////////////////////////////////
+  // Move menu UNIMENU
+  //////////////////////////////////////////
   window.moveMenu = () => {
     var canvas = document.getElementById("universe");
     moveMenu.style.display = "block";
@@ -1410,11 +1412,17 @@ export async function universe() {
           soundtrack.play("menuEnter3");
         }
       });
+
+      var patrons = shadow.getElementById("agentsAndPatrons");
+      var warpLock = shadow.getElementById("warpLock");
+
       switch (el.id) {
         case "uniMenuShop":
           el.addEventListener("click", (e) => {
             window.currentMenuTab = "shop";
             shadow.getElementById("romOffline").style.display = "none";
+            patrons.style.display = "none";
+            warpLock.style.display = "none";
             dragElement(moveMenu, true);
             shadow.getElementById("domainUnDev").style.display = "none";
             shadow.getElementById("fm-enhancements").style.display = "grid";
@@ -1429,38 +1437,10 @@ export async function universe() {
             if (window.isMobile === true) {
               window.dtmenuOpen = false;
               document.getElementById("shop2").setAttribute("active","true");
-              // shadow.getElementById(
-              //   "fm-enhancements"
-              // ).innerHTML = `
-              // <div class="mobileShopOpts" id="fashionShop">
-              //   <div class="mShopLabel">CLOTHING</div>
-              //   <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/shop-temp-1.png" alt="NFT Shop">
-              // </div>
-              // <div class="mobileShopOpts" id="nftShop">
-              //   <div class="mShopLabel">DIGISETTE</div>
-              //   <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png" alt="NFT Shop">
-              // </div>
-              // `;
-              // shadow.getElementById("fashionShop").addEventListener("click", () => {
-              //   window.shopping();
-              // });
-              // shadow.getElementById("nftShop").addEventListener("click", () => {
-              //   window.open('https://yumi.io/launchpad/detail/hmz4w-fiaaa-aaaah-admlq-cai');
-              // });
             } else {
               window.dtmenuOpen = false;
               pinMenu();
               document.getElementById("shop2").setAttribute("active","true");
-              // shadow.getElementById(
-              //   "fm-enhancements"
-              // ).innerHTML = `
-              // <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/DIGISHOP-1.png" alt="NFT Shop" id="nftShop">
-              // `;
-              // shadow.getElementById("nftShop").addEventListener("click", () => {
-              //   document.getElementById("getNfts").toggleNftScreen();
-              //   canvas.style.filter = "blur(5px)";
-              //   shadow.getElementById("uniMenu").style.filter = "blur(10px)";
-              // });
             }
             shadow.getElementById("fm-inventory").style.display = "none";
             shadow.getElementById("menuLoadingScreen").style.display = "none";
@@ -1472,6 +1452,8 @@ export async function universe() {
           el.addEventListener("click", (e) => {
             window.headlineSwtich(e);
             shadow.querySelector(`.it3`).style.display = "none";
+            patrons.style.display = "none";
+            warpLock.style.display = "none";
             window.currentMenuTab = "inventory";
             shadow.getElementById("romOffline").style.display = "none";
             if (window.tempIn === true) {
@@ -1502,8 +1484,6 @@ export async function universe() {
                       .getElementById("getUniMenu")
                       .shadowRoot.getElementById("fm-menu1"),
                   };
-                  // document.getElementById("getUniMenu").switchMenuTabs(selEl);
-                  // el.setAttribute("class", "mmen-active it selectedMenu");
                   el.setAttribute("class", "it selectedMenu");
                 } else {
                   el.setAttribute("class", "men-deactive it");
@@ -1551,7 +1531,8 @@ export async function universe() {
             shadow.getElementById("fm-menu1").style.display = "block";
             window.currentMenuTab = "profile";
             if (window.tempIn === false) {
-              shadow.getElementById("romOffline").style.display = "block";
+              // shadow.getElementById("romOffline").style.display = "block";
+              patrons.style.display = "grid";
             } else {
               shadow.getElementById("domainUnDev").style.display = "block";
             }
@@ -1568,6 +1549,7 @@ export async function universe() {
             shadow.getElementById("fm-feedback").style.display = "none";
             shadow.getElementById("fm-settings").style.display = "none";
             shadow.getElementById("fm-enhancements").style.display = "none";
+            warpLock.style.display = "none";
             shadow.getElementById("menuLoadingScreen").style.display = "none";
             shadow.getElementById("fm-header-headline").style.pointerEvents =
               "auto";
@@ -1578,7 +1560,6 @@ export async function universe() {
                     .getElementById("getUniMenu")
                     .shadowRoot.getElementById("fm-menu1"),
                 };
-                // document.getElementById("getUniMenu").switchMenuTabs(selEl);
                 el.setAttribute("class", "mmen-active ht selectedMenu");
               }
             });
@@ -1590,6 +1571,8 @@ export async function universe() {
             window.headlineSwtich(e);
             window.currentMenuTab = "settings";
             shadow.getElementById("romOffline").style.display = "none";
+            patrons.style.display = "none";
+            warpLock.style.display = "grid";
             shadow.getElementById("domainUnDev").style.display = "none";
             shadow.getElementById("fm-beacons").style.display = "none";
             shadow.getElementById("fm-inventory").style.display = "none";
@@ -1613,6 +1596,8 @@ export async function universe() {
             shadow.getElementById("fm-menu1").style.display = "block";
             window.currentMenuTab = "beacons";
             shadow.getElementById("romOffline").style.display = "none";
+            patrons.style.display = "none";
+            warpLock.style.display = "none";
             shadow.getElementById("domainUnDev").style.display = "none";
             dragElement(moveMenu, true);
             document
@@ -1651,13 +1636,15 @@ export async function universe() {
             // window.headlineSwtich(e);
             window.currentMenuTab = "feedback";
             shadow.getElementById("romOffline").style.display = "none";
+            patrons.style.display = "none";
+            warpLock.style.display = "none";
             shadow.getElementById("domainUnDev").style.display = "none";
             if (window.loggedIn === true) {
               shadow.getElementById("feedbackHeadline").innerHTML =
               "Help us make T.A.O.S City better";
             } else {
               shadow.getElementById("feedbackHeadline").innerHTML =
-              "Does SCOGÉ have your Email?";
+              "Contact SCOGÉ";
             }
             shadow.getElementById("fm-beacons").style.display = "none";
             shadow.getElementById("fm-inventory").style.display = "none";
@@ -1683,7 +1670,9 @@ export async function universe() {
         case "uniMenuExit":
           el.addEventListener("click", () => {
             window.currentMenuTab = "signin";
-            shadow.getElementById("romOffline").style.display = "block";
+            shadow.getElementById("romOffline").style.display = "grid";
+            patrons.style.display = "none";
+            warpLock.style.display = "none";
           });
           break;
         case "uniMenuCloudHall":
@@ -1691,8 +1680,10 @@ export async function universe() {
             window.headlineSwtich(e);
             shadow.getElementById("fm-menu1").style.display = "block";
             window.currentMenuTab = "cloudHall";
+            patrons.style.display = "none";
+            warpLock.style.display = "none";
             if (window.tempIn === false) {
-              shadow.getElementById("romOffline").style.display = "block";
+              shadow.getElementById("romOffline").style.display = "grid";
             } else {
               shadow.getElementById("romOffline").style.display = "none";
               shadow.getElementById("domainUnDev").style.display = "none";
@@ -2276,6 +2267,7 @@ export async function enterTaosCity(custCheck) {
   // }, 2000);
   pinMenu();
   uniMenu.getElementById("menuFeedback").innerHTML = "City Central";
+  uniMenu.getElementById("menuProfile").innerHTML = "Profile";
   uniMenu.getElementById("feedbackHeadline").innerHTML = "Help us make T.A.O.S City better.";
   uniMenu.getElementById("feedbackInput").placeholder = "Send feedback, or Contact City-Central here.";
   document.getElementById("dgr").setAttribute("active", "true");

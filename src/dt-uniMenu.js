@@ -83,7 +83,8 @@ class getUniMenu extends HTMLElement {
     this.shadow = this.attachShadow({ mode: "open" });
     this.defaultSource = `<img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/DIGISHOP-1.png" alt="NFT Shop" id="nftShop">`
     this.beacons = null;
-    this.digiLink = "https://yumi.io/launchpad/hmz4w-fiaaa-aaaah-admlq-cai";
+    this.digiLink = "https://yuku.app/launchpad/hmz4w-fiaaa-aaaah-admlq-cai";
+    this.patreonLink = "https://www.patreon.com/_scoge_";
     this.variableDataMessages = [
       {
         name: "Intro",
@@ -914,6 +915,9 @@ class getUniMenu extends HTMLElement {
     this.render();
     this.viewGallery();
     this.musicLevel();
+    this.shadow.getElementById("PatreonBut").addEventListener("click", () => {
+      window.open(this.patreonLink);
+    });
     this.shadow.getElementById("gdBuyBut2").addEventListener("click", () => {
       if (this.domainIntroSeen === null) {
         story("DomainDevelopment");
@@ -990,6 +994,40 @@ class getUniMenu extends HTMLElement {
           }, 3000);
         });
     });
+
+    this.shadow.getElementById("emailForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      this.shadow.getElementById("emailSubmit").value="Submitting..";
+  
+      // Retrieve form values
+      var emailSub = this.shadow.getElementById("emailInput").value;
+      var feedbackSub = "SUBSCRIBED";
+      
+      // Prepare the form data as URL-encoded
+      let formData = new URLSearchParams();
+      formData.append('Email', emailSub);
+      formData.append('FeedbackText', feedbackSub); // Make sure the key matches the GAS expected parameter
+  
+      // Make the fetch request
+      fetch("https://script.google.com/macros/s/AKfycbzHUtfeNysmMSZvlC7tnfYhpgs_EU_3kx9_6H_VV6le8tPyR4Vlzs8SlfES_8pbK0nb2w/exec?focus=feedback", {
+          method: "POST",
+          body: formData, // Send as URL-encoded form data
+          mode: "cors",
+      })
+      .then((res) => res.text())
+      .then((data) => {
+        this.shadow.getElementById("emailSubmit").style.color = "var(--accent)";
+          this.shadow.getElementById("emailSubmit").value="SUBSCRIBED!";
+          setTimeout(() => {
+            this.shadow.getElementById("emailSubmit").style.color = "";
+              this.shadow.getElementById("emailSubmit").value="SUBSCRIBE";
+          }, 2000);
+          this.shadow.getElementById("emailForm").reset(); // Reset the form
+      });
+  });
+  
+
     this.shadow
       .querySelector("#menuMessageBody")
       .addEventListener("click", () => {
@@ -1857,7 +1895,6 @@ class getUniMenu extends HTMLElement {
               font-weight: 600;
               margin-bottom: 20px;
               background-color: transparent;
-              text-align: center;
               cursor: default;
               user-select: none;
             }
@@ -1868,7 +1905,7 @@ class getUniMenu extends HTMLElement {
               margin: 8px 0;
               box-sizing: border-box;
               background-color: transparent;
-              border: 1px solid var(--secondary);
+              border: .5px solid var(--primary);
               font-size: 16px;
               color: var(--secondary);
               vertical-align: top;
@@ -1883,7 +1920,7 @@ class getUniMenu extends HTMLElement {
               margin: 8px 0;
               box-sizing: border-box;
               background-color: transparent;
-              border: 1px solid var(--secondary);
+              border: 1px solid var(--primary);
               font-size: 16px;
               color: var(--secondary);
               vertical-align: top;
@@ -1897,6 +1934,7 @@ class getUniMenu extends HTMLElement {
             #fm-feedback #feedbackInput {
               width: 100%;
               font-family: "BS-R";
+              resize: none;
               height: 150px; /* increase the height of the feedback input */
             }
             
@@ -2415,27 +2453,167 @@ class getUniMenu extends HTMLElement {
             }
 
             #romOffline {
-              width: 80%;
-              height: 80%;
+              width: 88%;
+              height: 88%;
+              position: absolute;
+              top: 0;
+              left: 0;
+              background-color: rgba(0, 0, 0, 0.9);
+              grid-template-columns: 1fr;
+              grid-template-rows: 16% 49% 35%;
+              z-index: 7;
+              padding: 6%;
+              display: none;
+              font-family: "GM-I";
+            }
+
+            #warpLock {
+              width: 88%;
+              height: 88%;
+              position: absolute;
+              top: 0;
+              left: 0;
+              background-color: rgba(0, 0, 0, 0.95);
+              z-index: 7;
+              padding: 6%;
+              display: none;
+              font-family: "GM-I";
+              grid-template-columns: 1fr;
+              grid-template-rows: 10% 90%;
+            }
+
+            #agentsAndPatrons {
+              width: 88%;
+              height: 88%;
               position: absolute;
               top: 0;
               left: 0;
               background-color: rgba(0, 0, 0, 0.9);
               z-index: 7;
-              padding: 10%;
+              padding: 6%;
               display: none;
+              font-family: "GM-I";
+              grid-template-columns: 1fr;
+              grid-template-rows: 10% 58% 17% 20%;
+            }
+
+            #PatreonBut {
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-template-rows: 1fr;
+              justify-items: center;
+              align-items: center;
+              font-size: 1.5em;
+              border-radius: 5px;
+              letter-spacing: 2px;
+              cursor: pointer;
+              transition: 0.3s all;
+              position: relative;
+              margin-top: 5%;
+              letter-spacing: 2px;
+            }
+
+            #patText {
+              font-family: "BS-B";
+            }
+
+
+            #PatreonBut:hover {
+              background-color: var(--accent);
+              color: var(--secondary);
+              font-family: "BS-B";
+              text-shadow: 0 0 5px black;
+              letter-spacing: 12px;
+            }
+
+            #newsletterHead {
+              width: 100%;
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-template-rows: 1fr;
+              justify-items: center;
+              align-items: center;
+              font-size: .6em;
+              letter-spacing: 2px;
+            }
+
+            #emailForm {
+              display: grid;
+              grid-template-columns: 60% 40%;
+              grid-template-rows: 1fr;
+              justify-items: center;
+              align-items: start;
+            }
+
+            #emailInput {
+              width: 100%;
+              height: 50%;
+              background: transparent;
+              border-top: none;
+              border-left: none;
+              border-right: none;
+              border-bottom: 1px solid var(--accent);
+              color: var(--secondary);
+              letter-spacing: 2px;
               font-family: "GM-I";
             }
 
-            #dgromD1 {
+            #emailInput:focus {
+              outline: none;
+            }
+
+            #emailInput::placeholder {
+              color: var(--primary);
+              opacity: 1; /* Firefox */
+            }
+            
+            #emailInput::-ms-input-placeholder { /* Edge 12 -18 */
+              color: var(--primary);
+            }
+
+            #emailSubmit {
+              background: transparent;
+              border: none;
+              color: var(--accent);
               font-family: "GM-I";
-              font-size: .8em;
-              color: white;
-              width: 75%;
-              height: 5%;
-              padding-left: 25%;
+              font-size: 1em;
+              width: 80%;
+              height: 50%;
+              justify-self: end;
+              transition: 0.3s all;
+              text-align: right;
+              cursor: pointer;
+            }
+
+            #emailSubmit:hover {
+              color: var(--accent);
+              letter-spacing: 4px;
+            }
+
+            #dgromD1, #agentssPage {
+              font-family: "GM-I";
+              width: 100%;
+              height: 98%;
+              display: grid;
+              grid-template-columns: 80% 20%;
+              grid-template-rows: 1fr;
+              justify-items: start;
+              align-items: start;
               letter-spacing: 1px;
-              float: left;
+              padding-top: 2%;
+            }
+
+            #dgHead {
+              font-size: 1.2em;
+              letter-spacing: 20px;
+            }
+
+            #dgChangelog {
+              font-size: 0.7em;
+              text-decoration: underline;
+              justify-self: end;
+              letter-spacing: 2px;
+              cursor: pointer;
             }
 
             #dgromD2 {
@@ -2580,23 +2758,76 @@ class getUniMenu extends HTMLElement {
             }
 
             #gdLoginBut {
-              color: var(--accent);
-              border-left: 1px solid var(--accent);
-              border-right: 1px solid var(--accent);
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-template-rows: 1fr;
+              justify-items: center;
+              align-items: center;
+              font-size: 1.2em;
+              border-radius: 5px;
+              letter-spacing: 4px;
+              cursor: pointer;
+              transition: 0.3s all;
+              position: relative;
+            }
+
+            #desktopOnly {
+              font-size: 0.5em;
+              position: absolute;
+              color: var(--primary);
+              bottom: 30%;
+              display: none;
+            }
+
+            .glowButton {
+              box-shadow: 0px 0px 10px var(--accent);
+            }
+
+            .glowButton:hover {
+              border: 1px solid var(--accent);
+            }
+
+            .buttonTxt {
+              position: absolute;
+              opacity: 1;
+            }
+
+            .bgImg {
+              width: 100%;
+              height: 100%;
+              background-size: cover;
+              background-position: center;
+              padding: 0%;
+              margin: 0%;
+              opacity: 0.8;
+            }
+
+            #mintBG {
+              background-image: url("./assets/images/digisette-icon.jpg");
+            }
+
+            #syncBG {
+              background-image: url("./assets/images/sync-icon.jpg");
+            }
+
+            #loginBG {
+              background-image: url("./assets/images/grid.jpg");
+            }
+
+            #patronBG {
+              background-image: url("./assets/images/patron3.jpg");
             }
 
             #dgromD4 {
-              float: left;
-              width: 90%;
-              height: 35%;
-              padding: 5%;
-              margin-top: 10%;
+              width: 95%;
+              height: 90%;
               display: grid;
-              grid-template-columns: 1fr;
-              grid-template-rows: 1fr 1fr;
-              justify-items: center;
-              align-items: center;
-              row-gap: 15%;
+              grid-template-columns: 60% 40%;
+              grid-template-rows: 1fr;
+              justify-items: start;
+              align-items: start;
+              grid-gap: 5%;
+              margin-top: 5%;
             }
 
             #ddLogo {
@@ -2638,7 +2869,7 @@ class getUniMenu extends HTMLElement {
             }
 
             .romLogButtons {
-              width: 60%;
+              width: 100%;
               height: 90%;
               background-color: rgba(0, 0, 0, 0.8);
               border-radius: 5px;
@@ -2647,27 +2878,49 @@ class getUniMenu extends HTMLElement {
               grid-template-rows: 1fr;
               justify-items: center;
               align-items: center;
-              color: var(--accent);
+              color: var(--primary);
               letter-spacing: 1px;
               font-size: .9em;
-              border-left: 1px solid var(--accent);
-              border-right: 1px solid var(--accent);
               transition: 0.3s all ease-in-out;
               cursor: pointer;
+              position: relative;
+            }
+
+            #syncStart {
+              justify-items: start;
+              align-items: end;
+              font-size: 1em;
+              background-size: cover;
+              background-position: center;
+              opacity: 0.6;
+              box-shadow: 0px 0px 10px var(--primary);
+              cursor: default;
+            }
+
+            #syncStartBut {
+              bottom: 3%;
+              left: 8%;
+            }
+
+            #mintStartBut {
+              bottom: 3%;
+              right: 8%;
             }
 
             #gdBuyBut {
               color: var(--primary);
-              border-left: 1px solid var(--primary);
-              border-right: 1px solid var(--primary);
+              justify-items: end;
+              align-items: end;
+              font-size: 1em;
+              background-size: cover;
+              background-position: center;
             }
 
             #gdBuyBut:hover {
-              background-color: var(--primary);
+              background-color: var(--accent);
               color: var(--secondary);
               font-family: "BS-B";
               letter-spacing: 2px;
-              scale: 1.1;
             }
 
             #gdBuyBut2:hover {
@@ -2680,10 +2933,10 @@ class getUniMenu extends HTMLElement {
 
             #gdLoginBut:hover {
               background-color: var(--accent);
-              color: black;
+              color: var(--secondary);
               font-family: "BS-B";
-              letter-spacing: 2px;
-              scale: 1.1;
+              text-shadow: 0px 0px 5px black;
+              letter-spacing: 12px;
             }
 
             .cDot {
@@ -2855,7 +3108,7 @@ class getUniMenu extends HTMLElement {
                 z-index: 11;
                 position: absolute;
                 top: 75svh;
-                left: 36px;
+                left: 39px;
                 background-color: rgba(0, 0, 0, 0.7);
                 border-left: 2px solid #ff002d;
                 border-bottom: 2px solid #ff002d;
@@ -2918,16 +3171,18 @@ class getUniMenu extends HTMLElement {
               }
 
               #romOffline {
-                width: 80%;
-                height: 90%;
+                width: 90%;
+                height: 95%;
                 position: absolute;
                 top: 0;
                 left: 0;
                 background-color: rgba(0, 0, 0, 0.9);
                 z-index: 7;
-                padding-left: 10%;
-                padding-right: 10%;
-                padding-bottom: 15%;
+                padding-left: 5%;
+                padding-right: 5%;
+                padding-bottom: 5%;
+                grid-template-columns: 1fr;
+                grid-template-rows: 8% 15% 75%;
                 display: none;
                 font-family: "GM-I";
               }
@@ -2970,7 +3225,7 @@ class getUniMenu extends HTMLElement {
                 padding-right: 5%;
                 display: none;
                 grid-template-columns: 1fr;
-                grid-template-rows: 10% 80%;
+                grid-template-rows: 10% 60%;
               }
 
               #fm-feedback textarea {
@@ -3246,11 +3501,112 @@ class getUniMenu extends HTMLElement {
 
               #dgromD4 {
                 height: 20%;
-                width: 95%;
-                padding: 5%;
+                width: 100%;
                 margin-top: 20%;
               }
+
+              #agentsAndPatrons {
+                width: 88%;
+                height: 96%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-color: rgba(0, 0, 0, 0.9);
+                z-index: 7;
+                padding: 6%;
+                display: none;
+                font-family: "GM-I";
+                grid-template-columns: 1fr;
+                grid-template-rows: 5% 40% 12% 48%;
+              }
               
+              #emailForm {
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr 1fr;
+                justify-items: center;
+                align-items: senter;
+                align-self: start;
+                height: 30%;
+              }
+              
+              #newsletterHead {
+                font-size: 0.7em;
+              }
+              
+
+              #PatreonBut #patText {
+                font-family: "BS-B";
+                letter-spacing: 12px;
+              }
+
+              #emailSubmit {
+                border: 1px solid var(--accent);
+                width: 80%;
+                height: 70%;
+                justify-self: center;
+                text-align: center;
+                letter-spacing: 4px;
+              }
+
+
+              #warpLock {
+                height: 95%;
+              }
+
+              #gdLoginBut {
+                background-image: url("./assets/images/grid.jpg");
+                background-size: cover;
+                box-shadow: 0px 0px 10px var(--primary);
+                font-family: "BS-B";
+                opacity: 0.6;
+                text-shadow: 0 0 5px black;
+              }
+
+              #dgromD4 {
+                width: 100%;
+                height: 90%;
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: 20% 40%;
+                justify-items: start;
+                align-items: start;
+                grid-gap: 5%;
+                margin-top: 5%;
+                margin-bottom: 40%;
+              }
+
+              #mintStartBut {
+                bottom: auto;
+                right: auto;
+                left: auto;
+                align-self: center;
+                justify-self: center;
+                font-size: 1.8em;
+                letter-spacing: 4px;
+                font-family: "BS-B";
+                color: var(--accent);
+              }
+
+              #syncStartBut {
+                bottom: auto;
+                right: auto;
+                left: auto;
+                align-self: center;
+                justify-self: center;
+                font-family: "BS-B";
+                font-size: 1.2em;
+                text-shadow: 0 0 5px black;
+              }
+
+              #gdBuyBut .bgImg {
+                opacity: 1;
+              }
+
+              #gdBuyBut {
+                border: 1px solid var(--accent);
+              }
+
             }
 
          </style>
@@ -3295,7 +3651,7 @@ class getUniMenu extends HTMLElement {
                 <div>
                   <svg id="uniMenuProfileSvg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.71 52.83"><defs><style>.cls-1{fill:#ff002d;}</style></defs><path class="cls-1" d="M31.5,26.12A11.42,11.42,0,1,1,42.92,14.7,11.43,11.43,0,0,1,31.5,26.12Zm0-21.55A10.13,10.13,0,1,0,41.63,14.7,10.15,10.15,0,0,0,31.5,4.57Z"/><path class="cls-1" d="M45.79,49.82h-28a.65.65,0,0,1-.64-.65V39.49a14.66,14.66,0,1,1,29.32,0v9.68A.65.65,0,0,1,45.79,49.82ZM18.41,48.53H45.15v-9a13.37,13.37,0,1,0-26.74,0Z"/></svg>
                 </div>
-                <div class="uniMenuTxt" id="menuProfile">Profile</div>
+                <div class="uniMenuTxt" id="menuProfile">Agents</div>
               </div>
               <div id="uniMenuBeacons" class="menuTabs">
                 <div>
@@ -3332,7 +3688,7 @@ class getUniMenu extends HTMLElement {
                   l2.5,2.4l7.5,5C685,282.5,650,417.5,532.5,532.5z"/>
                 </svg>
                 </div>
-                <div class="uniMenuTxt">Log In</div>
+                <div class="uniMenuTxt">Digisette</div>
               </div>
               <div id="uniMenuCloudHall" class="menuTabs">
                 <div>
@@ -3357,21 +3713,26 @@ class getUniMenu extends HTMLElement {
             <div id="fullMenu">
               <div id="romOffline">
                 <div id="dgromD1">
-                  DIGISETTE SYSTEM
+                  <div id="dgHead">DIGISETTE</div>
+                  <div id="dgChangelog"></div>
                 </div>
-                <div id="dgromD2">
-                  <div class="offline" id="dgromD2-1">OFFLINE</div>
-                  <div class="offline" id="dgromD2-2">OFFLINE</div>
-                </div>
-                <div id="dgromD3">
-                  <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette-offline.png" alt="SCOGE Logo" id="dgromOffLogo">
+                <div id="gdLoginBut" class="glowButton">
+                  <div class="bgImg" id="loginBG"></div>
+                  <div class="buttonTxt">LOG-IN</div>
+                  <div id="desktopOnly">*Desktop Only</div>
                 </div>
                 <div id="dgromD4">
-                  <div class="romLogButtons" id="gdLoginBut">LOG-IN (PRE-ALPHA)</div>
-                  <div class="romLogButtons" id="gdBuyBut">GET DIGISETTE</div>
+                  <div class="romLogButtons" id="syncStart">
+                    <div class="bgImg" id="syncBG"></div>
+                    <div class="buttonTxt" id="syncStartBut">SYNC</div>
+                  </div>
+                  <div class="romLogButtons glowButton" id="gdBuyBut">
+                    <div class="bgImg" id="mintBG"></div>
+                    <div class="buttonTxt" id="mintStartBut">MINT</div>
+                  </div>
                 </div>
               </div>
-               <div id="domainUnDev">
+              <div id="domainUnDev">
                 <div id="unDev1">
                   DIGISETTE ROM
                 </div>
@@ -3387,6 +3748,28 @@ class getUniMenu extends HTMLElement {
                 <div id="unDev3">
                   <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/graphics/domain-wireframe.png" alt="Domain Development" id="ddLogo">
                 </div>
+              </div>
+              <div id="agentsAndPatrons">
+                <div id="agentssPage">
+                  <div id="dgHead">AGENTS</div>
+                  <div id="dgChangelog"></div>
+                </div>
+                <div id="PatreonBut" class="glowButton">
+                  <div class="bgImg" id="patronBG"></div>
+                  <div class="buttonTxt" id="patText">PATREON</div>
+                </div>
+                <div id="newsletterHead">CLICK ABOVE TO JOIN OUR EXCLUSIVE PATREON, OR SUBSCRIBE TO THE SCOGÉ NEWSLETTER BELOW FOR UPDATES.</div>
+                <form id="emailForm">
+                  <input type="email" id="emailInput" placeholder="ENTER YOUR EMAIL" required>
+                  <input type="submit" id="emailSubmit" value="SUBSCRIBE">
+                </form>
+              </div>
+              <div id="warpLock">
+                <div id="agentssPage">
+                  <div id="dgHead">SETTINGS</div>
+                  <div id="dgChangelog"></div>
+                </div>
+                <combination-lock active="active" id="cLock"></combination-lock>
               </div>
               <div id="menuMessage">
                 <div>
@@ -3630,10 +4013,10 @@ class getUniMenu extends HTMLElement {
                   <div id="loading" class="loadinScreen">SENDING...</div>
                   <div class="loadIcon"></div>
                 </div>
-                <div id="feedbackHeadline">Does SCOGÉ have your Email?</div>
+                <div id="feedbackHeadline">Contact SCOGÉ</div>
                 <form id="feedbackForm">
-                  <input type="email" name="Email" id="feedbackEmailInput" placeholder="Email:" maxlength="45">
-                  <textarea id="feedbackInput" name="FeedbackText" placeholder="Message: (Optional)" maxlength="320"></textarea>
+                  <input type="email" name="Email" id="feedbackEmailInput" placeholder="Email Address:" maxlength="45">
+                  <textarea id="feedbackInput" name="FeedbackText" placeholder="Message:" maxlength="320"></textarea>
                   <input id="feedbackButton" type="submit">
                 </form>
               </div>
