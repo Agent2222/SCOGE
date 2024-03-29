@@ -3547,6 +3547,7 @@ class getUniMenu extends HTMLElement {
                 justify-self: center;
                 text-align: center;
                 letter-spacing: 4px;
+                font-family: "BS-R";
               }
 
 
@@ -3555,7 +3556,7 @@ class getUniMenu extends HTMLElement {
               }
 
               #gdLoginBut {
-                background-image: url("./assets/images/grid.jpg");
+                background-image: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/buttons/grid.jpg");
                 background-size: cover;
                 box-shadow: 0px 0px 10px var(--primary);
                 font-family: "BS-B";
@@ -3605,6 +3606,18 @@ class getUniMenu extends HTMLElement {
 
               #gdBuyBut {
                 border: 1px solid var(--accent);
+              }
+
+              #emailInput::placeholder {
+                color: var(--secondary);
+              }
+
+              #PatreonBut {
+                background-color: var(--accent);
+                color: var(--secondary);
+                font-family: "BS-B";
+                text-shadow: 0 0 5px black;
+                letter-spacing: 12px;
               }
 
             }
