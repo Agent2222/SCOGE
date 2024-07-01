@@ -1,0 +1,23 @@
+{
+    "name": "Dead Beacon",
+    "description": "FORGE Edition",
+    "image": "https://uqjdj-siaaa-aaaag-aaoxq-cai.icp0.io/assets/nfts/limited-tech/dead_beacon/img.jpg",
+    "content": {
+      "mime": "image/jpeg",
+      "uri": "https://uqjdj-siaaa-aaaag-aaoxq-cai.icp0.io/assets/nfts/limited-tech/dead_beacon/img.jpg"
+    },
+    "attributes": [
+      {
+        "trait_type": "CAT",
+        "value": "5"
+      },
+      {
+        "trait_type": "REG",
+        "value": "4"
+      },
+      {
+        "trait_type": "BAS",
+        "value": "4"
+      }
+    ]
+  }

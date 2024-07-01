@@ -1014,7 +1014,7 @@ class dtGallery extends HTMLElement {
         }
 
          </style>
-         <div id="collectionGallery">
+         <div id="collectionGallery" data-domType="shadow">
             <div id="expandedCollectionSection">
               <div id="collection3" class="collectionTabEx">FW23</div>
               <div id="collection2" class="collectionTabEx">SS23</div>

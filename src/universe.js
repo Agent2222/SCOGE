@@ -240,6 +240,7 @@ export async function universe() {
   var tipActive = false;
   var tipInit = false;
   var tipInit2 = false;
+  window.minactive = false;
   window.compPosition = "right";
   window.sendButActive = false;
   window.playerOnline = false;
@@ -825,7 +826,7 @@ export async function universe() {
     if (tipInit === false) {
       tipInit = true;
     document.addEventListener('keyup', (e) => {
-      if (e.keyCode == 72) {
+      if (e.keyCode == 72 &&  window.loggedIn === true) {
         alert("Help Tooltip ON");
         document.getElementById("miniAgent").setAttribute("status", "help");
         if (tipActive === false) {
@@ -871,7 +872,7 @@ export async function universe() {
       soundtrack.setVolume("typing-1", 0.8)
 
       // if keycode is s 
-      if (e.keyCode == 83) {
+      if (e.keyCode == 83 && window.loggedIn === true) {
         document.getElementById("miniAgent").toggle();
       }
 
@@ -1365,28 +1366,31 @@ export async function universe() {
   //////////////////////////////////////////
   window.moveMenu = () => {
     var canvas = document.getElementById("universe");
-    moveMenu.style.display = "block";
+    var moveMenu = document.getElementById("getUniMenu").shadowRoot?.getElementById("uniMenu");
+    if (moveMenu) {
+      moveMenu.style.display = "block";
+    }
     var uniMenu = document
       .getElementById("getUniMenu")
-      .shadowRoot.getElementById("menuItems");
+      .shadowRoot?.getElementById("menuItems");
     var shadow = document.getElementById("getUniMenu").shadowRoot;
     var text = document
       .getElementById("getUniMenu")
-      .shadowRoot.querySelectorAll(".uniMenuTxt");
+      .shadowRoot?.querySelectorAll(".uniMenuTxt");
     var headerTabs = document
       .getElementById("getUniMenu")
-      .shadowRoot.querySelectorAll(".men-active");
+      .shadowRoot?.querySelectorAll(".men-active");
     var getNewButtons = document
       .getElementById("getUniMenu")
-      .shadowRoot.querySelectorAll(".getNew");
+      .shadowRoot?.querySelectorAll(".getNew");
     //
-    getNewButtons.forEach((el) => {
+    getNewButtons?.forEach((el) => {
       el.addEventListener("click", () => {
         document.getElementById("getNfts").toggleNftScreen();
       });
     });
     // MenuSounds
-    text.forEach((el) => {
+    text?.forEach((el) => {
       el.addEventListener("mouseout", () => {
         soundtrack?.setVolume("menuMove3", 0.5);
         // soundtrack?.stop("menuMove3");
@@ -1399,7 +1403,7 @@ export async function universe() {
       });
     });
     //
-    uniMenu.childNodes.forEach((el) => {
+    uniMenu?.childNodes.forEach((el) => {
       if (el.id != "uniMenuItems") {
         soundtrack.stop("menuLoading1");
       }
@@ -1668,11 +1672,29 @@ export async function universe() {
           });
           break;
         case "uniMenuExit":
+
           el.addEventListener("click", () => {
-            window.currentMenuTab = "signin";
-            shadow.getElementById("romOffline").style.display = "grid";
-            patrons.style.display = "none";
-            warpLock.style.display = "none";
+            if (window.isMobile != true) {
+              window.currentMenuTab = "signin";
+              if (document.getElementById("walletsModal").shadowRoot.getElementById("main").style.transform === "scaleX(1)") {
+                document.getElementById("walletsModal").shadowRoot.getElementById("main").style.opacity = "0";
+                setTimeout(() => {
+                  document.getElementById("walletsModal").shadowRoot.getElementById("main").style.opacity = "1";
+                }, 200);
+              } else {
+                document.getElementById("walletsModal").shadowRoot.getElementById("main").style.transform =
+                "scaleX(1)";
+                document.getElementById("walletsModal").shadowRoot.getElementById("main").style.opacity = "1";
+              }
+              shadow.getElementById("romOffline").style.display = "grid";
+              patrons.style.display = "none";
+              warpLock.style.display = "none";
+            } else {
+              document.getElementById("getUniMenu").shadowRoot.getElementById("menuloginBut").innerHTML = "DESKTOP ONLY";
+              setTimeout(()=> {
+                document.getElementById("getUniMenu").shadowRoot.getElementById("menuloginBut").innerHTML = "Log-in";
+              },2000)
+            }
           });
           break;
         case "uniMenuCloudHall":
@@ -2225,6 +2247,7 @@ export const newEditorScenario = async (name,scene) => {
 
 export async function enterTaosCity(custCheck) {
   // Temporary
+  loading();
   window.loggedIn = true;
   try {
     mapping2 = await loadAllDomains();
@@ -2233,7 +2256,10 @@ export async function enterTaosCity(custCheck) {
   }
   setTimeout(() => {
     document.getElementById("seekModal").remove();
-    document.getElementById("miniAgent").setAttribute("active", "true");
+    if (window.minactive === false) {
+      document.getElementById("miniAgent").setAttribute("active", "true");
+      window.minactive === true;
+    }
   }, 1000);
   const lcCheck = () => {
     if (custCheck === true) {
@@ -2254,10 +2280,17 @@ export async function enterTaosCity(custCheck) {
     window.loggedIn = true;
   }
   window.tempIn = true;
+  endLoading();
+  let forger = document.getElementById("forgeModal").shadowRoot.getElementById("mainForge");
+  forger.style.transform = "scaleX(0)";
+  forger.style.opacity = "0";
+  document.getElementById("walletsModal").shadowRoot.getElementById("main").style.transform = "scaleX(0)";
+  document.getElementById("walletsModal").shadowRoot.getElementById("main").style.opacity = "0";
   soundtrack.play("menuEntrance1");
   soundtrack.setVolume("dgOnline-1", 0.4);
   soundtrack.play("dgOnline-1");
   //
+
   var uniMenu = document.getElementById("getUniMenu").shadowRoot;
   //
   // uniMenu.getElementById("uniMenuTxt").innerHTML = "CONTACT CC";
@@ -2331,62 +2364,62 @@ export function endLoading() {
 }
 
 export function dragElement(elmnt, on) {
-  var locked = document
-  .getElementById("getUniMenu")
-  .shadowRoot?.getElementById("locked");
-  var pinUi = document
-  .getElementById("getUniMenu")
-  .shadowRoot?.getElementById("pinMenu");
-  var pos1 = 0,
-    pos2 = 0,
-    pos3 = 0,
-    pos4 = 0;
+  var locked = document.getElementById("getUniMenu").shadowRoot?.getElementById("locked");
+  var pinUi = document.getElementById("getUniMenu").shadowRoot?.getElementById("pinMenu");
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+
   if (on === false) {
     return;
   }
-  pinUi.style.borderTop = "2px solid rgba(225, 225, 225, 0.8)";
-  pinUi.style.borderLeft = "2px solid rgba(225, 225, 225, 0.8)";
-  pinUi.style.filter = "blur(0px)";
-  pinUi.setAttribute("class", "unpinned");
-  locked.style.opacity = "0";
-  if (document.getElementById(elmnt.id + "header")) {
-    // if present, the header is where you move the DIV from:
-    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+
+  if (pinUi) {
+    pinUi.style.borderTop = "2px solid rgba(225, 225, 225, 0.8)";
+    pinUi.style.borderLeft = "2px solid rgba(225, 225, 225, 0.8)";
+    pinUi.style.filter = "blur(0px)";
+    pinUi.setAttribute("class", "unpinned");
+    locked.style.opacity = "0";
+  }
+
+  if (document.getElementById(elmnt?.id + "header")) {
+    document.getElementById(elmnt?.id + "header").onmousedown = dragMouseDown;
   } else {
-    // otherwise, move the DIV from anywhere inside the DIV:
-    elmnt.onmousedown = dragMouseDown;
+    if (elmnt) {
+      elmnt.onmousedown = dragMouseDown;
+    }
   }
 
   function dragMouseDown(e) {
     e = e || window.event;
     e.preventDefault();
-    // get the mouse cursor position at startup:
     pos3 = e.clientX;
     pos4 = e.clientY;
     document.onmouseup = closeDragElement;
-    // call a function whenever the cursor moves:
     document.onmousemove = elementDrag;
+
+    // Disable transitions
+    elmnt.style.transition = "none";
   }
 
   function elementDrag(e) {
     e = e || window.event;
     e.preventDefault();
-    // calculate the new cursor position:
     pos1 = pos3 - e.clientX;
     pos2 = pos4 - e.clientY;
     pos3 = e.clientX;
     pos4 = e.clientY;
-    // set the element's new position:
-    elmnt.style.top = elmnt.offsetTop - pos2 + "px";
-    elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
   }
 
   function closeDragElement() {
-    // stop moving when mouse button is released:
     document.onmouseup = null;
     document.onmousemove = null;
+
+    // Re-enable transitions
+    elmnt.style.transition = ".3s all";
   }
 }
+
 
 export var playerCoor = {
   x: 0,

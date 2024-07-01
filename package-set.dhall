@@ -86,7 +86,6 @@ let additions =
   , version = "v0.1.0"
   , dependencies = [ "base", "parser-combinators" ]
   },
-  
   { name = "stablebuffer_0_2_0"
   , repo = "https://github.com/skilesare/StableBuffer"
   , version = "v0.2.0"
@@ -117,6 +116,12 @@ let additions =
   , repo = "https://github.com/ORIGYN-SA/canistergeek-motoko"
   , version = "v0.0.1"
   , dependencies = ["base", "candy_0_1_10" ]
+  },
+  {
+    name = "base",
+    repo = "https://github.com/dfinity/motoko-base",
+    version = "master",
+    dependencies = [] : List Text
   }
   ] : List Package
 

@@ -1,13 +1,13 @@
 import { gsap } from "gsap";
-import { Configuration, OpenAIApi } from "openai";
+// import { Configuration, OpenAIApi } from "openai";
 import { newScenario, newEditorScenario } from "./src/universe";
 import { activateMapper } from "./src/uniHelpers/mapper";
 
 const VITE_ScogeI = import.meta.env.VITE_ScogeI;
-const configuration = new Configuration({
-  apiKey: VITE_ScogeI,
-});
-const openai = new OpenAIApi(configuration);
+// const configuration = new Configuration({
+//   apiKey: VITE_ScogeI,
+// });
+// const openai = new OpenAIApi(configuration);
 
 var data = null;
 var tempData = null;
@@ -632,16 +632,16 @@ export async function editor(editorActive) {
     document.getElementById("summonAI").addEventListener("click", async () => {
       document.getElementById("editorAiOutput").innerHTML = `Loading...`;
       var text = document.getElementById("editorUserInput").value;
-      var completion = await openai
-        .createChatCompletion({
-          model: "gpt-3.5-turbo",
-          messages: [{ role: "user", content: `Hello. ${text}` }],
-          max_tokens: 100,
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      console.log(completion);
+      // var completion = await openai
+      //   .createChatCompletion({
+      //     model: "gpt-3.5-turbo",
+      //     messages: [{ role: "user", content: `Hello. ${text}` }],
+      //     max_tokens: 100,
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
+      // console.log(completion);
       document.getElementById("editorUserInput").value = "";
       document.getElementById(
         "editorAiOutput"

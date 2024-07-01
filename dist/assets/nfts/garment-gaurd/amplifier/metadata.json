@@ -1,0 +1,23 @@
+{
+    "name": "CH1 - Amplifier",
+    "description": "FORGE Edition",
+    "image": "https://uqjdj-siaaa-aaaag-aaoxq-cai.icp0.io/assets/nfts/garment-gaurd/amplifier/img.jpg",
+    "content": {
+      "mime": "image/jpeg",
+      "uri": "https://uqjdj-siaaa-aaaag-aaoxq-cai.icp0.io/assets/nfts/garment-gaurd/amplifier/img.jpg"
+    },
+    "attributes": [
+      {
+        "trait_type": "CAT",
+        "value": "3"
+      },
+      {
+        "trait_type": "chapter",
+        "value": "1"
+      },
+      {
+        "trait_type": "Base",
+        "value": "3"
+      }
+    ]
+  }
