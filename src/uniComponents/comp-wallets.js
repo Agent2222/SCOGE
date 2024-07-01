@@ -150,20 +150,20 @@ class compWallets extends HTMLElement {
     async connectCoinbase() {
         // const wallet = createWallet("com.coinbase.wallet"); // pass the wallet id
         // // if user has coinbase wallet installed, connect to it
-        // if (injectedProvider("com.coinbase.wallet")) {
-        //     await wallet.connect({ client }).then(async (res) => {
-        //     this.resolveLogin(res, wallet)});
-        // }
+        if (injectedProvider("com.coinbase.wallet")) {
+            await wallet.connect({ client }).then(async (res) => {
+            this.resolveLogin(res, wallet)});
+        }
         
-        // // open wallet connect modal so user can scan the QR code and connect
-        // else {
-        //     await wallet.connect({
-        //     client,
-        //     walletConnect: { showQrModal: true },
-        // }).then((res) => {
-        //     this.resolveLogin(res, wallet);
-        // });
-        // }
+        // open wallet connect modal so user can scan the QR code and connect
+        else {
+            await wallet.connect({
+            client,
+            walletConnect: { showQrModal: true },
+        }).then((res) => {
+            this.resolveLogin(res, wallet);
+        });
+        }
         // try {
         //     const address = await provider.request({
         //       method: 'eth_requestAccounts',
