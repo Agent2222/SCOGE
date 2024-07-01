@@ -2,15 +2,14 @@ import { SoundtrackManager } from "./soundtrack.js";
 import { story } from "./game/SceneManager.js";
 import { newScenario, loading, endLoading, dragElement } from "./universe.js";
 import { getNFTCollections } from "./wallets.js";
-// import { enterTaosCity } from "./universe.js";
 import { connectError } from "./wallets.js";
-// import { universe } from "./universe.js";
 import { gsap } from "gsap";
-// import fleekStorage from "@fleekhq/fleek-storage-js";
-
-// import { idlFactory } from "./declarations/universe_backend/;universe_backend.did.js";
-import { Configuration, OpenAIApi } from "openai";
+// import { Configuration, OpenAIApi } from "openai";
 import { myFirstDrug } from "./universe.js";
+
+import comGlove from "../assets/images/icons/combat-glove.png";
+import comAvatar from "../assets/images/icons/combat-avatar.png";
+
 window.dtmenuOpen = false;
 window.dtfullMenuOpen = false;
 
@@ -643,7 +642,7 @@ class getUniMenu extends HTMLElement {
       fileInput.click();
     });
     proSave.addEventListener("click", () => {
-      this.saveProfileTemp();
+      // this.saveProfileTemp();
     });
   }
 
@@ -664,91 +663,91 @@ class getUniMenu extends HTMLElement {
   }
 
   // Temp Save Profile
-  async saveProfileTemp() {
-    let proImg = this.shadow.getElementById("proImgSect");
-    let proImg2 = this.shadow.getElementById("proImg");
-    let proImg3 = this.shadow.getElementById("editImgIcon");
-    let proText = this.shadow.getElementById("profileDesc");
-    let proEdit = this.shadow.getElementById("proEdit");
-    let proSave = this.shadow.getElementById("proSave");
-    let proName = this.shadow.getElementById("proLabelName");
-    let proIden = this.shadow.getElementById("proLabelIdentity");
-    let proEmail = this.shadow.getElementById("proLabelEmail");
-    const blob = this.imageBlob;
+  // async saveProfileTemp() {
+  //   let proImg = this.shadow.getElementById("proImgSect");
+  //   let proImg2 = this.shadow.getElementById("proImg");
+  //   let proImg3 = this.shadow.getElementById("editImgIcon");
+  //   let proText = this.shadow.getElementById("profileDesc");
+  //   let proEdit = this.shadow.getElementById("proEdit");
+  //   let proSave = this.shadow.getElementById("proSave");
+  //   let proName = this.shadow.getElementById("proLabelName");
+  //   let proIden = this.shadow.getElementById("proLabelIdentity");
+  //   let proEmail = this.shadow.getElementById("proLabelEmail");
+  //   const blob = this.imageBlob;
 
-    // Convert blob to array of arrays to match the expected type
-    const arrayBuffer = await this.readBlobAsArrayBuffer(blob);
-    const CHUNK_SIZE = 1024; // set the chunk size as per your requirements
-    const uint8Array = new Uint8Array(arrayBuffer);
-    const byteChunks = [];
-    for (let i = 0; i < uint8Array.length; i += CHUNK_SIZE) {
-      byteChunks.push(uint8Array.slice(i, i + CHUNK_SIZE));
-    }
-    const vectorOfVectors = byteChunks.map((byteChunk) =>
-      Array.from(byteChunk)
-    );
+  //   // Convert blob to array of arrays to match the expected type
+  //   const arrayBuffer = await this.readBlobAsArrayBuffer(blob);
+  //   const CHUNK_SIZE = 1024; // set the chunk size as per your requirements
+  //   const uint8Array = new Uint8Array(arrayBuffer);
+  //   const byteChunks = [];
+  //   for (let i = 0; i < uint8Array.length; i += CHUNK_SIZE) {
+  //     byteChunks.push(uint8Array.slice(i, i + CHUNK_SIZE));
+  //   }
+  //   const vectorOfVectors = byteChunks.map((byteChunk) =>
+  //     Array.from(byteChunk)
+  //   );
 
-    const configuration = new Configuration({
-      apiKey: VITE_ScogeI,
-    });
-    const openai = new OpenAIApi(configuration);
-    var convertedToBankoo = await openai
-      .createChatCompletion({
-        model: "gpt-3.5-turbo",
-        messages: [
-          {
-            role: "user",
-            content: `Convert ${proText.value} to speak from a futuristic sci-fi perspective`,
-          },
-        ],
-        max_tokens: 40,
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  //   const configuration = new Configuration({
+  //     apiKey: VITE_ScogeI,
+  //   });
+  //   const openai = new OpenAIApi(configuration);
+  //   var convertedToBankoo = await openai
+  //     .createChatCompletion({
+  //       model: "gpt-3.5-turbo",
+  //       messages: [
+  //         {
+  //           role: "user",
+  //           content: `Convert ${proText.value} to speak from a futuristic sci-fi perspective`,
+  //         },
+  //       ],
+  //       max_tokens: 40,
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
 
-    const openai2 = new OpenAIApi(configuration);
-    const newImage = await openai2.createImage({
-      prompt: convertedToBankoo.data.choices[0].message.content,
-      n: 1,
-      size: "512x512",
-    });
+  //   const openai2 = new OpenAIApi(configuration);
+  //   const newImage = await openai2.createImage({
+  //     prompt: convertedToBankoo.data.choices[0].message.content,
+  //     n: 1,
+  //     size: "512x512",
+  //   });
 
-    console.log("newImage:", newImage);
-    document.getElementById("GenImgCont")?.remove();
-    var ImageCont = document.createElement("div");
-    var newImageCont = document.createElement("img");
-    var genPara = document.createElement("p");
-    genPara.innerHTML = convertedToBankoo.data.choices[0].message.content;
-    newImageCont.src = newImage.data.data[0].url;
-    ImageCont.appendChild(newImageCont);
-    ImageCont.appendChild(genPara);
-    ImageCont.setAttribute("id", "GenImgCont");
-    ImageCont.addEventListener("click", () => {
-      ImageCont.remove();
-    });
-    document.getElementById("camera").appendChild(ImageCont);
+  //   console.log("newImage:", newImage);
+  //   document.getElementById("GenImgCont")?.remove();
+  //   var ImageCont = document.createElement("div");
+  //   var newImageCont = document.createElement("img");
+  //   var genPara = document.createElement("p");
+  //   genPara.innerHTML = convertedToBankoo.data.choices[0].message.content;
+  //   newImageCont.src = newImage.data.data[0].url;
+  //   ImageCont.appendChild(newImageCont);
+  //   ImageCont.appendChild(genPara);
+  //   ImageCont.setAttribute("id", "GenImgCont");
+  //   ImageCont.addEventListener("click", () => {
+  //     ImageCont.remove();
+  //   });
+  //   document.getElementById("camera").appendChild(ImageCont);
 
-    console.log("byteArray:", vectorOfVectors);
-    // Alias
-    nmcProps.alias = proName.value;
-    // Email
-    nmcProps.email = proEmail.value;
-    // Identity
-    nmcProps.identifier = proIden.value;
-    // Earth Image
-    // nmcProps.earthImage = [vectorOfVectors];
-    // Bankoo Image
-    // Earth Text
-    nmcProps.earthText = [proText.value];
-    // Bankoo Text
-    nmcProps.bankooText = [convertedToBankoo.data.choices[0].message.content];
-    // Send
-    var prin = await window.ic.bitfinityWallet.getPrincipal();
-    console.log(nmcProps);
-    window.suUiActor.updateTemp(prin, 0, [nmcProps]);
-    console.log("Saved Temp Profile");
-  }
+  //   console.log("byteArray:", vectorOfVectors);
+  //   // Alias
+  //   nmcProps.alias = proName.value;
+  //   // Email
+  //   nmcProps.email = proEmail.value;
+  //   // Identity
+  //   nmcProps.identifier = proIden.value;
+  //   // Earth Image
+  //   // nmcProps.earthImage = [vectorOfVectors];
+  //   // Bankoo Image
+  //   // Earth Text
+  //   nmcProps.earthText = [proText.value];
+  //   // Bankoo Text
+  //   nmcProps.bankooText = [convertedToBankoo.data.choices[0].message.content];
+  //   // Send
+  //   var prin = await window.ic.bitfinityWallet.getPrincipal();
+  //   console.log(nmcProps);
+  //   window.suUiActor.updateTemp(prin, 0, [nmcProps]);
+  //   console.log("Saved Temp Profile");
+  // }
 
   vidInvestigate() {
     document.getElementById("beaconAction1").remove();
@@ -915,6 +914,10 @@ class getUniMenu extends HTMLElement {
     this.render();
     this.viewGallery();
     this.musicLevel();
+    this.shadowRoot.getElementById("comBut").addEventListener("click", () => {
+      soundtrack2.setVolume("combatOff-1", 0.7);
+      soundtrack2.play(`combatOff-1`);
+    })
     this.shadow.getElementById("PatreonBut").addEventListener("click", () => {
       window.open(this.patreonLink);
     });
@@ -936,12 +939,16 @@ class getUniMenu extends HTMLElement {
     this.shadow.getElementById("cloudHallGarmentImg").addEventListener("click", () => {
       document.getElementById("compConsensus").setAttribute("active", "true");
     });
-    this.shadow.getElementById("gdLoginBut").addEventListener("click", async () => {
-          story("Intro");
-    });
     this.shadow.getElementById("gdBuyBut").addEventListener("click", () => {
-      // open new tab and go to link
-      window.open(this.digiLink);
+      if (document.getElementById("forgeModal").shadowRoot.getElementById("mainForge").style.transform === "scaleX(1)") {
+        document.getElementById("forgeModal").shadowRoot.getElementById("mainForge").style.opacity = "0";
+        setTimeout(() => {
+          document.getElementById("forgeModal").shadowRoot.getElementById("mainForge").style.opacity = "1";
+        }, 200);
+      } else {
+        document.getElementById("forgeModal").shadowRoot.getElementById("mainForge").style.transform = "scaleX(1)";
+        document.getElementById("forgeModal").shadowRoot.getElementById("mainForge").style.opacity = "1";
+      }
     });
     this.shadow.getElementById("fsToggle").addEventListener("click", () => {
       this.toggleFullScreen();
@@ -954,9 +961,20 @@ class getUniMenu extends HTMLElement {
     });
     this.tabs = this.shadow.querySelectorAll(".menuTabs");
     this.tabs.forEach((element) => {
-      element.addEventListener("click", (e) => {
-        this.openFullMenu(e);
-      });
+      if (element.id != "uniMenuExit") {
+        element.addEventListener("click", (e) => {
+          this.openFullMenu(e);
+        });
+      } else {
+        element.addEventListener("click", (e) => {
+          var data = this.shadowRoot.getElementById("uniMenuExit").getAttribute("data-connected");
+          if (data === "true") {
+            this.openFullMenu(e);
+          } else {
+            this.closeFullMenu();
+          }
+        });
+      }
     });
     this.headerTabs = this.shadow.querySelectorAll(".men-active");
     // this.headerTabs.forEach((element) => {
@@ -1221,7 +1239,7 @@ class getUniMenu extends HTMLElement {
               border-bottom-right-radius: 10px;
               z-index: 11;
               position: absolute;
-              top: 15vh;
+              top: 5vh;
               left: 36px;
               background-color: rgba(0, 0, 0, 0.7);
               border-left: 2px solid #ff002d;
@@ -1778,7 +1796,7 @@ class getUniMenu extends HTMLElement {
               justify-items: center;
               font-family: "BS-B";
               font-size: 1.5em;
-              color: #ff002d;
+              color: var(--accent);
             }
             .loadIcon {
               width: 300px;
@@ -1789,7 +1807,7 @@ class getUniMenu extends HTMLElement {
               align-items: center;
               justify-items: center;
               animation: spin 10s linear infinite, pulse 3s ease-in-out infinite;
-              border: 5px dotted #ff002d;
+              border: 5px dotted var(--accent);
               border-radius: 50%;
             }
             .loadinScreen {
@@ -2606,6 +2624,7 @@ class getUniMenu extends HTMLElement {
             #dgHead {
               font-size: 1.2em;
               letter-spacing: 20px;
+              user-select: none;
             }
 
             #dgChangelog {
@@ -2757,26 +2776,68 @@ class getUniMenu extends HTMLElement {
               cursor: pointer;
             }
 
-            #gdLoginBut {
+            #comSim {
+              height: 100%;
+              width: 90%;
               display: grid;
-              grid-template-columns: 1fr;
+              grid-template-columns: 1fr 1fr;
               grid-template-rows: 1fr;
-              justify-items: center;
-              align-items: center;
-              font-size: 1.2em;
-              border-radius: 5px;
-              letter-spacing: 4px;
+              justify-items: start;
+              align-items: start;
               cursor: pointer;
               transition: 0.3s all;
+              overflow: hidden;
+              padding-left: 5%;
+              padding-right: 5%;
               position: relative;
             }
 
-            #desktopOnly {
-              font-size: 0.5em;
+            #comBut {
               position: absolute;
+              width: 45%;
+              height: 25%;
+              display: flex;
+              flex-direction: column;
+              flex-wrap: wrap;
+              justify-content: center;
+              align-items: center;
+              border: 1px solid var(--primary);
+              justify-self: center;
+              align-self: center;
               color: var(--primary);
-              bottom: 30%;
-              display: none;
+              border-radius: 5px;
+              cursor: pointer;
+            }
+
+            #comBut:hover {
+              background-color: var(--primary);
+              color: black;
+              font-family: "BS-B";
+            }
+
+            .comImg {
+              height: 100%;
+              overflow: hidden;
+            }
+
+            .comImg img {
+              height: 100%;
+              width: auto;
+              object-fit: contain;
+            }
+
+            #comIcon2 {
+              justify-self: end;
+              padding-right: 7%;
+            }
+
+            #comButText1 {
+              font-size: .8em;
+              letter-spacing: 2px;
+            }
+
+            #comButText2 {
+              font-size: .7em;
             }
 
             .glowButton {
@@ -2822,7 +2883,7 @@ class getUniMenu extends HTMLElement {
               width: 95%;
               height: 90%;
               display: grid;
-              grid-template-columns: 60% 40%;
+              grid-template-columns: 50% 50%;
               grid-template-rows: 1fr;
               justify-items: start;
               align-items: start;
@@ -2929,14 +2990,6 @@ class getUniMenu extends HTMLElement {
               font-family: "BS-B";
               letter-spacing: 2px;
               scale: 1.1;
-            }
-
-            #gdLoginBut:hover {
-              background-color: var(--accent);
-              color: var(--secondary);
-              font-family: "BS-B";
-              text-shadow: 0px 0px 5px black;
-              letter-spacing: 12px;
             }
 
             .cDot {
@@ -3555,8 +3608,7 @@ class getUniMenu extends HTMLElement {
                 height: 95%;
               }
 
-              #gdLoginBut {
-                background-image: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/buttons/grid.jpg");
+              #comSim {
                 background-size: cover;
                 box-shadow: 0px 0px 10px var(--primary);
                 font-family: "BS-B";
@@ -3684,7 +3736,7 @@ class getUniMenu extends HTMLElement {
                 </div>
                 <div class="uniMenuTxt" id="menuFeedback">Emissary</div>
               </div>
-              <div id="uniMenuExit" class="menuTabs">
+              <div id="uniMenuExit" class="menuTabs" data-connected="false">
                 <div>
                   <svg version="1.1" id="uniMenuExitSvg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                   viewBox="0 0 800 800" style="enable-background:new 0 0 800 800;" xml:space="preserve">
@@ -3701,7 +3753,7 @@ class getUniMenu extends HTMLElement {
                   l2.5,2.4l7.5,5C685,282.5,650,417.5,532.5,532.5z"/>
                 </svg>
                 </div>
-                <div class="uniMenuTxt">Digisette</div>
+                <div class="uniMenuTxt" id="menuloginBut">Log-in</div>
               </div>
               <div id="uniMenuCloudHall" class="menuTabs">
                 <div>
@@ -3729,10 +3781,17 @@ class getUniMenu extends HTMLElement {
                   <div id="dgHead">DIGISETTE</div>
                   <div id="dgChangelog"></div>
                 </div>
-                <div id="gdLoginBut" class="glowButton">
-                  <div class="bgImg" id="loginBG"></div>
-                  <div class="buttonTxt">LOG-IN</div>
-                  <div id="desktopOnly">*Desktop Only</div>
+                <div id="comSim">
+                  <div id="comIcon1" class="comImg">
+                    <img src="${comGlove}">
+                  </div>
+                  <div id="comBut">
+                    <div id="comButText1">COMBAT SIMULATOR</div>
+                    <div id="comButText2">Version 0.1 (OFFLINE)</div>
+                  </div>
+                  <div id="comIcon2" class="comImg">
+                     <img src="${comAvatar}">
+                  </div>
                 </div>
                 <div id="dgromD4">
                   <div class="romLogButtons" id="syncStart">
@@ -3741,7 +3800,7 @@ class getUniMenu extends HTMLElement {
                   </div>
                   <div class="romLogButtons glowButton" id="gdBuyBut">
                     <div class="bgImg" id="mintBG"></div>
-                    <div class="buttonTxt" id="mintStartBut">MINT</div>
+                    <div class="buttonTxt" id="mintStartBut">FORGE</div>
                   </div>
                 </div>
               </div>

@@ -22,7 +22,7 @@ import { mintingScreen } from "../src/mint.js";
 // import { dialogue } from "./game/dialogue.js";
 import { gsap } from "gsap";
 import { TextPlugin } from "gsap/TextPlugin";
-import { Configuration, OpenAIApi } from "openai";
+// import { Configuration, OpenAIApi } from "openai";
 import { universe } from "./universe.js";
 import { uniConsensus } from "./uni-c-consensus.js";
 import { uni3dViewer } from "./uni-c-3dModel.js";
@@ -30,6 +30,11 @@ import { uniDomainDev } from "./uni-c-domaindev.js";
 import { checkInitialState } from "../src/game/SceneManager.js";
 import { emoter } from "./uniComponents/emoter.js";
 import { tooltip } from "./uniHelpers/tooltip.js";
+// import { client } from "./uniHelpers/thirdWeb.js";
+import { closeButton } from "./subComponents/sc-close-btn.js";
+import { compWallets } from "./uniComponents/comp-wallets.js";
+import { compForge } from "./uniComponents/comp-forge.js";
+import { compLoading } from "./subComponents/sc-loading.js";
 
 // Statics
 import mainvid1 from "../assets/video/scoge-c2-1.mp4";
@@ -112,6 +117,8 @@ window.productsloaded = false;
 window.currentMenuTab = null;
 window.tempIn = false;
 var ci = "false";
+// Connection Status
+window.connectionState = false;
 
 console.log("COPYRIGHT 2024 - SCOGE Inc. - ALL RIGHTS RESERVED");
 

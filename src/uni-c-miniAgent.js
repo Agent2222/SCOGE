@@ -13,33 +13,54 @@ class uniMenuAgent extends HTMLElement {
         this.dialogueBank = {
             intro: [
                 {
-                  text: "Welcome back. City-Central has been working hard on the upcoming release of the Digisette Domain Development upgrade. It'll be here soon.",
+                  text: "After the recent Digisette recall we're going to have to be really careful.",
                   waiter: null,
                   choices: [
                     {
                       text: "[ CONTINUE ]",
                       action: () => this.dialogue.choose(1)
+                    },
+                    {
+                        text: "[ CONTINUE ]",
+                        action: () => this.dialogue.choose(1)
                     }
                   ]
                 },
                 {
-                  text: 'You can still explore the city with your pre-alpha access. If you need help, just ask.',
+                    text: "All enforcers have orders to bring in anyone they find still using this system.",
+                    waiter: null,
+                    choices: [
+                      {
+                        text: "[ CONTINUE ]",
+                        action: () => this.dialogue.choose(1)
+                      }
+                    ]
+                  },
+                {
+                  text: 'This Oracle Cloak should help you maneuver through the city. But be fast!',
                   waiter: null,
                   choices: [
                     {
-                      text: "I'm here to buy something.",
-                      action: () => console.log("NPC Name: What would you like to buy?")
-                    },
-                    {
-                      text: "I'm here to sell something.",
-                      action: () => console.log("NPC Name: What would you like to sell?")
+                      text: "[ OK! ]",
+                      action: () => this.dialogue.choose(1)
                     }
                   ]
+                },
+                {
+                    text: 'This Oracle Cloak should help you maneuver through the city. But be fast!',
+                    waiter: null,
+                    choices: [
+                      {
+                        text: "[ OK! ]"
+                      }
+                    ]
+                },
+                {
+                    text: 'This Oracle Cloak should help you maneuver through the city. But be fast!',
+                    waiter: null,
+                    choices: []
                 }
-              ],
-            welcomeHelp: [
-                
-            ]
+              ]
         }
     }
 
@@ -97,7 +118,6 @@ class uniMenuAgent extends HTMLElement {
     }
 
     toggle() {
-        console.log(this.miniOpen);
         if (this.miniOpen === true) {
             this.shadowRoot.getElementById("chat").style.transform = "scaleX(0)";
             setTimeout(()=> {
@@ -147,7 +167,6 @@ class uniMenuAgent extends HTMLElement {
     }
 
     activate(newValue) {
-        console.log("activate", newValue);
         var pos = this.position;
             this.shadowRoot.getElementById("main").style.display = "grid";
             if (pos === "left") {
@@ -265,6 +284,7 @@ class uniMenuAgent extends HTMLElement {
                     transform-origin: left;
                     transform: scale(0);
                     transition: .3s all;
+                    color: var(--secondary);
                 }
                 #agentImg {
                     right: -100%;

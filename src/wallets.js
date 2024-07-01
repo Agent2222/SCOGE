@@ -8,8 +8,17 @@ import { endLoading, enterTaosCity, loading, soundtrack } from "./universe.js";
 import { story } from "./game/SceneManager.js";
 import {StoicIdentity} from "ic-stoic-identity";
 import { getDigisette } from "./uniHelpers/citycentral.js";
+import { createThirdwebClient, getContract } from "thirdweb";
+import { base } from "thirdweb/chains";
 
 const canister = "7mfck-baaaa-aaaah-acuqq-cai";
+
+export const ethclient = createThirdwebClient({
+  clientId: "a7f34678c8f921d05824641db058ef4a",
+  secretKey: "KUVFY2ISLPzPqLozDepsLKC0my-KGIh5rdANUw2cB_DcVTwulp4tzByYkq-XLGNZtD0B0js8_gCgvWRQr6DATQ",
+});
+
+export const ethChain = base;
 
 export var lord = {
   principal: null,
@@ -18,15 +27,6 @@ export var lord = {
 };
 
 export async function getNFTCollections(principal) {
-  // const principal = 'qpbuq-myqvw-yoaff-265ad-5g6xu-wx5dl-zzd7y-y6oak-zo4uf-x3ozb-dqe';
-  // var isConnected = await window.ic.plug.isConnected();
-  // if (isConnected === false) {
-  //   return false;
-  // } else {
-    // Variable Wallet principal 
-    // const principal = await window.ic.plug.getPrincipal().catch((e) => {
-    //   console.log("Get Principal", e);
-    // });
     var textV = Principal.fromUint8Array(principal._arr).toString();
     // let agent = new HttpAgent({ host: "https://ic0.app" });
     let agent = window.ic.plug.agent;
@@ -54,9 +54,6 @@ export async function getNFTCollections(principal) {
       // Find an NFT with the name "Panda Queen" and print its "description"
       var digisette = collections.find((nft) => nft.name === "Digisette Pre-Alpha");
       console.log("Digisette", digisette);
-
-      // const bigintValue = BigInt(0);
-      // const regularNumber = Number(bigintValue);      
 
       var dgTest = await getDigisette([Number(digisette.tokens[0].index)]);
 
@@ -242,96 +239,6 @@ export const connectStoicWallet = async (canisterId) => {
   })
 };
 
-//////////////////////////////////////////////////
-// Bitfinity Wallet
-//////////////////////////////////////////////////
-
-// const getNFTCollectionsBit = async () => {
-//   const principal = 'gdcab-izhzj-7yhxv-ym7jd-wduwn-2nlcy-em7ts-6q7zs-kf5z4-swdod-nqe';
-//   let agent = new HttpAgent({ host: "https://ic0.app" });
-  
-//   // Call the function directly with the required parameters
-//   try {
-//     const collections = await getAllUserNFTs({
-//       agent: agent,
-//       user: principal,
-//     });
-  
-//     console.log("NFTs", collections);
-//   } catch (err) {
-//     console.log("NFTs Error", err);
-//   }  
-// };
-
-// export const connectBitFinityWallet = async (whitelist, host) => {
-//   var view = document.querySelector(".currentScene");
-//   if (window.ic === undefined) {
-//     console.log("Plug not found - Get BitFinity Wallet");
-//     // connectError();
-//     // Scenario - New User. User Does not have a plug wallet
-//     return;
-//   } else {
-//     // Scenario - Returning User
-//     const connected = await window.ic.bitfinityWallet
-//       .isConnected()
-//       .catch((e) => {
-//         console.error(e);
-//       });
-
-//     // // Callback to print sessionData
-//     // const onConnectionUpdate = () => {
-//     //     console.log(window.ic.plug.sessionManager.sessionData)
-//     // }
-
-//     if (connected === false) {
-//       // Scenario - User has a plug wallet but is not connected
-//       console.log(whitelist, host);
-//       const bitpublicKey = await window.ic.bitfinityWallet
-//         .requestConnect({
-//           whitelist: whitelist,
-//           timeout: 50000,
-//         })
-//         .catch((e) => {
-//           //   var error = {e};
-//           //   connectError(error);
-//           console.error("Connect Wallet", e);
-//         });
-//       console.log("pk", bitpublicKey);
-//       gsap.to(view, {
-//         opacity: 0,
-//         filter: "blur(10px)",
-//         scale: 1.5,
-//         duration: 1,
-//         onComplete: () => {
-//           view?.remove();
-//         },
-//       });
-//       getNFTCollectionsBit();
-//       document.getElementById("universe").style.filter = "blur(0px)";
-//       document.querySelectorAll(".uniEvents").forEach((el) => {
-//         el.style.opacity = 1;
-//       });
-//     } else if (connected === true) {
-//       // Scenario - User has a plug wallet and is connected
-//       gsap.to(view, {
-//         opacity: 0,
-//         filter: "blur(10px)",
-//         scale: 1.5,
-//         duration: 1,
-//         onComplete: () => {
-//           view?.remove();
-//         },
-//       });
-//       getNFTCollectionsBit();
-//       console.log("Connected");
-//       document.getElementById("universe").style.filter = "blur(0px)";
-//       document.querySelectorAll(".uniEvents").forEach((el) => {
-//         el.style.opacity = 1;
-//       });
-//     }
-//   }
-// };
-
 //   // CANISTER (Change in local / production)
 //   // Create Actor
 export const createActor1 = async (can, idl) => {
@@ -345,31 +252,6 @@ export const createActor1 = async (can, idl) => {
     });
   return suUiActor;
 };
-
-// export function verifyDigisette() {}
-
-//   // player state
-//   const playerState = async () => {
-//     var shadow = document.getElementById("getUniMenu").shadowRoot;
-//     console.log(window.suUiActor);
-//     const admin = await window.suUiActor.adminUser().catch((e) => {
-//       console.log("Get Admin", {e});
-//       var error = {e}
-//       if (window.dmb === false) {
-//         attn(error);
-//       }
-//     }).catch((error) => {
-//       console.log(error);
-//     });
-//     if (admin === window.user.principal) {
-//       console.log("Admin Logged in");
-//     } else {
-//       shadow.getElementById("menuLoadingScreen").style.display = "none";
-//       shadow.getElementById("menuLoadingScreen3").style.display = "none";
-//       soundtrack.stop('menuLoading1');
-//       uiState.nftsLoaded = true;
-//     }
-//   }
 
   // Error
   export const connectError = async (error) => {
@@ -432,14 +314,14 @@ export const createActor1 = async (can, idl) => {
     // }
   }
 
-//   const attn = async (error) => {
-//     let data = new FormData();
-//     data.append("Email", "ATTN: RELOAD");
-//     data.append("FeedbackText", `${error.e.props.Message}`);
-//     fetch("https://script.google.com/macros/s/AKfycbxOuAozKPY70nQqWzkD_mYHnd954KrUZuRnGNrmGnA4j3l3nSMYuNssqiJMqn7Z4u064w/exec", {
-//     method: "POST",
-//     body: data,
-//     mode: "cors"
-//   })
-//   .then(res => res.text())
-//   }
+  /////////////////////////////
+  // Connect to MetaMask
+  /////////////////////////////
+
+  /////////////////////////////
+  // Connect to Coinbase Wallet
+  /////////////////////////////
+
+  /////////////////////////////
+  // Connect to Rainbow Wallet
+  /////////////////////////////

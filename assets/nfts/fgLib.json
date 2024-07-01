@@ -1,0 +1,1428 @@
+[
+    {
+        "name": "Digisette Ring",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "0",
+        "uri": "base",
+        "itemId": "1",
+        "definition": "def",
+        "output": "1",
+        "stats": {
+            "weight": "3",
+            "use": "0",
+            "cat": "5",
+            "cha": "4",
+            "bas": "10"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "19"},
+                {"item": "18"},
+                {"item": "20"},
+                {"item": "21"},
+                {"item": "33"},
+                {"item": "17"}
+            ],
+            "statReq": {
+                "tcat": "50",
+                "tcha": "40",
+                "tbas": "100"
+            }
+        }
+    },
+    {
+        "name": "Seal Case",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "1",
+        "uri": "base",
+        "itemId": "2",
+        "definition": "def",
+        "output": "1",
+        "stats": {
+            "weight": "1",
+            "use": "1",
+            "cat": "5",
+            "cha": "4",
+            "bas": "2"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "19"},
+                {"item": "18"},
+                {"item": "30"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "10",
+                "tcha": "8",
+                "tbas": "4"
+            }
+        }
+    },
+    {
+        "name": "Red Gel-Bite",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "2",
+        "uri": "base",
+        "itemId": "3",
+        "definition": "def",
+        "output": "5",
+        "stats": {
+            "weight": "1",
+            "use": "1",
+            "cat": "4",
+            "cha": "4",
+            "bas": "2"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "38"},
+                {"item": "32"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "8",
+                "tcha": "8",
+                "tbas": "4"
+            }
+        }
+    },
+    {
+        "name": "Blue Gel-Bite",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "3",
+        "uri": "base",
+        "itemId": "4",
+        "definition": "def",
+        "output": "5",
+        "stats": {
+            "weight": "1",
+            "use": "1",
+            "cat": "4",
+            "cha": "4",
+            "bas": "2"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "38"},
+                {"item": "33"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "8",
+                "tcha": "8",
+                "tbas": "4"
+            }
+        }
+    },
+    {
+        "name": "Yellow Gel-Bite",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "4",
+        "uri": "base",
+        "itemId": "5",
+        "definition": "def",
+        "output": "5",
+        "stats": {
+            "weight": "1",
+            "use": "1",
+            "cat": "4",
+            "cha": "4",
+            "bas": "2"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "38"},
+                {"item": "34"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "8",
+                "tcha": "8",
+                "tbas": "4"
+            }
+        }
+    },
+    {
+        "name": "Clear Gel-Bite",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "5",
+        "uri": "base",
+        "itemId": "6",
+        "definition": "def",
+        "output": "5",
+        "stats": {
+            "weight": "1",
+            "use": "1",
+            "cat": "4",
+            "cha": "4",
+            "bas": "2"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "38"},
+                {"item": "35"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "8",
+                "tcha": "8",
+                "tbas": "4"
+            }
+        }
+    },
+    {
+        "name": "Green Gel-Bite",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "6",
+        "uri": "base",
+        "itemId": "7",
+        "definition": "def",
+        "output": "5",
+        "stats": {
+            "weight": "1",
+            "use": "1",
+            "cat": "4",
+            "cha": "4",
+            "bas": "3"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "38"},
+                {"item": "36"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "12",
+                "tcha": "12",
+                "tbas": "9"
+            }
+        }
+    },
+    {
+        "name": "Rare Gel-Bite",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "",
+        "uri": "base",
+        "itemId": "8",
+        "definition": "rare",
+        "output": "1",
+        "stats": {
+            "weight": "4",
+            "use": "1",
+            "cat": "4",
+            "cha": "7",
+            "bas": "10"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "40",
+                "tcha": "70",
+                "tbas": "100"
+            }
+        }
+    },
+    {
+        "name": "Satin Fabric",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "7",
+        "uri": "base",
+        "itemId": "9",
+        "definition": "def",
+        "output": "1",
+        "stats": {
+            "weight": "1",
+            "use": "1",
+            "cat": "3",
+            "cha": "2",
+            "bas": "2"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "26"},
+                {"item": "21"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "6",
+                "tcha": "4",
+                "tbas": "4"
+            }
+        }
+    },
+    {
+        "name": "ZV Fabric",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "8",
+        "uri": "base",
+        "itemId": "10",
+        "definition": "def",
+        "output": "1",
+        "stats": {
+            "weight": "1",
+            "use": "1",
+            "cat": "3",
+            "cha": "3",
+            "bas": "3"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "18"},
+                {"item": "26"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "9",
+                "tcha": "9",
+                "tbas": "9"
+            }
+        }
+    },
+    {
+        "name": "Nylonic Fabric",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "9",
+        "uri": "base",
+        "itemId": "11",
+        "definition": "def",
+        "output": "1",
+        "stats": {
+            "weight": "1",
+            "use": "1",
+            "cat": "3",
+            "cha": "1",
+            "bas": "3"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "26"},
+                {"item": "19"},
+                {"item": "21"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "9",
+                "tcha": "3",
+                "tbas": "9"
+            }
+        }
+    },
+    {
+        "name": "T.A.O.S Fabric",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "10",
+        "uri": "base",
+        "itemId": "12",
+        "definition": "def",
+        "output": "1",
+        "stats": {
+            "weight": "1",
+            "use": "1",
+            "cat": "3",
+            "cha": "2",
+            "bas": "4"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "26"},
+                {"item": "17"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "12",
+                "tcha": "8",
+                "tbas": "16"
+            }
+        }
+    },
+    {
+        "name": "Sateen Fabric",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "11",
+        "uri": "base",
+        "itemId": "13",
+        "definition": "def",
+        "output": "1",
+        "stats": {
+            "weight": "1",
+            "use": "1",
+            "cat": "3",
+            "cha": "1",
+            "bas": "2"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "26"},
+                {"item": "19"},
+                {"item": "21"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "6",
+                "tcha": "2",
+                "tbas": "4"
+            }
+        }
+    },
+    {
+        "name": "Combat Glove",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "12",
+        "uri": "base",
+        "itemId": "14",
+        "definition": "rare",
+        "output": "1",
+        "stats": {
+            "weight": "4",
+            "use": "100",
+            "cat": "3",
+            "cha": "5",
+            "bas": "10"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "11"},
+                {"item": "18"},
+                {"item": "19"},
+                {"item": "33"},
+                {"item": "27"},
+                {"item": "10"}
+            ],
+            "statReq": {
+                "tcat": "30",
+                "tcha": "50",
+                "tbas": "100"
+            }
+        }
+    },
+    {
+        "name": "Sonic Baiter",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "13",
+        "uri": "base",
+        "itemId": "15",
+        "definition": "rare",
+        "output": "1",
+        "stats": {
+            "weight": "4",
+            "use": "20",
+            "cat": "6",
+            "cha": "6",
+            "bas": "5"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "20"},
+                {"item": "17"},
+                {"item": "18"},
+                {"item": "31"},
+                {"item": "36"},
+                {"item": "19"}
+            ],
+            "statReq": {
+                "tcat": "30",
+                "tcha": "30",
+                "tbas": "25"
+            }
+        }
+    },
+    {
+        "name": "Flex Knife",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "14",
+        "uri": "base",
+        "itemId": "16",
+        "definition": "rare",
+        "output": "1",
+        "stats": {
+            "weight": "4",
+            "use": "20",
+            "cat": "6",
+            "cha": "6",
+            "bas": "4"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "20"},
+                {"item": "18"},
+                {"item": "17"},
+                {"item": "39"},
+                {"item": "33"},
+                {"item": "10"}
+            ],
+            "statReq": {
+                "tcat": "24",
+                "tcha": "24",
+                "tbas": "16"
+            }
+        }
+    },
+    {
+        "name": "Z-Vortex Coil",
+        "contract": "0xf742c17C1C1f51C104F162a389C3DB8F38A3a432",
+        "tid": "0",
+        "uri": "base",
+        "itemId": "17",
+        "definition": "raw",
+        "output": "1",
+        "stats": {
+            "weight": "null",
+            "use": "1",
+            "cat": "2",
+            "cha": "7",
+            "bas": "10"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "0",
+                "tcha": "0",
+                "tbas": "0"
+            }
+        }
+    },
+    {
+        "name": "Z-Vortex Plasma",
+        "contract": "0xf742c17C1C1f51C104F162a389C3DB8F38A3a432",
+        "tid": "1",
+        "uri": "base",
+        "itemId": "18",
+        "definition": "raw",
+        "output": "1",
+        "stats": {
+            "weight": "null",
+            "use": "1",
+            "cat": "2",
+            "cha": "7",
+            "bas": "10"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "0",
+                "tcha": "0",
+                "tbas": "0"
+            }
+        }
+    },
+    {
+        "name": "Unknown Rubber",
+        "contract": "0xf742c17C1C1f51C104F162a389C3DB8F38A3a432",
+        "tid": "2",
+        "uri": "base",
+        "itemId": "19",
+        "definition": "raw",
+        "output": "1",
+        "stats": {
+            "weight": "null",
+            "use": "1",
+            "cat": "2",
+            "cha": "6",
+            "bas": "3"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "0",
+                "tcha": "0",
+                "tbas": "0"
+            }
+        }
+    },
+    {
+        "name": "Unknown Metal",
+        "contract": "0xf742c17C1C1f51C104F162a389C3DB8F38A3a432",
+        "tid": "3",
+        "uri": "base",
+        "itemId": "20",
+        "definition": "raw",
+        "output": "1",
+        "stats": {
+            "weight": "null",
+            "use": "1",
+            "cat": "2",
+            "cha": "6",
+            "bas": "2"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "0",
+                "tcha": "0",
+                "tbas": "0"
+            }
+        }
+    },
+    {
+        "name": "Unknown Glass",
+        "contract": "0xf742c17C1C1f51C104F162a389C3DB8F38A3a432",
+        "tid": "4",
+        "uri": "base",
+        "itemId": "21",
+        "definition": "raw",
+        "output": "1",
+        "stats": {
+            "weight": "null",
+            "use": "1",
+            "cat": "2",
+            "cha": "6",
+            "bas": "2"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "0",
+                "tcha": "0",
+                "tbas": "0"
+            }
+        }
+    },
+    {
+        "name": "Unknown Stone",
+        "contract": "0xf742c17C1C1f51C104F162a389C3DB8F38A3a432",
+        "tid": "5",
+        "uri": "base",
+        "itemId": "22",
+        "definition": "raw",
+        "output": "1",
+        "stats": {
+            "weight": "null",
+            "use": "1",
+            "cat": "2",
+            "cha": "6",
+            "bas": "2"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "0",
+                "tcha": "0",
+                "tbas": "0"
+            }
+        }
+    },
+    {
+        "name": "Unknwon Wood",
+        "contract": "0xf742c17C1C1f51C104F162a389C3DB8F38A3a432",
+        "tid": "6",
+        "uri": "base",
+        "itemId": "23",
+        "definition": "raw",
+        "output": "1",
+        "stats": {
+            "weight": "null",
+            "use": "1",
+            "cat": "2",
+            "cha": "6",
+            "bas": "2"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "0",
+                "tcha": "0",
+                "tbas": "0"
+            }
+        }
+    },
+    {
+        "name": "Food Item 1",
+        "contract": "0xf742c17C1C1f51C104F162a389C3DB8F38A3a432",
+        "tid": "7",
+        "uri": "base",
+        "itemId": "24",
+        "definition": "raw",
+        "output": "1",
+        "stats": {
+            "weight": "null",
+            "use": "1",
+            "cat": "1",
+            "cha": "6",
+            "bas": "2"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "0",
+                "tcha": "0",
+                "tbas": "0"
+            }
+        }
+    },
+    {
+        "name": "Food Item 2",
+        "contract": "0xf742c17C1C1f51C104F162a389C3DB8F38A3a432",
+        "tid": "8",
+        "uri": "base",
+        "itemId": "25",
+        "definition": "raw",
+        "output": "1",
+        "stats": {
+            "weight": "null",
+            "use": "1",
+            "cat": "1",
+            "cha": "6",
+            "bas": "2"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "0",
+                "tcha": "0",
+                "tbas": "0"
+            }
+        }
+    },
+    {
+        "name": "Classic Thread",
+        "contract": "0xf742c17C1C1f51C104F162a389C3DB8F38A3a432",
+        "tid": "10",
+        "uri": "base",
+        "itemId": "26",
+        "definition": "raw",
+        "output": "1",
+        "stats": {
+            "weight": "null",
+            "use": "1",
+            "cat": "7",
+            "cha": "4",
+            "bas": "2"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "0",
+                "tcha": "0",
+                "tbas": "0"
+            }
+        }
+    },
+    {
+        "name": "Red Sana Sand",
+        "contract": "0xf742c17C1C1f51C104F162a389C3DB8F38A3a432",
+        "tid": "11",
+        "uri": "base",
+        "itemId": "27",
+        "definition": "raw",
+        "output": "1",
+        "stats": {
+            "weight": "1",
+            "use": "1",
+            "cat": "2",
+            "cha": "7",
+            "bas": "4"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "42"},
+                {"item": "42"},
+                {"item": "42"},
+                {"item": "42"},
+                {"item": "42"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "0",
+                "tcha": "0",
+                "tbas": "0"
+            }
+        }
+    },
+    {
+        "name": "Blue Sana Sand",
+        "contract": "0xf742c17C1C1f51C104F162a389C3DB8F38A3a432",
+        "tid": "12",
+        "uri": "base",
+        "itemId": "28",
+        "definition": "raw",
+        "output": "1",
+        "stats": {
+            "weight": "1",
+            "use": "1",
+            "cat": "2",
+            "cha": "7",
+            "bas": "4"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "43"},
+                {"item": "43"},
+                {"item": "43"},
+                {"item": "43"},
+                {"item": "43"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "0",
+                "tcha": "0",
+                "tbas": "0"
+            }
+        }
+    },
+    {
+        "name": "Yellow Sana Sand",
+        "contract": "0xf742c17C1C1f51C104F162a389C3DB8F38A3a432",
+        "tid": "13",
+        "uri": "base",
+        "itemId": "29",
+        "definition": "raw",
+        "output": "1",
+        "stats": {
+            "weight": "1",
+            "use": "1",
+            "cat": "2",
+            "cha": "7",
+            "bas": "4"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "44"},
+                {"item": "44"},
+                {"item": "44"},
+                {"item": "44"},
+                {"item": "44"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "0",
+                "tcha": "0",
+                "tbas": "0"
+            }
+        }
+    },
+    {
+        "name": "Sana Sand",
+        "contract": "0xf742c17C1C1f51C104F162a389C3DB8F38A3a432",
+        "tid": "14",
+        "uri": "base",
+        "itemId": "30",
+        "definition": "raw",
+        "output": "1",
+        "stats": {
+            "weight": "1",
+            "use": "1",
+            "cat": "2",
+            "cha": "6",
+            "bas": "3"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "47"},
+                {"item": "47"},
+                {"item": "47"},
+                {"item": "47"},
+                {"item": "47"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "0",
+                "tcha": "0",
+                "tbas": "0"
+            }
+        }
+    },
+    {
+        "name": "Clim Leaf",
+        "contract": "0xf742c17C1C1f51C104F162a389C3DB8F38A3a432",
+        "tid": "15",
+        "uri": "base",
+        "itemId": "31",
+        "definition": "raw",
+        "output": "1",
+        "stats": {
+            "weight": "null",
+            "use": "1",
+            "cat": "2",
+            "cha": "7",
+            "bas": "5"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "0",
+                "tcha": "0",
+                "tbas": "0"
+            }
+        }
+    },
+    {
+        "name": "Red DigiGel",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "15",
+        "uri": "base",
+        "itemId": "32",
+        "definition": "ref",
+        "output": "1",
+        "stats": {
+            "weight": "2",
+            "use": "1",
+            "cat": "4",
+            "cha": "4",
+            "bas": "10"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "42"},
+                {"item": "18"},
+                {"item": "2"},
+                {"item": "39"},
+                {"item": "31"},
+                {"item": "42"}
+            ],
+            "statReq": {
+                "tcat": "40",
+                "tcha": "40",
+                "tbas": "100"
+            }
+        }
+    },
+    {
+        "name": "Blue DigiGel",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "16",
+        "uri": "base",
+        "itemId": "33",
+        "definition": "ref",
+        "output": "1",
+        "stats": {
+            "weight": "2",
+            "use": "1",
+            "cat": "4",
+            "cha": "4",
+            "bas": "2"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "43"},
+                {"item": "18"},
+                {"item": "2"},
+                {"item": "39"},
+                {"item": "31"},
+                {"item": "43"}
+            ],
+            "statReq": {
+                "tcat": "8",
+                "tcha": "8",
+                "tbas": "4"
+            }
+        }
+    },
+    {
+        "name": "Yellow DigiGel",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "17",
+        "uri": "base",
+        "itemId": "34",
+        "definition": "ref",
+        "output": "1",
+        "stats": {
+            "weight": "2",
+            "use": "1",
+            "cat": "4",
+            "cha": "4",
+            "bas": "2"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "44"},
+                {"item": "18"},
+                {"item": "2"},
+                {"item": "39"},
+                {"item": "31"},
+                {"item": "44"}
+            ],
+            "statReq": {
+                "tcat": "8",
+                "tcha": "8",
+                "tbas": "4"
+            }
+        }
+    },
+    {
+        "name": "Clear DigiGel",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "18",
+        "uri": "base",
+        "itemId": "35",
+        "definition": "ref",
+        "output": "1",
+        "stats": {
+            "weight": "2",
+            "use": "1",
+            "cat": "4",
+            "cha": "4",
+            "bas": "2"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "47"},
+                {"item": "18"},
+                {"item": "2"},
+                {"item": "39"},
+                {"item": "31"},
+                {"item": "47"}
+            ],
+            "statReq": {
+                "tcat": "8",
+                "tcha": "8",
+                "tbas": "4"
+            }
+        }
+    },
+    {
+        "name": "Green DigiGel",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "19",
+        "uri": "base",
+        "itemId": "36",
+        "definition": "ref",
+        "output": "1",
+        "stats": {
+            "weight": "2",
+            "use": "1",
+            "cat": "4",
+            "cha": "4",
+            "bas": "3"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "43"},
+                {"item": "44"},
+                {"item": "18"},
+                {"item": "2"},
+                {"item": "39"},
+                {"item": "31"}
+            ],
+            "statReq": {
+                "tcat": "12",
+                "tcha": "12",
+                "tbas": "9"
+            }
+        }
+    },
+    {
+        "name": "DigiGel Case",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "20",
+        "uri": "base",
+        "itemId": "38",
+        "definition": "ref",
+        "output": "1",
+        "stats": {
+            "weight": "3",
+            "use": "0",
+            "cat": "5",
+            "cha": "4",
+            "bas": "2"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "21"},
+                {"item": "19"},
+                {"item": "17"},
+                {"item": "20"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "10",
+                "tcha": "8",
+                "tbas": "4"
+            }
+        }
+    },
+    {
+        "name": "Vortex Stone Pot",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "21",
+        "uri": "base",
+        "itemId": "39",
+        "definition": "ref",
+        "output": "1",
+        "stats": {
+            "weight": "2",
+            "use": "5",
+            "cat": "7",
+            "cha": "6",
+            "bas": "3"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "21"},
+                {"item": "18"},
+                {"item": "30"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "21",
+                "tcha": "18",
+                "tbas": "9"
+            }
+        }
+    },
+    {
+        "name": "Cylinder Vile",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "22",
+        "uri": "base",
+        "itemId": "40",
+        "definition": "ref",
+        "output": "3",
+        "stats": {
+            "weight": "1",
+            "use": "3",
+            "cat": "7",
+            "cha": "4",
+            "bas": "2"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "21"},
+                {"item": "23"},
+                {"item": "18"},
+                {"item": "39"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "14",
+                "tcha": "8",
+                "tbas": "4"
+            }
+        }
+    },
+    {
+        "name": "Food Item 3",
+        "contract": "0xf742c17C1C1f51C104F162a389C3DB8F38A3a432",
+        "tid": "9",
+        "uri": "base",
+        "itemId": "41",
+        "definition": "raw",
+        "output": "1",
+        "stats": {
+            "weight": "null",
+            "use": "1",
+            "cat": "1",
+            "cha": "4",
+            "bas": "3"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "0",
+                "tcha": "0",
+                "tbas": "0"
+            }
+        }
+    },
+    {
+        "name": "Vile of Red SS",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "23",
+        "uri": "base",
+        "itemId": "42",
+        "definition": "def",
+        "output": "5",
+        "stats": {
+            "weight": "1",
+            "use": "1",
+            "cat": "2",
+            "cha": "7",
+            "bas": "4"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "27"},
+                {"item": "40"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "0",
+                "tcha": "0",
+                "tbas": "0"
+            }
+        }
+    },
+    {
+        "name": "Vile of Blue SS",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "24",
+        "uri": "base",
+        "itemId": "43",
+        "definition": "def",
+        "output": "5",
+        "stats": {
+            "weight": "1",
+            "use": "1",
+            "cat": "2",
+            "cha": "7",
+            "bas": "4"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "28"},
+                {"item": "40"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "0",
+                "tcha": "0",
+                "tbas": "0"
+            }
+        }
+    },
+    {
+        "name": "Vile of Yellow SS",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "25",
+        "uri": "base",
+        "itemId": "44",
+        "definition": "def",
+        "output": "5",
+        "stats": {
+            "weight": "1",
+            "use": "1",
+            "cat": "2",
+            "cha": "7",
+            "bas": "4"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "29"},
+                {"item": "40"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "0",
+                "tcha": "0",
+                "tbas": "0"
+            }
+        }
+    },
+    {
+        "name": "Dead Beacon",
+        "contract": "0xB8f11023C0EA546aDa9612cE4cC20911078B58Eb",
+        "tid": "0",
+        "uri": "base",
+        "itemId": "45",
+        "definition": "ref",
+        "output": "1",
+        "stats": {
+            "weight": "null",
+            "use": "1",
+            "cat": "5",
+            "cha": "4",
+            "bas": "4"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "32"},
+                {"item": "33"},
+                {"item": "20"},
+                {"item": "18"},
+                {"item": "19"},
+                {"item": "21"}
+            ],
+            "statReq": {
+                "tcat": "0",
+                "tcha": "0",
+                "tbas": "0"
+            }
+        }
+    },
+    {
+        "name": "HBK Beacon",
+        "contract": "0xB8f11023C0EA546aDa9612cE4cC20911078B58Eb",
+        "tid": "2",
+        "uri": "base",
+        "itemId": "46",
+        "definition": "rare",
+        "output": "1",
+        "stats": {
+            "weight": "null",
+            "use": "1",
+            "cat": "5",
+            "cha": "4",
+            "bas": "5"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "0",
+                "tcha": "0",
+                "tbas": "0"
+            }
+        }
+    },
+    {
+        "name": "Vile of SS",
+        "contract": "0xC8A557b3d340903a59e61711Cafca2b3999975B0",
+        "tid": "26",
+        "uri": "base",
+        "itemId": "47",
+        "definition": "def",
+        "output": "5",
+        "stats": {
+            "weight": "1",
+            "use": "1",
+            "cat": "2",
+            "cha": "2",
+            "bas": "4"
+        },
+        "criteria": {
+            "baseReg": [
+                {"item": "30"},
+                {"item": "40"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"},
+                {"item": "null"}
+            ],
+            "statReq": {
+                "tcat": "0",
+                "tcha": "0",
+                "tbas": "0"
+            }
+        }
+    }
+]

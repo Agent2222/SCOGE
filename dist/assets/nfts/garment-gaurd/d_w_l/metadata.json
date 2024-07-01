@@ -1,0 +1,23 @@
+{
+    "name": "CH2 - Dancing With Life",
+    "description": "FORGE Edition",
+    "image": "https://uqjdj-siaaa-aaaag-aaoxq-cai.icp0.io/assets/nfts/garment-gaurd/d_w_l/img.jpg",
+    "content": {
+      "mime": "image/jpeg",
+      "uri": "https://uqjdj-siaaa-aaaag-aaoxq-cai.icp0.io/assets/nfts/garment-gaurd/d_w_l/img.jpg"
+    },
+    "attributes": [
+      {
+        "trait_type": "CAT",
+        "value": "3"
+      },
+      {
+        "trait_type": "chapter",
+        "value": "2"
+      },
+      {
+        "trait_type": "Base",
+        "value": "2"
+      }
+    ]
+  }

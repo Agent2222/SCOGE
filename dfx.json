@@ -8,6 +8,10 @@
       "main": "src/backend/universe_backend/taos.mo",
       "type": "motoko"
     },
+    "scoge": {
+      "main": "src/backend/universe_backend/scoge.mo",
+      "type": "motoko"
+    },
     "assets": {
       "dependencies": [
         "universe_backend"

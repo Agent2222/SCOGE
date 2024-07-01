@@ -1,3 +1,5 @@
+import loading from "../assets/sound/loading.mp3";
+
 export class SoundtrackManager {
   constructor() {
     this.tracks = {};
@@ -26,6 +28,7 @@ export class SoundtrackManager {
       { key: 'sendmessage-1', src: 'https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/sendmessage-1.wav', artist: 'system', title: 'sendmessage-1' },
       { key: 'newmessage-1', src: '  https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/newmessage.wav', artist: 'system', title: 'newmessage-1' },
       { key: 'reacclimate-1', src: 'https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Sounds/universe-sound/reacclimate-1_01.mp3', artist: 'canon', title: 'reacclimate-1' },
+      { key: 'loading-1', src: loading, artist: 'system', title: 'loading-1' },
     ];
 
     this.trackList.forEach(track => {
