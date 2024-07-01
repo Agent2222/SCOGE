@@ -2236,7 +2236,7 @@ export const newEditorScenario = async (name,scene) => {
   // const data = await import('./sudb.json').catch((error) => {
   //   console.log(error);
   // });
-  //
+  //////////////////////////////////
   scenes.push(new DialogueScene(data.SUD.Scenarios[name][scene]));
   scenario.addScenes(...scenes);
   scenario.load();
