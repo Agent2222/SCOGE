@@ -12,10 +12,13 @@ import { createThirdwebClient, getContract, readContract } from "thirdweb";
 import { createWallet, injectedProvider } from "thirdweb/wallets";
 import { base, sepolia } from "thirdweb/chains";
 import { resolveName } from "thirdweb/extensions/ens";
+import { getRpcClient } from "thirdweb/rpc";
 
 export const client = createThirdwebClient({
-  clientId: "a7f34678c8f921d05824641db058ef4a",
+  clientId: "0122a915b52dd5f35d9bbc909a2b3341",
 });
+
+const rpcRequest = getRpcClient({ client, chain: base });
 
 export var forgeable = [];
 
