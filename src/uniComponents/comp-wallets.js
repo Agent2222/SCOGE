@@ -13,6 +13,7 @@ import { createWallet, injectedProvider } from "thirdweb/wallets";
 import { base, sepolia } from "thirdweb/chains";
 import { resolveName } from "thirdweb/extensions/ens";
 import { getRpcClient } from "thirdweb/rpc";
+import { CoinbaseWalletProvider } from "@coinbase/wallet-sdk";
 
 export const client = createThirdwebClient({
   clientId: "0122a915b52dd5f35d9bbc909a2b3341",
@@ -151,7 +152,7 @@ class compWallets extends HTMLElement {
     // Connect to Coinbase Wallet
     /////////////////////////////
     async connectCoinbase() {
-        // const wallet = createWallet("com.coinbase.wallet"); // pass the wallet id
+        const wallet = createWallet("com.coinbase.wallet"); // pass the wallet id
         // // if user has coinbase wallet installed, connect to it
         if (injectedProvider("com.coinbase.wallet")) {
             await wallet.connect({ client }).then(async (res) => {
