@@ -8,17 +8,8 @@ import { endLoading, enterTaosCity, loading, soundtrack } from "./universe.js";
 import { story } from "./game/SceneManager.js";
 import {StoicIdentity} from "ic-stoic-identity";
 import { getDigisette } from "./uniHelpers/citycentral.js";
-import { createThirdwebClient, getContract } from "thirdweb";
-import { base } from "thirdweb/chains";
 
 const canister = "7mfck-baaaa-aaaah-acuqq-cai";
-
-export const ethclient = createThirdwebClient({
-  clientId: "a7f34678c8f921d05824641db058ef4a",
-  secretKey: "KUVFY2ISLPzPqLozDepsLKC0my-KGIh5rdANUw2cB_DcVTwulp4tzByYkq-XLGNZtD0B0js8_gCgvWRQr6DATQ",
-});
-
-export const ethChain = base;
 
 export var lord = {
   principal: null,

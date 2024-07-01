@@ -1,0 +1,1 @@
+import{G as s}from"./main-BtNy6lCk.js";import"./wScoge-BfExBSv1.js";import"./i49-DSyJwZGj.js";async function r(t,e){const a=await t({method:"eth_estimateGas",params:[e]});return s(a)}export{r as eth_estimateGas};
