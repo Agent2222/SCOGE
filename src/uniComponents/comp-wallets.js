@@ -7,9 +7,7 @@ import stoicLogo from "../../assets/images/wallets/stoic.png";
 import smartLogo from "../../assets/images/wallets/smart.png";
 import statsImg from "../../assets/images/cards/digi-stats-1.jpg";
 import missing from "../../assets/images/items/scoge-missing-cloak.jpg";
-import { CoinbaseWalletSDK } from '@coinbase/wallet-sdk';
 import { enterTaosCity } from "../universe";
-
 import { createThirdwebClient, getContract, readContract } from "thirdweb";
 import { createWallet, injectedProvider } from "thirdweb/wallets";
 import { base, sepolia } from "thirdweb/chains";

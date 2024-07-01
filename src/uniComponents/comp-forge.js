@@ -1,7 +1,6 @@
 import { dragElement } from "../universe";
 import statsImg from "../../assets/images/cards/digi-stats-1.jpg";
 import leftArrow from "../../assets/images/icons/left-arrow.png";
-import { sector2 } from "../game/SceneManager";
 import { forgeable } from "./comp-wallets";
 
 export const forgelib = async () => {
