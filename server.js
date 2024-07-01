@@ -6,12 +6,19 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Basic GET route to verify server is running
+app.get('/', (req, res) => {
+  res.send('Server is running!');
+});
+
 // Route to handle the file overwrite operation
 app.post('/save-json', (req, res) => {
   const jsonData = req.body;
 
+  console.log('Received JSON data:', jsonData);
+
   // Convert the modified JSON data back to a string
-  const modifiedJsonString = JSON.stringify(jsonData);
+  const modifiedJsonString = JSON.stringify(jsonData, null, 2);
 
   // Overwrite the file on the server
   fs.writeFile('src/sudb.json', modifiedJsonString, err => {
