@@ -35,6 +35,7 @@ import { closeButton } from "./subComponents/sc-close-btn.js";
 import { compWallets } from "./uniComponents/comp-wallets.js";
 import { compForge } from "./uniComponents/comp-forge.js";
 import { compLoading } from "./subComponents/sc-loading.js";
+import { inject } from "@vercel/analytics"
 
 // Statics
 import mainvid1 from "../assets/video/scoge-c2-1.mp4";
@@ -45,6 +46,12 @@ var staticVids = [mainvid1, mainvid2];
 
 // randomly select a video and assign it to a variable
 var randomStaticVid = staticVids[Math.floor(Math.random() * staticVids.length)];
+
+try {
+  inject();
+} catch (err) {
+  console.log(err)
+}
 
 if (randomStaticVid === mainvid1) {
   // change poster of portalVideo to match the video
