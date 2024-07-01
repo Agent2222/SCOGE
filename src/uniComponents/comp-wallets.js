@@ -14,7 +14,6 @@ import { createThirdwebClient, getContract, readContract } from "thirdweb";
 import { createWallet, injectedProvider } from "thirdweb/wallets";
 import { base, sepolia } from "thirdweb/chains";
 import { resolveName } from "thirdweb/extensions/ens";
-import { doc } from "prettier";
 
 export const client = createThirdwebClient({
   clientId: "a7f34678c8f921d05824641db058ef4a",
@@ -151,22 +150,22 @@ class compWallets extends HTMLElement {
     // Connect to Coinbase Wallet
     /////////////////////////////
     async connectCoinbase() {
-        const wallet = createWallet("com.coinbase.wallet"); // pass the wallet id
-        // if user has coinbase wallet installed, connect to it
-        if (injectedProvider("com.coinbase.wallet")) {
-            await wallet.connect({ client }).then(async (res) => {
-            this.resolveLogin(res, wallet)});
-        }
+        // const wallet = createWallet("com.coinbase.wallet"); // pass the wallet id
+        // // if user has coinbase wallet installed, connect to it
+        // if (injectedProvider("com.coinbase.wallet")) {
+        //     await wallet.connect({ client }).then(async (res) => {
+        //     this.resolveLogin(res, wallet)});
+        // }
         
-        // open wallet connect modal so user can scan the QR code and connect
-        else {
-            await wallet.connect({
-            client,
-            walletConnect: { showQrModal: true },
-        }).then((res) => {
-            this.resolveLogin(res, wallet);
-        });
-        }
+        // // open wallet connect modal so user can scan the QR code and connect
+        // else {
+        //     await wallet.connect({
+        //     client,
+        //     walletConnect: { showQrModal: true },
+        // }).then((res) => {
+        //     this.resolveLogin(res, wallet);
+        // });
+        // }
         // try {
         //     const address = await provider.request({
         //       method: 'eth_requestAccounts',
