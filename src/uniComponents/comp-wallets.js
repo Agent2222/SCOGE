@@ -20,14 +20,6 @@ export const client = createThirdwebClient({
   clientId: "a7f34678c8f921d05824641db058ef4a",
 });
 
-const sdk = new CoinbaseWalletSDK({
-    appName: 'SCOGÉ',
-    appLogoUrl: 'https://example.com/logo.pnghttps://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/SCOGE%CC%81_Logo-red.png',
-    appChainIds: [84532],
-});
-
-const provider = sdk.makeWeb3Provider();
-
 export var forgeable = [];
 
 class compWallets extends HTMLElement {
