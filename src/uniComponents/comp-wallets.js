@@ -9,17 +9,13 @@ import statsImg from "../../assets/images/cards/digi-stats-1.jpg";
 import missing from "../../assets/images/items/scoge-missing-cloak.jpg";
 import { enterTaosCity } from "../universe";
 import { createThirdwebClient, getContract, readContract } from "thirdweb";
-import { createWallet, injectedProvider } from "thirdweb/wallets";
+import { createWallet, injectedProvider, ecosystemWallet} from "thirdweb/wallets";
 import { base, sepolia } from "thirdweb/chains";
 import { resolveName } from "thirdweb/extensions/ens";
-import { getRpcClient } from "thirdweb/rpc";
-import { CoinbaseWalletProvider } from "@coinbase/wallet-sdk";
 
 export const client = createThirdwebClient({
   clientId: "0122a915b52dd5f35d9bbc909a2b3341",
 });
-
-const rpcRequest = getRpcClient({ client, chain: base });
 
 export var forgeable = [];
 
@@ -134,7 +130,11 @@ class compWallets extends HTMLElement {
         await wallet.connect({ client }).then((res) => {
             this.resolveLogin(res, wallet);
             window.currentWallet = wallet.getAccount().address;
-        });
+        }).catch((err) => {
+            console.log(err)
+            this.shadowRoot.getElementById('MetaMask').style.opacity = ".5";
+            this.shadowRoot.getElementById('MetaMask-text').innerHTML = `*TEMPORARILY OFFLINE*`;
+        })
         }
         
         // open wallet connect modal so user can scan the QR code and connect
@@ -152,11 +152,20 @@ class compWallets extends HTMLElement {
     // Connect to Coinbase Wallet
     /////////////////////////////
     async connectCoinbase() {
+        // const wallet = ecosystemWallet("ecosystem.hooli", {
+        //     partnerId: "com.coinbase.wallet",
+        //   });
         const wallet = createWallet("com.coinbase.wallet"); // pass the wallet id
         // // if user has coinbase wallet installed, connect to it
         if (injectedProvider("com.coinbase.wallet")) {
             await wallet.connect({ client }).then(async (res) => {
-            this.resolveLogin(res, wallet)});
+            this.resolveLogin(res, wallet);
+            window.currentWallet = wallet.getAccount().address;
+        }).catch((err) => {
+                console.log(err)
+                this.shadowRoot.getElementById('Coinbase Wallet').style.opacity = ".5";
+                this.shadowRoot.getElementById('Coinbase Wallet-text').innerHTML = `*TEMPORARILY OFFLINE*`;
+            })
         }
         
         // open wallet connect modal so user can scan the QR code and connect
@@ -190,7 +199,12 @@ class compWallets extends HTMLElement {
         if (injectedProvider("me.rainbow")) {
         await wallet.connect({ client }).then(async (res) => {
             this.resolveLogin(res, wallet);
-        });
+            window.currentWallet = wallet.getAccount().address;
+        }).catch((err) => {
+            console.log("WALLET OFFLINE")
+            this.shadowRoot.getElementById('Rainbow').style.opacity = ".5";
+            this.shadowRoot.getElementById('Rainbow-text').innerHTML = `*TEMPORARILY OFFLINE*`;
+        })
         }
         
         // open wallet connect modal so user can scan the QR code and connect
@@ -258,12 +272,13 @@ class compWallets extends HTMLElement {
         this.availableWallets.forEach(wallet => {
             let walletBut = document.createElement("div");
             walletBut.classList.add("walletBut");
+            walletBut.id = wallet.name
             walletBut.innerHTML = `
                 <div class="walletLogo">
                     <img src="${wallet.logo}" style="height: 100%;"/>
                 </div>
                 <div class="walletName
-                ">${wallet.name}</div>`;
+                " id="${wallet.name}-text">${wallet.name}</div>`;
             walletsCont.appendChild(walletBut);
 
             switch(wallet.name) {
