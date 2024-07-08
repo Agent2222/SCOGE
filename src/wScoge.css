@@ -1575,6 +1575,19 @@ a:active {
   animation-play-state: paused;
   opacity: 0%;
 }
+
+#mainImg {
+  position: absolute;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  transition: 1s all;
+  opacity: 100%;
+}
+
 #portalVideo{
   position: absolute;
   width: 100% !important;

@@ -282,7 +282,7 @@ export async function universe() {
 
   const test = () => {
     document.addEventListener("keydown", async function (e) {
-      if (e.keyCode === 80) {
+      if (e.keyCode === 80 &&  window.loggedIn === true) {
         // window.testScn = await newScenario("Intro");
         // window.testScn = await newScenario("StangeNote");
         // window.testScn = await newScenario("DigisetteIntro");
@@ -881,7 +881,7 @@ export async function universe() {
         // if (e.keyCode == 27) {
         //   document.getElementById("getUniMenu").toggleFullScreen();
         // }
-        if (e.keyCode == 37) {
+        if (e.keyCode == 37 &&  window.loggedIn === true) {
           // LEFT
           soundtrack.stop("reacclimate-1");
           window.uniPlayer.emote = "";
@@ -913,7 +913,7 @@ export async function universe() {
             }
           }
         }
-        if (e.keyCode == 38) {
+        if (e.keyCode == 38 &&  window.loggedIn === true) {
           // UP
           soundtrack.stop("reacclimate-1");
           window.uniPlayer.emote = "";
@@ -945,7 +945,7 @@ export async function universe() {
             }
           }
         }
-        if (e.keyCode == 39) {
+        if (e.keyCode == 39 &&  window.loggedIn === true) {
           // RIGHT
           soundtrack.stop("reacclimate-1");
           window.uniPlayer.emote = "";
@@ -977,7 +977,7 @@ export async function universe() {
             }
           }
         }
-        if (e.keyCode == 40) {
+        if (e.keyCode == 40 &&  window.loggedIn === true) {
           // DOWN
           soundtrack.stop("reacclimate-1");
           window.uniPlayer.emote = "";
@@ -1013,7 +1013,7 @@ export async function universe() {
         box.style.top = selectionBoxPosition.y + "px";
         window.playerPos();
         // if space bar is pressed open the explore UI
-        if (e.keyCode == 32) {
+        if (e.keyCode == 32 &&  window.loggedIn === true) {
           window.exploreOpenHelper();
           soundtrack.stop("discovered-1")
           window.uniPlayer.emote = "";
@@ -1022,7 +1022,7 @@ export async function universe() {
         ///////////////////////
         //// TEMP
         ///////////////////////
-        if (e.keyCode == 88) {
+        if (e.keyCode == 88 &&  window.loggedIn === true) {
           document.getElementById("universe").style.filter = "blur(0px)";
           document.getElementById("currentSceneView_scene1").style.display = "none";
         }
@@ -1036,7 +1036,7 @@ export async function universe() {
     // scroll the camera element when the selection box reaches the edge of the window screen size (Update with sector activations)
     document.addEventListener("keydown", function (e) {
       var ddev = document.getElementById("compDomainDev");
-      if (e.keyCode == 37) {
+      if (e.keyCode == 37 &&  window.loggedIn === true) {
         // LEFT
         initLocationHUD(domain, mapping2);
         if (selectionBoxPosition.x == 0) {
@@ -1052,7 +1052,7 @@ export async function universe() {
           }
         }
       }
-      if (e.keyCode == 38) {
+      if (e.keyCode == 38 &&  window.loggedIn === true) {
         // UP
         initLocationHUD(domain, mapping2);
         if (lcCheck() === true) {
@@ -1065,7 +1065,7 @@ export async function universe() {
           }
         }
       }
-      if (e.keyCode == 39) {
+      if (e.keyCode == 39 &&  window.loggedIn === true) {
         // RIGHT
         initLocationHUD(domain, mapping2);
         if (selectionBoxPosition.x == window18Width * tileSize - tileSize) {
@@ -1081,7 +1081,7 @@ export async function universe() {
           }
         }
       }
-      if (e.keyCode == 40) {
+      if (e.keyCode == 40 &&  window.loggedIn === true) {
         // DOWN
         initLocationHUD(domain, mapping2);
         if (lcCheck() === true) {
@@ -1115,19 +1115,19 @@ export async function universe() {
     });
     
     document.addEventListener("keyup", function (e) {
-      if (e.keyCode == 37) {
+      if (e.keyCode == 37 &&  window.loggedIn === true) {
         soundtrack.stop("running-2")
         playing.running = false;
       }
-      if (e.keyCode == 38) {
+      if (e.keyCode == 38 &&  window.loggedIn === true) {
         soundtrack.stop("running-2")
         playing.running = false;
       }
-      if (e.keyCode == 39) {
+      if (e.keyCode == 39 &&  window.loggedIn === true) {
         soundtrack.stop("running-2")
         playing.running = false;
       }
-      if (e.keyCode == 40) {
+      if (e.keyCode == 40 &&  window.loggedIn === true) {
         soundtrack.stop("running-2")
         playing.running = false;
       }

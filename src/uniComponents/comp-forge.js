@@ -2,6 +2,7 @@ import { dragElement } from "../universe";
 import statsImg from "../../assets/images/cards/digi-stats-1.jpg";
 import leftArrow from "../../assets/images/icons/left-arrow.png";
 import { forgeable } from "./comp-wallets";
+import { gsap } from "gsap/gsap-core";
 
 export const forgelib = async () => {
     const httpUrl = "https://uqjdj-siaaa-aaaag-aaoxq-cai.icp0.io/assets/nfts/fgLib.json";
@@ -34,6 +35,12 @@ class compForge extends HTMLElement {
         this.flib = null;
         this.forgeOptions = [];
         this.refineOptions = [];
+        this.allVal = null;
+        this.leftVal = null;
+        this.rightVal = null;
+        this.movingRight = false;
+        this.codeColorPositon = ["s","a","p"]
+        this.currentNumbersFin = [];
     }
 
     get active() {
@@ -512,8 +519,198 @@ class compForge extends HTMLElement {
         `;
     }
 
+    // this.allVal = this.shadowRoot.querySelectorAll(".val");
+    // this.leftVal = this.shadowRoot.getElementById(".leftVal");
+    // this.rightVal = this.shadowRoot.getElementById(".rightVal");
+
+    lockUp() {
+        // forgeCode
+        this.allVal.forEach((ele)=> {
+            if (this.movingRight === false) {
+                gsap.timeline()
+                .to(ele, { y: -200, duration: 0.1, ease: "power1.inOut" }) 
+                .to(ele, { y: 0, duration: 0.1, ease: "power1.inOut" });
+              // Move back to original position
+            }
+        })
+    }
+
+    lockDown() {
+        this.allVal.forEach((ele)=> {
+            if (this.movingRight === false) {
+                gsap.timeline()
+                .to(ele, { y: 200, duration: 0.1, ease: "power1.inOut" }) 
+                .to(ele, { y: 0, duration: 0.1, ease: "power1.inOut" });
+              // Move back to original position
+            }
+        })
+    }
+
+    isNumeric(str) {
+        if (typeof str != "string") return false; // we only process strings!  
+        return !isNaN(str) && !isNaN(parseFloat(str)); // use parseFloat to filter out non-number strings
+    }
+
+    lockLeft(e) {
+        //
+        // e.keyCode == 37
+        this.codeColor("left");
+        this.allVal.forEach((ele)=> {
+            gsap.timeline()
+            .to(ele, { x: 200, duration: 0.05, ease: "power1.inOut" }) 
+            .to(ele, { x: -200, duration: 0.1, ease: "power1.inOut" }) 
+            .to(ele, { x: 200, duration: 0.1, ease: "power1.inOut" }) 
+            .to(ele, { x: 0, duration: 0.1, ease: "power1.inOut" })
+        })
+
+        var numberEl1 = this.shadowRoot.querySelectorAll(".leftVal");
+        var numberEl2 = this.shadowRoot.querySelectorAll(".centerVal");
+        var numberEl3 = this.shadowRoot.querySelectorAll(".rightVal");
+        var currentNumbers = [numberEl1[0].innerHTML, numberEl2[0].innerHTML, numberEl3[0].innerHTML];
+        
+        let result1 = this.isNumeric(numberEl1[0].innerHTML);
+        let result2 = this.isNumeric(numberEl2[0].innerHTML);
+        let result3 = this.isNumeric(numberEl3[0].innerHTML);
+
+        numberEl1.forEach((el1) => {
+            if (result1 === true) {
+                el1.innerHTML = Number(currentNumbers[1]) -1;
+            } else {
+                // letters
+                el1.innerHTML = currentNumbers[1];
+            }
+        })
+        numberEl2.forEach((el2) => {
+            if (result2 === true) {
+                el2.innerHTML = Number(currentNumbers[2]) -1;
+            } else {
+                // letters
+                el2.innerHTML = currentNumbers[2];
+            }
+        })
+        numberEl3.forEach((el3) => {
+            if (result3 === true) {
+                el3.innerHTML = Number(currentNumbers[0]) -1;
+            } else {
+                // letters
+                el3.innerHTML = currentNumbers[0];
+            }
+        })
+
+    }
+
+    lockRight() {
+        //
+        // e.keyCode == 39
+        this.codeColor("right");
+        this.allVal.forEach((ele)=> {
+            if (this.movingRight === false) {
+                gsap.timeline()
+                .to(ele, { x: -200, duration: 0.05, ease: "power1.inOut" }) 
+                .to(ele, { x: 200, duration: 0.1, ease: "power1.inOut" }) 
+                .to(ele, { x: -200, duration: 0.1, ease: "power1.inOut" }) 
+                .to(ele, { x: 0, duration: 0.1, ease: "power1.inOut" })
+            }
+        })
+        // this.movingRight === true;
+        // setTimeout(() => {
+        //     this.movingRight === false;
+        // },200)
+    }
+
+    codeColor(direction) {
+        let one = this.shadowRoot.getElementById("fc1");
+        let two = this.shadowRoot.getElementById("fc2");
+        let three = this.shadowRoot.getElementById("fc3");
+
+        if (direction === "left") {
+            if (this.codeColorPositon[0] === "s") {
+                this.codeColorPositon[0] = "a";
+                this.codeColorPositon[1] = "p";
+                this.codeColorPositon[2] = "s";
+                one.style.color = "var(--accent)";
+                one.style.backgroundColor = "var(--accent)";
+                two.style.color = "var(--primary)";
+                two.style.backgroundColor = "var(--primary)";
+                three.style.color = "var(--secondary)";
+                three.style.backgroundColor = "var(--secondary)";
+                return;
+            }
+    
+            if (this.codeColorPositon[0] === "a") {
+                this.codeColorPositon[0] = "p";
+                this.codeColorPositon[1] = "s";
+                this.codeColorPositon[2] = "a";
+                one.style.color = "var(--primary)";
+                one.style.backgroundColor = "var(--primary)";
+                two.style.color = "var(--secondary)";
+                two.style.backgroundColor = "var(--secondary)";
+                three.style.color = "var(--accent)";
+                three.style.backgroundColor = "var(--accent)";
+                return;
+            }
+    
+            if (this.codeColorPositon[0] === "p") {
+                this.codeColorPositon[0] = "s";
+                this.codeColorPositon[1] = "a";
+                this.codeColorPositon[2] = "p";
+                one.style.color = "var(--secondary)";
+                one.style.backgroundColor = "var(--secondary)";
+                two.style.color = "var(--accent)";
+                two.style.backgroundColor = "var(--accent)";
+                three.style.color = "var(--primary)";
+                three.style.backgroundColor = "var(--primary)";
+                return;
+            }
+            return;
+        } else {
+            if (this.codeColorPositon[0] === "s") {
+                this.codeColorPositon[0] = "p";
+                this.codeColorPositon[1] = "s";
+                this.codeColorPositon[2] = "a";
+                one.style.color = "var(--primary)";
+                one.style.backgroundColor = "var(--primary)";
+                two.style.color = "var(--secondary)";
+                two.style.backgroundColor = "var(--secondary)";
+                three.style.color = "var(--accent)";
+                three.style.backgroundColor = "var(--accent)";
+                return;
+            }
+    
+            if (this.codeColorPositon[0] === "a") {
+                this.codeColorPositon[0] = "s";
+                this.codeColorPositon[1] = "a";
+                this.codeColorPositon[2] = "p";
+                one.style.color = "var(--secondary)";
+                one.style.backgroundColor = "var(--secondary)";
+                two.style.color = "var(--accent)";
+                two.style.backgroundColor = "var(--accent)";
+                three.style.color = "var(--primary)";
+                three.style.backgroundColor = "var(--primary)";
+                return;
+            }
+    
+            if (this.codeColorPositon[0] === "p") {
+                this.codeColorPositon[0] = "a";
+                this.codeColorPositon[1] = "p";
+                this.codeColorPositon[2] = "s";
+                one.style.color = "var(--accent)";
+                one.style.backgroundColor = "var(--accent)";
+                two.style.color = "var(--primary)";
+                two.style.backgroundColor = "var(--primary)";
+                three.style.color = "var(--secondary)";
+                three.style.backgroundColor = "var(--secondary)";
+                return;
+            }
+        }
+
+    }
+
     connectedCallback() {
         this.render();
+        this.allVal = this.shadowRoot.querySelectorAll(".val");
+        this.leftVal = this.shadowRoot.getElementById("leftVal");
+        this.rightVal = this.shadowRoot.getElementById("rightVal");
         this.shadowRoot.getElementById("fmemBut").addEventListener("click", this.checkMemory.bind(this));
         // this.shadowRoot.getElementById("sendBeaconBut").addEventListener("click", this.sendBeaconData.bind(this));
         dragElement(this.shadowRoot.getElementById("mainForge"), true);
@@ -544,6 +741,22 @@ class compForge extends HTMLElement {
                 this.shadowRoot.getElementById("emailForm2").reset(); // Reset the form
             });
         });
+        document.addEventListener("keydown", (e) => {
+            switch(e.keyCode) {
+                case 37:
+                    this.lockLeft(e);
+                    break;
+                case 38:
+                    this.lockUp();
+                    break;
+                case 39:
+                    this.lockRight(e);
+                    break;
+                case 40:
+                    this.lockDown();
+                    break;
+            }
+        })
     }
 
     render() {
@@ -1468,6 +1681,83 @@ class compForge extends HTMLElement {
                 .selectedCard {
                     border: 2px solid var(--accent);
                 }
+
+                #forgeCode {
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    z-index: 7;
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr;
+                    grid-template-rows: 1fr;
+                    justify-content: center;
+                    align-items: 1fr;
+                    display: none;
+                }
+
+                #fordeStatus {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                }
+
+                .fc {
+                    width: 100%;
+                    height: 100%;
+                    font-size: 16em;
+                    display: fles;
+                    justify-items: center;
+                    align-items: center;
+                    position: relative;
+                    font-family: "BS-SB";
+                    overflow: hidden;
+                }
+
+                .fcBg, .fcBg2 {
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+                    background-color: rgba(0,0,0,0.8);
+                    opacity: 0.5;
+                }
+
+                .fcBg {
+                    opacity: 1;
+                }
+
+                .fcBg2 {
+                    transform: scaleY(2);
+                    filter: blur(9px);
+                    opacity: .4;
+                }
+
+                #fc1 {
+                    background-color: var(--secondary);
+                    color: var(--secondary);
+                }
+
+                #fc2 {
+                    background-color: var(--accent);
+                    color: var(--accent);
+                }
+
+                 #fc3 {
+                    background-color: var(--primary);
+                    color: var(--primary);
+                }
+
+                .val {
+                    transform: translateX(-100);
+                }
+
             </style>
             <div id="mainForge" data-domType="shadow">
                 <comp-close-btn></comp-close-btn>
@@ -1540,6 +1830,33 @@ class compForge extends HTMLElement {
                                 <input id="sendBeaconBut" type="submit" value="SEND BEACON">
                             </div>
                         </form>
+                    </div>
+                    <div id="forgeCode">
+                        <div id="fordeStatus"></div>
+                        <div id="fc1" class="fc">
+                            <div id="fcNum1" class="fcBg">
+                                <div class="val leftVal">2</div>
+                            </div>
+                            <div id="fcNum1Bg" class="fcBg2">
+                                <div class="val leftVal">2</div>
+                            </div>
+                        </div>
+                        <div id="fc2" class="fc">
+                            <div id="fcNum2" class="fcBg">
+                                <div class="val centerVal">A</div>
+                            </div>
+                            <div id="fcNum2Bg" class="fcBg2">
+                                <div class="val centerVal">A</div>
+                            </div>
+                        </div>
+                        <div id="fc3" class="fc">
+                            <div id="fcNum3" class="fcBg">
+                                <div class="val rightVal">4</div>
+                            </div>
+                            <div id="fcNum3Bg" class="fcBg2">
+                                <div class="val rightVal">4</div>
+                            </div>
+                        </div>
                     </div>
                     <div id="forgeMain">
                         <div id="mainDesc1">
