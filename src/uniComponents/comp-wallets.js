@@ -201,7 +201,7 @@ class compWallets extends HTMLElement {
             this.resolveLogin(res, wallet);
             window.currentWallet = wallet.getAccount().address;
         }).catch((err) => {
-            console.log("WALLET OFFLINE")
+            console.log(err)
             this.shadowRoot.getElementById('Rainbow').style.opacity = ".5";
             this.shadowRoot.getElementById('Rainbow-text').innerHTML = `*TEMPORARILY OFFLINE*`;
         })

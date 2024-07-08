@@ -11,4 +11,5 @@ build/models/Room44/Room44.gltf
 templates
 secrets.json
 server2.js
-.vscode.npmrc
+.vscode
+.npmrc

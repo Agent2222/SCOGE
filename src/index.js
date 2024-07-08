@@ -41,11 +41,12 @@ import { inject } from "@vercel/analytics"
 import mainvid1 from "../assets/video/scoge-c2-1.mp4";
 import mainvid2 from "../assets/video/scoge-c2-2.mp4";
 import main1poster from "../assets/video/scoge-c2-1-poster.jpg";
+import currentImg from "../assets/images/bgs/scoge-8-24.webp";
 
 var staticVids = [mainvid1, mainvid2];
 
-// randomly select a video and assign it to a variable
-var randomStaticVid = staticVids[Math.floor(Math.random() * staticVids.length)];
+// // randomly select a video and assign it to a variable
+// var randomStaticVid = staticVids[Math.floor(Math.random() * staticVids.length)];
 
 try {
   inject();
@@ -53,10 +54,12 @@ try {
   console.log(err)
 }
 
-if (randomStaticVid === mainvid1) {
-  // change poster of portalVideo to match the video
-  document.getElementById("portalVideo").poster = main1poster;
-}
+// if (randomStaticVid === mainvid1) {
+//   // change poster of portalVideo to match the video
+//   document.getElementById("portalVideo").poster = main1poster;
+// }
+
+document.getElementById("mainImg").src = currentImg;
 
 export const dsheet = "https://script.google.com/macros/s/AKfycbzHUtfeNysmMSZvlC7tnfYhpgs_EU_3kx9_6H_VV6le8tPyR4Vlzs8SlfES_8pbK0nb2w/exec";
 
@@ -171,14 +174,14 @@ function start() {
       window.universeSystem();
       document.getElementById("getInvestors").setAttribute("invest","active");
       // enterTaosCity();
-      document.getElementById("portalVideo").style.display = "block";
+      // document.getElementById("portalVideo").style.display = "block";
       document.getElementById("seekModal").style.pointerEvents = "auto";
       gsap.to('#videoGallery', {duration: 2, opacity: 1, y: 0, ease: "power2.out"});
       gsap.to("#videoGallery", { duration: 1, filter: "blur(0px)", ease: "power2.inOut"});
       ci = "true";
-      document.getElementById("portalVideo").src = randomStaticVid;
+      // document.getElementById("portalVideo").src = randomStaticVid;
       // document.getElementById("portalVideo").src = mainvid2;
-      document.getElementById("portalVideo")?.play();
+      // document.getElementById("portalVideo")?.play();
     }
 }
 
