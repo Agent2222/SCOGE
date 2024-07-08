@@ -1694,6 +1694,7 @@ class compForge extends HTMLElement {
                     grid-template-rows: 1fr;
                     justify-content: center;
                     align-items: 1fr;
+                    display: none;
                 }
 
                 #fordeStatus {
