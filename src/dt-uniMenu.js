@@ -4036,15 +4036,6 @@ class getUniMenu extends HTMLElement {
                       ${this.variableDataMessages[2].preview}
                     </div>
                   </div>
-                  <div class="beacon tut" id="varBeacon" data-headline="${this.variableDataMessages[0].head}" data-message="${this.variableDataMessages[0].message}">
-                    <div class="beaconOrigin">
-                      <div class="beaconIdenIcon">!</div>
-                      <div class="beaconSender">${this.variableDataMessages[0].from}</div>
-                    </div>
-                    <div class="beaconPreview">
-                      ${this.variableDataMessages[0].preview}
-                    </div>
-                  </div>
                   <div class="beacon tut" data-headline="SCOGÉ" data-message="SCOGÉ™ is a fashion label founded by designer Starnilas Oge. Oge practices a Meta-Analytical Psychology best described as Subreality Archeology - An approach where history, geography, and ecology of an alternate world are realized and understood through the production of the world's material culture. Oge studied at The Fashion Institute of Technology in NYC before launching the SCOGÉ™ label.">
                     <div class="beaconOrigin">
                       <div class="beaconIdenIcon">!</div>
