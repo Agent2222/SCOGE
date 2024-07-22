@@ -8,8 +8,9 @@
     "server2": "node server2.js",
     "dev": "concurrently \"npm run start\" \"npm run server\"",
     "dev2": "concurrently \"vite\" \"npm run server2\"",
-    "build": "vite build && npm run copy-assets",
+    "build": "vite build && npm run copy-assets && npm run copy-assets2",
     "copy-assets": "copyfiles -u 1 'assets/nfts/**/*' 'dist/assets/'",
+    "copy-assets2": "copyfiles -u 1 'assets/images/items/*' 'dist/assets/'",
     "serve": "npm run build && vite preview",
     "watch": "ic-dfx-watch",
     "sync": "browser-sync start -sw"
