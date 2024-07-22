@@ -114,7 +114,7 @@ class compForge extends HTMLElement {
                     buttons.appendChild(qtyInd);
                     var hash = null;
                     if (nft.nft.image.includes("ipfs://")) {
-                        hash = nft.nft.image.replace("ipfs://", "https://a7f34678c8f921d05824641db058ef4a.ipfscdn.io/ipfs/");
+                        hash = nft.nft.image.replace("ipfs://", "https://52ecc14ce71f7fe5cfc6f381627730cc.ipfscdn.io/ipfs/");
                     } else {
                         hash = nft.nft.image;
                     }
