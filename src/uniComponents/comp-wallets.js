@@ -537,9 +537,9 @@ class compWallets extends HTMLElement {
             // console.log("TEst", data)
 
             var httpUrl = null;
-
+            
             if (data.includes("ipfs://")) {
-                httpUrl = data.replace("ipfs://", "https://a7f34678c8f921d05824641db058ef4a.ipfscdn.io/ipfs/");
+                httpUrl = data.replace("ipfs://", "https://52ecc14ce71f7fe5cfc6f381627730cc.ipfscdn.io/ipfs/");
             } else {
                 httpUrl = data
             }
