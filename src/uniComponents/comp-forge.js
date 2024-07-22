@@ -38,9 +38,15 @@ class compForge extends HTMLElement {
         this.allVal = null;
         this.leftVal = null;
         this.rightVal = null;
+        this.centerVal = null;
         this.movingRight = false;
         this.codeColorPositon = ["s","a","p"]
         this.currentNumbersFin = [];
+        this.alphanumericArray = [
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 
+            'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 
+            'U', 'V', 'W', 'X', 'Y', 'Z'
+        ];
     }
 
     get active() {
@@ -517,6 +523,10 @@ class compForge extends HTMLElement {
                 <div id="forgeBut">FORGE</div>
             </div>
         `;
+        this.shadowRoot.getElementById("forgeBut").addEventListener("click", () => {
+            this.shadowRoot.getElementById("forgeCode").style.display = "grid";
+            this.shadowRoot.getElementById("connectorSpiral").style.display = "none";
+        })
     }
 
     // this.allVal = this.shadowRoot.querySelectorAll(".val");
@@ -525,23 +535,25 @@ class compForge extends HTMLElement {
 
     lockUp() {
         // forgeCode
-        this.allVal.forEach((ele)=> {
+        this.centerVal.forEach((ele)=> {
             if (this.movingRight === false) {
                 gsap.timeline()
+                .to(ele, { y: 200, duration: 0.05, ease: "power1.inOut" }) 
                 .to(ele, { y: -200, duration: 0.1, ease: "power1.inOut" }) 
-                .to(ele, { y: 0, duration: 0.1, ease: "power1.inOut" });
-              // Move back to original position
+                .to(ele, { y: 200, duration: 0.1, ease: "power1.inOut" }) 
+                .to(ele, { y: 0, duration: 0.1, ease: "power1.inOut" })
             }
         })
     }
 
     lockDown() {
-        this.allVal.forEach((ele)=> {
+        this.centerVal.forEach((ele)=> {
             if (this.movingRight === false) {
                 gsap.timeline()
+                .to(ele, { y: -200, duration: 0.05, ease: "power1.inOut" }) 
                 .to(ele, { y: 200, duration: 0.1, ease: "power1.inOut" }) 
-                .to(ele, { y: 0, duration: 0.1, ease: "power1.inOut" });
-              // Move back to original position
+                .to(ele, { y: -200, duration: 0.1, ease: "power1.inOut" }) 
+                .to(ele, { y: 0, duration: 0.1, ease: "power1.inOut" })
             }
         })
     }
@@ -573,27 +585,57 @@ class compForge extends HTMLElement {
         let result3 = this.isNumeric(numberEl3[0].innerHTML);
 
         numberEl1.forEach((el1) => {
-            if (result1 === true) {
-                el1.innerHTML = Number(currentNumbers[1]) -1;
+            if (result2 === true) {
+                if (Number(currentNumbers[1]) === 0) {
+                    el1.innerHTML = "Z";
+                } else {
+                    el1.innerHTML = Number(currentNumbers[1]) -1;
+                }
+                return;
             } else {
                 // letters
-                el1.innerHTML = currentNumbers[1];
+                if (currentNumbers[1] === "A") {
+                    el1.innerHTML = 9;
+                } else {
+                    const index = this.alphanumericArray.indexOf(currentNumbers[1]);
+                    el1.innerHTML = this.alphanumericArray[(index - 1) % this.alphanumericArray.length];
+                }
             }
         })
         numberEl2.forEach((el2) => {
-            if (result2 === true) {
-                el2.innerHTML = Number(currentNumbers[2]) -1;
+            if (result3 === true) {
+                if (Number(currentNumbers[2]) === 0) {
+                    el2.innerHTML = "Z";
+                } else {
+                    el2.innerHTML = Number(currentNumbers[2]) -1;
+                }
+                return;
             } else {
                 // letters
-                el2.innerHTML = currentNumbers[2];
+                if (currentNumbers[2] === "A") {
+                    el2.innerHTML = 9;
+                } else {
+                    const index = this.alphanumericArray.indexOf(currentNumbers[2]);
+                    el2.innerHTML = this.alphanumericArray[(index - 1) % this.alphanumericArray.length];
+                }
             }
         })
         numberEl3.forEach((el3) => {
-            if (result3 === true) {
-                el3.innerHTML = Number(currentNumbers[0]) -1;
+            if (result1 === true) {
+                if (Number(currentNumbers[0]) === 0) {
+                    el3.innerHTML = "Z";
+                } else {
+                    el3.innerHTML = Number(currentNumbers[0]) -1;
+                }
+                return;
             } else {
                 // letters
-                el3.innerHTML = currentNumbers[0];
+                if (currentNumbers[0] === "A") {
+                    el3.innerHTML = 9;
+                } else {
+                    const index = this.alphanumericArray.indexOf(currentNumbers[0]);
+                    el3.innerHTML = this.alphanumericArray[(index - 1) % this.alphanumericArray.length];
+                }
             }
         })
 
@@ -612,10 +654,70 @@ class compForge extends HTMLElement {
                 .to(ele, { x: 0, duration: 0.1, ease: "power1.inOut" })
             }
         })
-        // this.movingRight === true;
-        // setTimeout(() => {
-        //     this.movingRight === false;
-        // },200)
+
+        var numberEl1 = this.shadowRoot.querySelectorAll(".leftVal");
+        var numberEl2 = this.shadowRoot.querySelectorAll(".centerVal");
+        var numberEl3 = this.shadowRoot.querySelectorAll(".rightVal");
+        var currentNumbers = [numberEl1[0].innerHTML, numberEl2[0].innerHTML, numberEl3[0].innerHTML];
+        
+        let result1 = this.isNumeric(numberEl1[0].innerHTML);
+        let result2 = this.isNumeric(numberEl2[0].innerHTML);
+        let result3 = this.isNumeric(numberEl3[0].innerHTML);
+
+        numberEl1.forEach((el1) => {
+            if (result3 === true) {
+                if (Number(currentNumbers[2]) === 9) {
+                    el1.innerHTML = "A";
+                } else {
+                    el1.innerHTML = Number(currentNumbers[2]) +1;
+                }
+                return;
+            } else {
+                // letters
+                if (currentNumbers[2] === "Z") {
+                    el1.innerHTML = 0;
+                } else {
+                    const index = this.alphanumericArray.indexOf(currentNumbers[2]);
+                    el1.innerHTML = this.alphanumericArray[(index + 1) % this.alphanumericArray.length];
+                }
+            }
+        })
+        numberEl2.forEach((el2) => {
+            if (result1 === true) {
+                if (Number(currentNumbers[0]) === 9) {
+                    el2.innerHTML = "A";
+                } else {
+                    el2.innerHTML = Number(currentNumbers[0]) +1;
+                }
+                return;
+            } else {
+                // letters
+                if (currentNumbers[0] === "Z") {
+                    el2.innerHTML = 0;
+                } else {
+                    const index = this.alphanumericArray.indexOf(currentNumbers[0]);
+                    el2.innerHTML = this.alphanumericArray[(index + 1) % this.alphanumericArray.length];
+                }
+            }
+        })
+        numberEl3.forEach((el3) => {
+            if (result2 === true) {
+                if (Number(currentNumbers[1]) === 9) {
+                    el3.innerHTML = "A";
+                } else {
+                    el3.innerHTML = Number(currentNumbers[1]) +1;
+                }
+                return;
+            } else {
+                // letters
+                if (currentNumbers[1] === "Z") {
+                    el3.innerHTML = 0;
+                } else {
+                    const index = this.alphanumericArray.indexOf(currentNumbers[1]);
+                    el3.innerHTML = this.alphanumericArray[(index + 1) % this.alphanumericArray.length];
+                }
+            }
+        })
     }
 
     codeColor(direction) {
@@ -709,6 +811,7 @@ class compForge extends HTMLElement {
     connectedCallback() {
         this.render();
         this.allVal = this.shadowRoot.querySelectorAll(".val");
+        this.centerVal = this.shadowRoot.querySelectorAll(".centerVal");
         this.leftVal = this.shadowRoot.getElementById("leftVal");
         this.rightVal = this.shadowRoot.getElementById("rightVal");
         this.shadowRoot.getElementById("fmemBut").addEventListener("click", this.checkMemory.bind(this));
@@ -1831,7 +1934,7 @@ class compForge extends HTMLElement {
                             </div>
                         </form>
                     </div>
-                    <div id="forgeCode">
+                    <div id="forgeCode" class="xPre1">
                         <div id="fordeStatus"></div>
                         <div id="fc1" class="fc">
                             <div id="fcNum1" class="fcBg">

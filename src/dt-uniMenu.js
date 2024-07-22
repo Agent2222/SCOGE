@@ -78,7 +78,7 @@ var nmcProps = {
 class getUniMenu extends HTMLElement {
   constructor() {
     super();
-    this.domainIntroSeen = null;
+    this.domainIntroSeen = true;
     this.shadow = this.attachShadow({ mode: "open" });
     this.defaultSource = `<img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/DIGISHOP-1.png" alt="NFT Shop" id="nftShop">`
     this.beacons = null;
@@ -924,7 +924,6 @@ class getUniMenu extends HTMLElement {
     this.shadow.getElementById("gdBuyBut2").addEventListener("click", () => {
       if (this.domainIntroSeen === null) {
         story("DomainDevelopment");
-
       }
       if (this.domainIntroSeen === false) {
         story("DomainDevelopmentSetup");
