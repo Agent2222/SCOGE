@@ -387,7 +387,7 @@ async getProducts() {
     }
   }
 
-  // temp comment
+  // temp comment one
 
   async initialize() {
     this.shadowRoot.getElementById("loadcon").style.display = "grid";
