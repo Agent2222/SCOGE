@@ -387,6 +387,8 @@ async getProducts() {
     }
   }
 
+  // temp comment
+
   async initialize() {
     this.shadowRoot.getElementById("loadcon").style.display = "grid";
     const lineItems = this.bag.map((item) => {
