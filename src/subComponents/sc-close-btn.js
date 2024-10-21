@@ -36,6 +36,17 @@ class closeButton extends HTMLElement {
             let secondaryEl = grandParentNode.id
             let selected = document.getElementById(mainEl).shadowRoot.getElementById(secondaryEl);
 
+            // Inner Close
+            if (document.getElementById(mainEl).shadowRoot.querySelectorAll(".xPre2")[0]) {
+                console.log("HERE")
+                if (document.getElementById(mainEl).shadowRoot.querySelectorAll(".xPre2")[0].style.display === "grid") {
+                    document.getElementById(mainEl).shadowRoot.querySelectorAll(".xPre2")[0].style.display = "none";
+                    document.getElementById(mainEl).shadowRoot.getElementById("forgerOptions").style.display = "grid";
+                    return;
+                }
+                return;
+            }
+
             //PreClose
             if (document.getElementById(mainEl).shadowRoot.querySelectorAll(".xPre1")[0]) {
                 if (document.getElementById(mainEl).shadowRoot.querySelectorAll(".xPre1")[0].style.display === "grid") {

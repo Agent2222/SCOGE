@@ -42,11 +42,19 @@ class compForge extends HTMLElement {
         this.movingRight = false;
         this.codeColorPositon = ["s","a","p"]
         this.currentNumbersFin = [];
+        this.colorOpts = null;
+        this.keyAr = null;
+        this.fp = 0;
         this.alphanumericArray = [
+            "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 
             'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 
             'U', 'V', 'W', 'X', 'Y', 'Z'
         ];
+        this.forgeGoal = [];
+        this.colorsBase = ["var(--primary)", "var(--secondary)", "var(--accent)"];
+        this.colorOptions = ["var(--primary)", "var(--secondary)", "var(--accent)"];
+        this.forgeEndur = null;
     }
 
     get active() {
@@ -525,7 +533,8 @@ class compForge extends HTMLElement {
         `;
         this.shadowRoot.getElementById("forgeBut").addEventListener("click", () => {
             this.shadowRoot.getElementById("forgeCode").style.display = "grid";
-            this.shadowRoot.getElementById("connectorSpiral").style.display = "none";
+            // this.shadowRoot.getElementById("connectorSpiral").style.display = "none";
+            this.initForge();
         })
     }
 
@@ -533,29 +542,223 @@ class compForge extends HTMLElement {
     // this.leftVal = this.shadowRoot.getElementById(".leftVal");
     // this.rightVal = this.shadowRoot.getElementById(".rightVal");
 
-    lockUp() {
+    async lockUp() {
         // forgeCode
-        this.centerVal.forEach((ele)=> {
+        this.centerVal.forEach(async(ele)=> {
             if (this.movingRight === false) {
                 gsap.timeline()
                 .to(ele, { y: 200, duration: 0.05, ease: "power1.inOut" }) 
                 .to(ele, { y: -200, duration: 0.1, ease: "power1.inOut" }) 
                 .to(ele, { y: 200, duration: 0.1, ease: "power1.inOut" }) 
                 .to(ele, { y: 0, duration: 0.1, ease: "power1.inOut" })
+
+                var numberEl2 = this.shadowRoot.querySelectorAll(".centerVal");
+                var currentNumbers = numberEl2[0].innerHTML;
+                let result2 = await this.isNumericPromise(numberEl2[0].innerHTML);
+        
+                if (result2 === true) {
+                    if (Number(currentNumbers) === 9) {
+                        numberEl2.forEach((el1) => {
+                            el1.innerHTML = "A";
+                        })
+                        return;
+                    } else {
+                        numberEl2.forEach((el1) => {
+                            el1.innerHTML = Number(currentNumbers) +1;
+                        })
+                    }
+                    return;
+                } else {
+                    // letters
+                    if (currentNumbers === "Z") {
+                        numberEl2.forEach((el1) => {
+                            el1.innerHTML = 0;
+                        })
+                        return;
+                    } else {
+                        const index = this.alphanumericArray.indexOf(currentNumbers);
+                        numberEl2.forEach((el1) => {
+                            el1.innerHTML = this.alphanumericArray[(index + 1) % this.alphanumericArray.length];
+                        })
+                    }
+                }
+            }
+        })
+
+        this.trippleCheck();
+    }
+
+    randomVal() {
+        return new Promise((resolve,reject) => {
+            try {
+                const result = Math.floor(Math.random() * 37);
+                resolve(result)
+            } catch (error) {
+                reject(error)
             }
         })
     }
 
-    lockDown() {
-        this.centerVal.forEach((ele)=> {
+    async initForge(difficulty) {
+        this.colorOpts = Math.floor(Math.random() * this.colorOptions.length);
+        this.keyAr = this.shadowRoot.querySelectorAll(".connect");
+
+        for (let i = 0; i < 3; i++) {
+            var key = await this.randomVal();
+            // var key = await Math.floor(Math.random() * 37);
+            this.keyAr[i].innerHTML = this.alphanumericArray[key];
+            this.forgeGoal.push(this.alphanumericArray[key]);
+        }
+
+        switch (this.colorOpts) {
+            case 0:
+                this.keyAr[0].style.color = this.colorOptions[0];
+                this.keyAr[1].style.color = this.colorOptions[1];
+                this.keyAr[2].style.color = this.colorOptions[2];
+            break;
+            case 1:
+                this.keyAr[0].style.color = this.colorOptions[1];
+                this.keyAr[1].style.color = this.colorOptions[2];
+                this.keyAr[2].style.color = this.colorOptions[0];
+            break;
+            case 2:
+                this.keyAr[0].style.color = this.colorOptions[2];
+                this.keyAr[1].style.color = this.colorOptions[0];
+                this.keyAr[2].style.color = this.colorOptions[1];
+            break;
+        }
+
+        var card = this.shadowRoot.getElementById("forgeSelection");
+        gsap.to(card, {
+            transform: "translateX(0px)", 
+            duration: 0.3, 
+            ease: "power1.inOut" 
+        })
+        card.style.position = "sticky";
+        setTimeout(()=> {
+            var spiral1 = this.shadowRoot.getElementById("connectorSpiral");
+            gsap.to(spiral1, {
+                transform: "scale(2)",
+                delay: .5, 
+                opacity: 0,
+                duration: 0.2, 
+                ease: "power1.inOut" 
+            })
+        },400)
+        for (let i = 0; i < 5; i++) {
+            setTimeout(() => {
+                this.lockLeft();
+            }, 50 * i)
+        }
+    }
+
+    isSameCode(value, position) {
+        return new Promise((resolve,reject) => {
+            try {
+                const result = this.isMatch(value, position);
+                resolve(result)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    }
+
+    async trippleCheck() {
+        var check = await this.isSameCode(this.leftVal[0], 0)
+        var check2 = await this.isSameCode(this.centerVal[0], 1)
+        var check3 = await this.isSameCode(this.rightVal[0], 2)
+
+        if (check === true && check2 === true && check3 === true) {
+            switch (this.fp) {
+                case 0:
+                    this.forgeLvlPass(1);
+                    this.fp = 1;
+                break;
+                case 1:
+                    this.forgeLvlPass(2);
+                    this.fp = 3;
+                break;
+                case 2:
+                //
+                break;
+            }
+            return true;
+        }
+    }
+
+    isMatch(value, position) {
+        var valColor = null;
+        switch (window.getComputedStyle(value).color) {
+            case "rgb(255, 0, 45)":
+                valColor = "var(--primary)";
+            break;
+            case "rgb(148, 190, 140)":
+                valColor = "var(--accent)";
+            break;
+            case "rgb(181, 211, 209)":
+                valColor = "var(--secondary)";
+            break;
+        }
+        if (value.innerHTML === this.forgeGoal[position] && valColor === this.shadowRoot.querySelectorAll(".connect")[position].style.color) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    isNumericPromise(value) {
+        return new Promise((resolve, reject) => {
+            try {
+                const result = this.isNumeric(value);
+                resolve(result);
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }    
+
+    async lockDown() {
+        this.centerVal.forEach(async (ele)=> {
             if (this.movingRight === false) {
                 gsap.timeline()
                 .to(ele, { y: -200, duration: 0.05, ease: "power1.inOut" }) 
                 .to(ele, { y: 200, duration: 0.1, ease: "power1.inOut" }) 
                 .to(ele, { y: -200, duration: 0.1, ease: "power1.inOut" }) 
                 .to(ele, { y: 0, duration: 0.1, ease: "power1.inOut" })
+
+                var numberEl2 = this.shadowRoot.querySelectorAll(".centerVal");
+                var currentNumbers = numberEl2[0].innerHTML;
+                let result2 = await this.isNumericPromise(numberEl2[0].innerHTML);
+        
+                if (result2 === true) {
+                    if (Number(currentNumbers) === 0) {
+                        numberEl2.forEach(async (el1) => {
+                            el1.innerHTML = "Z";
+                        })
+                        return;
+                    } else {
+                        numberEl2.forEach(async (el1) => {
+                            el1.innerHTML = Number(currentNumbers) -1;
+                        })
+                    }
+                    return;
+                } else {
+                    // letters
+                    if (currentNumbers === "A") {
+                        numberEl2.forEach(async (el1) => {
+                            el1.innerHTML = 9;
+                        })
+                        return;
+                    } else {
+                        const index = this.alphanumericArray.indexOf(currentNumbers);
+                        numberEl2.forEach(async (el1) => {
+                            el1.innerHTML = this.alphanumericArray[(index - 1) % this.alphanumericArray.length];
+                        })
+                    }
+                }
             }
         })
+        this.trippleCheck();
     }
 
     isNumeric(str) {
@@ -638,6 +841,7 @@ class compForge extends HTMLElement {
                 }
             }
         })
+        this.trippleCheck();
 
     }
 
@@ -718,6 +922,7 @@ class compForge extends HTMLElement {
                 }
             }
         })
+        this.trippleCheck();
     }
 
     codeColor(direction) {
@@ -808,12 +1013,51 @@ class compForge extends HTMLElement {
 
     }
 
+    forgeLvlPass(lvl) {
+        var connector = this.shadowRoot.getElementById("connector");
+        var connector2 = this.shadowRoot.getElementById("connector2");
+        var connector3 = this.shadowRoot.getElementById("connector3");
+        this.forgeGoal = [];
+        switch(lvl) {
+            case 1:
+                setTimeout(() => {
+                    gsap.to(connector2, {
+                        top: "7%",
+                        duration: .3,
+                        ease: "power3.inOut"
+                    })
+                }, 500)
+                gsap.to(connector, { 
+                    rotation: 3600, // Rotate 360 degrees
+                    duration: 2,   // Duration of 2 seconds
+                    ease: "power3.inOut" // Easing function
+                });
+            break;
+            case 2: 
+                setTimeout(() => {
+                    gsap.to(connector3, {
+                        bottom: "7%",
+                        duration: .3,
+                        ease: "power3.inOut"
+                    })
+                }, 500)
+                gsap.to(connector, { 
+                    rotation: 0, // Rotate 360 degrees
+                    duration: 2,   // Duration of 2 seconds
+                    ease: "power3.inOut" // Easing function
+                });
+            break;
+        }
+
+        this.initForge();
+    }
+
     connectedCallback() {
         this.render();
         this.allVal = this.shadowRoot.querySelectorAll(".val");
         this.centerVal = this.shadowRoot.querySelectorAll(".centerVal");
-        this.leftVal = this.shadowRoot.getElementById("leftVal");
-        this.rightVal = this.shadowRoot.getElementById("rightVal");
+        this.leftVal = this.shadowRoot.querySelectorAll(".leftVal");
+        this.rightVal = this.shadowRoot.querySelectorAll(".rightVal");
         this.shadowRoot.getElementById("fmemBut").addEventListener("click", this.checkMemory.bind(this));
         // this.shadowRoot.getElementById("sendBeaconBut").addEventListener("click", this.sendBeaconData.bind(this));
         dragElement(this.shadowRoot.getElementById("mainForge"), true);
@@ -943,7 +1187,7 @@ class compForge extends HTMLElement {
                     overflow: hidden;
                 }
 
-                #connector {
+                #connector, #connector2, #connector3 {
                     width: 10svh;
                     height: 10svh;
                     position: absolute;
@@ -953,6 +1197,18 @@ class compForge extends HTMLElement {
                     right: -12%;
                     top: 37%;
                     border-radius: 50%;
+                }
+
+                #connector2 {
+                    transform: scale(.8);
+                    overflow: hidden;
+                    z-index: 1;
+                }
+                    
+                #connector3 {
+                    top: auto;
+                    transform: scale(.8);
+                    overflow: hidden;
                 }
 
                 #header {
@@ -1291,6 +1547,7 @@ class compForge extends HTMLElement {
                     padding-left: 3%;
                     padding-right: 3%;
                     overflow-y: auto;
+                    overflow-x: hidden;
                     position: relative;
                 }
 
@@ -1612,6 +1869,7 @@ class compForge extends HTMLElement {
                     position: absolute;
                     font-family: 'BS-B';
                     transform: translateY(-5%);
+                    z-index: -1;
                 }
 
                 #con3 {
@@ -1631,7 +1889,7 @@ class compForge extends HTMLElement {
                     color: var(--primary);
                 }
 
-                #connectorSpiral {
+                #connectorSpiral, #connectorSpiral2, #connectorSpiral3 {
                     width: 100%;
                     height: 100%;
                     display: flex;
@@ -1861,7 +2119,90 @@ class compForge extends HTMLElement {
                     transform: translateX(-100);
                 }
 
+                #forgeFocus {
+                    display: none;
+                    position: fixed;
+                    width: 100%;
+                    height: 100%;
+                    left: 0;
+                    top: 0;
+                    background-color: rgba(0,0,0,0.8);
+                    z-index: 10;
+                }
+
+                #forgeSelection {
+                    position: absolute;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    z-index: 10;
+                    background-color: black;
+                    display: flex;
+                    justify-content: center;
+                    align-content: center;
+                    overflow: hidden;
+                    transform: translateX(500px);
+                }
+
+                #forgeSelection img {
+                    height: 100%;
+                    width: auto;
+                    object-fit: contain;
+                    transform: scale(1.5);
+                }
+
+                #forgeStatus {
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    background-color: rgba(0,0,0,0.9);
+                    z-index: 2;
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    justify-items: center;
+                    align-content: center;
+                    padding-left: 2%;
+                }
+
+                #fs1 {
+                    font-size: 1.2em;
+                    color: var(--accent);
+                    letter-spacing: 5px;
+                }
+                    
+                #fs2 {
+                    font-size: 2em;
+                    letter-spacing: 30px;
+                    color: var(--accent);
+                }
+
+                 #fs3 {
+                    width: 30%;
+                    height: 60%;
+                    padding: 1% 3%;
+                    margin-top: 5%;
+                    border: 1px solid var(--accent);
+                    letter-spacing: 2px;
+                    color: var(--accent);
+                    text-align: center;
+                    border-radius: 5px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    transition: .3s all;
+                    cursor: pointer;
+                }
+
+                 #fs3:hover {
+                    background-color: var(--accent);
+                    color: black;
+                    font-family: "BS-B";
+                 }
+
             </style>
+            <div id="forgeFocus"></div>
             <div id="mainForge" data-domType="shadow">
                 <comp-close-btn></comp-close-btn>
                 <div id="collection">
@@ -1897,16 +2238,29 @@ class compForge extends HTMLElement {
                         </div>
                     </div>
                     <div id="availableCards">
+                        <div id="forgeSelection">
+                            <img src="https://uqjdj-siaaa-aaaag-aaoxq-cai.icp0.io/assets/images/items/scoge_zv-fabric.jpg">
+                        </div>
                         <loading-modal active="true" id="loadingModal"></loading-modal>
                     </div>
                     <div id="connector">
-                    <div id="connectorSpiral">
-                        <svg class="beaconLines" id="uniMenuBeaconsSvg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.71 52.83"><defs><style>.cls-1{fill:#ff002d;}</style></defs><path class="cls-1" d="M32.35,16.19a.65.65,0,0,1-.64-.65V3.93a.65.65,0,1,1,1.29,0V15.54A.65.65,0,0,1,32.35,16.19Z"/><path class="cls-1" d="M32.35,51.26a.65.65,0,0,1-.64-.65V39A.65.65,0,1,1,33,39V50.61A.66.66,0,0,1,32.35,51.26Z"/><path class="cls-1" d="M55.69,27.92H44.08a.65.65,0,1,1,0-1.3H55.69a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M20.63,27.92H9a.65.65,0,0,1-.64-.65A.65.65,0,0,1,9,26.62H20.63a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M40.64,19.63a.7.7,0,0,1-.46-.19.66.66,0,0,1,0-.92L48.4,10.3a.65.65,0,0,1,.92.92L41.1,19.44A.68.68,0,0,1,40.64,19.63Z"/><path class="cls-1" d="M15.85,44.42a.63.63,0,0,1-.46-.19.66.66,0,0,1,0-.92l8.22-8.21a.64.64,0,0,1,.91.91l-8.21,8.22A.63.63,0,0,1,15.85,44.42Z"/><path class="cls-1" d="M48.86,44.42a.63.63,0,0,1-.46-.19L40.18,36a.65.65,0,0,1,.92-.91l8.22,8.21a.66.66,0,0,1,0,.92A.65.65,0,0,1,48.86,44.42Z"/><path class="cls-1" d="M24.06,19.63a.65.65,0,0,1-.45-.19l-8.22-8.22a.65.65,0,0,1,.92-.92l8.21,8.22a.64.64,0,0,1,0,.92A.66.66,0,0,1,24.06,19.63Z"/></svg>
-                    </div>
+                        <div id="connectorSpiral">
+                            <svg class="beaconLines" id="uniMenuBeaconsSvg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.71 52.83"><defs><style>.cls-1{fill:#ff002d;}</style></defs><path class="cls-1" d="M32.35,16.19a.65.65,0,0,1-.64-.65V3.93a.65.65,0,1,1,1.29,0V15.54A.65.65,0,0,1,32.35,16.19Z"/><path class="cls-1" d="M32.35,51.26a.65.65,0,0,1-.64-.65V39A.65.65,0,1,1,33,39V50.61A.66.66,0,0,1,32.35,51.26Z"/><path class="cls-1" d="M55.69,27.92H44.08a.65.65,0,1,1,0-1.3H55.69a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M20.63,27.92H9a.65.65,0,0,1-.64-.65A.65.65,0,0,1,9,26.62H20.63a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M40.64,19.63a.7.7,0,0,1-.46-.19.66.66,0,0,1,0-.92L48.4,10.3a.65.65,0,0,1,.92.92L41.1,19.44A.68.68,0,0,1,40.64,19.63Z"/><path class="cls-1" d="M15.85,44.42a.63.63,0,0,1-.46-.19.66.66,0,0,1,0-.92l8.22-8.21a.64.64,0,0,1,.91.91l-8.21,8.22A.63.63,0,0,1,15.85,44.42Z"/><path class="cls-1" d="M48.86,44.42a.63.63,0,0,1-.46-.19L40.18,36a.65.65,0,0,1,.92-.91l8.22,8.21a.66.66,0,0,1,0,.92A.65.65,0,0,1,48.86,44.42Z"/><path class="cls-1" d="M24.06,19.63a.65.65,0,0,1-.45-.19l-8.22-8.22a.65.65,0,0,1,.92-.92l8.21,8.22a.64.64,0,0,1,0,.92A.66.66,0,0,1,24.06,19.63Z"/></svg>
+                        </div>
                         <div id="con1" class="connect">2</div>
                         <div id="con2" class="connect">A</div>
                         <div id="conSpacer"></div>
                         <div id="con3" class="connect">4</div>
+                    </div>
+                    <div id="connector2">
+                        <div id="connectorSpiral2">
+                            <svg class="beaconLines" id="uniMenuBeaconsSvg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.71 52.83"><defs><style>.cls-1{fill:#ff002d;}</style></defs><path class="cls-1" d="M32.35,16.19a.65.65,0,0,1-.64-.65V3.93a.65.65,0,1,1,1.29,0V15.54A.65.65,0,0,1,32.35,16.19Z"/><path class="cls-1" d="M32.35,51.26a.65.65,0,0,1-.64-.65V39A.65.65,0,1,1,33,39V50.61A.66.66,0,0,1,32.35,51.26Z"/><path class="cls-1" d="M55.69,27.92H44.08a.65.65,0,1,1,0-1.3H55.69a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M20.63,27.92H9a.65.65,0,0,1-.64-.65A.65.65,0,0,1,9,26.62H20.63a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M40.64,19.63a.7.7,0,0,1-.46-.19.66.66,0,0,1,0-.92L48.4,10.3a.65.65,0,0,1,.92.92L41.1,19.44A.68.68,0,0,1,40.64,19.63Z"/><path class="cls-1" d="M15.85,44.42a.63.63,0,0,1-.46-.19.66.66,0,0,1,0-.92l8.22-8.21a.64.64,0,0,1,.91.91l-8.21,8.22A.63.63,0,0,1,15.85,44.42Z"/><path class="cls-1" d="M48.86,44.42a.63.63,0,0,1-.46-.19L40.18,36a.65.65,0,0,1,.92-.91l8.22,8.21a.66.66,0,0,1,0,.92A.65.65,0,0,1,48.86,44.42Z"/><path class="cls-1" d="M24.06,19.63a.65.65,0,0,1-.45-.19l-8.22-8.22a.65.65,0,0,1,.92-.92l8.21,8.22a.64.64,0,0,1,0,.92A.66.66,0,0,1,24.06,19.63Z"/></svg>
+                        </div>
+                    </div>
+                    <div id="connector3">
+                        <div id="connectorSpiral3">
+                            <svg class="beaconLines" id="uniMenuBeaconsSvg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.71 52.83"><defs><style>.cls-1{fill:#ff002d;}</style></defs><path class="cls-1" d="M32.35,16.19a.65.65,0,0,1-.64-.65V3.93a.65.65,0,1,1,1.29,0V15.54A.65.65,0,0,1,32.35,16.19Z"/><path class="cls-1" d="M32.35,51.26a.65.65,0,0,1-.64-.65V39A.65.65,0,1,1,33,39V50.61A.66.66,0,0,1,32.35,51.26Z"/><path class="cls-1" d="M55.69,27.92H44.08a.65.65,0,1,1,0-1.3H55.69a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M20.63,27.92H9a.65.65,0,0,1-.64-.65A.65.65,0,0,1,9,26.62H20.63a.65.65,0,0,1,0,1.3Z"/><path class="cls-1" d="M40.64,19.63a.7.7,0,0,1-.46-.19.66.66,0,0,1,0-.92L48.4,10.3a.65.65,0,0,1,.92.92L41.1,19.44A.68.68,0,0,1,40.64,19.63Z"/><path class="cls-1" d="M15.85,44.42a.63.63,0,0,1-.46-.19.66.66,0,0,1,0-.92l8.22-8.21a.64.64,0,0,1,.91.91l-8.21,8.22A.63.63,0,0,1,15.85,44.42Z"/><path class="cls-1" d="M48.86,44.42a.63.63,0,0,1-.46-.19L40.18,36a.65.65,0,0,1,.92-.91l8.22,8.21a.66.66,0,0,1,0,.92A.65.65,0,0,1,48.86,44.42Z"/><path class="cls-1" d="M24.06,19.63a.65.65,0,0,1-.45-.19l-8.22-8.22a.65.65,0,0,1,.92-.92l8.21,8.22a.64.64,0,0,1,0,.92A.66.66,0,0,1,24.06,19.63Z"/></svg>
+                        </div>
                     </div>
                 </div>
                 <div id="forger">
@@ -1935,6 +2289,11 @@ class compForge extends HTMLElement {
                         </form>
                     </div>
                     <div id="forgeCode" class="xPre1">
+                        <div id="forgeStatus">
+                            <div id="fs1">FORGE</div>
+                            <div id="fs2">SUCCESSFUL</div>
+                            <div id="fs3">ADD TO COLLECTION</div>
+                        </div>
                         <div id="fordeStatus"></div>
                         <div id="fc1" class="fc">
                             <div id="fcNum1" class="fcBg">
@@ -2017,7 +2376,7 @@ class compForge extends HTMLElement {
                         </div>
                     </div>
                     <div id="forgerOptions"></div>
-                    <div id="forgerCont" class="xPre1">
+                    <div id="forgerCont" class="xPre2">
                         <div id="forgeDetails">
                             <div id="forgeItemDesc">
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc ultricies
