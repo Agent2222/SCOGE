@@ -82,6 +82,13 @@ class scogeShop extends HTMLElement {
             })
             this.shadowRoot.getElementById("products").scrollLeft = 0;
             this.shopOpen = true;
+            console.log("Shop Open");
+            if (this.shadowRoot.getElementById("addtoCart").style.pointerEvents === "none") {
+                console.log("Pointer Events None");
+                // this.shadowRoot.getElementById("productInfo").style.pointerEvents = "auto";
+                // this.shadowRoot.getElementById("cartItems").style.pointerEvents = "auto";
+                this.shadowRoot.getElementById("addtoCart").style.pointerEvents = "auto";
+            }
             return;
         }
         if (newValue === "false") {
@@ -1579,7 +1586,7 @@ toggleRequest(e) {
 
                 #sliderEl {
                     width: 90%;
-                    height: 1%;
+                    height: 1px;
                     margin-top: 25px;
                     align-self: start;
                     -webkit-appearance: none; 
@@ -2729,6 +2736,14 @@ toggleRequest(e) {
                         font-size: .8em;
                         line-height: 2;
                     }
+
+                    #sliderEl {
+                        width: 90%;
+                        height: 1px !important;
+                        background: #486965 !important;
+                        -webkit-transition: .2s; 
+                    }
+
                     #sliderEl::-webkit-slider-thumb {
                         -webkit-appearance: none;
                         appearance: none;
