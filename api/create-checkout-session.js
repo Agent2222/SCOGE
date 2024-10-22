@@ -1,5 +1,5 @@
 // Import Stripe with the secret key from environment variables
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe')(process.env.VITE_StripeKey);
 
 module.exports = async (req, res) => {
   if (req.method === 'POST') {
