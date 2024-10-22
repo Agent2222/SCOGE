@@ -2,6 +2,10 @@
 const express = require('express');
 const app = express();
 require('dotenv').config();
+const cors = require('cors');
+app.use(cors({
+  origin: 'https://www.scoge.co', // Your frontend domain
+}));
 app.use(express.static('dist'));
 app.use(express.json());
 
@@ -22,6 +26,7 @@ app.use(allowCrossDomain)
 // app.use('/', express.static(__dirname + '/dist'))
 
 app.post('/create-checkout-session', async (req, res) => {
+  console.log('Request received for create-checkout-session');
   const { lineItems } = req.body; 
   try {
     const session = await stripe.checkout.sessions.create({
