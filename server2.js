@@ -19,7 +19,7 @@ function allowCrossDomain(req, res, next) {
 
 // Serve any static files
 app.use(allowCrossDomain)
-app.use('/', express.static(__dirname + '/dist'))
+// app.use('/', express.static(__dirname + '/dist'))
 
 app.post('/create-checkout-session', async (req, res) => {
   const { lineItems } = req.body; 

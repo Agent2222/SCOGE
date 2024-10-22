@@ -387,6 +387,8 @@ async getProducts() {
     }
   }
 
+  // temp comment one //
+
   async initialize() {
     this.shadowRoot.getElementById("loadcon").style.display = "grid";
     const lineItems = this.bag.map((item) => {
@@ -407,7 +409,7 @@ async getProducts() {
     
       const { clientSecret } = await response.json();
       
-      this.stripe = Stripe("pk_live_51IbCVzHMfdeKt5zM7eq7VimKhvoak6vkeati23YVPavrVNnYj4oPiE36KBYpy5LYzudDioM5AONK9r26IRA9Tysy00ibywIvec");
+      this.stripe = Stripe("pk_live_51IbCVzHMfdeKt5zMTpLoBO9ITi7IHT6sxviRdrrZWk3pNwE7DdVCYVtIJZdpqLJ6EzHAiqTLdmhm3FEOVQELX0Yb00MqY9U9PH");
 
       console.log("Stripe:", this.stripe);
       
