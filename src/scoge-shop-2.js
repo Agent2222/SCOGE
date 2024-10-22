@@ -399,7 +399,7 @@ async getProducts() {
     });
 
     try {
-    const response = await fetch("https://www.scoge.co/create-checkout-session", {
+    const response = await fetch("/api/create-checkout-session", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
