@@ -29,16 +29,8 @@ export default defineConfig({
   server: {
     proxy: {
       // Proxy /api requests to your Express server
-      '/create-checkout-session': {
-        target: 'https://www.scoge.co/',  
-        changeOrigin: true,
-        secure: false,
-      },
-      '/session-status': {
-        target: 'https://www.scoge.co/',
-        changeOrigin: true,
-        secure: false,
-      },
+      '/create-checkout-session': 'https://www.scoge.co',
+      '/session-status': 'https://www.scoge.co',
     },
   },
   resolve: {

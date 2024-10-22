@@ -21,7 +21,7 @@ function allowCrossDomain(req, res, next) {
 app.use(allowCrossDomain)
 // app.use('/', express.static(__dirname + '/dist'))
 
-app.post('/create-checkout-session', async (req, res) => {
+app.post('https://www.scoge.co/api/create-checkout-session', async (req, res) => {
   const { lineItems } = req.body; 
   try {
     const session = await stripe.checkout.sessions.create({
