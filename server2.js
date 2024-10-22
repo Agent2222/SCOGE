@@ -25,7 +25,7 @@ function allowCrossDomain(req, res, next) {
 app.use(allowCrossDomain)
 // app.use('/', express.static(__dirname + '/dist'))
 
-app.post('/create-checkout-session', async (req, res) => {
+app.post('https://www.scoge.co/create-checkout-session', async (req, res) => {
   console.log('Request received for create-checkout-session');
   const { lineItems } = req.body; 
   try {
