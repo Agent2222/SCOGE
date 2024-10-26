@@ -1,121 +1,123 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const dsheet = "https://script.google.com/macros/s/AKfycbzHUtfeNysmMSZvlC7tnfYhpgs_EU_3kx9_6H_VV6le8tPyR4Vlzs8SlfES_8pbK0nb2w/exec";
+const dsheet =
+  "https://script.google.com/macros/s/AKfycbzHUtfeNysmMSZvlC7tnfYhpgs_EU_3kx9_6H_VV6le8tPyR4Vlzs8SlfES_8pbK0nb2w/exec";
 
-gsap.registerPlugin(ScrollTrigger) 
+gsap.registerPlugin(ScrollTrigger);
 
 class scogeShop extends HTMLElement {
-    constructor() {
-        super();
-        this.shadow = this.attachShadow({mode: 'open'});
-        this.requestOpen = false;
-        this.requestTogAdded1 = false;
-        this.requestTogAdded2 = false;
-        this.requestTogAdded3 = false;
-        this.requestArray = [];
-        this.rsentadded = false;
-        this.externalOpen = null;
-        this.sliding = false;
-        this.largeGalOpen = false;
-        this.selectedLook = null;
-        this.lookCollection = null;
-        this.currentProduct = null;
-        this.bag = [];
-        this.bagOpen = false;
-        this.checkoutBuilt = false;
-        this.pid = null;
-        this.pName2 = null;
-        this.item = null;
-        this.allItemQuantitiesSum = null;
-        this.checkoutBuilt = false;
-        this.scOpen = false;
-        this.scBuilt = false;
-        this.prodImg = null;
-        this.shopOpen = false;
-        this.ch = null;
-        this.stripe = null;
-        // this.stripe = Stripe("pk_live_51IbCVzHMfdeKt5zM7eq7VimKhvoak6vkeati23YVPavrVNnYj4oPiE36KBYpy5LYzudDioM5AONK9r26IRA9Tysy00ibywIvec");
-        // this.stripeJs = document.createElement('script');
-        // this.stripeJs.src = 'https://js.stripe.com/v3/';
-        // document.head.appendChild(this.stripeJs);
-        // this.stripeJs.onload = () => {
-        //     this.stripe = Stripe("pk_live_51IbCVzHMfdeKt5zM7eq7VimKhvoak6vkeati23YVPavrVNnYj4oPiE36KBYpy5LYzudDioM5AONK9r26IRA9Tysy00ibywIvec");
-        //     // Further Stripe-related initialization...
-        // };
-    }
+  constructor() {
+    super();
+    this.shadow = this.attachShadow({ mode: "open" });
+    this.requestOpen = false;
+    this.requestTogAdded1 = false;
+    this.requestTogAdded2 = false;
+    this.requestTogAdded3 = false;
+    this.requestArray = [];
+    this.rsentadded = false;
+    this.externalOpen = null;
+    this.sliding = false;
+    this.largeGalOpen = false;
+    this.selectedLook = null;
+    this.lookCollection = null;
+    this.currentProduct = null;
+    this.bag = [];
+    this.bagOpen = false;
+    this.checkoutBuilt = false;
+    this.pid = null;
+    this.pName2 = null;
+    this.item = null;
+    this.allItemQuantitiesSum = null;
+    this.checkoutBuilt = false;
+    this.scOpen = false;
+    this.scBuilt = false;
+    this.prodImg = null;
+    this.shopOpen = false;
+    this.ch = null;
+    this.stripe = null;
+    // this.stripe = Stripe("pk_live_51IbCVzHMfdeKt5zM7eq7VimKhvoak6vkeati23YVPavrVNnYj4oPiE36KBYpy5LYzudDioM5AONK9r26IRA9Tysy00ibywIvec");
+    // this.stripeJs = document.createElement('script');
+    // this.stripeJs.src = 'https://js.stripe.com/v3/';
+    // document.head.appendChild(this.stripeJs);
+    // this.stripeJs.onload = () => {
+    //     this.stripe = Stripe("pk_live_51IbCVzHMfdeKt5zM7eq7VimKhvoak6vkeati23YVPavrVNnYj4oPiE36KBYpy5LYzudDioM5AONK9r26IRA9Tysy00ibywIvec");
+    //     // Further Stripe-related initialization...
+    // };
+  }
 
-    get active() {
-        return this.getAttr('active');
-    }
+  get active() {
+    return this.getAttr("active");
+  }
 
-    set active(val) {
-        this.setAttr('active', val);
-    }
+  set active(val) {
+    this.setAttr("active", val);
+  }
 
-    static get observedAttributes() {
-        return ["active"];
-    }
+  static get observedAttributes() {
+    return ["active"];
+  }
 
-    // smoothScroll() {
-    //     var el = this.shadowRoot.getElementById("products");
-    //     let t1 = gsap.to(el, {
-    //         x: -400,
-    //         scrollTrigger: el
-    //     });
-    // }
+  // smoothScroll() {
+  //     var el = this.shadowRoot.getElementById("products");
+  //     let t1 = gsap.to(el, {
+  //         x: -400,
+  //         scrollTrigger: el
+  //     });
+  // }
 
-    progressScript() {
-        const sliderEl = this.shadowRoot.getElementById("sliderEl");
-        const sliderValue = sliderEl.value;
-        sliderEl.style.background = `linear-gradient(to right, #ff002d ${sliderValue}%, #486965 ${sliderValue}%)`;
+  progressScript() {
+    const sliderEl = this.shadowRoot.getElementById("sliderEl");
+    const sliderValue = sliderEl.value;
+    sliderEl.style.background = `linear-gradient(to right, #ff002d ${sliderValue}%, #486965 ${sliderValue}%)`;
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    var main = this.shadowRoot.getElementById("main");
+    if (newValue === "true") {
+      gsap.to(main, {
+        scale: 1,
+        duration: 0.5,
+        opacity: 1,
+        pointerEvents: "auto",
+      });
+      this.shadowRoot.getElementById("products").scrollLeft = 0;
+      this.shopOpen = true;
+      console.log("Shop Open");
+      if (
+        this.shadowRoot.getElementById("addtoCart").style.pointerEvents ===
+        "none"
+      ) {
+        console.log("Pointer Events None");
+        // this.shadowRoot.getElementById("productInfo").style.pointerEvents = "auto";
+        // this.shadowRoot.getElementById("cartItems").style.pointerEvents = "auto";
+        this.shadowRoot.getElementById("addtoCart").style.pointerEvents =
+          "auto";
       }
-
-    attributeChangedCallback(name, oldValue, newValue) {
-        var main = this.shadowRoot.getElementById("main");
-        if (newValue === "true") {
-            gsap.to(main, {
-                scale: 1,
-                duration: 0.5,
-                opacity: 1,
-                pointerEvents: "auto"
-            })
-            this.shadowRoot.getElementById("products").scrollLeft = 0;
-            this.shopOpen = true;
-            console.log("Shop Open");
-            if (this.shadowRoot.getElementById("addtoCart").style.pointerEvents === "none") {
-                console.log("Pointer Events None");
-                // this.shadowRoot.getElementById("productInfo").style.pointerEvents = "auto";
-                // this.shadowRoot.getElementById("cartItems").style.pointerEvents = "auto";
-                this.shadowRoot.getElementById("addtoCart").style.pointerEvents = "auto";
-            }
-            return;
-        }
-        if (newValue === "false") {
-            gsap.to(main, {
-                scale: 1.5,
-                duration: 0.5,
-                opacity: 0,
-                pointerEvents: "none"
-            })
-            setTimeout(()=> {
-                this.shadowRoot.getElementById("products").scrollLeft = 0;
-            }, 1000)
-            this.shopOpen = false;
-        }
+      return;
     }
+    if (newValue === "false") {
+      gsap.to(main, {
+        scale: 1.5,
+        duration: 0.5,
+        opacity: 0,
+        pointerEvents: "none",
+      });
+      setTimeout(() => {
+        this.shadowRoot.getElementById("products").scrollLeft = 0;
+      }, 1000);
+      this.shopOpen = false;
+    }
+  }
 
-// Beacons
-async getProducts() {
+  // Beacons
+  async getProducts() {
     try {
-      const response = await fetch(
-        `${dsheet + "?focus=products"}`,
-        {
-          method: "GET",
-          mode: "cors",
-        }
-      );
-  
+      const response = await fetch(`${dsheet + "?focus=products"}`, {
+        method: "GET",
+        mode: "cors",
+      });
+
       if (response.ok) {
         const data = await response.json(); // Parse JSON response
         this.products = data;
@@ -127,11 +129,11 @@ async getProducts() {
       console.error("Error:", error);
       throw error;
     }
-  }  
+  }
 
   async loadShop() {
-    this.products.reverse().forEach((product) => {
-        if (product.Active === true) {
+    this.products.forEach((product) => {
+      if (product.Active === true) {
         // Viewport Images
         var viewImgCont = document.createElement("div");
         var viewImgImg = document.createElement("img");
@@ -166,231 +168,253 @@ async getProducts() {
         productCont.appendChild(productImg);
         productCont.appendChild(shadowImg);
         container.appendChild(productCont);
-        this.shadowRoot.getElementById(`load_${product.Id}`).style.display = "grid";
+        this.shadowRoot.getElementById(`load_${product.Id}`).style.display =
+          "grid";
         if (productImg.complete) {
-            productImg.classList.add("loaded");
-            this.shadowRoot.getElementById(`load_${product.Id}`).style.display = "none";
+          productImg.classList.add("loaded");
+          this.shadowRoot.getElementById(`load_${product.Id}`).style.display =
+            "none";
         } else {
-            productImg.addEventListener("load", () => {
-                productImg.classList.add("loaded");
-                this.shadowRoot.getElementById(`load_${product.Id}`).style.display = "none";
-            });
+          productImg.addEventListener("load", () => {
+            productImg.classList.add("loaded");
+            this.shadowRoot.getElementById(`load_${product.Id}`).style.display =
+              "none";
+          });
         }
         if (viewImgImg.complete) {
-            viewImgImg.classList.add("loaded");
+          viewImgImg.classList.add("loaded");
         } else {
-            viewImgImg.addEventListener("load", () => {
-                viewImgImg.classList.add("loaded");
-            });
+          viewImgImg.addEventListener("load", () => {
+            viewImgImg.classList.add("loaded");
+          });
         }
         productCont.addEventListener("click", (e) => {
-            this.shadowRoot.getElementById("explore")?.remove();
-            this.toggleExplore(e);
-        })
-        }
-    })
+          this.shadowRoot.getElementById("explore")?.remove();
+          this.toggleExplore(e);
+        });
+      }
+    });
+
+    // Reverse the order of elements in the container after appending all products
+    const container = this.shadowRoot.getElementById("products");
+    Array.from(container.children)
+      .reverse()
+      .forEach((child) => container.appendChild(child));
+
+    const strip = this.shadowRoot.getElementById("thumbnails");
+    Array.from(strip.children)
+      .reverse()
+      .forEach((child) => strip.appendChild(child));
+
     for (let i = 0; i < 2; i++) {
-        var spacer = document.createElement("div");
-        spacer.classList.add("productCont");
-        spacer.style.pointerEvents = "none";
-        this.shadowRoot.getElementById("products").appendChild(spacer);
+      var spacer = document.createElement("div");
+      spacer.classList.add("productCont");
+      spacer.style.pointerEvents = "none";
+      this.shadowRoot.getElementById("products").appendChild(spacer);
     }
     if (window.isMobile === true) {
-        this.shadowRoot.getElementById("look0").remove();
+      this.shadowRoot.getElementById("look0").remove();
     }
   }
 
   toggleExplore(e) {
     if (!this.shadowRoot.getElementById("explore")) {
-        var selected = e.target
-        var explore = document.createElement("div");
-        var container = this.shadowRoot.getElementById("products");
-        var product1 = document.createElement("div");
-        var product2 = document.createElement("div");
-        product1.id = `${selected.id}_product_1`;
-        product2.id = `${selected.id}_product_2`;
-        explore.id = `explore`;
-        //
-        var item = this.products[Number(e.target.id.replace("look_",""))- 1];
-        this.selectedLook = item;
-        var ch = this.shadowRoot.getElementById("chapter");
-        switch (item.Chapter) {
-            case 0:
-                ch.innerHTML = "Prelude - Discovery 1";
-                this.lookCollection = "Prelude - Discovery 1";
-            break;
-            case 1:
-                ch.innerHTML = "Chapter 1. Reacclimate";
-                this.lookCollection = "Chapter 1. Reacclimate";
-            break;
-            case 2:
-                ch.innerHTML = "Chapter 2. Alan & Evie";
-                this.lookCollection = "Chapter 2. Alan & Evie";
-            break;
-            case 3:
-                ch.innerHTML = "Chapter 3. Digisette";
-                this.lookCollection = "Chapter 3. Digisette";
-            break;
-            default:
-                ch.innerHTML = "Core";
-                this.lookCollection = "Core";
-            break;
-        }
-        // if (this.requestOpen === true) {
-        //     this.toggleRequest(e);
-        // }
-        if (item?.Product3 != "null") {
-            explore.style.gridTemplateRows = "1fr 1fr 1fr";
-            explore.innerHTML = `
+      var selected = e.target;
+      var explore = document.createElement("div");
+      var container = this.shadowRoot.getElementById("products");
+      var product1 = document.createElement("div");
+      var product2 = document.createElement("div");
+      product1.id = `${selected.id}_product_1`;
+      product2.id = `${selected.id}_product_2`;
+      explore.id = `explore`;
+      //
+      var item = this.products[Number(e.target.id.replace("look_", "")) - 1];
+      this.selectedLook = item;
+      var ch = this.shadowRoot.getElementById("chapter");
+      switch (item.Chapter) {
+        case 0:
+          ch.innerHTML = "Prelude - Discovery 1";
+          this.lookCollection = "Prelude - Discovery 1";
+          break;
+        case 1:
+          ch.innerHTML = "Chapter 1. Reacclimate";
+          this.lookCollection = "Chapter 1. Reacclimate";
+          break;
+        case 2:
+          ch.innerHTML = "Chapter 2. Alan & Evie";
+          this.lookCollection = "Chapter 2. Alan & Evie";
+          break;
+        case 3:
+          ch.innerHTML = "Chapter 3. Digisette";
+          this.lookCollection = "Chapter 3. Digisette";
+          break;
+        default:
+          ch.innerHTML = "Core";
+          this.lookCollection = "Core";
+          break;
+      }
+      // if (this.requestOpen === true) {
+      //     this.toggleRequest(e);
+      // }
+      if (item?.Product3 != "null") {
+        explore.style.gridTemplateRows = "1fr 1fr 1fr";
+        explore.innerHTML = `
             <div class="productCTA">
                 <div class="productImgInner" id="Product1Img">
                     <div class="loadingSpinner" id="load_P1" style="display: none;">
                         <div class="loadingLine"></div>
                     </div>
-                    <img class="exImg" id="pp1" loading="lazy" data-name="${item?.P1Name}" data-type="${item?.P1Type}" "data-look="${Number(e.target.id.replace("look_",""))- 1}" data-p="P1" src='${item.Product1}'/>
+                    <img class="exImg" id="pp1" loading="lazy" data-name="${item?.P1Name}" data-type="${item?.P1Type}" "data-look="${Number(e.target.id.replace("look_", "")) - 1}" data-p="P1" src='${item.Product1}'/>
                 </div>
-                <div id="Product1" class="rcta" data-name="${item?.P1Name}"data-look="${Number(e.target.id.replace("look_",""))- 1}" data-p="P1">${item?.P1Name}<br>$${item?.P1Price}</div>
+                <div id="Product1" class="rcta" data-name="${item?.P1Name}"data-look="${Number(e.target.id.replace("look_", "")) - 1}" data-p="P1">${item?.P1Name}<br>$${item?.P1Price}</div>
             </div>
             <div class="productCTA">
                 <div class="productImgInner" id="Product2Img">
                     <div class="loadingSpinner" id="load_P2" style="display: none;">
                         <div class="loadingLine"></div>
                     </div>
-                    <img class="exImg" id="pp2" loading="lazy" data-type="${item?.P2Type}" data-name="${item?.P2Name}" data-look="${Number(e.target.id.replace("look_",""))- 1}" data-p="P2" src="${item.Product2}"/>
+                    <img class="exImg" id="pp2" loading="lazy" data-type="${item?.P2Type}" data-name="${item?.P2Name}" data-look="${Number(e.target.id.replace("look_", "")) - 1}" data-p="P2" src="${item.Product2}"/>
                 </div>
-                <div id="Product2" class="rcta" data-name="${item?.P2Name}" data-look="${Number(e.target.id.replace("look_",""))- 1}" data-p="P2">${item?.P2Name}<br>$${item?.P2Price}</div>
+                <div id="Product2" class="rcta" data-name="${item?.P2Name}" data-look="${Number(e.target.id.replace("look_", "")) - 1}" data-p="P2">${item?.P2Name}<br>$${item?.P2Price}</div>
             </div>
             <div class="productCTA">
                 <div class="productImgInner" id="Product3Img">
                     <div class="loadingSpinner" id="load_P3" style="display: none;">
                         <div class="loadingLine"></div>
                     </div>
-                    <img class="exImg" id="pp3" loading="lazy" data-type="${item?.P3Type}" data-name="${item?.P3Name}" data-look="${Number(e.target.id.replace("look_",""))- 1}" data-p="P3" src="${item.Product3}"/>
+                    <img class="exImg" id="pp3" loading="lazy" data-type="${item?.P3Type}" data-name="${item?.P3Name}" data-look="${Number(e.target.id.replace("look_", "")) - 1}" data-p="P3" src="${item.Product3}"/>
                 </div>
-                <div id="Product3" class="rcta" data-name="${item?.P3Name}" data-look="${Number(e.target.id.replace("look_",""))- 1}" data-p="P3">${item?.P3Name}<br>$${item?.P3Price}</div>
+                <div id="Product3" class="rcta" data-name="${item?.P3Name}" data-look="${Number(e.target.id.replace("look_", "")) - 1}" data-p="P3">${item?.P3Name}<br>$${item?.P3Price}</div>
             </div>
-            `
-        } else if (item?.Product2 != "null") {
-            explore.style.gridTemplateRows = "1fr 1fr";
-            explore.innerHTML = `
+            `;
+      } else if (item?.Product2 != "null") {
+        explore.style.gridTemplateRows = "1fr 1fr";
+        explore.innerHTML = `
             <div class="productCTA">
                 <div class="productImgInner" id="Product1Img">
                     <div class="loadingSpinner" id="load_P1" style="display: none;">
                         <div class="loadingLine"></div>
                     </div>
-                    <img class="exImg" id="pp1" loading="lazy" data-type="${item?.P1Type}" data-name="${item?.P1Name}" data-look="${Number(e.target.id.replace("look_",""))- 1}" data-p="P1" src="${item?.Product1}"/>
+                    <img class="exImg" id="pp1" loading="lazy" data-type="${item?.P1Type}" data-name="${item?.P1Name}" data-look="${Number(e.target.id.replace("look_", "")) - 1}" data-p="P1" src="${item?.Product1}"/>
                 </div>
-                <div id="Product1" class="rcta" data-name="${item?.P1Name}" data-look="${Number(e.target.id.replace("look_",""))- 1}" data-p="P1">${item?.P1Name}<br>$${item?.P1Price}</div>
+                <div id="Product1" class="rcta" data-name="${item?.P1Name}" data-look="${Number(e.target.id.replace("look_", "")) - 1}" data-p="P1">${item?.P1Name}<br>$${item?.P1Price}</div>
             </div>
             <div class="productCTA">
                 <div class="productImgInner" id="Product2Img">
                     <div class="loadingSpinner" id="load_P2" style="display: none;">
                         <div class="loadingLine"></div>
                     </div>
-                    <img class="exImg" id="pp2" loading="lazy" data-type="${item?.P2Type}" data-name="${item?.P2Name}" data-look="${Number(e.target.id.replace("look_",""))- 1}" data-p="P2" src="${item?.Product2}"/>
+                    <img class="exImg" id="pp2" loading="lazy" data-type="${item?.P2Type}" data-name="${item?.P2Name}" data-look="${Number(e.target.id.replace("look_", "")) - 1}" data-p="P2" src="${item?.Product2}"/>
                 </div>
-                <div id="Product2" class="rcta" data-name="${item?.P2Name}" data-look="${Number(e.target.id.replace("look_",""))- 1}" data-p="P2">${item?.P2Name}<br>$${item?.P2Price}</div>
+                <div id="Product2" class="rcta" data-name="${item?.P2Name}" data-look="${Number(e.target.id.replace("look_", "")) - 1}" data-p="P2">${item?.P2Name}<br>$${item?.P2Price}</div>
             </div>
-            `
-        } else {
-            explore.style.gridTemplateRows = "1fr";
-            explore.innerHTML = `
+            `;
+      } else {
+        explore.style.gridTemplateRows = "1fr";
+        explore.innerHTML = `
             <div class="productCTA">
                 <div class="productImgInner" id="Product1Img">
                     <div class="loadingSpinner" id="load_P1" style="display: none;">
                         <div class="loadingLine"></div>
                     </div>
-                    <img class="exImg" id="pp1" loading="lazy" data-type="${item?.P1Type}" data-name="${item?.P1Name}" data-look="${Number(e.target.id.replace("look_",""))- 1}" data-p="P1" src="${item?.Product1}"/>
+                    <img class="exImg" id="pp1" loading="lazy" data-type="${item?.P1Type}" data-name="${item?.P1Name}" data-look="${Number(e.target.id.replace("look_", "")) - 1}" data-p="P1" src="${item?.Product1}"/>
                 </div>
-                <div id="Product1" class="rcta" data-type="${item?.P1Type}" data-name="${item?.P1Name}" data-look="${Number(e.target.id.replace("look_",""))- 1}" data-p="P1">${item?.P1Name}<br>$${item?.P1Price}</div>
+                <div id="Product1" class="rcta" data-type="${item?.P1Type}" data-name="${item?.P1Name}" data-look="${Number(e.target.id.replace("look_", "")) - 1}" data-p="P1">${item?.P1Name}<br>$${item?.P1Price}</div>
             </div>
-            `
-            // if (item?.Garment === false ) {
-            //     setTimeout(()=> {
-            //         this.shadowRoot.getElementById("Product1").innerHTML = "CLAIM";
-            //     },200)
-            // }
-            if (item?.P1External === true ) {
-                setTimeout(()=> {
-                    this.shadowRoot.getElementById("Product1").innerHTML = `${item?.P1Name}<br>${item?.P1Price}`;
-                },200)
-            }
-            if (item?.P2External === true ) {
-                setTimeout(()=> {
-                    this.shadowRoot.getElementById("Product2").innerHTML = `${item?.P2Name}<br>${item?.P2Price}`;
-                },200)
-            }
-            if (item?.P3External === true ) {
-                setTimeout(()=> {
-                    this.shadowRoot.getElementById("Product3").innerHTML = `${item?.P3Name}<br>${item?.P3Price}`;
-                },200)
-            }
+            `;
+        // if (item?.Garment === false ) {
+        //     setTimeout(()=> {
+        //         this.shadowRoot.getElementById("Product1").innerHTML = "CLAIM";
+        //     },200)
+        // }
+        if (item?.P1External === true) {
+          setTimeout(() => {
+            this.shadowRoot.getElementById("Product1").innerHTML =
+              `${item?.P1Name}<br>${item?.P1Price}`;
+          }, 200);
         }
-        //
-        //
-        selected.insertAdjacentElement('afterend', explore);
-        explore.style.transition = ".5s all";
-        setTimeout(() => {
-            explore.style.transform = "scaleX(1)";
-            var imgs = this.shadowRoot.querySelectorAll(".exImg");
+        if (item?.P2External === true) {
+          setTimeout(() => {
+            this.shadowRoot.getElementById("Product2").innerHTML =
+              `${item?.P2Name}<br>${item?.P2Price}`;
+          }, 200);
+        }
+        if (item?.P3External === true) {
+          setTimeout(() => {
+            this.shadowRoot.getElementById("Product3").innerHTML =
+              `${item?.P3Name}<br>${item?.P3Price}`;
+          }, 200);
+        }
+      }
+      //
+      //
+      selected.insertAdjacentElement("afterend", explore);
+      explore.style.transition = ".5s all";
+      setTimeout(() => {
+        explore.style.transform = "scaleX(1)";
+        var imgs = this.shadowRoot.querySelectorAll(".exImg");
+        if (this.shadowRoot.getElementById(`load_P1`)) {
+          this.shadowRoot.getElementById(`load_P1`).style.display = "grid";
+        }
+        if (this.shadowRoot.getElementById(`load_P2`)) {
+          this.shadowRoot.getElementById(`load_P2`).style.display = "grid";
+        }
+        if (this.shadowRoot.getElementById(`load_P3`)) {
+          this.shadowRoot.getElementById(`load_P3`).style.display = "grid";
+        }
+        imgs.forEach((imgEl) => {
+          if (imgEl.complete) {
+            imgEl.classList.add("loaded");
             if (this.shadowRoot.getElementById(`load_P1`)) {
-                this.shadowRoot.getElementById(`load_P1`).style.display = "grid";
+              this.shadowRoot.getElementById(`load_P1`).style.display = "none";
             }
             if (this.shadowRoot.getElementById(`load_P2`)) {
-                this.shadowRoot.getElementById(`load_P2`).style.display = "grid";
+              this.shadowRoot.getElementById(`load_P2`).style.display = "none";
             }
             if (this.shadowRoot.getElementById(`load_P3`)) {
-                this.shadowRoot.getElementById(`load_P3`).style.display = "grid";
+              this.shadowRoot.getElementById(`load_P3`).style.display = "none";
             }
-            imgs.forEach((imgEl) => {
-                if (imgEl.complete) {
-                    imgEl.classList.add("loaded");
-                    if (this.shadowRoot.getElementById(`load_P1`)) {
-                        this.shadowRoot.getElementById(`load_P1`).style.display = "none";
-                    }
-                    if (this.shadowRoot.getElementById(`load_P2`)) {
-                        this.shadowRoot.getElementById(`load_P2`).style.display = "none";
-                    }
-                    if (this.shadowRoot.getElementById(`load_P3`)) {
-                        this.shadowRoot.getElementById(`load_P3`).style.display = "none";
-                    }
-                } else {
-                    imgEl.addEventListener("load", () => {
-                        imgEl.classList.add("loaded");
-                        if (this.shadowRoot.getElementById(`load_P1`)) {
-                            this.shadowRoot.getElementById(`load_P1`).style.display = "none";
-                        }
-                        if (this.shadowRoot.getElementById(`load_P2`)) {
-                            this.shadowRoot.getElementById(`load_P2`).style.display = "none";
-                        }
-                        if (this.shadowRoot.getElementById(`load_P3`)) {
-                            this.shadowRoot.getElementById(`load_P3`).style.display = "none";
-                        }
-                    });
-                }
-            })
-        },100)
-        const containerWidth = container.clientWidth;
-        const targetPosition = explore.offsetLeft;
-        const targetWidth = explore.clientWidth;
-        const scrollPosition = targetPosition - (containerWidth - targetWidth) / 2;
-    
-        container.scrollLeft = scrollPosition;
+          } else {
+            imgEl.addEventListener("load", () => {
+              imgEl.classList.add("loaded");
+              if (this.shadowRoot.getElementById(`load_P1`)) {
+                this.shadowRoot.getElementById(`load_P1`).style.display =
+                  "none";
+              }
+              if (this.shadowRoot.getElementById(`load_P2`)) {
+                this.shadowRoot.getElementById(`load_P2`).style.display =
+                  "none";
+              }
+              if (this.shadowRoot.getElementById(`load_P3`)) {
+                this.shadowRoot.getElementById(`load_P3`).style.display =
+                  "none";
+              }
+            });
+          }
+        });
+      }, 100);
+      const containerWidth = container.clientWidth;
+      const targetPosition = explore.offsetLeft;
+      const targetWidth = explore.clientWidth;
+      const scrollPosition =
+        targetPosition - (containerWidth - targetWidth) / 2;
 
-        var buts = this.shadowRoot.querySelectorAll(".rcta");
-        buts.forEach((button) => {
-            button.addEventListener("click", (e) => {
-                this.toggleRequest(e)
-            })
-        })
-        var exImgs = this.shadowRoot.querySelectorAll(".exImg");
-        exImgs.forEach((el) => {
-            el.addEventListener("click", (e) => {
-                this.toggleRequest(e)
-            })
-        })
+      container.scrollLeft = scrollPosition;
+
+      var buts = this.shadowRoot.querySelectorAll(".rcta");
+      buts.forEach((button) => {
+        button.addEventListener("click", (e) => {
+          this.toggleRequest(e);
+        });
+      });
+      var exImgs = this.shadowRoot.querySelectorAll(".exImg");
+      exImgs.forEach((el) => {
+        el.addEventListener("click", (e) => {
+          this.toggleRequest(e);
+        });
+      });
     } else {
-        //
+      //
     }
   }
 
@@ -399,36 +423,38 @@ async getProducts() {
   async initialize() {
     this.shadowRoot.getElementById("loadcon").style.display = "grid";
     const lineItems = this.bag.map((item) => {
-        return {
-          price: item.price,
-          quantity: item.quantity,
-        };
+      return {
+        price: item.price,
+        quantity: item.quantity,
+      };
     });
 
     try {
-    const response = await fetch("/api/create-checkout-session", {
+      const response = await fetch("/api/create-checkout-session", {
         method: "POST",
         headers: {
-            'Content-Type': 'application/json',
-          },
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ lineItems }),
       });
-    
+
       const { clientSecret } = await response.json();
-      
-      this.stripe = Stripe("pk_live_51IbCVzHMfdeKt5zMTpLoBO9ITi7IHT6sxviRdrrZWk3pNwE7DdVCYVtIJZdpqLJ6EzHAiqTLdmhm3FEOVQELX0Yb00MqY9U9PH");
+
+      this.stripe = Stripe(
+        "pk_live_51IbCVzHMfdeKt5zMTpLoBO9ITi7IHT6sxviRdrrZWk3pNwE7DdVCYVtIJZdpqLJ6EzHAiqTLdmhm3FEOVQELX0Yb00MqY9U9PH"
+      );
 
       console.log("Stripe:", this.stripe);
-      
+
       const checkout = await this.stripe.initEmbeddedCheckout({
         clientSecret,
       });
 
       this.ch = checkout;
-    
+
       // Mount Checkout
-      checkout.mount('#checkout');
-      
+      checkout.mount("#checkout");
+
       var checkoutScreen = document.getElementById("checkout");
       checkoutScreen.style.scale = "1";
       checkoutScreen.style.pointerEvents = "auto";
@@ -440,69 +466,69 @@ async getProducts() {
         checkoutScreen.style.zIndex = "11";
       }
     } catch (error) {
-        console.error("Error:", error);
-        this.shadowRoot.getElementById("loadcon").style.display = "none";
+      console.error("Error:", error);
+      this.shadowRoot.getElementById("loadcon").style.display = "none";
     }
 
-      this.shadowRoot.getElementById("loadcon").style.display = "none";
-      document.getElementById("shop2").setAttribute("active", "false");
-      this.shadowRoot.getElementById("productInfo").style.pointerEvents = "none";
-      this.shadowRoot.getElementById("cartItems").style.pointerEvents = "none";
-      this.shadowRoot.getElementById("addtoCart").style.pointerEvents = "none";
+    this.shadowRoot.getElementById("loadcon").style.display = "none";
+    document.getElementById("shop2").setAttribute("active", "false");
+    this.shadowRoot.getElementById("productInfo").style.pointerEvents = "none";
+    this.shadowRoot.getElementById("cartItems").style.pointerEvents = "none";
+    this.shadowRoot.getElementById("addtoCart").style.pointerEvents = "none";
   }
 
-async endCoSession() {
+  async endCoSession() {
     this.ch.embeddedCheckout.destroy();
-}
+  }
 
-addToBag(pid, size, name, img, desc, price) {
+  addToBag(pid, size, name, img, desc, price) {
     // quanity adjustment object var
     // add event listener to checkout button if not already added
     // display bag count icon
     // add event listener to bag count icon if not already added
     var lineItem = {
-        price: pid,
-        quantity: 1,
-        adjustable_quantity: {
-            enabled: true,
-            minimum: 1,
-            maximum: 10,
+      price: pid,
+      quantity: 1,
+      adjustable_quantity: {
+        enabled: true,
+        minimum: 1,
+        maximum: 10,
+      },
+      price_data: {
+        currency: "usd",
+        product_data: {
+          name: name,
+          metadata: {
+            size: size,
+            desc: desc,
+            price: price,
+          },
         },
-        price_data: {
-            currency: 'usd',
-            product_data: {
-              name: name,
-              metadata: {
-                size: size,
-                desc: desc,
-                price: price,
-              }
-            },
-            images: [img],
-        },
-    }
+        images: [img],
+      },
+    };
 
     if (this.bag.length === 0) {
-        this.bag.push(lineItem);
-        this.shadowRoot.getElementById("shopNowCH").classList.remove("faint");
-        if (!document.getElementById("altBagIcon")) {
-            var bagIconCont = document.createElement("div");
-            bagIconCont.id = "altBagIcon";
-            bagIconCont.style.userSelect = "none";
-            bagIconCont.style.cursor = "pointer";
-            bagIconCont.style.pointerEvents = "auto";
-            bagIconCont.style.opacity = "1";
-            bagIconCont.style.transition = ".3s all";
-            bagIconCont.style.position = "fixed";
-            bagIconCont.style.top = "5%";
-            bagIconCont.style.right = "2%";
-            bagIconCont.style.zIndex = "10";
-            bagIconCont.style.display = "grid";
-            bagIconCont.style.gridTemplateColumns = "1fr 1fr";
-            bagIconCont.style.alignItems = "center";
-            bagIconCont.style.justifyItems = "center";
-            bagIconCont.style.width = "150px";
-            bagIconCont.innerHTML = `
+      this.bag.push(lineItem);
+      this.shadowRoot.getElementById("shopNowCH").classList.remove("faint");
+      if (!document.getElementById("altBagIcon")) {
+        var bagIconCont = document.createElement("div");
+        bagIconCont.id = "altBagIcon";
+        bagIconCont.style.userSelect = "none";
+        bagIconCont.style.cursor = "pointer";
+        bagIconCont.style.pointerEvents = "auto";
+        bagIconCont.style.opacity = "1";
+        bagIconCont.style.transition = ".3s all";
+        bagIconCont.style.position = "fixed";
+        bagIconCont.style.top = "5%";
+        bagIconCont.style.right = "2%";
+        bagIconCont.style.zIndex = "10";
+        bagIconCont.style.display = "grid";
+        bagIconCont.style.gridTemplateColumns = "1fr 1fr";
+        bagIconCont.style.alignItems = "center";
+        bagIconCont.style.justifyItems = "center";
+        bagIconCont.style.width = "150px";
+        bagIconCont.innerHTML = `
             <div id="bagCtn" style="justify-self:end; font-size:1em; font-family: BS-R;">${this.allItemQuantitiesSum}</div>
             <div id="svgContainer" style="display:block; width:50%;">
                   <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
@@ -513,97 +539,106 @@ addToBag(pid, size, name, img, desc, price) {
                   </svg>
               </div>
             `;
-            if (window.isMobile != true) {
-                document.getElementById("main").appendChild(bagIconCont);
-                bagIconCont.addEventListener("click", () => {
-                    this.toggleBag();
-                });
-                this.allItemQuantitiesSum = this.bag.reduce((acc, item) => {
-                    return acc + item.quantity;
-                }, 0);
-                document.getElementById("bagCtn").innerHTML = `${this.allItemQuantitiesSum}`;
-            } else {
-                this.allItemQuantitiesSum = this.bag.reduce((acc, item) => {
-                    return acc + item.quantity;
-                }, 0);
-                this.shadowRoot.getElementById("checkoutBut").innerHTML = `(${this.allItemQuantitiesSum}) CHECKOUT`;
-            }
-            // document.getElementById("main").appendChild(bagIconCont);
-            // bagIconCont.addEventListener("click", () => {
-            //     this.toggleBag();
-            // });
-        }
-            // go through bag and add up all quantities
-            // this.allItemQuantitiesSum = this.bag.reduce((acc, item) => {
-            //     return acc + item.quantity;
-            // }, 0);
-            // document.getElementById("bagCtn").innerHTML = `${this.allItemQuantitiesSum}`;
-        return;
-    } else {
-        var bagCtn = document.getElementById("bagCtn");
-        if (this.bag.some((item) => item.price === pid && item.price_data.product_data.metadata.size === size)) {
-            var itemIndex = this.bag.findIndex((item) => item.price === pid);
-            this.bag[itemIndex].quantity += 1;
-            // go through bag and add up all quantities
-            this.allItemQuantitiesSum = this.bag.reduce((acc, item) => {
-                return acc + item.quantity;
-            }, 0);
-            if (window.isMobile != true) {
-                bagCtn.innerHTML = `${this.allItemQuantitiesSum}`;
-                bagCtn.innerHTML = `${this.allItemQuantitiesSum}`;
-                bagCtn.style.transition = ".3s all";
-                bagCtn.style.color = "var(--secondary)";
-                bagCtn.style.scale = "1.2";
-                setTimeout(()=> {
-                    bagCtn.style.scale = "1";
-                    bagCtn.style.color = "var(--primary)";
-                }, 300);
-            } else {
-                this.allItemQuantitiesSum = this.bag.reduce((acc, item) => {
-                    return acc + item.quantity;
-                }, 0);
-                this.shadowRoot.getElementById("checkoutBut").innerHTML = `(${this.allItemQuantitiesSum}) CHECKOUT`;
-            }
-            return;
+        if (window.isMobile != true) {
+          document.getElementById("main").appendChild(bagIconCont);
+          bagIconCont.addEventListener("click", () => {
+            this.toggleBag();
+          });
+          this.allItemQuantitiesSum = this.bag.reduce((acc, item) => {
+            return acc + item.quantity;
+          }, 0);
+          document.getElementById("bagCtn").innerHTML =
+            `${this.allItemQuantitiesSum}`;
         } else {
-            this.bag.push(lineItem);
-            // go through bag and add up all quantities
-            this.allItemQuantitiesSum = this.bag.reduce((acc, item) => {
-                return acc + item.quantity;
-            }, 0);
-            if (window.isMobile != true) {
-                bagCtn.innerHTML = `${this.allItemQuantitiesSum}`;
-                bagCtn.style.color = "var(--secondary)";
-                bagCtn.style.scale = "1.2";
-                setTimeout(()=> {
-                    bagCtn.style.scale = "1";
-                    bagCtn.style.color = "var(--primary)";
-                },300);
-            } else {
-                this.allItemQuantitiesSum = this.bag.reduce((acc, item) => {
-                    return acc + item.quantity;
-                }, 0);
-                this.shadowRoot.getElementById("checkoutBut").innerHTML = `(${this.allItemQuantitiesSum}) CHECKOUT`;
-            }
+          this.allItemQuantitiesSum = this.bag.reduce((acc, item) => {
+            return acc + item.quantity;
+          }, 0);
+          this.shadowRoot.getElementById("checkoutBut").innerHTML =
+            `(${this.allItemQuantitiesSum}) CHECKOUT`;
         }
+        // document.getElementById("main").appendChild(bagIconCont);
+        // bagIconCont.addEventListener("click", () => {
+        //     this.toggleBag();
+        // });
+      }
+      // go through bag and add up all quantities
+      // this.allItemQuantitiesSum = this.bag.reduce((acc, item) => {
+      //     return acc + item.quantity;
+      // }, 0);
+      // document.getElementById("bagCtn").innerHTML = `${this.allItemQuantitiesSum}`;
+      return;
+    } else {
+      var bagCtn = document.getElementById("bagCtn");
+      if (
+        this.bag.some(
+          (item) =>
+            item.price === pid &&
+            item.price_data.product_data.metadata.size === size
+        )
+      ) {
+        var itemIndex = this.bag.findIndex((item) => item.price === pid);
+        this.bag[itemIndex].quantity += 1;
+        // go through bag and add up all quantities
+        this.allItemQuantitiesSum = this.bag.reduce((acc, item) => {
+          return acc + item.quantity;
+        }, 0);
+        if (window.isMobile != true) {
+          bagCtn.innerHTML = `${this.allItemQuantitiesSum}`;
+          bagCtn.innerHTML = `${this.allItemQuantitiesSum}`;
+          bagCtn.style.transition = ".3s all";
+          bagCtn.style.color = "var(--secondary)";
+          bagCtn.style.scale = "1.2";
+          setTimeout(() => {
+            bagCtn.style.scale = "1";
+            bagCtn.style.color = "var(--primary)";
+          }, 300);
+        } else {
+          this.allItemQuantitiesSum = this.bag.reduce((acc, item) => {
+            return acc + item.quantity;
+          }, 0);
+          this.shadowRoot.getElementById("checkoutBut").innerHTML =
+            `(${this.allItemQuantitiesSum}) CHECKOUT`;
+        }
+        return;
+      } else {
+        this.bag.push(lineItem);
+        // go through bag and add up all quantities
+        this.allItemQuantitiesSum = this.bag.reduce((acc, item) => {
+          return acc + item.quantity;
+        }, 0);
+        if (window.isMobile != true) {
+          bagCtn.innerHTML = `${this.allItemQuantitiesSum}`;
+          bagCtn.style.color = "var(--secondary)";
+          bagCtn.style.scale = "1.2";
+          setTimeout(() => {
+            bagCtn.style.scale = "1";
+            bagCtn.style.color = "var(--primary)";
+          }, 300);
+        } else {
+          this.allItemQuantitiesSum = this.bag.reduce((acc, item) => {
+            return acc + item.quantity;
+          }, 0);
+          this.shadowRoot.getElementById("checkoutBut").innerHTML =
+            `(${this.allItemQuantitiesSum}) CHECKOUT`;
+        }
+      }
     }
+  }
 
-}
-
-getSizes(item, pSizes) {
+  getSizes(item, pSizes) {
     const myString = this.products[item][pSizes];
     const myArray = myString.split(", ");
     var select = this.shadowRoot.getElementById("cpSizeSel");
     select.innerHTML = "";
     myArray.forEach((size) => {
-        var option = document.createElement("option");
-        option.value = size;
-        option.innerHTML = size;
-        select.appendChild(option);
+      var option = document.createElement("option");
+      option.value = size;
+      option.innerHTML = size;
+      select.appendChild(option);
     });
-}
+  }
 
-sizeChart(cat) {
+  sizeChart(cat) {
     var sizeChart = document.createElement("div");
     sizeChart.id = "sizeChart";
     sizeChart.innerHTML = `
@@ -613,19 +648,19 @@ sizeChart(cat) {
             <div id="sizeChartClose">X</div>
         </div>
         <div id="sizeDetails"></div>
-    </div>`
+    </div>`;
     this.shadowRoot.getElementById("main").appendChild(sizeChart);
     switch (cat) {
-        case "Snapback":
-            this.shadowRoot.getElementById("sizeDetails").innerHTML = `
+      case "Snapback":
+        this.shadowRoot.getElementById("sizeDetails").innerHTML = `
             <div class="sizeChartRow1">
                 <div>Single Size</div>
                 <div>Snapback adjustable hat - 35 Inch Circumference Max.</div>
             </div>
-            `
+            `;
         break;
-        case "Hat":
-            this.shadowRoot.getElementById("sizeDetails").innerHTML = `
+      case "Hat":
+        this.shadowRoot.getElementById("sizeDetails").innerHTML = `
             <div class="sizeChartRow2">
                 <div>Size</div>
                 <div>Head Circumference</div>
@@ -650,10 +685,10 @@ sizeChart(cat) {
                 <div>2X-Large</div>
                 <div>25" - 25.5"</div>
             </div>
-            `
+            `;
         break;
-        case "Hoodie":
-            this.shadowRoot.getElementById("sizeDetails").innerHTML = `
+      case "Hoodie":
+        this.shadowRoot.getElementById("sizeDetails").innerHTML = `
             <div class="sizeChartRow4">
                 <div>Size</div>
                 <div>Length</div>
@@ -684,10 +719,10 @@ sizeChart(cat) {
                 <div>26.5"</div>
                 <div>26.5"</div>
             </div>
-            `
+            `;
         break;
-        case "Jogger Pants":
-            this.shadowRoot.getElementById("sizeDetails").innerHTML = `
+      case "Jogger Pants":
+        this.shadowRoot.getElementById("sizeDetails").innerHTML = `
             <div class="sizeChartRow4">
                 <div>Size</div>
                 <div>Waist (Max Stretch)</div>
@@ -718,10 +753,10 @@ sizeChart(cat) {
                 <div>13"</div>
                 <div>41"</div>
             </div>
-            `
+            `;
         break;
-        case "Track Shorts":
-            this.shadowRoot.getElementById("sizeDetails").innerHTML = `
+      case "Track Shorts":
+        this.shadowRoot.getElementById("sizeDetails").innerHTML = `
             <div class="sizeChartRow3">
                 <div>Size</div>
                 <div>Waist (Max Stretch)</div>
@@ -737,10 +772,10 @@ sizeChart(cat) {
                 <div>21"</div>
                 <div>18"</div>
             </div>
-            `
+            `;
         break;
-        case "Polo Shirt":
-            this.shadowRoot.getElementById("sizeDetails").innerHTML = `
+      case "Polo Shirt":
+        this.shadowRoot.getElementById("sizeDetails").innerHTML = `
             <div class="sizeChartRow3">
                 <div>Size</div>
                 <div>Chest Width</div>
@@ -756,192 +791,215 @@ sizeChart(cat) {
                 <div>21"</div>
                 <div>29"</div>
             </div>
-            `
+            `;
         break;
-        default:
+      default:
     }
-}
+  }
 
-toggleSizeChart(cat) {
+  toggleSizeChart(cat) {
     if (this.scBuilt === false) {
-        this.sizeChart(cat);
-        this.shadowRoot.getElementById("sizeChartClose").addEventListener("click", () => {
-            this.toggleSizeChart(cat);
+      this.sizeChart(cat);
+      this.shadowRoot
+        .getElementById("sizeChartClose")
+        .addEventListener("click", () => {
+          this.toggleSizeChart(cat);
         });
-        this.scBuilt = true;
-        return;
+      this.scBuilt = true;
+      return;
     } else {
-        if (this.scOpen === false) {
-            this.shadowRoot.getElementById("sizeChart").style.opacity = "1";
-            this.shadowRoot.getElementById("sizeChart").style.pointerEvents = "auto";
-            this.scOpen = true;
-            return;
-        } else {
-            this.shadowRoot.getElementById("sizeChart").style.opacity = "0";
-            this.shadowRoot.getElementById("sizeChart").style.pointerEvents = "none";
-            this.scOpen = false;
-        }
+      if (this.scOpen === false) {
+        this.shadowRoot.getElementById("sizeChart").style.opacity = "1";
+        this.shadowRoot.getElementById("sizeChart").style.pointerEvents =
+          "auto";
+        this.scOpen = true;
+        return;
+      } else {
+        this.shadowRoot.getElementById("sizeChart").style.opacity = "0";
+        this.shadowRoot.getElementById("sizeChart").style.pointerEvents =
+          "none";
+        this.scOpen = false;
+      }
     }
-}
+  }
 
-toggleBag() {
+  toggleBag() {
     var bagPage = this.shadowRoot.getElementById("cartPage");
     var icon = document.getElementById("altBagIcon");
-    if (this.bagOpen === false && this.bag.length > 0 && this.shopOpen === false) {
-        document.getElementById("shop2").setAttribute("active", "true");
-        bagPage.style.opacity = "1";
-        bagPage.style.scale = "1";
-        bagPage.style.pointerEvents = "auto";
-        this.bagOpen = true;
-        if (icon) {
-            icon.style.display = "none";
-        }
-        this.toggleRequest();
-        this.buildBag();
-        return;
-    }
-    else if (this.bagOpen === false && this.bag.length > 0 && this.largeGalOpen === true) {
-        bagPage.style.opacity = "1";
-        bagPage.style.scale = "1";
-        bagPage.style.pointerEvents = "auto";
-        this.bagOpen = true;
-        if (icon) {
-            icon.style.display = "none";
-        }
-        this.buildBag();
-        return;
+    if (
+      this.bagOpen === false &&
+      this.bag.length > 0 &&
+      this.shopOpen === false
+    ) {
+      document.getElementById("shop2").setAttribute("active", "true");
+      bagPage.style.opacity = "1";
+      bagPage.style.scale = "1";
+      bagPage.style.pointerEvents = "auto";
+      this.bagOpen = true;
+      if (icon) {
+        icon.style.display = "none";
+      }
+      this.toggleRequest();
+      this.buildBag();
+      return;
+    } else if (
+      this.bagOpen === false &&
+      this.bag.length > 0 &&
+      this.largeGalOpen === true
+    ) {
+      bagPage.style.opacity = "1";
+      bagPage.style.scale = "1";
+      bagPage.style.pointerEvents = "auto";
+      this.bagOpen = true;
+      if (icon) {
+        icon.style.display = "none";
+      }
+      this.buildBag();
+      return;
     } else if (this.largeGalOpen === false && this.bag.length > 0) {
-        bagPage.style.opacity = "1";
-        bagPage.style.scale = "1";
-        bagPage.style.pointerEvents = "auto";
-        this.bagOpen = true;
-        if (icon) {
-            icon.style.display = "none";
-        }
-        this.toggleRequest();
-        this.buildBag();
-        return;
+      bagPage.style.opacity = "1";
+      bagPage.style.scale = "1";
+      bagPage.style.pointerEvents = "auto";
+      this.bagOpen = true;
+      if (icon) {
+        icon.style.display = "none";
+      }
+      this.toggleRequest();
+      this.buildBag();
+      return;
     } else if (this.largeGalOpen === true && this.bag.length > 0) {
-        if (icon) {
-            icon.style.display = "grid";
-        }
-        bagPage.style.opacity = "0";
-        bagPage.style.scale = "2";
-        bagPage.style.pointerEvents = "none";
-        // this.toggleRequest();
-        this.bagOpen = false;
-        // this.shadowRoot.getElementById("addToCart").style.opacity = "100%";
-        // this.shadowRoot.getElementById("addToCart").style.pointerEvents = "auto";
-        this.shadowRoot.getElementById("cartItems").style.opacity = "0";
-        this.shadowRoot.getElementById("cartItems").style.pointerEvents = "none";
-        this.shadowRoot.getElementById("cartItems").style.scale = "2";
-        if (this.requestOpen === true) {
-            this.toggleRequest();
-        }
-        return;
+      if (icon) {
+        icon.style.display = "grid";
+      }
+      bagPage.style.opacity = "0";
+      bagPage.style.scale = "2";
+      bagPage.style.pointerEvents = "none";
+      // this.toggleRequest();
+      this.bagOpen = false;
+      // this.shadowRoot.getElementById("addToCart").style.opacity = "100%";
+      // this.shadowRoot.getElementById("addToCart").style.pointerEvents = "auto";
+      this.shadowRoot.getElementById("cartItems").style.opacity = "0";
+      this.shadowRoot.getElementById("cartItems").style.pointerEvents = "none";
+      this.shadowRoot.getElementById("cartItems").style.scale = "2";
+      if (this.requestOpen === true) {
+        this.toggleRequest();
+      }
+      return;
     } else {
-        if (icon) {
-            icon.style.display = "grid";
-        }
-        bagPage.style.opacity = "0";
-        bagPage.style.scale = "2";
-        bagPage.style.pointerEvents = "none";
-        this.bagOpen = false;
-        this.largeGalleryToggle();
+      if (icon) {
+        icon.style.display = "grid";
+      }
+      bagPage.style.opacity = "0";
+      bagPage.style.scale = "2";
+      bagPage.style.pointerEvents = "none";
+      this.bagOpen = false;
+      this.largeGalleryToggle();
     }
-}
+  }
 
-decreaseQuantity(e) {
-    var index = e.target.id.replace("dec","");
+  decreaseQuantity(e) {
+    var index = e.target.id.replace("dec", "");
     var item = this.bag[index];
     var bagPage = this.shadowRoot.getElementById("cartPage");
     if (item.quantity > 1) {
-        item.quantity -= 1;
-        this.buildBag();
-        this.shadowRoot.getElementById(`qty${index}`).innerHTML = `${this.bag[index].quantity}`;
+      item.quantity -= 1;
+      this.buildBag();
+      this.shadowRoot.getElementById(`qty${index}`).innerHTML =
+        `${this.bag[index].quantity}`;
     } else {
-        this.bag.splice(index, 1);
-        this.buildBag();
-        this.allItemQuantitiesSum = this.bag.reduce((acc, item) => {
-            return acc + item.quantity;
-        }, 0);
-        if (document.getElementById("bagCtn")) {
-        document.getElementById("bagCtn").innerHTML = `${this.allItemQuantitiesSum}`;}
-        if (this.bag.length === 0) {
-            bagPage.style.opacity = "0";
-            bagPage.style.scale = "2";
-            this.allItemQuantitiesSum = 0;
-            bagPage.style.pointerEvents = "none";
-            this.bagOpen = false;
-            this.shadowRoot.getElementById("shopNowCH").classList.add("faint");
-            this.toggleRequest();
-            if (document.getElementById("altBagIcon")) {
-            document.getElementById("altBagIcon").style.display = "none";
-            }
-            // FIX
+      this.bag.splice(index, 1);
+      this.buildBag();
+      this.allItemQuantitiesSum = this.bag.reduce((acc, item) => {
+        return acc + item.quantity;
+      }, 0);
+      if (document.getElementById("bagCtn")) {
+        document.getElementById("bagCtn").innerHTML =
+          `${this.allItemQuantitiesSum}`;
+      }
+      if (this.bag.length === 0) {
+        bagPage.style.opacity = "0";
+        bagPage.style.scale = "2";
+        this.allItemQuantitiesSum = 0;
+        bagPage.style.pointerEvents = "none";
+        this.bagOpen = false;
+        this.shadowRoot.getElementById("shopNowCH").classList.add("faint");
+        this.toggleRequest();
+        if (document.getElementById("altBagIcon")) {
+          document.getElementById("altBagIcon").style.display = "none";
         }
+        // FIX
+      }
     }
-    this.shadowRoot.getElementById("cartSubTotalVal").innerHTML = `$${this.bag.reduce((acc, item) => {
-        return acc + (item.price_data.product_data.metadata.price * item.quantity);
-    }, 0)} USD`;
+    this.shadowRoot.getElementById("cartSubTotalVal").innerHTML =
+      `$${this.bag.reduce((acc, item) => {
+        return (
+          acc + item.price_data.product_data.metadata.price * item.quantity
+        );
+      }, 0)} USD`;
     if (window.isMobile === true) {
-        this.allItemQuantitiesSum = this.bag.reduce((acc, item) => {
-            return acc + item.quantity;
-        }, 0);
-        this.shadowRoot.getElementById("checkoutBut").innerHTML = `(${this.allItemQuantitiesSum}) CHECKOUT`;
+      this.allItemQuantitiesSum = this.bag.reduce((acc, item) => {
+        return acc + item.quantity;
+      }, 0);
+      this.shadowRoot.getElementById("checkoutBut").innerHTML =
+        `(${this.allItemQuantitiesSum}) CHECKOUT`;
     }
-}
+  }
 
-increaseQuantity(e) {
-    var index = e.target.id.replace("inc","");
+  increaseQuantity(e) {
+    var index = e.target.id.replace("inc", "");
     var item = this.bag[index];
     if (item.quantity < 10) {
-        item.quantity += 1;
-        this.buildBag();
-        this.shadowRoot.getElementById(`qty${index}`).innerHTML = `${this.bag[index].quantity}`;
-        this.shadowRoot.getElementById("cartSubTotalVal").innerHTML = `$${this.bag.reduce((acc, item) => {
-            return acc + (item.price_data.product_data.metadata.price * item.quantity);
+      item.quantity += 1;
+      this.buildBag();
+      this.shadowRoot.getElementById(`qty${index}`).innerHTML =
+        `${this.bag[index].quantity}`;
+      this.shadowRoot.getElementById("cartSubTotalVal").innerHTML =
+        `$${this.bag.reduce((acc, item) => {
+          return (
+            acc + item.price_data.product_data.metadata.price * item.quantity
+          );
         }, 0)} USD`;
-        if (window.isMobile === true) {
-            this.allItemQuantitiesSum = this.bag.reduce((acc, item) => {
-                return acc + item.quantity;
-            }, 0);
-            this.shadowRoot.getElementById("checkoutBut").innerHTML = `(${this.allItemQuantitiesSum}) CHECKOUT`;
-        }
+      if (window.isMobile === true) {
+        this.allItemQuantitiesSum = this.bag.reduce((acc, item) => {
+          return acc + item.quantity;
+        }, 0);
+        this.shadowRoot.getElementById("checkoutBut").innerHTML =
+          `(${this.allItemQuantitiesSum}) CHECKOUT`;
+      }
     } else {
-        return;
+      return;
     }
-}
+  }
 
-buildBag() {
+  buildBag() {
     this.shadowRoot.getElementById("cartItems").style.opacity = "1";
     this.shadowRoot.getElementById("cartItems").style.pointerEvents = "auto";
     this.shadowRoot.getElementById("cartItems").style.scale = "1";
     this.shadowRoot.getElementById("productInfo").style.pointerEvents = "auto";
     var bagCont = this.shadowRoot.getElementById("cartItems");
     if (document.getElementById("altBagIcon")) {
-        document.getElementById("altBagIcon").style.display = "none";
+      document.getElementById("altBagIcon").style.display = "none";
     }
     bagCont.innerHTML = "";
     this.bag.forEach((item) => {
-        var bagItem = document.createElement("div");
-        var index = this.bag.indexOf(item);
-        var dec = document.createElement("div");
-        var inc = document.createElement("div");
-        var qty = document.createElement("div");
-        dec.id = `dec${index}`;
-        inc.id = `inc${index}`;
-        qty.id = `qty${index}`;
-        dec.classList.add("bagItemQuantSub");
-        inc.classList.add("bagItemQuantAdd");
-        qty.classList.add("bagItemQuant");
-        dec.innerHTML = "-";
-        inc.innerHTML = "+";
-        qty.innerHTML = `${item.quantity}`;
-        qty.style.fontSize = "1.2em";
-        bagItem.classList.add("bagItem");
-        bagItem.id = index;
-        bagItem.innerHTML = `
+      var bagItem = document.createElement("div");
+      var index = this.bag.indexOf(item);
+      var dec = document.createElement("div");
+      var inc = document.createElement("div");
+      var qty = document.createElement("div");
+      dec.id = `dec${index}`;
+      inc.id = `inc${index}`;
+      qty.id = `qty${index}`;
+      dec.classList.add("bagItemQuantSub");
+      inc.classList.add("bagItemQuantAdd");
+      qty.classList.add("bagItemQuant");
+      dec.innerHTML = "-";
+      inc.innerHTML = "+";
+      qty.innerHTML = `${item.quantity}`;
+      qty.style.fontSize = "1.2em";
+      bagItem.classList.add("bagItem");
+      bagItem.id = index;
+      bagItem.innerHTML = `
         <div class="bagItemImage"><img src="${item.price_data.images[0]}"/></div>
         <div class="bagItemCont">
             <div class="bagItemName">${item.price_data.product_data.name}</div>
@@ -950,24 +1008,27 @@ buildBag() {
             <div class="bagItemPrice">$${item.price_data.product_data.metadata.price} USD</div>
             <div class="bagItemQuantity" id="qtyBlock${index}"></div>
         </div>
-        `
-        bagCont.appendChild(bagItem);
-        this.shadowRoot.getElementById(`qtyBlock${index}`).appendChild(dec);
-        this.shadowRoot.getElementById(`qtyBlock${index}`).appendChild(qty);
-        this.shadowRoot.getElementById(`qtyBlock${index}`).appendChild(inc);
-        this.shadowRoot.getElementById("cartSubTotalVal").innerHTML = `$${this.bag.reduce((acc, item) => {
-            return acc + (item.price_data.product_data.metadata.price * item.quantity);
+        `;
+      bagCont.appendChild(bagItem);
+      this.shadowRoot.getElementById(`qtyBlock${index}`).appendChild(dec);
+      this.shadowRoot.getElementById(`qtyBlock${index}`).appendChild(qty);
+      this.shadowRoot.getElementById(`qtyBlock${index}`).appendChild(inc);
+      this.shadowRoot.getElementById("cartSubTotalVal").innerHTML =
+        `$${this.bag.reduce((acc, item) => {
+          return (
+            acc + item.price_data.product_data.metadata.price * item.quantity
+          );
         }, 0)} USD`;
-        dec.addEventListener("click", (e) => {
-            this.decreaseQuantity(e);
-        });
-        inc.addEventListener("click", (e) => {
-            this.increaseQuantity(e);
-        });
-    })
-}
+      dec.addEventListener("click", (e) => {
+        this.decreaseQuantity(e);
+      });
+      inc.addEventListener("click", (e) => {
+        this.increaseQuantity(e);
+      });
+    });
+  }
 
-toggleCheckout() {
+  toggleCheckout() {
     var checkoutScreen = document.getElementById("checkout");
     document.getElementById("checkout").innerHTML = "";
     this.initialize();
@@ -978,27 +1039,35 @@ toggleCheckout() {
     this.shadowRoot.getElementById("productInfo").style.pointerEvents = "none";
     this.shadowRoot.getElementById("cartItems").style.pointerEvents = "none";
     this.shadowRoot.getElementById("addtoCart").style.pointerEvents = "none";
-}
+  }
 
-hideCheckout() {
+  hideCheckout() {
     var checkoutScreen = document.getElementById("checkout");
     checkoutScreen.style.opacity = "0";
     checkoutScreen.style.pointerEvents = "none";
     checkoutScreen.style.scale = "2";
-}
-  
-toggleRequest(e) {
+  }
+
+  toggleRequest(e) {
     this.largeGalleryToggle(e);
     if (e != undefined) {
-        // this.largeGalleryToggle(e);
-        var selected =  e.target.id;
-        var product = this.shadowRoot.getElementById(selected).getAttribute("data-name");
-        this.type = this.shadowRoot.getElementById(selected).getAttribute("data-type");
-        //
-        var lookNum = this.shadowRoot.getElementById(selected).getAttribute("data-look");
-        var choicePre = this.shadowRoot.getElementById(selected).getAttribute("data-p");
+      // this.largeGalleryToggle(e);
+      var selected = e.target.id;
+      var product = this.shadowRoot
+        .getElementById(selected)
+        .getAttribute("data-name");
+      this.type = this.shadowRoot
+        .getElementById(selected)
+        .getAttribute("data-type");
+      //
+      var lookNum = this.shadowRoot
+        .getElementById(selected)
+        .getAttribute("data-look");
+      var choicePre = this.shadowRoot
+        .getElementById(selected)
+        .getAttribute("data-p");
     } else {
-        this.type = "viewBag";
+      this.type = "viewBag";
     }
     var body = this.shadowRoot.getElementById("request");
     var external = this.shadowRoot.getElementById("linkOutPage");
@@ -1013,7 +1082,7 @@ toggleRequest(e) {
     // pinnerArray.forEach((el) => {
     //     //
     //     if (this.externalOpen != true) {
-    //         // Local 
+    //         // Local
     //         this.shadowRoot.getElementById("request").style.pointerEvents = "none";
     //         this.shadowRoot.getElementById("request").style.transition = ".3s all"
     //         this.shadowRoot.getElementById("request").style.opacity = "0";
@@ -1028,285 +1097,335 @@ toggleRequest(e) {
     //         this.externalOpen = false;
     //     }
     // })
-    
+
     //
     if (this.requestTogAdded1 === false) {
-        this.requestTogAdded1 = true;
-        this.shadowRoot.getElementById("returnBut").addEventListener("click", (e) => {
-            this.toggleRequest(e)
+      this.requestTogAdded1 = true;
+      this.shadowRoot
+        .getElementById("returnBut")
+        .addEventListener("click", (e) => {
+          this.toggleRequest(e);
         });
-        this.shadowRoot.getElementById("returnBut2")?.addEventListener("click", (e) => {
-            this.toggleRequest(e)
+      this.shadowRoot
+        .getElementById("returnBut2")
+        ?.addEventListener("click", (e) => {
+          this.toggleRequest(e);
         });
     }
 
     if (this.type === "RTO") {
-            // Request to Order
-            this.shadowRoot.getElementById("main").style.backgroundColor = "rgba(0,0,0,1)";
-            this.externalOpen = false;
-            this.shadowRoot.getElementById("request").style.pointerEvents = "auto";
-            gsap.to(body, {
-                duration: .3,
-                opacity: "100%",
-            })
-            this.requestOpen = true;
-            this.shadowRoot.getElementById("returnBut").setAttribute("data-look", `${lookNum}`);
-        return;
+      // Request to Order
+      this.shadowRoot.getElementById("main").style.backgroundColor =
+        "rgba(0,0,0,1)";
+      this.externalOpen = false;
+      this.shadowRoot.getElementById("request").style.pointerEvents = "auto";
+      gsap.to(body, {
+        duration: 0.3,
+        opacity: "100%",
+      });
+      this.requestOpen = true;
+      this.shadowRoot
+        .getElementById("returnBut")
+        .setAttribute("data-look", `${lookNum}`);
+      return;
     } else if (this.type === "EON") {
-         // External Order Now
-         var linkEl = this.shadowRoot.getElementById("link1");
-         var linkname = choicePre + "ExtName";
-         var pName = choicePre + "Name";
-         var bodyText = choicePre + "Details";
-         linkEl.href = this.products[item][link];
-         linkEl.innerHTML = this.products[item][linkname];
-         this.shadowRoot.getElementById("loBody").innerHTML = this.products[item][bodyText];
-         this.shadowRoot.getElementById("reqLinkProduct").innerHTML = this.products[item][pName];
-         this.shadowRoot.getElementById("shopNow").href = this.products[item][link];
-         this.shadowRoot.getElementById("gTag").innerHTML = this.products[item].Type + ":";
-         this.externalOpen = true;
-         this.shadowRoot.getElementById("linkOutPage").style.pointerEvents = "auto";
-         gsap.to(external, {
-             duration: .3,
-             opacity: "100%",
-         })
-         this.requestOpen = true;
-         this.shadowRoot.getElementById("returnButLink").setAttribute("data-look", `${lookNum}`)
-         if (this.requestTogAdded2 === false) {
-             this.requestTogAdded2 = true;
-             this.shadowRoot.getElementById("returnButLink").addEventListener("click", (e) => {
-                 this.toggleRequest(e)
-             });
-         }
-        return;
+      // External Order Now
+      var linkEl = this.shadowRoot.getElementById("link1");
+      var linkname = choicePre + "ExtName";
+      var pName = choicePre + "Name";
+      var bodyText = choicePre + "Details";
+      linkEl.href = this.products[item][link];
+      linkEl.innerHTML = this.products[item][linkname];
+      this.shadowRoot.getElementById("loBody").innerHTML =
+        this.products[item][bodyText];
+      this.shadowRoot.getElementById("reqLinkProduct").innerHTML =
+        this.products[item][pName];
+      this.shadowRoot.getElementById("shopNow").href =
+        this.products[item][link];
+      this.shadowRoot.getElementById("gTag").innerHTML =
+        this.products[item].Type + ":";
+      this.externalOpen = true;
+      this.shadowRoot.getElementById("linkOutPage").style.pointerEvents =
+        "auto";
+      gsap.to(external, {
+        duration: 0.3,
+        opacity: "100%",
+      });
+      this.requestOpen = true;
+      this.shadowRoot
+        .getElementById("returnButLink")
+        .setAttribute("data-look", `${lookNum}`);
+      if (this.requestTogAdded2 === false) {
+        this.requestTogAdded2 = true;
+        this.shadowRoot
+          .getElementById("returnButLink")
+          .addEventListener("click", (e) => {
+            this.toggleRequest(e);
+          });
+      }
+      return;
     } else if (this.type === "ATO" || this.type === "MTO") {
-        // Available to Order or Made to Order
-        this.pid = choicePre + "Pid";
-        this.pName2 = choicePre + "Name";
-        this.price = choicePre + "Price";
-        this.item = item;
-        this.prodImg = `Product${choicePre.replace("P","")}`;
-        this.desc = choicePre + "Details";
-        var pSizes = choicePre + "Sizes";
-        this.category = choicePre + "Cat";
-        this.getSizes(item, pSizes);
-        this.shadowRoot.getElementById("cpSizeSel").setAttribute("data-cat", `${this.products[item][this.category]}`);
-        var size = this.shadowRoot.getElementById("cpSizeSel");
+      // Available to Order or Made to Order
+      this.pid = choicePre + "Pid";
+      this.pName2 = choicePre + "Name";
+      this.price = choicePre + "Price";
+      this.item = item;
+      this.prodImg = `Product${choicePre.replace("P", "")}`;
+      this.desc = choicePre + "Details";
+      var pSizes = choicePre + "Sizes";
+      this.category = choicePre + "Cat";
+      this.getSizes(item, pSizes);
+      this.shadowRoot
+        .getElementById("cpSizeSel")
+        .setAttribute("data-cat", `${this.products[item][this.category]}`);
+      var size = this.shadowRoot.getElementById("cpSizeSel");
 
-        if (size.value === "Single") {
-            this.shadowRoot.getElementById("addtoBag").innerHTML = `Add to Bag`;
-        } else {
-            this.shadowRoot.getElementById("addtoBag").innerHTML = `Add ${size.value} to Bag`;
-        }
-        
-        if (this.scBuilt === false) {
-            this.shadowRoot.getElementById("cpSize").addEventListener("click", () => {
-                this.shadowRoot.getElementById("addtoBag").innerHTML = `Add ${size.value} to Bag`;
-                this.toggleSizeChart(this.products[item][this.category]);
-            })
-            this.shadowRoot.getElementById("cpSizeSel").addEventListener("change", () => {
-                this.shadowRoot.getElementById("addtoBag").innerHTML = `Add ${size.value} to Bag`;
-            })
-        }
+      if (size.value === "Single") {
+        this.shadowRoot.getElementById("addtoBag").innerHTML = `Add to Bag`;
+      } else {
+        this.shadowRoot.getElementById("addtoBag").innerHTML =
+          `Add ${size.value} to Bag`;
+      }
 
-        this.shadowRoot.getElementById("cpDesc").innerHTML = this.products[item][this.desc];
-        this.shadowRoot.getElementById("cpPrice").innerHTML = `$${this.products[item][this.price]} USD`;
-        this.shadowRoot.getElementById("cpName").innerHTML = this.products[item][this.pName2];
-        this.shadowRoot.getElementById("gTag").innerHTML = this.products[item].Type + ":";
-        atc.style.pointerEvents = "auto";
-        gsap.to(atc, {
-            duration: .3,
-            opacity: "100%",
-        })
-        if (this.requestTogAdded3 === false) {
-            this.requestTogAdded3 = true;
-            // need to be a variable outside of this block
-            this.shadowRoot.getElementById("returnButLink3").addEventListener("click", (e) => {
-                this.toggleRequest(e)
-                var atc = this.shadowRoot.getElementById("addtoCart");
-                atc.style.pointerEvents = "none";
-                atc.style.opacity = "0";
-                atc.style.transition = ".3s all";
-            });
-            this.shadowRoot.getElementById("shopNowCH").addEventListener("click", () => {
-                this.toggleBag();
-            })
-            this.shadowRoot.getElementById("addtoBag").addEventListener("click", () => {
-                var sel = choicePre.replace("P","Product");
-                var size2 = this.shadowRoot.getElementById("cpSizeSel");
-                this.addToBag(this.products[this.item][this.pid], size2.value, this.products[this.item][this.pName2], this.products[this.item][this.prodImg], this.products[this.item][this.desc], this.products[this.item][this.price]);
-            })
-        }
-        return;
+      if (this.scBuilt === false) {
+        this.shadowRoot
+          .getElementById("cpSize")
+          .addEventListener("click", () => {
+            this.shadowRoot.getElementById("addtoBag").innerHTML =
+              `Add ${size.value} to Bag`;
+            this.toggleSizeChart(this.products[item][this.category]);
+          });
+        this.shadowRoot
+          .getElementById("cpSizeSel")
+          .addEventListener("change", () => {
+            this.shadowRoot.getElementById("addtoBag").innerHTML =
+              `Add ${size.value} to Bag`;
+          });
+      }
+
+      this.shadowRoot.getElementById("cpDesc").innerHTML =
+        this.products[item][this.desc];
+      this.shadowRoot.getElementById("cpPrice").innerHTML =
+        `$${this.products[item][this.price]} USD`;
+      this.shadowRoot.getElementById("cpName").innerHTML =
+        this.products[item][this.pName2];
+      this.shadowRoot.getElementById("gTag").innerHTML =
+        this.products[item].Type + ":";
+      atc.style.pointerEvents = "auto";
+      gsap.to(atc, {
+        duration: 0.3,
+        opacity: "100%",
+      });
+      if (this.requestTogAdded3 === false) {
+        this.requestTogAdded3 = true;
+        // need to be a variable outside of this block
+        this.shadowRoot
+          .getElementById("returnButLink3")
+          .addEventListener("click", (e) => {
+            this.toggleRequest(e);
+            var atc = this.shadowRoot.getElementById("addtoCart");
+            atc.style.pointerEvents = "none";
+            atc.style.opacity = "0";
+            atc.style.transition = ".3s all";
+          });
+        this.shadowRoot
+          .getElementById("shopNowCH")
+          .addEventListener("click", () => {
+            this.toggleBag();
+          });
+        this.shadowRoot
+          .getElementById("addtoBag")
+          .addEventListener("click", () => {
+            var sel = choicePre.replace("P", "Product");
+            var size2 = this.shadowRoot.getElementById("cpSizeSel");
+            this.addToBag(
+              this.products[this.item][this.pid],
+              size2.value,
+              this.products[this.item][this.pName2],
+              this.products[this.item][this.prodImg],
+              this.products[this.item][this.desc],
+              this.products[this.item][this.price]
+            );
+          });
+      }
+      return;
     } else if (this.type === "DAI") {
-        // Digital Asset Internal
+      // Digital Asset Internal
     } else if (this.type === "viewBag") {
-        if (window.dtmenuOpen === false) {
-            document.getElementById("getUniMenu").toggleMenu();
-            if (this.bag.length > 0) {
-                if (document.getElementById("altBagIcon")) {
-                    document.getElementById("altBagIcon").style.display = "grid";
-                }
-            }
+      if (window.dtmenuOpen === false) {
+        document.getElementById("getUniMenu").toggleMenu();
+        if (this.bag.length > 0) {
+          if (document.getElementById("altBagIcon")) {
+            document.getElementById("altBagIcon").style.display = "grid";
+          }
         }
+      }
     }
-}
+  }
 
   toggleReq() {
     this.largeGalleryToggle();
     switch (this.currentProduct) {
-        case 1:
-            this.shadowRoot.getElementById("Product1").click();
+      case 1:
+        this.shadowRoot.getElementById("Product1").click();
         break;
-        case 2:
-            this.shadowRoot.getElementById("Product2").click();
+      case 2:
+        this.shadowRoot.getElementById("Product2").click();
         break;
-        case 3:
-            this.shadowRoot.getElementById("Product3").click();
+      case 3:
+        this.shadowRoot.getElementById("Product3").click();
         break;
     }
   }
 
   largeGalleryToggle(e) {
     var gal = this.shadowRoot.getElementById("productInfo");
-    var selected =  e?.target.id;
-    var type = this.shadowRoot.getElementById(selected)?.getAttribute("data-type");
+    var selected = e?.target.id;
+    var type = this.shadowRoot
+      .getElementById(selected)
+      ?.getAttribute("data-type");
     var body = this.shadowRoot.getElementById("request");
     var external = this.shadowRoot.getElementById("linkOutPage");
     var atc = this.shadowRoot.getElementById("addtoCart");
     //
     switch (type) {
-        case "RTO":
-            external.style.pointerEvents = "none";
-            external.style.opacity = "0";
-            external.style.transition = ".3s all";
-            atc.style.pointerEvents = "none";
-            atc.style.opacity = "0";
-            atc.style.transition = ".3s all";
+      case "RTO":
+        external.style.pointerEvents = "none";
+        external.style.opacity = "0";
+        external.style.transition = ".3s all";
+        atc.style.pointerEvents = "none";
+        atc.style.opacity = "0";
+        atc.style.transition = ".3s all";
         break;
-        case "EON":
-            body.style.pointerEvents = "none";
-            body.style.opacity = "0";
-            body.style.transition = ".3s all";
-            atc.style.pointerEvents = "none";
-            atc.style.opacity = "0";
-            atc.style.transition = ".3s all";
+      case "EON":
+        body.style.pointerEvents = "none";
+        body.style.opacity = "0";
+        body.style.transition = ".3s all";
+        atc.style.pointerEvents = "none";
+        atc.style.opacity = "0";
+        atc.style.transition = ".3s all";
         break;
-        case "ATO":
-            body.style.pointerEvents = "none";
-            body.style.opacity = "0";
-            body.style.transition = ".3s all";
-            external.style.pointerEvents = "none";
-            external.style.opacity = "0";
-            external.style.transition = ".3s all";
+      case "ATO":
+        body.style.pointerEvents = "none";
+        body.style.opacity = "0";
+        body.style.transition = ".3s all";
+        external.style.pointerEvents = "none";
+        external.style.opacity = "0";
+        external.style.transition = ".3s all";
         break;
-        case "MTO":
-            body.style.pointerEvents = "none";
-            body.style.opacity = "0";
-            body.style.transition = ".3s all";
-            external.style.pointerEvents = "none";
-            external.style.opacity = "0";
-            external.style.transition = ".3s all";
+      case "MTO":
+        body.style.pointerEvents = "none";
+        body.style.opacity = "0";
+        body.style.transition = ".3s all";
+        external.style.pointerEvents = "none";
+        external.style.opacity = "0";
+        external.style.transition = ".3s all";
         break;
-        // case "DAI":
-        //     body.style.pointerEvents = "none";
-        //     body.style.opacity = "0";
-        //     body.style.transition = ".3s all";
-        //     external.style.pointerEvents = "none";
-        //     external.style.opacity = "0";
-        //     external.style.transition = ".3s all";
-        //     atc.style.pointerEvents = "none";
-        //     atc.style.opacity = "0";
-        //     atc.style.transition = ".3s all";
-        // break;
-        default:
-            body.style.pointerEvents = "none";
-            body.style.opacity = "0";
-            body.style.transition = ".3s all";
-            external.style.pointerEvents = "none";
-            external.style.opacity = "0";
-            external.style.transition = ".3s all";
-            atc.style.pointerEvents = "none";
-            atc.style.opacity = "0";
-            atc.style.transition = ".3s all";
-            if (this.shadowRoot.getElementById("InfoImgs").style.display === "block") {
-                atc.style.pointerEvents = "auto";
-                atc.style.opacity = "1";
-                atc.style.transition = ".3s all";
-            }
-            this.shadowRoot.getElementById("cartItems").style.opacity = "0";
-            this.shadowRoot.getElementById("cartItems").style.pointerEvents = "none";
-            this.shadowRoot.getElementById("cartItems").style.scale = "2";
+      // case "DAI":
+      //     body.style.pointerEvents = "none";
+      //     body.style.opacity = "0";
+      //     body.style.transition = ".3s all";
+      //     external.style.pointerEvents = "none";
+      //     external.style.opacity = "0";
+      //     external.style.transition = ".3s all";
+      //     atc.style.pointerEvents = "none";
+      //     atc.style.opacity = "0";
+      //     atc.style.transition = ".3s all";
+      // break;
+      default:
+        body.style.pointerEvents = "none";
+        body.style.opacity = "0";
+        body.style.transition = ".3s all";
+        external.style.pointerEvents = "none";
+        external.style.opacity = "0";
+        external.style.transition = ".3s all";
+        atc.style.pointerEvents = "none";
+        atc.style.opacity = "0";
+        atc.style.transition = ".3s all";
+        if (
+          this.shadowRoot.getElementById("InfoImgs").style.display === "block"
+        ) {
+          atc.style.pointerEvents = "auto";
+          atc.style.opacity = "1";
+          atc.style.transition = ".3s all";
+        }
+        this.shadowRoot.getElementById("cartItems").style.opacity = "0";
+        this.shadowRoot.getElementById("cartItems").style.pointerEvents =
+          "none";
+        this.shadowRoot.getElementById("cartItems").style.scale = "2";
         break;
     }
     //
     if (e) {
-        if (e.target.id.includes("Product")) {
-            switch (e.target.id) {
-                case "Product1":
-                    this.currentProduct = 1;
-                break;
-                case "Product2":
-                    this.currentProduct = 2;
-                break;
-                case "Product3":
-                    this.currentProduct = 3;
-                break;
-            }
-        } else {
-            switch (e.target.id) {
-                case "pp1":
-                    this.currentProduct = 1;
-                break;
-                case "pp2":
-                    this.currentProduct = 2;
-                break;
-                case "pp3":
-                    this.currentProduct = 3;
-                break;
-            }
+      if (e.target.id.includes("Product")) {
+        switch (e.target.id) {
+          case "Product1":
+            this.currentProduct = 1;
+            break;
+          case "Product2":
+            this.currentProduct = 2;
+            break;
+          case "Product3":
+            this.currentProduct = 3;
+            break;
         }
-    } 
+      } else {
+        switch (e.target.id) {
+          case "pp1":
+            this.currentProduct = 1;
+            break;
+          case "pp2":
+            this.currentProduct = 2;
+            break;
+          case "pp3":
+            this.currentProduct = 3;
+            break;
+        }
+      }
+    }
 
     if (this.largeGalOpen === false) {
-        //
-        var largeImages = this.selectedLook["p" + this.currentProduct + "AltQty"];
-        this.shadowRoot.getElementById("InfoImgs").innerHTML = "";
-        for (let i = 1; i < largeImages + 1; i++) {
-            var img = document.createElement("img");
-            img.src = `https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeShop/alts/P${this.currentProduct}-L${this.selectedLook.Look}-c${this.selectedLook.Chapter}-SCOGE-alt${i}.png`;
-            this.shadowRoot.getElementById("InfoImgs").appendChild(img);
-        }
+      //
+      var largeImages = this.selectedLook["p" + this.currentProduct + "AltQty"];
+      this.shadowRoot.getElementById("InfoImgs").innerHTML = "";
+      for (let i = 1; i < largeImages + 1; i++) {
+        var img = document.createElement("img");
+        img.src = `https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeShop/alts/P${this.currentProduct}-L${this.selectedLook.Look}-c${this.selectedLook.Chapter}-SCOGE-alt${i}.png`;
+        this.shadowRoot.getElementById("InfoImgs").appendChild(img);
+      }
 
-        if (largeImages === 1) {
-            this.shadowRoot.getElementById("InfoImgs").style.display = "grid";
-            this.shadowRoot.getElementById("InfoImgs").style.gridTemplateColumns = "1fr";
-            this.shadowRoot.getElementById("InfoImgs").style.gridTemplateRows = "1fr";
-            this.shadowRoot.getElementById("InfoImgs").style.justifyItems = "center";
-            this.shadowRoot.getElementById("InfoImgs").style.alignItems = "center";
-        } else if (largeImages > 1) {
-            this.shadowRoot.getElementById("InfoImgs").style.display = "block";
-        }
-        //
-        this.largeGalOpen = true;
-        gsap.to(gal, {
-            scale: 1,
-            duration: 0.5,
-            opacity: 1,
-            pointerEvents: "auto"
-        })
-        return;
+      if (largeImages === 1) {
+        this.shadowRoot.getElementById("InfoImgs").style.display = "grid";
+        this.shadowRoot.getElementById("InfoImgs").style.gridTemplateColumns =
+          "1fr";
+        this.shadowRoot.getElementById("InfoImgs").style.gridTemplateRows =
+          "1fr";
+        this.shadowRoot.getElementById("InfoImgs").style.justifyItems =
+          "center";
+        this.shadowRoot.getElementById("InfoImgs").style.alignItems = "center";
+      } else if (largeImages > 1) {
+        this.shadowRoot.getElementById("InfoImgs").style.display = "block";
+      }
+      //
+      this.largeGalOpen = true;
+      gsap.to(gal, {
+        scale: 1,
+        duration: 0.5,
+        opacity: 1,
+        pointerEvents: "auto",
+      });
+      return;
     } else {
-        gsap.to(gal, {
-            scale: 1.5,
-            duration: 0.5,
-            opacity: 0,
-            pointerEvents: "none"
-        })
-        setTimeout(()=> {
-            this.shadowRoot.getElementById("InfoImgs").scrollTop = 0;
-        }, 600)
-        this.largeGalOpen = false;
+      gsap.to(gal, {
+        scale: 1.5,
+        duration: 0.5,
+        opacity: 0,
+        pointerEvents: "none",
+      });
+      setTimeout(() => {
+        this.shadowRoot.getElementById("InfoImgs").scrollTop = 0;
+      }, 600);
+      this.largeGalOpen = false;
     }
   }
 
@@ -1314,7 +1433,8 @@ toggleRequest(e) {
     this.form = this.shadowRoot.getElementById("request");
     this.form.addEventListener("submit", (event) => {
       event.preventDefault();
-      this.shadowRoot.getElementById("menuLoadingScreen2").style.display = "grid";
+      this.shadowRoot.getElementById("menuLoadingScreen2").style.display =
+        "grid";
       let data = new FormData(this.form);
       fetch(
         "https://script.google.com/macros/s/AKfycbwyfpqK5BOPXAZnGpXc0e6szgHqYwXfX7jajbDNEENP7Et0l36InKzVUECe9ENCBO7uhA/exec?focus=requests",
@@ -1329,30 +1449,33 @@ toggleRequest(e) {
           this.form.reset();
           this.shadowRoot.getElementById("menuLoadingScreen2").style.display =
             "none";
-        this.shadowRoot.getElementById("reqSent").style.display = "grid";
-        if (this.rsentadded === false) {
-            this.shadowRoot.getElementById("rsBut").addEventListener("click", (e) => {
+          this.shadowRoot.getElementById("reqSent").style.display = "grid";
+          if (this.rsentadded === false) {
+            this.shadowRoot
+              .getElementById("rsBut")
+              .addEventListener("click", (e) => {
                 this.toggleRequest(e);
                 setTimeout(() => {
-                    this.shadowRoot.getElementById("reqSent").style.display = "none";
-                },300)
-            })
+                  this.shadowRoot.getElementById("reqSent").style.display =
+                    "none";
+                }, 300);
+              });
             this.rsentadded = true;
-        }
-        //   this.shadow.getElementById("feedbackHeadline").style.color =
-        //     "var(--accent)";
-        //   this.shadow.getElementById("feedbackHeadline").innerHTML =
-        //     "Outstanding feedback citizen!";
-        //   setTimeout(() => {
-        //     this.shadow.getElementById("feedbackHeadline").style.color =
-        //       "var(--primary)";
-        //     this.shadow.getElementById("feedbackHeadline").innerHTML =
-        //       "This City needs more people like you!";
-        //   }, 3000);
+          }
+          //   this.shadow.getElementById("feedbackHeadline").style.color =
+          //     "var(--accent)";
+          //   this.shadow.getElementById("feedbackHeadline").innerHTML =
+          //     "Outstanding feedback citizen!";
+          //   setTimeout(() => {
+          //     this.shadow.getElementById("feedbackHeadline").style.color =
+          //       "var(--primary)";
+          //     this.shadow.getElementById("feedbackHeadline").innerHTML =
+          //       "This City needs more people like you!";
+          //   }, 3000);
         });
     });
   }
-  
+
   syncedSlide() {
     const products = this.shadowRoot.querySelector("#products");
     const thumbs = this.shadowRoot.getElementById("thumbnails");
@@ -1360,66 +1483,75 @@ toggleRequest(e) {
 
     // Update slider's max value based on products' scrollWidth
     const updateSliderMax = () => {
-        const maxScrollLeft = products.scrollWidth - products.clientWidth;
-        slider.max = maxScrollLeft;
+      const maxScrollLeft = products.scrollWidth - products.clientWidth;
+      slider.max = maxScrollLeft;
     };
 
     // Call this function once initially, and whenever the content might change
     updateSliderMax();
 
     products.addEventListener("scroll", () => {
-        if (!this.sliding) {
-            // Calculate the percentage of the scroll
-            const scrollPercent = products.scrollLeft / (products.scrollWidth - products.clientWidth);
-            // Update slider value based on scroll percentage
-            slider.value = scrollPercent * slider.max;
+      if (!this.sliding) {
+        // Calculate the percentage of the scroll
+        const scrollPercent =
+          products.scrollLeft / (products.scrollWidth - products.clientWidth);
+        // Update slider value based on scroll percentage
+        slider.value = scrollPercent * slider.max;
 
-            // Update thumbnails' scroll position based on slider's value
-            const thumbScrollPercent = slider.value / slider.max;
-            thumbs.scrollLeft = thumbScrollPercent * (thumbs.scrollWidth - thumbs.clientWidth);
+        // Update thumbnails' scroll position based on slider's value
+        const thumbScrollPercent = slider.value / slider.max;
+        thumbs.scrollLeft =
+          thumbScrollPercent * (thumbs.scrollWidth - thumbs.clientWidth);
 
-            // Update slider background based on value
-            slider.style.background = `linear-gradient(to right, #ff002d ${slider.value * 100 / slider.max}%, #486965 ${slider.value * 100 / slider.max}%)`;
-        }
+        // Update slider background based on value
+        slider.style.background = `linear-gradient(to right, #ff002d ${(slider.value * 100) / slider.max}%, #486965 ${(slider.value * 100) / slider.max}%)`;
+      }
     });
 
     slider.addEventListener("input", () => {
-        this.sliding = true;
+      this.sliding = true;
 
-        // Calculate the percentage of the slider value
-        const sliderPercent = slider.value / slider.max;
-        // Update products' and thumbs' scroll position based on slider's value
-        products.scrollLeft = sliderPercent * (products.scrollWidth - products.clientWidth);
-        thumbs.scrollLeft = sliderPercent * (thumbs.scrollWidth - thumbs.clientWidth);
+      // Calculate the percentage of the slider value
+      const sliderPercent = slider.value / slider.max;
+      // Update products' and thumbs' scroll position based on slider's value
+      products.scrollLeft =
+        sliderPercent * (products.scrollWidth - products.clientWidth);
+      thumbs.scrollLeft =
+        sliderPercent * (thumbs.scrollWidth - thumbs.clientWidth);
 
-        // Update slider background based on value
-        slider.style.background = `linear-gradient(to right, #ff002d ${slider.value * 100 / slider.max}%, #486965 ${slider.value * 100 / slider.max}%)`;
+      // Update slider background based on value
+      slider.style.background = `linear-gradient(to right, #ff002d ${(slider.value * 100) / slider.max}%, #486965 ${(slider.value * 100) / slider.max}%)`;
     });
 
     slider.addEventListener("mouseout", () => {
-        setTimeout(() => {
-            this.sliding = false;
-        }, 1000);
+      setTimeout(() => {
+        this.sliding = false;
+      }, 1000);
     });
-}
+  }
 
+  async connectedCallback() {
+    this.render();
+    await this.getProducts();
+    this.loadShop();
+    // this.shadowRoot.getElementById("sliderEl").addEventListener("input", this.progressScript.bind(this));
+    this.shadowRoot
+      .getElementById("submitRequest")
+      .addEventListener("click", this.submitRequest.bind(this));
+    this.shadowRoot
+      .getElementById("returnButLink4")
+      .addEventListener("click", this.toggleBag.bind(this));
+    this.shadowRoot
+      .getElementById("checkoutBut")
+      .addEventListener("click", this.toggleCheckout.bind(this));
+    // setTimeout(() => {
+    //     this.smoothScroll();
+    // }, 300)
+    this.syncedSlide();
+  }
 
-   async connectedCallback() {
-        this.render();
-        await this.getProducts();
-        this.loadShop();
-        // this.shadowRoot.getElementById("sliderEl").addEventListener("input", this.progressScript.bind(this));
-        this.shadowRoot.getElementById("submitRequest").addEventListener("click", this.submitRequest.bind(this));
-        this.shadowRoot.getElementById("returnButLink4").addEventListener("click", this.toggleBag.bind(this))
-        this.shadowRoot.getElementById("checkoutBut").addEventListener("click", this.toggleCheckout.bind(this));
-        // setTimeout(() => {
-        //     this.smoothScroll();
-        // }, 300)
-        this.syncedSlide();
-    }
-
-    render() {
-        this.shadow.innerHTML = `
+  render() {
+    this.shadow.innerHTML = `
             <style>
                 // :host {
                 //     display: block;
@@ -3000,10 +3132,9 @@ toggleRequest(e) {
                 </div>
             </div>
         `;
-    }
-
+  }
 }
 
-customElements.define('scoge-shop', scogeShop);
+customElements.define("scoge-shop", scogeShop);
 
-export {scogeShop};
+export { scogeShop };
