@@ -130,7 +130,7 @@ async getProducts() {
   }  
 
   async loadShop() {
-    this.products.forEach((product) => {
+    this.products.reverse().forEach((product) => {
         if (product.Active === true) {
         // Viewport Images
         var viewImgCont = document.createElement("div");
