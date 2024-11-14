@@ -1,11 +1,14 @@
 import { enterTaosCity } from "./universe.js";
+
+var combination = import.meta.env.VITE_Combination.split(',');
+
 class CombinationLock extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
         // Initialize the visible combination to a default value
         this.combination = ['M', 'N', 'O', 'P', 'Q'];
-        this.correctCombination = ['A', 'L', 'G', 'S', 'T']; // The correct combination
+        this.correctCombination = combination;
         this.numLetters = 26; // Number of letters in the alphabet
     }
 
@@ -43,6 +46,7 @@ class CombinationLock extends HTMLElement {
 
         // Click handler for the enter button
         this.shadowRoot.querySelector('#enter-button').addEventListener('click', () => {
+            this.getCombination();
             if (this.combination.join('') === this.correctCombination.join('')) {
                 console.log('Unlocked!');
                 enterTaosCity();
@@ -52,7 +56,26 @@ class CombinationLock extends HTMLElement {
                     this.shadowRoot.querySelector('#response').style.display = 'none';
                 }, 2000);
             }
+            this.correctCombination = [];
         });
+    }
+
+    async getCombination() {
+        try {
+            const response = await fetch("/api/combination", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ lineItems }),
+            });
+      
+            const comb = await response.json();
+            this.correctCombination = comb.split(',');
+      
+          } catch (error) {
+            console.error("Error:", error);
+          }
     }
 
     rotateDial(index, direction) {
