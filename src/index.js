@@ -42,11 +42,16 @@ import mainvid1 from "../assets/video/scoge-c2-1.mp4";
 import mainvid2 from "../assets/video/scoge-c2-2.mp4";
 import main1poster from "../assets/video/scoge-c2-1-poster.jpg";
 import currentImg from "../assets/images/bgs/scoge-8-24.webp";
+import Img2 from "../assets/images/bgs/scoge-10-24.webp";
 
 var staticVids = [mainvid1, mainvid2];
+var bgs = [currentImg, Img2];
 
 // // randomly select a video and assign it to a variable
 // var randomStaticVid = staticVids[Math.floor(Math.random() * staticVids.length)];
+
+// // randomly select a image and assign it to a variable
+var randomIntro = bgs[Math.floor(Math.random() * bgs.length)];
 
 try {
   inject();
@@ -59,9 +64,78 @@ try {
 //   document.getElementById("portalVideo").poster = main1poster;
 // }
 
-document.getElementById("mainImg").src = currentImg;
+document.getElementById("mainImg").src = randomIntro;
 
-export const dsheet = "https://script.google.com/macros/s/AKfycbzHUtfeNysmMSZvlC7tnfYhpgs_EU_3kx9_6H_VV6le8tPyR4Vlzs8SlfES_8pbK0nb2w/exec";
+var beacons;
+var beaconsBuilt = false; 
+
+const dsheet = "https://script.google.com/macros/s/AKfycbydI7j2TrYlfW15ESG4gDPo4m0g_KlijM5KZvdSSVnBiTpVpWiMMnE9wzYOG3IdAJEV2w/exec";
+
+function addBeacons(data) {
+  var beacons = data;
+  beacons.forEach((beacon) => {
+    if (beacon.Active === true && beaconsBuilt === false) {
+      var beaconEl = document.createElement("div");
+      beaconEl.setAttribute("class", beacon.Class);
+      beaconEl.setAttribute("id", beacon.Id);
+      beaconEl.setAttribute("data-headline", beacon.Headline);
+      beaconEl.setAttribute("data-message", beacon.Message);
+      beaconEl.innerHTML = `
+      <div class="beaconOrigin">
+          <div class="beaconIdenIcon">${beacon.Icon}</div>
+          <div class="beaconSender">${beacon.Sender}</div>
+        </div>
+        <div class="beaconPreview">
+          ${beacon.Preview}
+      </div>
+      `
+      beaconEl.addEventListener("click", (e) => {
+        document.getElementById("getUniMenu").openBeaconMessage(e);
+      });
+
+      if (beacon.live === true) {
+        beaconEl.classList.add("blinking");
+        document.getElementById("getUniMenu").blinkingBeacon();
+        beaconEl.style.animation = "beaconBlinking3 1s infinite";
+      }
+
+      document.getElementById("getUniMenu").shadowRoot.getElementById("beaconsBody").appendChild(beaconEl);
+      
+    }
+  });
+  beaconsBuilt = true;
+}
+
+  // Beacons
+async function getBeacons() {
+    try {
+      const response = await fetch(`${dsheet + "?focus=beacons"}`, {
+        method: "GET",
+        mode: "cors",
+      });
+
+      if (response.ok) {
+        const data = await response.json(); // Parse JSON response
+        beacons = data;
+
+        // beacons.forEach((beacon) => {
+        //   if (beacon.live === true) {
+        //     document.getElementById("getUniMenu").blinkingBeacon();
+        //   }
+        // });
+
+        addBeacons(beacons);
+        return data;
+      } else {
+        throw new Error("Failed to fetch data");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      throw error;
+    }
+}
+
+getBeacons();
 
 // // Check size on Start
 window.sizeInit = () => {
@@ -98,6 +172,7 @@ window.entry();
 
 const VITE_ScogeI = import.meta.env.VITE_ScogeI;
 const VITE_ably = import.meta.env.VITE_ably;
+const VITE_combination = import.meta.env.VITE_Combination;
 
   window.ably = new Ably.Realtime({
   key: VITE_ably,
