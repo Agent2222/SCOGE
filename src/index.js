@@ -137,6 +137,28 @@ async function getBeacons() {
 
 getBeacons();
 
+function reminder() {
+  var reminder = document.createElement("div");
+  reminder.setAttribute("class", "reminder");
+  reminder.innerHTML = `<div>
+    Reminder: This is a non-fictional universe. All characters and events are non-fictional.<br>Agents won't forget.<br><br><br><br>
+    <div id="closeReminder">- Understood -</div>
+  </div>
+  `;
+
+  // randomly decide if the reminder should be displayed
+  var displayReminder = Math.random() < 0.5;
+
+  if (displayReminder) {
+    document.getElementById("main").appendChild(reminder);
+    document.getElementById("closeReminder").addEventListener("click", () => {
+      document.querySelector(".reminder").remove();
+    });
+  }
+}
+
+reminder();
+
 // // Check size on Start
 window.sizeInit = () => {
   if (window.matchMedia("(max-width: 768px)").matches) {
