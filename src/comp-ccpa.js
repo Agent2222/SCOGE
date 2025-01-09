@@ -661,10 +661,9 @@ class compCCPA extends HTMLElement {
                 }
 
                 #exitButCont {
-                    // visibility: hidden;
                     width: 100%;
                     height: 100%;
-                    display flex;
+                    display: grid;
                     grid-template-columns: 1fr;
                     grid-template-rows: 1fr;
                     justify-items: center;
