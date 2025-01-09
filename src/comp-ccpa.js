@@ -209,7 +209,7 @@ class compCCPA extends HTMLElement {
 
     }
 
-    exitBut(page) {
+    exitButton(page) {
         switch(page) {
             case "main":
                 gsap.to(this.shadowRoot.host, {duration: .5, scale: 2, opacity: 0, ease: "power2.inOut"});
@@ -243,7 +243,7 @@ class compCCPA extends HTMLElement {
             this.shadowRoot.getElementById("phantomScroller").style.pointerEvents = "auto";
 
             exitBut.addEventListener("click", () => {
-                this.exitBut("main");
+                this.exitButton("main");
             });
         }, 2500);
 
@@ -656,7 +656,7 @@ class compCCPA extends HTMLElement {
                     display: grid;
                     grid-template-columns: 1fr;
                     grid-template-rows: 1fr 1fr;
-                    justify-items: center;
+                    justify-items: center !important;
                     align-items: center;
                 }
 
@@ -664,12 +664,16 @@ class compCCPA extends HTMLElement {
                     // visibility: hidden;
                     width: 100%;
                     height: 100%;
-                    display grid;
+                    display flex;
                     grid-template-columns: 1fr;
                     grid-template-rows: 1fr;
                     justify-items: center;
                     align-items: center;
+                }
+
+                #exitBut {
                     justify-self: center;
+                    align-self: center;
                 }
 
                 .button {
