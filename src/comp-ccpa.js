@@ -4,6 +4,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { idlFactory } from "../src/declarations/universe_backend/universe_backend.did.js";
 import { Actor, HttpAgent } from "@dfinity/agent";
 
+//Static Assets
+import previousBut from "../assets/images/assets1/previous-primary-1.png";
+import playBut from "../assets/images/assets1/play-primary-1.png";
+import sendBut from "../assets/images/assets1/arrow-primary-1.png";
+import globes from "../assets/images/assets1/SCOGE_BankooGraphic.png";
+import banner from "../assets/images/assets1/SCOGE_Banner.png";
+import arrowAccent from "../assets/images/assets1/arrow-accent-1.png";
+
 class compCCPA extends HTMLElement {
     constructor() {
         super();
@@ -482,8 +490,8 @@ class compCCPA extends HTMLElement {
                             <div>${this.loadedPerium.desc}</div>
                         </div>
                         <div id="customControls">
-                            <img class="audioButtons" id="restartSonic" src="../assets/images/assets1/previous-primary-1.png" style="width: auto; height:50px;"/>
-                            <img class="audioButtons" id="playSymbol" src="../assets/images/assets1/play-primary-1.png" style="width: auto; height: 60px;"/>
+                            <img class="audioButtons" id="restartSonic" src="${previousBut}" style="width: auto; height:50px;"/>
+                            <img class="audioButtons" id="playSymbol" src="${playBut}" style="width: auto; height: 60px;"/>
                             <div class="blankDiv"></div>
                         </div>
                     </div>
@@ -656,6 +664,7 @@ class compCCPA extends HTMLElement {
                     height: 30px;
                     display: flex;
                     justify-content: center;
+                    justify-self: center;
                     align-items: center;
                     letter-spacing: 1px;
                 }   
@@ -1182,7 +1191,7 @@ class compCCPA extends HTMLElement {
                             </div>
                             <div id="sendBeacon">
                                 <input id="sendBeaconBut" type="submit" value="SEND BEACON">
-                                <img id="ctaSendButton" src="../assets/images/assets1/arrow-primary-1.png"/>
+                                <img id="ctaSendButton" src="${sendBut}"/>
                             </div>
                         </form>  
                     </div>
@@ -1197,8 +1206,8 @@ class compCCPA extends HTMLElement {
                                 <img id="avatar2" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/avatar/avatar-base1.png"/>
                             </div>
                             <div id="loadGlobes">
-                                <img id="blg1" class="globeG1" src="../assets/images/assets1/SCOGE_BankooGraphic.png"/>
-                                <img id="blg2" class="globeG1" src="../assets/images/assets1/SCOGE_BankooGraphic.png"/>
+                                <img id="blg1" class="globeG1" src="${globes}"/>
+                                <img id="blg2" class="globeG1" src="${globes}"/>
                             </div>
                             <div id="ccpaCircle">CITY CENTRAL PERIUM ARCHIVE</div>
                         </div> 
@@ -1206,7 +1215,7 @@ class compCCPA extends HTMLElement {
                     <div id="scrollIntro">
                         <div class="blankDiv"></div>
                         <div id="ccapBanner">
-                            <img id="banner1" src="../assets/images/assets1/SCOGE_Banner.png"/>
+                            <img id="banner1" src="${banner}"/>
                             <div id="periumIntro">
                                 <div style="color:var(--secondary)">
                                     <span>PA:</span>
@@ -1218,11 +1227,11 @@ class compCCPA extends HTMLElement {
                                 </div>
                                 <div style="color:var(--accent)">SCROLL UP TO VIEW</div>
                             </div>
-                            <img id="banner2" src="../assets/images/assets1/SCOGE_Banner.png"/>
+                            <img id="banner2" src="${banner}"/>
                         </div>
                         <div id="scrollIcons">
-                            <img id="scrollIcon1" src="../assets/images/assets1/arrow-accent-1.png"/>
-                            <img id="scrollIcon2" src="../assets/images/assets1/arrow-accent-1.png"/>
+                            <img id="scrollIcon1" src="${arrowAccent}"/>
+                            <img id="scrollIcon2" src="${arrowAccent}"/>
                         </div>
                     </div>
                 </div>
