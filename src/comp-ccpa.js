@@ -11,6 +11,8 @@ import sendBut from "../assets/images/assets1/arrow-primary-1.png";
 import globes from "../assets/images/assets1/SCOGE_BankooGraphic.png";
 import banner from "../assets/images/assets1/SCOGE_Banner.png";
 import arrowAccent from "../assets/images/assets1/arrow-accent-1.png";
+import pauseBut from "../assets/images/assets1/pause-primary-1.png";
+import periumRetrieve from "../assets/sound/perium-retrieve.mp3";
 
 class compCCPA extends HTMLElement {
     constructor() {
@@ -74,11 +76,9 @@ class compCCPA extends HTMLElement {
             this.render();
         }
         if (name === "data-perium" && newValue === "trueAdmin") {
-            console.log("newVal1", newValue);
             this.getPerium();
         }
         if (name === "data-perium" && newValue != "true") {
-            console.log("newVal2", newValue);
             this.getPerium({id: newValue, env: "prod"});
         }
     }
@@ -167,8 +167,6 @@ class compCCPA extends HTMLElement {
             env: null
         }
 
-        console.log("periumData", periumData);
-
         if (periumData != null) {
             envData = periumData;
         }
@@ -179,16 +177,34 @@ class compCCPA extends HTMLElement {
                 this.loadedPerium = result[0];
                 this.shadowRoot.getElementById("paNum").innerHTML = this.loadedPerium.nfc;
                 this.shadowRoot.getElementById("pIntroNum").innerHTML = this.loadedPerium.nfc;
-                this.shadowRoot.getElementById("paNum2").innerHTML = this.loadedPerium.cat;
+                this.shadowRoot.getElementById("paNum2").innerHTML = `[${this.loadedPerium.cat}]`;
+                this.shadowRoot.getElementById("singleAction").innerHTML = "ACCESS";
+                this.shadowRoot.getElementById("singleAction").style.animation = "none";
+                this.shadowRoot.getElementById("singleAction").style.border = "1px solid var(--accent)";
+                this.shadowRoot.getElementById("singleAction").style.color = "var(--accent)";
+                this.shadowRoot.getElementById("singleAction").addEventListener("click", () => {
+                    var retrieve = new Audio(periumRetrieve);
+                    setTimeout(() => {
+                        retrieve.play();
+                    }, 500);
+                    this.findPerium();
+                });
                 return result;
               }).catch((error) => {
+                this.shadowRoot.getElementById("singleAction").innerHTML = "ERROR";
+                this.shadowRoot.getElementById("singleAction").style.animation = "none";
+                this.shadowRoot.getElementById("singleAction").style.border = "1px solid var(--primary)";
+                this.shadowRoot.getElementById("singleAction").style.color = "var(--primary)";
                 console.error("Error checking permission:", error);
             });
             return;
         } else {
             this.shadowRoot.getElementById("paNum").innerHTML = this.loadedPerium.nfc;
             this.shadowRoot.getElementById("pIntroNum").innerHTML = this.loadedPerium.nfc;
-            this.shadowRoot.getElementById("paNum2").innerHTML = this.loadedPerium.cat;
+            this.shadowRoot.getElementById("paNum2").innerHTML = `[${this.loadedPerium.cat}]`;
+            this.shadowRoot.getElementById("singleAction").addEventListener("click", () => {
+                this.findPerium();
+            });
         }
 
     }
@@ -218,8 +234,6 @@ class compCCPA extends HTMLElement {
         gsap.to(this.shadowRoot.getElementById("ccpaAvatar"), {duration: 1, rotation: -180, ease: "power2.inOut", delay: .3});
         gsap.to(this.shadowRoot.getElementById("introScreen"), {duration: .5, scale: 10, ease: "power2.inOut", delay: 2.4});
         gsap.to(this.shadowRoot.getElementById("introScreen"), {duration: .5, opacity: 0, ease: "power2.inOut", delay: 2.4});
-
-        console.log("Finding Perium");
 
         setTimeout(() => {
             this.shadowRoot.getElementById("pdNum").style.visibility = "hidden";
@@ -274,15 +288,18 @@ class compCCPA extends HTMLElement {
             });
         }, 2400);
 
-        console.log("loaded Perium", this.loadedPerium);
+        // console.log("loaded Perium", this.loadedPerium);
         this.buildPages(this.loadedPerium);
     }
 
     playToggleSonic() {
-        this.fileReader("sonic", this.loadedPerium.d2);
+        if (this.currentSonic === null) {
+            this.fileReader("sonic", this.loadedPerium.d2);
+            this.currentSonic = new Audio(this.loadedPerium.d2);
+        }
+
         if (this.sonicPlaying === false) {
             this.sonicPlaying = true;
-            this.currentSonic = new Audio(this.loadedPerium.d2);
             this.shadowRoot.getElementById("playSymbol").src = pauseBut;
             this.currentSonic.play()
 
@@ -530,9 +547,6 @@ class compCCPA extends HTMLElement {
     connectedCallback() {
         this.render();
         // this.ccpaCta();
-        this.shadowRoot.getElementById("singleAction").addEventListener("click", () => {
-            this.findPerium();
-        });
     }
 
     render() {
@@ -653,8 +667,9 @@ class compCCPA extends HTMLElement {
                     display grid;
                     grid-template-columns: 1fr;
                     grid-template-rows: 1fr;
-                    justify-content: center;
+                    justify-items: center;
                     align-items: center;
+                    justify-self: center;
                 }
 
                 .button {
@@ -1116,6 +1131,20 @@ class compCCPA extends HTMLElement {
                     opacity: 60%;
                 }
 
+                #paNum {
+                    text-transform: uppercase;
+                }
+
+                #singleAction {
+                    animation: blinkingAndMoving 1.5s infinite;
+                    border: 1px solid var(--primary);
+                    color: var(--primary);
+                }
+
+                #paNum2 {
+                    text-transform: uppercase;
+                }
+
                 @keyframes blinkingAndMoving {
                     0% {
                         opacity: 1;
@@ -1166,7 +1195,7 @@ class compCCPA extends HTMLElement {
                     </div>
                     <div id="ccpaButttons">
                         <div id="actionButCont">
-                            <div id="singleAction" class="button">ACCESS</div>
+                            <div id="singleAction" class="button">LOADING..</div>
                             <div id="doubleAction">
                                 <div id="listBut" class="smButton"></div>
                                 <div id="gridBut" class="smButton"></div>

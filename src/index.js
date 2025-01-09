@@ -764,7 +764,6 @@ window.getParamsDesktop = () => {
     window.activateInvestors();
   }
   if (ccpa != null) {
-    console.log("CCPA", ccpa);
     var ccpaEl = document.createElement("scoge-ccpa");
     ccpaEl.setAttribute("active", "true");
     ccpaEl.setAttribute("id", "ccpaModal");
