@@ -201,6 +201,54 @@ var editorActive = false;
 
   };
 
+  export const adminMenu = () => { 
+    if (!document.getElementById("adminMenu")) {
+      var adminMenu = document.createElement("div");
+      adminMenu.id = "adminMenu";
+      adminMenu.style.right = "1%";
+      adminMenu.style.top = "3%";
+      adminMenu.style.position = "fixed";
+      adminMenu.style.zIndex = "501";
+      adminMenu.style.width = "auto";
+      adminMenu.style.height = "5%";
+      adminMenu.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
+      adminMenu.style.borderRadius = "10px";
+      adminMenu.style.border = "1px solid var(--primary)";
+      adminMenu.style.textTransform = "uppercase";
+      adminMenu.style.fontFamily = "BS-R";
+      adminMenu.style.display = "flex";
+      adminMenu.style.flexDirection = "row";
+      adminMenu.style.fontSize = "12px";
+      adminMenu.style.letterSpacing = "1px";
+      adminMenu.innerHTML = `
+      <div id="adminMapper" class="adminMenuItem" style="width: 150px; height: 100%; display: flex; justify-content: center; align-items: center; cursor: pointer; border-bottom: 1px solid #ff002d;">MAPPER</div>
+      <div id="adminRRC" class="adminMenuItem" style="width: 150px; height: 100%; display: flex; justify-content: center; align-items: center; cursor: pointer; border-bottom: 1px solid #ff002d;">RR Creator</div>
+      <div id="adminCCPADB" class="adminMenuItem" style="width: 150px; height: 100%; display: flex; justify-content: center; align-items: center; cursor: pointer; border-bottom: 1px solid #ff002d;">CCPA DB</div>
+      `;
+
+      document.getElementById("main").appendChild(adminMenu);
+
+      document.getElementById("adminMapper").addEventListener("click", () => {
+        activateMapper();
+      });
+      document.getElementById("adminRRC").addEventListener("click", async () => {
+          const editorModule = await import("../editor.js");
+          var editorState = await editorModule.editor(editorActive);
+          if (editorState === false) {
+            editorActive = false;
+            return;
+          }
+          if (editorState === true) {
+            editorActive = true;
+            return;
+          }
+        });
+      document.getElementById("adminCCPADB").addEventListener("click", () => {
+        document.getElementById("ccpaModal").setAttribute("active", "true");
+      });
+    }
+  };
+
 // Init Soundtrack
 export async function universe() {
   const channel = window.ably.channels.get("alphaTestersChat");
@@ -411,10 +459,9 @@ export async function universe() {
     //   alert("The browser is not Brave, Firefox, or Chrome");
     // }
 
-    if (lcCheck()) {
-      editorButton();
-      mapperButton();
-    }
+    // if (lcCheck()) {
+    //   adminMenu();
+    // }
     //
   };
 
@@ -2263,9 +2310,7 @@ export async function enterTaosCity(custCheck) {
   }, 1000);
   const lcCheck = () => {
     if (custCheck === true) {
-      console.log("Custom Check");
-      editorButton();
-      mapperButton();
+      // adminMenu();
       testFunctionButton();
     }
     return (

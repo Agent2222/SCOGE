@@ -1504,3 +1504,14 @@
   border: .5px solid var(--primary);
 }
 /* --------------------- LOC HUD END ----------------------- */
+/* --------------------- ADMIN MENU ITEM --------------------------- */
+.adminMenuItem {
+  transition: .3s all;
+}
+
+.adminMenuItem:hover {
+  cursor: pointer;
+  color: var(--accent);
+  letter-spacing: 2px;
+}
+/* --------------------- ADMIN MENU ITEM END ----------------------- */

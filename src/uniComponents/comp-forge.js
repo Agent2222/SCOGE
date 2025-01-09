@@ -45,6 +45,7 @@ class compForge extends HTMLElement {
         this.colorOpts = null;
         this.keyAr = null;
         this.fp = 0;
+        this.forgeComplete = false;
         this.alphanumericArray = [
             "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 
@@ -52,9 +53,15 @@ class compForge extends HTMLElement {
             'U', 'V', 'W', 'X', 'Y', 'Z'
         ];
         this.forgeGoal = [];
+        this.forgeEndur = 30000;
+        this.scale = 1;
+        this.intervalTime = 50;
+        this.currentConnector = "connector";
+        this.decrement  = (1 / (this.forgeEndur / this.intervalTime));
+        this.forgeDecay = null;
+        this.decayGate = true;
         this.colorsBase = ["var(--primary)", "var(--secondary)", "var(--accent)"];
         this.colorOptions = ["var(--primary)", "var(--secondary)", "var(--accent)"];
-        this.forgeEndur = null;
     }
 
     get active() {
@@ -260,7 +267,6 @@ class compForge extends HTMLElement {
         } else {
             el.style.transform = "rotate(360deg)";
         }
-
     }
     
     checkMemory() {
@@ -504,6 +510,8 @@ class compForge extends HTMLElement {
     }
 
     viewForgeOption(option) {
+        // #main
+        this.shadowRoot.getElementById("forgerCont").setAttribute("class", "xPre2");
         this.shadowRoot.getElementById("forgerOptions").style.display = "none";
         this.shadowRoot.getElementById("forgerCont").style.display = "grid";
         this.shadowRoot.getElementById("forgerCont").innerHTML = `
@@ -600,6 +608,27 @@ class compForge extends HTMLElement {
     }
 
     async initForge(difficulty) {
+        // Add switch statement for difficulty
+        // this.fp = 2;
+        // this.forgeEndur = 5000;
+        console.log("initForge");
+        this.forgeDecayChecker();
+
+        this.shadowRoot.getElementById("forgeFocus").style.display = "block";
+        
+        // center #mainForge in the screen based on the width and height of the screen and the element
+        var forgeFocus = this.shadowRoot.getElementById("mainForge");
+        var forgeFocusRect = forgeFocus.getBoundingClientRect();
+        var forgeFocusWidth = forgeFocusRect.width;
+        var forgeFocusHeight = forgeFocusRect.height;
+        var windowWidth = window.innerWidth;
+        var windowHeight = window.innerHeight;
+        var forgeFocusX = (windowWidth - forgeFocusWidth) / 2;
+        var forgeFocusY = (windowHeight - forgeFocusHeight) / 2;
+        forgeFocus.style.left = `${forgeFocusX}px`;
+        forgeFocus.style.top = `${forgeFocusY}px`;
+
+
         this.colorOpts = Math.floor(Math.random() * this.colorOptions.length);
         this.keyAr = this.shadowRoot.querySelectorAll(".connect");
 
@@ -635,21 +664,34 @@ class compForge extends HTMLElement {
             ease: "power1.inOut" 
         })
         card.style.position = "sticky";
-        setTimeout(()=> {
-            var spiral1 = this.shadowRoot.getElementById("connectorSpiral");
-            gsap.to(spiral1, {
-                transform: "scale(2)",
-                delay: .5, 
-                opacity: 0,
-                duration: 0.2, 
-                ease: "power1.inOut" 
-            })
-        },400)
+        if (this.forgeComplete === false) {
+            setTimeout(()=> {
+                var spiral1 = this.shadowRoot.getElementById("connectorSpiral");
+                gsap.to(spiral1, {
+                    transform: "scale(2)",
+                    delay: .5, 
+                    opacity: 0,
+                    duration: 0.2, 
+                    ease: "power1.inOut" 
+                })
+            },400)
+        }
         for (let i = 0; i < 5; i++) {
             setTimeout(() => {
                 this.lockLeft();
             }, 50 * i)
         }
+
+        this.shadowRoot.querySelectorAll(".connect").forEach((el) => {
+            if (el.innerHTML === "undefined") {
+                this.decayGate = true;
+                this.fp = null;
+                clearInterval(this.forgeDecay);
+                this.scale = 0;
+                this.forgeDecayChecker();
+            }
+        });
+
     }
 
     isSameCode(value, position) {
@@ -663,27 +705,264 @@ class compForge extends HTMLElement {
         })
     }
 
+    forgeDecayChecker() {
+        var connector = this.shadowRoot.getElementById("connector");
+        var connector2 = this.shadowRoot.getElementById("connector2");
+        var connector3 = this.shadowRoot.getElementById("connector3");
+        clearInterval(this.forgeDecay);
+        // this.scale = 1;
+        this.forgeDecay = setInterval(() => {
+            this.scale -= this.decrement; // Reduce the scale
+            if (this.scale <= 0 && this.decayGate === true) {
+                clearInterval(this.forgeDecay); // Stop when scale reaches 0
+                this.scale = 1;
+
+                switch (this.fp) {
+                    case 0:
+                        console.log("Forge Failed"," - Checking FP", this.fp);
+                        clearInterval(this.forgeDecay);
+                        // clearInterval(document.getElementById("forgeModal").forgeDecay);
+                        this.scale = 1;
+                        this.fp = 0;
+                        this.currentConnector = "connector";
+                        this.shadowRoot.getElementById("forgeFailed").style.display = "grid";
+                        this.shadowRoot.getElementById("connectorSpiral").style.opacity = "1";
+                        this.decayGate = false;
+                        gsap.to(connector, { 
+                            rotation: 0, // Rotate 360 degrees
+                            duration: 3,   // Duration of 2 seconds
+                            ease: "power3.inOut", // Easing function
+                            scale: 1
+                        });
+                        gsap.to(connector2, { 
+                            top: "37%",
+                            rotation: 0, // Rotate 360 degrees
+                            duration: 2,   // Duration of 2 seconds
+                            ease: "power3.inOut", // Easing function
+                            zIndex: 0
+                        });
+                        gsap.to(connector3, { 
+                            bottom: "37%",
+                            rotation: 0, // Rotate 360 degrees
+                            duration: 2,   // Duration of 2 seconds
+                            ease: "power3.inOut", // Easing function
+                            zIndex: 0
+                        });
+                        setTimeout(() => {
+                            connector2.style.display = "block";
+                            connector3.style.display = "block";
+                        }, 3000);
+                        this.decayGate = false;
+                    break;
+                    case 1:
+                        this.forgeGoal = [];
+                        console.log("Decayed 1", this.forgeGoal);
+                        this.initForge();
+                        this.scale = 1;
+                        this.currentConnector = "connector";
+                        this.fp = 0;
+                        // this.forgeDecayChecker();
+                        gsap.to(connector2, { 
+                            top: "37%",
+                            rotation: 3600, // Rotate 360 degrees
+                            duration: 2,   // Duration of 2 seconds
+                            ease: "power3.inOut", // Easing function
+                            zIndex: 0
+                        });
+                        setTimeout(() => {
+                            connector2.style.display = "none";
+                        }, 2000)
+                    break;
+                    case 2:
+                        this.forgeGoal = [];
+                        console.log("Decayed 2", this.forgeGoal);
+                        this.initForge();
+                        this.scale = 1;
+                        this.currentConnector = "connector";
+                        this.fp = 1;
+                        this.forgeDecayChecker();
+                        gsap.to(connector3, { 
+                            top: "37%",
+                            rotation: 3600, // Rotate 360 degrees
+                            duration: 2,   // Duration of 2 seconds
+                            ease: "power3.inOut", // Easing function
+                            zIndex: 0
+                        });
+                        setTimeout(() => {
+                            connector3.style.display = "none";
+                        }, 2000)
+                        // alert("Two Lives Left");
+                    break;
+                    case null:
+                        console.log("Calling NULL");
+                        this.scale = 1;
+                        this.currentConnector = "connector";
+                        this.shadowRoot.getElementById("forgeError").style.display = "grid";
+                        this.shadowRoot.getElementById("forgeSuccess").style.display = "none";
+                        this.fp = 0;
+                        gsap.to(connector, { 
+                            rotation: 0, // Rotate 360 degrees
+                            duration: 3,   // Duration of 2 seconds
+                            ease: "power3.inOut", // Easing function
+                            scale: 1
+                        });
+                        gsap.to(connector2, { 
+                            top: "37%",
+                            rotation: 0, // Rotate 360 degrees
+                            duration: 2,   // Duration of 2 seconds
+                            ease: "power3.inOut", // Easing function
+                            zIndex: 0
+                        });
+                        gsap.to(connector3, { 
+                            bottom: "37%",
+                            rotation: 0, // Rotate 360 degrees
+                            duration: 2,   // Duration of 2 seconds
+                            ease: "power3.inOut", // Easing function
+                            zIndex: 0
+                        });
+                        setTimeout(() => {
+                            connector2.style.display = "block";
+                            connector3.style.display = "block";
+                        }, 3000);
+                        this.decayGate = false;
+                        setTimeout(() => {
+                            document.getElementById("forgeModal").shadowRoot.getElementById("connectorSpiral").style.opacity = "1";
+                        }, 1200);
+                    break;
+                }
+                return;
+            }
+
+            this.shadowRoot.getElementById(this.currentConnector).style.transform = `scale(${this.scale})`;
+        }, this.intervalTime);
+    }
+
     async trippleCheck() {
         var check = await this.isSameCode(this.leftVal[0], 0)
         var check2 = await this.isSameCode(this.centerVal[0], 1)
         var check3 = await this.isSameCode(this.rightVal[0], 2)
 
         if (check === true && check2 === true && check3 === true) {
+            console.log("fp", this.fp);
             switch (this.fp) {
                 case 0:
+                    console.log("Calling Here 1");
+                    // decay algorithm
+                    // this.forgeDecayChecker();
                     this.forgeLvlPass(1);
-                    this.fp = 1;
+                    this.fp = 1; 
                 break;
                 case 1:
+                    // decay algorithm
+                    console.log("Calling Here 2");
+                    // this.forgeDecayChecker();
                     this.forgeLvlPass(2);
-                    this.fp = 3;
+                    // this.fp = 2;
                 break;
                 case 2:
-                //
+                    // decay algorithm
+                    console.log("Calling Here 3");
+                    this.forgeLvlPass(3);
+                    clearInterval(this.forgeDecay);
+                    // this.fp = 0;
+                break;
+                case null:
+                    console.log("Calling Here 4");
+                    // decay algorithm
+                    this.fp = 0; 
+                    // this.forgeDecayChecker();
+                    this.forgeLvlPass(1);
                 break;
             }
             return true;
         }
+    }
+
+    forgeLvlPass(lvl) {
+        var connector = this.shadowRoot.getElementById("connector");
+        var connector2 = this.shadowRoot.getElementById("connector2");
+        var connector3 = this.shadowRoot.getElementById("connector3");
+        this.forgeGoal = [];
+        console.log("Forge Level Passed");
+        switch(lvl) {
+            case 1:
+                clearInterval(this.forgeDecay);
+                this.scale = 1;
+                this.fp = 1;
+                connector2.style.display = "block";
+                setTimeout(() => {
+                    gsap.to(connector2, {
+                        top: "7%",
+                        duration: .3,
+                        ease: "power3.inOut",
+                        zIndex: 1
+                    })
+                }, 500)
+                gsap.to(connector, { 
+                    rotation: 3600, // Rotate 360 degrees
+                    duration: 2,   // Duration of 2 seconds
+                    ease: "power3.inOut" // Easing function
+                });
+            break;
+            case 2:
+                clearInterval(this.forgeDecay);
+                this.scale = 1; 
+                this.fp = 2;
+                connector3.style.display = "block";
+                setTimeout(() => {
+                    gsap.to(connector3, {
+                        bottom: "7%",
+                        duration: .3,
+                        ease: "power3.inOut",
+                        zIndex: 1
+                    })
+                }, 500)
+                gsap.to(connector, { 
+                    rotation: 0, // Rotate 360 degrees
+                    duration: 2,   // Duration of 2 seconds
+                    ease: "power3.inOut" // Easing function
+                });
+            break;
+            case 3: 
+                clearInterval(this.forgeDecay);
+                this.scale = 1;
+                this.decayGate = false;
+                this.fp = 0;
+                gsap.to(connector, { 
+                    rotation: 3960, // Rotate 360 degrees
+                    duration: 3,   // Duration of 2 seconds
+                    ease: "power3.inOut", // Easing function
+                    transform: "scale(1)",
+                });
+                gsap.to(connector2, { 
+                    top: "37%",
+                    rotation: 3600, // Rotate 360 degrees
+                    duration: 2,   // Duration of 2 seconds
+                    ease: "power3.inOut", // Easing function
+                    zIndex: 0
+                });
+                gsap.to(connector3, { 
+                    bottom: "37%",
+                    rotation: 3600, // Rotate 360 degrees
+                    duration: 2,   // Duration of 2 seconds
+                    ease: "power3.inOut", // Easing function
+                    zIndex: 0
+                });
+                setTimeout(() => {
+                    document.getElementById("forgeModal").shadowRoot.getElementById("connectorSpiral").style.opacity = "1";
+                }, 500)
+                this.shadowRoot.getElementById("forgeSuccess").style.display = "grid";
+                this.forgeComplete = true;
+                setTimeout(() => {
+                    this.forgeComplete = false;
+                    connector2.style.display = "none";
+                    connector3.style.display = "none";
+                }, 3000);
+                // connector.style.transform = "scale(1)";
+            break;
+        }
+
+        this.initForge();
     }
 
     isMatch(value, position) {
@@ -1013,43 +1292,19 @@ class compForge extends HTMLElement {
 
     }
 
-    forgeLvlPass(lvl) {
-        var connector = this.shadowRoot.getElementById("connector");
-        var connector2 = this.shadowRoot.getElementById("connector2");
-        var connector3 = this.shadowRoot.getElementById("connector3");
-        this.forgeGoal = [];
-        switch(lvl) {
-            case 1:
-                setTimeout(() => {
-                    gsap.to(connector2, {
-                        top: "7%",
-                        duration: .3,
-                        ease: "power3.inOut"
-                    })
-                }, 500)
-                gsap.to(connector, { 
-                    rotation: 3600, // Rotate 360 degrees
-                    duration: 2,   // Duration of 2 seconds
-                    ease: "power3.inOut" // Easing function
-                });
-            break;
-            case 2: 
-                setTimeout(() => {
-                    gsap.to(connector3, {
-                        bottom: "7%",
-                        duration: .3,
-                        ease: "power3.inOut"
-                    })
-                }, 500)
-                gsap.to(connector, { 
-                    rotation: 0, // Rotate 360 degrees
-                    duration: 2,   // Duration of 2 seconds
-                    ease: "power3.inOut" // Easing function
-                });
-            break;
-        }
+    addToCollection() {
+        // Display sending animation
+        // Send the forged NFT to the users wallet
+        // Sendt items used to forge to the base scoge wallet
+        // Display success message
+        // reload collection section
+    }
 
-        this.initForge();
+    addToLeaderboard() {
+        // Display leaderboard
+        // Move to position animation
+        // Add user to leaderboard or update user score
+        // Display share to warpcast or twitter button
     }
 
     connectedCallback() {
@@ -1116,7 +1371,7 @@ class compForge extends HTMLElement {
                     left: 5%;
                     position: absolute;
                     overflow: hidden;
-                    z-index: 20;
+                    z-index: 21;
                     font-family: 'BS-R';
                     transform-origin: center;
                     transition: .3s all;
@@ -1200,12 +1455,14 @@ class compForge extends HTMLElement {
                 }
 
                 #connector2 {
+                    display: none;
                     transform: scale(.8);
                     overflow: hidden;
                     z-index: 1;
                 }
                     
                 #connector3 {
+                    display: none;
                     top: auto;
                     transform: scale(.8);
                     overflow: hidden;
@@ -2058,10 +2315,12 @@ class compForge extends HTMLElement {
                     display: none;
                 }
 
-                #fordeStatus {
+                #forgeStatus {
                     position: absolute;
                     left: 0;
                     top: 0;
+                    width: 100%;
+                    height: 100%;
                 }
 
                 .fc {
@@ -2126,8 +2385,8 @@ class compForge extends HTMLElement {
                     height: 100%;
                     left: 0;
                     top: 0;
-                    background-color: rgba(0,0,0,0.8);
-                    z-index: 10;
+                    background-color: rgba(0,0,0,0.9);
+                    z-index: 20;
                 }
 
                 #forgeSelection {
@@ -2151,7 +2410,7 @@ class compForge extends HTMLElement {
                     transform: scale(1.5);
                 }
 
-                #forgeStatus {
+                #forgeSuccess, #forgedFailed, #forgeError {
                     width: 100%;
                     height: 100%;
                     position: absolute;
@@ -2159,7 +2418,22 @@ class compForge extends HTMLElement {
                     top: 0;
                     background-color: rgba(0,0,0,0.9);
                     z-index: 2;
-                    display: grid;
+                    display: none;
+                    grid-template-columns: 1fr;
+                    justify-items: center;
+                    align-content: center;
+                    padding-left: 2%;
+                }
+
+                .fStatusBlock {
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    background-color: rgba(0,0,0,0.9);
+                    z-index: 2;
+                    display: none;
                     grid-template-columns: 1fr;
                     justify-items: center;
                     align-content: center;
@@ -2202,7 +2476,7 @@ class compForge extends HTMLElement {
                  }
 
             </style>
-            <div id="forgeFocus"></div>
+            <div id="forgeFocus">FLAMES!</div>
             <div id="mainForge" data-domType="shadow">
                 <comp-close-btn></comp-close-btn>
                 <div id="collection">
@@ -2290,11 +2564,22 @@ class compForge extends HTMLElement {
                     </div>
                     <div id="forgeCode" class="xPre1">
                         <div id="forgeStatus">
-                            <div id="fs1">FORGE</div>
-                            <div id="fs2">SUCCESSFUL</div>
-                            <div id="fs3">ADD TO COLLECTION</div>
+                            <div id="forgeSuccess" class="fStatusBlock">
+                                 <div id="fs1">FORGE</div>
+                                 <div id="fs2">SUCCESSFUL</div>
+                                 <div id="fs3">ADD TO COLLECTION</div>
+                            </div>
+                            <div id="forgeFailed" class="fStatusBlock">
+                                <div id="fs1" style="color: #ff002d;">FORGE</div>
+                                <div id="fs2" style="color: #ff002d;">FAILED</div>
+                                <div id="fs3">CONTINUE</div>
+                            </div>
+                            <div id="forgeError" class="fStatusBlock">
+                                <div id="fs1" style="color: #ff002d;">FORGE</div>
+                                <div id="fs2" style="color: #ff002d;">ERROR</div>
+                                <div id="fs3">RESTART</div>
+                            </div>
                         </div>
-                        <div id="fordeStatus"></div>
                         <div id="fc1" class="fc">
                             <div id="fcNum1" class="fcBg">
                                 <div class="val leftVal">2</div>
@@ -2376,7 +2661,7 @@ class compForge extends HTMLElement {
                         </div>
                     </div>
                     <div id="forgerOptions"></div>
-                    <div id="forgerCont" class="xPre2">
+                    <div id="forgerCont" class="xPre">
                         <div id="forgeDetails">
                             <div id="forgeItemDesc">
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc ultricies

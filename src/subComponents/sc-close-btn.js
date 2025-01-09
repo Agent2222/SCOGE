@@ -1,3 +1,5 @@
+import { gsap } from "gsap/gsap-core";
+
 class closeButton extends HTMLElement {
     constructor() {
         super();
@@ -38,10 +40,60 @@ class closeButton extends HTMLElement {
 
             // Inner Close
             if (document.getElementById(mainEl).shadowRoot.querySelectorAll(".xPre2")[0]) {
-                console.log("HERE")
                 if (document.getElementById(mainEl).shadowRoot.querySelectorAll(".xPre2")[0].style.display === "grid") {
                     document.getElementById(mainEl).shadowRoot.querySelectorAll(".xPre2")[0].style.display = "none";
                     document.getElementById(mainEl).shadowRoot.getElementById("forgerOptions").style.display = "grid";
+                    document.getElementById(mainEl).shadowRoot.getElementById("forgerCont").setAttribute("class", "xPre");
+                    document.getElementById(mainEl).shadowRoot.getElementById("connectorSpiral").style.opacity = "1";
+                    document.getElementById(mainEl).shadowRoot.getElementById("forgeCode").style.display = "none";
+
+                    document.getElementById(mainEl).shadowRoot.querySelectorAll(".fStatusBlock").forEach((el)=> {
+                        el.style.display = "none";
+                    });
+                    document.getElementById(mainEl).shadowRoot.getElementById("forgeFocus").style.display = "none";
+                    clearInterval(document.getElementById(mainEl).forgeDecay);
+                    document.getElementById(mainEl).shadowRoot.getElementById("forgeFocus").style.display = "none";
+                    document.getElementById(mainEl).decayGate = true;
+                    document.getElementById(mainEl).forgeGoal = [];  
+                    document.getElementById(mainEl).scale = 1;
+
+                    var connector = document.getElementById(mainEl).shadowRoot.getElementById("connector");
+                    var connector2 = document.getElementById(mainEl).shadowRoot.getElementById("connector2");
+                    var connector3 = document.getElementById(mainEl).shadowRoot.getElementById("connector3");
+                    
+                    connector.style.transform = "scale(1)";
+                    gsap.to(connector, { 
+                        rotation: 0, // Rotate 360 degrees
+                        duration: 3,   // Duration of 2 seconds
+                        ease: "power3.inOut", // Easing function
+                        scale: 1,
+                    });
+                    gsap.to(connector2, { 
+                        top: "37%",
+                        rotation: 0, // Rotate 360 degrees
+                        duration: 1,   // Duration of 2 seconds
+                        ease: "power3.inOut", // Easing function
+                        zIndex: 1
+                    });
+                    gsap.to(connector3, { 
+                        bottom: "37%",
+                        rotation: 0, // Rotate 360 degrees
+                        duration: 1,   // Duration of 2 seconds
+                        ease: "power3.inOut", // Easing function
+                        zIndex: 1
+                    });
+                    setTimeout(() => {
+                        connector2.style.display = "none";
+                        connector3.style.display = "none";
+                    }, 3000);
+
+                    var card = document.getElementById(mainEl).shadowRoot.getElementById("forgeSelection");
+                    gsap.to(card, {
+                        transform: "translateX(500px)", 
+                        duration: 0.3, 
+                        ease: "power1.inOut" 
+                    })
+                    card.style.position = "absolute";
                     return;
                 }
                 return;

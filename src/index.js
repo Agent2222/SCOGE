@@ -31,10 +31,16 @@ import { checkInitialState } from "../src/game/SceneManager.js";
 import { emoter } from "./uniComponents/emoter.js";
 import { tooltip } from "./uniHelpers/tooltip.js";
 // import { client } from "./uniHelpers/thirdWeb.js";
+
+// Components
 import { closeButton } from "./subComponents/sc-close-btn.js";
 import { compWallets } from "./uniComponents/comp-wallets.js";
 import { compForge } from "./uniComponents/comp-forge.js";
 import { compLoading } from "./subComponents/sc-loading.js";
+import { compCCPA } from "./comp-ccpa.js";
+import { compAdmin } from "./comp-admin.js";
+
+// Analytics
 import { inject } from "@vercel/analytics"
 
 // Statics
@@ -273,8 +279,8 @@ function start() {
       // enterTaosCity();
       // document.getElementById("portalVideo").style.display = "block";
       document.getElementById("seekModal").style.pointerEvents = "auto";
-      gsap.to('#videoGallery', {duration: 2, opacity: 1, y: 0, ease: "power2.out"});
-      gsap.to("#videoGallery", { duration: 1, filter: "blur(0px)", ease: "power2.inOut"});
+      // gsap.to('#videoGallery', {duration: 2, opacity: 1, y: 0, ease: "power2.out"});
+      // gsap.to("#videoGallery", { duration: 1, filter: "blur(0px)", ease: "power2.inOut"});
       ci = "true";
       // document.getElementById("portalVideo").src = randomStaticVid;
       // document.getElementById("portalVideo").src = mainvid2;
@@ -742,9 +748,11 @@ window.closeInvestor = () => {
 
 // URL PARAMS OPEN SHOP
 var viewThisProduct = "";
+var ccpa = null;
 window.getParamsDesktop = () => {
   const params = new URLSearchParams(location.search)
   viewThisProduct = params.get("Product");
+  ccpa = params.get("ccpa");
   if (params.size > 0 && window.urlParamsActive === "shop") {
     window.urlParamsActive = "shop";
   }
@@ -754,6 +762,20 @@ window.getParamsDesktop = () => {
   window.investorsView = params.get("Investors");
   if (window.investorsView === "true") {
     window.activateInvestors();
+  }
+  if (ccpa != null) {
+    console.log("CCPA", ccpa);
+    var ccpaEl = document.createElement("scoge-ccpa");
+    ccpaEl.setAttribute("active", "true");
+    ccpaEl.setAttribute("id", "ccpaModal");
+    // ccpaEl.setAttribute("data-perium", `false`);
+    ccpaEl.style.position = "absolute";
+    ccpaEl.style.top = "0";
+    ccpaEl.style.left = "0";
+    ccpaEl.style.zIndex = "100";
+    document.getElementById("main").appendChild(ccpaEl);
+    ccpaEl.setAttribute("data-perium", `${ccpa}`);
+    window.perium = ccpa;
   }
   if (viewThisProduct != null) {
     console.log("Checker", viewThisProduct);

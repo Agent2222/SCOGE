@@ -1,135 +1,27 @@
-type TokenMetadata = 
+type Perium = 
  record {
-   approved_at: opt nat64;
-   approved_by: opt principal;
-   burned_at: opt nat64;
-   burned_by: opt principal;
-   is_burned: bool;
-   minted_at: nat64;
-   minted_by: principal;
-   operator: opt principal;
-   owner: opt principal;
-   properties: vec NMCProperties;
-   token_identifier: nat;
-   transferred_at: opt nat64;
-   transferred_by: opt principal;
- };
-type SupportedInterface = 
- record {
-   Approval: null;
-   Burn: null;
-   Mint: null;
-   TransactionHistory: null;
- };
-type Result_3 = 
- variant {
-   err: NftError;
-   ok: opt principal;
- };
-type Result_2 = 
- variant {
-   err: NftError;
-   ok: vec TokenMetadata;
- };
-type Result_1 = 
- variant {
-   err: NftError;
-   ok: TokenMetadata;
- };
-type Result = 
- variant {
-   err: NftError;
-   ok: nat;
- };
-type NftError = 
- variant {
-   ExistedNFT;
-   NotFound;
-   OperatorNotFound;
-   Other: text;
-   OwnerNotFound;
-   SelfApprove;
-   SelfTransfer;
-   TokenNotFound;
-   UnauthorizedOperator;
-   UnauthorizedOwner;
- };
-type NMCProperties = 
- record {
-   alias: text;
-   ancestorsImages: vec nat8;
-   ancestorsNames: vec text;
-   bankooText: vec text;
-   category: text;
-   discovered: vec text;
-   discoveredProgress: float64;
-   domains: vec nat64;
-   earthText: vec text;
-   email: text;
-   endurance: float64;
-   fsOn: bool;
-   health: nat64;
-   identifier: text;
-   imageCompData: vec nat8;
-   landNumber: nat64;
-   landRank: nat64;
-   linked: bool;
-   mental: nat64;
-   musicLevel: float64;
-   network: vec text;
-   networkClass: text;
-   notiOn: bool;
-   physical: nat64;
-   playerLocation: nat64;
-   power: nat64;
-   powerUps: vec nat64;
-   progress: nat64;
-   rank: nat64;
-   ringType: text;
-   sight: nat64;
-   soundLevel: float64;
-   speed: nat64;
-   story:
-    record {
-      imagesUri: vec text;
-      "text": text;
-      title: text;
-      videoURI: text;
-    };
-   styles: vec text;
-   xp: nat64;
- };
-type Metadata = 
- record {
-   created_at: nat64;
-   custodians: vec principal;
-   logo: opt text;
-   name: opt text;
-   symbol: opt text;
-   upgraded_at: nat64;
+   cat: text;
+   d1: blob;
+   d2: blob;
+   d3: text;
+   dep: bool;
+   desc: text;
+   lastV: text;
+   nfc: text;
+   tag: text;
+   title: text;
+   views: nat;
  };
 service : {
+  addOrUpdateCCPA: (text, Perium) -> ();
   adminUser: () -> (text) query;
-  alphaLedger: () -> (nat) query;
-  balanceOf: (principal) -> (Result) query;
+  allowed2: (text) -> (bool);
+  allowed3: (principal) -> (bool);
+  ccpaTotalSupply: () -> (nat) query;
   custodians: () -> (vec principal) query;
+  getCCPA: () -> (vec Perium) query;
+  getPerium: (text) -> (opt Perium) query;
   logo: () -> (opt text) query;
-  metadata: () -> (Metadata) query;
-  mint: (principal, nat, vec NMCProperties) -> (Result);
-  name: () -> (opt text) query;
-  operatorOf: (nat) -> (Result_3) query;
-  operatorTokenMetadata: (principal) -> (Result_2) query;
-  ownerOf: (nat) -> (Result_3) query;
-  ownerTokenMetadata: (principal) -> (Result_2) query;
-  savetoTemp: (principal, nat, vec NMCProperties) -> (Result);
   setCustodians: (vec principal) -> ();
   setLogo: (text) -> ();
-  setName: (text) -> ();
-  setSymbol: (text) -> ();
-  supportedInterfaces: () -> (vec SupportedInterface) query;
-  symbol: () -> (opt text) query;
-  tempMetaData: (nat) -> (Result_1) query;
-  tokenMetadata: (nat) -> (Result_1) query;
-  totalSupply: () -> (nat) query;
-  updateTemp: (principal, nat, vec NMCProperties) -> (Result);
 }

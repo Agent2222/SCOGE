@@ -19,6 +19,13 @@
   font-style: normal;
 }
 
+/* @font-face {
+  font-family: "AC";
+  src: url("https://www.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/Apple%20Chancery.ttf");
+  font-weight: normal;
+  font-style: normal;
+} */
+
 @font-face {
   font-family: "BS-R";
   src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.eot");
@@ -88,6 +95,7 @@
 :root {
   --black : black;
   --primary: #ff002d;
+  --faintPrimary: rgba(106, 4, 22, 1);
   --secondary: #b5d3d1;
   --accent: #94be8c;
   --regular: "BS-R", sans-serif;
@@ -1522,7 +1530,7 @@ a:active {
   left: -2%;
   top: 0px;
   z-index: 4;
-  opacity: 0%;
+  opacity: 100%;
   overflow: hidden;
 }
 

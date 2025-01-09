@@ -38,77 +38,39 @@ actor ScogeCMS {
     symbol : Blob;
     name : Text;
   };
-  // Variables
-  private var _nmcProps : [T.NMCProperties] = [({
-    // ** Visual Identifier **
-    ringType : Text = "";
-    landRank : Nat64 = 0;
-    rank : Nat64 = 0;
-    powerUps : [Nat64] = [0];
-    progress : Nat64 = 0;
-    xp : Nat64 = 0;
-    category : Text = "";
-    linked : Bool = false;
-    // ** Player Info **
-    identifier : Text = "";
-    alias : Text = "";
-    email : Text = "";
-    // earthImage: [Nat8] = [];
-    earthText : [Text] = [""];
-    styles : [Text] = [""];
-    // ** Player Stats **
-    discovered : [Text] = [""];
-    discoveredProgress : Float = 0.0;
-    power : Nat64 = 0;
-    mental : Nat64 = 0;
-    physical : Nat64 = 0;
-    health : Nat64 = 0;
-    speed : Nat64 = 0;
-    sight : Nat64 = 0;
-    endurance : Float = 0.0;
-    domains : [Nat64] = [0];
-    playerLocation : Nat64 = 0;
-    // ** Player Settings **
-    soundLevel : Float = 0.0;
-    musicLevel : Float = 0.0;
-    fsOn : Bool = false;
-    notiOn : Bool = false;
-    // ** Player Network **
-    networkClass : Text = "";
-    network : [Text] = [""];
-    // ** Land Info **
-    landNumber : Nat64 = 0;
-    story = {
-      title : Text = "";
-      text : Text = "";
-      imagesUri : [Text] = [""];
-      videoURI : Text = "";
-    };
-    // bankooImage: [Blob] = [];
-    bankooText : [Text] = [""];
-    imageCompData : [Nat8] = [0];
-    // ** History **
-    ancestorsNames : [Text] = [""];
-    ancestorsImages : [Nat8] = [0];
-  })];
 
-  // Testing upgrade
+  public type Perium = {
+    nfc : Text;
+    dep : Bool;
+    tag : Text;
+    cat : Text;
+    title : Text;
+    d1 : Blob;
+    d2 : Blob;
+    d3 : Text;
+    desc : Text;
+    views : Nat;
+    lastV : Text;
+  };
 
   // Canister State Here
-  private stable var admin : Text = "qpbuq-myqvw-yoaff-265ad-5g6xu-wx5dl-zzd7y-y6oak-zo4uf-x3ozb-dqe";
-  private stable var admin2 : Text = "pzf4c-tunkg-cx6cq-wquml-hvydb-rku72-o45ud-b7ote-64ctg-mtxls-oqe";
-
+  private stable let admin : Text = "qpbuq-myqvw-yoaff-265ad-5g6xu-wx5dl-zzd7y-y6oak-zo4uf-x3ozb-dqe";
+  private stable let admin2 : Text = "pzf4c-tunkg-cx6cq-wquml-hvydb-rku72-o45ud-b7ote-64ctg-mtxls-oqe";
+  private stable let admin3 : Text = "0x2a9e5F8485c7596e427BFb26Fd41D149A110E949";
+  private stable let admin4 : Text = "0x7119fD2DbC5Db3E34624B727322396D1b6456aF8";
   private stable var custodians_ : [Principal] = [Principal.fromText(admin)];
-  private stable var symbol_ : ?Text = ?"SCOGÉ";
+  private stable var custodiansEth : [Text] = [admin3, admin, admin4];
   private stable var _cycles_ : Nat = Cycles.balance();
   private stable var _owner : Text = "qpbuq-myqvw-yoaff-265ad-5g6xu-wx5dl-zzd7y-y6oak-zo4uf-x3ozb-dqe";
+  stable var totalSupply : Nat = 0;
+
+  // CCPA
+  stable var ccpa : [(Text, Perium)] = [];
+  var ccpa2 : _HashMap.HashMap<Text, Perium> = _HashMap.HashMap<Text, Perium>(500, Text.equal, Text.hash);
 
   // HOME PAGE
   private stable var logo_ : ?Text = ?"https://storageapi.fleek.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/bankoo-logo-square2.jpg";
   private stable var appVersion : ?Text = ?"0.6";
-  // private stable var backgroundVideoArray : ?[Blob] = [];
-  // private stable var backgroundImageArray : ?[Blob] = [var];
-  // private stable var menuItems : ?[MenuItem] = [var];
 
   // Check for allowed prin
   func allowed(id : Principal) : Bool {
@@ -122,47 +84,97 @@ actor ScogeCMS {
     );
   };
 
+  // Check for allowed prin
+  public func allowed2(id : Text) : async Bool {
+    Option.isSome(
+      Array.find(
+        custodiansEth,
+        func(x : Text) : Bool {
+          return x == id;
+        },
+      )
+    );
+  };
+
+    // Check for allowed prin
+  public func allowed3(id : Principal) : async Bool {
+    Option.isSome(
+      Array.find(
+        custodians_,
+        func(x : Principal) : Bool {
+          return x == id;
+        },
+      )
+    );
+  };
+
   // QUERY FUNCTIONS
-  // logo : () -> (opt text) query;
   public query func logo() : async ?Text {
     return logo_;
   };
 
-  // name : () -> (opt text) query;
-  // public query func name() : async ?Text {
-  //   return name_;
-  // };
-
-  // admin : () -> (text) query;
   public query func adminUser() : async Text {
     return admin;
   };
 
-  // symbol : () -> (opt text) query;
-  public query func symbol() : async ?Text {
-    return symbol_;
-  };
-
-  // custodians : () -> (vec principal) query;
   public query func custodians() : async ([Principal]) {
     return custodians_;
   };
 
-  // public query func alphaLedger() : async (Nat) {
-  //   return digisetteAlphaLedger.size();
-  // };
   // UPDATE METHODS
-  // setCustodians : (vec principal) -> ();
   public shared (init_msg) func setCustodians(newCustodian : [Principal]) : async () {
     if (init_msg.caller == Principal.fromText(admin2)) {
       custodians_ := newCustodian;
     };
   };
-  // setLogo : (text) -> ();
-  // *** BY CUSTODIAN
+
   public shared (init_msg) func setLogo(newLogo : Text) : async () {
     if (allowed(init_msg.caller)) {
       logo_ := ?newLogo;
     };
   };
+
+  // CCPA QUERY FUNCTIONS
+  public query func getCCPA() : async [Perium] {
+    _Iter.toArray(ccpa2.vals());
+  };
+
+  public query func getPerium(k : Text) : async ?Perium {
+    return ccpa2.get(k);
+  };
+
+  public query func ccpaTotalSupply() : async Nat {
+      return totalSupply;
+  };
+
+  // CCPA UPDATE FUNCTIONS
+  public shared (init_msg) func addOrUpdateCCPA(k: Text, v: Perium) : async () {
+     assert allowed(init_msg.caller);
+    // if (allowed(init_msg.caller)) {
+    //   ccpa2.put(k, v);
+    // };
+      var newK = ccpa2.size() + 1;
+      var newKey = Nat.toText(newK);
+      // ccpa2.put(newKey, v);
+      ccpa2.put(k, v);
+      totalSupply += ccpa2.size();  
+  };
+
+  // SYSTEM FUNCTIONS
+  system func preupgrade() {
+    ccpa := _Iter.toArray(ccpa2.entries());
+  };
+
+  system func postupgrade() {
+      ccpa2 := _HashMap.HashMap<Text, Perium>(500, Text.equal, Text.hash);
+
+      // Restore data from `ccpa` into `ccpa2`
+      for ((key, value) in ccpa.vals()) {
+        ccpa2.put(key, value);
+      };
+
+      // Clear stable storage to free memory
+      ccpa := [];
+  };
+
 };
