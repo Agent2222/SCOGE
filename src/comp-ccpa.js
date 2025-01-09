@@ -283,13 +283,13 @@ class compCCPA extends HTMLElement {
         if (this.sonicPlaying === false) {
             this.sonicPlaying = true;
             this.currentSonic = new Audio(this.loadedPerium.d2);
-            this.shadowRoot.getElementById("playSymbol").src = "../assets/images/assets1/pause-primary-1.png";
+            this.shadowRoot.getElementById("playSymbol").src = pauseBut;
             this.currentSonic.play()
 
             this.shadowRoot.getElementById("ac2").style.animation = "rotateAlbum 8s linear infinite";
     
             this.currentSonic.addEventListener("ended", () => {
-                this.shadowRoot.getElementById("playSymbol").src = "../assets/images/assets1/play-primary-1.png";
+                this.shadowRoot.getElementById("playSymbol").src = playBut;
                 this.sonicPlaying = false;
                 this.shadowRoot.getElementById("ac2").style.animation = "none";
             });
@@ -298,13 +298,13 @@ class compCCPA extends HTMLElement {
 
         if (this.sonicPaused === false) {
             this.currentSonic.pause();
-            this.shadowRoot.getElementById("playSymbol").src = "../assets/images/assets1/play-primary-1.png";
+            this.shadowRoot.getElementById("playSymbol").src = playBut;
             this.sonicPaused = true;
             this.shadowRoot.getElementById("ac2").style.animation = "none";
             return;
         } else {
             this.currentSonic.play();
-            this.shadowRoot.getElementById("playSymbol").src = "../assets/images/assets1/pause-primary-1.png";
+            this.shadowRoot.getElementById("playSymbol").src = pauseBut;
             this.sonicPaused = false;
             this.shadowRoot.getElementById("ac2").style.animation = "rotateAlbum 8s linear infinite";
             return;
@@ -315,7 +315,7 @@ class compCCPA extends HTMLElement {
         this.currentSonic.pause();
         this.currentSonic.currentTime = 0;
         this.currentSonic.play();
-        this.shadowRoot.getElementById("playSymbol").src = "../assets/images/assets1/pause-primary-1.png";
+        this.shadowRoot.getElementById("playSymbol").src = pauseBut;
         this.sonicPaused = false;
     }
 
@@ -474,7 +474,7 @@ class compCCPA extends HTMLElement {
                 break;
             case "sonic":
                 this.fileReader("image", this.loadedPerium.d1);
-                this.shadowRoot.getElementById("sb4").style.display = "none";
+                // this.shadowRoot.getElementById("sb4").style.display = "none";
                 this.shadowRoot.getElementById("sb5").style.display = "none";
                 var newPage = document.createElement("div");
                 newPage.innerHTML = `
@@ -653,7 +653,7 @@ class compCCPA extends HTMLElement {
                     display grid;
                     grid-template-columns: 1fr;
                     grid-template-rows: 1fr;
-                    justify-items: center;
+                    justify-content: center;
                     align-items: center;
                 }
 
@@ -978,6 +978,7 @@ class compCCPA extends HTMLElement {
 
                 #sonic {
                     align-self: start;
+                    z-index: 10;
                 }
 
                 #metaData {
@@ -989,6 +990,7 @@ class compCCPA extends HTMLElement {
                     justify-content: start;
                     align-items: center;
                     font-family: "BS-R";
+                    text-align: center;
                 }
 
                 #customControls {
