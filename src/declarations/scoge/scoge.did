@@ -1,0 +1,162 @@
+type Value = 
+ variant {
+   Array: vec Value;
+   Blob: blob;
+   Bool: bool;
+   Float: float64;
+   Int: int;
+   Map: vec record {
+              text;
+              Value;
+            };
+   Nat: nat;
+   Text: text;
+ };
+type Subaccount = blob;
+type Story = 
+ record {
+   imagesUri: vec text;
+   "text": text;
+   title: text;
+   videoURI: text;
+ };
+type NFT = 
+ record {
+   id: nat;
+   metadata: vec MetadataValue;
+ };
+type MetadataValue = 
+ record {
+   key: text;
+   value: Value;
+ };
+type Metadata = 
+ record {
+   alias: text;
+   ancestorsImages: vec nat;
+   ancestorsNames: vec text;
+   bankooText: vec text;
+   category: text;
+   discovered: vec text;
+   discoveredProgress: float64;
+   domains: vec nat;
+   earthText: vec text;
+   email: text;
+   endurance: float64;
+   fsOn: bool;
+   health: nat;
+   identifier: text;
+   imageCompData: vec nat;
+   landNumber: nat;
+   landRank: nat;
+   linked: bool;
+   mental: nat;
+   musicLevel: float64;
+   network: vec text;
+   networkClass: text;
+   notiOn: bool;
+   physical: nat;
+   playerLocation: nat;
+   power: nat;
+   powerUps: vec nat;
+   progress: nat;
+   rank: nat;
+   ringType: text;
+   sight: nat;
+   soundLevel: float64;
+   speed: nat;
+   story: Story;
+   styles: vec text;
+   xp: nat;
+ };
+type ICRC16 = 
+ variant {
+   Array: vec ICRC16;
+   Blob: blob;
+   Bool: bool;
+   Bytes: vec nat8;
+   Class: vec record {
+                immutable: bool;
+                name: text;
+                value: ICRC16;
+              };
+   Float: float64;
+   Floats: vec float64;
+   Int: int;
+   Int16: int16;
+   Int32: int32;
+   Int64: int64;
+   Int8: int8;
+   Ints: vec int;
+   Map: vec record {
+              key: text;
+              value: ICRC16;
+            };
+   Nat: nat;
+   Nat16: nat16;
+   Nat32: nat32;
+   Nat64: nat64;
+   Nat8: nat8;
+   Nats: vec nat;
+   Option: opt ICRC16;
+   Principal: principal;
+   Set: vec ICRC16;
+   Text: text;
+   ValueMap: vec record {
+                   ICRC16;
+                   ICRC16;
+                 };
+ };
+type DappPermissions = 
+ record {
+   data: ICRC16;
+   permissions: Value;
+   read: Value;
+   write: Value;
+ };
+type AppMetadata = 
+ record {
+   name: text;
+   permissions: DappPermissions;
+ };
+type Account = 
+ record {
+   nft: opt NFT;
+   owner: principal;
+   subaccount: opt Subaccount;
+ };
+service : {
+  icrc60_add_app: (text, AppMetadata) -> ();
+  icrc60_burn: (nat) -> (opt nat);
+  icrc60_mint: (vec MetadataValue) -> (nat);
+  icrc60_update_app_permissions: (text, DappPermissions) -> (opt text);
+  icrc60_update_metadata: (nat, vec MetadataValue) -> (opt nat);
+  icrc7_atomic_batch_transfers: () -> (opt bool) query;
+  icrc7_balance_of: (vec Account) -> (vec nat) query;
+  icrc7_collection_metadata: () -> (vec record {
+                                          text;
+                                          Value;
+                                        }) query;
+  icrc7_default_take_value: () -> (opt nat) query;
+  icrc7_description: () -> (opt text) query;
+  icrc7_logo: () -> (opt text) query;
+  icrc7_max_memo_size: () -> (opt nat) query;
+  icrc7_max_query_batch_size: () -> (opt nat) query;
+  icrc7_max_take_value: () -> (opt nat) query;
+  icrc7_max_update_batch_size: () -> (opt nat) query;
+  icrc7_name: () -> (text) query;
+  icrc7_owner_of: (vec nat) -> (vec opt Account) query;
+  icrc7_permitted_drift: () -> (opt nat) query;
+  icrc7_supply_cap: () -> (opt nat) query;
+  icrc7_symbol: () -> (text) query;
+  icrc7_token_metadata: (vec nat) ->
+   (vec vec opt vec record {
+                      text;
+                      Value;
+                    }) query;
+  icrc7_tokens: (opt nat, opt nat) -> (vec nat) query;
+  icrc7_tokens_of: (Account, opt nat, opt nat) -> (vec nat) query;
+  icrc7_total_supply: () -> (nat) query;
+  icrc7_tx_window: () -> (opt nat) query;
+  metadataToICRC7: (Metadata) -> (vec MetadataValue);
+}

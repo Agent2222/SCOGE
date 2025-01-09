@@ -1,4 +1,7 @@
-import { dragElement } from "../universe";
+import {
+    dragElement
+} from "../universe";
+import { Principal } from "@dfinity/principal";
 import coinbaseLogo from "../../assets/images/wallets/coinbase.png";
 import metamaskLogo from "../../assets/images/wallets/metamask.png";
 import plugLogo from "../../assets/images/wallets/plug.png";
@@ -7,14 +10,32 @@ import stoicLogo from "../../assets/images/wallets/stoic.png";
 import smartLogo from "../../assets/images/wallets/smart.png";
 import statsImg from "../../assets/images/cards/digi-stats-1.jpg";
 import missing from "../../assets/images/items/scoge-missing-cloak.jpg";
-import { enterTaosCity } from "../universe";
-import { createThirdwebClient, getContract, readContract } from "thirdweb";
-import { createWallet, injectedProvider, ecosystemWallet} from "thirdweb/wallets";
-import { base, sepolia } from "thirdweb/chains";
-import { resolveName } from "thirdweb/extensions/ens";
+import { adminMenu } from "../universe";
+import { idlFactory } from "../../src/declarations/universe_backend/universe_backend.did.js";
+
+import {
+    enterTaosCity
+} from "../universe";
+import {
+    createThirdwebClient,
+    getContract,
+    readContract
+} from "thirdweb";
+import {
+    createWallet,
+    injectedProvider,
+    ecosystemWallet
+} from "thirdweb/wallets";
+import {
+    base,
+    sepolia
+} from "thirdweb/chains";
+import {
+    resolveName
+} from "thirdweb/extensions/ens";
 
 export const client = createThirdwebClient({
-  clientId: "0122a915b52dd5f35d9bbc909a2b3341",
+    clientId: "0122a915b52dd5f35d9bbc909a2b3341",
 });
 
 export var forgeable = [];
@@ -22,13 +43,25 @@ export var forgeable = [];
 class compWallets extends HTMLElement {
     constructor() {
         super();
-        this.attachShadow({mode: 'open'});
+        this.attachShadow({
+            mode: 'open'
+        });
         window.ethNFTS = [];
         this.currentWallet = null;
         this.nftloading = false;
-        
-        this.availableWallets = [
-            {
+        this.icpPrincipal = null;
+        this.icpActor = null;
+        this.plugPk = null;
+        // const canister = "7mfck-baaaa-aaaah-acuqq-cai";
+        this.local = "http://127.0.0.1:8080/";
+        this.canLocal = "bd3sg-teaaa-aaaaa-qaaba-cai";
+        this.deploy = "https://ic0.app";
+        this.canDeploy = 'wnunb-baaaa-aaaag-aaoya-cai';
+        this.taosLocal = 'bd3sg-teaaa-aaaaa-qaaba-cai';
+        this.whitelist = [this.canDeploy, this.taosLocal];
+        // whitelist, deploy
+
+        this.availableWallets = [{
                 name: "Coinbase Wallet",
                 logo: coinbaseLogo,
                 link: "https://www.coinbase.com/wallet"
@@ -41,17 +74,17 @@ class compWallets extends HTMLElement {
                 name: "MetaMask",
                 logo: metamaskLogo
             },
-            // {
-            //     name: "Plug",
-            //     logo: plugLogo
-            // },
+            {
+                name: "Plug",
+                logo: plugLogo
+            },
             // {
             //     name: "Stoic",
             //     logo: stoicLogo
             // }
         ];
 
-         this.myChain = base;
+        this.myChain = base;
 
         // get a contract
         this.contract = getContract({
@@ -119,7 +152,16 @@ class compWallets extends HTMLElement {
             this.connectTransition();
         }
     }
-    
+
+    async isAdmin(address) {
+        const custCheck = await this.icpActor.allowed2(address).then((result) => {
+            console.log("allowed", result);
+            return result;
+          }).catch((error) => {
+            console.error("Error checking permission:", error);
+          });
+    }
+
     /////////////////////////////
     // Connect to MetaMask
     /////////////////////////////
@@ -127,24 +169,28 @@ class compWallets extends HTMLElement {
         const wallet = createWallet("io.metamask"); // pass the wallet id
         // if user has metamask installed, connect to it
         if (injectedProvider("io.metamask")) {
-        await wallet.connect({ client }).then((res) => {
-            this.resolveLogin(res, wallet);
-            window.currentWallet = wallet.getAccount().address;
-        }).catch((err) => {
-            console.log(err)
-            this.shadowRoot.getElementById('MetaMask').style.opacity = ".5";
-            this.shadowRoot.getElementById('MetaMask-text').innerHTML = `*TEMPORARILY OFFLINE*`;
-        })
+            await wallet.connect({
+                client
+            }).then((res) => {
+                this.resolveLogin(res, wallet, false);
+                window.currentWallet = wallet.getAccount().address;
+            }).catch((err) => {
+                console.log(err)
+                this.shadowRoot.getElementById('MetaMask').style.opacity = ".5";
+                this.shadowRoot.getElementById('MetaMask-text').innerHTML = `*TEMPORARILY OFFLINE*`;
+            })
         }
-        
+
         // open wallet connect modal so user can scan the QR code and connect
         else {
-        await wallet.connect({
-            client,
-            walletConnect: { showQrModal: true },
-        }).then((res) => {
-            this.resolveLogin(res, wallet);
-        })
+            await wallet.connect({
+                client,
+                walletConnect: {
+                    showQrModal: true
+                },
+            }).then((res) => {
+                this.resolveLogin(res, wallet, false);
+            })
         }
     }
 
@@ -158,24 +204,28 @@ class compWallets extends HTMLElement {
         const wallet = createWallet("com.coinbase.wallet"); // pass the wallet id
         // // if user has coinbase wallet installed, connect to it
         if (injectedProvider("com.coinbase.wallet")) {
-            await wallet.connect({ client }).then(async (res) => {
-            this.resolveLogin(res, wallet);
-            window.currentWallet = wallet.getAccount().address;
-        }).catch((err) => {
+            await wallet.connect({
+                client
+            }).then(async (res) => {
+                this.resolveLogin(res, wallet, false);
+                window.currentWallet = wallet.getAccount().address;
+            }).catch((err) => {
                 console.log(err)
                 this.shadowRoot.getElementById('Coinbase Wallet').style.opacity = ".5";
                 this.shadowRoot.getElementById('Coinbase Wallet-text').innerHTML = `*TEMPORARILY OFFLINE*`;
             })
         }
-        
+
         // open wallet connect modal so user can scan the QR code and connect
         else {
             await wallet.connect({
-            client,
-            walletConnect: { showQrModal: true },
-        }).then((res) => {
-            this.resolveLogin(res, wallet);
-        });
+                client,
+                walletConnect: {
+                    showQrModal: true
+                },
+            }).then((res) => {
+                this.resolveLogin(res, wallet, false);
+            });
         }
         // try {
         //     const address = await provider.request({
@@ -197,23 +247,27 @@ class compWallets extends HTMLElement {
         const wallet = createWallet("me.rainbow"); // pass the wallet id
         // if user has rainbow wallet installed, connect to it
         if (injectedProvider("me.rainbow")) {
-        await wallet.connect({ client }).then(async (res) => {
-            this.resolveLogin(res, wallet);
-            window.currentWallet = wallet.getAccount().address;
-        }).catch((err) => {
-            console.log(err)
-            this.shadowRoot.getElementById('Rainbow').style.opacity = ".5";
-            this.shadowRoot.getElementById('Rainbow-text').innerHTML = `*TEMPORARILY OFFLINE*`;
-        })
+            await wallet.connect({
+                client
+            }).then(async (res) => {
+                this.resolveLogin(res, wallet, false);
+                window.currentWallet = wallet.getAccount().address;
+            }).catch((err) => {
+                console.log(err)
+                this.shadowRoot.getElementById('Rainbow').style.opacity = ".5";
+                this.shadowRoot.getElementById('Rainbow-text').innerHTML = `*TEMPORARILY OFFLINE*`;
+            })
         }
-        
+
         // open wallet connect modal so user can scan the QR code and connect
         else {
             await wallet.connect({
                 client,
-                walletConnect: { showQrModal: true },
+                walletConnect: {
+                    showQrModal: true
+                },
             }).then((res) => {
-                this.resolveLogin(res, wallet);
+                this.resolveLogin(res, wallet, false);
             });
         }
     }
@@ -221,15 +275,124 @@ class compWallets extends HTMLElement {
     /////////////////////////////
     // Connect to Plug Wallet
     /////////////////////////////
+    async connectPlug(whitelist, host) {
+        if (window.ic === undefined) {
+            console.log("Plug not found - Get Plug Wallet");
+            this.shadowRoot.getElementById('Plug').style.opacity = ".5";
+            this.shadowRoot.getElementById('Plug-text').innerHTML = `*Plug not found - Get Plug Wallet*`;
+            return;
+        } else {
+            // Scenario - Returning User
+            let connected = false;
+            try {
+                connected = await window.ic.plug.isConnected();
+            } catch (e) {
+                console.error(e);
+            }
 
-     /////////////////////////////
+            if (connected === false) {
+                // Scenario - User has a plug wallet but is not connected
+                this.plugPk = await window.ic.plug
+                    .requestConnect({
+                        whitelist: whitelist,
+                        host: host,
+                        timeout: 50000,
+                    })
+                    .catch((e) => {
+                        console.error("Connect Wallet", e);
+                        this.shadowRoot.getElementById('Rainbow').style.opacity = ".5";
+                        this.shadowRoot.getElementById('Rainbow-text').innerHTML = `*TEMPORARILY OFFLINE*`;
+                    });
+
+                const principal = await window.ic.plug.getPrincipal().catch((e) => {
+                    console.log("Get Principal", e);
+                });
+                
+                this.icpPrincipal = Principal.fromUint8Array(principal._arr).toString();
+
+                var res = {
+                    address: this.icpPrincipal
+                };
+                var wallet = {}
+                this.resolveLogin(res, wallet, true);
+
+            } else if (connected === true) {
+                // Scenario - User has a plug wallet and is connected
+                console.log("Connected");
+                const principal = await window.ic.plug.getPrincipal().catch((e) => {
+                    console.log("Get Principal", e);
+                });
+                
+                this.icpPrincipal = Principal.fromUint8Array(principal._arr).toString();
+
+                var res = {
+                    address: this.icpPrincipal
+                };
+                var wallet = {}
+                this.resolveLogin(res, wallet, true);
+                
+                this.icpActor = await window.ic.plug.createActor({
+                    canisterId: "wnunb-baaaa-aaaag-aaoya-cai",
+                    interfaceFactory: idlFactory,
+                });
+
+                document.getElementById("ccpaModal").icpActor = this.icpActor;
+
+                const custCheck = await this.icpActor.allowed3(principal).then((result) => {
+                  console.log("allowed", result);
+                  if (result === true) {
+                    adminMenu();
+                  }
+                  return result;
+                }).catch((error) => {
+                  console.error("Error checking permission:", error);
+                });
+
+            }
+        }
+    }
+
+
+    /////////////////////////////
     // Connect to Stoic Wallet
     /////////////////////////////
 
-    async resolveLogin(res, wallet) {
-            this.connectTransition();
-            console.log("connected", res);
-            window.currentWallet = res.address;
+    async resolveLogin(res, wallet, isIcp) {
+        this.connectTransition();
+        setTimeout(() => {
+            document.getElementById("forgeModal").shadowRoot.getElementById("loadingModal").startLoading();
+        }, 500);
+        window.currentWallet = res.address;
+
+        document.getElementById("getUniMenu").shadowRoot.getElementById("uniMenuExit").setAttribute("data-connected", "true");
+        var el = document.getElementById("getUniMenu").shadowRoot.getElementById("menuloginBut");
+        document.getElementById("getUniMenu").openFullMenu(el);
+
+        if (isIcp === true) {
+            // ICP CODE
+            console.log("ICP WALLET");
+            let username = this.icpPrincipal.slice(0, 3) + "..." + this.icpPrincipal.slice(-4) + "&nbsp;&nbsp;>";
+            this.shadowRoot.getElementById("username").innerHTML = username.replace(">", "");
+            document.getElementById("getUniMenu").shadowRoot.getElementById("menuloginBut").innerHTML = username;
+
+            this.shadowRoot.getElementById("logout").addEventListener("click", async () => {
+                window.ic.plug.disconnect().then(() => {
+                    this.disconnectTransition();
+                }).catch((err) => {
+                    console.log("disconnect error", err);
+                });
+            });
+
+            setTimeout(() => {
+                document.getElementById("forgeModal").spinAction();
+                document.getElementById("forgeModal").shadowRoot.getElementById("loadingModal").stopLoading();
+            }, 500);
+            // document.getElementById("forgeModal").setAttribute("active", "loaded");
+
+            return;
+        } else {
+            // ETH CODE
+            console.log("ETH WALLET");
             this.getScogeAssetsETH(res.address, this.contract);
             setTimeout(() => {
                 document.getElementById("forgeModal").shadowRoot.getElementById("loadingModal").startLoading();
@@ -246,14 +409,14 @@ class compWallets extends HTMLElement {
                 let el = document.getElementById("getUniMenu").shadowRoot.getElementById("menuloginBut");
                 this.shadowRoot.getElementById("username").innerHTML = name;
                 el.innerHTML = name + "&nbsp;&nbsp;>";
-                } else {
+            } else {
                 let username = res.address.slice(0, 6) + "..." + res.address.slice(-4) + "&nbsp;&nbsp;>";
 
                 this.shadowRoot.getElementById("username").innerHTML = username.replace(">", "");
 
                 document.getElementById("getUniMenu").shadowRoot.getElementById("menuloginBut").innerHTML = username;
-                }
-                
+            }
+
             this.shadowRoot.getElementById("logout").addEventListener("click", async () => {
                 await wallet.disconnect().then(() => {
                     this.disconnectTransition();
@@ -261,10 +424,8 @@ class compWallets extends HTMLElement {
                     console.log("disconnect error", err);
                 });
             });
+        }
 
-            document.getElementById("getUniMenu").shadowRoot.getElementById("uniMenuExit").setAttribute("data-connected", "true");
-            var el = document.getElementById("getUniMenu").shadowRoot.getElementById("menuloginBut");
-            document.getElementById("getUniMenu").openFullMenu(el);
     }
 
     buildWalletButons() {
@@ -281,7 +442,7 @@ class compWallets extends HTMLElement {
                 " id="${wallet.name}-text">${wallet.name}</div>`;
             walletsCont.appendChild(walletBut);
 
-            switch(wallet.name) {
+            switch (wallet.name) {
                 case "Coinbase Wallet":
                     walletBut.addEventListener("click", () => {
                         this.connectCoinbase();
@@ -300,19 +461,18 @@ class compWallets extends HTMLElement {
                 case "Smart Wallet":
                     walletBut.addEventListener("click", () => {
                         this.connectSmart();
-                    }
-                    );
+                    });
                     break;
-                // case "Plug":
-                //     walletBut.addEventListener("click", () => {
-                //         this.connectPlug();
-                //     });
-                //     break;
-                // case "Stoic":
-                //     walletBut.addEventListener("click", () => {
-                //         this.connectStoic();
-                //     });
-                //     break;
+                case "Plug":
+                    walletBut.addEventListener("click", () => {
+                        this.connectPlug(this.whitelist, this.deploy);
+                    });
+                    break;
+                    // case "Stoic":
+                    //     walletBut.addEventListener("click", () => {
+                    //         this.connectStoic();
+                    //     });
+                    //     break;
             }
         });
 
@@ -323,13 +483,13 @@ class compWallets extends HTMLElement {
             window.open('https://zora.co/@scoge', '_blank');
         });
     }
-    
+
     connectTransition() {
         let el1main = this.shadowRoot.getElementById("walletsCont");
         let el1head = this.shadowRoot.getElementById("header");
         let el2main = this.shadowRoot.getElementById("connectedCont");
         let el2head = this.shadowRoot.getElementById("headerConnected");
-        if (this.shadowRoot.getElementById("infoCont1") ){
+        if (this.shadowRoot.getElementById("infoCont1")) {
             this.shadowRoot.getElementById("infoCont1").style.display = "none";
         }
         if (this.shadowRoot.getElementById("infoCont2")) {
@@ -402,7 +562,10 @@ class compWallets extends HTMLElement {
                 params: [add, i],
             });
             if (balance > 0) {
-                ownedNFTs.push({id: i, balance: balance});
+                ownedNFTs.push({
+                    id: i,
+                    balance: balance
+                });
             }
         }
 
@@ -415,29 +578,42 @@ class compWallets extends HTMLElement {
                 params: [add, i],
             });
             if (balance > 0) {
-                ownedNFTs2.push({id: i, balance: balance});
+                ownedNFTs2.push({
+                    id: i,
+                    balance: balance
+                });
             }
         }
 
         window.ethNFTS = [];
-        
+
         for (let nftObj in ownedNFTs) {
             let nft = await this.tokenDataETH(ownedNFTs[nftObj].id, this.contract);
-            window.ethNFTS.push({id: ownedNFTs[nftObj].id, count: 0, qty: Number(ownedNFTs[nftObj].balance) ,nft: nft});
+            window.ethNFTS.push({
+                id: ownedNFTs[nftObj].id,
+                count: 0,
+                qty: Number(ownedNFTs[nftObj].balance),
+                nft: nft
+            });
             // name
             // description
             // image
             // attributes
             // content
             // attributes
-                // trait_type
-                // value
+            // trait_type
+            // value
             // animation_url
         }
 
         for (let nftObj in ownedNFTs2) {
             let nft = await this.tokenDataETH(ownedNFTs2[nftObj].id, this.rawMaterials);
-            window.ethNFTS.push({id: firstLength + ownedNFTs2[nftObj].id, count: 0, qty: Number(ownedNFTs2[nftObj].balance) ,nft: nft});
+            window.ethNFTS.push({
+                id: firstLength + ownedNFTs2[nftObj].id,
+                count: 0,
+                qty: Number(ownedNFTs2[nftObj].balance),
+                nft: nft
+            });
         }
 
         ////////////////////////
@@ -449,13 +625,21 @@ class compWallets extends HTMLElement {
                 params: [add, i],
             });
             if (balance > 0) {
-                ownedNFTs3.push({id: i, balance: balance});
+                ownedNFTs3.push({
+                    id: i,
+                    balance: balance
+                });
             }
         }
 
         for (let nftObj in ownedNFTs3) {
             let nft = await this.tokenDataETH(ownedNFTs3[nftObj].id, this.forgeable);
-            forgeable.push({id: ownedNFTs3[nftObj].id, count: 0, qty: Number(ownedNFTs3[nftObj].balance) ,nft: nft});
+            forgeable.push({
+                id: ownedNFTs3[nftObj].id,
+                count: 0,
+                qty: Number(ownedNFTs3[nftObj].balance),
+                nft: nft
+            });
         }
 
         // for (let nftObj in ownedNFTs3) {
@@ -467,19 +651,27 @@ class compWallets extends HTMLElement {
         ////////////////////////
         var thirdLength = ownedNFTs.length + 1;
         for (let i = 0; i < 50; i++) {
-                 const balance = await readContract({
-                     contract: this.guide,
-                     method: "function balanceOf(address, uint256) view returns (uint256)",
-                     params: [add, i],
-                 });
-                 if (balance > 0) {
-                     ownedNFTs4.push({id: i, balance: balance});
-                 }
-             }
-     
+            const balance = await readContract({
+                contract: this.guide,
+                method: "function balanceOf(address, uint256) view returns (uint256)",
+                params: [add, i],
+            });
+            if (balance > 0) {
+                ownedNFTs4.push({
+                    id: i,
+                    balance: balance
+                });
+            }
+        }
+
         for (let nftObj in ownedNFTs4) {
             let nft = await this.tokenDataETH(ownedNFTs4[nftObj].id, this.guide);
-            window.ethNFTS.push({id: ownedNFTs4[nftObj].id, count: 0, qty: Number(ownedNFTs4[nftObj].balance) ,nft: nft});
+            window.ethNFTS.push({
+                id: ownedNFTs4[nftObj].id,
+                count: 0,
+                qty: Number(ownedNFTs4[nftObj].balance),
+                nft: nft
+            });
         }
         //////////////////////
 
@@ -492,18 +684,28 @@ class compWallets extends HTMLElement {
             params: [add, 0],
         }).then(async (res) => {
             if (Number(res) != 0) { //HAS BEACON
-                    let nft2 = await this.tokenDataETH(0, this.limitedTech);
-                    window.ethNFTS.unshift({id:0, count: 0, qty:1, nft: nft2})
+                let nft2 = await this.tokenDataETH(0, this.limitedTech);
+                window.ethNFTS.unshift({
+                    id: 0,
+                    count: 0,
+                    qty: 1,
+                    nft: nft2
+                })
             } else { // NO BEACON
                 if (window.ethNFTS.length < 6) {
                     const beacBal = await readContract({
                         contract: this.limitedTech,
                         method: "function totalSupply(uint256) view returns (uint256)",
                         params: [0],
-                    }).then( async (res) => {
+                    }).then(async (res) => {
                         if (res != 0) {
                             let nft1 = await this.tokenDataETH(1, this.limitedTech);
-                            window.ethNFTS.unshift({id:1, count: 0, qty:1, nft: nft1});
+                            window.ethNFTS.unshift({
+                                id: 1,
+                                count: 0,
+                                qty: 1,
+                                nft: nft1
+                            });
                         } else {
                             //No more beacons available
                         }
@@ -521,7 +723,7 @@ class compWallets extends HTMLElement {
                 this.shadowRoot.querySelectorAll(".button")[0].classList.remove("inactive");
                 this.shadowRoot.getElementById("accountDesc").innerHTML = "This system is still in development. Use this cloak to avoid detection. It wont last for long.";
             }
-        }) 
+        })
 
         document.getElementById("forgeModal").setAttribute("active", "loaded");
     }
@@ -537,7 +739,7 @@ class compWallets extends HTMLElement {
             // console.log("TEst", data)
 
             var httpUrl = null;
-            
+
             if (data.includes("ipfs://")) {
                 httpUrl = data.replace("ipfs://", "https://52ecc14ce71f7fe5cfc6f381627730cc.ipfscdn.io/ipfs/");
             } else {
@@ -550,7 +752,7 @@ class compWallets extends HTMLElement {
             // .replace("ipfs://", "https://ipfs.io/ipfs/");
             const response = await fetch(httpUrl);
             const nft = await response.json();
-            
+
             return nft;
 
         } catch (error) {
@@ -567,7 +769,7 @@ class compWallets extends HTMLElement {
             alert("THEY'RE ONTO YOU, GET OUT!");
             setTimeout(() => {
                 location.reload();
-            },1000)
+            }, 1000)
         }, 60000)
     }
 
@@ -594,8 +796,8 @@ class compWallets extends HTMLElement {
             let img = new Image();
             card.appendChild(img);
             card.appendChild(buttons);
-        
-            img.onload = function() {
+
+            img.onload = function () {
                 card.classList.add("imgloaded");
                 loadedImagesCount++;
                 if (loadedImagesCount === totalImages) {
@@ -604,10 +806,10 @@ class compWallets extends HTMLElement {
                     }, 2000);
                 }
             };
-        
+
             var nftImg = nft.nft.image
             // .replace("ipfs://", "https://ipfs.io/ipfs/");
-        
+
             var stats = null;
             if (nft.nft.attributes) {
                 stats = {
@@ -622,21 +824,21 @@ class compWallets extends HTMLElement {
                     bas: "X"
                 };
             }
-        
+
             img.src = nftImg;
-        
+
             this.shadowRoot.getElementById("availableCards")?.appendChild(card);
-        
+
             this.shadowRoot.getElementById(`selnft${nft.id}`)?.addEventListener("click", (e) => {
                 // Add your select NFT logic here
             });
-        
+
             this.shadowRoot.getElementById(`viewnft${nft.id}`)?.addEventListener("click", (e) => {
                 this.viewCard(e, nftImg, stats);
             });
         });
     }
-    
+
 
     connectedCallback() {
         this.render();
@@ -933,4 +1135,6 @@ class compWallets extends HTMLElement {
 
 customElements.define('wallets-modal', compWallets);
 
-export {compWallets};
+export {
+    compWallets
+};

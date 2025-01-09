@@ -386,7 +386,7 @@ export function activateMapper() {
         document.getElementById("mapperUI").remove();
         return;
     } else {
-        mapperBut.style.border = "1px solid var(--accent)";
+        // mapperBut.style.color = "var(--accent)";
         uniEvents.forEach((event) => {
             event.style.display = "none";
         });

@@ -1,5 +1,4 @@
 
-import pdf from '../assets/pdf/s-d-23.pdf'
 
 var currentPage = 1;
 var currentBtsPage = 1;
@@ -899,7 +898,7 @@ class dtInvestors extends HTMLElement {
             <div id="scrollBody">
             <div id="header">
               <div id="head">SCOGÉ Seed Raise</div>
-              <div id="sub"><span class="acc" style="cursor:pointer;"><a href='${pdf}' id="pdfDL" target="_blank">(Download PDF)</a></span></div>
+              <div id="sub"><span class="acc" style="cursor:pointer;"><a href='' id="pdfDL" target="_blank">(Download PDF)</a></span></div>
               <div id="menuHead">
                 <div style="color: var(--secondary); border-color:var(--secondary);" id="introMenu" class="menu-item">INTRO</div>
                 <div id="aboutMenu" class="menu-item">PROBLEM</div>
