@@ -244,8 +244,24 @@ var editorActive = false;
           }
         });
       document.getElementById("adminCCPADB").addEventListener("click", () => {
+        var el = document.getElementById("ccpaModal");
+
+        if (el.classList.contains("loaded")) {
+          var ccpaModal = document.getElementById("ccpaModal").shadowRoot.getElementById("main");
+          gsap.to(ccpaModal, {
+            duration: 0.5,
+            opacity: 1, 
+            scaleX: 1,
+            ease: "power2.inOut",
+          });
+          return;
+        }
+
         document.getElementById("ccpaModal").setAttribute("active", "true");
+        document.getElementById("ccpaModal").classList.add("loaded");
+        window.adminMode = true;
       });
+      return;
     }
   };
 

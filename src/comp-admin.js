@@ -6,6 +6,10 @@ class compAdmin extends HTMLElement {
         this.periumArchive = null;
         this.selectedPerium = "";
         this.windowOpen = false;
+        this.tempPerium = null;
+        window.blobBlock = false;
+        this.pred2 = null;
+        this.pred1 = null;
         this.Perium = {
             nfc: "",
             dep: false,
@@ -76,8 +80,8 @@ class compAdmin extends HTMLElement {
                 <option>sonic</option>
             </select>
             <input id="periumTitle${ccpaLength}" value=""></input>
-            <input type="file" id="fileInput1" accept="text/plain, video/*, audio/*, image/*"/>
-            <input type="file" id="fileInput2" accept="text/plain, video/*, audio/*, image/*"/>
+            <input type="file" id="fileInput1-${ccpaLength}" accept="text/plain, video/*, audio/*, image/*"/>
+            <input type="file" id="fileInput2-${ccpaLength}" accept="text/plain, video/*, audio/*, image/*"/>
             <input id="periumD3${ccpaLength}" value=""></input>
             <input id="periumDesc${ccpaLength}" value=""></input>
             <div>-</div>
@@ -91,27 +95,27 @@ class compAdmin extends HTMLElement {
             `;
 
             // add event listenners to file inputs to get file data. Make is capture blob data
-            row.querySelector(`#fileInput1`).addEventListener('change', async (e) => {
+            row.querySelector(`#fileInput1-${ccpaLength}`).addEventListener('change', async (e) => {
                 console.log("Input 1 Changed", this.Perium);
 
-                let fileInput1 = this.shadowRoot.getElementById(`fileInput1`).files;
+                let fileInput1 = this.shadowRoot.getElementById(`fileInput1-${ccpaLength}`).files;
 
-                var pred1 = fileInput1[0];
+                this.pred1 = fileInput1[0];
 
-                const arrayBuffer = await pred1.arrayBuffer(); // Read file as ArrayBuffer
+                const arrayBuffer = await this.pred1.arrayBuffer(); // Read file as ArrayBuffer
                 const blob = new Uint8Array(arrayBuffer); // Convert to Uint8Array
 
                 this.Perium.d1 = blob;
             });
 
-            row.querySelector(`#fileInput2`).addEventListener('change', async (e) => {
+            row.querySelector(`#fileInput2-${ccpaLength}`).addEventListener('change', async (e) => {
                 console.log("Input 2 Changed", this.Perium);
 
-                let fileInput2 = this.shadowRoot.getElementById(`fileInput2`).files;
+                let fileInput2 = this.shadowRoot.getElementById(`fileInput2-${ccpaLength}`).files;
                 
-                var pred2 = fileInput2[0];
+                this.pred2 = fileInput2[0];
 
-                const arrayBuffer = await pred2.arrayBuffer(); // Read file as ArrayBuffer
+                const arrayBuffer = await this.pred2.arrayBuffer(); // Read file as ArrayBuffer
                 const blob = new Uint8Array(arrayBuffer); // Convert to Uint8Array
 
                 this.Perium.d2 = blob;
@@ -127,32 +131,31 @@ class compAdmin extends HTMLElement {
             this.shadowRoot.getElementById(`viewBut${ccpaLength}`).addEventListener('click', (e) => {
                 var id = ccpaLength;
                 console.log("Viewing Perium", this.Perium);
-                this.viewPerium(id);
+                this.viewPerium(id, undefined);
             });
             return;
         } else {
-            // address multiple lines having file input fields with same ids
             row.innerHTML = `
-            <div>${ccpaLength}.</div>
-            <input id="periumNfc${ccpaLength}" value="${currentPerium.nfc}"></input>
+            <div class="live">${ccpaLength}.</div>
+            <input id="periumNfc${ccpaLength}" value="${perium.nfc}"></input>
             <select id="periumDep${ccpaLength}" value="NO">
                 <option>YES</option>
                 <option selected>NO</option>
             </select>
-            <input id="periumTag${ccpaLength}" value="${currentPerium.tag}"></input>
-            <select id="periumCat${ccpaLength}" value="${currentPerium.cat}">
+            <input id="periumTag${ccpaLength}" value="${perium.tag}"></input>
+            <select id="periumCat${ccpaLength}" value="${perium.cat}">
                 <option>note</option>
                 <option>image</option>
                 <option>video</option>
                 <option>sonic</option>
             </select>
-            <input id="periumTitle${ccpaLength}" value="${currentPerium.title}"></input>
-            <input id="fileInput${ccpaLength}"/>
-            <input id="fileInput${ccpaLength}"/>
-            <input id="periumD3${ccpaLength}" value="${currentPerium.d3}"></input>
-            <input id="periumDesc${ccpaLength}" value="${currentPerium.desc}"></input>
-            <div>${currentPerium.views}</div>
-            <div>${currentPerium.lastV}</div>
+            <input id="periumTitle${ccpaLength}" value="${perium.title}"></input>
+            <input id="fileInput1-${ccpaLength}"/>
+            <input id="fileInput2-${ccpaLength}"/>
+            <input id="periumD3${ccpaLength}" value="${perium.d3}"></input>
+            <input id="periumDesc${ccpaLength}" value="${perium.desc}"></input>
+            <div>${perium.views}</div>
+            <div>${perium.lastV}</div>
             <div class="actionBut" id="viewBut${ccpaLength}">
                 <img src="/assets/images/assets1/svg/view.svg">
             </div>
@@ -161,6 +164,39 @@ class compAdmin extends HTMLElement {
             </div>
             `;
             this.shadowRoot.querySelector('#Body').appendChild(row);
+
+            switch (perium.cat) {
+                case "note":
+                    this.shadowRoot.getElementById(`periumCat${ccpaLength}`).selectedIndex = 0;
+                    break;
+                case "image":
+                    this.shadowRoot.getElementById(`periumCat${ccpaLength}`).selectedIndex = 1;
+                    break;
+                case "video":
+                    this.shadowRoot.getElementById(`periumCat${ccpaLength}`).selectedIndex = 2;
+                    break;
+                case "sonic":
+                    this.shadowRoot.getElementById(`periumCat${ccpaLength}`).selectedIndex = 3;
+                    break;
+            }
+
+            switch (perium.dep) {
+                case true:
+                    this.shadowRoot.getElementById(`periumDep${ccpaLength}`).selectedIndex = 0;
+                    break;
+                case false:
+                    this.shadowRoot.getElementById(`periumDep${ccpaLength}`).selectedIndex = 1;
+                    break;
+            }
+
+            this.shadowRoot.getElementById(`saveBut${ccpaLength}`).addEventListener('click', (e) => {
+                this.savePerium(perium.nfc);
+            });
+
+            this.shadowRoot.getElementById(`viewBut${ccpaLength}`).addEventListener('click', (e) => {
+                console.log("Viewing Perium", this.Perium);
+                this.viewPerium(ccpaLength, perium.nfc);
+            });
         }
         
     }
@@ -183,9 +219,11 @@ class compAdmin extends HTMLElement {
         this.Perium.desc = this.shadowRoot.getElementById(`periumDesc${id}`).value;
         this.Perium.views = 0;
 
+        this.selectedPerium = this.Perium.nfc;
+
         // Get object from this.periumArchive that has nfc that matches the selected perium
-        var tempPerium = this.periumArchive?.find((perium) => {
-            return perium.nfc === this.selectedPerium;
+        var tempPerium = this.periumArchive?.find((id) => {
+            return id.nfc === this.selectedPerium;
         });
 
         if (tempPerium != undefined) {
@@ -257,7 +295,7 @@ class compAdmin extends HTMLElement {
         //
     }
 
-    async viewPerium(id) {
+    async viewPerium(id, nfc) {
         var previewBody = document.createElement('div');
         var closeBut = document.createElement('div');
 
@@ -270,15 +308,21 @@ class compAdmin extends HTMLElement {
         this.Perium.d3 = this.shadowRoot.getElementById(`periumD3${id}`).value;
         this.Perium.desc = this.shadowRoot.getElementById(`periumDesc${id}`).value;
 
+        this.selectedPerium = this.Perium.nfc;
+
         // Get object from this.periumArchive that has nfc that matches the selected perium
-        var tempPerium = this.periumArchive.find((id) => {
-            return perium.nfc === this.selectedPerium;
+        this.tempPerium = this.periumArchive.find(async (id) => {
+            return await id === this.selectedPerium;
         });
 
-        if (tempPerium != undefined) {
-            console.log("no perium found");
-            this.Perium.views = tempPerium.views;
-            this.Perium.lastV = tempPerium.lastViewed;
+        if (this.tempPerium != undefined) {
+            this.Perium.views = this.tempPerium.views;
+            this.Perium.lastV = this.tempPerium.lastViewed;
+            window.blobBlock = true;
+            this.pred1 = this.tempPerium.d1;
+            this.pred2 = this.tempPerium.d2;
+            this.Perium.d1 = this.tempPerium.d1;
+            this.Perium.d2 = this.tempPerium.d2;
         }
 
         closeBut.innerHTML = "X";
@@ -288,18 +332,34 @@ class compAdmin extends HTMLElement {
         var previewInnerBody = document.createElement('div');
         previewInnerBody.setAttribute('class', 'ccpaPreviewInnerBody');
         previewInnerBody.innerHTML = `
-            <scoge-ccpa active="true" data-perium="false" id="ccpa"></scoge-ccpa>
+            <scoge-ccpa active="true" data-perium="false" data-tempPerium="false" id="ccpa"></scoge-ccpa>
         `;
         previewBody.appendChild(previewInnerBody);
         previewBody.appendChild(closeBut);
         this.shadowRoot.getElementById('main').appendChild(previewBody);
         closeBut.addEventListener('click', () => {
+            this.Perium.d1 = this.pred1;
+            this.Perium.d2 = this.pred2;
+            this.shadowRoot.getElementById('ccpa').loadedPerium.d1 = this.pred1;
+            this.shadowRoot.getElementById('ccpa').loadedPerium.d2 = this.pred2;
+            if (this.shadowRoot.getElementById("ccpa").currentSonic != null) {
+                this.shadowRoot.getElementById("ccpa").currentSonic.pause();
+                this.shadowRoot.getElementById("ccpa").currentSonic = null;
+                this.shadowRoot.getElementById("ccpa").sonicPlaying = false;
+            }
             previewBody.remove();
         });
 
         this.shadowRoot.getElementById('ccpa').loadedPerium = this.Perium;
-        console.log(this.shadowRoot.getElementById('ccpa').loadedPerium);
-        this.shadowRoot.getElementById('ccpa').setAttribute('data-perium', 'trueAdmin');
+
+        if (this.tempPerium != undefined) {
+            this.shadowRoot.getElementById('ccpa').setAttribute('data-perium', 'trueAdmin');
+            this.shadowRoot.getElementById('ccpa').setAttribute('data-tempperium', 'true');
+            this.shadowRoot.getElementById('ccpa').loadedPerium = this.tempPerium;
+            return;
+        } else {
+            this.shadowRoot.getElementById('ccpa').setAttribute('data-perium', 'trueAdmin');
+        }
     }
 
     uploadData(event) {
