@@ -24,6 +24,8 @@ class compCCPA extends HTMLElement {
         this.sonicPaused = false;
         this.pured1 = null;
         this.pured2 = null;
+        this.adminMode = false;
+        this.periumFound = false;
         this.loadedPerium = {
             nfc: "",
             dep: false,
@@ -67,8 +69,8 @@ class compCCPA extends HTMLElement {
     }
 
 
-    static get observedAttributes() {
-        return ["active", "data-perium"];
+    static get observedAttributes() { 
+        return ["active", "data-perium", "data-tempPerium"];
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -78,6 +80,9 @@ class compCCPA extends HTMLElement {
         if (name === "data-perium" && newValue === "trueAdmin") {
             this.getPerium();
         }
+        // if (name === "data-perium" && newValue === "tempPerium") {
+        //     this.getPerium();
+        // }
         if (name === "data-perium" && newValue != "true") {
             this.getPerium({id: newValue, env: "prod"});
         }
@@ -167,7 +172,7 @@ class compCCPA extends HTMLElement {
             env: null
         }
 
-        if (periumData != null) {
+        if (periumData != null && window.adminMode != true) {
             envData = periumData;
         }
 
@@ -202,8 +207,18 @@ class compCCPA extends HTMLElement {
             this.shadowRoot.getElementById("paNum").innerHTML = this.loadedPerium.nfc;
             this.shadowRoot.getElementById("pIntroNum").innerHTML = this.loadedPerium.nfc;
             this.shadowRoot.getElementById("paNum2").innerHTML = `[${this.loadedPerium.cat}]`;
+            this.shadowRoot.getElementById("singleAction").innerHTML = "ACCESS";
+            this.shadowRoot.getElementById("singleAction").style.animation = "none";
+            this.shadowRoot.getElementById("singleAction").style.border = "1px solid var(--accent)";
+            this.shadowRoot.getElementById("singleAction").style.color = "var(--accent)";
             this.shadowRoot.getElementById("singleAction").addEventListener("click", () => {
-                this.findPerium();
+                if (this.periumFound === false) {
+                    var retrieve = new Audio(periumRetrieve);
+                    setTimeout(() => {
+                        retrieve.play();
+                    }, 500);
+                    this.findPerium();
+                }
             });
         }
 
@@ -219,12 +234,15 @@ class compCCPA extends HTMLElement {
 
                 // clear url params
                 window.history.pushState({}, document.title, "/" + "");
-
+                this.currentSonic.pause();
+                this.currentSonic = null;
                 break;
         }
     }
 
     findPerium() {
+        console.log("finding perium");
+        this.periumFound = true;
         var button1 = this.shadowRoot.getElementById("singleAction");
         var exitBut = this.shadowRoot.getElementById("exitBut");
         // rotate the avatars
@@ -341,7 +359,6 @@ class compCCPA extends HTMLElement {
         switch(perium.cat) {
             case "note":
                 this.fileReader("note", this.loadedPerium.d3);
-                console.log("loadedD3", this.loadedPerium.d3);
                 for (let i = 0; i < this.loadedPerium.d3.length; i++) {
 
                     // if (i === 0) {
@@ -520,6 +537,14 @@ class compCCPA extends HTMLElement {
                 newPage.id = "page" + 0;
                 newPage.style.zIndex = 0;
                 this.shadowRoot.getElementById("periumPages").appendChild(newPage);
+
+                // this.shadowRoot.getElementById("ac1").onloadeddata = function() {
+                //     URL.revokeObjectURL(this.src);
+                // };
+                // this.shadowRoot.getElementById("ac2").onloadeddata = function() {
+                //     URL.revokeObjectURL(this.src);
+                // };
+
                 gsap.to(newPage, {
                     opacity: 1, // Fade out to 0 opacity
                     scrollTrigger: {
@@ -1134,7 +1159,7 @@ class compCCPA extends HTMLElement {
                     opacity: 60%;
                 }
 
-                #paNum {
+                #paNum, #pIntroNum {
                     text-transform: uppercase;
                 }
 
@@ -1194,7 +1219,7 @@ class compCCPA extends HTMLElement {
                 </div>
                 <div id="footer">
                     <div id="pdNum">
-                        <span>PA:</span><span id="paNum">${this.loadedPerium.nfc}</span>
+                        <span id="pa">PA:</span><span id="paNum">${this.loadedPerium.nfc}</span>
                     </div>
                     <div id="ccpaButttons">
                         <div id="actionButCont">
