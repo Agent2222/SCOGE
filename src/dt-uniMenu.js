@@ -81,7 +81,7 @@ class getUniMenu extends HTMLElement {
     this.domainIntroSeen = true;
     this.beaconInterval = null;
     this.shadow = this.attachShadow({ mode: "open" });
-    this.defaultSource = `<img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/DIGISHOP-1.png" alt="NFT Shop" id="nftShop">`
+    this.defaultSource = `<img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/DIGISHOP-1.png" alt="NFT Shop" id="nftShop">`
     this.beacons = null;
     this.digiLink = "https://yuku.app/launchpad/hmz4w-fiaaa-aaaah-admlq-cai";
     this.patreonLink = "https://www.patreon.com/_scoge_";
@@ -309,7 +309,7 @@ class getUniMenu extends HTMLElement {
 
   // Beacons
   // async getBeacons() {
-  //   fetch('https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeData/beacons1.csv')
+  //   fetch('https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeData/beacons1.csv')
   // .then(response => response.text())
   // .then(data => {
   //   // Parse and process the data as needed
@@ -1127,31 +1127,31 @@ class getUniMenu extends HTMLElement {
          <style>
             @font-face {
                 font-family: "BS-B";
-                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Bold.svg");
+                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Bold.svg");
                 font-weight: bold;
                 font-style: normal;
             }
             @font-face {
                 font-family: "BS-R";
-                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.ttf");
+                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.ttf");
                 font-weight: normal;
                 font-style: normal;
             }
             @font-face {
                 font-family: "BS-SB";
-                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-SemiBold.svg");
+                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-SemiBold.svg");
                 font-weight: 600;
                 font-style: normal;
             }
             @font-face {
                 font-family: "BS-I";
-                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Italic.svg");
+                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Italic.svg");
                 font-weight: normal;
                 font-style: italic;
             }
             @font-face {
               font-family: "GM-I";
-              src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/DMSans-Italic.ttf");
+              src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/DMSans-Italic.ttf");
               font-weight: normal;
               font-style: italic;
             }
@@ -2902,19 +2902,19 @@ class getUniMenu extends HTMLElement {
             }
 
             #mintBG {
-              background-image: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/buttons/digisette-icon.jpg");
+              background-image: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/buttons/digisette-icon.jpg");
             }
 
             #syncBG {
-              background-image: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/buttons/sync-icon.jpg");
+              background-image: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/buttons/sync-icon.jpg");
             }
 
             #loginBG {
-              background-image: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/buttons/grid.jpg");
+              background-image: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/buttons/grid.jpg");
             }
 
             #patronBG {
-              background-image: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/buttons/patron3.jpg");
+              background-image: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/buttons/patron3.jpg");
             }
 
             #dgromD4 {
@@ -3765,7 +3765,7 @@ class getUniMenu extends HTMLElement {
             <div id="refresh"></div>
             <div id="menuHeader">
               <div id="topMenu">
-               <img id="uniMenuLogo" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/SCOGÉ_Logo-red.png" draggable="false">
+               <img id="uniMenuLogo" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/SCOGÉ_Logo-red.png" draggable="false">
                <div id="loadingText">Loading...</div>
                <div id="uniMenuIcon">
                 <div class="menuIcon" id="mi1"></div>
@@ -3901,7 +3901,7 @@ class getUniMenu extends HTMLElement {
                   <span class="actionArrows" id="aaR"><<</span>
                 </div>
                 <div id="unDev3">
-                  <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/graphics/domain-wireframe.png" alt="Domain Development" id="ddLogo">
+                  <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/graphics/domain-wireframe.png" alt="Domain Development" id="ddLogo">
                 </div>
               </div>
               <div id="agentsAndPatrons">
@@ -3977,13 +3977,13 @@ class getUniMenu extends HTMLElement {
                             ADD NEW
                           </div>
                           <div class="Inventory-Image-Cont">
-                            <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+                            <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
                           </div>
                           <div class="Inventory-Image-Cont">
-                            <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+                            <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
                           </div>
                           <div class="Inventory-Image-Cont">
-                            <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
+                            <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/squ-3.jpg"/>
                           </div>
                       </div>
                     </div>
@@ -4023,7 +4023,7 @@ class getUniMenu extends HTMLElement {
                         </g>
                       </g>
                     </svg>               
-                    <img id="proImg" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/TAOS-CITY-IDC.png">
+                    <img id="proImg" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/TAOS-CITY-IDC.png">
                   </div>
                   <div id="proInfo">
                     <div class="proInfoSect">
@@ -4131,11 +4131,11 @@ class getUniMenu extends HTMLElement {
               <div id="fm-cloudHall">
                 <div id="cloudHallBody">
                   <div class="cloudHall-tabs ct1">
-                    <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/graphics/tc-dd-seal.png" alt="CloudHall 12" id="cloudHallImg">
+                    <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/graphics/tc-dd-seal.png" alt="CloudHall 12" id="cloudHallImg">
                     <div id="cloudHallText">GRAND COUNCIL CENTER<br>- UNDER CONSTRUCTION -</div>
                   </div>
                   <div class="cloudHall-tabs ct2">
-                    <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/avatar/avatar-base1.png" alt="CloudHall 12" id="cloudHallGarmentImg">
+                    <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/avatar/avatar-base1.png" alt="CloudHall 12" id="cloudHallGarmentImg">
                   </div>
                   <div class="cloudHall-tabs ct3">
                   </div>

@@ -245,6 +245,7 @@ class compWallets extends HTMLElement {
     /////////////////////////////
     async connectRainbow() {
         const wallet = createWallet("me.rainbow"); // pass the wallet id
+        console.log(wallet);
         // if user has rainbow wallet installed, connect to it
         if (injectedProvider("me.rainbow")) {
             await wallet.connect({
