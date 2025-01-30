@@ -15,8 +15,9 @@ import { uniMenuAgent } from "../src/uni-c-miniAgent.js";
 import { MainDialogue } from "./typing.js";
 import { SeekDialogue } from "./seeking.js";
 import { SoundtrackManager } from "./soundtrack.js";
-import { HttpAgent } from "@dfinity/agent";
+import { Actor, HttpAgent } from "@dfinity/agent";
 import { Principal } from '@dfinity/principal';
+import { idlFactory } from "../src/declarations/universe_backend/universe_backend.did.js";
 // import the closeCampaign function from dt-campaign.js
 import { mintingScreen } from "../src/mint.js";
 // import { dialogue } from "./game/dialogue.js";
@@ -745,11 +746,25 @@ window.closeInvestor = () => {
   document.getElementById("getInvestors").shadowRoot.getElementById("investorComp").style.transition = "1s all";
   document.getElementById("getInvestors").shadowRoot.getElementById("investorComp").style.right = "-100%";
 }
+window.periumActor = async () => {
+    // var canisterId = "bd3sg-teaaa-aaaaa-qaaba-cai";
+    var canisterId = "wnunb-baaaa-aaaag-aaoya-cai";
+    var live = "https://ic0.app";
+    var local = "http://127.0.0.1:4943";
+    let agent = new HttpAgent({ host: live });
+    // let agent =  window.ic.plug.agent;
+    const actor = Actor.createActor(idlFactory, {
+        agent,
+        canisterId,
+    });
+    agent.fetchRootKey();
+    return actor;
+}
 
 // URL PARAMS OPEN SHOP
 var viewThisProduct = "";
 var ccpa = null;
-window.getParamsDesktop = () => {
+window.getParamsDesktop = async () => {
   const params = new URLSearchParams(location.search)
   viewThisProduct = params.get("Product");
   ccpa = params.get("ccpa");
@@ -763,7 +778,7 @@ window.getParamsDesktop = () => {
   if (window.investorsView === "true") {
     window.activateInvestors();
   }
-  if (ccpa != null) {
+  if (ccpa != null && window.isMobile == true) {
     var ccpaEl = document.createElement("scoge-ccpa");
     ccpaEl.setAttribute("active", "true");
     ccpaEl.setAttribute("id", "ccpaModal");
@@ -775,6 +790,14 @@ window.getParamsDesktop = () => {
     document.getElementById("main").appendChild(ccpaEl);
     ccpaEl.setAttribute("data-perium", `${ccpa}`);
     window.perium = ccpa;
+    var date = new Date();
+    var convertedDate = date.toISOString();
+    var pActor = await window.periumActor();
+    pActor.updateLastViewed(ccpa, convertedDate).then((res) => {
+      console.log("Updated", res);
+    }).catch((err) => {
+      console.log("Error", err);
+    });
   }
   if (viewThisProduct != null) {
     console.log("Checker", viewThisProduct);

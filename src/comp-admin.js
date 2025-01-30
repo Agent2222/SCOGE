@@ -10,14 +10,16 @@ class compAdmin extends HTMLElement {
         window.blobBlock = false;
         this.pred2 = null;
         this.pred1 = null;
+        this.d1Chunks = null;
+        this.d2Chunks = null;
         this.Perium = {
             nfc: "",
             dep: false,
             tag: "",
             cat: "[note]",
             title: "",
-            d1: null,
-            d2: null,
+            d1: [],
+            d2: [],
             d3: "",
             desc: "",
             views: null,
@@ -105,7 +107,8 @@ class compAdmin extends HTMLElement {
                 const arrayBuffer = await this.pred1.arrayBuffer(); // Read file as ArrayBuffer
                 const blob = new Uint8Array(arrayBuffer); // Convert to Uint8Array
 
-                this.Perium.d1 = blob;
+                // this.Perium.d1 = blob;
+                this.d1Chunks = blob;
             });
 
             row.querySelector(`#fileInput2-${ccpaLength}`).addEventListener('change', async (e) => {
@@ -118,7 +121,8 @@ class compAdmin extends HTMLElement {
                 const arrayBuffer = await this.pred2.arrayBuffer(); // Read file as ArrayBuffer
                 const blob = new Uint8Array(arrayBuffer); // Convert to Uint8Array
 
-                this.Perium.d2 = blob;
+                // this.Perium.d2 = blob;
+                this.d2Chunks = blob;
             });
 
             this.shadowRoot.querySelector('#Body').appendChild(row);
@@ -201,6 +205,35 @@ class compAdmin extends HTMLElement {
         
     }
 
+    async uploadChunks(nfc, field, blob, chunkSize = 1_800_000) {
+        const totalChunks = Math.ceil(blob.length / chunkSize);
+    
+        for (let i = 0; i < totalChunks; i++) {
+            const chunk = blob.slice(i * chunkSize, (i + 1) * chunkSize);
+    
+            try {
+                // ✅ Convert Uint8Array to standard JavaScript array
+                const chunkArray = Array.from(chunk);
+    
+                // ✅ Wrap in an option (`?vec nat8`) by using `[chunkArray]`
+                await this.icpActor.saveBlob(nfc, field, [chunkArray]); // Send as `opt vec nat8`
+    
+                console.log(`Uploaded chunk ${i + 1}/${totalChunks} for ${field}`);
+            } catch (err) {
+                console.error(`Error uploading chunk ${i + 1}:`, err);
+                return;
+            }
+        }
+    
+        console.log(`${field} upload complete!`);
+    }
+    
+    
+
+    async recomposeChunks(chunks) {
+        return new Uint8Array(chunks.flat());
+    }
+
     savePerium(id) {
         // stage perium data 
         this.Perium.nfc = this.shadowRoot.getElementById(`periumNfc${id}`).value;
@@ -218,6 +251,7 @@ class compAdmin extends HTMLElement {
         this.Perium.d3 = this.shadowRoot.getElementById(`periumD3${id}`).value;
         this.Perium.desc = this.shadowRoot.getElementById(`periumDesc${id}`).value;
         this.Perium.views = 0;
+        this.Perium.lastV = "-";
 
         this.selectedPerium = this.Perium.nfc;
 
@@ -229,8 +263,11 @@ class compAdmin extends HTMLElement {
         if (tempPerium != undefined) {
             console.log("no perium found");
             this.Perium.views = tempPerium.views;
-            this.Perium.lastV = tempPerium.lastViewed;
         }
+
+        var date = new Date();
+        var ConvertedDate = date.toISOString();
+        this.Perium.lastV = ConvertedDate;
 
         var preSave = document.createElement('div');
         preSave.setAttribute('class', 'preSave');
@@ -242,6 +279,7 @@ class compAdmin extends HTMLElement {
             </div>
         `;
         preSave.querySelector('#confirmSave').addEventListener('click', () => {
+            console.log("Saving Perium", this.Perium);
             this.confirmSave();
         });
         preSave.querySelector('#cancelSave').addEventListener('click', () => {
@@ -255,13 +293,46 @@ class compAdmin extends HTMLElement {
         this.shadowRoot.querySelector('#saveText').style.animation = "loadBlink 1s ease-in-out infinite";
 
         const custCheck = await this.icpActor.addOrUpdateCCPA(this.Perium.nfc, this.Perium).then((result) => {
-            this.shadowRoot.querySelector('#saveText').innerHTML = "Perium Saved!";
-            this.shadowRoot.querySelector('#saveText').style.animation = "none";
-            this.shadowRoot.querySelector('#cancelSave').remove();
-            this.shadowRoot.querySelector('#confirmSave').innerHTML = "CLOSE";
-            this.shadowRoot.querySelector('#savePeriumButtons').style.gridTemplateColumns = "100%";
-            this.shadowRoot.getElementById("Body").innerHTML = "";
-            this.getArchive();
+
+            switch (this.Perium.cat) {
+                case "video":
+                    this.uploadChunks(this.Perium.nfc, "d1", this.d1Chunks).then(() => {
+                        this.shadowRoot.querySelector('#saveText').innerHTML = "Perium Saved!";
+                        this.shadowRoot.querySelector('#saveText').style.animation = "none";
+                        this.shadowRoot.querySelector('#cancelSave').remove();
+                        this.shadowRoot.querySelector('#confirmSave').innerHTML = "CLOSE";
+                        this.shadowRoot.querySelector('#savePeriumButtons').style.gridTemplateColumns = "100%";
+                        this.shadowRoot.getElementById("Body").innerHTML = "";
+                        this.getArchive();
+                    });
+                    break;
+                case "sonic":
+                    this.uploadChunks(this.Perium.nfc, "d1", this.d1Chunks).then(() => {
+                        console.log("Uploaded Image Chunks");
+                        this.uploadChunks(this.Perium.nfc, "d2", this.d2Chunks).then(() => {
+                            console.log("Uploaded Sonic Chunks");
+                            this.shadowRoot.querySelector('#saveText').innerHTML = "Perium Saved!";
+                            this.shadowRoot.querySelector('#saveText').style.animation = "none";
+                            this.shadowRoot.querySelector('#cancelSave').remove();
+                            this.shadowRoot.querySelector('#confirmSave').innerHTML = "CLOSE";
+                            this.shadowRoot.querySelector('#savePeriumButtons').style.gridTemplateColumns = "100%";
+                            this.shadowRoot.getElementById("Body").innerHTML = "";
+                            this.getArchive();
+                        });
+                    });
+                    break;
+                case "image":  
+                    this.uploadChunks(this.Perium.nfc, "d1", this.d1Chunks).then(() => {
+                        this.shadowRoot.querySelector('#saveText').innerHTML = "Perium Saved!";
+                        this.shadowRoot.querySelector('#saveText').style.animation = "none";
+                        this.shadowRoot.querySelector('#cancelSave').remove();
+                        this.shadowRoot.querySelector('#confirmSave').innerHTML = "CLOSE";
+                        this.shadowRoot.querySelector('#savePeriumButtons').style.gridTemplateColumns = "100%";
+                        this.shadowRoot.getElementById("Body").innerHTML = "";
+                        this.getArchive();
+                    });
+                    break;
+            } 
             return result;
           }).catch((error) => {
             console.error("Error saving perium", error);
@@ -295,6 +366,31 @@ class compAdmin extends HTMLElement {
         //
     }
 
+    async getPeriumChunks(nfc, field, chunkSize = 1_800_000) {
+        let allChunks = [];
+        let startIndex = 0;
+      
+        while (true) {
+          // Fetch chunks from the backend
+          const chunks = await this.icpActor.getBlobChunks(nfc, field, chunkSize, startIndex);
+      
+          if (!chunks || chunks.length === 0) {
+            // Stop fetching if no more chunks are returned
+            break;
+          }
+
+          progress = Math.round((startIndex / this.loadedPerium.d1.length) * 100);
+          console.log("Progress: ", progress);    
+      
+          // Add the fetched chunks to the array
+          allChunks.push(...chunks);
+          startIndex += chunks.length; // Increment the start index
+        }
+      
+        // Recompose all chunks into a single Uint8Array
+        return new Uint8Array(allChunks.flat());
+    };
+
     async viewPerium(id, nfc) {
         var previewBody = document.createElement('div');
         var closeBut = document.createElement('div');
@@ -321,8 +417,71 @@ class compAdmin extends HTMLElement {
             window.blobBlock = true;
             this.pred1 = this.tempPerium.d1;
             this.pred2 = this.tempPerium.d2;
-            this.Perium.d1 = this.tempPerium.d1;
-            this.Perium.d2 = this.tempPerium.d2;
+
+
+
+            switch (this.Perium.cat) {
+                case "image":
+                    this.getPeriumChunks(this.tempPerium.nfc, "d1").then((result) => {
+                        this.Perium.d1 = result;
+                        this.tempPerium.d1 = result;
+                        console.log("result", result);
+                    });
+                    break;
+                case "video":
+                    this.getPeriumChunks(this.tempPerium.nfc, "d1").then((result) => {
+                        this.Perium.d1 = result;
+                        this.tempPerium.d1 = result;
+                    });
+                    break;
+                case "sonic":
+                    this.getPeriumChunks(this.tempPerium.nfc, "d1").then((result) => {
+                        this.Perium.d1 = result;
+                        this.tempPerium.d1 = result;
+                        console.log("result", result);
+                    });
+                    this.getPeriumChunks(this.tempPerium.nfc, "d2").then((result) => {
+                        this.Perium.d2 = result;
+                        this.tempPerium.d2 = result;
+                        console.log("result", result);
+                    });
+                    break;
+                default:
+                    this.Perium.d1 = this.tempPerium.d1;
+                    this.Perium.d2 = this.tempPerium.d2;
+                    break;
+            }
+
+            // switch (this.Perium.cat) {
+            //     case "video":
+            //         this.recomposeChunks(this.tempPerium.d1).then((result) => {
+            //             this.Perium.d1 = result;
+            //         });
+            //         break;
+            //     case "sonic":
+            //         this.recomposeChunks(this.tempPerium.d1).then((result) => {
+            //             this.Perium.d1 = result;
+            //         });
+            //         this.recomposeChunks(this.tempPerium.d2).then((result) => {
+            //             this.Perium.d2 = result;
+            //         });
+            //         break;
+            //     default:
+            //         this.Perium.d1 = this.tempPerium.d1;
+            //         this.Perium.d2 = this.tempPerium.d2;
+            //         break;
+            // }
+
+            // this.recomposeChunks(this.tempPerium.d1).then((result) => {
+            //     this.Perium.d1 = result;
+            // });
+
+            // this.recomposeChunks(this.tempPerium.d2).then((result) => {
+            //     this.Perium.d2 = result;
+            // });
+
+            // // this.Perium.d1 = this.tempPerium.d1;
+            // // this.Perium.d2 = this.tempPerium.d2;
         }
 
         closeBut.innerHTML = "X";
@@ -355,6 +514,7 @@ class compAdmin extends HTMLElement {
         if (this.tempPerium != undefined) {
             this.shadowRoot.getElementById('ccpa').setAttribute('data-perium', 'trueAdmin');
             this.shadowRoot.getElementById('ccpa').setAttribute('data-tempperium', 'true');
+            console.log("Temp Perium", this.tempPerium);
             this.shadowRoot.getElementById('ccpa').loadedPerium = this.tempPerium;
             return;
         } else {

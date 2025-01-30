@@ -26,6 +26,7 @@ class compCCPA extends HTMLElement {
         this.pured2 = null;
         this.adminMode = false;
         this.periumFound = false;
+        this.loadedAllChunks = false;
         this.loadedPerium = {
             nfc: "",
             dep: false,
@@ -99,8 +100,10 @@ class compCCPA extends HTMLElement {
                 this.loadedPerium.d3 = textArray;
                 break;
             case "image":
+                console.log("original image file", file);
                 const blobRaw = new Blob([file]);
                 const blobURL = URL.createObjectURL(blobRaw);
+                console.log("image file converted", blobURL);
                 this.loadedPerium.d1 = blobURL;
                 break;
             case "video":
@@ -115,6 +118,7 @@ class compCCPA extends HTMLElement {
             case "sonic":
                 let blobRaw3 = new Blob([file], {type: 'audio/mpeg'});
                 let blobURL3 = URL.createObjectURL(blobRaw3);
+                console.log("sonic file converted", blobURL3);
                 this.loadedPerium.d2 = blobURL3;
                 break;
         }
@@ -164,7 +168,49 @@ class compCCPA extends HTMLElement {
         agent.fetchRootKey();
         return actor;
     }
-    
+
+    async getPeriumChunks(nfc, field, chunkSize = 262_414) {
+        let allChunks = [];
+        let startIndex = 0;
+      
+        while (this.loadedAllChunks === false) {
+          // Fetch chunks from the backend
+          const pActor = await this.periumActor();
+          const chunks = await pActor.getBlobChunks(nfc, field, chunkSize, startIndex);
+      
+          if (!chunks || chunks.length === 0) {
+            // Stop fetching if no more chunks are returned
+            console.log("No more chunks to fetch");
+            break;
+          } 
+
+          if (chunks[0].length === 0) {
+            this.loadedAllChunks = true;
+            console.log("All chunks loaded");
+          }
+      
+          // Add the fetched chunks to the array
+          allChunks.push(...chunks || []);
+          startIndex += chunks.length; // Increment the start index
+        }
+      
+        this.loadedAllChunks = false;
+        // Recompose all chunks into a single Uint8Array
+        // ✅ Flatten all Uint8Arrays correctly
+        let flattenedChunks = [].concat(...allChunks);
+
+        // ✅ Merge into a single Uint8Array
+        let totalSize = flattenedChunks.reduce((acc, chunk) => acc + chunk.length, 0);
+        let mergedUint8Array = new Uint8Array(totalSize);
+
+        let offset = 0;
+        for (let chunk of flattenedChunks) {
+            mergedUint8Array.set(chunk, offset);
+            offset += chunk.length;
+        }
+
+        return mergedUint8Array;
+    };
 
     async getPerium(periumData) {
         var envData = {
@@ -178,8 +224,23 @@ class compCCPA extends HTMLElement {
 
         if (envData.env != null) {
             var actor = await this.periumActor(); 
-            const perium = await actor.getPerium(envData.id).then((result) => {
+            const perium = await actor.getPerium(envData.id).then(async(result) => {
                 this.loadedPerium = result[0];
+
+                switch(this.loadedPerium.cat) {
+                    case "image":
+                        this.loadedPerium.d1 = await this.getPeriumChunks(this.loadedPerium.nfc, "d1");
+                        break;
+                    case "video":
+                        this.loadedPerium.d1 = await this.getPeriumChunks(this.loadedPerium.nfc, "d1")
+                        break;
+                    case "sonic":
+                        console.log("calling here");
+                        this.loadedPerium.d1 = await this.getPeriumChunks(this.loadedPerium.nfc, "d1");
+                        this.loadedPerium.d2 = await this.getPeriumChunks(this.loadedPerium.nfc, "d2");
+                        break;
+                }
+
                 this.shadowRoot.getElementById("paNum").innerHTML = this.loadedPerium.nfc;
                 this.shadowRoot.getElementById("pIntroNum").innerHTML = this.loadedPerium.nfc;
                 this.shadowRoot.getElementById("paNum2").innerHTML = `[${this.loadedPerium.cat}]`;
@@ -422,6 +483,7 @@ class compCCPA extends HTMLElement {
                     this.shadowRoot.getElementById("sb5").style.display = "none";
                      
                     if (i === 0) {
+                        console.log("loaded perium", this.loadedPerium);
                         this.fileReader("image", this.loadedPerium.d1);
                         var newPage = document.createElement("div");
                         newPage.innerHTML = `<img src="${this.loadedPerium.d1}" style="width: 90%; height: auto;"/>`;
@@ -507,6 +569,7 @@ class compCCPA extends HTMLElement {
 
                 break;
             case "sonic":
+                console.log("loaded perium", this.loadedPerium);
                 this.fileReader("image", this.loadedPerium.d1);
                 // this.shadowRoot.getElementById("sb4").style.display = "none";
                 this.shadowRoot.getElementById("sb5").style.display = "none";
@@ -1261,8 +1324,8 @@ class compCCPA extends HTMLElement {
                     <div id="introScreen"> 
                         <div id="ccpaCont">
                             <div id="ccpaAvatar">
-                                <img id="avatar1" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/avatar/avatar-base1.png"/>
-                                <img id="avatar2" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/avatar/avatar-base1.png"/>
+                                <img id="avatar1" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/avatar/avatar-base1.png"/>
+                                <img id="avatar2" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/avatar/avatar-base1.png"/>
                             </div>
                             <div id="loadGlobes">
                                 <img id="blg1" class="globeG1" src="${globes}"/>
