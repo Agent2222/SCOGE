@@ -1390,7 +1390,7 @@ class scogeShop extends HTMLElement {
       this.shadowRoot.getElementById("InfoImgs").innerHTML = "";
       for (let i = 1; i < largeImages + 1; i++) {
         var img = document.createElement("img");
-        img.src = `https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeShop/alts/P${this.currentProduct}-L${this.selectedLook.Look}-c${this.selectedLook.Chapter}-SCOGE-alt${i}.png`;
+        img.src = `https://storage.scoge.co/scogeShop/alts/P${this.currentProduct}-L${this.selectedLook.Look}-c${this.selectedLook.Chapter}-SCOGE-alt${i}.png`;
         this.shadowRoot.getElementById("InfoImgs").appendChild(img);
       }
 
@@ -2418,6 +2418,7 @@ class scogeShop extends HTMLElement {
                     pointer-events: none;
                     scale: 1.5;
                     overflow-x: hidden;
+                    overflow-y: hidden;
                   }
                   
                   #InfoDesc {
@@ -3026,7 +3027,7 @@ class scogeShop extends HTMLElement {
                 </div>
                 <div id="productInfo">
                     <div id="InfoImgs">
-                        <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeShop/P2-L4-cC-SCOGE.png"/>
+                        <img src="https://storage.scoge.co/scogeShop/P2-L4-cC-SCOGE.png"/>
                     </div>
                     <div id="cartItems"></div>
                     <div id="linkOutPage">

@@ -1,8 +1,6 @@
 type Perium = 
  record {
    cat: text;
-   d1: blob;
-   d2: blob;
    d3: text;
    dep: bool;
    desc: text;
@@ -19,9 +17,12 @@ service : {
   allowed3: (principal) -> (bool);
   ccpaTotalSupply: () -> (nat) query;
   custodians: () -> (vec principal) query;
+  getBlobChunks: (text, text, nat, nat) -> (opt vec blob) query;
   getCCPA: () -> (vec Perium) query;
   getPerium: (text) -> (opt Perium) query;
   logo: () -> (opt text) query;
+  saveBlob: (text, text, opt blob) -> ();
   setCustodians: (vec principal) -> ();
   setLogo: (text) -> ();
+  updateLastViewed: (text, text) -> ();
 }
