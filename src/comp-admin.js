@@ -299,8 +299,8 @@ class compAdmin extends HTMLElement {
                     this.uploadChunks(this.Perium.nfc, "d1", this.d1Chunks).then(() => {
                         this.shadowRoot.querySelector('#saveText').innerHTML = "Perium Saved!";
                         this.shadowRoot.querySelector('#saveText').style.animation = "none";
-                        this.shadowRoot.querySelector('#cancelSave').remove();
-                        this.shadowRoot.querySelector('#confirmSave').innerHTML = "CLOSE";
+                        this.shadowRoot.querySelector('#confirmSave').remove();
+                        this.shadowRoot.querySelector('#cancelSave').innerHTML = "CLOSE";
                         this.shadowRoot.querySelector('#savePeriumButtons').style.gridTemplateColumns = "100%";
                         this.shadowRoot.getElementById("Body").innerHTML = "";
                         this.getArchive();
@@ -313,8 +313,8 @@ class compAdmin extends HTMLElement {
                             console.log("Uploaded Sonic Chunks");
                             this.shadowRoot.querySelector('#saveText').innerHTML = "Perium Saved!";
                             this.shadowRoot.querySelector('#saveText').style.animation = "none";
-                            this.shadowRoot.querySelector('#cancelSave').remove();
-                            this.shadowRoot.querySelector('#confirmSave').innerHTML = "CLOSE";
+                            this.shadowRoot.querySelector('#confirmSave').remove();
+                            this.shadowRoot.querySelector('#cancelSave').innerHTML = "CLOSE";
                             this.shadowRoot.querySelector('#savePeriumButtons').style.gridTemplateColumns = "100%";
                             this.shadowRoot.getElementById("Body").innerHTML = "";
                             this.getArchive();
@@ -325,8 +325,8 @@ class compAdmin extends HTMLElement {
                     this.uploadChunks(this.Perium.nfc, "d1", this.d1Chunks).then(() => {
                         this.shadowRoot.querySelector('#saveText').innerHTML = "Perium Saved!";
                         this.shadowRoot.querySelector('#saveText').style.animation = "none";
-                        this.shadowRoot.querySelector('#cancelSave').remove();
-                        this.shadowRoot.querySelector('#confirmSave').innerHTML = "CLOSE";
+                        this.shadowRoot.querySelector('#confirmSave').remove();
+                        this.shadowRoot.querySelector('#cancelSave').innerHTML = "CLOSE";
                         this.shadowRoot.querySelector('#savePeriumButtons').style.gridTemplateColumns = "100%";
                         this.shadowRoot.getElementById("Body").innerHTML = "";
                         this.getArchive();

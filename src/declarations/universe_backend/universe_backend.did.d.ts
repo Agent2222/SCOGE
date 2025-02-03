@@ -20,6 +20,7 @@ export interface _SERVICE {
   'allowed3' : ActorMethod<[Principal], boolean>,
   'ccpaTotalSupply' : ActorMethod<[], bigint>,
   'custodians' : ActorMethod<[], Array<Principal>>,
+  'deletePerium' : ActorMethod<[string], undefined>,
   'getBlobChunks' : ActorMethod<
     [string, string, bigint, bigint],
     [] | [Array<Uint8Array | number[]>]

@@ -15,7 +15,7 @@ class compForge extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({mode: 'open'});
-        this.marketLink = "https://zora.co/collect/base:0x321a5b87ed0008c05503b3429e218d48c1419d29";
+        this.marketLink = "https://opensea.io/collection/scoge-1";
         this.memoryAvailable = false;
         this.loadedImagesCount = 0;
         this.selectedNfts = [];

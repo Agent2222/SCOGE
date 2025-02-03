@@ -481,7 +481,7 @@ class compWallets extends HTMLElement {
             this.connectCoinbase();
         });
         this.shadowRoot.getElementById("infoCont2").addEventListener("click", () => {
-            window.open('https://zora.co/@scoge', '_blank');
+            window.open('https://zora.co/collect/base:0xd8b7edda0dcf5069d5900b43362e96b1832ffc12/2?referrer=0x2a9e5f8485c7596e427bfb26fd41d149a110e949', '_blank');
         });
     }
 
