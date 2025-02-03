@@ -57,7 +57,7 @@ export async function story(scenario) {
 
 export function openNote1() {
   document.getElementById("note1-img").src =
-    "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/graphics/tg-artifact-1-2-2.png";
+    "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/graphics/tg-artifact-1-2-2.png";
   document.getElementById("note1-cont").style.width = "100%";
   document.getElementById("note1-cont").style.height = "100%";
   document.getElementById("note1-cont").style.left = "0%";

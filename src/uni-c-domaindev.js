@@ -283,27 +283,27 @@ class uniDomainDev extends HTMLElement {
             }
         });
         if (this.blueGel != 0) {
-            this.shadowRoot.getElementById('ii2').src = "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Blue-DigiGel-1.png";
+            this.shadowRoot.getElementById('ii2').src = "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Blue-DigiGel-1.png";
             if (this.blueGel > 1) {
                 this.shadowRoot.getElementById('ii3multi').innerHTML = `( <span class="gelQty">${this.blueGel - 1}</span> )`;
             }
         }
         if (this.redGel != 0) {
-            this.shadowRoot.getElementById('ii3').src = "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Red-DigiGel-1.png";
+            this.shadowRoot.getElementById('ii3').src = "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Red-DigiGel-1.png";
             if (this.redGel > 1) {
                 this.shadowRoot.getElementById('ii4multi').innerHTML = `( <span class="gelQty">${this.redGel - 1}</span> )`;
             }
         }
 
         if (this.goldGel != 0) {
-            this.shadowRoot.getElementById('ii4').src = "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Yellow-DigiGel-1.png";
+            this.shadowRoot.getElementById('ii4').src = "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Yellow-DigiGel-1.png";
             if (this.goldGel > 1) {
                 this.shadowRoot.getElementById('ii5multi').innerHTML = `( <span class="gelQty">${this.goldGel - 1}</span> )`;
             }
         }
 
         if (this.whiteGel != 0) {
-            this.shadowRoot.getElementById('ii5').src = "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/White-DigiGel-1.png";
+            this.shadowRoot.getElementById('ii5').src = "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/White-DigiGel-1.png";
             if (this.whiteGel > 1) {
                 this.shadowRoot.getElementById('ii6multi').innerHTML = `( <span class="gelQty">${this.whiteGel - 1}</span> )`;
             }
@@ -1073,11 +1073,11 @@ class uniDomainDev extends HTMLElement {
                     </div>
                     <div id="assetsCont">
                         <div class="inventoryItem" id="assetDigisette">
-                            <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png" alt="digisette">
+                            <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png" alt="digisette">
                             <div class="multiplier" id="ii1multi">001</div>
                         </div>
                         <div class="inventoryItem" id="inventoryItem1">
-                            <img id="ii1" data-help="GelCase" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Clear-DigiGelCase-1.png">
+                            <img id="ii1" data-help="GelCase" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Clear-DigiGelCase-1.png">
                             <div class="multiplier" id="ii2multi"></div>
                         </div>
                         <div class="inventoryItem" id="inventoryItem2">

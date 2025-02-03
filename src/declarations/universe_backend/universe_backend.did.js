@@ -17,6 +17,7 @@ export const idlFactory = ({ IDL }) => {
     'allowed3' : IDL.Func([IDL.Principal], [IDL.Bool], []),
     'ccpaTotalSupply' : IDL.Func([], [IDL.Nat], ['query']),
     'custodians' : IDL.Func([], [IDL.Vec(IDL.Principal)], ['query']),
+    'deletePerium' : IDL.Func([IDL.Text], [], []),
     'getBlobChunks' : IDL.Func(
         [IDL.Text, IDL.Text, IDL.Nat, IDL.Nat],
         [IDL.Opt(IDL.Vec(IDL.Vec(IDL.Nat8)))],

@@ -10,7 +10,7 @@ export var CharacterData = {
       images: [
         {
           default: {
-            link: "https://scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-1.png",
+            link: "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-1.png",
           },
         },
       ]
@@ -25,7 +25,7 @@ export var CharacterData = {
       images: [
         {
           default: {
-            link: "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Destiny-1.png",
+            link: "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Destiny-1.png",
           },
         },
       ]

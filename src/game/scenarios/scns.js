@@ -154,7 +154,7 @@ export const scns = {
           position: "absolute",
           shadow: true,
           shadowEffect: "blur(50px)",
-          src: "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/BFWallet.png",
+          src: "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/BFWallet.png",
           action: function () {
             // Connect Wallet
           },
@@ -252,7 +252,7 @@ export const scns = {
           position: "absolute",
           shadow: true,
           shadowEffect: "blur(50px)",
-          src: "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/BFWallet.png",
+          src: "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/BFWallet.png",
           action: function () {
             // Connect Wallet
           },

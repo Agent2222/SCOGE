@@ -18,6 +18,7 @@ class compCCPA extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({mode: 'open'});
+        this.mediaSource
         this.currentSonic = null;
         this.sonicPlaying = false;
         this.currentSonicTrack = 0;
@@ -169,7 +170,7 @@ class compCCPA extends HTMLElement {
         return actor;
     }
 
-    async getPeriumChunks(nfc, field, chunkSize = 262_414) {
+    async getPeriumChunks(nfc, field, chunkSize = 2_000_000) {
         let allChunks = [];
         let startIndex = 0;
       
@@ -211,6 +212,7 @@ class compCCPA extends HTMLElement {
 
         return mergedUint8Array;
     };
+    
 
     async getPerium(periumData) {
         var envData = {
@@ -235,9 +237,10 @@ class compCCPA extends HTMLElement {
                         this.loadedPerium.d1 = await this.getPeriumChunks(this.loadedPerium.nfc, "d1")
                         break;
                     case "sonic":
-                        console.log("calling here");
                         this.loadedPerium.d1 = await this.getPeriumChunks(this.loadedPerium.nfc, "d1");
                         this.loadedPerium.d2 = await this.getPeriumChunks(this.loadedPerium.nfc, "d2");
+                        // this.loadedPerium.d2 = 
+                        // await this.streamPeriumChunks(this.loadedPerium.nfc, "d2", 'audio/mp4; codecs="mp4a.40.2"');
                         break;
                 }
 
@@ -375,6 +378,8 @@ class compCCPA extends HTMLElement {
         if (this.currentSonic === null) {
             this.fileReader("sonic", this.loadedPerium.d2);
             this.currentSonic = new Audio(this.loadedPerium.d2);
+            // this.currentSonic = document.getElementById("periumMedia");   
+            // console.log("current sonic", this.currentSonic);
         }
 
         if (this.sonicPlaying === false) {

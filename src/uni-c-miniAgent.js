@@ -371,8 +371,8 @@ class uniMenuAgent extends HTMLElement {
                 </div>
                 <div id="help">S</div>
                 <div id="agentProfile">
-                    <img id="agentImg" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Lesli-1.png" alt="Avatar" style="width:100%">
-                    <img src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/graphics/domain-wireframe.png" alt="Domain Development" id="ddLogo" style="height:100%">
+                    <img id="agentImg" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Lesli-1.png" alt="Avatar" style="width:100%">
+                    <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/graphics/domain-wireframe.png" alt="Domain Development" id="ddLogo" style="height:100%">
                 </div>
             </div>
         `;
