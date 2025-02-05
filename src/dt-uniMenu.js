@@ -4131,11 +4131,11 @@ class getUniMenu extends HTMLElement {
               <div id="fm-cloudHall">
                 <div id="cloudHallBody">
                   <div class="cloudHall-tabs ct1">
-                    <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/graphics/tc-dd-seal.png" alt="CloudHall 12" id="cloudHallImg">
+                    <img src="https://storage.scoge.co/scogeUniverse/uniMenu/tc-dd-seal.png" alt="CloudHall 12" id="cloudHallImg">
                     <div id="cloudHallText">GRAND COUNCIL CENTER<br>- UNDER CONSTRUCTION -</div>
                   </div>
                   <div class="cloudHall-tabs ct2">
-                    <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/avatar/avatar-base1.png" alt="CloudHall 12" id="cloudHallGarmentImg">
+                    <img src="https://storage.scoge.co/scogeUniverse/avatars/avatar-base1.png" alt="CloudHall 12" id="cloudHallGarmentImg">
                   </div>
                   <div class="cloudHall-tabs ct3">
                   </div>
