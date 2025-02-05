@@ -66,51 +66,6 @@ try {
   console.log(err)
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  // URL PARAMS OPEN SHOP
-  var viewThisProduct = "";
-  var ccpa = null;
-  window.getParamsDesktop = async () => {
-    const params = new URLSearchParams(location.search)
-    viewThisProduct = params.get("Product");
-    ccpa = params.get("ccpa");
-    if (params.size > 0 && window.urlParamsActive === "shop") {
-      window.urlParamsActive = "shop";
-    }
-  if (params.size > 0 && viewThisProduct != "shop") {
-    window.urlParamsActive = true;
-  }
-    window.investorsView = params.get("Investors");
-    if (window.investorsView === "true") {
-      window.activateInvestors();
-    }
-    if (ccpa != null && window.isMobile == true) {
-      var ccpaEl = document.createElement("scoge-ccpa");
-      ccpaEl.setAttribute("active", "true");
-      ccpaEl.setAttribute("id", "ccpaModal");
-      // ccpaEl.setAttribute("data-perium", `false`);
-      ccpaEl.style.position = "absolute";
-      ccpaEl.style.top = "0";
-      ccpaEl.style.left = "0";
-      ccpaEl.style.zIndex = "100";
-      document.getElementById("main").appendChild(ccpaEl);
-      ccpaEl.setAttribute("data-perium", `${ccpa}`);
-      window.perium = ccpa;
-      var date = new Date();
-      var convertedDate = date.toISOString();
-      var pActor = await window.periumActor();
-      pActor.updateLastViewed(ccpa, convertedDate).then((res) => {
-        console.log("Updated", res);
-      }).catch((err) => {
-        console.log("Error", err);
-      });
-    }
-    if (viewThisProduct != null) {
-      console.log("Checker", viewThisProduct);
-    }
-  }
-});
-
 // if (randomStaticVid === mainvid1) {
 //   // change poster of portalVideo to match the video
 //   document.getElementById("portalVideo").poster = main1poster;
@@ -804,6 +759,49 @@ window.periumActor = async () => {
     });
     agent.fetchRootKey();
     return actor;
+}
+
+// URL PARAMS OPEN SHOP
+var viewThisProduct = "";
+var ccpa = null;
+window.getParamsDesktop = async () => {
+  const params = new URLSearchParams(location.search)
+  viewThisProduct = params.get("Product");
+  ccpa = params.get("ccpa");
+  if (params.size > 0 && window.urlParamsActive === "shop") {
+    window.urlParamsActive = "shop";
+  }
+ if (params.size > 0 && viewThisProduct != "shop") {
+  window.urlParamsActive = true;
+ }
+  window.investorsView = params.get("Investors");
+  if (window.investorsView === "true") {
+    window.activateInvestors();
+  }
+  if (ccpa != null && window.isMobile == true) {
+    var ccpaEl = document.createElement("scoge-ccpa");
+    ccpaEl.setAttribute("active", "true");
+    ccpaEl.setAttribute("id", "ccpaModal");
+    // ccpaEl.setAttribute("data-perium", `false`);
+    ccpaEl.style.position = "absolute";
+    ccpaEl.style.top = "0";
+    ccpaEl.style.left = "0";
+    ccpaEl.style.zIndex = "100";
+    document.getElementById("main").appendChild(ccpaEl);
+    ccpaEl.setAttribute("data-perium", `${ccpa}`);
+    window.perium = ccpa;
+    var date = new Date();
+    var convertedDate = date.toISOString();
+    var pActor = await window.periumActor();
+    pActor.updateLastViewed(ccpa, convertedDate).then((res) => {
+      console.log("Updated", res);
+    }).catch((err) => {
+      console.log("Error", err);
+    });
+  }
+  if (viewThisProduct != null) {
+    console.log("Checker", viewThisProduct);
+  }
 }
 
 // -----------------------------------------------
