@@ -1056,7 +1056,7 @@ class compWallets extends HTMLElement {
                     align-items: end;
                 }
 
-                .button {
+                .button, .preButton {
                     width: 48%;
                     height: 45%;
                     display: flex;
@@ -1082,12 +1082,13 @@ class compWallets extends HTMLElement {
                 }
 
                 .inactive {
-                    border: 1px solid var(--primary);
-                    color: var(--primary)
+                    border: 1px solid var(--accent);
+                    color: var(--accent);
+                    opacity: .3;
                 }
 
                 .inactive:hover {
-                    background-color: var(--primary);
+                    background-color: var(--accent);
                     color: black;
                     font-family: "BS-B";
                     text-decoration: line-through;
@@ -1111,7 +1112,7 @@ class compWallets extends HTMLElement {
                             <img src="${missing}" id="lgimg" style="width: auto; height: 100%;"/>
                         </div>
                         <div id="accountDesc">
-                            You'll need a Cloak to boot this up. It's too risky!
+                            You'll need a Cloak to roam this city. It's too risky!
                         </div>
                         <div id="accountStats">
                             <div id="stats">
@@ -1122,12 +1123,12 @@ class compWallets extends HTMLElement {
                             <div id="expandBut">+</div>
                         </div>
                         <div id="actionButCont">
-                            <div class="button inactive">BOOT-UP</div>
+                            <div class="preButton inactive">BOOT-UP</div>
                         </div>
                     </div>
                 </div>
                 <div id="infoCont1">Create Wallet</div>
-                <div id="infoCont2">Find A Cloak</div>
+                <div id="infoCont2">Get A Cloak</div>
             </div>
         `;
     }

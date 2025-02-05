@@ -9,143 +9,143 @@ class dtGallery extends HTMLElement {
     this.srcs = [
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/campaign/SCOGE-CH2-l1.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGE-CH2-l1.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/campaign/SCOGE-CH2-l10.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGE-CH2-l10.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/campaign/SCOGE-CH2-l11.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGE-CH2-l11.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/campaign/SCOGE-CH2-l2.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGE-CH2-l2.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/campaign/SCOGE-CH2-l3.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGE-CH2-l3.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/campaign/SCOGE-CH2-l4.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGE-CH2-l4.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/campaign/SCOGE-CH2-l5.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGE-CH2-l5.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/campaign/SCOGE-CH2-l6.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGE-CH2-l6.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/campaign/SCOGE-CH2-l7.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGE-CH2-l7.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/campaign/SCOGE-CH2-l8.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGE-CH2-l8.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Optimized/campaign/SCOGE-CH2-l9.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGE-CH2-l9.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGÉ-DY1-IMG-POR-1.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGÉ-DY1-IMG-POR-1.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGÉ-DY1-IMG-POR-2.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGÉ-DY1-IMG-POR-2.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGÉ-DY1-IMG-POR-15.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGÉ-DY1-IMG-POR-15.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGÉ-DY1-IMG-POR-4.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGÉ-DY1-IMG-POR-4.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGÉ-DY1-IMG-POR-18.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGÉ-DY1-IMG-POR-18.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGÉ-DY1-IMG-POR-22.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGÉ-DY1-IMG-POR-22.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGÉ-DY1-IMG-POR-7.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGÉ-DY1-IMG-POR-7.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGÉ-DY1-IMG-POR-34.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGÉ-DY1-IMG-POR-34.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGÉ-DY1-IMG-POR-35.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGÉ-DY1-IMG-POR-35.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGÉ-DY1-IMG-POR-36.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGÉ-DY1-IMG-POR-36.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGÉ-DY1-IMG-POR-29.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGÉ-DY1-IMG-POR-29.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGÉ-DY1-IMG-POR-31.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGÉ-DY1-IMG-POR-31.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGÉ-DY1-IMG-POR-32.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGÉ-DY1-IMG-POR-32.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGÉ-CH1-IMG-POR-1.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGÉ-CH1-IMG-POR-1.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGÉ-CH1-IMG-POR-2.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGÉ-CH1-IMG-POR-2.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGÉ-CH1-IMG-POR-4.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGÉ-CH1-IMG-POR-4.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGÉ-CH1-IMG-POR-5.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGÉ-CH1-IMG-POR-5.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGÉ-CH1-IMG-POR-6.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGÉ-CH1-IMG-POR-6.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGÉ-CH1-IMG-POR-7.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGÉ-CH1-IMG-POR-7.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGÉ-CH1-IMG-POR-8.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGÉ-CH1-IMG-POR-8.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGÉ-CH1-IMG-POR-9.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGÉ-CH1-IMG-POR-9.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGÉ-CH1-IMG-POR-10.jpg",
+          " ",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGÉ-CH1-IMG-POR-11.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGÉ-CH1-IMG-POR-11.jpg",
       },
       {
         publicUrl:
-          "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGÉ-CH1-IMG-POR-12.jpg",
+          "https://storage.scoge.co/scogeCollections/SCOGÉ-CH1-IMG-POR-12.jpg",
       },
     ];
     this.credits = {
@@ -1034,9 +1034,9 @@ class dtGallery extends HTMLElement {
                 <div id="galInfo">
                 </div>
                 <div id="galGridImages">
-                  <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGE%CC%81-CH1-IMG-POR-2.jpg" alt="gallery">
-                  <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGE%CC%81-CH1-IMG-POR-2.jpg" alt="gallery">
-                  <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/scogeImages/SCOGE%CC%81-CH1-IMG-POR-2.jpg" alt="gallery">
+                  <img src="https://storage.scoge.co/scogeCollections/SCOGE%CC%81-CH1-IMG-POR-2.jpg" alt="gallery">
+                  <img src="https://storage.scoge.co/scogeCollections/SCOGE%CC%81-CH1-IMG-POR-2.jpg" alt="gallery">
+                  <img src="https://storage.scoge.co/scogeCollections/SCOGE%CC%81-CH1-IMG-POR-2.jpg" alt="gallery">
                 </div>
               </div>
               <div id="galleryMainImages"></div>

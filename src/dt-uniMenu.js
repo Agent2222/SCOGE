@@ -2914,7 +2914,7 @@ class getUniMenu extends HTMLElement {
             }
 
             #patronBG {
-              background-image: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/buttons/patron3.jpg");
+              background-image: url("https://storage.scoge.co/scogeUniverse/uniMenu/patron3.jpg");
             }
 
             #dgromD4 {
