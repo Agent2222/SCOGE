@@ -881,10 +881,10 @@ class compAdmin extends HTMLElement {
                     </div>
                     <div id="adminOptions">
                         <div id="database">
-                            <img src="/assets/images/assets1/svg/database.svg">
+                            <img src="../assets/images/assets1/svg/database.svg">
                         </div>
                         <div id="ccpaBut">
-                            <img src="/assets/images/assets1/svg/ccpa.svg">
+                            <img src="../assets/images/assets1/svg/ccpa.svg">
                         </div>
                     </div>
                     <div class="blank"></div>

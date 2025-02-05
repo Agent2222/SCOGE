@@ -3901,7 +3901,7 @@ class getUniMenu extends HTMLElement {
                   <span class="actionArrows" id="aaR"><<</span>
                 </div>
                 <div id="unDev3">
-                  <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/graphics/domain-wireframe.png" alt="Domain Development" id="ddLogo">
+                  <img src="https://storage.scoge.co/scogeUniverse/uniMenu/domain-wireframe.png" alt="Domain Development" id="ddLogo">
                 </div>
               </div>
               <div id="agentsAndPatrons">

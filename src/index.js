@@ -177,9 +177,9 @@ window.sizeInit = () => {
     videoEls.forEach((videoEl) => {
       videoEl.setAttribute("class", "mobileVideo");
     });
-    document.getElementById("getUniMenu").shadowRoot.getElementById("gdLoginBut").style.pointerEvents = "none";
-    document.getElementById("getUniMenu").shadowRoot.getElementById("gdLoginBut").style.userSelect = "none";
-    document.getElementById("getUniMenu").shadowRoot.getElementById("gdLoginBut").innerHTML = "(LOGIN) DESKTOP ONLY";
+    // document.getElementById("getUniMenu").shadowRoot.getElementById("gdLoginBut").style.pointerEvents = "none";
+    // document.getElementById("getUniMenu").shadowRoot.getElementById("gdLoginBut").style.userSelect = "none";
+    // document.getElementById("getUniMenu").shadowRoot.getElementById("gdLoginBut").innerHTML = "(LOGIN) DESKTOP ONLY";
   } else {
     // Desktop
   }
@@ -276,7 +276,7 @@ function start() {
       window.galleryActive = true;
       window.view = "gallery";
       window.universeSystem();
-      document.getElementById("getInvestors").setAttribute("invest","active");
+      // document.getElementById("getInvestors").setAttribute("invest","active");
       // enterTaosCity();
       // document.getElementById("portalVideo").style.display = "block";
       document.getElementById("seekModal").style.pointerEvents = "auto";
