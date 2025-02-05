@@ -1,4 +1,4 @@
-import { SoundtrackManager } from "./soundtrack.js";
+// import { SoundtrackManager } from "./soundtrack.js";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { idlFactory } from "../src/declarations/universe_backend/universe_backend.did.js";
