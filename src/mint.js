@@ -250,7 +250,7 @@ class mintingScreen extends HTMLElement {
     var screen = this.shadow.getElementById("mainScreen");
     screen.style.transition = "1s all";
     var sources = {
-      red: "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Yellow-DigiGel-1.png",
+      red: "https://storage.scoge.co/scogeUniverse/digisette/Yellow-DigiGel-1.png",
       black:
         "https://storage.scoge.co/scogeUniverse/digisette/Digisette-1-2.png",
       blue: "https://storage.scoge.co/scogeUniverse/digisette/shop-temp-1.png",
@@ -356,25 +356,25 @@ class mintingScreen extends HTMLElement {
          <style>
             @font-face {
                 font-family: "BS-B";
-                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Bold.svg");
+                src: url("https://storage.scoge.co/scogeFonts/BioSans-Bold.svg");
                 font-weight: bold;
                 font-style: normal;
             }
             @font-face {
                 font-family: "BS-R";
-                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.svg");
+                src: url("https://storage.scoge.co/scogeFonts/BioSans-Regular.svg");
                 font-weight: normal;
                 font-style: normal;
             }
             @font-face {
                 font-family: "BS-SB";
-                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-SemiBold.svg");
+                src: url("https://storage.scoge.co/scogeFonts/BioSans-SemiBold.svg");
                 font-weight: 600;
                 font-style: normal;
             }
             @font-face {
                 font-family: "BS-I";
-                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Italic.svg");
+                src: url("https://storage.scoge.co/scogeFonts/BioSans-Italic.svg");
                 font-weight: normal;
                 font-style: italic;
             }

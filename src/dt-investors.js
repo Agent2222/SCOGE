@@ -307,7 +307,7 @@ class dtInvestors extends HTMLElement {
          <style>
             @font-face {
                 font-family: "BS-R";
-                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.svg");
+                src: url("https://storage.scoge.co/scogeFonts/BioSans-Regular.svg");
                 font-weight: normal;
                 font-style: normal;
             }
@@ -914,22 +914,6 @@ class dtInvestors extends HTMLElement {
                 <div id="contactMenu" class="menu-item">CONTACT</div>
               </div>
             </div>
-            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-1-2.jpg"/>
-            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-2.jpg"/>
-            <div id="film">
-              <iframe id="yt" width="100%" height="630" src="https://www.youtube.com/embed/f_yQrIwtgYE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
-            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-3.jpg"/>
-            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-4.jpg"/>
-            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-5.jpg"/>
-            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-6.jpg"/>
-            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-7.jpg"/>
-            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-8.jpg"/>
-            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-9.jpg"/>
-            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-10.jpg"/>
-            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-11.jpg"/>
-            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-12.jpg"/>
-            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-13.jpg"/>
             <div class="body2">
             <span class="acc" style="font-size:24px;">Use of funds:</span><br>5 year runway.
             </div>
@@ -968,7 +952,7 @@ class dtInvestors extends HTMLElement {
                   </div>
                 </div>
             </div>
-            <img class="deckImage" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/investor/si-24-14.jpg"/>
+            <img class="deckImage" src=""/>
               <div id="projections">
                 <div id="pProjHead">FINANCIAL PROJECTIONS</div>
                 <div id="pProjBody">

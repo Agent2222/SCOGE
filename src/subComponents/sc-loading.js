@@ -1,6 +1,6 @@
-import { SoundtrackManager } from "../soundtrack.js";
+// import { SoundtrackManager } from "../soundtrack.js";
 
-const soundtrack = new SoundtrackManager();
+// const soundtrack = new SoundtrackManager();
 
 class compLoading extends HTMLElement {
     constructor() {
@@ -23,12 +23,12 @@ class compLoading extends HTMLElement {
 
     startLoading() {
         this.shadowRoot.getElementById("main").style.display = "grid";
-        soundtrack.play('loading-1');
+        window.soundtrack.play('loading-1');
     }
  
     stopLoading() {
         this.shadowRoot.getElementById("main").style.display = "none";
-        soundtrack.stop('loading-1');
+        window.soundtrack.stop('loading-1');
       }
 
     attributeChangedCallback(name, oldValue, newValue) {

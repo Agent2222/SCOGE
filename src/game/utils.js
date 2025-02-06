@@ -9,22 +9,22 @@ export const environmentIntensity = 1.2;
 export const groundTag = "Ground";
 
 export const videoList = [
-  "https://scoge.s3.us-east-2.amazonaws.com/3d/films/Sure-Ill-Tell-You.mp4",
-  "https://scoge.s3.us-east-2.amazonaws.com/3d/films/S-21-1.mp4",
-  "https://scoge.s3.us-east-2.amazonaws.com/3d/films/shades-tan.mp4",
+  // "https://scoge.s3.us-east-2.amazonaws.com/3d/films/Sure-Ill-Tell-You.mp4",
+  // "https://scoge.s3.us-east-2.amazonaws.com/3d/films/S-21-1.mp4",
+  // "https://scoge.s3.us-east-2.amazonaws.com/3d/films/shades-tan.mp4",
 ];
 
 export const audioList = [
-  "https://scoge.s3.us-east-2.amazonaws.com/3d/Sounds/iaym_rev.mp3",
-  "https://scoge.s3.us-east-2.amazonaws.com/3d/Sounds/scoge-radio-1.mp3",
+  // "https://scoge.s3.us-east-2.amazonaws.com/3d/Sounds/iaym_rev.mp3",
+  // "https://scoge.s3.us-east-2.amazonaws.com/3d/Sounds/scoge-radio-1.mp3",
 ];
 
 export const compList = [
-  "https://scoge.s3.us-east-2.amazonaws.com/3d/video/loadingscreen-comp.mp4",
+  // "https://scoge.s3.us-east-2.amazonaws.com/3d/video/loadingscreen-comp.mp4",
 ];
 
 export const ddVideo = [
-  "https://scoge.s3.us-east-2.amazonaws.com/3d/video/audioscreen_2.mp4",
+  // "https://scoge.s3.us-east-2.amazonaws.com/3d/video/audioscreen_2.mp4",
 ];
 
 export const actionTypes = {

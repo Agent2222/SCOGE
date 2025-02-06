@@ -76,7 +76,7 @@ actor ScogeCMS {
   var blobStore2: _HashMap.HashMap<Text, PeriumMetadata> = _HashMap.HashMap<Text, PeriumMetadata>(500, Text.equal, Text.hash);
 
   // HOME PAGE
-  private stable var logo_ : ?Text = ?"https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/bankoo-logo-square2.jpg";
+  private stable var logo_ : ?Text = ?"https://storage.scoge.co/scogeUniverse/logos/bankoo-logo-square2.jpg";
   private stable var appVersion : ?Text = ?"0.6";
 
   // Check for allowed prin

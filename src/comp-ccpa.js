@@ -1329,8 +1329,8 @@ class compCCPA extends HTMLElement {
                     <div id="introScreen"> 
                         <div id="ccpaCont">
                             <div id="ccpaAvatar">
-                                <img id="avatar1" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/avatar/avatar-base1.png"/>
-                                <img id="avatar2" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/avatar/avatar-base1.png"/>
+                                <img id="avatar1" src="https://storage.scoge.co/scogeUniverse/avatars/avatar-base1.png"/>
+                                <img id="avatar2" src="https://storage.scoge.co/scogeUniverse/avatars/avatar-base1.png"/>
                             </div>
                             <div id="loadGlobes">
                                 <img id="blg1" class="globeG1" src="${globes}"/>

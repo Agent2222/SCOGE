@@ -360,7 +360,7 @@ export function clearSquare() {
     img.onload = function () {
         ctx.drawImage(img, playerCoor.x, playerCoor.y + 4, 18, 18, playerCoor.x, playerCoor.y +4, 18, 18);
     };
-    img.src = "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/scoge-taos-city-universe.jpg";
+    img.src = "https://storage.scoge.co/scogeUniverse/maps/scoge-taos-city-universe.jpg";
 }
 
 export function activateMapper() {
@@ -1196,7 +1196,7 @@ function clearPaintedDomains() {
               ctx.fillRect(0, y, img.width, 1);
             }
           };
-        img.src = "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/scoge-taos-city-universe.jpg";
+        img.src = "https://storage.scoge.co/scogeUniverse/maps/scoge-taos-city-universe.jpg";
     });
 }   
 

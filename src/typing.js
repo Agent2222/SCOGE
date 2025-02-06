@@ -1,4 +1,4 @@
-import { SoundtrackManager } from "./soundtrack.js";
+// import { SoundtrackManager } from "./soundtrack.js";
 
 export class MainDialogue {
     constructor(npc, tone, lines) {
@@ -8,7 +8,7 @@ export class MainDialogue {
         // this.element = document.getElementById('dialogueModal').shadowRoot.getElementById('diaMain');
         this.specialText1 = "bold";
         this.specialText2 = "bright";
-        this.soundtrack = new SoundtrackManager();
+        // this.soundtrack = new SoundtrackManager();
         this.currentDialogue = 0;
         this.pauseDelay = 500;
         this.element = document.getElementById("miniAgent").shadowRoot.getElementById("chat");
@@ -38,9 +38,9 @@ export class MainDialogue {
     
       async type() {
         if (this.i < this.words.length) {
-          this.soundtrack.setVolume("typing-1", 0.8);
-          this.soundtrack.stop("typing-1");
-          this.soundtrack.play("typing-1");
+          window.soundtrack.setVolume("typing-1", 0.8);
+          window.soundtrack.stop("typing-1");
+          window.soundtrack.play("typing-1");
           if (this.j < this.words[this.i].length) {
             let char = this.words[this.i][this.j];
             if (this.words[this.i][0] === '*') {
