@@ -1,3 +1,6 @@
+import ccpaSvg from '../assets/images/assets1/svg/ccpa.svg';
+import databaseSvg from '../assets/images/assets1/svg/database.svg';
+
 class compAdmin extends HTMLElement {
     constructor() {
         super();
@@ -881,10 +884,10 @@ class compAdmin extends HTMLElement {
                     </div>
                     <div id="adminOptions">
                         <div id="database">
-                            <img src="../assets/images/assets1/svg/database.svg">
+                            <img src="${databaseSvg}">
                         </div>
                         <div id="ccpaBut">
-                            <img src="../assets/images/assets1/svg/ccpa.svg">
+                            <img src="${ccpaSvg}">
                         </div>
                     </div>
                     <div class="blank"></div>

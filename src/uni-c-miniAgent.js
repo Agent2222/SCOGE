@@ -1,5 +1,5 @@
 // import { TypingPlus } from "../src//index.js";
-import { SoundtrackManager } from "./soundtrack.js";
+// import { SoundtrackManager } from "./soundtrack.js";
 import { MainDialogue } from "./typing.js";
 
 class uniMenuAgent extends HTMLElement {
@@ -8,7 +8,7 @@ class uniMenuAgent extends HTMLElement {
         this.attachShadow({mode: 'open'});
         this.dialogue;
         this.miniOpen = false;
-        this.soundtrack = new SoundtrackManager();
+        // this.soundtrack = new SoundtrackManager();
         this.intro = "Ok, so here's your Digisette Domain Development setup interface. You'll be able setup domain from here.";
         this.dialogueBank = {
             intro: [
@@ -124,14 +124,14 @@ class uniMenuAgent extends HTMLElement {
                 this.shadowRoot.getElementById("agentProfile").style.transform = "scale(0)";
             }, 290)
             this.miniOpen = false;
-            this.soundtrack.setVolume("closewindow-1", 0.8);
-            this.soundtrack.play("closewindow-1");
+            window.soundtrack.setVolume("closewindow-1", 0.8);
+            window.soundtrack.play("closewindow-1");
             this.shadowRoot.getElementById("chat").style.pointerEvents = "none";
             this.shadowRoot.getElementById("agentProfile").style.pointerEvents = "none";
             return;
         } else {
-            this.soundtrack.setVolume("openwindow-1", 0.8);
-            this.soundtrack.play("openwindow-1");
+            window.soundtrack.setVolume("openwindow-1", 0.8);
+            window.soundtrack.play("openwindow-1");
             this.shadowRoot.getElementById("agentProfile").style.transform = "scaleX(1)";
             this.shadowRoot.getElementById("chat").style.pointerEvents = "all";
             this.shadowRoot.getElementById("agentProfile").style.pointerEvents = "all";
@@ -371,7 +371,7 @@ class uniMenuAgent extends HTMLElement {
                 </div>
                 <div id="help">S</div>
                 <div id="agentProfile">
-                    <img id="agentImg" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Lesli-1.png" alt="Avatar" style="width:100%">
+                    <img id="agentImg" src="https://storage.scoge.co/scogeUniverse/characters/CC-Lesli-1.png" alt="Avatar" style="width:100%">
                     <img src="https://storage.scoge.co/scogeUniverse/uniMenu/domain-wireframe.png" alt="Domain Development" id="ddLogo" style="height:100%">
                 </div>
             </div>

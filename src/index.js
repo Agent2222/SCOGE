@@ -26,7 +26,7 @@ import { TextPlugin } from "gsap/TextPlugin";
 // import { Configuration, OpenAIApi } from "openai";
 import { universe } from "./universe.js";
 import { uniConsensus } from "./uni-c-consensus.js";
-import { uni3dViewer } from "./uni-c-3dModel.js";
+// import { uni3dViewer } from "./uni-c-3dModel.js";
 import { uniDomainDev } from "./uni-c-domaindev.js";
 import { checkInitialState } from "../src/game/SceneManager.js";
 import { emoter } from "./uniComponents/emoter.js";
@@ -237,7 +237,7 @@ window.connectionState = false;
 console.log("COPYRIGHT 2024 - SCOGE Inc. - ALL RIGHTS RESERVED");
 
 // Init Soundtrack
-const soundtrack = new SoundtrackManager();
+window.soundtrack = new SoundtrackManager();
 
 // Notifications
 const noti = {
@@ -746,20 +746,20 @@ window.closeInvestor = () => {
   document.getElementById("getInvestors").shadowRoot.getElementById("investorComp").style.transition = "1s all";
   document.getElementById("getInvestors").shadowRoot.getElementById("investorComp").style.right = "-100%";
 }
-window.periumActor = async () => {
-    // var canisterId = "bd3sg-teaaa-aaaaa-qaaba-cai";
-    var canisterId = "wnunb-baaaa-aaaag-aaoya-cai";
-    var live = "https://ic0.app";
-    var local = "http://127.0.0.1:4943";
-    let agent = new HttpAgent({ host: live });
-    // let agent =  window.ic.plug.agent;
-    const actor = Actor.createActor(idlFactory, {
-        agent,
-        canisterId,
-    });
-    agent.fetchRootKey();
-    return actor;
-}
+// window.periumActor = async () => {
+//     // var canisterId = "bd3sg-teaaa-aaaaa-qaaba-cai";
+//     var canisterId = "wnunb-baaaa-aaaag-aaoya-cai";
+//     var live = "https://ic0.app";
+//     var local = "http://127.0.0.1:4943";
+//     let agent = new HttpAgent({ host: live });
+//     // let agent =  window.ic.plug.agent;
+//     const actor = Actor.createActor(idlFactory, {
+//         agent,
+//         canisterId,
+//     });
+//     agent.fetchRootKey();
+//     return actor;
+// }
 
 // URL PARAMS OPEN SHOP
 var viewThisProduct = "";
@@ -790,14 +790,14 @@ window.getParamsDesktop = async () => {
     document.getElementById("main").appendChild(ccpaEl);
     ccpaEl.setAttribute("data-perium", `${ccpa}`);
     window.perium = ccpa;
-    var date = new Date();
-    var convertedDate = date.toISOString();
-    var pActor = await window.periumActor();
-    pActor.updateLastViewed(ccpa, convertedDate).then((res) => {
-      console.log("Updated", res);
-    }).catch((err) => {
-      console.log("Error", err);
-    });
+    // var date = new Date();
+    // var convertedDate = date.toISOString();
+    // var pActor = await window.periumActor();
+    // pActor.updateLastViewed(ccpa, convertedDate).then((res) => {
+    //   console.log("Updated", res);
+    // }).catch((err) => {
+    //   console.log("Error", err);
+    // });
   }
   if (viewThisProduct != null) {
     console.log("Checker", viewThisProduct);
@@ -962,9 +962,9 @@ export class TypingPlus {
     this.intervalId = setInterval(() => {
       if (this.currentIndex < this.text.length) {
         this.element.textContent += this.text.charAt(this.currentIndex);
-        soundtrack.setVolume("typing-1", 0.8);
-        soundtrack.stop("typing-1");
-        soundtrack.play("typing-1");
+        window.soundtrack.setVolume("typing-1", 0.8);
+        window.soundtrack.stop("typing-1");
+        window.soundtrack.play("typing-1");
         this.currentIndex++;
       } else {
         clearInterval(this.intervalId);

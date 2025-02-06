@@ -116,21 +116,21 @@ class CombinationLock extends HTMLElement {
 
                 @font-face {
                     font-family: "BS-B";
-                    src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Bold.svg");
+                    src: url("https://storage.scoge.co/scogeFonts/BioSans-Bold.svg");
                     font-weight: bold;
                     font-style: normal;
                 }
                 
                 @font-face {
                     font-family: "GM-I";
-                    src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/DMSans-Italic.ttf");
+                    src: url("https://storage.scoge.co/scogeFonts/DMSans-Italic.ttf");
                     font-weight: normal;
                     font-style: italic;
                   }
 
                   @font-face {
                     font-family: "BS-R";
-                    src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.ttf");
+                    src: url("https://storage.scoge.co/scogeFonts/BioSans-Regular.ttf");
                     font-weight: normal;
                     font-style: normal;
                 }

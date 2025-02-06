@@ -64,7 +64,7 @@ class mintingScreen extends HTMLElement {
         category: categoryList[2],
         name: 'Digisette Pre-Alpha',
         description: 'Limited edition pre-alpha 1 of 450 Digisette.',
-        url: `https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/SCOGE-Digisette-Alpha-Collection.jpg`,
+        url: `https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/SCOGE-Digisette-Alpha-Collection.jpg`,
         attributes: [
           {
             ringType: "",
@@ -250,11 +250,11 @@ class mintingScreen extends HTMLElement {
     var screen = this.shadow.getElementById("mainScreen");
     screen.style.transition = "1s all";
     var sources = {
-      red: "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Yellow-DigiGel-1.png",
+      red: "https://storage.scoge.co/scogeUniverse/digisette/Yellow-DigiGel-1.png",
       black:
-        "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png",
-      blue: "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/shop-temp-1.png",
-      white: "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/White-DigiGel-1.png"
+        "https://storage.scoge.co/scogeUniverse/digisette/Digisette-1-2.png",
+      blue: "https://storage.scoge.co/scogeUniverse/digisette/shop-temp-1.png",
+      white: "https://storage.scoge.co/scogeUniverse/digisette/White-DigiGel-1.png"
     };
     switch (selected) {
       case "red":
@@ -356,25 +356,25 @@ class mintingScreen extends HTMLElement {
          <style>
             @font-face {
                 font-family: "BS-B";
-                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Bold.svg");
+                src: url("https://storage.scoge.co/scogeFonts/BioSans-Bold.svg");
                 font-weight: bold;
                 font-style: normal;
             }
             @font-face {
                 font-family: "BS-R";
-                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.svg");
+                src: url("https://storage.scoge.co/scogeFonts/BioSans-Regular.svg");
                 font-weight: normal;
                 font-style: normal;
             }
             @font-face {
                 font-family: "BS-SB";
-                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-SemiBold.svg");
+                src: url("https://storage.scoge.co/scogeFonts/BioSans-SemiBold.svg");
                 font-weight: 600;
                 font-style: normal;
             }
             @font-face {
                 font-family: "BS-I";
-                src: url("https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Italic.svg");
+                src: url("https://storage.scoge.co/scogeFonts/BioSans-Italic.svg");
                 font-weight: normal;
                 font-style: italic;
             }
@@ -574,9 +574,9 @@ class mintingScreen extends HTMLElement {
          <div id="mainScreen">
             <div id="innerScreen">
               <div id="nftAssetGallery">
-                <img class="pills" id="red" style="opacity:31%;" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Yellow-DigiGel-1.png"/>
-                <img class="pills" id="black" style="transform:scale(1.4);" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png"/>
-                <img class="pills" id="blue" src="https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/shop-temp-1.png"/>
+                <img class="pills" id="red" style="opacity:31%;" src="https://storage.scoge.co/scogeUniverse/digisette/Yellow-DigiGel-1.png"/>
+                <img class="pills" id="black" style="transform:scale(1.4);" src="https://storage.scoge.co/scogeUniverse/digisette/Digisette-1-2.png"/>
+                <img class="pills" id="blue" src="https://storage.scoge.co/scogeUniverse/digisette/shop-temp-1.png"/>
               </div>
               <div id="mintUiActions">
                 <div id="mintUiActionsInner">

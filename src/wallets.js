@@ -4,7 +4,7 @@ import { Actor, HttpAgent } from "@dfinity/agent";
 import idlFactory1 from "../src/uniHelpers/erc721.did.js";
 import { idlFactory } from "../src/declarations/taoscity/taoscity.did.js";
 import { getAllUserNFTs } from "@psychedelic/dab-js";
-import { endLoading, enterTaosCity, loading, soundtrack } from "./universe.js";
+import { endLoading, enterTaosCity, loading} from "./universe.js";
 import { story } from "./game/SceneManager.js";
 import {StoicIdentity} from "ic-stoic-identity";
 import { getDigisette } from "./uniHelpers/citycentral.js";
@@ -249,9 +249,9 @@ export const createActor1 = async (can, idl) => {
     var shadow = document.getElementById("getUniMenu").shadowRoot;
     shadow.getElementById("menuLoadingScreen").style.display = "none";
     shadow.getElementById("menuLoadingScreen3").style.display = "none";
-    soundtrack.stop('menuLoading1');
-    soundtrack.setVolume('menuError1', 0.4);
-    soundtrack.play('menuError1');
+    window.soundtrack.stop('menuLoading1');
+    window.soundtrack.setVolume('menuError1', 0.4);
+    window.soundtrack.play('menuError1');
     shadow.getElementById("menuMessage").style.display = "grid";
     switch (error.e.result?.error_code || error.e.message) {
       case "IC0501":

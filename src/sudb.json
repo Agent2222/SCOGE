@@ -7,7 +7,7 @@
         "job": "Identity Agent",
         "dialogue": "Hello, welcome to City Central. I'm Alex, your Identity Agent. I'm here to help you get started with your new wallet.",
         "images": {
-          "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-1.png"
+          "default": "https://storage.scoge.co/scogeUniverse/characters/CC-Alex-1.png"
         }
       },
       {
@@ -16,7 +16,7 @@
         "job": "Identity Agent",
         "dialogue": "You haven't purchased your Digisette yet? You can still get one at the YUMI Marketplace.",
         "images": {
-          "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Destiny-1.png"
+          "default": "https://storage.scoge.co/scogeUniverse/characters/CC-Destiny-1.png"
         }
       },
       {
@@ -25,7 +25,7 @@
         "job": "Identity Agent",
         "dialogue": "You haven't purchased your Digisette yet? You can still get one at the YUMI Marketplace.",
         "images": {
-          "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Destiny-1.png"
+          "default": "https://storage.scoge.co/scogeUniverse/characters/CC-Destiny-1.png"
         }
       },
       {
@@ -34,7 +34,7 @@
         "job": "Digisette associate",
         "dialogue": "You haven't purchased your Digisette yet? You can still get one at the YUMI Marketplace.",
         "images": {
-          "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-2.png"
+          "default": "https://storage.scoge.co/scogeUniverse/characters/CC-Alex-2.png"
         }
       },
       {
@@ -43,7 +43,7 @@
         "job": "DD associate",
         "dialogue": "You haven't purchased your Digisette yet? You can still get one at the YUMI Marketplace.",
         "images": {
-          "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Lesli-1.png"
+          "default": "https://storage.scoge.co/scogeUniverse/characters/CC-Lesli-1.png"
         }
       },
       {
@@ -52,22 +52,22 @@
         "job": "",
         "dialogue": "",
         "images": {
-          "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/TheGuide-1.png"
+          "default": "https://storage.scoge.co/scogeUniverse/characters/TheGuide-1.png"
         }
       }
     ],
     "Elements": [
       {
         "id": "plugWallet",
-        "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/plugWallet.png"
+        "src": "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/plugWallet.png"
       },
       {
         "id": "bitWallet",
-        "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/BFWallet.png"
+        "src": "https://storage.scoge.co/scogeUniverse/digisette/BFWallet.png"
       },
       {
         "id": "digisette",
-        "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png"
+        "src": "https://storage.scoge.co/scogeUniverse/digisette/Digisette-1-2.png"
       }
     ],
     "Scenarios": {
@@ -101,9 +101,9 @@
                 ]
                 },
                 "images": {
-                  "halo": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-1.png",
-                  "alt": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-2.png",
-                  "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-3HM1.png"
+                  "halo": "https://storage.scoge.co/scogeUniverse/characters/CC-Alex-1.png",
+                  "alt": "https://storage.scoge.co/scogeUniverse/characters/CC-Alex-2.png",
+                  "default": "https://storage.scoge.co/scogeUniverse/characters/CC-Alex-3HM1.png"
                 }
               },
               "pns": {
@@ -169,8 +169,8 @@
                   "text": []
                 },
                 "images": {
-                  "halo": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Destiny-1.png",
-                  "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Destiny-1-HALO.png"
+                  "halo": "https://storage.scoge.co/scogeUniverse/characters/CC-Destiny-1.png",
+                  "default": "https://storage.scoge.co/scogeUniverse/characters/CC-Destiny-1-HALO.png"
                 }
               },
               "pns": {
@@ -194,7 +194,7 @@
           "elements": [
             {
               "id": "plugWallet",
-              "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/plugWallet.png",
+              "src": "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/plugWallet.png",
               "type": "div",
               "innerType": "img",
               "width": "20%",
@@ -220,7 +220,7 @@
             },
             {
               "id": "stoicWallet",
-              "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/stoicWallet.png",
+              "src": "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/stoicWallet.png",
               "type": "div",
               "innerType": "img",
               "width": "20%",
@@ -274,7 +274,7 @@
                   "text": []
                 },
                 "images": {
-                  "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-3HM1.png"
+                  "default": "https://storage.scoge.co/scogeUniverse/characters/CC-Alex-3HM1.png"
                 }
               },
               "pns": {
@@ -337,7 +337,7 @@
                   "multi": true,
                   "text": [
                     {
-                      "action":"document.getElementById('stoicWallet-cont').style.scale = '0'; document.getElementById('plugWallet-img').src='https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png'; document.getElementById('element1Shadow').src='https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png'; document.getElementById('plugWallet-cont').style.scale = 1.2; document.getElementById('plugWallet-cont').style.left = '38%'; document.getElementById('plugWallet-cont').style.top = '35%'; window.newElLink = true",
+                      "action":"document.getElementById('stoicWallet-cont').style.scale = '0'; document.getElementById('plugWallet-img').src='https://storage.scoge.co/scogeUniverse/digisette/Digisette-1-2.png'; document.getElementById('element1Shadow').src='https://storage.scoge.co/scogeUniverse/digisette/Digisette-1-2.png'; document.getElementById('plugWallet-cont').style.scale = 1.2; document.getElementById('plugWallet-cont').style.left = '38%'; document.getElementById('plugWallet-cont').style.top = '35%'; window.newElLink = true",
                       "txt":"Hi! Sorry, my colleague is a bit too brief. You must be new here. Digisette's are the future of this city. Domain management, memory, and entertainment. Not to mention you get Lord status through-out the city!"
                     },
                     {
@@ -359,7 +359,7 @@
                 ]
                 },
                 "images": {
-                  "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Destiny-1.png"
+                  "default": "https://storage.scoge.co/scogeUniverse/characters/CC-Destiny-1.png"
                 }
               },
               "pns": {
@@ -412,7 +412,7 @@
           "elements": [
             {
               "id": "digisette",
-              "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png",
+              "src": "https://storage.scoge.co/scogeUniverse/digisette/Digisette-1-2.png",
               "type": "div",
               "innerType": "img",
               "width": "20%",
@@ -466,7 +466,7 @@
                 ]
                 },
                 "images": {
-                  "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Alex-2.png"
+                  "default": "https://storage.scoge.co/scogeUniverse/characters/CC-Alex-2.png"
                 }
               },
               "pns": {
@@ -525,7 +525,7 @@
           "elements": [
             {
               "id": "digisette",
-              "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Digisette/Digisette-1-2.png",
+              "src": "https://storage.scoge.co/scogeUniverse/digisette/Digisette-1-2.png",
               "type": "div",
               "innerType": "img",
               "width": "25%",
@@ -572,7 +572,7 @@
           "elements": [
             {
               "id": "note1",
-              "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/graphics/tg-artifact-1-1.png",
+              "src": "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/graphics/tg-artifact-1-1.png",
               "type": "div",
               "innerType": "img",
               "width": "25%",
@@ -640,7 +640,7 @@
                 ]
                 },
                 "images": {
-                  "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Lesli-1.png"
+                  "default": "https://storage.scoge.co/scogeUniverse/characters/CC-Lesli-1.png"
                 }
               },
               "pns": {
@@ -736,7 +736,7 @@
                 ]
                 },
                 "images": {
-                  "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Lesli-1.png"
+                  "default": "https://storage.scoge.co/scogeUniverse/characters/CC-Lesli-1.png"
                 }
               },
               "pns": {
@@ -828,7 +828,7 @@
                 ]
                 },
                 "images": {
-                  "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/TheGuide-1.png"
+                  "default": "https://storage.scoge.co/scogeUniverse/characters/TheGuide-1.png"
                 }
               },
               "pns": {
@@ -917,17 +917,17 @@
                     "txt":"Thanks for using City-Central Holo Support. So, navigating the city with a DIGISETTE can be tricky at first. But don't worry, you'll get the hang of it."
                   },
                   {
-                    "action": "document.querySelectorAll('.sceneElementImg').forEach((el) => { el.src='https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/arrowsnspace.png'; el.style.top = '45%' });",
+                    "action": "document.querySelectorAll('.sceneElementImg').forEach((el) => { el.src='https://storage.scoge.co/scogeUniverse/characters/arrowsnspace.png'; el.style.top = '45%' });",
                     "txt":"You can move around the city by just thinking it, or simply using the ARROW-KEYS on your system. When you get close to another Lord or something important, you'll see an action symbol. Send a mental pulse or simply press the SPACE-BAR to interact with it."
                   },
                   {
-                    "action": "document.querySelectorAll('.sceneElementImg').forEach((el) => { el.src='https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/click.png'; el.style.top = '0%'; el.style.width = '28%' });",
+                    "action": "document.querySelectorAll('.sceneElementImg').forEach((el) => { el.src='https://storage.scoge.co/scogeUniverse/characters/click.png'; el.style.top = '0%'; el.style.width = '28%' });",
                     "txt":"Last but not least, you can preview any domain by sending an overwatch beacons, or simply CLICKING it. That's it! You're ready to re-explore the city. Once the other Lords are online, you'll be able to interact with them too."
                   }
                 ]
                 },
                 "images": {
-                  "default": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/CC-Destiny-1-HALO.png"
+                  "default": "https://storage.scoge.co/scogeUniverse/characters/CC-Destiny-1-HALO.png"
                 }
               },
               "pns": {
@@ -986,7 +986,7 @@
           "elements": [
             {
               "id": "avatar",
-              "src": "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/char-template.png",
+              "src": "https://storage.scoge.co/scogeUniverse/characters/char-template.png",
               "type": "div",
               "innerType": "img",
               "width": "30%",

@@ -164,47 +164,47 @@ class uniConsensus extends HTMLElement {
                 el.classList.add("selectedCategory");
                 switch (el.id) {
                     case 'vcBottoms':
-                        catImage.src = "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/avatar/avatar-pants1.png";
+                        catImage.src = "https://storage.scoge.co/scogeUniverse/avatars/avatar-pants1.png";
                         voteText.innerHTML = "BOTTOMS";
                         this.selectCategory = 'vcBottoms';
                     break;
                     case 'vcSuits':
-                        catImage.src = "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/avatar/avatar-suit1.png";
+                        catImage.src = "https://storage.scoge.co/scogeUniverse/avatars/avatar-suit1.png";
                         voteText.innerHTML = "SUITS";
                         this.selectCategory = 'vcSuits';
                     break;
                     case 'vcTop':
-                        catImage.src = "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/avatar/avatar-top1.png";
+                        catImage.src = "https://storage.scoge.co/scogeUniverse/avatars/avatar-top1.png";
                         voteText.innerHTML = "TOPS";
                         this.selectCategory = 'vcTop';
                     break;
                     case 'vcShoes':
-                        catImage.src = "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/avatar/avatar-shoes1.png";
+                        catImage.src = "https://storage.scoge.co/scogeUniverse/avatars/avatar-shoes1.png";
                         voteText.innerHTML = "SHOES";
                         this.selectCategory = 'vcShoes';
                     break;
                     case 'vcHead':
-                        catImage.src = "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/avatar/avatar-head1.png";
+                        catImage.src = "https://storage.scoge.co/scogeUniverse/avatars/avatar-head1.png";
                         voteText.innerHTML = "HEAD";
                         this.selectCategory = 'vcHead';
                     break;
                     case 'vcHands':
-                        catImage.src = "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/avatar/avatar-hands1.png";
+                        catImage.src = "https://storage.scoge.co/scogeUniverse/avatars/avatar-hands1.png";
                         voteText.innerHTML = "HAND";
                         this.selectCategory = 'vcHands';
                     break;
                     case 'vcPants':
-                        catImage.src = "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/avatar/avatar-pants1.png";
+                        catImage.src = "https://storage.scoge.co/scogeUniverse/avatars/avatar-pants1.png";
                         voteText.innerHTML = "PANTS";
                         this.selectCategory = 'vcPants';
                     break;
                     case 'vcTshirt':
-                        catImage.src = "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/avatar/avatar-tshirt1.png";
+                        catImage.src = "https://storage.scoge.co/scogeUniverse/avatars/avatar-tshirt1.png";
                         voteText.innerHTML = "T-SHIRT";
                         this.selectCategory = 'vcTshirt';
                     break;
                     case 'vcShorts':
-                        catImage.src = "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/avatar/avatar-shorts1.png";
+                        catImage.src = "https://storage.scoge.co/scogeUniverse/avatars/avatar-shorts1.png";
                         voteText.innerHTML = "SHORTS";
                         this.selectCategory = 'vcShorts';
                     break;
@@ -887,10 +887,10 @@ class uniConsensus extends HTMLElement {
                     <div id="pecentageBlock">
                         <div id="avatar">
                             <div id="avatarImg">
-                                <img id="avImg" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/avatar/avatar-suit1.png" alt="">
+                                <img id="avImg" src="https://storage.scoge.co/scogeUniverse/avatars/avatar-suit1.png" alt="">
                             </div>
                             <div id="avatarBase">
-                                <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/avatar/avatar-base1.png" alt="">
+                                <img src="https://storage.scoge.co/scogeUniverse/avatars/avatar-base1.png" alt="">
                             </div>
                         </div>  
                         <div id="bgpBlock">

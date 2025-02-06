@@ -1,5 +1,5 @@
 // UNIVERSE SYSTEM
-import { SoundtrackManager } from "./soundtrack.js";
+// import { SoundtrackManager } from "./soundtrack.js";
 // import { idlFactory } from "./declarations/universe_backend/universe_backend.did.js";
 import { chatRoom } from "./uniHelpers/chat.js";
 import { uniPlayers } from "./uniHelpers/players.js";
@@ -13,7 +13,7 @@ import { digisetteData, updateMetadata } from "./uniHelpers/citycentral.js";
 
 const dsheet = "https://script.google.com/macros/s/AKfycbzHUtfeNysmMSZvlC7tnfYhpgs_EU_3kx9_6H_VV6le8tPyR4Vlzs8SlfES_8pbK0nb2w/exec";
 
-export const soundtrack = new SoundtrackManager();
+// export const soundtrack = new SoundtrackManager();
 
 var testState = {
   whitelistPrincipals: [
@@ -574,7 +574,7 @@ export async function universe() {
     document.getElementById("explore").style.display = "block";
     var rect = universeCanvas.getBoundingClientRect();
     if (exploreUI.style.transform === "scale(1)" && window.landActivated === true) {
-      soundtrack.play("closewindow-1")
+      window.soundtrack.play("closewindow-1")
     }
     exploreUI.style.transform = "scale(0)";
     selectionPos.x = Math.round((e.clientX - (rect.left + 9)) / tileSize);
@@ -766,9 +766,9 @@ export async function universe() {
       `${position}` === tempLandEx[3] ||
       `${position}` === tempLandEx[4] 
     ) {
-      soundtrack.loop("discovered-1")
-      soundtrack.setVolume("discovered-1", 0.8)
-      soundtrack.play("discovered-1")
+      window.soundtrack.loop("discovered-1")
+      window.soundtrack.setVolume("discovered-1", 0.8)
+      window.soundtrack.play("discovered-1")
       window.landActivated = true;
       document.getElementById("selection").style.animationPlayState = "running";
       document.getElementById("selection").style.animation =
@@ -784,12 +784,12 @@ export async function universe() {
         exploreUI.innerHTML = tempCont1;
         document.querySelector(".listen").addEventListener("click", () => {
           if (window.spoke.spokeAcclimatePlaying === false) {
-            soundtrack.play("reacclimate-1");
+            window.soundtrack.play("reacclimate-1");
             document.querySelector(".listen").innerHTML = "STOP";
             window.spoke.spokeAcclimatePlaying = true;
             return;
           } else {
-            soundtrack.stop("reacclimate-1");
+            window.soundtrack.stop("reacclimate-1");
             document.querySelector(".listen").innerHTML = "LISTEN";
             window.spoke.spokeAcclimatePlaying = false;
           }
@@ -843,8 +843,8 @@ export async function universe() {
             await channel.publish("chatRoom1", {
               roomMessage: message,
             });
-            soundtrack.setVolume("sendmessage-1", 0.8)
-            soundtrack.play("sendmessage-1")
+            window.soundtrack.setVolume("sendmessage-1", 0.8)
+            window.soundtrack.play("sendmessage-1")
             messageInput.value = "";
           }
         });
@@ -858,7 +858,7 @@ export async function universe() {
       }
       return;
     } else {
-      soundtrack.stop("discovered-1")
+      window.soundtrack.stop("discovered-1")
       window.domainType = "canon";
       window.landActivated = false;
       document.getElementById("selection").style.animationPlayState = "paused";
@@ -931,8 +931,8 @@ export async function universe() {
       .getElementById("collectionGallery")
       .shadowRoot.getElementById("collectionGallery");
 
-      soundtrack.setVolume("closewindow-1", 0.4)
-      soundtrack.setVolume("typing-1", 0.8)
+      window.soundtrack.setVolume("closewindow-1", 0.4)
+      window.soundtrack.setVolume("typing-1", 0.8)
 
       // if keycode is s 
       if (e.keyCode == 83 && window.loggedIn === true) {
@@ -946,22 +946,22 @@ export async function universe() {
         // }
         if (e.keyCode == 37 &&  window.loggedIn === true) {
           // LEFT
-          soundtrack.stop("reacclimate-1");
+          window.soundtrack.stop("reacclimate-1");
           window.uniPlayer.emote = "";
           if (playing.running === false) {
-            soundtrack.setVolume("running-2", playing.startVolume)
+            window.soundtrack.setVolume("running-2", playing.startVolume)
             setTimeout(() => {
               soundtrack.setVolume("running-2", playing.fullVolume)
             }, 1000);
-            soundtrack.loop("running-2")
-            soundtrack.play("running-2")
+            window.soundtrack.loop("running-2")
+            window.soundtrack.play("running-2")
             playing.running = true;
           }
           if (coll.style.transform == "scaleX(1)") {
-            soundtrack.play("closewindow-1")
+            window.soundtrack.play("closewindow-1")
           }
           if (exploreUI.style.transform === "scale(1)" && window.landActivated === true) {
-            soundtrack.play("closewindow-1")
+            window.soundtrack.play("closewindow-1")
           }
           exploreUI.style.transform = "scale(0)";
           coll.style.transform =
@@ -978,22 +978,22 @@ export async function universe() {
         }
         if (e.keyCode == 38 &&  window.loggedIn === true) {
           // UP
-          soundtrack.stop("reacclimate-1");
+          window.soundtrack.stop("reacclimate-1");
           window.uniPlayer.emote = "";
           if (playing.running === false) {
-            soundtrack.setVolume("running-2", playing.startVolume)
+            window.soundtrack.setVolume("running-2", playing.startVolume)
             setTimeout(() => {
               soundtrack.setVolume("running-2", playing.fullVolume)
             }, 1000);
-            soundtrack.loop("running-2")
-            soundtrack.play("running-2")
+            window.soundtrack.loop("running-2")
+            window.soundtrack.play("running-2")
             playing.running = true;
           }
           if (coll.style.transform == "scaleX(1)") {
-            soundtrack.play("closewindow-1")
+            window.soundtrack.play("closewindow-1")
           }
           if (exploreUI.style.transform === "scale(1)" && window.landActivated === true) {
-            soundtrack.play("closewindow-1")
+            window.soundtrack.play("closewindow-1")
           }
           exploreUI.style.transform = "scale(0)";
           coll.style.transform =
@@ -1010,22 +1010,22 @@ export async function universe() {
         }
         if (e.keyCode == 39 &&  window.loggedIn === true) {
           // RIGHT
-          soundtrack.stop("reacclimate-1");
+          window.soundtrack.stop("reacclimate-1");
           window.uniPlayer.emote = "";
           if (playing.running === false) {
-            soundtrack.setVolume("running-2", playing.startVolume)
+            window.soundtrack.setVolume("running-2", playing.startVolume)
             setTimeout(() => {
-              soundtrack.setVolume("running-2", playing.fullVolume)
+              window.soundtrack.setVolume("running-2", playing.fullVolume)
             }, 1000);
-            soundtrack.loop("running-2")
-            soundtrack.play("running-2")
+            window.soundtrack.loop("running-2")
+            window.soundtrack.play("running-2")
             playing.running = true;
           }
           if (coll.style.transform == "scaleX(1)") {
-            soundtrack.play("closewindow-1")
+            window.soundtrack.play("closewindow-1")
           }
           if (exploreUI.style.transform === "scale(1)" && window.landActivated === true) {
-            soundtrack.play("closewindow-1")
+            window.soundtrack.play("closewindow-1")
           }
           exploreUI.style.transform = "scale(0)";
          coll.style.transform =
@@ -1042,22 +1042,22 @@ export async function universe() {
         }
         if (e.keyCode == 40 &&  window.loggedIn === true) {
           // DOWN
-          soundtrack.stop("reacclimate-1");
+          window.soundtrack.stop("reacclimate-1");
           window.uniPlayer.emote = "";
           if (playing.running === false) {
-            soundtrack.setVolume("running-2", playing.startVolume)
+            window.soundtrack.setVolume("running-2", playing.startVolume)
             setTimeout(() => {
-              soundtrack.setVolume("running-2", playing.fullVolume)
+              window.soundtrack.setVolume("running-2", playing.fullVolume)
             }, 1000);
-            soundtrack.loop("running-2")
-            soundtrack.play("running-2")
+            window.soundtrack.loop("running-2")
+            window.soundtrack.play("running-2")
             playing.running = true;
           }
           if (coll.style.transform == "scaleX(1)") {
-            soundtrack.play("closewindow-1")
+            window.soundtrack.play("closewindow-1")
           }
           if (exploreUI.style.transform === "scale(1)" && window.landActivated === true) {
-            soundtrack.play("closewindow-1")
+            window.soundtrack.play("closewindow-1")
           }
           exploreUI.style.transform = "scale(0)";
           coll.style.transform =
@@ -1078,9 +1078,9 @@ export async function universe() {
         // if space bar is pressed open the explore UI
         if (e.keyCode == 32 &&  window.loggedIn === true) {
           window.exploreOpenHelper();
-          soundtrack.stop("discovered-1")
+          window.soundtrack.stop("discovered-1")
           window.uniPlayer.emote = "";
-          soundtrack.stop("reacclimate-1");
+          window.soundtrack.stop("reacclimate-1");
         }
         ///////////////////////
         //// TEMP
@@ -1091,8 +1091,8 @@ export async function universe() {
         }
       } else if (window.chatActive === true && window.tempIn === true) {
         if (e.keyCode != 37 || e.keyCode != 38 || e.keyCode != 39 || e.keyCode != 40 && typing == true) {
-          soundtrack.stop("typing-1")
-          soundtrack.play("typing-1")
+         window.soundtrack.stop("typing-1")
+          window.soundtrack.play("typing-1")
         }
       }
     });
@@ -1179,19 +1179,19 @@ export async function universe() {
     
     document.addEventListener("keyup", function (e) {
       if (e.keyCode == 37 &&  window.loggedIn === true) {
-        soundtrack.stop("running-2")
+        window.soundtrack.stop("running-2")
         playing.running = false;
       }
       if (e.keyCode == 38 &&  window.loggedIn === true) {
-        soundtrack.stop("running-2")
+        window.oundtrack.stop("running-2")
         playing.running = false;
       }
       if (e.keyCode == 39 &&  window.loggedIn === true) {
-        soundtrack.stop("running-2")
+        window.soundtrack.stop("running-2")
         playing.running = false;
       }
       if (e.keyCode == 40 &&  window.loggedIn === true) {
-        soundtrack.stop("running-2")
+        window.soundtrack.stop("running-2")
         playing.running = false;
       }
     });
@@ -1319,7 +1319,7 @@ export async function universe() {
   // Explore Open Helper
   window.exploreOpenHelper = () => {
     // scale exploreUI to 1 and position it 18px to the right of the selection box if the space to the right of the selection box is greater than the width of the exploreUI element, if not position it 18px to the left of the selection box.
-    soundtrack.setVolume("openwindow-1", 0.4);
+    window.soundtrack.setVolume("openwindow-1", 0.4);
     var exploreUISize = document.getElementById("exploreUI").offsetWidth;
     if (typing === false) {
       if (
@@ -1336,7 +1336,7 @@ export async function universe() {
       }
       if (window.landActivated === false) {
         setTimeout(() => {
-          soundtrack.play("explore-1")
+          window.soundtrack.play("explore-1")
         } , 100);
         exploreUI.style.width = "128px";
         exploreUI.style.height = "20px";
@@ -1355,7 +1355,7 @@ export async function universe() {
         // Add switch case for different domain functions(catgories)
         // exploreUI.style.width = "540px";
         // exploreUI.style.height = "80%";
-        soundtrack.play("openwindow-1");
+        window.soundtrack.play("openwindow-1");
         if (window.domainType === "chat") {
           window.chatActive = true;
           exploreUI.style.width = "540px";
@@ -1369,7 +1369,7 @@ export async function universe() {
         if (window.domainType === "world") {
           exploreUI.style.width = "540px";
           exploreUI.style.height = "810px";
-          soundtrack.play("openwindow-1");
+          window.soundtrack.play("openwindow-1");
           // document
           //   .getElementById("uniEvent4")
           //   .setAttribute("style", "animation: none;");
@@ -1378,10 +1378,10 @@ export async function universe() {
         if (window.domainType === "canon") {   
           exploreUI.style.width = "540px";
           exploreUI.style.height = "60vh";
-          soundtrack.play("openwindow-1");
+          window.soundtrack.play("openwindow-1");
           setTimeout(() => {
             if (window.spoke.spokeAcclimate === false) {
-              soundtrack.play("reacclimate-1");
+              window.soundtrack.play("reacclimate-1");
               window.spoke.spokeAcclimatePlaying = true;
             }
           }, 200);
@@ -1398,7 +1398,7 @@ export async function universe() {
         }
 
         if (window.domainType === "canonX") {
-          soundtrack.play("openwindow-1");
+          window.soundtrack.play("openwindow-1");
           document
           .getElementById("collectionGallery")
           .shadowRoot.getElementById("collectionGallery").style.transform =
@@ -1455,28 +1455,28 @@ export async function universe() {
     // MenuSounds
     text?.forEach((el) => {
       el.addEventListener("mouseout", () => {
-        soundtrack?.setVolume("menuMove3", 0.5);
+        window.soundtrack?.setVolume("menuMove3", 0.5);
         // soundtrack?.stop("menuMove3");
         if (soundtrack?.paused) {
-          soundtrack?.play("menuMove3");
+          window.soundtrack?.play("menuMove3");
         } else {
           // soundtrack?.stop("menuMove3");
-          soundtrack?.play("menuMove3");
+          window.soundtrack?.play("menuMove3");
         }
       });
     });
     //
     uniMenu?.childNodes.forEach((el) => {
       if (el.id != "uniMenuItems") {
-        soundtrack.stop("menuLoading1");
+        window.soundtrack.stop("menuLoading1");
       }
       el.addEventListener("click", () => {
         window.clearAndSelectMenu(el.id);
         if (soundtrack.paused) {
-          soundtrack.play("menuEnter3");
+          window.soundtrack.play("menuEnter3");
         } else {
-          soundtrack.stop("menuEnter3");
-          soundtrack.play("menuEnter3");
+          window.soundtrack.stop("menuEnter3");
+          window.soundtrack.play("menuEnter3");
         }
       });
 
@@ -2001,9 +2001,9 @@ export async function universe() {
     var shadow = document.getElementById("getUniMenu").shadowRoot;
     shadow.getElementById("menuLoadingScreen").style.display = "none";
     shadow.getElementById("menuLoadingScreen3").style.display = "none";
-    soundtrack.stop("menuLoading1");
-    soundtrack.setVolume("menuError1", 0.4);
-    soundtrack.play("menuError1");
+    window.soundtrack.stop("menuLoading1");
+    window.soundtrack.setVolume("menuError1", 0.4);
+    window.soundtrack.play("menuError1");
     shadow.getElementById("menuMessage").style.display = "grid";
     switch (error.e.result?.error_code || error.e.message) {
       case "IC0501":
@@ -2347,9 +2347,9 @@ export async function enterTaosCity(custCheck) {
   forger.style.opacity = "0";
   document.getElementById("walletsModal").shadowRoot.getElementById("main").style.transform = "scaleX(0)";
   document.getElementById("walletsModal").shadowRoot.getElementById("main").style.opacity = "0";
-  soundtrack.play("menuEntrance1");
-  soundtrack.setVolume("dgOnline-1", 0.4);
-  soundtrack.play("dgOnline-1");
+  window.soundtrack.play("menuEntrance1");
+  window.soundtrack.setVolume("dgOnline-1", 0.4);
+  window.soundtrack.play("dgOnline-1");
   //
 
   var uniMenu = document.getElementById("getUniMenu").shadowRoot;
@@ -2386,9 +2386,9 @@ export async function enterTaosCity(custCheck) {
   `
   document.getElementById("camera").appendChild(powerUp);
   powerUp.addEventListener("click", () => {
-    soundtrack.setVolume("combatOff-1", 0.7);
-    soundtrack.setVolume("combatOff-2", 0.7);
-    soundtrack.play(`combatOff-${Math.floor(Math.random() * 2) + 1}`);
+    window.soundtrack.setVolume("combatOff-1", 0.7);
+    window.soundtrack.setVolume("combatOff-2", 0.7);
+    window.soundtrack.play(`combatOff-${Math.floor(Math.random() * 2) + 1}`);
   });
   // uniMenu.getElementById("it1").style.display = "none";
 }
@@ -2411,8 +2411,8 @@ export function loading() {
   var loading2 = shadow.getElementById("menuLoadingScreen3");
       loading.style.display = "grid";
       loading2.style.display = "grid";
-      soundtrack.loop('menuLoading1');
-      soundtrack.play('menuLoading1');
+      window.soundtrack.loop('menuLoading1');
+      window.soundtrack.play('menuLoading1');
 }
 
 export function endLoading() {
@@ -2421,7 +2421,7 @@ export function endLoading() {
   var loading2 = shadow.getElementById("menuLoadingScreen3");
       loading.style.display = "none";
       loading2.style.display = "none";
-      soundtrack.stop('menuLoading1');
+      window.soundtrack.stop('menuLoading1');
 }
 
 export function dragElement(elmnt, on) {

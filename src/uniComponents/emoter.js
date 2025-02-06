@@ -1,4 +1,4 @@
-import { soundtrack } from "../universe";
+// import { soundtrack } from "../universe";
 import { gsap } from "gsap";
 import { channel2ex } from "../universe";
 
@@ -61,22 +61,22 @@ class emoter extends HTMLElement {
                 }
             }
             if (e.keyCode === 49 && this.emotes === true) {
-                soundtrack.play("explore-1");
+                window.soundtrack.play("explore-1");
                 window.uniPlayer.emote = "👋";
                 player.innerHTML = `<div class="playerEmote" style="position: absolute; top: 9px; left: 9px; width: 28px; height: 28px; z-index:10; background-color:black; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: #fff; font-weight: 700;">👋</div>`;
                 channel2ex.presence.update({ data: window.uniPlayer });
             } else if (e.keyCode === 50 && this.emotes === true) {
-                soundtrack.play("explore-1");
+                window.soundtrack.play("explore-1");
                 window.uniPlayer.emote = "😆";
                 channel2ex.presence.update({ data: window.uniPlayer });
                 player.innerHTML = `<div class="playerEmote" style="position: absolute; top: 9px; left: 9px; width: 28px; height: 28px; z-index:10; background-color:black; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: #fff; font-weight: 700;">😆</div>`;
             } else if (e.keyCode === 51 && this.emotes === true) {
-                soundtrack.play("explore-1");
+                window.soundtrack.play("explore-1");
                 window.uniPlayer.emote = "🍻";
                 channel2ex.presence.update({ data: window.uniPlayer });
                 player.innerHTML = `<div class="playerEmote" style="position: absolute; top: 9px; left: 9px; width: 28px; height: 28px; z-index:10; background-color:black; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: #fff; font-weight: 700;">🍻</div>`;
             } else if (e.keyCode === 52 && this.emotes === true) {
-                soundtrack.play("explore-1");
+                window.soundtrack.play("explore-1");
                 window.uniPlayer.emote = "🚨";
                 channel2ex.presence.update({ data: window.uniPlayer });
                 player.innerHTML = `<div class="playerEmote" style="position: absolute; top: 9px; left: 9px; width: 28px; height: 28px; z-index:10; background-color:black; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: #fff; font-weight: 700;">🚨</div>`;
@@ -93,7 +93,7 @@ class emoter extends HTMLElement {
                 // window.uniPlayer.emote = "📸";
                 // channel2.presence.update({ data: window.uniPlayer });
             } else if (e.keyCode === 56 && this.emotes === true) {
-                soundtrack.play("explore-1");
+                window.soundtrack.play("explore-1");
                 window.uniPlayer.emote = "💤";
                 channel2ex.presence.update({ data: window.uniPlayer });
                 player.innerHTML = `<div class="playerEmote" style="position: absolute; top: 9px; left: 9px; width: 28px; height: 28px; z-index:10; background-color:black; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: #fff; font-weight: 700;">💤</div>`;
@@ -102,7 +102,7 @@ class emoter extends HTMLElement {
                 // window.uniPlayer.emote = "🌐";
                 // channel2.presence.update({ data: window.uniPlayer });
             } else if (e.keyCode === 48 && this.emotes === true) {
-                soundtrack.play("explore-1");
+                window.soundtrack.play("explore-1");
                 window.uniPlayer.emote = "💬";
                 channel2ex.presence.update({ data: window.uniPlayer });
                 player.innerHTML = `<div class="playerEmote" style="position: absolute; top: 9px; left: 9px; width: 28px; height: 28px; z-index:10; background-color:black; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: #fff; font-weight: 700;">💬</div>`;

@@ -1,4 +1,4 @@
-import { SoundtrackManager } from "./soundtrack.js";
+// import { SoundtrackManager } from "./soundtrack.js";
 import { story } from "./game/SceneManager.js";
 import { newScenario, loading, endLoading, dragElement } from "./universe.js";
 import { getNFTCollections } from "./wallets.js";
@@ -16,7 +16,7 @@ window.dtfullMenuOpen = false;
 const dsheet = "https://script.google.com/macros/s/AKfycbzHUtfeNysmMSZvlC7tnfYhpgs_EU_3kx9_6H_VV6le8tPyR4Vlzs8SlfES_8pbK0nb2w/exec";
 
 const VITE_ScogeI = import.meta.env.VITE_ScogeI;
-const soundtrack2 = new SoundtrackManager();
+// const soundtrack2 = new SoundtrackManager();
 const fleekP = import.meta.env.VITE_fleekP;
 const fleekS = import.meta.env.VITE_fleekS;
 
@@ -81,7 +81,7 @@ class getUniMenu extends HTMLElement {
     this.domainIntroSeen = true;
     this.beaconInterval = null;
     this.shadow = this.attachShadow({ mode: "open" });
-    this.defaultSource = `<img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/DIGISHOP-1.png" alt="NFT Shop" id="nftShop">`
+    this.defaultSource = `<img src="https://storage.scoge.co/scogeUniverse/uniMenu/DIGISHOP-1.png" alt="NFT Shop" id="nftShop">`
     this.beacons = null;
     this.digiLink = "https://yuku.app/launchpad/hmz4w-fiaaa-aaaah-admlq-cai";
     this.patreonLink = "https://www.patreon.com/_scoge_";
@@ -218,8 +218,8 @@ class getUniMenu extends HTMLElement {
 
   loggedIn() {
       this.updateVarBeacon();
-      soundtrack2.loop("pegasus");
-      soundtrack2.play("pegasus");
+      // soundtrack2.loop("pegasus");
+      // soundtrack2.play("pegasus");
       var newBeacon = this.shadow.getElementById("newvarBeacon")
       this.shadow.getElementById("varBeacon")?.replaceWith(newBeacon);
     this.shadow.getElementById("uniMenuExit").style.display = "none";
@@ -277,30 +277,30 @@ class getUniMenu extends HTMLElement {
     this.shadow.getElementById("myRange2").addEventListener("input", (e) => {
       switch (e.target.value) {
         case "0":
-        soundtrack2.setVolume("pegasus", 0.0);
-        soundtrack2.loop("pegasus");
-        soundtrack2.pause("pegasus");
+        // soundtrack2.setVolume("pegasus", 0.0);
+        // soundtrack2.loop("pegasus");
+        // soundtrack2.pause("pegasus");
         e.target.value = 0;
         break;
         case "1":
-        soundtrack2.setVolume("pegasus", 0.1);
-        soundtrack2.play("pegasus");
+        // soundtrack2.setVolume("pegasus", 0.1);
+        // soundtrack2.play("pegasus");
         e.target.value = 1;
         break;
         case "2":
-        soundtrack2.setVolume("pegasus", 0.25);
+        // soundtrack2.setVolume("pegasus", 0.25);
         e.target.value = 2;
         break;
         case "3":
-        soundtrack2.setVolume("pegasus", 0.50);
+        // soundtrack2.setVolume("pegasus", 0.50);
         e.target.value = 3;
         break;
         case "4":
-        soundtrack2.setVolume("pegasus", 0.75);
+        // soundtrack2.setVolume("pegasus", 0.75);
         e.target.value = 4;
         break;
         case "5":
-        soundtrack2.setVolume("pegasus", 1);
+        // soundtrack2.setVolume("pegasus", 1);
         e.target.value = 5;
         break;
       }
@@ -1127,31 +1127,31 @@ class getUniMenu extends HTMLElement {
          <style>
             @font-face {
                 font-family: "BS-B";
-                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Bold.svg");
+                src: url("https://storage.scoge.co/scogeFonts/BioSans-Bold.svg");
                 font-weight: bold;
                 font-style: normal;
             }
             @font-face {
                 font-family: "BS-R";
-                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Regular.ttf");
+                src: url("https://storage.scoge.co/scogeFonts/BioSans-Regular.ttf");
                 font-weight: normal;
                 font-style: normal;
             }
             @font-face {
                 font-family: "BS-SB";
-                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-SemiBold.svg");
+                src: url("https://storage.scoge.co/scogeFonts/BioSans-SemiBold.svg");
                 font-weight: 600;
                 font-style: normal;
             }
             @font-face {
                 font-family: "BS-I";
-                src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/BioSans-Italic.svg");
+                src: url("https://storage.scoge.co/scogeFonts/BioSans-Italic.svg");
                 font-weight: normal;
                 font-style: italic;
             }
             @font-face {
               font-family: "GM-I";
-              src: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/fonts/DMSans-Italic.ttf");
+              src: url("https://storage.scoge.co/scogeFonts/DMSans-Italic.ttf");
               font-weight: normal;
               font-style: italic;
             }
@@ -2902,15 +2902,15 @@ class getUniMenu extends HTMLElement {
             }
 
             #mintBG {
-              background-image: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/buttons/digisette-icon.jpg");
+              background-image: url("https://storage.scoge.co/scogeUniverse/uniMenu/digisette-icon.jpg");
             }
 
             #syncBG {
-              background-image: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/buttons/sync-icon.jpg");
+              background-image: url("https://storage.scoge.co/scogeUniverse/uniMenu/sync-icon.jpg");
             }
 
             #loginBG {
-              background-image: url("https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/buttons/grid.jpg");
+              background-image: url("https://storage.scoge.co/scogeUniverse/uniMenu/grid.jpg");
             }
 
             #patronBG {
@@ -3765,7 +3765,7 @@ class getUniMenu extends HTMLElement {
             <div id="refresh"></div>
             <div id="menuHeader">
               <div id="topMenu">
-               <img id="uniMenuLogo" src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/SCOGÉ_Logo-red.png" draggable="false">
+               <img id="uniMenuLogo" src="../assets/images/sl-r.png" draggable="false">
                <div id="loadingText">Loading...</div>
                <div id="uniMenuIcon">
                 <div class="menuIcon" id="mi1"></div>
@@ -4131,11 +4131,11 @@ class getUniMenu extends HTMLElement {
               <div id="fm-cloudHall">
                 <div id="cloudHallBody">
                   <div class="cloudHall-tabs ct1">
-                    <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/graphics/tc-dd-seal.png" alt="CloudHall 12" id="cloudHallImg">
+                    <img src="https://storage.scoge.co/scogeUniverse/uniMenu/tc-dd-seal.png" alt="CloudHall 12" id="cloudHallImg">
                     <div id="cloudHallText">GRAND COUNCIL CENTER<br>- UNDER CONSTRUCTION -</div>
                   </div>
                   <div class="cloudHall-tabs ct2">
-                    <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/avatar/avatar-base1.png" alt="CloudHall 12" id="cloudHallGarmentImg">
+                    <img src="https://storage.scoge.co/scogeUniverse/avatars/avatar-base1.png" alt="CloudHall 12" id="cloudHallGarmentImg">
                   </div>
                   <div class="cloudHall-tabs ct3">
                   </div>
