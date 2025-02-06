@@ -9,6 +9,7 @@ import { myFirstDrug } from "./universe.js";
 
 import comGlove from "../assets/images/icons/combat-glove.png";
 import comAvatar from "../assets/images/icons/combat-avatar.png";
+import mainLogo from "../assets/images/sl-r.png";
 
 window.dtmenuOpen = false;
 window.dtfullMenuOpen = false;
@@ -3765,7 +3766,7 @@ class getUniMenu extends HTMLElement {
             <div id="refresh"></div>
             <div id="menuHeader">
               <div id="topMenu">
-               <img id="uniMenuLogo" src="../assets/images/sl-r.png" draggable="false">
+               <img id="uniMenuLogo" src="${mainLogo}" draggable="false">
                <div id="loadingText">Loading...</div>
                <div id="uniMenuIcon">
                 <div class="menuIcon" id="mi1"></div>
