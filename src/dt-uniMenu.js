@@ -955,8 +955,8 @@ class getUniMenu extends HTMLElement {
     this.musicLevel();
 
     this.shadowRoot.getElementById("comBut").addEventListener("click", () => {
-      soundtrack2.setVolume("combatOff-1", 0.7);
-      soundtrack2.play(`combatOff-1`);
+      window.soundtrack.setVolume("combatOff-1", 0.7);
+      window.soundtrack.play(`combatOff-1`);
     })
     this.shadow.getElementById("PatreonBut").addEventListener("click", () => {
       window.open(this.patreonLink);
@@ -4124,7 +4124,7 @@ class getUniMenu extends HTMLElement {
                 </div>
                 <div id="feedbackHeadline">Contact SCOGÉ</div>
                 <form id="feedbackForm">
-                  <input type="email" name="Email" id="feedbackEmailInput" placeholder="Email Address:" maxlength="45">
+                  <input type="email" name="Email" id="feedbackEmailInput" placeholder="Email:" maxlength="45">
                   <textarea id="feedbackInput" name="FeedbackText" placeholder="Message:" maxlength="320"></textarea>
                   <input id="feedbackButton" type="submit">
                 </form>
