@@ -389,7 +389,7 @@ export async function universe() {
         }
       };
       img.src =
-        "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/scoge-taos-city-universe.jpg";
+        "https://storage.scoge.co/scogeUniverse/maps/scoge-taos-city-universe.jpg";
       cam.scrollTo(990, 0);
       // prevent scrolling under scrollto(990,0) and activate scrolling over scrollto(990,0) Sectors
       // cam.addEventListener(
@@ -500,7 +500,7 @@ export async function universe() {
         }
       };
       img.src =
-        "https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/uniMap/scoge-taos-city-universe.jpg";
+        "https://storage.scoge.co/scogeUniverse/maps/scoge-taos-city-universe.jpg";
       cam.scrollTo(990, 0);
   };
 
@@ -1446,6 +1446,9 @@ export async function universe() {
     var getNewButtons = document
       .getElementById("getUniMenu")
       .shadowRoot?.querySelectorAll(".getNew");
+      var tabs = document
+      .getElementById("getUniMenu")
+      .shadowRoot?.querySelectorAll(".menuTabs");
     //
     getNewButtons?.forEach((el) => {
       el.addEventListener("click", () => {
@@ -1456,11 +1459,11 @@ export async function universe() {
     text?.forEach((el) => {
       el.addEventListener("mouseout", () => {
         window.soundtrack?.setVolume("menuMove3", 0.5);
-        // soundtrack?.stop("menuMove3");
+        soundtrack?.stop("menuMove3");
         if (soundtrack?.paused) {
           window.soundtrack?.play("menuMove3");
         } else {
-          // soundtrack?.stop("menuMove3");
+          soundtrack?.stop("menuMove3");
           window.soundtrack?.play("menuMove3");
         }
       });

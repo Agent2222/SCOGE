@@ -31,6 +31,7 @@ import { uniDomainDev } from "./uni-c-domaindev.js";
 import { checkInitialState } from "../src/game/SceneManager.js";
 import { emoter } from "./uniComponents/emoter.js";
 import { tooltip } from "./uniHelpers/tooltip.js";
+import { dtCampaign } from "./dt-campaign.js";
 // import { client } from "./uniHelpers/thirdWeb.js";
 
 // Components

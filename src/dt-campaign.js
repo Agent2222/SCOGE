@@ -106,7 +106,6 @@ class dtCampaign extends HTMLElement {
     this.render();
     this.pageScroll();
     document.getElementById("campaignBut").addEventListener("click", this.openCampaign.bind(this));
-    this.shadow.getElementById("campIcon").addEventListener("click", this.closeCampaign.bind(this));
     this.shadow.getElementById("nextGalleryImg").addEventListener("click", this.nextImage.bind(this));
     this.shadow.getElementById("preGalleryImg").addEventListener("click", this.previousImage.bind(this));
     this.shadow.getElementById("nextBtsImg").addEventListener("click", this.nextBtsImage.bind(this));
@@ -134,7 +133,7 @@ class dtCampaign extends HTMLElement {
             }
             /* width */
             ::-webkit-scrollbar {
-              width: 10px;
+              width: 2px;
             }
 
             /* Track */
@@ -152,12 +151,14 @@ class dtCampaign extends HTMLElement {
               background: var(--secondary); 
             }
             #campaignComp {
-              width: 70%;
-              height: 98%;
-              background: black;
+              width: 40%;
+              height: 85%;
+              background: rgba(0, 0, 0, 0.95);
+              border: 1px solid var(--primary);
+              border-radius: 10px;
               position: fixed;
-              top: 0;
-              right: -70%;
+              top: 5%;
+              right: 2%;
               z-index: 5;
               font-family: "BS-R";
               padding-top: 2%;
@@ -215,27 +216,6 @@ class dtCampaign extends HTMLElement {
               height: 65%;
               float: left;
               margin-bottom: 4%;
-            }
-            #campIcon {
-              width: 4%;
-              height: 4%;
-              position: absolute;
-              left: -4%;
-              top: 9.3%;
-              z-index: 5;
-              background-color: #ff002d;
-              border-right: none;
-              border-top-left-radius: 8%;
-              border-bottom-left-radius: 8%;
-              display: grid;
-              grid-template-columns: 1fr;
-              grid-template-rows: 1fr;
-              align-items: center;
-              justify-items: center;
-              font-family: "BS-R";
-              color: white;
-              cursor: pointer;
-              font-size: 12px;
             }
             #scrollBody {
               width: 100%;
@@ -303,9 +283,6 @@ class dtCampaign extends HTMLElement {
               height: 100%;
             }
             @media screen and (max-width: 769px) {
-              #campIcon {
-                display: none;
-              }
               #campaignComp {
                 width: 100%;
                 height: 80%;
@@ -394,9 +371,6 @@ class dtCampaign extends HTMLElement {
             }
          </style>
          <div id="campaignComp">
-            <div id="campIcon">
-              X
-            </div>
             <div id="scrollBody">
             <div id="header">
               <div id="head">CH. 1 - REACCLIMATE</div>
