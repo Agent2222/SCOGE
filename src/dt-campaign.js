@@ -165,6 +165,7 @@ class dtCampaign extends HTMLElement {
               overflow-y: visible;
               overflow-x: visible;
               transition: 1s;
+              display: none;
             }
             #header {
               height: auto%;
