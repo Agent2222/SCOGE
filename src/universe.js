@@ -1183,7 +1183,7 @@ export async function universe() {
         playing.running = false;
       }
       if (e.keyCode == 38 &&  window.loggedIn === true) {
-        window.oundtrack.stop("running-2")
+        window.soundtrack.stop("running-2")
         playing.running = false;
       }
       if (e.keyCode == 39 &&  window.loggedIn === true) {
