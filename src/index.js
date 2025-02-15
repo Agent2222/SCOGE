@@ -149,7 +149,7 @@ function reminder() {
   var reminder = document.createElement("div");
   reminder.setAttribute("class", "reminder");
   reminder.innerHTML = `<div>
-    Reminder: This is a non-fictional universe. All characters and events are non-fictional.<br>Agents won't forget.<br><br><br><br>
+    Reminder: This is a non-fictional universe. All characters and events are non-fictional.<br><br>join the Agency for updates.<br><br><br><br>
     <div id="closeReminder">- Understood -</div>
   </div>
   `;

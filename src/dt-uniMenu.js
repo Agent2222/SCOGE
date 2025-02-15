@@ -958,9 +958,9 @@ class getUniMenu extends HTMLElement {
       window.soundtrack.setVolume("combatOff-1", 0.7);
       window.soundtrack.play(`combatOff-1`);
     })
-    this.shadow.getElementById("PatreonBut").addEventListener("click", () => {
-      window.open(this.patreonLink);
-    });
+    // this.shadow.getElementById("PatreonBut").addEventListener("click", () => {
+    //   window.open(this.patreonLink);
+    // });
     this.shadow.getElementById("gdBuyBut2").addEventListener("click", () => {
       if (this.domainIntroSeen === null) {
         story("DomainDevelopment");
@@ -2563,7 +2563,6 @@ class getUniMenu extends HTMLElement {
               font-size: 1.5em;
               border-radius: 5px;
               letter-spacing: 2px;
-              cursor: pointer;
               transition: 0.3s all;
               position: relative;
               margin-top: 5%;
@@ -2575,13 +2574,13 @@ class getUniMenu extends HTMLElement {
             }
 
 
-            #PatreonBut:hover {
-              background-color: var(--accent);
-              color: var(--secondary);
-              font-family: "BS-B";
-              text-shadow: 0 0 5px black;
-              letter-spacing: 12px;
-            }
+            // #PatreonBut:hover {
+            //   background-color: var(--accent);
+            //   color: var(--secondary);
+            //   font-family: "BS-B";
+            //   text-shadow: 0 0 5px black;
+            //   letter-spacing: 12px;
+            // }
 
             #newsletterHead {
               width: 100%;
@@ -3800,7 +3799,7 @@ class getUniMenu extends HTMLElement {
                 <div>
                   <svg id="uniMenuProfileSvg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.71 52.83"><defs><style>.cls-1{fill:#ff002d;}</style></defs><path class="cls-1" d="M31.5,26.12A11.42,11.42,0,1,1,42.92,14.7,11.43,11.43,0,0,1,31.5,26.12Zm0-21.55A10.13,10.13,0,1,0,41.63,14.7,10.15,10.15,0,0,0,31.5,4.57Z"/><path class="cls-1" d="M45.79,49.82h-28a.65.65,0,0,1-.64-.65V39.49a14.66,14.66,0,1,1,29.32,0v9.68A.65.65,0,0,1,45.79,49.82ZM18.41,48.53H45.15v-9a13.37,13.37,0,1,0-26.74,0Z"/></svg>
                 </div>
-                <div class="uniMenuTxt" id="menuProfile">Agents</div>
+                <div class="uniMenuTxt" id="menuProfile">Agency</div>
               </div>
               <div id="uniMenuBeacons" class="menuTabs">
                 <div>
@@ -3907,17 +3906,17 @@ class getUniMenu extends HTMLElement {
               </div>
               <div id="agentsAndPatrons">
                 <div id="agentssPage">
-                  <div id="dgHead">AGENTS</div>
+                  <div id="dgHead">AGENCY</div>
                   <div id="dgChangelog"></div>
                 </div>
-                <div id="PatreonBut" class="glowButton">
+                <div id="PatreonBut" class="">
                   <div class="bgImg" id="patronBG"></div>
-                  <div class="buttonTxt" id="patText">PATREON</div>
+                  <div class="buttonTxt" id="patText" style="display:none;">PATREON</div>
                 </div>
-                <div id="newsletterHead">CLICK ABOVE TO JOIN OUR EXCLUSIVE PATREON, OR SUBSCRIBE TO THE SCOGÉ NEWSLETTER BELOW FOR UPDATES.</div>
+                <div id="newsletterHead">EVERY AGENT NEEDS TO STAY INFORMED. SUBSCRIBING ENSURES YOU'RE PREPARED FOR WHAT'S TO COME.</div>
                 <form id="emailForm">
-                  <input type="email" id="emailInput" placeholder="ENTER YOUR EMAIL" required>
-                  <input type="submit" id="emailSubmit" value="SUBSCRIBE">
+                  <input type="email" id="emailInput" placeholder="YOUR.EMAIL@DOMAIN.COM" required>
+                  <input type="submit" id="emailSubmit" value="JOIN NOW">
                 </form>
               </div>
               <div id="warpLock">
