@@ -2663,6 +2663,7 @@ class getUniMenu extends HTMLElement {
               font-size: 1.2em;
               letter-spacing: 20px;
               user-select: none;
+              font-family: "GM-I";
             }
 
             #dgChangelog {
@@ -3747,13 +3748,13 @@ class getUniMenu extends HTMLElement {
                 color: var(--secondary);
               }
 
-              #PatreonBut {
-                background-color: var(--accent);
-                color: var(--secondary);
-                font-family: "BS-B";
-                text-shadow: 0 0 5px black;
-                letter-spacing: 12px;
-              }
+              // #PatreonBut {
+              //   background-color: var(--accent);
+              //   color: var(--secondary);
+              //   font-family: "BS-B";
+              //   text-shadow: 0 0 5px black;
+              //   letter-spacing: 12px;
+              // }
 
             }
 
