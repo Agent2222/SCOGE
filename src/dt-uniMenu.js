@@ -1280,7 +1280,7 @@ class getUniMenu extends HTMLElement {
               position: absolute;
               top: 5vh;
               left: 36px;
-              background-color: rgba(0, 0, 0, 0.7);
+              background-color: rgba(0, 0, 0, 0.8);
               border-left: 2px solid #ff002d;
               border-bottom: 2px solid #ff002d;
               border-top: 2px solid #ff002d;
@@ -1308,7 +1308,7 @@ class getUniMenu extends HTMLElement {
               position: absolute;
               top: 25vh;
               left: 36px;
-              background-color: rgba(0, 0, 0, 0.7);
+              background-color: rgba(0, 0, 0, 0.8);
               border-left: 2px solid #ff002d;
               border-bottom: 2px solid #ff002d;
               border-top: 2px solid #ff002d;
@@ -1448,7 +1448,7 @@ class getUniMenu extends HTMLElement {
               position: absolute;
               left: 260px;
               top: -2px;
-              background-color: rgba(0, 0, 0, 0.7);
+              background-color: rgba(0, 0, 0, 0.8);
               z-index: 6;
               border-top-right-radius: 10px;
               border-bottom-right-radius: 10px;
@@ -3246,7 +3246,7 @@ class getUniMenu extends HTMLElement {
                 position: absolute;
                 top: 75svh;
                 left: 39px;
-                background-color: rgba(0, 0, 0, 0.7);
+                background-color: rgba(0, 0, 0, 0.8);
                 border-left: 2px solid #ff002d;
                 border-bottom: 2px solid #ff002d;
                 border-top: 2px solid #ff002d;
