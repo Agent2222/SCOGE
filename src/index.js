@@ -49,8 +49,8 @@ import { inject } from "@vercel/analytics"
 import mainvid1 from "../assets/video/scoge-c2-1.mp4";
 import mainvid2 from "../assets/video/scoge-c2-2.mp4";
 import main1poster from "../assets/video/scoge-c2-1-poster.jpg";
-import currentImg from "../assets/images/bgs/scoge-8-24.webp";
-import Img2 from "../assets/images/bgs/scoge-10-24.webp";
+import currentImg from "../assets/images/bgs/scoge-ch3-bg1.jpg";
+import Img2 from "../assets/images/bgs/scoge-ch3-bg2.jpg";
 
 var staticVids = [mainvid1, mainvid2];
 var bgs = [currentImg, Img2];
