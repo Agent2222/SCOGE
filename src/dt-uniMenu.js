@@ -3954,6 +3954,7 @@ class getUniMenu extends HTMLElement {
               <div id="fm-inventory">
                 <div id="inventoryBody">
                   <div class="inventory-tabs it1">
+                      <div class="collectionTab" id="collection4"><span class="cDot">&#9658;</span>SS/FW25 - Ch.3 DIGISETTE</div>
                       <div class="collectionTab" id="collection3"><span class="cDot">&#9658;</span>FW23 - Ch.2 ALAN & EVIE</div>
                       <div class="collectionTab" id="collection2"><span class="cDot">&#9658;</span>SS23 - Ch.1 REACCLIMATE</div>
                       <div class="collectionTab" id="collection1"><span class="cDot">&#9658;</span>FW22 - Discovery 1</div>

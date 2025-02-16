@@ -147,6 +147,38 @@ class dtGallery extends HTMLElement {
         publicUrl:
           "https://storage.scoge.co/scogeCollections/SCOGÉ-CH1-IMG-POR-12.jpg",
       },
+      {
+        publicUrl:
+          "https://storage.scoge.co/scogeCollections/scoge-ch3-look-1-sm.jpg",
+      },
+      {
+        publicUrl:
+          "https://storage.scoge.co/scogeCollections/scoge-ch3-look-2-sm.jpg",
+      },
+      {
+        publicUrl:
+          "https://storage.scoge.co/scogeCollections/scoge-ch3-look-3-sm.jpg",
+      },
+      {
+        publicUrl:
+          "https://storage.scoge.co/scogeCollections/scoge-ch3-look-4-sm.jpg",
+      },
+      {
+        publicUrl:
+          "https://storage.scoge.co/scogeCollections/scoge-ch3-look-5-sm.jpg",
+      },
+      {
+        publicUrl:
+          "https://storage.scoge.co/scogeCollections/scoge-ch3-look-6-sm.jpg",
+      },
+      {
+        publicUrl:
+          "https://storage.scoge.co/scogeCollections/scoge-ch3-look-7-sm.jpg",
+      },
+      {
+        publicUrl:
+          "https://storage.scoge.co/scogeCollections/scoge-ch3-look-8-sm.jpg",
+      },
     ];
     this.credits = {
       collection1: [
@@ -358,6 +390,76 @@ class dtGallery extends HTMLElement {
           ],
         },
       ],
+      collection4: [
+        {
+          category: "DIRECTOR / DESIGNER",
+          names: ["SCOGÉ"],
+        },
+        {
+          category: "PRODUCTION ASSISTANTS & STYLING",
+          names: [
+            "Marisol Romero",
+            "Danny Caton Jr.",
+            "Aniyah Sanchez"
+          ],
+        },
+        {
+          category: "HAIR / HEADPIECES",
+          names: [
+            "Jenni Iva Wimmerstedt",
+          ],
+        },
+        {
+          category: "MUA",
+          names: ["Stefanny G."],
+        },
+        {
+          category: "NAIL TECH",
+          names: ["Jasmine Tsuzura"],
+        },
+        {
+          category: "GUEST PHOTOGRAPHER",
+          names: [
+            "TheOneWillFocus",
+          ],
+        },
+        {
+          category: "FILM",
+          names: ["Vin Bains", "Theo Endreny"],
+        },
+        {
+          category: "TALENT",
+          names: [
+            "JJ Pinckney",
+            "Ryan",
+            "Joe West",
+            "Ian",
+            "Bred",
+            "Nashanti Harris",
+            "Adrienne",
+            "Lilly",
+            "Amanda Lux",
+          ],
+        },
+        {
+          category: "PR",
+          names: ["Tolani Faloye"],
+        },
+        {
+          category: "AUDIO ENGINEER",
+          names: ["James Seadale"],
+        },
+        {
+          category: "SPECIAL THANKS",
+          names: [
+            "Alexander Evans Experience",
+            "Rick Davy",
+            "Stephan N Linton",
+            "Lamine",
+            "Eric"
+          ],
+        },
+      ],
     }
   }
 
@@ -462,6 +564,31 @@ class dtGallery extends HTMLElement {
           }
         });
         break;
+      case "collection4":
+        this.selectedCollection = "collection4";
+        this.srcs.forEach((src) => {
+          if (src.publicUrl.includes("ch3")) {
+            const img = document.createElement("img");
+            img.setAttribute("class", "blackVignette");
+            img.id = `${src.publicUrl}_main`;
+            img.src = src.publicUrl;
+            const img2 = document.createElement("img");
+            img2.setAttribute("class", "blackVignette");
+            img2.id = src.publicUrl;
+            img2.src = src.publicUrl;
+            this.shadow.getElementById("galleryMainImages").appendChild(img);
+            this.shadow.getElementById("galGridImages").appendChild(img2);
+            img2.addEventListener("click", (e) => {
+              this.viewGalGrid();
+              const container = this.shadow.getElementById("galleryMainImages");
+              container.scrollTop = 0;
+              const imageRect = this.shadow.getElementById(`${e.target.id}_main`).getBoundingClientRect();
+              const containerRect = container.getBoundingClientRect();
+              const offsetTop = imageRect.top - containerRect.top;
+              container.scrollTop = offsetTop;
+            });
+          }
+        });
     }
   }
 
@@ -531,6 +658,26 @@ class dtGallery extends HTMLElement {
             break;
             case "collection3":
               this.credits.collection3.forEach((credit) => {
+                const creditContainer = document.createElement("div");
+                creditContainer.setAttribute("class", "creditContainer");
+                const namesContainer = document.createElement("div");
+                namesContainer.setAttribute("class", "creditNames");
+                const cat = document.createElement("div");
+                cat.innerHTML = credit.category;
+                cat.setAttribute("class", "creditCategory");
+                creditContainer.appendChild(cat);
+                credit.names.forEach((name) => {
+                  const n = document.createElement("div");
+                  n.innerHTML = name;
+                  n.setAttribute("class", "creditNames");
+                  namesContainer.appendChild(n);
+                  creditContainer.appendChild(namesContainer);
+                  this.shadow.getElementById("galInfo").appendChild(creditContainer);
+                });
+              });
+              break;
+            case "collection4":
+              this.credits.collection4.forEach((credit) => {
                 const creditContainer = document.createElement("div");
                 creditContainer.setAttribute("class", "creditContainer");
                 const namesContainer = document.createElement("div");
