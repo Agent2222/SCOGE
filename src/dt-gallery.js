@@ -442,10 +442,6 @@ class dtGallery extends HTMLElement {
           ],
         },
         {
-          category: "PR",
-          names: ["Tolani Faloye"],
-        },
-        {
           category: "AUDIO ENGINEER",
           names: ["James Seadale"],
         },
