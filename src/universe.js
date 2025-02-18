@@ -2323,6 +2323,7 @@ export async function enterTaosCity(custCheck) {
   setTimeout(() => {
     document.getElementById("seekModal").remove();
     if (window.minactive === false) {
+      document.getElementById("miniAgent").setAttribute("status", "intro");
       document.getElementById("miniAgent").setAttribute("active", "true");
       window.minactive === true;
     }

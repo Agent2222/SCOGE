@@ -764,6 +764,7 @@ class compWallets extends HTMLElement {
     taos() {
         enterTaosCity();
         setTimeout(() => {
+            document.getElementById("miniAgent").setAttribute("status", "intro");
             document.getElementById("miniAgent").toggle();
         }, 59000)
         setTimeout(() => {

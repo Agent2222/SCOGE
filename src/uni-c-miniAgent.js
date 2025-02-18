@@ -1,6 +1,7 @@
 // import { TypingPlus } from "../src//index.js";
 // import { SoundtrackManager } from "./soundtrack.js";
 import { MainDialogue } from "./typing.js";
+import { dialogueTree1, characters } from "../src/game/dialogueTree-1.js";
 
 class uniMenuAgent extends HTMLElement {
     constructor() {
@@ -10,58 +11,7 @@ class uniMenuAgent extends HTMLElement {
         this.miniOpen = false;
         // this.soundtrack = new SoundtrackManager();
         this.intro = "Ok, so here's your Digisette Domain Development setup interface. You'll be able setup domain from here.";
-        this.dialogueBank = {
-            intro: [
-                {
-                  text: "After the recent Digisette recall we're going to have to be really careful.",
-                  waiter: null,
-                  choices: [
-                    {
-                      text: "[ CONTINUE ]",
-                      action: () => this.dialogue.choose(1)
-                    },
-                    {
-                        text: "[ CONTINUE ]",
-                        action: () => this.dialogue.choose(1)
-                    }
-                  ]
-                },
-                {
-                    text: "All enforcers have orders to bring in anyone they find still using this system.",
-                    waiter: null,
-                    choices: [
-                      {
-                        text: "[ CONTINUE ]",
-                        action: () => this.dialogue.choose(1)
-                      }
-                    ]
-                  },
-                {
-                  text: 'This Oracle Cloak should help you maneuver through the city. But be fast!',
-                  waiter: null,
-                  choices: [
-                    {
-                      text: "[ OK! ]",
-                      action: () => this.dialogue.choose(1)
-                    }
-                  ]
-                },
-                {
-                    text: 'This Oracle Cloak should help you maneuver through the city. But be fast!',
-                    waiter: null,
-                    choices: [
-                      {
-                        text: "[ OK! ]"
-                      }
-                    ]
-                },
-                {
-                    text: 'This Oracle Cloak should help you maneuver through the city. But be fast!',
-                    waiter: null,
-                    choices: []
-                }
-              ]
-        }
+        this.dialogueBank = dialogueTree1;
     }
 
     get active() {
@@ -143,7 +93,8 @@ class uniMenuAgent extends HTMLElement {
     }
 
 
-    engage() {
+    engage(dialogue) {
+        this.shadowRoot.getElementById("agentImg").src = characters[this.dialogueBank[dialogue][0].character].mini;
         this.shadowRoot.getElementById("agentImg").style.transition = "all .8s ease-in-out";
                 this.shadowRoot.getElementById("agentImg").style.right = "0%";
                 var intro = this.intro
@@ -153,7 +104,7 @@ class uniMenuAgent extends HTMLElement {
                     this.toggle();
                 });
                 // this.dialogue = new TypingPlus(intro,el,60);
-                this.dialogue = new MainDialogue("Kat","neutral", this.dialogueBank['intro'])
+                this.dialogue = new MainDialogue(this.dialogueBank[dialogue])
                 this.toggle();
                 setTimeout(() => {
                     el.innerHTML = "";
@@ -166,7 +117,7 @@ class uniMenuAgent extends HTMLElement {
                 }, 800);
     }
 
-    activate(newValue) {
+    activate(dialogue) {
         var pos = this.position;
             this.shadowRoot.getElementById("main").style.display = "grid";
             if (pos === "left") {
@@ -181,7 +132,7 @@ class uniMenuAgent extends HTMLElement {
             }
 
             setTimeout(() => {
-                this.engage();
+                this.engage(dialogue);
             }, 500);
     }
 
@@ -196,10 +147,12 @@ class uniMenuAgent extends HTMLElement {
     attributeChangedCallback(name, oldValue, newValue) {
         if (name === "active") {
             if (newValue === "true") {
-                this.activate(newValue);
+                var dialogue = document.getElementById("miniAgent").getAttribute("status");
+                this.activate(dialogue);
             }
             if (newValue === "false") {
                 this.deactivate();
+                this.toggle();
             }
         }
         // if (name === "status") {
@@ -259,6 +212,12 @@ class uniMenuAgent extends HTMLElement {
                     transform: scale(0);
                 }
 
+                .name {
+                    font-family: "BS-B";
+                    color: var(--primary);
+                    text-transform: uppercase;
+                }
+
                 #agentChat {
                     height: 100%;
                     width: 100%;
@@ -277,7 +236,6 @@ class uniMenuAgent extends HTMLElement {
                     margin-top: 6%;
                     border-radius: 10px;
                     padding: 5%;
-                    text-transform: uppercase;
                     font-size: .8em;
                     letter-spacing: 2px;
                     background-color: rgba(0, 0, 0, 0.5);
@@ -371,7 +329,7 @@ class uniMenuAgent extends HTMLElement {
                 </div>
                 <div id="help">S</div>
                 <div id="agentProfile">
-                    <img id="agentImg" src="https://storage.scoge.co/scogeUniverse/characters/CC-Lesli-1.png" alt="Avatar" style="width:100%">
+                    <img id="agentImg" src="" alt="Avatar" style="width:100%">
                     <img src="https://storage.scoge.co/scogeUniverse/uniMenu/domain-wireframe.png" alt="Domain Development" id="ddLogo" style="height:100%">
                 </div>
             </div>

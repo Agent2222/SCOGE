@@ -6,6 +6,7 @@ class dtGallery extends HTMLElement {
     this.shadow = this.attachShadow({ mode: "open" });
     this.selectedCollection = null;
     this.gallExpanded = false;
+    this.easterGates = [false];
     this.srcs = [
       {
         publicUrl:
@@ -561,6 +562,30 @@ class dtGallery extends HTMLElement {
         });
         break;
       case "collection4":
+        setTimeout(() => {
+          var secondEl = document.getElementById("collectionGallery").shadowRoot.querySelectorAll(".blackVignette")[1];
+          var galleryCont = document.getElementById("collectionGallery").shadowRoot.getElementById("galleryMainImages");
+
+          // if the top of secondEl is at the top of #galleryMainImages div the container execute code
+          if (this.easterGates[0] === false && window.isMobile === false) {
+            galleryCont.addEventListener("scroll", () => {
+              const secondElTop = secondEl.getBoundingClientRect().top;
+              const galleryTop = galleryCont.getBoundingClientRect().top;
+ 
+             const relativeTop = secondElTop - galleryTop;
+ 
+             const secondElRelativeTop = galleryCont.scrollTop - secondEl.offsetTop;
+ 
+             if (Math.abs(secondElRelativeTop) >= 1300 && this.easterGates[0] === false) {
+              document.getElementById("miniAgent").setAttribute("status", "ch3Easter1");
+               document.getElementById("miniAgent").setAttribute("active", "true");
+               this.easterGates[0] = true;
+             }
+           });
+          }
+
+        }, 200);
+
         this.selectedCollection = "collection4";
         this.srcs.forEach((src) => {
           if (src.publicUrl.includes("ch3")) {

@@ -1,10 +1,13 @@
 // import { SoundtrackManager } from "./soundtrack.js";
 
+import { doc } from "prettier";
+
 export class MainDialogue {
-    constructor(npc, tone, lines) {
-        this.npc = npc;
-        this.tone = tone;
-        this.lines = lines;
+    constructor(dialogue) {
+        this.npc = dialogue[0].character;
+        this.tone = dialogue[0].tone;
+        this.lines = dialogue;
+        this.nameSet = false;
         // this.element = document.getElementById('dialogueModal').shadowRoot.getElementById('diaMain');
         this.specialText1 = "bold";
         this.specialText2 = "bright";
@@ -15,7 +18,6 @@ export class MainDialogue {
       }
     
       start() {
-        console.log(`${this.npc}: ${this.tone}`);
         this.typeLine(this.lines[0]);
       }
     
@@ -27,7 +29,7 @@ export class MainDialogue {
         this.j = 0;
         this.type().then(() => {
           line.choices.forEach((choice, index) => {
-            console.log(`${index + 1}: ${choice.text}`);
+            // console.log(`${index + 1}: ${choice.text}`);
           });
         });
       }
@@ -37,6 +39,17 @@ export class MainDialogue {
       }
     
       async type() {
+        if (this.nameSet == false) {
+          const nameEl = document.createElement('span');
+          const lineBreak = document.createElement('br');
+          const lineBreak2 = document.createElement('br');
+          nameEl.className = 'name';
+          nameEl.textContent = this.npc + ':';
+          this.element.appendChild(nameEl);
+          this.element.appendChild(lineBreak);
+          // this.element.appendChild(lineBreak2);
+          this.nameSet = true;
+        }
         if (this.i < this.words.length) {
           window.soundtrack.setVolume("typing-1", 0.8);
           window.soundtrack.stop("typing-1");
@@ -75,6 +88,7 @@ export class MainDialogue {
               //
             } else {
               if (this.lines[this.currentDialogue].choices.length > 1) {
+                this.nameSet = false;
                 const spanElement = document.createElement('span');
                 const lineBreak = document.createElement('br');
                 const lineBreak2 = document.createElement('br');
@@ -88,6 +102,7 @@ export class MainDialogue {
                 this.element.appendChild(lineBreak2);
                 this.element.appendChild(spanElement);
                 //
+                this.nameSet = false;
                 const spanElement2 = document.createElement('span');
                 const lineBreak3 = document.createElement('br');
                 const lineBreak4 = document.createElement('br');
@@ -98,6 +113,7 @@ export class MainDialogue {
                 this.element.appendChild(spanElement2);
               } else {
                 // Create a new span element
+                this.nameSet = false;
                 const spanElement = document.createElement('span');
                 const lineBreak = document.createElement('br');
                 const lineBreak2 = document.createElement('br');
@@ -137,20 +153,24 @@ export class MainDialogue {
       }
     
       choose(index) {
-        const choice = this.lines[index].choices[0];
+        const choice = this.lines[this.currentDialogue].choices[index];
         this.element.innerHTML = "";
-        console.log(choice.text);
-        this.lines.shift();
-        if (this.lines.length === 0) {
-          console.log('End of conversation.');
-          return;
-        }
-        if (choice.action) {
-          choice.action();
-        }
+        // console.log(choice);
+        // this.lines.shift();
+        this.currentDialogue++;
+        // if (choice.action) {
+        //   choice.action();
+        // }
         setTimeout(()=> {
-          this.typeLine(this.lines[0]);
+          this.typeLine(this.lines[index]);
         },500)
+      }
+
+      end() {
+        document.getElementById("miniAgent").setAttribute("active", "false");
+        setTimeout(() => {
+          document.getElementById("miniAgent").shadowRoot.getElementById("main").style.display = "none";
+        }, 800);
       }
   }
   
