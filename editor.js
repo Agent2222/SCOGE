@@ -1,6 +1,6 @@
 import { gsap } from "gsap";
 // import { Configuration, OpenAIApi } from "openai";
-import { newScenario, newEditorScenario } from "./src/universe";
+import { newScenario, newEditorScenario, newEditorCutScene } from "./src/universe";
 import { activateMapper } from "./src/uniHelpers/mapper";
 
 const VITE_ScogeI = import.meta.env.VITE_ScogeI;
@@ -22,6 +22,7 @@ var newElIndex = 0;
 var allElementsLoaded = false;
 var csd = null;
 var selectScopeTarget = null;
+var currentScenarioCutScenes = null;
 
 var defaultTempSceneData = {
   name: "newScene",
@@ -56,7 +57,7 @@ var tempSceneData = {
 var templateElementData = {
   id: "newElement",
   type: "div",
-  src: "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Elements/charTemplate.png",
+  src: "https://scoge.storage/scogeUniverse/Elements/charTemplate.png",
   left: "auto",
   right: "10%",
   bottom: "auto",
@@ -90,7 +91,7 @@ var templateCharacterData = {
     },
     images: {
       default:
-        "https://storage.fleek-internal.com/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/Characters/char-template.png",
+        "https://scoge.storage/scogeUniverse/Characters/char-template.png",
     },
   },
   pns: {
@@ -199,6 +200,36 @@ export async function editor(editorActive) {
                         <div class="sceneSelectElement" id="newElBut">[ NEW ELEMENT ]</div>
                     </div>
                 </div>
+                <div id="editorVideoGal" class="selectorContainer cutSceneSelectorContainer">
+                    <div id="videoSectHeader" class="sectHeader">VIDEOS</div>
+                    <div id="vidsContainer">
+                        <div class="sceneSelectVideo" id="newElBut">[ NEW VIDEO ]</div>
+                    </div>
+                </div>
+                <div id="editorTitlesGal" class="selectorContainer cutSceneSelectorContainer">
+                    <div id="titleSectHeader" class="sectHeader">TITLES</div>
+                    <div id="titlesContainer">
+                        <div class="sceneSelectTitle" id="newElBut">[ NEW TITLE ]</div>
+                    </div>
+                </div>
+                <div id="editorTracksGal" class="selectorContainer cutSceneSelectorContainer">
+                    <div id="trackSectHeader" class="sectHeader">TRACKS</div>
+                    <div id="tracksContainer">
+                        <div class="sceneSelectTrack" id="newElBut">[ NEW TRACK ]</div>
+                    </div>
+                </div>
+                <div id="editorDialogueGal" class="selectorContainer cutSceneSelectorContainer">
+                    <div id="dialogueSectHeader" class="sectHeader">DIALOGUES</div>
+                    <div id="dialogueContainer">
+                        <div class="sceneSelectDialogue" id="newElBut">[ NEW DIALOGUE ]</div>
+                    </div>
+                </div>
+                <div id="editorBreakGal" class="selectorContainer cutSceneSelectorContainer">
+                    <div id="breaksSectHeader" class="sectHeader">BREAKS</div>
+                    <div id="breaksContainer">
+                        <div class="sceneSelectBreak" id="newElBut">[ NEW BREAK ]</div>
+                    </div>
+                </div>
             </div>
             <div id="editorBody">
                 <div id="editorbodyHeader">
@@ -245,6 +276,20 @@ export async function editor(editorActive) {
                         </div>
                         <div id="editorAiOutput"></div>
                     </div>
+                </div>
+                <div id="editorbodyElements2">
+                  <div id="primeLineCont"></div>
+                  <div id="vertLine"></div>
+                  <div id="tBars">
+                    <div id="tBar1">00:00</div>
+                    <div id="tBar2">01:00</div>
+                  </div>
+                  <div id="cutSceneElsCont">
+                    <div class="ccElSect">
+                      <div class="csStartBullet"></div>
+                      <div class="csEndBullet"></div>
+                    </div>
+                  </div>
                 </div>
             </div>
             <div id="editorRightPanel">
@@ -313,39 +358,121 @@ export async function editor(editorActive) {
     for (const scenario in tempData.SUD.Scenarios) {
       var scenarioDropdownOption = document.createElement("option");
       scenarioDropdownOption.setAttribute("value", scenario);
-      scenarioDropdownOption.innerHTML = scenario;
+      scenarioDropdownOption.classList.add("dialogueSceneOption");
+      scenarioDropdownOption.innerHTML = `ds-${scenario}`;
       scenarioDropdown.appendChild(scenarioDropdownOption);
     }
-
+    
+    // Load CutScenes
+    var scenarioDropdownOption = document.createElement("option");
+    scenarioDropdownOption.setAttribute("value", `cs-CUTSCENES`);
+    scenarioDropdownOption.classList.add("cutSceneOption");
+    scenarioDropdownOption.innerHTML = `CUT-SCENES`;
+    scenarioDropdown.appendChild(scenarioDropdownOption);
+    
     currentScName = scenarioDropdown.value;
 
     // Select Scenario
-    scenarioDropdown.addEventListener("change", () => {
-      var currentScenarioScenes =
-        tempData.SUD.Scenarios[scenarioDropdown.value];
-      currentScenario = tempData.SUD.Scenarios[scenarioDropdown.value];
-      document.getElementById("scenesContainer").innerHTML = "";
-      currentScenarioScenes.forEach((scene) => {
-        var sceneSelectElement = document.createElement("div");
-        sceneSelectElement.setAttribute("class", "sceneSelectElement");
-        sceneSelectElement.setAttribute("id", scene.name);
-        sceneSelectElement.innerHTML = `${scene.name}`;
-        sceneSelectElement.addEventListener("click", (e) => {
-          loadScene(e.target.id);
+    scenarioDropdown.addEventListener("change", async (el) => {
+      let charGal = document.getElementById("editorCharGal");
+      let elGal = document.getElementById("editorElementGal");
+      let csGal = document.querySelectorAll(".cutSceneSelectorContainer");
+      let csElsCont = document.getElementById("editorbodyElements2");
+      let csElsCont1 = document.getElementById("editorbodyElements");
+      let leftPan =  document.getElementById("editorLeftPanel");
+
+      currentScName = scenarioDropdown.value;
+
+      document.querySelector(".cutcurrentCutSceneScene")?.remove();
+
+      if (el.target.value.includes("cs-")) {
+        currentScenarioCutScenes = await tempData.SUD.CutScenes;
+
+        document.getElementById("editorLeftPanel").style.gridTemplateRows = "1fr 1fr 1fr 1fr";
+        charGal.style.display = "none";
+        elGal.style.display = "none";
+  
+        csGal.forEach((el) => {
+          el.style.display = "grid";
         });
-        document
-          .getElementById("scenesContainer")
-          .appendChild(sceneSelectElement);
-      });
-      var newSceneBut = document.createElement("div");
-      newSceneBut.setAttribute("class", "sceneSelectElement");
-      newSceneBut.setAttribute("id", "newSceneBut");
-      newSceneBut.innerHTML = `[ NEW SCENE ]`;
-      document.getElementById("scenesContainer").appendChild(newSceneBut);
-      newScene();
-      if (allElementsLoaded) {
-        document.querySelector(".currentScene")?.remove();
-        loadScene(currentScenarioScenes[0]?.name, 0);
+  
+        leftPan.style.display = "block";
+        leftPan.style.gridTemplateColumns = "";
+        leftPan.style.gridTemplateRows = "";
+        leftPan.style.overflowY = "scroll";
+        leftPan.style.overflowX = "hidden";
+        csElsCont.style.display = "grid";
+        csElsCont1.style.display = "none";
+
+        currentScenario = tempData.SUD.CutScenes[scenarioDropdown.value.replace("cs-", "")];
+        document.getElementById("scenesContainer").innerHTML = "";
+
+        for (const cutScene in currentScenarioCutScenes) {
+          var cutSceneSelectElement = document.createElement("div");
+          cutSceneSelectElement.setAttribute("class", "sceneSelectElement");
+          cutSceneSelectElement.setAttribute("id", currentScenarioCutScenes[cutScene].name);
+          cutSceneSelectElement.innerHTML = `${currentScenarioCutScenes[cutScene].name}`;
+          cutSceneSelectElement.addEventListener("click", (e) => {
+            loadCutScene(e.target.id);
+          });
+          document
+            .getElementById("scenesContainer")
+            .appendChild(cutSceneSelectElement);
+        }
+
+        var newSceneBut = document.createElement("div");
+        newSceneBut.setAttribute("class", "cutSceneSelectElement");
+        newSceneBut.setAttribute("id", "newCutSceneBut");
+        newSceneBut.innerHTML = `[ NEW CUT SCENE ]`;
+        document.getElementById("scenesContainer").appendChild(newSceneBut);
+
+        // newCutScene();
+
+        if (allElementsLoaded) {
+          document.querySelector(".currentScene")?.remove();
+          loadCutScene(currentScenarioScenes[0]?.name, 0);
+        }
+        return;
+      } else {
+        var currentScenarioScenes = tempData.SUD.Scenarios[scenarioDropdown.value];
+
+        leftPan.style.display = "grid";
+        leftPan.style.gridTemplateColumns = "1fr";
+        leftPan.style.gridTemplateRows = "1fr 1fr 1fr";
+        charGal.style.display = "grid";
+        elGal.style.display = "grid";
+  
+        csGal.forEach((el) => {
+          el.style.display = "none";
+        });
+  
+        csElsCont.style.display = "none";
+        csElsCont1.style.display = "grid";
+
+        currentScenario = tempData.SUD.Scenarios[scenarioDropdown.value];
+        document.getElementById("scenesContainer").innerHTML = "";
+        currentScenarioScenes.forEach((scene) => { 
+          var sceneSelectElement = document.createElement("div");
+          sceneSelectElement.setAttribute("class", "sceneSelectElement");
+          sceneSelectElement.setAttribute("id", scene.name);
+          sceneSelectElement.innerHTML = `${scene.name}`;
+          sceneSelectElement.addEventListener("click", (e) => {
+            loadScene(e.target.id);
+          });
+          document
+            .getElementById("scenesContainer")
+            .appendChild(sceneSelectElement);
+        });
+        var newSceneBut = document.createElement("div");
+        newSceneBut.setAttribute("class", "sceneSelectElement");
+        newSceneBut.setAttribute("id", "newSceneBut");
+        newSceneBut.innerHTML = `[ NEW SCENE ]`;
+        document.getElementById("scenesContainer").appendChild(newSceneBut);
+        newScene();
+        if (allElementsLoaded) {
+          document.querySelector(".currentScene")?.remove();
+          loadScene(currentScenarioScenes[0]?.name, 0);
+        }
       }
     });
 
@@ -624,7 +751,272 @@ export async function editor(editorActive) {
       allElementsLoaded = true;
     };
 
+    // Load CutScene
+    const loadCutScene = (e) => {
+      document.querySelector(".cutcurrentCutSceneScene")?.remove();
+      if (document.querySelector(".currentScene") === null) {
+        newEditorCutScene(`${e}`);
+        setTimeout(() => {
+          document
+            .getElementById("editorbodyDisplay")
+            ?.appendChild(document.querySelector(".cutcurrentCutSceneScene"));
+        }, 1000);
+      }
+
+      document.querySelectorAll(".sceneSelectElement").forEach((el) => {
+        document.getElementById("scnAttName").setAttribute("class", "attInput");
+        document.getElementById("headerSceneName").removeAttribute("class");
+        if (el.id === e) {
+          document.getElementById(e).innerHTML = `${e}<span style="float:right; color: var(--accent)">&#9679;</span>`;
+        } else {
+          document.getElementById(el.id).innerHTML = `${el.id}`;
+        }
+      });
+
+      function buildSliderEl(id, start, end, type) {
+        var sliderSection = document.createElement("div");
+        var startBullet = document.createElement("div");
+        var endBullet = document.createElement("div");
+
+        sliderSection.setAttribute("class", `ccElSect csElSect${type}`);
+        sliderSection.setAttribute("id", `${id}-${type}`);
+        
+        startBullet.setAttribute("class", "csStartBullet");
+        startBullet.setAttribute("id", `${id}-start`);
+        startBullet.setAttribute("style", `left: ${start}%;`);
+        startBullet.setAttribute("draggable", "true");
+
+        endBullet.setAttribute("class", "csEndBullet");
+        endBullet.setAttribute("id", `${id}-end`);
+        endBullet.setAttribute("style", `left: ${end}%;`);
+        endBullet.setAttribute("draggable", "true");
+
+        let elCount = document.querySelectorAll(`.csElSect${type}`).length + 1;
+        
+        switch (type) {
+          case "video":
+            startBullet.innerHTML = `V${elCount}`;
+            endBullet.innerHTML = `V${elCount}`;
+            break;
+          case "title":
+            startBullet.innerHTML = `T${elCount}`;
+            endBullet.innerHTML = `T${elCount}`;
+            break;
+          case "track":
+            startBullet.innerHTML = `A${elCount}`;
+            endBullet.innerHTML = `A${elCount}`;
+            break;
+          case "dialogue":
+            startBullet.innerHTML = `D${elCount}`;
+            endBullet.innerHTML = `D${elCount}`;
+            break;
+          case "break":
+            startBullet.innerHTML = `B${elCount}`;
+            endBullet.innerHTML = `B${elCount}`;
+            break;
+        }
+
+        sliderSection.appendChild(startBullet);
+        sliderSection.appendChild(endBullet);
+
+        sliderSection.addEventListener("click", (e) => {
+          var id = e.target.id;
+          selectCsElement(id);
+        });
+
+        document.getElementById("cutSceneElsCont").appendChild(sliderSection);
+      }
+
+      for (const scene in currentScenarioCutScenes) {
+        // convert milliseconds to seconds
+        if (currentScenarioCutScenes[e].name === e) {
+          var seconds = Math.floor(currentScenarioCutScenes[e].length / 1000);
+          currentScene = currentScenarioCutScenes[e];
+          document.getElementById("hsn").innerHTML = `${currentScene.label}`;
+          document.getElementById("hsc").innerHTML = `${seconds} seconds`;
+          document.getElementById("headerSceneName").innerHTML = `${currentScene.name}`;
+          document.getElementById("scnAttName").value = `${currentScene.name}`;
+          document.getElementById("scnAttType").value = `${currentScene.type}`;
+          document.getElementById("scnAttBg").value = `${currentScene.activated.bg}`;
+          document.getElementById("scnAttAct1").value = `${currentScene.activated.land}`;
+          document.getElementById("scnAttAct2").value = `${currentScene.activated.pop}`;
+
+          if (currentScene.activated.pop === true) {
+            document.getElementById("scnAttAct2").selectedIndex = 0;
+          } else {
+            document.getElementById("scnAttAct2").selectedIndex = 1;
+          }
+          
+          document.getElementById("scnAttAct3").value = `${currentScene.activated.gate}`;
+          document.getElementById("scnAttAct4").value = `${parseInt(
+            currentScene.activated.scn?.join("")
+          )}`;
+
+          document.getElementById("cutSceneElsCont").innerHTML = "";
+
+          // Videos
+          currentScenarioCutScenes[e].videos?.forEach((video) => {
+            var sceneSelectVideo = document.createElement("div");
+            sceneSelectVideo.setAttribute("class", "sceneSelectVideo");
+            sceneSelectVideo.setAttribute("id", video.id);
+            document.getElementById("vidsContainer").appendChild(sceneSelectVideo);
+
+            if (video.used === true) {
+              sceneSelectVideo.innerHTML = `${video.id}<span style="float:right; color: var(--accent)">&#9679;</span>`;
+              buildSliderEl(
+                video.id,
+                video.start,
+                video.end,
+                "video"
+              );
+              // <span style="float:right;">O</span>
+            } else {
+              sceneSelectVideo.innerHTML = `${video.id}`;
+            }
+            
+            sceneSelectVideo.addEventListener("click", (e) => {
+              // selectVideo(e.target.id);
+            });
+          });
+
+          // Titles
+          currentScenarioCutScenes[e].titles?.forEach((title) => {
+            var sceneSelectTitle = document.createElement("div");
+            sceneSelectTitle.setAttribute("class", "sceneSelectTitle");
+            sceneSelectTitle.setAttribute("id", title.id);
+            document.getElementById("titlesContainer").appendChild(sceneSelectTitle);
+
+            if (title.used === true) {
+              sceneSelectTitle.innerHTML = `${title.id}<span style="float:right; color: var(--accent)">&#9679;</span>`;
+              buildSliderEl(
+                title.id,
+                title.start,
+                title.end,
+                "title"
+              );
+              // <span style="float:right;">O</span>
+            } else {
+              sceneSelectTitle.innerHTML = `${title.id}`;
+            }
+            
+            sceneSelectTitle.addEventListener("click", (e) => {
+              // selectVideo(e.target.id);
+            });
+          });
+
+          // Tracks
+          currentScenarioCutScenes[e].tracks?.forEach((track) => {
+            var sceneSelectTrack = document.createElement("div");
+            sceneSelectTrack.setAttribute("class", "sceneSelectTrack");
+            sceneSelectTrack.setAttribute("id", track.id);
+            document.getElementById("tracksContainer").appendChild(sceneSelectTrack);
+
+            if (track.used === true) {
+              sceneSelectTrack.innerHTML = `${track.id}<span style="float:right; color: var(--accent)">&#9679;</span>`;
+              buildSliderEl(
+                track.id,
+                track.start,
+                track.end,
+                "track"
+              );
+              // <span style="float:right;">O</span>
+            } else {
+              sceneSelectTrack.innerHTML = `${track.id}`;
+            }
+            
+            sceneSelectTrack.addEventListener("click", (e) => {
+              // selectVideo(e.target.id);
+            });
+          });
+          
+          // Dialogues
+          currentScenarioCutScenes[e].dialogues?.forEach((dialogue) => {
+            var sceneSelectDialogue = document.createElement("div");
+            sceneSelectDialogue.setAttribute("class", "sceneSelectDialogue");
+            sceneSelectDialogue.setAttribute("id", dialogue.id);
+            document.getElementById("dialogueContainer").appendChild(sceneSelectDialogue);
+
+            if (dialogue.used === true) {
+              sceneSelectDialogue.innerHTML = `${dialogue.id}<span style="float:right; color: var(--accent)">&#9679;</span>`;
+              buildSliderEl(
+                dialogue.id,
+                dialogue.start,
+                dialogue.end,
+                "dialogue"
+              );
+              // <span style="float:right;">O</span>
+            } else {
+              sceneSelectDialogue.innerHTML = `${dialogue.id}`;
+            }
+            
+            sceneSelectDialogue.addEventListener("click", (e) => {
+              selectDialogue(e.target.id);
+            });
+          });
+
+          // Breaks
+          currentScenarioCutScenes[e].breaks?.forEach((breaks) => {
+            var sceneSelectBreak = document.createElement("div");
+            sceneSelectBreak.setAttribute("class", "sceneSelectBreak");
+            sceneSelectBreak.setAttribute("id", breaks.id);
+            document.getElementById("breaksContainer").appendChild(sceneSelectBreak);
+
+            if (breaks.used === true) {
+              sceneSelectBreak.innerHTML = `${breaks.id}<span style="float:right; color: var(--accent)">&#9679;</span>`;
+              buildSliderEl(
+                breaks.id,
+                breaks.start,
+                breaks.end,
+                "break"
+              );
+              // <span style="float:right;">O</span>
+            } else {
+              sceneSelectBreak.innerHTML = `${breaks.id}`;
+            }
+            
+            sceneSelectBreak.addEventListener("click", (e) => {
+              selectDialogue(e.target.id);
+            });
+          });
+        }
+      }
+
+    }
+
     loadScene("scene1", 0);
+
+    // Select CS Element
+    const selectCsElement = (id) => {
+      var type = id.split("-")[1];
+      
+      switch (type) {
+        case "video":
+          var el = document.getElementById(id);
+          var start = document.getElementById(`${id}-start`);
+          var end = document.getElementById(`${id}-end`);
+          break;
+        case "title":
+          var el = document.getElementById(id);
+          var start = document.getElementById(`${id}-start`);
+          var end = document.getElementById(`${id}-end`);
+          break;
+        case "track":
+          var el = document.getElementById(id);
+          var start = document.getElementById(`${id}-start`);
+          var end = document.getElementById(`${id}-end`);
+          break;
+        case "dialogue":
+          var el = document.getElementById(id);
+          var start = document.getElementById(`${id}-start`);
+          var end = document.getElementById(`${id}-end`);
+          break;
+        case "break":
+          var el = document.getElementById(id);
+          var start = document.getElementById(`${id}-start`);
+          var end = document.getElementById(`${id}-end`);
+          break;
+      }
+    };
 
     // Load Characters
 
@@ -2611,6 +3003,9 @@ export async function editor(editorActive) {
     };
 
     newScene();
+
+    // New CutScene
+    const newCutScene = () => {}
 
     // Delete Scenario
     document

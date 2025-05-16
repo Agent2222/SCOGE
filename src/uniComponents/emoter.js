@@ -1,12 +1,13 @@
 // import { soundtrack } from "../universe";
 import { gsap } from "gsap";
-import { channel2ex } from "../universe";
+import { channel } from "../../src/game/GameMultiPlayer.js";
 
 class emoter extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({mode: 'open'});
         this.emotes = false;
+        this.channel2ex = channel;
     }
 
     get active() {
@@ -25,6 +26,7 @@ class emoter extends HTMLElement {
     attributeChangedCallback(name, oldValue, newValue) {
         if (newValue === "true") {
             this.activate();
+            this.channel2ex = channel;
         }
     }
 
@@ -51,7 +53,20 @@ class emoter extends HTMLElement {
         }
     }
 
-    activate() {
+    async activate() {
+        let smile = await import("/assets/images/icons/emotes/smile-emote.png");
+        let anger = await import("/assets/images/icons/emotes/anger-emote.png");
+        let alert = await import("/assets/images/icons/emotes/alert-emote.png");
+        let action = await import("/assets/images/icons/emotes/action-emote.png");
+        let network = await import("/assets/images/icons/emotes/network-emote.png");
+        let chat = await import("/assets/images/icons/emotes/chat-emote.png");
+        let forge = await import("/assets/images/icons/emotes/forge-emote.png");
+        let photo = await import("/assets/images/icons/emotes/photo-emote.png");
+        let snooze = await import("/assets/images/icons/emotes/snooze-emote.png");
+        let wave = await import("/assets/images/icons/emotes/wave-emote.png");
+
+        console.log("wave", wave.default);
+
         document.addEventListener('keydown', (e) => {
             var player =  document.getElementById("selection");
             if (e.keyCode === 49 || e.keyCode === 50 || e.keyCode === 51 || e.keyCode === 52 || e.keyCode === 53 || e.keyCode === 54 || e.keyCode === 55 || e.keyCode === 56 || e.keyCode === 57 || e.keyCode === 48) {
@@ -64,21 +79,21 @@ class emoter extends HTMLElement {
                 window.soundtrack.play("explore-1");
                 window.uniPlayer.emote = "👋";
                 player.innerHTML = `<div class="playerEmote" style="position: absolute; top: 9px; left: 9px; width: 28px; height: 28px; z-index:10; background-color:black; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: #fff; font-weight: 700;">👋</div>`;
-                channel2ex.presence.update({ data: window.uniPlayer });
+                this.channel2ex.presence.update({ data: window.uniPlayer });
             } else if (e.keyCode === 50 && this.emotes === true) {
                 window.soundtrack.play("explore-1");
                 window.uniPlayer.emote = "😆";
-                channel2ex.presence.update({ data: window.uniPlayer });
+                this.channel2ex.presence.update({ data: window.uniPlayer });
                 player.innerHTML = `<div class="playerEmote" style="position: absolute; top: 9px; left: 9px; width: 28px; height: 28px; z-index:10; background-color:black; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: #fff; font-weight: 700;">😆</div>`;
             } else if (e.keyCode === 51 && this.emotes === true) {
                 window.soundtrack.play("explore-1");
                 window.uniPlayer.emote = "🍻";
-                channel2ex.presence.update({ data: window.uniPlayer });
+                this.channel2ex.presence.update({ data: window.uniPlayer });
                 player.innerHTML = `<div class="playerEmote" style="position: absolute; top: 9px; left: 9px; width: 28px; height: 28px; z-index:10; background-color:black; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: #fff; font-weight: 700;">🍻</div>`;
             } else if (e.keyCode === 52 && this.emotes === true) {
                 window.soundtrack.play("explore-1");
                 window.uniPlayer.emote = "🚨";
-                channel2ex.presence.update({ data: window.uniPlayer });
+                this.channel2ex.presence.update({ data: window.uniPlayer });
                 player.innerHTML = `<div class="playerEmote" style="position: absolute; top: 9px; left: 9px; width: 28px; height: 28px; z-index:10; background-color:black; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: #fff; font-weight: 700;">🚨</div>`;
             } else if (e.keyCode === 53 && this.emotes === true) {
                 // soundtrack.play("explore-1");
@@ -95,7 +110,7 @@ class emoter extends HTMLElement {
             } else if (e.keyCode === 56 && this.emotes === true) {
                 window.soundtrack.play("explore-1");
                 window.uniPlayer.emote = "💤";
-                channel2ex.presence.update({ data: window.uniPlayer });
+                this.channel2ex.presence.update({ data: window.uniPlayer });
                 player.innerHTML = `<div class="playerEmote" style="position: absolute; top: 9px; left: 9px; width: 28px; height: 28px; z-index:10; background-color:black; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: #fff; font-weight: 700;">💤</div>`;
             } else if (e.keyCode === 57 && this.emotes === true) {
                 // soundtrack.play("explore-1");
@@ -104,7 +119,7 @@ class emoter extends HTMLElement {
             } else if (e.keyCode === 48 && this.emotes === true) {
                 window.soundtrack.play("explore-1");
                 window.uniPlayer.emote = "💬";
-                channel2ex.presence.update({ data: window.uniPlayer });
+                this.channel2ex.presence.update({ data: window.uniPlayer });
                 player.innerHTML = `<div class="playerEmote" style="position: absolute; top: 9px; left: 9px; width: 28px; height: 28px; z-index:10; background-color:black; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: #fff; font-weight: 700;">💬</div>`;
             }
         });

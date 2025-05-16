@@ -26,6 +26,9 @@ const aliases = Object.entries(dfxJson.canisters).reduce(
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  define: {
+    'process.env': {}  // Replaces process.env with an empty object
+  },
   server: {
     proxy: {
       // Proxy /api requests to your Express server

@@ -253,6 +253,7 @@ export class DialogueScene extends Scenario {
     if (!document.getElementById("choices")) {
      var choices = document.createElement("div");
     choices.classList.add("choices");
+    choices.style.position = "absolute";
     choices.setAttribute("id", "choices");
     this.scene.choices.forEach((choice, index) => {
       var choiceCont = document.createElement("div");

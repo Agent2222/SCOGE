@@ -70,6 +70,108 @@
         "src": "https://storage.scoge.co/scogeUniverse/digisette/Digisette-1-2.png"
       }
     ],
+    "CutScenes" : {
+      "NewGame": {
+          "name": "NewGame",
+          "position": 1,
+          "length": 50000,
+          "type": "cutscene",
+          "label": "Intro",
+          "activated": {
+            "land": 9120,
+            "gate": 0,
+            "pop": false,
+            "type": "cutscene",
+            "bg": "rgba(0, 0, 0, 0.9)",
+            "scn": [1,4]
+          },
+          "titles" : [
+            {
+              "id": "title1",
+              "text": "Welcome to T.A.O.S City",
+              "y": 0,
+              "x": 200,
+              "start": 0,
+              "end": 5,
+              "inTransition": "fadeIn",
+              "outTransition": "fadeOut",
+              "inDuration": 1,
+              "outDuration": 1,
+              "xPositionStart": 200,
+              "xPositionEnd": 200,
+              "yPositionStart": 200,
+              "yPositionEnd": 200,
+              "scaleStart": 1,
+              "scaleEnd": 1,
+              "opacityStart": 1,
+              "opacityEnd": 1,
+              "fontSize": 50,
+              "textDouble": false,
+              "startAnimation": "fadeIn",
+              "endAnimation": "fadeOut",
+              "used": true
+            },
+            {
+              "id": "title2",
+              "text": "The future of the city is in your hands.",
+              "y": 0,
+              "x": 200,
+              "start": 5,
+              "end": 10,
+              "inTransition": "fadeIn",
+              "outTransition": "fadeOut",
+              "inDuration": 1,
+              "outDuration": 1,
+              "xPositionStart": 200,
+              "xPositionEnd": 200,
+              "yPositionStart": 200,
+              "yPositionEnd": 200,
+              "scaleStart": 1,
+              "scaleEnd": 1,
+              "opacityStart": 1,
+              "opacityEnd": 1,
+              "fontSize": 50,
+              "textDouble": false,
+              "startAnimation": "fadeIn",
+              "endAnimation": "fadeOut",
+              "used": true
+            }
+          ],
+          "videos" : [
+            {
+              "id": "video1",
+              "src": "https://storage.scoge.co/scogeUniverse/videos/intro-test.mp4",
+              "left": 0,
+              "top": 0,
+              "zIndex": 1,
+              "start": 0,
+              "end": 5,
+              "inTransition": "fadeIn",
+              "outTransition": "fadeOut",
+              "inDuration": 1,
+              "outDuration": 1,
+              "used": true
+            }
+          ],
+          "tracks" : [
+            {
+              "id": "track1",
+              "src": "",
+              "loop": true,
+              "duration": 5,
+              "start": 0,
+              "end": 5,
+              "inTransition": "fadeIn",
+              "outTransition": "fadeOut",
+              "inDuration": 1,
+              "outDuration": 1,
+              "used": true
+            }
+          ],
+          "dialogues" : [],
+          "breaks" : []
+        }
+    },
     "Scenarios": {
       "Intro": [
         {
@@ -730,7 +832,7 @@
                     "txt":"Hello, welcome to T.A.O.S City Domain-Development. Let's get you setup with a domain."
                   },
                   {
-                    "action": "setTimeout(() => {window.currentScenario.scenes[0].hide(); setTimeout(() => {document.getElementById('compDomainDev').setAttribute('active','true'); pinMenu()},200)}, 3000)",
+                    "action": "setTimeout(() => {window.currentScenario.scenes[0].hide(); setTimeout(() => {document.getElementById('compDomainDev').setAttribute('active','true'); pinMenu('left')},200)}, 3000)",
                     "txt":"You can explore the city during this process. I'll help you through your Digisette. Let's get started!"
                   }
                 ]

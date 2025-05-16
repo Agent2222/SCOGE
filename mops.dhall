@@ -1,0 +1,22 @@
+{ name = "SCOGE"
+, dependencies =
+    [ "base"
+    , "cbor@1.0.0"
+    , "array"
+    , "crypto"
+    , "hash"
+    , "encoding"
+    , "matchers"
+    , "candy"
+    , "principalmo"
+    , "http"
+    , "json"
+    , "format"
+    , "stablebuffer"
+    , "map"
+    , "canistergeek"
+    , "ic-websocket-cdk = "0.4.1""
+    , "ic-certification" 
+    ]
+, compiler = Some "0.8.7"
+}
