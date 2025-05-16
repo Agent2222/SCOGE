@@ -1,1 +1,0 @@
-import{bv as r}from"./main-CjiS4ifE.js";async function o(n,a){return await n({method:"eth_sendRawTransaction",params:[a]})}function s(n=32){return r(t(n))}function t(n=32){return globalThis.crypto.getRandomValues(new Uint8Array(n))}export{o as e,s as r};

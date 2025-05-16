@@ -68,6 +68,9 @@
     "vite-plugin-node-polyfills": "^0.22.0"
   },
   "overrides": {
-    "@dfinity/principal": "^2.3.0"
+    "@dfinity/principal": "^2.3.0",
+    "@dfinity/certificate-verification": {
+      "@dfinity/agent": "^1.4.0"
+    }
   }
 }
