@@ -12,6 +12,10 @@
       "main": "src/backend/universe_backend/scoge.mo",
       "type": "motoko"
     },
+    "socket": {
+      "main": "src/backend/universe_backend/socket.mo",
+      "type": "motoko"
+    },
     "assets": {
       "dependencies": [
         "universe_backend"
@@ -27,7 +31,7 @@
   },
   "defaults": {
     "build": {
-      "packtool": "vessel sources"
+      "packtool": "mops sources"
     }
   },
   "dfx": "0.18.0",
@@ -37,6 +41,13 @@
         "https://ic0.app"
       ],
       "type": "persistent"
+    },
+    "local": {
+      "bind": "localhost:4943",
+      "type": "ephemeral",
+      "replica": {
+        "subnet_type": "system"
+      }
     }
   },
   "version": 1

@@ -1,6 +1,7 @@
 import { dragElement } from "../universe";
 import statsImg from "../../assets/images/cards/digi-stats-1.jpg";
 import leftArrow from "../../assets/images/icons/left-arrow.png";
+import magnaCase1 from "../../assets/images/cards/scoge_magna-case-1.jpg";
 import { forgeable } from "./comp-wallets";
 import { gsap } from "gsap/gsap-core";
 
@@ -143,6 +144,16 @@ class compForge extends HTMLElement {
                             setTimeout(() => {
                                 this.spinAction();
                                 document.getElementById("forgeModal").shadowRoot.getElementById("loadingModal").stopLoading();
+                                this.shadowRoot.getElementById("forgeMain").style.display = "grid";
+                                this.shadowRoot.getElementById("inventoryMainLoading").style.display = "none";
+                                this.shadowRoot.getElementById("marketTabSelect").classList.remove("inactiveTab");
+
+                                this.shadowRoot.querySelectorAll(".imTab").forEach((el) => {
+                                    el.addEventListener("click", (e) => {
+                                        this.selectTab(e);
+                                    });
+                                });
+
                             }, 200);
                         }
                     };
@@ -184,6 +195,98 @@ class compForge extends HTMLElement {
         }
     }
 
+    mint() {}
+
+    burn() {}
+
+    openPack() {}
+
+    buildMarket(e1, e2) {
+       //
+    }
+
+    openCheckout(checkout) {
+        let mainCont = this.shadowRoot.getElementById("marketCheckout");
+        let coCont = this.shadowRoot.getElementById("marketCheckoutModal");
+
+        mainCont.style.backgroundColor = "rgba(0,0,0,0.4)";
+        mainCont.style.userSelect = "auto";
+        mainCont.style.pointerEvents = "auto";
+
+        coCont.style.bottom = "0%";
+    }
+
+    closeCheckout() {
+        let mainCont = this.shadowRoot.getElementById("marketCheckout");
+        let coCont = this.shadowRoot.getElementById("marketCheckoutModal");
+
+        mainCont.style.backgroundColor = "rgba(0,0,0,0.0)";
+        mainCont.style.userSelect = "none";
+        mainCont.style.pointerEvents = "none";
+
+        coCont.style.bottom = "-70%";
+    }
+
+    buildCheckout() {}
+
+    pay() {
+        this.shadowRoot.getElementById("forgeMain").style.display = "none";
+        this.shadowRoot.getElementById("marketMain").style.display = "none";
+        this.shadowRoot.getElementById("loadingIcon").style.display = "block";
+        this.shadowRoot.getElementById("inventoryMainLoading").style.display = "grid";
+        this.shadowRoot.getElementById("loadingText").innerHTML = "ASSET INBOUND";
+        document.getElementById("forgeModal").shadowRoot.getElementById("loadingModal").startLoading();
+
+        // TEMP 
+        setTimeout(() => {
+            document.getElementById("forgeModal").shadowRoot.getElementById("loadingModal").stopLoading();
+            this.shadowRoot.getElementById("forgeMain").style.display = "grid";
+            this.shadowRoot.getElementById("marketMain").style.display = "grid";
+            this.shadowRoot.getElementById("loadingIcon").style.display = "none";
+            this.shadowRoot.getElementById("loadingText").innerHTML = "LOADING INVENTORY";
+            this.shadowRoot.getElementById("inventoryMainLoading").style.display = "none";
+        }, 8000);
+    }
+
+    payConfirm() {
+
+    }
+
+    payError() {}
+
+    selectTab(e) {
+        let tabs = this.shadowRoot.querySelectorAll(".imTab");
+        let mainForge = this.shadowRoot.getElementById("forgeMain");
+        let mainMarket = this.shadowRoot.getElementById("marketMain");
+        let beacon = this.shadowRoot.getElementById("mCaseBeacon");
+        let forger = document.getElementById("forgeModal").shadowRoot?.getElementById("mainForge");
+
+        tabs.forEach((tab) => {
+            if (tab.id != "imTabSpacer") {
+                tab.classList.add("nonSelImTab");
+            }
+        })
+        e.target.classList?.remove("nonSelImTab");
+
+         // get the custom element named comp-close-btn in #forgeCard 
+
+        switch (e.target.id) {
+            case "forgeTabSelect":
+                mainForge.style.display = "grid";
+                mainMarket.style.display = "none";
+                this.shadowRoot.getElementById("forgeCard").querySelector("comp-close-btn").shadowRoot.getElementById("main").click();
+                dragElement(this.shadowRoot.getElementById("mainForge"), true);
+            break;
+            case "marketTabSelect":
+                mainForge.style.display = "none";
+                beacon.style.display = "none";
+                mainMarket.style.display = "grid";
+                this.shadowRoot.getElementById("forgeCard").querySelector("comp-close-btn").shadowRoot.getElementById("main").click();
+                dragElement(this.shadowRoot.getElementById("mainForge"), true);
+            break;
+        }
+    }
+
     withTimeout(promise, timeout) {
         return new Promise((resolve, reject) => {
             const timer = setTimeout(() => {
@@ -205,6 +308,7 @@ class compForge extends HTMLElement {
 
     viewCard(e, nftImg, stats) {
         this.shadowRoot.querySelector(`.nftQty2`).style.display = "none";
+        this.selectTab({target: { id: "forgeTabSelect" }});
         var card = Number(e.target.getAttribute("data-nftId"));
         this.shadowRoot.getElementById("selCardImge").src = nftImg;
         this.shadowRoot.getElementById("forgeCard").style.opacity = "1";
@@ -226,6 +330,7 @@ class compForge extends HTMLElement {
     selectCard(e, nftImg, stats) {
         var card = Number(e.target.getAttribute("data-nftId"));
         var type = e.target.getAttribute("data-beacon");
+        this.selectTab({target: { id: "forgeTabSelect" }});
         if (type === "true" ) {
             this.viewCard(e, nftImg, stats)
             this.shadowRoot.getElementById("mCaseBeacon").style.display = "grid";
@@ -613,6 +718,8 @@ class compForge extends HTMLElement {
         // this.forgeEndur = 5000;
         console.log("initForge");
         this.forgeDecayChecker();
+        window.soundtrack.setVolume("forgeInit", 0.7);
+        window.soundtrack.play('forgeInit');
 
         this.shadowRoot.getElementById("forgeFocus").style.display = "block";
         
@@ -1359,6 +1466,93 @@ class compForge extends HTMLElement {
                     break;
             }
         })
+
+        // TEMP
+        this.shadowRoot.getElementById("continueForgeBut").addEventListener("click", () => {
+            var main = this.shadowRoot.getElementById("mainForge");
+            var forgeFocus = this.shadowRoot.getElementById("forgeFocus");
+            var card = this.shadowRoot.getElementById("forgeSelection");
+            
+            main.style.left = "5%";
+            main.top = "";
+            main.bottom = "5%";
+            forgeFocus.style.display = "none";
+            card.style.position = "absolute";
+            this.shadowRoot.getElementById("forgeFailed").style.display = "none";
+            this.shadowRoot.getElementById("mainForge").querySelector("comp-close-btn").shadowRoot.getElementById("main").click();
+            this.shadowRoot.querySelector("#forgeSelection").style.transform = "translateX(500px)";
+        });
+
+        this.shadowRoot.getElementById("mainForge").querySelector("comp-close-btn").shadowRoot.getElementById("main").addEventListener("click", () => {
+            var main = this.shadowRoot.getElementById("mainForge");
+            var forgeFocus = this.shadowRoot.getElementById("forgeFocus");
+            var card = this.shadowRoot.getElementById("forgeSelection");
+            
+            main.style.left = "5%";
+            main.top = "";
+            main.bottom = "5%";
+            forgeFocus.style.display = "none";
+            card.style.position = "absolute";
+            this.shadowRoot.getElementById("forgeFailed").style.display = "none";
+            this.shadowRoot.getElementById("forgeError").style.display = "none";
+            this.shadowRoot.querySelector("#forgeSelection").style.transform = "translateX(500px)";
+
+            var connector = this.shadowRoot.getElementById("connector");
+            var connector2 = this.shadowRoot.getElementById("connector2");
+            var connector3 = this.shadowRoot.getElementById("connector3");
+            clearInterval(this.forgeDecay); // Stop when scale reaches 0
+            this.scale = 1;
+            this.scale = 1;
+            this.currentConnector = "connector";
+            this.shadowRoot.getElementById("forgeError").style.display = "grid";
+            this.shadowRoot.getElementById("forgeSuccess").style.display = "none";
+            this.fp = 0;
+            gsap.to(connector, { 
+                rotation: 0, // Rotate 360 degrees
+                duration: 3,   // Duration of 2 seconds
+                ease: "power3.inOut", // Easing function
+                scale: 1
+            });
+            gsap.to(connector2, { 
+                top: "37%",
+                rotation: 0, // Rotate 360 degrees
+                duration: 2,   // Duration of 2 seconds
+                ease: "power3.inOut", // Easing function
+                zIndex: 0
+            });
+            gsap.to(connector3, { 
+                bottom: "37%",
+                rotation: 0, // Rotate 360 degrees
+                duration: 2,   // Duration of 2 seconds
+                ease: "power3.inOut", // Easing function
+                zIndex: 0
+            });
+            setTimeout(() => {
+                connector2.style.display = "block";
+                connector3.style.display = "block";
+            }, 3000);
+            this.decayGate = false;
+            setTimeout(() => {
+                document.getElementById("forgeModal").shadowRoot.getElementById("connectorSpiral").style.opacity = "1";
+            }, 1200);
+            clearInterval(this.forgeDecay); // Stop when scale reaches 0
+            this.scale = 1;
+            this.shadowRoot.getElementById(this.currentConnector).style.transform = `scale(${this.scale})`;
+        });
+
+        this.shadowRoot.getElementById("restartForgeBut").addEventListener("click", () => {
+            this.initForge();
+        });
+        
+        this.shadowRoot.querySelector(".marketItemBuyNow").addEventListener("click", () => {
+            this.openCheckout();
+        });
+        this.shadowRoot.querySelector("#coModalCloseBut").addEventListener("click", () => {
+            this.closeCheckout();
+        });
+        this.shadowRoot.querySelector("#pb").addEventListener("click", () => {
+            this.pay();
+        });
     }
 
     render() {
@@ -1421,7 +1615,36 @@ class compForge extends HTMLElement {
                     background: var(--secondary); 
                   }
 
-                #collection {
+                @keyframes blink {
+                    0% {
+                        opacity: 1;
+                    }
+                    50% {
+                        opacity: 0;
+                    }
+                    100% {
+                        opacity: 1;
+                    }
+                }
+
+                @keyframes flyAndFade {
+                    0% {
+                        transform: translateX(220px);
+                        opacity: 0;
+                    }
+                    25% {
+                        opacity: 1;
+                    }
+                    75% {
+                        opacity: 1;
+                    }
+                    100% {
+                        transform: translateX(-220px);
+                        opacity: 0;
+                    }
+                }
+
+                #inventory {
                     height: 99%;
                     width: 38%;
                     position: absolute;
@@ -1496,27 +1719,46 @@ class compForge extends HTMLElement {
                     font-family: 'BS-B';
                 }
 
-                #market {
-                    cursor: pointer;
-                }
-
-                #market:hover {
-                    color: var(--primary);
-                }
-
-                #forgerHead {
-                    width: 97%;
+                #inventoryMenuHead {
+                    width: 100%;
                     height: 12%;
                     color: Var(--primary);
-                    display: flex;
+                    display: grid;
+                    grid-template-columns: 25% 25% 50%;
+                    grid-template-rows: 1fr;
                     justify-content: start;
                     align-items: center;
-                    padding-left: 3%;
                     font-size: 1.2rem;
                     letter-spacing: 2px;
                     z-index: 2;
                     position: absolute;
                     cursor: grab;
+                    font-size: .8em;
+                }
+
+                .imTab {
+                    border-right: 1px solid var(--primary);
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    cursor: pointer;
+                }
+
+                #imTabSpacer, .nonSelImTab {
+                    border-bottom: 1px solid var(--primary);
+                    transition: .3s all;
+                }
+
+                #imTabSpacer {
+                    cursor: grab;
+                }
+
+                .nonSelImTab:hover {
+                    background-color: var(--primary);
+                    color: var(--secondary);
+                    font-family: 'BS-B';
                 }
 
                 #forgerOptions {
@@ -1559,18 +1801,57 @@ class compForge extends HTMLElement {
                     box-sizing: border-box; 
                 }
 
-
                 #forgeMain {
                     width: 94%;
                     height: 89%;
-                    display: grid;
+                    display: none;
                     grid-template-columns: 1fr;
                     grid-template-rows: 15% 10% 30% 25%;
                     justify-content: center;
                     align-items: center;
                     padding-left: 3%;
                     padding-right: 3%;
-                    margin-top: 11%;
+                    margin-top: 9%;
+                    border-top: 1px solid var(--primary);
+                }
+
+                #inventoryMainLoading {
+                    width: 94%;
+                    height: 90%;
+                    position: absolute;
+                    justify-content: center;
+                    align-items: center;
+                    padding-left: 3%;
+                    padding-right: 3%;
+                    margin-top: 4%;
+                    left: 0;
+                    top: 0;
+                    z-index: 7;
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    grid-template-rows: 1fr;
+                    justify-content: center;
+                    align-items: center;
+                    user-select: none;
+                    pointer-events: none;
+                }
+
+                #inventoryMainLoadingcont {
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+                    flex-direction: column;
+                    letter-spacing: 2px;
+                }
+
+                .pleaseWait {
+                    color: var(--accent);
+                    font-size: .7rem;
+                    animation: blink 2s infinite;
+                    margin-top: 2%;
                 }
 
                 #mainDesc1, #mainDescBeacon {
@@ -2162,6 +2443,11 @@ class compForge extends HTMLElement {
                     transform: scale(.8);
                 }
 
+                .inactiveTab {
+                    text-decoration: line-through;
+                    color: #850118;
+                }
+
                 #mCaseBeacon {
                     width: 94%;
                     height: 89%;
@@ -2216,7 +2502,7 @@ class compForge extends HTMLElement {
                 }
 
                 #sendBeaconBut {
-                    width: 30% !important;
+                    width: 35% !important;
                     height: 50%;
                     border: 1px solid var(--accent) !important;
                     transition: .3s all;
@@ -2306,7 +2592,7 @@ class compForge extends HTMLElement {
                     position: absolute;
                     top: 0;
                     left: 0;
-                    z-index: 7;
+                    z-index: 11;
                     display: grid;
                     grid-template-columns: 1fr 1fr 1fr;
                     grid-template-rows: 1fr;
@@ -2389,6 +2675,22 @@ class compForge extends HTMLElement {
                     z-index: 20;
                 }
 
+                #forgeDemo {
+                    width: 10%;
+                    height: 5%;
+                    position: absolute;
+                    left: 45%;
+                    bottom: 10%;
+                    border: 1px solid var(--primary);
+                    border-radius: 5px;
+                    font-family: "BS-B";
+                    opacity: 0.5;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                }
+
                 #forgeSelection {
                     position: absolute;
                     top: 0;
@@ -2452,7 +2754,7 @@ class compForge extends HTMLElement {
                     color: var(--accent);
                 }
 
-                 #fs3 {
+                 .fs3 {
                     width: 30%;
                     height: 60%;
                     padding: 1% 3%;
@@ -2469,21 +2771,405 @@ class compForge extends HTMLElement {
                     cursor: pointer;
                 }
 
-                 #fs3:hover {
+                 .fs3:hover {
                     background-color: var(--accent);
                     color: black;
                     font-family: "BS-B";
                  }
 
+
+                #marketMain {
+                    width: 94%;
+                    height: 87%;
+                    display: none;
+                    grid-template-columns: 1fr;
+                    grid-template-rows: 1fr%;
+                    justify-content: center;
+                    align-items: center;
+                    padding-left: 3%;
+                    padding-right: 3%;
+                    margin-top: 9%;
+                    border-top: 1px solid var(--primary);
+                }
+
+                #marketCheckout {
+                    display: grid;
+                    width: 100%;
+                    height: 86%;
+                    background-color: rgba(0,0,0,0.0);
+                    position: absolute;
+                    z-index: 8;
+                    margin-top: 9%;
+                    left: 0;
+                    top: 0;
+                    pointer-events: none;
+                    user-select: none;
+                    transition: .3s all;
+                }
+
+                #marketCheckoutModal {
+                    width: 100%;
+                    height: 70%;
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    grid-template-rows: 20% 80%;
+                    justify-items: center;
+                    align-items: center;
+                    background-color: black;
+                    border-radius: 10px;
+                    position: absolute;
+                    left: 0;
+                    bottom: -70%;
+                    border-top: .5px solid var(--primary);
+                    overflow: hidden;
+                    transition: .3s all;
+                }
+
+                #coDeetCont {
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                #coModalCloseBut {
+                    width: 40px;
+                    height: 40px;
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    font-size: 1em;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-left: 1px solid var(--primary);
+                    border-bottom: 1px solid var(--primary);
+                    cursor: pointer;
+                }
+
+                #coModalCloseBut:hover {
+                    font-family: "BS-B";
+                    font-size: 1.2em;
+                }
+
+                #coLineItems {
+                    width: 100%;
+                    height: 100%;
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    grid-template-rows: auto;
+                    border-right: .5px solid #850118;
+                    padding-right: 5%;
+                    padding-left: 5%;
+                    overflow-y: auto;
+                    gap: 5%;
+                }
+
+                .colineItem {
+                    width: 100%;
+                    height: 75px;
+                    display: grid;
+                    grid-template-columns: 30% 70%;
+                    grid-template-rows: 1fr;
+                    justify-content: center;
+                    align-items: center;
+                    border: .5px solid var(--accent);
+                    border-radius: 10px;
+                    overflow: hidden;
+                    color: var(--accent);
+                    user-select: none;
+                }
+
+                .liThumbnail {
+                    width: 100%;
+                    height: 100%;
+                    border-right: .5px solid var(--accent);
+                }
+
+                .liThumbnail img {
+                    width: 100%;
+                    height: auto;
+                }
+                
+                .liDetails {
+                    width: 80%;
+                    height: 80%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: start;
+                    padding-left: 10%;
+                    font-size: .8rem;
+                }
+
+                .liName {
+                    margin-bottom: 5%;
+                }
+
+                #coHead {
+                    width: 92%;
+                    height: 100%;
+                    letter-spacing: 2px;
+                    padding-left: 8%;
+                    font-size: .9em;
+                    display: flex;
+                    align-items: center;
+                }
+
+                #coPay {
+                    width: 90%;
+                    height: 100%;
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    grid-template-rows: 15% 25% 30% 30%;
+                    justify-content: center;
+                    align-items: center;
+                    padding-left: 5%;
+                    padding-right: 5%;
+                    color: var(--accent);
+                }
+
+                #payHead {
+                    align-self: start;
+                }
+
+                #liPriceEth {}
+
+                #liPV {}
+
+                #liPriceUsd {
+                    opacity: 0.5;
+                }
+
+                #pcButton {
+                    justify-self: end;
+                }
+
+                #pb {
+                    width: 100px;
+                    padding: 5%;
+                    text-align: center;
+                    border-radius: 5px;
+                    border: 1px solid var(--accent);
+                    letter-spacing: 2px;
+                    color: var(--accent);
+                    transition: .3s all;
+                    cursor: pointer;
+                }
+
+                #pb:hover {
+                    background-color: var(--accent);
+                    color: black;
+                    font-family: "BS-B";
+                }
+
+                #liTotal {
+                    width: 100%;
+                    height: 100%;
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    grid-template-rows: 1fr;
+                    justify-content: start;
+                    align-items: start;
+                }
+
+                #coTotalHead {}
+
+                #liTotalVals {
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-items: end;
+                    text-align: end;
+                }
+
+                #coPayConfirm {
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                }
+
+                #pcStatus {
+                    font-size: .8em;
+                    color: var(--primary);
+                    visibility: hidden;
+                    text-transform: uppercase;
+                }
+
+                #liTotalEth {}
+                
+                #liTV {}
+
+                #liTotalUsd {
+                    opacity: 0.5;
+                }
+
+                #payAccount {
+                    height: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    opacity: 0.5;
+                }
+
+                #marketItems {
+                    width: 90%;
+                    height: 90%;
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr;
+                    grid-template-rows: auto;
+                    padding: 5%;
+                    padding-top: 2%;
+                    overflow-y: auto;
+                    gap: 20px;
+                    margin-top: 1%;
+                }
+
+                .marketItem {
+                    width: 100%;
+                    height: 275px;
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    grid-template-rows: 1fr 1fr;
+                    justify-content: center;
+                    align-items: center;
+                    border: .5px solid #850118;
+                    border-radius: 10px;
+                    overflow: hidden;
+                    background-color: black;
+                    position: relative;
+                    cursor: pointer;
+                    transition: .2s all;
+                }
+
+                .marketItem:hover > .quickAddItems {
+                    display: flex;
+                }
+
+                .marketItem:hover .marketItemBuyNow {
+                    bottom: 0%;
+                }
+
+                .marketItem:hover {
+                    border: 1px solid var(--accent);
+                }
+
+                .quickAddItems {
+                    display: none;
+                    position: absolute;
+                    top: 5%;
+                    right: 10%;
+                    width: 30px;
+                    height: 30px;
+                    border: 1px solid var(--accent);
+                    border-radius: 15px;
+                    background-color: var(--accent);
+                    align-items: center;
+                    justify-content: center;
+                    color: black;
+                    font-family: "BS-B";
+                    font-size: 1.5em;
+                    transition: .2s all;
+                }
+
+                .quickAddItems:hover {
+                    background-color: var(--secondary);
+                }
+
+                .marketItemImage {
+                    width: 100%;
+                    height: auto;
+                    // border-bottom: 1px solid var(--primary);
+                }
+
+                .marketItemImage img {
+                    width: 100%;
+                    height: auto;
+                }
+
+                .marketItemDeets {
+                    width: 90%;
+                    height: 100%;
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    grid-template-rows: 1fr 1fr;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: .9rem;
+                    padding-left: 10%;
+                    position: relative;
+                    text-transform: uppercase;
+                }
+
+                .marketItemBuyNow {
+                    position: absolute;
+                    height: 50%;
+                    width: 80%;
+                    bottom: -50%;
+                    background-color: var(--accent);
+                    color: black;
+                    font-family: "BS-B";
+                    display: flex;
+                    justify-content: space-between;
+                    padding-right: 10%;
+                    padding-left: 10%;
+                    align-items: center;
+                    text-transform: uppercase;
+                    transition: .3s all;
+                }
+
+                .marketItemBuyNow:hover {
+                    background-color: var(--secondary);
+                }
+
+                #loadingIcon {
+                    display: none;
+                    width: 150px;
+                    height: auto;
+                    transform: translateY(220px);
+                    animation: flyAndFade 3.5s ease-in-out infinite;
+                }
+
+                #loadingIcon img {
+                    width: 100%;
+                    height: auto;
+                }
+
+                #loadingText {}
+
+                .demo {
+                    width: 100%;
+                    height: 100%;
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    grid-template-rows: 1fr;
+                    justify-items: center;
+                    align-items: center;
+                    position: absolute;
+                    z-index: 10;
+                    opacity: .08;
+                    color: var(--accent);
+                    pointer-events: none;
+                    user-select: none;
+                    font-family: "BS-B";
+                    font-size: 15em;
+                }
+
             </style>
-            <div id="forgeFocus">FLAMES!</div>
+            <div id="forgeFocus">
+                <div id="forgeDemo">
+                    <div class="demo">FORGE MASTERS DEMO</div>
+                    <div id="hint">*USE ARROW KEYS</div>
+                </div>
+            </div>
             <div id="mainForge" data-domType="shadow">
                 <comp-close-btn></comp-close-btn>
-                <div id="collection">
+                <div id="inventory">
                     <div id="header">
-                        <div>COLLECTION</div>
+                        <div>INVENTORY</div>
                         <div id="reload">&#8635;</div>
-                        <div id="market"><a href="${this.marketLink}" target="_blank">MARKET</a><span style="rotate: -90deg; font-size:.9em;">&#x21B3;</span></div>
                     </div>
                     <div id="forgeCard" data-domType="shadow">
                         <comp-close-btn></comp-close-btn>
@@ -2513,7 +3199,7 @@ class compForge extends HTMLElement {
                     </div>
                     <div id="availableCards">
                         <div id="forgeSelection">
-                            <img src="https://uqjdj-siaaa-aaaag-aaoxq-cai.icp0.io/assets/images/items/scoge_zv-fabric.jpg">
+                            <img src="${magnaCase1}">
                         </div>
                         <loading-modal active="true" id="loadingModal"></loading-modal>
                     </div>
@@ -2538,15 +3224,19 @@ class compForge extends HTMLElement {
                     </div>
                 </div>
                 <div id="forger">
-                    <div id="forgerHead">FORGE</div>
+                    <div id="inventoryMenuHead">
+                        <div class="imTab" id="forgeTabSelect">FORGE</div>
+                        <div class="imTab nonSelImTab inactiveTab" id="marketTabSelect">MARKETPLACE</div>
+                        <div class="imTab" id="imTabSpacer"></div>
+                    </div>
                     <div id="mCaseBeacon" class="xButAll">
                         <div id="mainDescBeacon">
                             <div id="mainText">
-                                A 1ST GEN HBK BEACON, USED TO CALL IN LOST MAGNA CASE'S.<br>MAYBE IT STILL WORKS, GIVE IT A TRY!
+                                A 1ST GEN HBK BEACON, USED TO CALL IN LOST MAGNA CASE'S.<br>THIS ONE STILL WORKS, GIVE IT A TRY!
                             </div>
                         </div>
                         <div style="text-align: center;" id="secText">
-                                Once sent, a Magna Case<br> should arrive at your address shortly. 
+                                Join the whitelist to receive a beacon for upcoming $CDSK and MagnaCase drops!<br>Enter your email below to be added to the list. 
                         </div>
                         <form id="mcBeaconInput">
                             <div class="mbRow">
@@ -2558,7 +3248,7 @@ class compForge extends HTMLElement {
                                 <input type="email" id="emailInput2">
                             </div>
                             <div id="sendBeacon">
-                                <input id="sendBeaconBut" type="submit" value="SEND BEACON">
+                                <input id="sendBeaconBut" type="submit" value="JOIN WHITELIST">
                             </div>
                         </form>
                     </div>
@@ -2567,17 +3257,17 @@ class compForge extends HTMLElement {
                             <div id="forgeSuccess" class="fStatusBlock">
                                  <div id="fs1">FORGE</div>
                                  <div id="fs2">SUCCESSFUL</div>
-                                 <div id="fs3">ADD TO COLLECTION</div>
+                                 <div class="fs3" id="addToInventory">ADD TO INVENTORY</div>
                             </div>
                             <div id="forgeFailed" class="fStatusBlock">
                                 <div id="fs1" style="color: #ff002d;">FORGE</div>
                                 <div id="fs2" style="color: #ff002d;">FAILED</div>
-                                <div id="fs3">CONTINUE</div>
+                                <div class="fs3" id="continueForgeBut">CONTINUE</div>
                             </div>
                             <div id="forgeError" class="fStatusBlock">
                                 <div id="fs1" style="color: #ff002d;">FORGE</div>
                                 <div id="fs2" style="color: #ff002d;">ERROR</div>
-                                <div id="fs3">RESTART</div>
+                                <div class="fs3" id="restartForgeBut">RESTART</div>
                             </div>
                         </div>
                         <div id="fc1" class="fc">
@@ -2605,22 +3295,89 @@ class compForge extends HTMLElement {
                             </div>
                         </div>
                     </div>
+                    <div id="inventoryMainLoading">
+                        <div class="demo">DEMO</div>
+                        <div id="inventoryMainLoadingcont">
+                            <div id="loadingIcon">
+                                <img src="https://storage.scoge.co/scogeUniverse/graphics/magna-transport2.png">
+                            </div>
+                            <div id="loadingText">LOADING INVENTORY</div>
+                            <div class="pleaseWait">PLEASE WAIT.</div>
+                        </div>
+                    </div>
+                    <div id="marketMain">
+                        <div class="demo">DEMO</div>
+                        <div id="marketCheckout">
+                            <div id="marketCheckoutModal">
+                                <div id="coHead">CHECKOUT</div>
+                                <div id="coModalCloseBut">X</div>
+                                <div id="coDeetCont">
+                                    <div id="coLineItems">
+                                        <div class="colineItem">
+                                            <div class="liThumbnail">
+                                                <img src="https://dd.dexscreener.com/ds-data/tokens/base/0x394bc54133c50d37429f08a2d558018b7fc1c14d.png?size=xl&key=bab96f">
+                                            </div>
+                                            <div class="liDetails">
+                                                <div class="liName">Testing #22082</div>
+                                                <div class="liPriceEth"><span class="liPV">0.013</span> ETH</div>
+                                                <div class="liPriceUsd">$34.70</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="coPay">
+                                        <div id="payHead">PAYMENT</div>
+                                        <div id="payAccount">
+                                            <div id="payThumb">Placer</div>
+                                            <div id="payAccount">Placer</div>
+                                        </div>
+                                        <div id="liTotal">
+                                            <div id="coTotalHead">TOTAL</div>
+                                            <div id="liTotalVals">
+                                                <div id="liTotalEth"><span id="liTV">0.013</span> ETH</div>
+                                                <div id="liTotalUsd">$34.70</div>
+                                            </div>
+                                        </div>
+                                        <div id="coPayConfirm">
+                                            <div id="pcStatus">Testing</div>
+                                            <div id="pcButton">
+                                                <div id="pb">PAY</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="marketItems">
+                            <div class="marketItem" id="marketNft">
+                                <div class="quickAddItems">+</div>
+                                <div class="marketItemImage">
+                                    <img src="https://dd.dexscreener.com/ds-data/tokens/base/0x394bc54133c50d37429f08a2d558018b7fc1c14d.png?size=xl&key=bab96f">
+                                </div>
+                                <div class="marketItemDeets">
+                                    <div class="mItemName">Testing #22082</div>
+                                    <div class="mItemCost"><span class="mCostVal">0.0012</span> ETH</div>
+                                    <div class="marketItemBuyNow">
+                                        <div class="mBuyNowBut">Buy Now</div>
+                                        <div class="mBuyNowPrice">0.0012 ETH</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div id="forgeMain">
                         <div id="mainDesc1">
                             <div id="badMemory1" class="insufMem hidden">
                                 INSUFFICIENT MEMORY
                             </div>
                             <div>
-                                + SELECT UP TO <span style="color:var(--accent);">6</span> COLLECTION ITEMS + <br>TO BEGIN THE FORGING PROCESS
+                                - SELECT UP TO <span style="color:var(--accent);">6</span> INVENTORY ITEMS - <br>TO BEGIN THE FORGING PROCESS
                             </div>
                         </div>
                         <div id="mainDesc2">
                             <div id="badMemory2" class="insufMem hidden">
                                 ! Additional stats required to use this memory !
                             </div>
-                            <div>
-                                Items must be *forgeable<br>(*FORGE EDITIONS)
-                            </div>
+                            <div></div>
                         </div>
                         <div id="mainDesc3">
                             <div id="badMemory3" class="insufMem hidden">

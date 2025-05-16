@@ -13,26 +13,19 @@ import { CombinationLock } from "../src/dt-lock.js";
 import { dialogueBox } from "../src/dialogueBox.js";
 import { uniMenuAgent } from "../src/uni-c-miniAgent.js";
 import { MainDialogue } from "./typing.js";
-import { SeekDialogue } from "./seeking.js";
 import { SoundtrackManager } from "./soundtrack.js";
 import { Actor, HttpAgent } from "@dfinity/agent";
-import { Principal } from '@dfinity/principal';
+import { Principal } from "@dfinity/principal";
 import { idlFactory } from "../src/declarations/universe_backend/universe_backend.did.js";
-// import the closeCampaign function from dt-campaign.js
 import { mintingScreen } from "../src/mint.js";
-// import { dialogue } from "./game/dialogue.js";
 import { gsap } from "gsap";
 import { TextPlugin } from "gsap/TextPlugin";
-// import { Configuration, OpenAIApi } from "openai";
 import { universe } from "./universe.js";
 import { uniConsensus } from "./uni-c-consensus.js";
-// import { uni3dViewer } from "./uni-c-3dModel.js";
 import { uniDomainDev } from "./uni-c-domaindev.js";
 import { checkInitialState } from "../src/game/SceneManager.js";
-import { emoter } from "./uniComponents/emoter.js";
 import { tooltip } from "./uniHelpers/tooltip.js";
 import { dtCampaign } from "./dt-campaign.js";
-// import { client } from "./uniHelpers/thirdWeb.js";
 
 // Components
 import { closeButton } from "./subComponents/sc-close-btn.js";
@@ -43,7 +36,7 @@ import { compCCPA } from "./comp-ccpa.js";
 import { compAdmin } from "./comp-admin.js";
 
 // Analytics
-import { inject } from "@vercel/analytics"
+import { inject } from "@vercel/analytics";
 
 // Statics
 import mainvid1 from "../assets/video/scoge-c2-1.mp4";
@@ -52,11 +45,19 @@ import main1poster from "../assets/video/scoge-c2-1-poster.jpg";
 import currentImg from "../assets/images/bgs/scoge-ch3-bg1.jpg";
 import Img2 from "../assets/images/bgs/scoge-ch3-bg2.jpg";
 
+// TEMP
+import { enterTaosCity } from "./universe.js";
+
+// import { client } from "./uniHelpers/thirdWeb.js";
+// import { dialogue } from "./game/dialogue.js";
+// import the closeCampaign function from dt-campaign.js
+// import { uni3dViewer } from "./uni-c-3dModel.js";
+// import { Configuration, OpenAIApi } from "openai";
+
+var networkOnline = false;
+
 var staticVids = [mainvid1, mainvid2];
 var bgs = [currentImg, Img2];
-
-// // randomly select a video and assign it to a variable
-// var randomStaticVid = staticVids[Math.floor(Math.random() * staticVids.length)];
 
 // // randomly select a image and assign it to a variable
 var randomIntro = bgs[Math.floor(Math.random() * bgs.length)];
@@ -64,20 +65,16 @@ var randomIntro = bgs[Math.floor(Math.random() * bgs.length)];
 try {
   inject();
 } catch (err) {
-  console.log(err)
+  console.log(err);
 }
-
-// if (randomStaticVid === mainvid1) {
-//   // change poster of portalVideo to match the video
-//   document.getElementById("portalVideo").poster = main1poster;
-// }
 
 document.getElementById("mainImg").src = randomIntro;
 
 var beacons;
-var beaconsBuilt = false; 
+var beaconsBuilt = false;
 
-const dsheet = "https://script.google.com/macros/s/AKfycbydI7j2TrYlfW15ESG4gDPo4m0g_KlijM5KZvdSSVnBiTpVpWiMMnE9wzYOG3IdAJEV2w/exec";
+const dsheet =
+  "https://script.google.com/macros/s/AKfycbydI7j2TrYlfW15ESG4gDPo4m0g_KlijM5KZvdSSVnBiTpVpWiMMnE9wzYOG3IdAJEV2w/exec";
 
 function addBeacons(data) {
   var beacons = data;
@@ -96,7 +93,7 @@ function addBeacons(data) {
         <div class="beaconPreview">
           ${beacon.Preview}
       </div>
-      `
+      `;
       beaconEl.addEventListener("click", (e) => {
         document.getElementById("getUniMenu").openBeaconMessage(e);
       });
@@ -107,40 +104,42 @@ function addBeacons(data) {
         beaconEl.style.animation = "beaconBlinking3 1s infinite";
       }
 
-      document.getElementById("getUniMenu").shadowRoot.getElementById("beaconsBody").appendChild(beaconEl);
-      
+      document
+        .getElementById("getUniMenu")
+        .shadowRoot.getElementById("beaconsBody")
+        .appendChild(beaconEl);
     }
   });
   beaconsBuilt = true;
 }
 
-  // Beacons
+// Beacons
 async function getBeacons() {
-    try {
-      const response = await fetch(`${dsheet + "?focus=beacons"}`, {
-        method: "GET",
-        mode: "cors",
-      });
+  try {
+    const response = await fetch(`${dsheet + "?focus=beacons"}`, {
+      method: "GET",
+      mode: "cors",
+    });
 
-      if (response.ok) {
-        const data = await response.json(); // Parse JSON response
-        beacons = data;
+    if (response.ok) {
+      const data = await response.json(); // Parse JSON response
+      beacons = data;
 
-        // beacons.forEach((beacon) => {
-        //   if (beacon.live === true) {
-        //     document.getElementById("getUniMenu").blinkingBeacon();
-        //   }
-        // });
+      // beacons.forEach((beacon) => {
+      //   if (beacon.live === true) {
+      //     document.getElementById("getUniMenu").blinkingBeacon();
+      //   }
+      // });
 
-        addBeacons(beacons);
-        return data;
-      } else {
-        throw new Error("Failed to fetch data");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      throw error;
+      addBeacons(beacons);
+      return data;
+    } else {
+      throw new Error("Failed to fetch data");
     }
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
 }
 
 getBeacons();
@@ -165,22 +164,23 @@ function reminder() {
   }
 }
 
-reminder();
+// reminder();
 
 // // Check size on Start
 window.sizeInit = () => {
   if (window.matchMedia("(max-width: 768px)").matches) {
     // Mobile
     window.isMobile = true;
-    document.getElementById("getUniMenu").shadowRoot.getElementById("uniMenuIcon").style.display = "block";
-    document.getElementById("getUniMenu").shadowRoot.getElementById("loadingText").style.display = "none";
+    document
+      .getElementById("getUniMenu")
+      .shadowRoot.getElementById("uniMenuIcon").style.display = "block";
+    document
+      .getElementById("getUniMenu")
+      .shadowRoot.getElementById("loadingText").style.display = "none";
     var videoEls = document.querySelectorAll(".videoEl");
     videoEls.forEach((videoEl) => {
       videoEl.setAttribute("class", "mobileVideo");
     });
-    // document.getElementById("getUniMenu").shadowRoot.getElementById("gdLoginBut").style.pointerEvents = "none";
-    // document.getElementById("getUniMenu").shadowRoot.getElementById("gdLoginBut").style.userSelect = "none";
-    // document.getElementById("getUniMenu").shadowRoot.getElementById("gdLoginBut").innerHTML = "(LOGIN) DESKTOP ONLY";
   } else {
     // Desktop
   }
@@ -196,7 +196,7 @@ window.entry = () => {
   consensusBlock.setAttribute("id", "compConsensus");
   document.getElementById("main").appendChild(consensusBlock);
   checkInitialState();
-}
+};
 
 window.entry();
 
@@ -204,10 +204,19 @@ const VITE_ScogeI = import.meta.env.VITE_ScogeI;
 const VITE_ably = import.meta.env.VITE_ably;
 const VITE_combination = import.meta.env.VITE_Combination;
 
-  window.ably = new Ably.Realtime({
+export function initAbly() {
+  ably = new Ably.Realtime({
+    key: VITE_ably,
+    clientId: "Test",
+  });
+  console.log("Ably Initialized");
+  return ably;
+}
+
+window.ably = new Ably.Realtime({
   key: VITE_ably,
-  clientId: "Test"
-})
+  clientId: "Test",
+});
 
 // Globals
 var notiActive = false;
@@ -271,37 +280,45 @@ window.isMobile = false;
 
 function start() {
   universe();
-    window.dbm = true;
-    // ci = "bankoo";
-    if (ci === "false") {
-      window.galleryActive = true;
-      window.view = "gallery";
-      window.universeSystem();
-      // document.getElementById("getInvestors").setAttribute("invest","active");
+  window.dbm = true;
+  // ci = "bankoo";
+  if (ci === "false") {
+    window.galleryActive = true;
+    window.view = "gallery";
+
+    window.moveMenu();
+    // document.getElementById("getInvestors").setAttribute("invest","active");
+    // enterTaosCity();
+    // document.getElementById("portalVideo").style.display = "block";
+    document.getElementById("seekModal").style.pointerEvents = "auto";
+    ci = "true";
+  }
+
+  //REMOVE
+  document.addEventListener("keydown", (e) => {
+    if (window.location.hostname === "localhost" && e.key === "Enter") {
       // enterTaosCity();
-      // document.getElementById("portalVideo").style.display = "block";
-      document.getElementById("seekModal").style.pointerEvents = "auto";
-      // gsap.to('#videoGallery', {duration: 2, opacity: 1, y: 0, ease: "power2.out"});
-      // gsap.to("#videoGallery", { duration: 1, filter: "blur(0px)", ease: "power2.inOut"});
-      ci = "true";
-      // document.getElementById("portalVideo").src = randomStaticVid;
-      // document.getElementById("portalVideo").src = mainvid2;
-      // document.getElementById("portalVideo")?.play();
     }
+  });
 }
 
 start();
 
 // Check Size on Resize
 window.addEventListener("resize", function () {
-   if (window.currentMenuTab != "settings" && window.matchMedia("(min-width: 800px)").matches) {
-    window.reloaduniverseSystem(); 
-   }
+  if (
+    window.currentMenuTab != "settings" &&
+    window.matchMedia("(min-width: 800px)").matches
+  ) {
+    window.reloaduniverseSystem();
+  }
   if (window.matchMedia("(max-width: 768px)").matches) {
     var shopMenuBut = document.getElementById("shopBut");
     window.isMobile = true;
     window.termsOpen = false;
-    document.getElementById("getUniMenu").shadowRoot.getElementById("uniMenu").style.overflowX = "hidden";
+    document
+      .getElementById("getUniMenu")
+      .shadowRoot.getElementById("uniMenu").style.overflowX = "hidden";
     //
   } else {
     window.isMobile = false;
@@ -310,7 +327,7 @@ window.addEventListener("resize", function () {
 
 window.onload = () => {
   window?.getParamsDesktop();
-}
+};
 
 window.shopping = () => {
   if (window.matchMedia("(max-width: 768px)").matches) {
@@ -665,27 +682,27 @@ window.clearMainUi = () => {
   textTop.style.transition = "2s all";
   textBottom.style.transition = "2s all";
   if (window.inUniverse === true) {
-    setTimeout(()=> {
-          // Move
-    menu.style.left = "10%";
-    logo.style.left = "30%";
-    // Opacity
-    menu.style.opacity = "0";
-    logo.style.opacity = "0%";
-    setTimeout(()=> {
-      textTop.style.bottom = "49%";
-      textTop.style.opacity = "100%";
-      setTimeout(()=> {
-        textBottom.style.bottom = "45%";
-        // textBottom.style.opacity = "";
-      },500);
-    },1000);
-    setTimeout(()=> {
-      menu.style.display = "none";
-      logo.style.display = "none";
-      settingsMenu.style.display = "none";
-    },3000);
-    },2000);
+    setTimeout(() => {
+      // Move
+      menu.style.left = "10%";
+      logo.style.left = "30%";
+      // Opacity
+      menu.style.opacity = "0";
+      logo.style.opacity = "0%";
+      setTimeout(() => {
+        textTop.style.bottom = "49%";
+        textTop.style.opacity = "100%";
+        setTimeout(() => {
+          textBottom.style.bottom = "45%";
+          // textBottom.style.opacity = "";
+        }, 500);
+      }, 1000);
+      setTimeout(() => {
+        menu.style.display = "none";
+        logo.style.display = "none";
+        settingsMenu.style.display = "none";
+      }, 3000);
+    }, 2000);
   } else {
     menu.style.display = "block";
     logo.style.display = "block";
@@ -694,26 +711,26 @@ window.clearMainUi = () => {
     textTop.style.opacity = "0%";
     textBottom.style.bottom = "40%";
     textBottom.style.opacity = "0%";
-    setTimeout(()=> {
-                // Move
-    menu.style.left = "6%";
-    logo.style.left = "3%";
-    // Opacity
-    menu.style.opacity = "100%";
-    logo.style.opacity = "100%";
-    },1000)
-    setTimeout(()=> {
+    setTimeout(() => {
+      // Move
+      menu.style.left = "6%";
+      logo.style.left = "3%";
+      // Opacity
+      menu.style.opacity = "100%";
+      logo.style.opacity = "100%";
+    }, 1000);
+    setTimeout(() => {
       textBottom.style.display = "none";
       textTop.style.display = "none";
-    })
+    });
   }
-}
+};
 
 // Main Menu System
-window.mainMenuPosition = (bg,p1,p2,p3,p4) => {
+window.mainMenuPosition = (bg, p1, p2, p3, p4) => {
   var menu = document.querySelectorAll(".mainMenuBut");
-  var menuItems = document.getElementById("")
-  menu.forEach((menuItem)=> {
+  var menuItems = document.getElementById("");
+  menu.forEach((menuItem) => {
     menuItem.style.backgroundColor = bg;
     switch (menuItem.id) {
       case "shopBut":
@@ -723,30 +740,38 @@ window.mainMenuPosition = (bg,p1,p2,p3,p4) => {
         document.getElementById("newGameBut").style.left = p2;
         break;
       case "settingsBut":
-      document.getElementById("settingsBut").style.left = p3;
-      break;
+        document.getElementById("settingsBut").style.left = p3;
+        break;
       case "subscribeBut":
-      document.getElementById("subscribeBut").style.left = p4;
-      break;
+        document.getElementById("subscribeBut").style.left = p4;
+        break;
     }
   });
-}
+};
 
 // Open Investors
 window.activateInvestors = () => {
   document.getElementById("getInvestors").style.display = "block";
-}
+};
 
 // Open Investors
 window.openInvestors = () => {
-  document.getElementById("getInvestors").shadowRoot.getElementById("investorComp").style.transition = "1s all";
-  document.getElementById("getInvestors").shadowRoot.getElementById("investorComp").style.right = "0%";
-}
+  document
+    .getElementById("getInvestors")
+    .shadowRoot.getElementById("investorComp").style.transition = "1s all";
+  document
+    .getElementById("getInvestors")
+    .shadowRoot.getElementById("investorComp").style.right = "0%";
+};
 
 window.closeInvestor = () => {
-  document.getElementById("getInvestors").shadowRoot.getElementById("investorComp").style.transition = "1s all";
-  document.getElementById("getInvestors").shadowRoot.getElementById("investorComp").style.right = "-100%";
-}
+  document
+    .getElementById("getInvestors")
+    .shadowRoot.getElementById("investorComp").style.transition = "1s all";
+  document
+    .getElementById("getInvestors")
+    .shadowRoot.getElementById("investorComp").style.right = "-100%";
+};
 // window.periumActor = async () => {
 //     // var canisterId = "bd3sg-teaaa-aaaaa-qaaba-cai";
 //     var canisterId = "wnunb-baaaa-aaaag-aaoya-cai";
@@ -766,15 +791,15 @@ window.closeInvestor = () => {
 var viewThisProduct = "";
 var ccpa = null;
 window.getParamsDesktop = async () => {
-  const params = new URLSearchParams(location.search)
+  const params = new URLSearchParams(location.search);
   viewThisProduct = params.get("Product");
   ccpa = params.get("ccpa");
   if (params.size > 0 && window.urlParamsActive === "shop") {
     window.urlParamsActive = "shop";
   }
- if (params.size > 0 && viewThisProduct != "shop") {
-  window.urlParamsActive = true;
- }
+  if (params.size > 0 && viewThisProduct != "shop") {
+    window.urlParamsActive = true;
+  }
   window.investorsView = params.get("Investors");
   if (window.investorsView === "true") {
     window.activateInvestors();
@@ -803,7 +828,7 @@ window.getParamsDesktop = async () => {
   if (viewThisProduct != null) {
     console.log("Checker", viewThisProduct);
   }
-}
+};
 
 // -----------------------------------------------
 // -----------------------------------------------
@@ -834,67 +859,84 @@ window.sub = () => {
       rotation: 360,
       duration: 2,
       repeat: -1,
-      ease: "none" // use linear easing for a constant speed
+      ease: "none", // use linear easing for a constant speed
     });
     let data = new FormData(form);
-    fetch("https://script.google.com/macros/s/AKfycbwyfpqK5BOPXAZnGpXc0e6szgHqYwXfX7jajbDNEENP7Et0l36InKzVUECe9ENCBO7uhA/exec?focus=products", {
-      method: "POST",
-      body: data,
-      mode: "cors"
-    }).then(res => res.text()).then(data => {
-      var block = document.getElementById("subGeneral");
-      var newEl = document.createElement("span");
-      newEl.setAttribute("id", "done");
-      newEl.innerHTML = `Done!`;
-      block.appendChild(newEl);
-      form.reset();
-      gsap.to("#done", {opacity: 0, duration: 1, ease: "power2.out", onComplete: function() {
-      block.removeChild(newEl);
+    fetch(
+      "https://script.google.com/macros/s/AKfycbwyfpqK5BOPXAZnGpXc0e6szgHqYwXfX7jajbDNEENP7Et0l36InKzVUECe9ENCBO7uhA/exec?focus=products",
+      {
+        method: "POST",
+        body: data,
+        mode: "cors",
       }
-    })
-    gsap.to("#genSubLoad", {opacity: 0, duration: 1, ease: "power2.out"
-  })
-    });
+    )
+      .then((res) => res.text())
+      .then((data) => {
+        var block = document.getElementById("subGeneral");
+        var newEl = document.createElement("span");
+        newEl.setAttribute("id", "done");
+        newEl.innerHTML = `Done!`;
+        block.appendChild(newEl);
+        form.reset();
+        gsap.to("#done", {
+          opacity: 0,
+          duration: 1,
+          ease: "power2.out",
+          onComplete: function () {
+            block.removeChild(newEl);
+          },
+        });
+        gsap.to("#genSubLoad", { opacity: 0, duration: 1, ease: "power2.out" });
+      });
   });
-}
+};
 
 window.sub2 = () => {
   var form2 = document.querySelector("#subGeneral2");
   form2.addEventListener("submit", (event) => {
-    document.getElementById('genCat2').value = `${document.getElementById('genInput3').value}`;
+    document.getElementById("genCat2").value =
+      `${document.getElementById("genInput3").value}`;
     event.preventDefault();
     document.getElementById("genSubLoad2").style.opacity = "100%";
     gsap.to("#genSubLoad2", {
       rotation: 360,
       duration: 2,
       repeat: -1,
-      ease: "none" // use linear easing for a constant speed
+      ease: "none", // use linear easing for a constant speed
     });
     let data = new FormData(form2);
-    fetch("https://script.google.com/macros/s/AKfycbwyfpqK5BOPXAZnGpXc0e6szgHqYwXfX7jajbDNEENP7Et0l36InKzVUECe9ENCBO7uhA/exec", {
-      method: "POST",
-      body: data,
-      mode: "cors"
-    }).then(res => res.text()).then(data => {
-      var confirm = document.getElementById("genSubLoad2");
-      form2.reset();
-      // Cancel any existing tweens of #genSubLoad2
-      gsap.killTweensOf("#genSubLoad2");
+    fetch(
+      "https://script.google.com/macros/s/AKfycbwyfpqK5BOPXAZnGpXc0e6szgHqYwXfX7jajbDNEENP7Et0l36InKzVUECe9ENCBO7uhA/exec",
+      {
+        method: "POST",
+        body: data,
+        mode: "cors",
+      }
+    )
+      .then((res) => res.text())
+      .then((data) => {
+        var confirm = document.getElementById("genSubLoad2");
+        form2.reset();
+        // Cancel any existing tweens of #genSubLoad2
+        gsap.killTweensOf("#genSubLoad2");
 
-      // Reset the rotation of #genSubLoad2
-      gsap.set("#genSubLoad2", { rotation: 0 });
+        // Reset the rotation of #genSubLoad2
+        gsap.set("#genSubLoad2", { rotation: 0 });
 
-      confirm.innerHTML = `Sent.`;
-      setTimeout(() => {
-        gsap.to("#genSubLoad2", {opacity: 0, duration: 1, ease: "power2.out"
-      });
+        confirm.innerHTML = `Sent.`;
         setTimeout(() => {
-          confirm.innerHTML = `|`;
-        }, 1000);
-      }, 3000);
-    })
+          gsap.to("#genSubLoad2", {
+            opacity: 0,
+            duration: 1,
+            ease: "power2.out",
+          });
+          setTimeout(() => {
+            confirm.innerHTML = `|`;
+          }, 1000);
+        }, 3000);
+      });
   });
-}
+};
 
 export class Typing {
   constructor(text, elementId, speed = 50) {
@@ -924,8 +966,11 @@ export class Typing {
   }
 }
 
-
-window.galleryHelp = new Typing("Click to move forward.", "simpleNoti", speed = 80);
+window.galleryHelp = new Typing(
+  "Click to move forward.",
+  "simpleNoti",
+  (speed = 80)
+);
 
 export class TypingPlus {
   constructor(text, element, speed = 50) {
@@ -939,20 +984,20 @@ export class TypingPlus {
         //
       } else {
         // Create a new span element
-        const spanElement = document.createElement('span');
-        const lineBreak = document.createElement('br');
-        const lineBreak2 = document.createElement('br');
-        spanElement.className = 'continueBut';
-        spanElement.textContent = '[ CONTINUE ]';
+        const spanElement = document.createElement("span");
+        const lineBreak = document.createElement("br");
+        const lineBreak2 = document.createElement("br");
+        spanElement.className = "continueBut";
+        spanElement.textContent = "[ CONTINUE ]";
         spanElement.addEventListener("click", () => {
           this.next();
-        })
+        });
         // Append the new span element to the existing element
         this.element.appendChild(lineBreak);
         this.element.appendChild(lineBreak2);
         this.element.appendChild(spanElement);
       }
-    }
+    };
     this.action = null;
   }
 
@@ -978,12 +1023,11 @@ export class TypingPlus {
 
   next() {
     //
-    alert("HI")
+    alert("HI");
   }
 
   switch() {
     //
   }
-
 }
 // ------ Simple Typing End

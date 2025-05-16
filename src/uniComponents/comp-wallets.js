@@ -9,13 +9,10 @@ import rainbowLogo from "../../assets/images/wallets/rainbow.png";
 import stoicLogo from "../../assets/images/wallets/stoic.png";
 import smartLogo from "../../assets/images/wallets/smart.png";
 import statsImg from "../../assets/images/cards/digi-stats-1.jpg";
-import missing from "../../assets/images/items/scoge-missing-cloak.jpg";
-import { adminMenu } from "../universe";
+import mainCover from "../../assets/images/covers/scoge-uni-cover-1.jpg";
+import { adminMenu,  enterTaosCity} from "../universe";
 import { idlFactory } from "../../src/declarations/universe_backend/universe_backend.did.js";
 
-import {
-    enterTaosCity
-} from "../universe";
 import {
     createThirdwebClient,
     getContract,
@@ -70,10 +67,10 @@ class compWallets extends HTMLElement {
                 name: "Rainbow",
                 logo: rainbowLogo
             },
-            {
-                name: "MetaMask",
-                logo: metamaskLogo
-            },
+            // {
+            //     name: "MetaMask",
+            //     logo: metamaskLogo
+            // },
             {
                 name: "Plug",
                 logo: plugLogo
@@ -384,6 +381,16 @@ class compWallets extends HTMLElement {
                 });
             });
 
+            this.shadowRoot.querySelector(".newGameButton").addEventListener("click", async () => {
+                // this.taos().bind(this);
+            });
+
+            // this.initForge();
+            this.shadowRoot.querySelector(".forgeMastersButton").addEventListener("click", async () => {
+                document.getElementById("forgeModal").shadowRoot.getElementById("forgeCode").style.display = "grid";
+                document.getElementById("forgeModal").initForge();
+            }); 
+
             setTimeout(() => {
                 document.getElementById("forgeModal").spinAction();
                 document.getElementById("forgeModal").shadowRoot.getElementById("loadingModal").stopLoading();
@@ -417,6 +424,22 @@ class compWallets extends HTMLElement {
 
                 document.getElementById("getUniMenu").shadowRoot.getElementById("menuloginBut").innerHTML = username;
             }
+
+            // $CDSK
+            this.shadowRoot.querySelector(".marketButton").addEventListener("click", async () => {
+                // open new tab
+                window.open('https://dexscreener.com/base/0x66d57d9d6b59c2d2ae3f31eb22926bd08833956f', '_blank');
+            });
+
+            this.shadowRoot.querySelector(".newGameButton").addEventListener("click", async () => {
+                // this.taos().bind(this);
+            }); 
+
+            // this.initForge();
+            this.shadowRoot.querySelector(".forgeMastersButton").addEventListener("click", async () => {
+                document.getElementById("forgeModal").shadowRoot.getElementById("forgeCode").style.display = "grid";
+                document.getElementById("forgeModal").initForge();
+            }); 
 
             this.shadowRoot.getElementById("logout").addEventListener("click", async () => {
                 await wallet.disconnect().then(() => {
@@ -481,7 +504,10 @@ class compWallets extends HTMLElement {
             this.connectCoinbase();
         });
         this.shadowRoot.getElementById("infoCont2").addEventListener("click", () => {
-            window.open('https://zora.co/collect/base:0xd8b7edda0dcf5069d5900b43362e96b1832ffc12/2?referrer=0x2a9e5f8485c7596e427bfb26fd41d149a110e949', '_blank');
+            window.open('https://app.uniswap.org/swap?chain=base&inputCurrency=NATIVE&outputCurrency=0x394bc54133c50d37429f08a2d558018b7fc1c14d', '_blank');
+        });
+        this.shadowRoot.getElementById("accountCard").addEventListener("click", () => {
+            window.open('https://www.youtube.com/watch?v=UsgbSmDMZZg', '_blank');
         });
     }
 
@@ -544,7 +570,6 @@ class compWallets extends HTMLElement {
         document.getElementById("getUniMenu").shadowRoot.getElementById("menuloginBut").innerHTML = "Log-in";
         document.getElementById("getUniMenu").shadowRoot.getElementById("uniMenuExit").setAttribute("data-connected", "false");
         document.getElementById("getUniMenu").closeFullMenu();
-        this.shadowRoot.getElementById("actionButCont").removeEventListener("click", this.taos);
         this.shadowRoot.querySelectorAll(".button")[0].classList.add("inactive");
     }
 
@@ -561,6 +586,8 @@ class compWallets extends HTMLElement {
                 contract: contract,
                 method: "function balanceOf(address, uint256) view returns (uint256)",
                 params: [add, i],
+            }).catch((err) => {
+                console.log("Error", err);
             });
             if (balance > 0) {
                 ownedNFTs.push({
@@ -720,9 +747,8 @@ class compWallets extends HTMLElement {
         window.ethNFTS.forEach((nft) => {
             if (nft.nft.name === "Oracle Cloak") {
                 this.shadowRoot.getElementById("lgimg").src = nft.nft.image;
-                this.shadowRoot.getElementById("actionButCont").addEventListener("click", this.taos);
-                this.shadowRoot.querySelectorAll(".button")[0].classList.remove("inactive");
-                this.shadowRoot.getElementById("accountDesc").innerHTML = "This system is still in development. Use this cloak to avoid detection. It wont last for long.";
+                // this.shadowRoot.getElementById("actionButCont").addEventListener("click", this.taos);
+                this.shadowRoot.querySelectorAll(".button")[0]?.classList.remove("inactive");
             }
         })
 
@@ -763,16 +789,16 @@ class compWallets extends HTMLElement {
 
     taos() {
         enterTaosCity();
-        setTimeout(() => {
-            document.getElementById("miniAgent").setAttribute("status", "intro");
-            document.getElementById("miniAgent").toggle();
-        }, 59000)
-        setTimeout(() => {
-            alert("THEY'RE ONTO YOU, GET OUT!");
-            setTimeout(() => {
-                location.reload();
-            }, 1000)
-        }, 60000)
+        // setTimeout(() => {
+        //     document.getElementById("miniAgent").setAttribute("status", "intro");
+        //     document.getElementById("miniAgent").toggle();
+        // }, 59000)
+        // setTimeout(() => {
+        //     alert("THEY'RE ONTO YOU, GET OUT!");
+        //     setTimeout(() => {
+        //         location.reload();
+        //     }, 1000)
+        // }, 60000)
     }
 
     reloadNfts() {
@@ -862,7 +888,7 @@ class compWallets extends HTMLElement {
                     width: 24%;
                     position: absolute;
                     overflow: hidden;
-                    background-color: rgba(0, 0, 0, 0.7);
+                    background-color: rgba(0, 0, 0, 0.8);
                     top: 12.5%;
                     right: 5%;
                     z-index: 20;
@@ -1017,26 +1043,30 @@ class compWallets extends HTMLElement {
                     padding-right: 8%;
                     display: none;
                     grid-template-columns: 1fr;
-                    grid-template-rows: 60% 1fr 1fr 1fr;
+                    grid-template-rows: 55% 5% 1fr;
                 }
 
-                #accountCard {}
+                #accountCard {
+                    cursor: pointer;
+                    transition: .5s all;
+                }
+
+                #accountCard img {
+                    width: 100%;
+                }
+                #accountCard:hover {
+                    scale: 1.02;
+                }
 
                 #accountDesc {
-                    padding-top: 5%;
-                    font-size: 1em;
-                    color: var(--secondary);
-                }
-
-                #accountStats {
-                    display: grid;
-                    grid-template-columns: 85% 15%;
-                    grid-template-rows: 1fr;
+                    display: flex;
                     justify-content: center;
                     align-items: center;
-                    color: var(--primary);
                     font-size: 1em;
+                    text-align: center;
+                    text-transform: uppercase;
                     letter-spacing: 2px;
+                    font-size: .8em;
                 }
 
                 #expandBut {
@@ -1052,12 +1082,15 @@ class compWallets extends HTMLElement {
                 }
 
                 #actionButCont {
-                    display: flex;
-                    justify-content: center;
+                    display: grid;
+                    grid-template-rows: 1fr 1fr 1fr 1fr ;
+                    grid-template-columns: 1fr;
+                    justify-items: center;
                     align-items: end;
+                    width: 100%;
                 }
 
-                .button, .preButton {
+                .button, .preButton, .newButton {
                     width: 48%;
                     height: 45%;
                     display: flex;
@@ -1074,6 +1107,17 @@ class compWallets extends HTMLElement {
 
                 .button:hover {
                     background-color: var(--accent);
+                    color: black;
+                    font-family: 'BS-B';
+                }
+
+                .newButton {
+                    border: 1px solid var(--primary);
+                    color: var(--primary);
+                }
+
+                .newButton:hover {
+                    background-color: var(--primary);
                     color: black;
                     font-family: 'BS-B';
                 }
@@ -1095,10 +1139,42 @@ class compWallets extends HTMLElement {
                     text-decoration: line-through;
                 }
 
+                .inactive2 {
+                    border: 1px solid var(--primary);
+                    color: var(--primary);
+                    opacity: .5;
+                }
+
+                .inactive2:hover {
+                    background-color: var(--primary);
+                    color: black;
+                    font-family: "BS-B";
+                    text-decoration: line-through;
+                }
+
+                .forgeMastersButton {
+                    animation: buttonPulse 1.5s infinite;
+                }
+                    
+                @keyframes buttonPulse {
+                    0% {
+                        transform: scale(1);
+                        box-shadow: 0 0 0 0 rgba(255, 0, 45, 1);
+                    }
+                    50% {
+                        transform: scale(1.05);
+                        box-shadow: 0 0 0 30px rgba(255, 0, 45, 0);
+                    }
+                    100% {
+                        transform: scale(1);
+                         box-shadow: 0 0 0 0 rgba(255, 0, 45, 0);
+                    }
+                }
+
             </style>
             <div id="main" data-domType="shadow">
                 <comp-close-btn></comp-close-btn>
-                <div id="header">CONNECT WALLET</div>
+                <div id="header">LOG-IN</div>
                 <div id="headerConnected">
                     <div>
                         <div style="font-size:.6em;">Welcome back</div>
@@ -1110,26 +1186,21 @@ class compWallets extends HTMLElement {
                     <div id="walletsCont"></div>
                     <div id="connectedCont">
                         <div id="accountCard">
-                            <img src="${missing}" id="lgimg" style="width: auto; height: 100%;"/>
+                            <img src="${mainCover}" id="lgimg" style="width: 100%; height: auto;"/>
                         </div>
                         <div id="accountDesc">
-                            You'll need a Cloak to roam this city. It's too risky!
-                        </div>
-                        <div id="accountStats">
-                            <div id="stats">
-                                <div class="stat">P_A:V0.0.6</div>
-                                <div class="stat">CH 0 - Tourist</div>
-                                <div class="stat">0x/0x/xx24 ::  x00:00x</div>
-                            </div>
-                            <div id="expandBut">+</div>
+                            Version: 0.0.6
                         </div>
                         <div id="actionButCont">
-                            <div class="preButton inactive">BOOT-UP</div>
+                            <div class="newButton newGameButton inactive2">NEW GAME</div>
+                            <div class="button continueButton inactive">CONTINUE</div>
+                            <div class="button forgeMastersButton">FORGE MASTERS</div>
+                            <div class="button marketButton">$CDSK</div>
                         </div>
                     </div>
                 </div>
                 <div id="infoCont1">Create Wallet</div>
-                <div id="infoCont2">Get A Cloak</div>
+                <div id="infoCont2">$CDSK Uniswap</div>
             </div>
         `;
     }

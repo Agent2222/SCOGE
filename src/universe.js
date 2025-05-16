@@ -1,27 +1,52 @@
 // UNIVERSE SYSTEM
 // import { SoundtrackManager } from "./soundtrack.js";
 // import { idlFactory } from "./declarations/universe_backend/universe_backend.did.js";
-import { chatRoom } from "./uniHelpers/chat.js";
-import { uniPlayers } from "./uniHelpers/players.js";
-import { Scenario } from "./game/scenarios/Scenarios.js";
-import { DialogueScene } from "./game/scenarios/DialogueScene.js";
-import { gsap } from "gsap";
-import { story } from "./game/SceneManager.js";
-import { activateMapper, initLocationHUD, loadAllDomains } from "../src/uniHelpers/mapper";
-import data from './sudb.json';
-import { digisetteData, updateMetadata } from "./uniHelpers/citycentral.js";
+import {
+  chatRoom
+} from "./uniHelpers/chat.js";
+import {
+  uniPlayers
+} from "./uniHelpers/players.js";
+import {
+  Scenario
+} from "./game/scenarios/Scenarios.js";
+import {
+  DialogueScene
+} from "./game/scenarios/DialogueScene.js";
+import {
+  CutScene
+} from "./game/scenarios/CutScene.js";
+import {
+  gsap
+} from "gsap";
+import {
+  story
+} from "./game/SceneManager.js";
+import {
+  activateMapper,
+  initLocationHUD,
+  regionPassCheck,
+  loadAllDomains,
+} from "../src/uniHelpers/mapper";
+import data from "./sudb.json";
+import {
+  digisetteData,
+  updateMetadata
+} from "./uniHelpers/citycentral.js";
+import {
+  scogeUniverse
+} from "./game/GameManger.js";
 
-const dsheet = "https://script.google.com/macros/s/AKfycbzHUtfeNysmMSZvlC7tnfYhpgs_EU_3kx9_6H_VV6le8tPyR4Vlzs8SlfES_8pbK0nb2w/exec";
+const dsheet =
+  "https://script.google.com/macros/s/AKfycbzHUtfeNysmMSZvlC7tnfYhpgs_EU_3kx9_6H_VV6le8tPyR4Vlzs8SlfES_8pbK0nb2w/exec";
 
 // export const soundtrack = new SoundtrackManager();
 
 var testState = {
-  whitelistPrincipals: [
-    {
-      principal: "ryjl3-tyaaa-aaaaa-aaaba-cai",
-      name: "ryjl3-tyaaa-aaaaa-aaaba-cai",
-    },
-  ],
+  whitelistPrincipals: [{
+    principal: "ryjl3-tyaaa-aaaaa-aaaba-cai",
+    name: "ryjl3-tyaaa-aaaaa-aaaba-cai",
+  }, ],
   admins: ["ryjl3-tyaaa-aaaaa-aaaba-cai"],
   hasPlug: false,
   hasBitfinity: false,
@@ -31,67 +56,63 @@ var testState = {
     name: "Digisette Pre-Alpha",
     description: "Limited edition pre-alpha 1 of 450 Digisette.",
     url: `https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/SCOGE-Yumi-LaunchCollection Logo.jpg`,
-    attributes: [
-      {
-        ringType: "",
-        domains: [
-          {
-            number: 0,
-            lord: "",
-            rank: 0,
-            power: 0,
-            defense: 0,
-            xp: 0,
-            functions: [],
-            positiveEvents: 0,
-            negativeEvents: 0,
-            privacy: false,
-            sanitize: false,
-          },
-        ],
+    attributes: [{
+      ringType: "",
+      domains: [{
+        number: 0,
+        lord: "",
         rank: 0,
-        powerUps: [0],
-        progress: 0,
-        xp: 0,
-        linked: false,
-        earthName: "",
-        bankooName: "",
-        email: "",
-        earthImage: "",
-        earthText: "",
-        bankooImage: "",
-        bankooText: "",
-        ownedStyles: [0],
-        discovered: [""],
-        discoveredProgress: 0.0,
         power: 0,
-        mental: 0,
-        physical: 0,
-        health: 0,
-        speed: 0,
-        sight: 0,
-        endurance: 0,
-        playerLocation: 0,
-        soundLevel: 0,
-        musicLevel: 0,
-        fsOn: false,
-        notiOn: false,
-        networkClass: "",
-        network: [""],
-        story: {
-          title: "",
-          text: "",
-          imagesUri: [""],
-          videoUri: "",
-        },
-        ancestorsNames: [""],
-        ancestorsImages: [""],
-        battles: 0,
-        battleRank: 0.0,
-        soul: 0.0,
-        inventory: [0],
+        defense: 0,
+        xp: 0,
+        functions: [],
+        positiveEvents: 0,
+        negativeEvents: 0,
+        privacy: false,
+        sanitize: false,
+      }, ],
+      rank: 0,
+      powerUps: [0],
+      progress: 0,
+      xp: 0,
+      linked: false,
+      earthName: "",
+      bankooName: "",
+      email: "",
+      earthImage: "",
+      earthText: "",
+      bankooImage: "",
+      bankooText: "",
+      ownedStyles: [0],
+      discovered: [""],
+      discoveredProgress: 0.0,
+      power: 0,
+      mental: 0,
+      physical: 0,
+      health: 0,
+      speed: 0,
+      sight: 0,
+      endurance: 0,
+      playerLocation: 0,
+      soundLevel: 0,
+      musicLevel: 0,
+      fsOn: false,
+      notiOn: false,
+      networkClass: "",
+      network: [""],
+      story: {
+        title: "",
+        text: "",
+        imagesUri: [""],
+        videoUri: "",
       },
-    ],
+      ancestorsNames: [""],
+      ancestorsImages: [""],
+      battles: 0,
+      battleRank: 0.0,
+      soul: 0.0,
+      inventory: [0],
+    }, ],
     mimeType: "image",
     thumb: `example`,
     timestamp: +new Date(),
@@ -99,6 +120,9 @@ var testState = {
 };
 
 export var domainNumber = null;
+
+var camPad = 0;
+var loadedGame = null;
 
 export const attn = async (error, np) => {
   let data = new FormData();
@@ -111,8 +135,7 @@ export const attn = async (error, np) => {
     data.append("FeedbackText", `${np}`);
   }
   fetch(
-    "https://script.google.com/macros/s/AKfycbwyfpqK5BOPXAZnGpXc0e6szgHqYwXfX7jajbDNEENP7Et0l36InKzVUECe9ENCBO7uhA/exec?focus=feedback",
-    {
+    "https://script.google.com/macros/s/AKfycbwyfpqK5BOPXAZnGpXc0e6szgHqYwXfX7jajbDNEENP7Et0l36InKzVUECe9ENCBO7uhA/exec?focus=feedback", {
       method: "POST",
       body: data,
       mode: "cors",
@@ -120,47 +143,114 @@ export const attn = async (error, np) => {
   ).then((res) => res.text());
 };
 
-  // MP
-
-export var channelex ;
-export var channel2ex ;
+// MP
 var mapping2 = [];
 
 var editorActive = false;
 
-  // Test Function Button
-  const testFunctionButton = () => {
-    var testFunction = document.createElement("div");
-    testFunction.id = "testFunction";
-    testFunction.style.right = "2%";
-    testFunction.style.top = "10%";
-    testFunction.style.position = "fixed";
-    testFunction.style.zIndex = "501";
-    testFunction.style.width = "40px";
-    testFunction.style.height = "40px";
-    testFunction.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
-    testFunction.style.borderRadius = "10px";
-    testFunction.style.border = "1px solid #ff002d";
-    testFunction.addEventListener("click", async () => {
-      updateMetadata(0, digisetteData);
+// Test Function Button
+const testFunctionButton = () => {
+  var testFunction = document.createElement("div");
+  testFunction.id = "testFunction";
+  testFunction.style.right = "2%";
+  testFunction.style.top = "10%";
+  testFunction.style.position = "fixed";
+  testFunction.style.zIndex = "501";
+  testFunction.style.width = "40px";
+  testFunction.style.height = "40px";
+  testFunction.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
+  testFunction.style.borderRadius = "10px";
+  testFunction.style.border = "1px solid #ff002d";
+  testFunction.addEventListener("click", async () => {
+    updateMetadata(0, digisetteData);
   });
   document.getElementById("main").appendChild(testFunction);
-  };
+};
 
-  // Editor Button
-  const editorButton = () => {
-    var viewEditor = document.createElement("div");
-    viewEditor.id = "viewEditor";
-    viewEditor.style.right = "2%";
-    viewEditor.style.top = "3%";
-    viewEditor.style.position = "fixed";
-    viewEditor.style.zIndex = "501";
-    viewEditor.style.width = "40px";
-    viewEditor.style.height = "40px";
-    viewEditor.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
-    viewEditor.style.borderRadius = "10px";
-    viewEditor.style.border = "1px solid #ff002d";
-    viewEditor.addEventListener("click", async () => {
+// Editor Button
+const editorButton = () => {
+  var viewEditor = document.createElement("div");
+  viewEditor.id = "viewEditor";
+  viewEditor.style.right = "2%";
+  viewEditor.style.top = "3%";
+  viewEditor.style.position = "fixed";
+  viewEditor.style.zIndex = "501";
+  viewEditor.style.width = "40px";
+  viewEditor.style.height = "40px";
+  viewEditor.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
+  viewEditor.style.borderRadius = "10px";
+  viewEditor.style.border = "1px solid #ff002d";
+  viewEditor.addEventListener("click", async () => {
+    const editorModule = await import("../editor.js");
+    var editorState = await editorModule.editor(editorActive);
+    if (editorState === false) {
+      editorActive = false;
+      return;
+    }
+    if (editorState === true) {
+      editorActive = true;
+      return;
+    }
+  });
+
+  document.getElementById("main").appendChild(viewEditor);
+};
+
+// Mapper Button
+const mapperButton = () => {
+  if (!document.getElementById("viewMapper")) {
+    var viewMapper = document.createElement("div");
+    viewMapper.id = "viewMapper";
+    viewMapper.style.right = "6%";
+    viewMapper.style.top = "3%";
+    viewMapper.style.position = "fixed";
+    viewMapper.style.zIndex = "501";
+    viewMapper.style.width = "40px";
+    viewMapper.style.height = "40px";
+    viewMapper.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
+    viewMapper.style.borderRadius = "10px";
+    viewMapper.style.border = "1px solid var(--secondary)";
+    document.getElementById("main").appendChild(viewMapper);
+  }
+  // Mapper
+  if (viewMapper) {
+    viewMapper.addEventListener("click", () => {
+      activateMapper();
+    });
+  }
+};
+
+export const adminMenu = () => {
+  if (!document.getElementById("adminMenu")) {
+    var adminMenu = document.createElement("div");
+    adminMenu.id = "adminMenu";
+    adminMenu.style.right = "1%";
+    adminMenu.style.top = "3%";
+    adminMenu.style.position = "fixed";
+    adminMenu.style.zIndex = "501";
+    adminMenu.style.width = "auto";
+    adminMenu.style.height = "5%";
+    adminMenu.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
+    adminMenu.style.borderRadius = "10px";
+    adminMenu.style.border = "1px solid var(--primary)";
+    adminMenu.style.textTransform = "uppercase";
+    adminMenu.style.fontFamily = "BS-R";
+    adminMenu.style.display = "flex";
+    adminMenu.style.flexDirection = "row";
+    adminMenu.style.fontSize = "12px";
+    adminMenu.style.letterSpacing = "1px";
+    adminMenu.innerHTML = `
+      <div id="adminMapper" class="adminMenuItem" style="width: 150px; height: 100%; display: flex; justify-content: center; align-items: center; cursor: pointer; border-bottom: 1px solid #ff002d;">MAPPER</div>
+      <div id="adminRRC" class="adminMenuItem" style="width: 150px; height: 100%; display: flex; justify-content: center; align-items: center; cursor: pointer; border-bottom: 1px solid #ff002d;">RR Creator</div>
+      <div id="adminCCPADB" class="adminMenuItem" style="width: 150px; height: 100%; display: flex; justify-content: center; align-items: center; cursor: pointer; border-bottom: 1px solid #ff002d;">CCPA DB</div>
+      `;
+
+    document.getElementById("main").appendChild(adminMenu);
+
+    document.getElementById("adminMapper").addEventListener("click", () => {
+      activateMapper();
+    });
+    document.getElementById("adminRRC").addEventListener("click", async () => {
       const editorModule = await import("../editor.js");
       var editorState = await editorModule.editor(editorActive);
       if (editorState === false) {
@@ -172,105 +262,35 @@ var editorActive = false;
         return;
       }
     });
+    document.getElementById("adminCCPADB").addEventListener("click", () => {
+      var el = document.getElementById("ccpaModal");
 
-    document.getElementById("main").appendChild(viewEditor);
-  };
-
-  // Mapper Button 
-  const mapperButton = () => {
-    if (!document.getElementById("viewMapper")) {
-      var viewMapper = document.createElement("div");
-      viewMapper.id = "viewMapper";
-      viewMapper.style.right = "6%";
-      viewMapper.style.top = "3%";
-      viewMapper.style.position = "fixed";
-      viewMapper.style.zIndex = "501";
-      viewMapper.style.width = "40px";
-      viewMapper.style.height = "40px";
-      viewMapper.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
-      viewMapper.style.borderRadius = "10px";
-      viewMapper.style.border = "1px solid var(--secondary)";
-      document.getElementById("main").appendChild(viewMapper);
-    }
-      // Mapper
-      if (viewMapper) {
-        viewMapper.addEventListener("click", () => {
-          activateMapper();
-      });
+      if (el.classList.contains("loaded")) {
+        var ccpaModal = document
+          .getElementById("ccpaModal")
+          .shadowRoot.getElementById("main");
+        gsap.to(ccpaModal, {
+          duration: 0.5,
+          opacity: 1,
+          scaleX: 1,
+          ease: "power2.inOut",
+        });
+        return;
       }
 
-  };
-
-  export const adminMenu = () => { 
-    if (!document.getElementById("adminMenu")) {
-      var adminMenu = document.createElement("div");
-      adminMenu.id = "adminMenu";
-      adminMenu.style.right = "1%";
-      adminMenu.style.top = "3%";
-      adminMenu.style.position = "fixed";
-      adminMenu.style.zIndex = "501";
-      adminMenu.style.width = "auto";
-      adminMenu.style.height = "5%";
-      adminMenu.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
-      adminMenu.style.borderRadius = "10px";
-      adminMenu.style.border = "1px solid var(--primary)";
-      adminMenu.style.textTransform = "uppercase";
-      adminMenu.style.fontFamily = "BS-R";
-      adminMenu.style.display = "flex";
-      adminMenu.style.flexDirection = "row";
-      adminMenu.style.fontSize = "12px";
-      adminMenu.style.letterSpacing = "1px";
-      adminMenu.innerHTML = `
-      <div id="adminMapper" class="adminMenuItem" style="width: 150px; height: 100%; display: flex; justify-content: center; align-items: center; cursor: pointer; border-bottom: 1px solid #ff002d;">MAPPER</div>
-      <div id="adminRRC" class="adminMenuItem" style="width: 150px; height: 100%; display: flex; justify-content: center; align-items: center; cursor: pointer; border-bottom: 1px solid #ff002d;">RR Creator</div>
-      <div id="adminCCPADB" class="adminMenuItem" style="width: 150px; height: 100%; display: flex; justify-content: center; align-items: center; cursor: pointer; border-bottom: 1px solid #ff002d;">CCPA DB</div>
-      `;
-
-      document.getElementById("main").appendChild(adminMenu);
-
-      document.getElementById("adminMapper").addEventListener("click", () => {
-        activateMapper();
-      });
-      document.getElementById("adminRRC").addEventListener("click", async () => {
-          const editorModule = await import("../editor.js");
-          var editorState = await editorModule.editor(editorActive);
-          if (editorState === false) {
-            editorActive = false;
-            return;
-          }
-          if (editorState === true) {
-            editorActive = true;
-            return;
-          }
-        });
-      document.getElementById("adminCCPADB").addEventListener("click", () => {
-        var el = document.getElementById("ccpaModal");
-
-        if (el.classList.contains("loaded")) {
-          var ccpaModal = document.getElementById("ccpaModal").shadowRoot.getElementById("main");
-          gsap.to(ccpaModal, {
-            duration: 0.5,
-            opacity: 1, 
-            scaleX: 1,
-            ease: "power2.inOut",
-          });
-          return;
-        }
-
-        document.getElementById("ccpaModal").setAttribute("active", "true");
-        document.getElementById("ccpaModal").classList.add("loaded");
-        window.adminMode = true;
-      });
-      return;
-    }
-  };
+      document.getElementById("ccpaModal").setAttribute("active", "true");
+      document.getElementById("ccpaModal").classList.add("loaded");
+      window.adminMode = true;
+    });
+    return;
+  }
+};
 
 // Init Soundtrack
 export async function universe() {
   const channel = window.ably.channels.get("alphaTestersChat");
   const channel2 = window.ably.channels.get("lordsInTheCity");
-  channelex = channel;
-  channel2ex = channel2;
+
   // US VARS
   var universeCanvas = document.querySelector("#universe");
   var exploreUI = document.querySelector("#exploreUI");
@@ -282,10 +302,22 @@ export async function universe() {
   var moveMenu = document
     .getElementById("getUniMenu")
     .shadowRoot?.getElementById("uniMenu");
-  var playerPos = { x: 0, y: 0 };
-  var selectionPos = { x: 0, y: 0 };
-  var selectionBoxPosition = { x: 0, y: 0 };
-  var cityPosition = { x: 0, y: 0 };
+  var playerPos = {
+    x: 0,
+    y: 0
+  };
+  var selectionPos = {
+    x: 0,
+    y: 0
+  };
+  var selectionBoxPosition = {
+    x: 0,
+    y: 0
+  };
+  var cityPosition = {
+    x: 0,
+    y: 0
+  };
   var convertedSelPos;
   var convertedCursorPos;
   var tileSize = 18;
@@ -311,16 +343,17 @@ export async function universe() {
   window.connected = false;
   window.mapperActive = false;
   window.loggedIn = false;
+  window.movementBlock = false
   var tempLandEx = ["1435", "3162", "2849", "6208", "1980"];
   var playing = {
     startVolume: 0.2,
     fullVolume: 0.6,
     running: false,
-  }
+  };
   window.spoke = {
     spokeAcclimatePlaying: false,
     spokeAcclimate: false,
-  }
+  };
   window.activeGames = [];
   window.suUiActor = null;
   window.landActivated = false;
@@ -340,168 +373,43 @@ export async function universe() {
   const host =
     "https://a4gq6-oaaaa-aaaab-qaa4q-cai.raw.ic0.app/?id=wnunb-baaaa-aaaag-aaoya-cai";
   const local = "http://localhost:8080/";
-  const localhost = "http://127.0.0.1:8080/?canisterId=r7inp-6aaaa-aaaaa-aaabq-cai&id=ryjl3-tyaaa-aaaaa-aaaba-cai";
+  const localhost =
+    "http://127.0.0.1:8080/?canisterId=r7inp-6aaaa-aaaaa-aaabq-cai&id=ryjl3-tyaaa-aaaaa-aaaba-cai";
   // BEFORE LAUNCH !!!!!!!!!
   // Rebuilding Actors Across Account Switches
 
-  const test = () => {
-    document.addEventListener("keydown", async function (e) {
-      if (e.keyCode === 80 &&  window.loggedIn === true) {
-        // window.testScn = await newScenario("Intro");
-        // window.testScn = await newScenario("StangeNote");
-        // window.testScn = await newScenario("DigisetteIntro");
-      }
-      // if (e.keyCode === 77) {
-      //   var character = document.querySelector(".character");
-      //   gsap.to(character, {duration: 0.5, x: 500});
-      //   // document.querySelector(".character").style.transform = "translateX(100px)";
-      //   setTimeout(()=> {
-      //     gsap.to(character, {duration: 0.5, x: 0});
-      //     // document.querySelector(".character").style.transform = "translateX(0px)";
-      //   },10);
-      // }
-    });
-  };
-  // test();
+  // window.universeSystem = async () => {
+  //   // City Elements
+  //   var uniEvent = document.createElement("div");
+  //   var uniEvent2 = document.createElement("div");
+  //   var uniEvent3 = document.createElement("div");
+  //   var uniEvent4 = document.createElement("div");
+  //   var uniEvent5 = document.createElement("div");
+  //   //
 
-  window.universeSystem = async () => {
-    var uniCtx = universeCanvas.getContext("2d");
-    var img = document.createElement("img");
-    var cam = document.getElementById("camera");
-    // Check for browser support
-    // if (
-    //   navigator.userAgent.includes("Brave") ||
-    //   navigator.userAgent.includes("Firefox") ||
-    //   navigator.userAgent.includes("Chrome") ||
-    //   navigator.userAgent.includes("Safari")
-    // ) {
-      // The browser is Brave, Firefox, or Chrome
-      document.querySelector("#universe").style.display = "block";
-      img.onload = function () {
-        uniCtx.drawImage(img, 0, 0, img.width, img.height);
-        // make a 18px by 18px grid overlay
-        uniCtx.fillStyle = "rgba(255, 255, 255, 0.08)";
-        for (var x = 0; x < img.width; x += tileSize) {
-          uniCtx.fillRect(x, 0, 1, img.height);
-        }
-        for (var y = 0; y < img.height; y += tileSize) {
-          uniCtx.fillRect(0, y, img.width, 1);
-        }
-      };
-      img.src =
-        "https://storage.scoge.co/scogeUniverse/maps/scoge-taos-city-universe.jpg";
-      cam.scrollTo(990, 0);
-      // prevent scrolling under scrollto(990,0) and activate scrolling over scrollto(990,0) Sectors
-      // cam.addEventListener(
-      //   "scroll",
-      //   function () {
-      //     if (cam.scrollLeft < 990 && lcCheck() === true) {
-      //       cam.scrollTo(990, 0);
-      //     }
-      //     cam.style.overflowY = "hidden";
-      //   },
-      //   { passive: false }
-      // );
-      // disable scrolling with mouse wheel
-      cam.addEventListener(
-        "wheel",
-        function (e) {
-          e.preventDefault();
-        },
-        { passive: false }
-      );
-      // add event listener to mousemove
-      universeCanvas.addEventListener("mousemove", window.mousePos);
-      // add event listener to mouseclick
-      universeCanvas.addEventListener("click", window.selectedPos);
-      // Focus and Blur events
-      // eslint-disable-next-line no-unused-vars
-      document.addEventListener(
-        "focus",
-        (event) => {
-          typing = true;
-        },
-        true
-      );
-      // eslint-disable-next-line no-unused-vars
-      document.addEventListener(
-        "blur",
-        (event) => {
-          typing = false;
-        },
-        true
-      );
-      //
-      // City Elements
-      var uniEvent = document.createElement("div");
-      var uniEvent2 = document.createElement("div");
-      var uniEvent3 = document.createElement("div");
-      var uniEvent4 = document.createElement("div");
-      var uniEvent5 = document.createElement("div");
-      //
-      uniEvent.id = "uniEvent";
-      uniEvent.setAttribute("class", "uniEvents");
-      if (!document.getElementById("uniEvent")) {
-        document.getElementById("camera").appendChild(uniEvent);
-      }
-      //
-      uniEvent2.id = "uniEvent2";
-      uniEvent2.setAttribute("class", "uniEvents");
-      if (!document.getElementById("uniEvent2")) {
-        document.getElementById("camera").appendChild(uniEvent2);
-      }
-      //
-      uniEvent3.id = "uniEvent3";
-      uniEvent3.setAttribute("class", "uniEvents");
-      if (!document.getElementById("uniEvent3")) {
-        document.getElementById("camera").appendChild(uniEvent3);
-      }
-      //
-      uniEvent4.id = "uniEvent4";
-      uniEvent4.setAttribute("class", "uniEvents");
-      if (!document.getElementById("uniEvent4")) {
-        document.getElementById("camera").appendChild(uniEvent4);
-      }
-      //
-      uniEvent5.id = "uniEvent5";
-      uniEvent5.setAttribute("class", "uniEvents");
-      if (!document.getElementById("uniEvent5")) {
-        document.getElementById("camera").appendChild(uniEvent5);
-      }
-      // Intro Scene
-      window.adminUI();
-    // } else {
-    //   // The browser is not Brave, Firefox, or Chrome
-    //   alert("The browser is not Brave, Firefox, or Chrome");
-    // }
-
-    // if (lcCheck()) {
-    //   adminMenu();
-    // }
-    //
-  };
-
+  //   window.moveMenu();
+  // };
 
   window.reloaduniverseSystem = async () => {
     var uniCtx = universeCanvas.getContext("2d");
     var img = document.createElement("img");
     var cam = document.getElementById("camera");
-      img.onload = function () {
-        // clear canvas
-        uniCtx.clearRect(0, 0, universeCanvas.width, universeCanvas.height);
-        uniCtx.drawImage(img, 0, 0, img.width, img.height);
-        // make a 18px by 18px grid overlay
-        uniCtx.fillStyle = "rgba(255, 255, 255, 0.08)";
-        for (var x = 0; x < img.width; x += tileSize) {
-          uniCtx.fillRect(x, 0, 1, img.height);
-        }
-        for (var y = 0; y < img.height; y += tileSize) {
-          uniCtx.fillRect(0, y, img.width, 1);
-        }
-      };
-      img.src =
-        "https://storage.scoge.co/scogeUniverse/maps/scoge-taos-city-universe.jpg";
-      cam.scrollTo(990, 0);
+    img.onload = function () {
+      // clear canvas
+      uniCtx.clearRect(0, 0, universeCanvas.width, universeCanvas.height);
+      uniCtx.drawImage(img, 0, 0, img.width, img.height);
+      // make a 18px by 18px grid overlay
+      uniCtx.fillStyle = "rgba(255, 255, 255, 0.08)";
+      for (var x = 0; x < img.width; x += tileSize) {
+        uniCtx.fillRect(x, 0, 1, img.height);
+      }
+      for (var y = 0; y < img.height; y += tileSize) {
+        uniCtx.fillRect(0, y, img.width, 1);
+      }
+    };
+    img.src =
+      "https://storage.scoge.co/scogeUniverse/maps/scoge-taos-city-universe.jpg";
+    cam.scrollTo(990, 0);
   };
 
   // Admin UI
@@ -540,16 +448,13 @@ export async function universe() {
       selectionPosDiv.innerHTML = "Selected Tile:";
     }
     if (columnDiv) {
-      columnDiv.innerHTML = "Column:"; 
+      columnDiv.innerHTML = "Column:";
       rowDiv.innerHTML = "Row:";
       pixelPosDiv.innerHTML = "X: , Y:";
       selectPosBoxDiv.innerHTML = "SelBoxTile:";
       playerCordDiv.innerHTML = "Player Coordinates:";
       playerScreenCoor.innerHTML = "Player Screen Coord:";
     }
-    window.initSelection();
-    window.moveSelection();
-    window.moveMenu();
   };
 
   // mouse position
@@ -573,8 +478,11 @@ export async function universe() {
     // get mouse position
     document.getElementById("explore").style.display = "block";
     var rect = universeCanvas.getBoundingClientRect();
-    if (exploreUI.style.transform === "scale(1)" && window.landActivated === true) {
-      window.soundtrack.play("closewindow-1")
+    if (
+      exploreUI.style.transform === "scale(1)" &&
+      window.landActivated === true
+    ) {
+      window.soundtrack.play("closewindow-1");
     }
     exploreUI.style.transform = "scale(0)";
     selectionPos.x = Math.round((e.clientX - (rect.left + 9)) / tileSize);
@@ -587,6 +495,13 @@ export async function universe() {
     convertedCursorPos = 170 - deduct + 170 * selectionPos.y;
     previewUI.innerHTML = "Domain " + playerNum;
     previewUI.style.color = "blue";
+
+    // convert playerNum back to x and y coordinates on the canvas
+    // var x = playerNum % 170;
+    // var y = Math.floor(playerNum / 170);
+    // selectionBoxPosition.x = x * tileSize;
+    // selectionBoxPosition.y = y * tileSize;
+
     // move explore box to pointer and snap to nearest grid position
     expBox.style.left = e.clientX - expBox.offsetWidth / 2 + "px";
     expBox.style.top = e.clientY - expBox.offsetHeight / 2 + "px";
@@ -644,8 +559,8 @@ export async function universe() {
   // Deactivate Menu Drag
   window.deactivateDrag = () => {
     var pinUi = document
-    .getElementById("getUniMenu")
-    .shadowRoot?.getElementById("pinMenu");
+      .getElementById("getUniMenu")
+      .shadowRoot?.getElementById("pinMenu");
     moveMenu.onmousedown = null;
     document.onmouseup = null;
     document.onmousemove = null;
@@ -656,10 +571,10 @@ export async function universe() {
   };
 
   // Pin Menu
-  window.pinMenu = () => {
+  window.pinMenu = (direction) => {
     var pinUi = document
-    .getElementById("getUniMenu")
-    .shadowRoot?.getElementById("pinMenu");
+      .getElementById("getUniMenu")
+      .shadowRoot?.getElementById("pinMenu");
     if (pinUi.getAttribute("class") == "pinned") {
       dragElement(moveMenu, true);
       pinUi.setAttribute("class", "unpinned");
@@ -670,201 +585,29 @@ export async function universe() {
       pinUi.setAttribute("class", "pinned");
       moveMenu.style.transition = ".5s";
       moveMenu.style.top = "36px";
-      moveMenu.style.left = "36px";
+
+      if (direction === "right") {
+        gsap.to(moveMenu, {
+          duration: 1,
+          left: "auto",
+          right: "36px",
+          ease: "power3.out",
+        });
+      }
+      if (direction === "left") {
+        gsap.to(moveMenu, {
+          duration: 1,
+          left: "36px",
+          right: "auto",
+          ease: "power3.out",
+        });
+      }
+
       document.getElementById("getUniMenu").toggleMenu();
       setTimeout(() => {
         moveMenu.style.transition = "";
       }, 1200);
       return;
-    }
-  };
-
-  window.playerPos = async () => {
-    var box = document.getElementById("selection");
-    // get position of the canvas element relative to the viewport
-    var rect = universeCanvas.getBoundingClientRect();
-    // get position of the selection box relative to the viewport
-    var boxRect = box.getBoundingClientRect();
-    // get position of the selection box relative to the canvas element
-    var boxPos = {
-      x: Math.round(boxRect.left - rect.left + 2),
-      y: Math.round(boxRect.top - rect.top + 2),
-    };
-    var convertedBoxPos = {
-      x: Math.round(boxPos.x / tileSize),
-      y: Math.round(Math.round(boxPos.y / tileSize)),
-    };
-    var deduct = 170 - convertedBoxPos.x;
-    var position = 170 - deduct + convertedBoxPos.y * 170;
-
-    document.getElementById(
-      "selectPosBox"
-    ).innerHTML = `Player Position: ${position}`;
-
-    convertedSelPos = 170 - deduct + convertedBoxPos.y * 170;
-    cityPosition.x = boxPos.x - 2;
-    cityPosition.y = boxPos.y - 2;
-
-    document.getElementById(
-      "playerCord"
-    ).innerHTML = `Player Coordinates: ${cityPosition.x}, ${cityPosition.y}`;
-
-    playerCoor.x = cityPosition.x;
-    playerCoor.y = cityPosition.y;
-    domain = position;
-
-    document.getElementById(
-      "playerScreenCoor"
-    ).innerHTML = `Player Screen Coordinates: ${boxRect.left}, ${
-      Math.round(boxRect.top) + 2
-    }`;
-
-    // Temp
-    window.activeGames.forEach((game) => {
-      if (game === "The Guide") {
-        const theGuideElement = document.getElementById("theGuide");
-        const selectionElement = document.getElementById("selection");
-      
-        if (!theGuideElement || !selectionElement) {
-          // One of the elements is missing, return false as they can't collide
-          return false;
-        }
-      
-        const theGuideRect = theGuideElement.getBoundingClientRect();
-        const selectionRect = selectionElement.getBoundingClientRect();
-      
-        // Calculate the minimum distance (9 pixels)
-        const minDistance = -18;
-      
-        // Check for collision with minimum distance
-        const isCollidingWithMinDistance = !(
-          theGuideRect.right + minDistance < selectionRect.left ||
-          theGuideRect.left - minDistance > selectionRect.right ||
-          theGuideRect.bottom + minDistance < selectionRect.top ||
-          theGuideRect.top - minDistance > selectionRect.bottom
-        );
-
-      if (isCollidingWithMinDistance) {
-        story("FoundTheGuide");
-        myFirstDrug();
-      }
-      }
-    });
-
-    //
-    if (window.uniPlayer) {
-      window.uniPlayer.x = box.style.left;
-      window.uniPlayer.y = box.style.top;
-      channel2.presence.update({ data: window.uniPlayer });
-    }
-    // window.uniPlayer.x = box?.style.left;
-    // window.uniPlayer.y = box?.style.top;
-    if (
-      `${position}` === tempLandEx[0] ||
-      `${position}` === tempLandEx[1] ||
-      `${position}` === tempLandEx[2] ||
-      `${position}` === tempLandEx[3] ||
-      `${position}` === tempLandEx[4] 
-    ) {
-      window.soundtrack.loop("discovered-1")
-      window.soundtrack.setVolume("discovered-1", 0.8)
-      window.soundtrack.play("discovered-1")
-      window.landActivated = true;
-      document.getElementById("selection").style.animationPlayState = "running";
-      document.getElementById("selection").style.animation =
-        "whiteBoxGlow 1s infinite";
-      // place a div with an exclamation mark in the center of it positioned 8px absolute from the top and left of the selection box
-      document.getElementById(
-        "selection"
-      ).innerHTML = `<div id="exclamationMark" style="position: absolute; top: 8px; left: 8px; width: 18px; height: 18px; background-color: #ff002d; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 18px; color: #fff; font-weight: 700;">!</div>`;
-      //
-      if (`${position}` === tempLandEx[0]) {
-        window.domainType = "canon";
-        canon = "collection2"
-        exploreUI.innerHTML = tempCont1;
-        document.querySelector(".listen").addEventListener("click", () => {
-          if (window.spoke.spokeAcclimatePlaying === false) {
-            window.soundtrack.play("reacclimate-1");
-            document.querySelector(".listen").innerHTML = "STOP";
-            window.spoke.spokeAcclimatePlaying = true;
-            return;
-          } else {
-            window.soundtrack.stop("reacclimate-1");
-            document.querySelector(".listen").innerHTML = "LISTEN";
-            window.spoke.spokeAcclimatePlaying = false;
-          }
-        });
-        return;
-      } else if (`${position}` === tempLandEx[1]) {
-        window.domainType = "canonX";
-        canon = "collection3"
-        // exploreUI.innerHTML = tempCont2;
-        exploreUI.innerHTML = "";
-        return;
-      } else if (`${position}` === tempLandEx[2]) {
-        window.domainType = "world";
-        exploreUI.innerHTML = tempCont3;
-        return;
-      } else if (`${position}` === tempLandEx[3]) {
-        window.domainType = "chat";
-        exploreUI.innerHTML = chatDomTemplate;
-        // exploreUI.onmousedown = null;
-        var messagespre = window.room1.getMessages();
-        messagespre?.forEach((message) => {
-          const mEl = document.createElement("div");
-          const mDiv = document.getElementById("chatRoom1");
-          mEl.setAttribute("class", "chatMessageContainer");
-          // messageElement.innerText = `${data.sender}: ${data.message}`;
-          mEl.innerHTML = `
-        <div class="messageAvatar self">
-          <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/avatar/avatar-chat.png"/>
-        </div>
-        <div class="messageBody">
-          <div class="messageSender">Unidentified Lord</div>
-          <p class="messageText">${message}</p>
-        </div>
-      `;
-          mDiv.appendChild(mEl);
-        });
-        exploreUI.addEventListener("keyup", () => {
-          dragElement(document.getElementById("exploreUI"), true);
-        });
-        document
-          .getElementById("chatTextArea")
-          .addEventListener("click", () => {
-            exploreUI.onmousedown = null;
-            document.getElementById("chatInput1").focus();
-          });
-        document.getElementById("sendBut").addEventListener("click", async () => {
-          var messageInput = document.getElementById("chatInput1");
-          const message = messageInput.value.trim();
-          if (message) {
-            window.room1.addMessage(message);
-            await channel.publish("chatRoom1", {
-              roomMessage: message,
-            });
-            window.soundtrack.setVolume("sendmessage-1", 0.8)
-            window.soundtrack.play("sendmessage-1")
-            messageInput.value = "";
-          }
-        });
-        return;
-      } else if (`${position}` === tempLandEx[4]) {
-        window.domainType = "canonX";
-        canon = "collection1"
-        // exploreUI.innerHTML = tempCont2;
-        exploreUI.innerHTML = "";
-        return;
-      }
-      return;
-    } else {
-      window.soundtrack.stop("discovered-1")
-      window.domainType = "canon";
-      window.landActivated = false;
-      document.getElementById("selection").style.animationPlayState = "paused";
-      document.getElementById("selection").style.animation = "none";
-      document.getElementById("selection").innerHTML = "";
-      exploreUI.innerHTML = "";
     }
   };
 
@@ -881,92 +624,86 @@ export async function universe() {
     var window18Width = window.innerWidth / tileSize;
     var topCenter = window18Height / 2;
     var leftCenter = window18Width / 2;
-    selectionBoxPosition.x = leftCenter * tileSize;
-    selectionBoxPosition.y = topCenter * tileSize;
+    // selectionBoxPosition.x = leftCenter * tileSize;
+    // selectionBoxPosition.y = topCenter * tileSize;
+    // Starting Point
+    // selectionBoxPosition.x = 206;
+    // selectionBoxPosition.y = 143;
+    selectionBoxPosition.x = Number(mapping2[1447].x);
+    selectionBoxPosition.y = Number(mapping2[1447].y);
     // make a event listeniner for arrow keys and move the selection box 18px in the direction of the arrow key pressed starting from its current position if window is not scrolling. Stop from moving at the edge of the window screen size.
 
     // Help Tooltip
-    if (tipInit === false) {
-      tipInit = true;
-    document.addEventListener('keyup', (e) => {
-      if (e.keyCode == 72 &&  window.loggedIn === true) {
-        alert("Help Tooltip ON");
-        document.getElementById("miniAgent").setAttribute("status", "help");
-        if (tipActive === false) {
-          tipActive = true;
-          document.getElementById("stt").setAttribute("active", "true");
-          return
-        } else {
-          document.getElementById("miniAgent").setAttribute("status", "default");
-          tipActive = false;
-          document.getElementById("stt").setAttribute("active", "false");
-        }
-      }
-    });
-  }
+    // if (tipInit === false) {
+    //   tipInit = true;
+    //   document.addEventListener("keyup", (e) => {
+    //     if (e.keyCode == 72 && window.loggedIn === true) {
+    //       alert("Help Tooltip ON");
+    //       document.getElementById("miniAgent").setAttribute("status", "help");
+    //       if (tipActive === false) {
+    //         tipActive = true;
+    //         document.getElementById("stt").setAttribute("active", "true");
+    //         return;
+    //       } else {
+    //         document
+    //           .getElementById("miniAgent")
+    //           .setAttribute("status", "default");
+    //         tipActive = false;
+    //         document.getElementById("stt").setAttribute("active", "false");
+    //       }
+    //     }
+    //   });
+    // }
 
-  if (tipInit2 === false) {
-    tipInit2 = true;
-  document.addEventListener("mousemove", (e) => {  
-    // get element under mouse click
-    var element = document.elementFromPoint(e.clientX, e.clientY);
-    if (e.target.shadowRoot) {
-      var innerElement = element.shadowRoot?.elementFromPoint(e.clientX, e.clientY);
-      if (innerElement) {
-          element = innerElement;
-      }
-    }
-    //
-    if (tipActive === true && element.hasAttribute("data-help")) {
-      document.getElementById("stt").placeTip(element)
-      document.getElementById("stt").updateData(element)
-    } else {
-      document.getElementById("stt").hideTip();
-    }
-  });
-}
-  
-    document.addEventListener("keydown", function (e) {
-      var coll = document
-      .getElementById("collectionGallery")
-      .shadowRoot.getElementById("collectionGallery");
+    // if (tipInit2 === false) {
+    //   tipInit2 = true;
+    //   document.addEventListener("mousemove", (e) => {
+    //     // get element under mouse click
+    //     var element = document.elementFromPoint(e.clientX, e.clientY);
+    //     if (e.target.shadowRoot) {
+    //       var innerElement = element.shadowRoot?.elementFromPoint(
+    //         e.clientX,
+    //         e.clientY
+    //       );
+    //       if (innerElement) {
+    //         element = innerElement;
+    //       }
+    //     }
+    //     //
+    //     if (tipActive === true && element.hasAttribute("data-help")) {
+    //       document.getElementById("stt").placeTip(element);
+    //       document.getElementById("stt").updateData(element);
+    //     } else {
+    //       document.getElementById("stt").hideTip();
+    //     }
+    //   });
+    // }
 
-      window.soundtrack.setVolume("closewindow-1", 0.4)
-      window.soundtrack.setVolume("typing-1", 0.8)
+    // KEY CONTROLS
+    document.addEventListener("keydown", async function (e) {
 
-      // if keycode is s 
-      if (e.keyCode == 83 && window.loggedIn === true) {
-        document.getElementById("miniAgent").toggle();
-      }
+      window.soundtrack.setVolume("closewindow-1", 0.4);
+      window.soundtrack.setVolume("typing-1", 0.8);
 
+      // PLAYER MOVEMENT 1
       if (window.chatActive != true && window.tempIn === true) {
         dragElement(document.getElementById("exploreUI"), true);
-        // if (e.keyCode == 27) {
-        //   document.getElementById("getUniMenu").toggleFullScreen();
-        // }
-        if (e.keyCode == 37 &&  window.loggedIn === true) {
+
+        if (e.keyCode == 37 && window.loggedIn === true) {
           // LEFT
           window.soundtrack.stop("reacclimate-1");
           window.uniPlayer.emote = "";
-          if (playing.running === false) {
-            window.soundtrack.setVolume("running-2", playing.startVolume)
-            setTimeout(() => {
-              soundtrack.setVolume("running-2", playing.fullVolume)
-            }, 1000);
-            window.soundtrack.loop("running-2")
-            window.soundtrack.play("running-2")
-            playing.running = true;
-          }
-          if (coll.style.transform == "scaleX(1)") {
-            window.soundtrack.play("closewindow-1")
-          }
-          if (exploreUI.style.transform === "scale(1)" && window.landActivated === true) {
-            window.soundtrack.play("closewindow-1")
-          }
-          exploreUI.style.transform = "scale(0)";
-          coll.style.transform =
-          "scaleX(0)";
-          if (selectionBoxPosition.x > 0) {
+          const pass = await regionPassCheck(null, null, domain, mapping2);
+          if (pass.left != true) {
+
+            if (
+              exploreUI.style.transform === "scale(1)" &&
+              window.landActivated === true
+            ) {
+              window.soundtrack.play("closewindow-1");
+            }
+            exploreUI.style.transform = "scale(0)";
+            // if (selectionBoxPosition.x > 0) {
             if (movementPaused == false) {
               selectionBoxPosition.x -= tileSize;
               movementPaused = true;
@@ -974,135 +711,115 @@ export async function universe() {
                 movementPaused = false;
               }, msL);
             }
+            // }
+          } else {
+            alert("You need to unlock this region to proceed");
           }
         }
-        if (e.keyCode == 38 &&  window.loggedIn === true) {
+
+        if (e.keyCode == 38 && window.loggedIn === true) {
           // UP
           window.soundtrack.stop("reacclimate-1");
           window.uniPlayer.emote = "";
-          if (playing.running === false) {
-            window.soundtrack.setVolume("running-2", playing.startVolume)
-            setTimeout(() => {
-              soundtrack.setVolume("running-2", playing.fullVolume)
-            }, 1000);
-            window.soundtrack.loop("running-2")
-            window.soundtrack.play("running-2")
-            playing.running = true;
-          }
-          if (coll.style.transform == "scaleX(1)") {
-            window.soundtrack.play("closewindow-1")
-          }
-          if (exploreUI.style.transform === "scale(1)" && window.landActivated === true) {
-            window.soundtrack.play("closewindow-1")
+
+          if (
+            exploreUI.style.transform === "scale(1)" &&
+            window.landActivated === true
+          ) {
+            window.soundtrack.play("closewindow-1");
           }
           exploreUI.style.transform = "scale(0)";
-          coll.style.transform =
-          "scaleX(0)";
-          if (selectionBoxPosition.y > 0) {
-            if (movementPaused == false) {
-              selectionBoxPosition.y -= tileSize;
-              movementPaused = true;
-              setTimeout(() => {
-                movementPaused = false;
-              }, msU);
-            }
+          // if (selectionBoxPosition.y > 0) {
+          if (movementPaused == false) {
+            selectionBoxPosition.y -= tileSize;
+            movementPaused = true;
+            setTimeout(() => {
+              movementPaused = false;
+            }, msU);
           }
+          // }
         }
-        if (e.keyCode == 39 &&  window.loggedIn === true) {
+        if (e.keyCode == 39 && window.loggedIn === true) {
           // RIGHT
           window.soundtrack.stop("reacclimate-1");
           window.uniPlayer.emote = "";
-          if (playing.running === false) {
-            window.soundtrack.setVolume("running-2", playing.startVolume)
-            setTimeout(() => {
-              window.soundtrack.setVolume("running-2", playing.fullVolume)
-            }, 1000);
-            window.soundtrack.loop("running-2")
-            window.soundtrack.play("running-2")
-            playing.running = true;
-          }
-          if (coll.style.transform == "scaleX(1)") {
-            window.soundtrack.play("closewindow-1")
-          }
-          if (exploreUI.style.transform === "scale(1)" && window.landActivated === true) {
-            window.soundtrack.play("closewindow-1")
+
+          if (
+            exploreUI.style.transform === "scale(1)" &&
+            window.landActivated === true
+          ) {
+            window.soundtrack.play("closewindow-1");
           }
           exploreUI.style.transform = "scale(0)";
-         coll.style.transform =
-          "scaleX(0)";
-          if (selectionBoxPosition.x < window18Width * tileSize - tileSize) {
-            if (movementPaused == false) {
-              selectionBoxPosition.x += tileSize;
-              movementPaused = true;
-              setTimeout(() => {
-                movementPaused = false;
-              }, msR);
-            }
+          // if (selectionBoxPosition.x < window18Width * tileSize - tileSize) {
+          if (movementPaused == false) {
+            selectionBoxPosition.x += tileSize;
+            movementPaused = true;
+            setTimeout(() => {
+              movementPaused = false;
+            }, msR);
           }
+          // }
         }
-        if (e.keyCode == 40 &&  window.loggedIn === true) {
+        if (e.keyCode == 40 && window.loggedIn === true) {
           // DOWN
           window.soundtrack.stop("reacclimate-1");
           window.uniPlayer.emote = "";
-          if (playing.running === false) {
-            window.soundtrack.setVolume("running-2", playing.startVolume)
-            setTimeout(() => {
-              window.soundtrack.setVolume("running-2", playing.fullVolume)
-            }, 1000);
-            window.soundtrack.loop("running-2")
-            window.soundtrack.play("running-2")
-            playing.running = true;
-          }
-          if (coll.style.transform == "scaleX(1)") {
-            window.soundtrack.play("closewindow-1")
-          }
-          if (exploreUI.style.transform === "scale(1)" && window.landActivated === true) {
-            window.soundtrack.play("closewindow-1")
+
+          if (
+            exploreUI.style.transform === "scale(1)" &&
+            window.landActivated === true
+          ) {
+            window.soundtrack.play("closewindow-1");
           }
           exploreUI.style.transform = "scale(0)";
-          coll.style.transform =
-          "scaleX(0)";
-          if (selectionBoxPosition.y < window18Height * tileSize - tileSize) {
-            if (movementPaused == false) {
-              selectionBoxPosition.y += tileSize;
-              movementPaused = true;
-              setTimeout(() => {
-                movementPaused = false;
-              }, msD);
-            }
+          // if (selectionBoxPosition.y < window18Height * tileSize - tileSize) {
+          if (movementPaused == false) {
+            selectionBoxPosition.y += tileSize;
+            movementPaused = true;
+            setTimeout(() => {
+              movementPaused = false;
+            }, msD);
           }
+          // }
         }
         box.style.left = selectionBoxPosition.x + "px";
         box.style.top = selectionBoxPosition.y + "px";
-        window.playerPos();
+        // window.playerPos();
         // if space bar is pressed open the explore UI
-        if (e.keyCode == 32 &&  window.loggedIn === true) {
+        if (e.keyCode == 32 && window.loggedIn === true) {
           window.exploreOpenHelper();
-          window.soundtrack.stop("discovered-1")
+          window.soundtrack.stop("discovered-1");
           window.uniPlayer.emote = "";
           window.soundtrack.stop("reacclimate-1");
         }
         ///////////////////////
         //// TEMP
         ///////////////////////
-        if (e.keyCode == 88 &&  window.loggedIn === true) {
+        if (e.keyCode == 88 && window.loggedIn === true) {
           document.getElementById("universe").style.filter = "blur(0px)";
-          document.getElementById("currentSceneView_scene1").style.display = "none";
+          document.getElementById("currentSceneView_scene1").style.display =
+            "none";
         }
       } else if (window.chatActive === true && window.tempIn === true) {
-        if (e.keyCode != 37 || e.keyCode != 38 || e.keyCode != 39 || e.keyCode != 40 && typing == true) {
-         window.soundtrack.stop("typing-1")
-          window.soundtrack.play("typing-1")
+        if (
+          e.keyCode != 37 ||
+          e.keyCode != 38 ||
+          e.keyCode != 39 ||
+          (e.keyCode != 40 && typing == true)
+        ) {
+          window.soundtrack.stop("typing-1");
+          window.soundtrack.play("typing-1");
         }
       }
     });
     // scroll the camera element when the selection box reaches the edge of the window screen size (Update with sector activations)
     document.addEventListener("keydown", function (e) {
       var ddev = document.getElementById("compDomainDev");
-      if (e.keyCode == 37 &&  window.loggedIn === true) {
+      if (e.keyCode == 37 && window.loggedIn === true) {
         // LEFT
         initLocationHUD(domain, mapping2);
-        if (selectionBoxPosition.x == 0) {
+        if (selectionBoxPosition.x == 0 && pass.left != true) {
           document.getElementById("camera").scrollLeft -= tileSize;
         }
 
@@ -1115,9 +832,10 @@ export async function universe() {
           }
         }
       }
-      if (e.keyCode == 38 &&  window.loggedIn === true) {
+      if (e.keyCode == 38 && window.loggedIn === true) {
         // UP
         initLocationHUD(domain, mapping2);
+        const pass = regionPassCheck(null, null, domain, mapping2);
         if (lcCheck() === true) {
           if (selectionBoxPosition.y <= 9) {
             document.getElementById("camera").scrollTop -= tileSize;
@@ -1128,13 +846,14 @@ export async function universe() {
           }
         }
       }
-      if (e.keyCode == 39 &&  window.loggedIn === true) {
+      if (e.keyCode == 39 && window.loggedIn === true) {
         // RIGHT
         initLocationHUD(domain, mapping2);
-        if (selectionBoxPosition.x == window18Width * tileSize - tileSize) {
+        const pass = regionPassCheck(null, null, domain, mapping2);
+        if (selectionBoxPosition.x == window18Width * tileSize - tileSize && pass.right != true) {
           document.getElementById("camera").scrollLeft += tileSize;
         }
-        
+
         // check if selectionBoxPosition.x is greater than 60% of the window width
         if (selectionBoxPosition.x > window18Width * 0.6 * tileSize) {
           window.compPosition = "left";
@@ -1144,9 +863,10 @@ export async function universe() {
           }
         }
       }
-      if (e.keyCode == 40 &&  window.loggedIn === true) {
+      if (e.keyCode == 40 && window.loggedIn === true) {
         // DOWN
         initLocationHUD(domain, mapping2);
+        const pass = regionPassCheck(null, null, domain, mapping2);
         if (lcCheck() === true) {
           if (selectionBoxPosition.y >= window18Height * tileSize - tileSize) {
             document.getElementById("camera").scrollTop += tileSize;
@@ -1176,35 +896,6 @@ export async function universe() {
         viewEditor.style.bottom = "auto";
       }
     });
-    
-    document.addEventListener("keyup", function (e) {
-      if (e.keyCode == 37 &&  window.loggedIn === true) {
-        window.soundtrack.stop("running-2")
-        playing.running = false;
-      }
-      if (e.keyCode == 38 &&  window.loggedIn === true) {
-        window.soundtrack.stop("running-2")
-        playing.running = false;
-      }
-      if (e.keyCode == 39 &&  window.loggedIn === true) {
-        window.soundtrack.stop("running-2")
-        playing.running = false;
-      }
-      if (e.keyCode == 40 &&  window.loggedIn === true) {
-        window.soundtrack.stop("running-2")
-        playing.running = false;
-      }
-    });
-  };
-
-  window.initSelection = () => {
-    // get window size
-    var windowWidth = window.innerWidth / tileSize;
-    var windowHeight = window.innerHeight / tileSize;
-    // position selection box in the center of the window
-    var selectionBox = document.getElementById("selection");
-    selectionBox.style.left = (windowWidth / 2) * tileSize + "px";
-    selectionBox.style.top = (windowHeight / 2) * tileSize + "px";
   };
 
   // Open Location Card
@@ -1224,10 +915,14 @@ export async function universe() {
       }
     });
   };
+
+  //////////////////////////////////////////
+  // TEMP LOCATION CARD VARIABLES
+  //////////////////////////////////////////
   var tempContx = `
   <div id="unclaimedBox">
   <div id="unclaimed">UNCLAIMED DOMAIN</div>
-</div>`
+  </div>`;
   var tempCont1 = `<div class="cannonIcon">
   <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Images/Logos/Bankoo-Main-1Inch-red-Outline.png" alt="cannonIcon">
   </div>
@@ -1336,8 +1031,8 @@ export async function universe() {
       }
       if (window.landActivated === false) {
         setTimeout(() => {
-          window.soundtrack.play("explore-1")
-        } , 100);
+          window.soundtrack.play("explore-1");
+        }, 100);
         exploreUI.style.width = "128px";
         exploreUI.style.height = "20px";
         exploreUI.style.top = selectionBoxPosition.y - 92 + "px";
@@ -1360,7 +1055,8 @@ export async function universe() {
           window.chatActive = true;
           exploreUI.style.width = "540px";
           exploreUI.style.height = "80%";
-          exploreUI.style.top = (100 - (Number(exploreUI.style.height.replace("%","")))) / 2 + "vh";
+          exploreUI.style.top =
+            (100 - Number(exploreUI.style.height.replace("%", ""))) / 2 + "vh";
           // document
           //   .getElementById("uniEvent4")
           //   .setAttribute("style", "animation: none;");
@@ -1375,7 +1071,7 @@ export async function universe() {
           //   .setAttribute("style", "animation: none;");
         }
 
-        if (window.domainType === "canon") {   
+        if (window.domainType === "canon") {
           exploreUI.style.width = "540px";
           exploreUI.style.height = "60vh";
           window.soundtrack.play("openwindow-1");
@@ -1385,33 +1081,44 @@ export async function universe() {
               window.spoke.spokeAcclimatePlaying = true;
             }
           }, 200);
-          //      
+          //
           document
-          .getElementById("collectionGallery")
-          .shadowRoot.getElementById("collectionGallery").style.transform =
-          "scaleX(1)";
-        document
-          .getElementById("collectionGallery")
-          .shadowRoot.getElementById("collectionGallery").style.opacity = "1";
-          var target =  { target: { id: canon} };
-          document.getElementById("collectionGallery")?.selectCollection(target);
+            .getElementById("collectionGallery")
+            .shadowRoot.getElementById("collectionGallery").style.transform =
+            "scaleX(1)";
+          document
+            .getElementById("collectionGallery")
+            .shadowRoot.getElementById("collectionGallery").style.opacity = "1";
+          var target = {
+            target: {
+              id: canon
+            }
+          };
+          document
+            .getElementById("collectionGallery")?.selectCollection(target);
         }
 
         if (window.domainType === "canonX") {
           window.soundtrack.play("openwindow-1");
           document
-          .getElementById("collectionGallery")
-          .shadowRoot.getElementById("collectionGallery").style.transform =
-          "scaleX(1)";
-        document
-          .getElementById("collectionGallery")
-          .shadowRoot.getElementById("collectionGallery").style.opacity = "1";
-          var target2 =  { target: { id: canon} };
-        document.getElementById("collectionGallery")?.selectCollection(target2);
+            .getElementById("collectionGallery")
+            .shadowRoot.getElementById("collectionGallery").style.transform =
+            "scaleX(1)";
+          document
+            .getElementById("collectionGallery")
+            .shadowRoot.getElementById("collectionGallery").style.opacity = "1";
+          var target2 = {
+            target: {
+              id: canon
+            }
+          };
+          document
+            .getElementById("collectionGallery")?.selectCollection(target2);
         }
         // window.deactivateDrag();
         // BELOW TEMP OPTION
-        exploreUI.style.top = (100 - (Number(exploreUI.style.height.replace("vh","")))) / 2 + "vh";
+        exploreUI.style.top =
+          (100 - Number(exploreUI.style.height.replace("vh", ""))) / 2 + "vh";
         var vid = document.getElementById("tempVid");
         var vid2 = document.getElementById("tempVid2");
         if (vid?.src != "") {
@@ -1429,7 +1136,9 @@ export async function universe() {
   //////////////////////////////////////////
   window.moveMenu = () => {
     var canvas = document.getElementById("universe");
-    var moveMenu = document.getElementById("getUniMenu").shadowRoot?.getElementById("uniMenu");
+    var moveMenu = document
+      .getElementById("getUniMenu")
+      .shadowRoot?.getElementById("uniMenu");
     if (moveMenu) {
       moveMenu.style.display = "block";
     }
@@ -1446,7 +1155,7 @@ export async function universe() {
     var getNewButtons = document
       .getElementById("getUniMenu")
       .shadowRoot?.querySelectorAll(".getNew");
-      var tabs = document
+    var tabs = document
       .getElementById("getUniMenu")
       .shadowRoot?.querySelectorAll(".menuTabs");
     //
@@ -1459,7 +1168,7 @@ export async function universe() {
     text?.forEach((el) => {
       el.addEventListener("mouseout", () => {
         window.soundtrack?.setVolume("menuMove3", 0.5);
-        soundtrack?.stop("menuMove3");
+        window.soundtrack?.stop("menuMove3");
         if (soundtrack?.paused) {
           window.soundtrack?.play("menuMove3");
         } else {
@@ -1506,11 +1215,11 @@ export async function universe() {
             shadow.getElementById("fm-profile").style.display = "none";
             if (window.isMobile === true) {
               window.dtmenuOpen = false;
-              document.getElementById("shop2").setAttribute("active","true");
+              document.getElementById("shop2").setAttribute("active", "true");
             } else {
               window.dtmenuOpen = false;
-              pinMenu();
-              document.getElementById("shop2").setAttribute("active","true");
+              pinMenu("left");
+              document.getElementById("shop2").setAttribute("active", "true");
             }
             shadow.getElementById("fm-inventory").style.display = "none";
             shadow.getElementById("menuLoadingScreen").style.display = "none";
@@ -1528,13 +1237,13 @@ export async function universe() {
             shadow.getElementById("romOffline").style.display = "none";
             if (window.tempIn === true) {
               shadow.getElementById("domainUnDev").style.display = "block";
-              
+
               headerTabs.forEach((el) => {
                 if (el.id === "fm-menu2") {
                   var selEl = {
                     target: document
                       .getElementById("getUniMenu")
-                      .shadowRoot.getElementById("fm-menu2")
+                      .shadowRoot.getElementById("fm-menu2"),
                   };
                   selEl.target.style.display = "block";
                   shadow.getElementById("fm-menu1").style.display = "none";
@@ -1546,21 +1255,22 @@ export async function universe() {
                 }
               });
               //
-            } else [
-              headerTabs.forEach((el) => {
-                if (el.id === "fm-menu1") {
-                  var selEl = {
-                    target: document
-                      .getElementById("getUniMenu")
-                      .shadowRoot.getElementById("fm-menu1"),
-                  };
-                  el.setAttribute("class", "it selectedMenu");
-                } else {
-                  el.setAttribute("class", "men-deactive it");
-                }
-              }),
-              shadow.getElementById("domainUnDev").style.display = "none"
-            ]
+            } else
+              [
+                headerTabs.forEach((el) => {
+                  if (el.id === "fm-menu1") {
+                    var selEl = {
+                      target: document
+                        .getElementById("getUniMenu")
+                        .shadowRoot.getElementById("fm-menu1"),
+                    };
+                    el.setAttribute("class", "it selectedMenu");
+                  } else {
+                    el.setAttribute("class", "men-deactive it");
+                  }
+                }),
+                (shadow.getElementById("domainUnDev").style.display = "none"),
+              ];
             dragElement(moveMenu, true);
             window.openInventory();
             shadow.getElementById("fm-beacons").style.display = "none";
@@ -1711,10 +1421,10 @@ export async function universe() {
             shadow.getElementById("domainUnDev").style.display = "none";
             if (window.loggedIn === true) {
               shadow.getElementById("feedbackHeadline").innerHTML =
-              "Help us make T.A.O.S City better";
+                "Help us make T.A.O.S City better";
             } else {
               shadow.getElementById("feedbackHeadline").innerHTML =
-              "Contact SCOGÉ";
+                "Contact SCOGÉ";
             }
             shadow.getElementById("fm-beacons").style.display = "none";
             shadow.getElementById("fm-inventory").style.display = "none";
@@ -1738,28 +1448,46 @@ export async function universe() {
           });
           break;
         case "uniMenuExit":
-
           el.addEventListener("click", () => {
             if (window.isMobile != true) {
               window.currentMenuTab = "signin";
-              if (document.getElementById("walletsModal").shadowRoot.getElementById("main").style.transform === "scaleX(1)") {
-                document.getElementById("walletsModal").shadowRoot.getElementById("main").style.opacity = "0";
+              if (
+                document
+                .getElementById("walletsModal")
+                .shadowRoot.getElementById("main").style.transform ===
+                "scaleX(1)"
+              ) {
+                document
+                  .getElementById("walletsModal")
+                  .shadowRoot.getElementById("main").style.opacity = "0";
                 setTimeout(() => {
-                  document.getElementById("walletsModal").shadowRoot.getElementById("main").style.opacity = "1";
+                  document
+                    .getElementById("walletsModal")
+                    .shadowRoot.getElementById("main").style.opacity = "1";
                 }, 200);
               } else {
-                document.getElementById("walletsModal").shadowRoot.getElementById("main").style.transform =
-                "scaleX(1)";
-                document.getElementById("walletsModal").shadowRoot.getElementById("main").style.opacity = "1";
+                document
+                  .getElementById("walletsModal")
+                  .shadowRoot.getElementById("main").style.transform =
+                  "scaleX(1)";
+                document
+                  .getElementById("walletsModal")
+                  .shadowRoot.getElementById("main").style.opacity = "1";
               }
               shadow.getElementById("romOffline").style.display = "grid";
               patrons.style.display = "none";
               warpLock.style.display = "none";
             } else {
-              document.getElementById("getUniMenu").shadowRoot.getElementById("menuloginBut").innerHTML = "DESKTOP ONLY";
-              setTimeout(()=> {
-                document.getElementById("getUniMenu").shadowRoot.getElementById("menuloginBut").innerHTML = "Log-in";
-              },2000)
+              document
+                .getElementById("getUniMenu")
+                .shadowRoot.getElementById("menuloginBut").innerHTML =
+                "DESKTOP ONLY";
+              setTimeout(() => {
+                document
+                  .getElementById("getUniMenu")
+                  .shadowRoot.getElementById("menuloginBut").innerHTML =
+                  "Universe";
+              }, 2000);
             }
           });
           break;
@@ -1786,7 +1514,8 @@ export async function universe() {
             shadow.getElementById("menuLoadingScreen").style.display = "none";
             shadow.getElementById("fm-header").style.display = "grid";
             shadow.getElementById("fm-header-headline").style.opacity = "100%";
-            shadow.getElementById("fm-header-headline").style.pointerEvents = "auto";
+            shadow.getElementById("fm-header-headline").style.pointerEvents =
+              "auto";
             shadow.getElementById("fm-cloudHall").style.display = "grid";
             headerTabs.forEach((el) => {
               if (el.id === "fm-menu1") {
@@ -1797,8 +1526,7 @@ export async function universe() {
                     .shadowRoot.getElementById("fm-menu1"),
                 };
                 // document.getElementById("getUniMenu").switchMenuTabs(selEl);
-              } 
-              else {
+              } else {
                 el.setAttribute("class", "men-active ct");
               }
             });
@@ -1811,9 +1539,11 @@ export async function universe() {
     });
     //
     dragElement(moveMenu, true);
-    window.hideMenu();
   };
 
+  //////////////////////////////////////////
+  // HEADLINE SWITCH UNIMENU 
+  //////////////////////////////////////////
   window.headlineSwtich = (e) => {
     var selected = e.target.id;
     var h1 = document
@@ -1878,11 +1608,13 @@ export async function universe() {
         //
         break;
       default:
-      //
+        //
     }
   };
 
-  // Clear and select menu items
+  //////////////////////////////////////////
+  // Clear and select menu items UNIMENU
+  //////////////////////////////////////////
   window.clearAndSelectMenu = (e) => {
     var shadow = document.getElementById("getUniMenu").shadowRoot;
     var uniMenu = document
@@ -1892,40 +1624,35 @@ export async function universe() {
       if (el.id === e) {
         el.setAttribute("class", "menuTabs selectedMenu2");
         if (shadow.getElementById(`${el.id}Svg`).hasChildNodes()) {
-        shadow.getElementById(`${el.id}Svg`).childNodes.forEach((el) => {
+          shadow.getElementById(`${el.id}Svg`).childNodes.forEach((el) => {
             if (el.nodeName === "path") {
               // Found the <path> element
               // Perform your desired actions on it
               el.style.stroke = "white";
               el.style.fill = "white";
             }
-        })
-      }
+          });
+        }
       } else {
         el.setAttribute("class", "menuTabs");
-        if ( document
+        if (
+          document
           .getElementById("getUniMenu")
           .shadowRoot.getElementById(`${el.id}Svg`)
-          .hasChildNodes()) {
-        document
-          .getElementById("getUniMenu")
-          .shadowRoot.getElementById(`${el.id}Svg`)
-          .childNodes.forEach((el) => {
-            if (el.nodeName === "path") {
-              el.style.stroke = "#ff002d";
-              el.style.fill = "#ff002d";
-            }
-          });}
+          .hasChildNodes()
+        ) {
+          document
+            .getElementById("getUniMenu")
+            .shadowRoot.getElementById(`${el.id}Svg`)
+            .childNodes.forEach((el) => {
+              if (el.nodeName === "path") {
+                el.style.stroke = "#ff002d";
+                el.style.fill = "#ff002d";
+              }
+            });
+        }
       }
     });
-  };
-
-  // Hide default menu
-  window.hideMenu = () => {
-    document.getElementById("uniEvent").style.display = "block";
-    document.getElementById("uniEvent2").style.display = "block";
-    document.getElementById("uniEvent3").style.display = "block";
-    document.getElementById("uniEvent4").style.display = "block";
   };
 
   // Open inventory / wallet
@@ -1962,8 +1689,12 @@ export async function universe() {
     const admin = await window.suUiActor
       .adminUser()
       .catch((e) => {
-        console.log("Get Admin", { e });
-        var error = { e };
+        console.log("Get Admin", {
+          e
+        });
+        var error = {
+          e
+        };
         if (window.dmb === false) {
           attn(error, null);
         }
@@ -1980,24 +1711,6 @@ export async function universe() {
     //   uiState.nftsLoaded = true;
     // }
   };
-
-  // CANISTER (Change in local / production)
-  // Create Actor
-  // const createActor = async () => {
-  //   // Create an actor to interact with the NNS Canister
-  //   // we pass the NNS Canister id and the interface factory
-  //   window.user.principal = await window.ic.bitfinityWallet.getPrincipal();
-  //   // console.log(window.ic.infinityWallet);
-  //   window.suUiActor = await window.ic.bitfinityWallet
-  //     .createActor({
-  //       canisterId: can2,
-  //       interfaceFactory: suIDL,
-  //       host: "http://localhost:8080/",
-  //     })
-  //     .catch((e) => {
-  //       console.log("creatActor", e);
-  //     });
-  // };
 
   // Error
   const connectError = async (error) => {
@@ -2072,49 +1785,6 @@ export async function universe() {
     document.getElementById("rsvpModal").style.display = "block";
   };
 
-  // const element = document.getElementById('dialogueModal').shadowRoot.getElementById('diaMain');
-  // element.innerHTML = '';
-  // const string = 'Hello, world *this* is a test';
-  // const options = {
-  //   speed: 50,
-  //   specialText1: "specialText1",
-  //   specialText2: "specialText2",
-  // };
-
-  // const typing = new Typing('Hello, World! ^This is $] some special text1 *And this $is some special $text2', element, options);
-
-  // typing.type();
-
-  // const dialogue = new MainDialogue('NPC Name', 'friendly', [
-  //   {
-  //     text: 'Hello, $how are you? $] Are you doing well?',
-  //     choices: [
-  //       {
-  //         text: "I'm doing well, thanks.",
-  //         action: () => console.log("NPC Name: That's great to hear!")
-  //       },
-  //       {
-  //         text: "I'm not doing so well.",
-  //         action: () => console.log("NPC Name: I'm sorry to hear that.")
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     text: 'What brings you here?',
-  //     choices: [
-  //       {
-  //         text: "I'm here to buy something.",
-  //         action: () => console.log("NPC Name: What would you like to buy?")
-  //       },
-  //       {
-  //         text: "I'm here to sell something.",
-  //         action: () => console.log("NPC Name: What would you like to sell?")
-  //       }
-  //     ]
-  //   }
-  //   // (npc, tone, lines)
-  // ]);
-
   // Multiplayer
   await window.ably.connection.once("connected");
   console.log("Connected!");
@@ -2125,11 +1795,10 @@ export async function universe() {
   window.room1.setIo(window.ably);
 
   // get the channel to subscribe to
-
+  //////////////////////////////////////////
+  // CHAT ROOM
+  //////////////////////////////////////////
   await channel.subscribe("chatRoom1", (message) => {
-    // console.log(message)
-    // console.log("Received a greeting message in realtime: " + message.data.roomMessage);
-    // console.log(window.room1);
     window.room1.addMessage(message.data.roomMessage);
     const messageElement = document.createElement("div");
     const messagesDiv = document.getElementById("chatRoom1");
@@ -2178,73 +1847,31 @@ export async function universe() {
     }
   });
 
- if (window.playerOnline === false) {
+  if (window.playerOnline === false) {
     // Universe Players
-  const room2Name = "alphaTesters";
-  const room2Description = "Alpha Testers";
-  window.uniPlayer = {
-    playerId: Math.floor(Math.random() * 100),
-    playerName: "Damion",
-    x: 0,
-    y: 0,
-    emote: null,
-  };
-  window.room2 = uniPlayers.create(room2Name, room2Description);
-  window.room2.setChannel(channel2);
-  var playerInt = false;
-  var otherPlayers = [];
+    // const room2Name = "alphaTesters";
+    // const room2Description = "Alpha Testers";
+    var tempPlayerId = Math.floor(Math.random() * 100);
+    window.uniPlayer = {
+      playerId: tempPlayerId,
+      playerName: "Damion",
+      x: 0,
+      y: 0,
+      emote: null,
+    };
+    // window.room2 = uniPlayers.create(room2Name, room2Description);
+    // window.room2.setChannel(channel2);
+    // var playerInt = false;
+    // var otherPlayers = [];
 
-  channel2.presence.subscribe("enter", (member) => {
-    // console.log("A NEW PLAYER HAS ARRIVED", member.data);
-    console.log("A NEW PLAYER HAS ARRIVED");
-  });
-  channel2.presence.subscribe("update", (member) => {
-    if (playerInt === false) {
-      var playerGroup1 = uniPlayers.create("PlayerGroup1");
-      playerGroup1.renderPlayer(member.data.data);
-      otherPlayers.push(member.data.data.playerId);
-      playerInt = true;
-      return;
-    }
-    if (otherPlayers.includes(member.data.data.playerId) === false) {
-      otherPlayers.push(member.data.data.playerId);
-      window.room2.renderPlayer(member.data.data);
-    }
-    document.getElementById(`${member.data.data.playerId}`).style.top =
-    member.data.data.y;
-    document.getElementById(`${member.data.data.playerId}`).style.left =
-    member.data.data.x;
-    // Update Emote if changed
-    if (document.getElementById(`${member.data.data.playerId}`)) {
-      if (
-        document
-          .getElementById(`${member.data.data.playerId}`)
-          .getAttribute("emote") !== member.data.data.emote
-      ) {
-        document
-          .getElementById(`${member.data.data.playerId}`)
-          .setAttribute("emote", member.data.data.emote);
-          document
-          .getElementById(`${member.data.data.playerId}`)
-          .innerHTML = `<div class="playerEmote" style="position: absolute; top: 9px; left: 9px; width: 28px; height: 28px; z-index:10; background-color:black; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: #fff; font-weight: 700;">${member.data.data.emote}</div>`;
-      }
-      if (document
-        .getElementById(`${member.data.data.playerId}`)
-        .getAttribute("emote") === "") {
-          document.getElementById(`${member.data.data.playerId}`).innerHTML = "";
-      }
-    }
-  });
-  channel2.presence.subscribe("leave", (member) => {
-    // console.log("MemberData", member.data);
-    document.getElementById(`${member.data.data.playerId}`).remove();
-  });
+    // channel2.presence.subscribe("enter", (member) => {
+    //   // console.log("A NEW PLAYER HAS ARRIVED", member.data);
+    // });
 
-  channel2.presence.enter(window.uniPlayer);
-  window.playerOnline = true;
-  return;
+    // channel2.presence.enter(window.uniPlayer);
+    window.playerOnline = true;
+    return;
   }
-  
 
   // TOOLTIP
   // window.elementHelp = async (e) => {
@@ -2269,10 +1896,6 @@ export async function universe() {
   };
 }
 
-export const newPlayer = async () => {
-  //
-}
-
 // Instantiate scenario
 export const newScenario = async (name) => {
   var scenario = new Scenario();
@@ -2294,8 +1917,23 @@ export const newScenario = async (name) => {
   return scenario;
 };
 
+export const newCutScene = async (name) => {
+  var cutScene = new Scenario();
+  var scenes = [];
+
+  if (data.SUD.CutScenes[name].activated.gate === 0) {
+    scenes.push(new CutScene(data.SUD.CutScenes[name]));
+  }
+  
+  cutScene.addScenes(...scenes);
+  cutScene.load();
+  // check conditions
+  cutScene.show();
+  return cutScene;
+} 
+
 // Instantiate Editor Scenario
-export const newEditorScenario = async (name,scene) => {
+export const newEditorScenario = async (name, scene) => {
   var scenario = new Scenario();
   var scenes = [];
   // fetch scns.json and load it into the editor
@@ -2309,19 +1947,50 @@ export const newEditorScenario = async (name,scene) => {
   // check conditions
   scenario.show();
   return scenario;
+};
+
+// Instantiate Editor CutScene
+export const newEditorCutScene = async (name) => {
+  var cutScene = new Scenario();
+  var scenes = [];
+  // fetch scns.json and load it into the editor
+  // const data = await import('./sudb.json').catch((error) => {
+  //   console.log(error);
+  // });
+  //////////////////////////////////
+  scenes.push(new CutScene(data.SUD.CutScenes[name]));
+  cutScene.addScenes(...scenes);
+  cutScene.load();
+  // check conditions
+  cutScene.show();
+  return cutScene;
 }
 
+
+//////////////////////////////////////////
+// ENTER TAOS CITY
+//////////////////////////////////////////
 export async function enterTaosCity(custCheck) {
   // Temporary
   loading();
   window.loggedIn = true;
   try {
-    mapping2 = await loadAllDomains();
+    // Get user saga  (PLUGIN QUERY FUNCTION)
+    const saga = "foundation";
+
+    switch (saga) {
+      case "foundation":
+        mapping2 = await loadAllDomains();
+        break;
+      default:
+        console.log("Saga Error");
+    }
+
   } catch (error) {
     console.log("Mapping Error", error);
   }
   setTimeout(() => {
-    document.getElementById("seekModal").remove();
+    document.getElementById("seekModal")?.remove();
     if (window.minactive === false) {
       document.getElementById("miniAgent").setAttribute("status", "intro");
       document.getElementById("miniAgent").setAttribute("active", "true");
@@ -2346,11 +2015,22 @@ export async function enterTaosCity(custCheck) {
   }
   window.tempIn = true;
   endLoading();
-  let forger = document.getElementById("forgeModal").shadowRoot.getElementById("mainForge");
+
+  story("NewGame");
+
+  loadedGame = new scogeUniverse(mapping2);
+
+  let forger = document
+    .getElementById("forgeModal")
+    .shadowRoot.getElementById("mainForge");
   forger.style.transform = "scaleX(0)";
   forger.style.opacity = "0";
-  document.getElementById("walletsModal").shadowRoot.getElementById("main").style.transform = "scaleX(0)";
-  document.getElementById("walletsModal").shadowRoot.getElementById("main").style.opacity = "0";
+  document
+    .getElementById("walletsModal")
+    .shadowRoot.getElementById("main").style.transform = "scaleX(0)";
+  document
+    .getElementById("walletsModal")
+    .shadowRoot.getElementById("main").style.opacity = "0";
   window.soundtrack.play("menuEntrance1");
   window.soundtrack.setVolume("dgOnline-1", 0.4);
   window.soundtrack.play("dgOnline-1");
@@ -2363,37 +2043,42 @@ export async function enterTaosCity(custCheck) {
   // setTimeout(() => {
   //   document.getElementById("seekModal").style.display = "none";
   // }, 2000);
-  pinMenu();
+  setTimeout(() => {
+    window.pinMenu("right");
+  }, 800);
+
   uniMenu.getElementById("menuFeedback").innerHTML = "City Central";
   uniMenu.getElementById("menuProfile").innerHTML = "Profile";
-  uniMenu.getElementById("feedbackHeadline").innerHTML = "Help us make T.A.O.S City better.";
-  uniMenu.getElementById("feedbackInput").placeholder = "Send feedback, or Contact City-Central here.";
+  uniMenu.getElementById("feedbackHeadline").innerHTML =
+    "Help us make T.A.O.S City better.";
+  uniMenu.getElementById("feedbackInput").placeholder =
+    "Send feedback, or Contact City-Central here.";
   document.getElementById("dgr").setAttribute("active", "true");
   document.getElementById("getUniMenu").setAttribute("uniMenu", "taoscity");
   document.getElementById("camera").style.pointerEvents = "auto";
   window.openLocationCard();
-  window.playerPos();
-  document.getElementById("compEmoter").setAttribute("active", "true");
+  // window.playerPos();
   setTimeout(() => {
     document.querySelector("#universe").style.opacity = "100%";
   }, 100);
-   document.getElementById("players").style.display = "block";
-   document.getElementById("selection").style.display = "block";
-   document.querySelectorAll(".uniPlayer").forEach((el) => {
-      el.style.display = "block";
-   });
-   var powerUp = document.createElement("div");
-   powerUp.setAttribute("id", "powerUp1");
-   powerUp.setAttribute("class", "powerUps");
+  document.getElementById("players").style.display = "block";
+  document.getElementById("selection").style.display = "block";
+  document.querySelectorAll(".uniPlayer").forEach((el) => {
+    el.style.display = "block";
+  });
+  var powerUp = document.createElement("div");
+  powerUp.setAttribute("id", "powerUp1");
+  powerUp.setAttribute("class", "powerUps");
   powerUp.innerHTML = `
   <img src="https://storage.scoge.co/b2612349-1217-4db2-af51-c5424a50e5c1-bucket/Universe/graphics/crglove.png"/>
-  `
+  `;
   document.getElementById("camera").appendChild(powerUp);
   powerUp.addEventListener("click", () => {
     window.soundtrack.setVolume("combatOff-1", 0.7);
     window.soundtrack.setVolume("combatOff-2", 0.7);
     window.soundtrack.play(`combatOff-${Math.floor(Math.random() * 2) + 1}`);
   });
+  window.adminUI();
   // uniMenu.getElementById("it1").style.display = "none";
 }
 
@@ -2401,37 +2086,50 @@ export function myFirstDrug() {
   document.querySelectorAll(".uniEvents").forEach((el, index) => {
     if (el.id === "uniEvent3" || el.id === "uniEvent5") {
       gsap.to(el, {
-        delay: index * 0.5,  // Increase the delay for each element
+        delay: index * 0.5, // Increase the delay for each element
         duration: 1,
         opacity: 1,
       });
     }
-  });  
-} 
+  });
+}
 
+//////////////////////////////////////////
+//  LOADING SCREEN
+//////////////////////////////////////////
 export function loading() {
   var shadow = document.getElementById("getUniMenu").shadowRoot;
   var loading = shadow.getElementById("menuLoadingScreen");
   var loading2 = shadow.getElementById("menuLoadingScreen3");
-      loading.style.display = "grid";
-      loading2.style.display = "grid";
-      window.soundtrack.loop('menuLoading1');
-      window.soundtrack.play('menuLoading1');
+  loading.style.display = "grid";
+  loading2.style.display = "grid";
+  window.soundtrack.loop("menuLoading1");
+  window.soundtrack.play("menuLoading1");
 }
 
 export function endLoading() {
   var shadow = document.getElementById("getUniMenu").shadowRoot;
   var loading = shadow.getElementById("menuLoadingScreen");
   var loading2 = shadow.getElementById("menuLoadingScreen3");
-      loading.style.display = "none";
-      loading2.style.display = "none";
-      window.soundtrack.stop('menuLoading1');
+  loading.style.display = "none";
+  loading2.style.display = "none";
+  window.soundtrack.stop("menuLoading1");
 }
 
+//////////////////////////////////////////
+// DRAG ELEMENT
+//////////////////////////////////////////
 export function dragElement(elmnt, on) {
-  var locked = document.getElementById("getUniMenu").shadowRoot?.getElementById("locked");
-  var pinUi = document.getElementById("getUniMenu").shadowRoot?.getElementById("pinMenu");
-  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  var locked = document
+    .getElementById("getUniMenu")
+    .shadowRoot?.getElementById("locked");
+  var pinUi = document
+    .getElementById("getUniMenu")
+    .shadowRoot?.getElementById("pinMenu");
+  var pos1 = 0,
+    pos2 = 0,
+    pos3 = 0,
+    pos4 = 0;
 
   if (on === false) {
     return;
@@ -2472,8 +2170,8 @@ export function dragElement(elmnt, on) {
     pos2 = pos4 - e.clientY;
     pos3 = e.clientX;
     pos4 = e.clientY;
-    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+    elmnt.style.top = elmnt.offsetTop - pos2 + "px";
+    elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
   }
 
   function closeDragElement() {
@@ -2485,10 +2183,15 @@ export function dragElement(elmnt, on) {
   }
 }
 
-
+//////////////////////////////////////////
+//  PLAYER COORDINATES VARIABLE
+//////////////////////////////////////////
 export var playerCoor = {
   x: 0,
   y: 0,
-}
+};
 
+//////////////////////////////////////////
+//  DOMAIN VARIABLE
+//////////////////////////////////////////
 export var domain = null;

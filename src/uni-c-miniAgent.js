@@ -80,6 +80,7 @@ class uniMenuAgent extends HTMLElement {
             this.shadowRoot.getElementById("agentProfile").style.pointerEvents = "none";
             return;
         } else {
+            if (this.shadowRoot.getElementById("agentProfile")) {
             window.soundtrack.setVolume("openwindow-1", 0.8);
             window.soundtrack.play("openwindow-1");
             this.shadowRoot.getElementById("agentProfile").style.transform = "scaleX(1)";
@@ -89,6 +90,7 @@ class uniMenuAgent extends HTMLElement {
                 this.shadowRoot.getElementById("chat").style.transform = "scaleX(1)";
             }, 270)
             this.miniOpen = true;
+            }
         }   
     }
 
@@ -98,7 +100,7 @@ class uniMenuAgent extends HTMLElement {
         this.shadowRoot.getElementById("agentImg").style.transition = "all .8s ease-in-out";
                 this.shadowRoot.getElementById("agentImg").style.right = "0%";
                 var intro = this.intro
-                this,this.shadowRoot.getElementById("ddLogo").style.display = "block";
+                this,this.shadowRoot.getElementById("ddLogo").style.display = "none";
                 var el = this.shadowRoot.getElementById("chat");
                 this.shadowRoot.getElementById("help").addEventListener("click", () => {
                     this.toggle();

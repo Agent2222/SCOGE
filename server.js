@@ -11,6 +11,11 @@ app.get('/', (req, res) => {
   res.send('Server is running!');
 });
 
+app.get('/api/v2/status', (req, res) => {
+  res.json({ status: 'ok' });
+});
+
+
 // Route to handle the file overwrite operation
 app.post('/save-json', (req, res) => {
   const jsonData = req.body;

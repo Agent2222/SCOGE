@@ -1,4 +1,11 @@
 import loading from "../assets/sound/loading.mp3";
+import forgeInitS from "../assets/sound/forge-init.mp3";
+
+var playing = {
+  startVolume: 0.2,
+  fullVolume: 0.6,
+  running: false,
+};
 
 export class SoundtrackManager {
   constructor() {
@@ -26,6 +33,7 @@ export class SoundtrackManager {
       { key: 'newmessage-1', src: '  https://storage.scoge.co/scogeUniverse/sounds/newmessage.mp3', artist: 'system', title: 'newmessage-1' },
       { key: 'reacclimate-1', src: 'https://storage.scoge.co/scogeUniverse/sounds/reacclimate-1_01.mp3', artist: 'canon', title: 'reacclimate-1' },
       { key: 'loading-1', src: loading, artist: 'system', title: 'loading-1' },
+      { key: 'forgeInit', src: forgeInitS, artist: 'system', title: 'forgeInit' },
     ];
 
     this.trackList.forEach(track => {
@@ -72,4 +80,25 @@ export class SoundtrackManager {
   loop(key) {
     this.tracks[key].loop = true;
   }  
+
+  movement(active, terrain) {
+    switch (active) {
+      case true:
+        if (playing.running === false) {
+          window.soundtrack.setVolume("running-2", playing.startVolume);
+          setTimeout(() => {
+            soundtrack.setVolume("running-2", playing.fullVolume);
+          }, 1000);
+          window.soundtrack.loop("running-2");
+          window.soundtrack.play("running-2");
+          playing.running = true;
+        }
+        break;
+      case false:
+        window.soundtrack.stop("running-2");
+        playing.running = false;
+        break;
+      default:
+    }
+  }
 }

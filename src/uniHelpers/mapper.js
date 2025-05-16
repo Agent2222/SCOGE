@@ -16,6 +16,36 @@ var img = document.createElement("img");
 var taosIdl = idlFactory;
 var mapping = [];
 var loadScope = null;
+const securityGates = {
+    domains: [],
+    terrains: [],
+    sectors: [],
+    "LX Industry": false,
+    "West Wing River": false,
+    "Outerlands": true,
+    "The 12th": true,
+    "Ports of Alansana": true,
+    "Falcons Heart": false,
+    "East Wing River": false,
+    "Sustainer Town": false,
+    "Alans Isles": false,
+    "City Central": false,
+}
+const securityGatesDebug = {
+    domains: [],
+    terrains: [],
+    sectors: [],
+    "LX Industry": true,
+    "West Wing River": true,
+    "Outerlands": true,
+    "The 12th": true,
+    "Ports of Alansana": true,
+    "Falcons Heart": true,
+    "East Wing River": true,
+    "Sustainer Town": true,
+    "Alans Isles": true,
+    "City Central": true,
+}
 var regionLock = {
     locked: false,
     region: null,
@@ -1264,10 +1294,78 @@ function terrainLockFunc() {
 
 // Limit Regions
 // Release Limit Regions
+export const regionPassCheck = async (region, sector, domain, mapping2) => {
+    var regionPass = {
+        up: false,
+        down: false,
+        left: false,
+        right: false
+    }
+
+    var domainBlocked = {
+        up: false,
+        down: false,
+        left: false,
+        right: false
+    }
+
+    regionPass.up = {
+        domain: domain - 170,
+        region: mapping2[domain - 170]?.region,
+        sector: mapping2[domain - 170]?.sector,
+        terrain: mapping2[domain - 170]?.terrain
+    };
+
+    regionPass.down = {
+        domain: domain + 170,
+        region: mapping2[domain + 170]?.region,
+        sector: mapping2[domain + 170]?.sector,
+        terrain: mapping2[domain + 170]?.terrain
+    };
+
+    regionPass.left = {
+        domain: domain - 1,
+        region: mapping2[domain - 1]?.region,
+        sector: mapping2[domain - 1]?.sector,
+        terrain: mapping2[domain - 1]?.terrain
+    };
+
+    regionPass.right = {
+        domain: domain + 1,
+        region: mapping2[domain + 1]?.region,
+        sector: mapping2[domain + 1]?.sector,
+        terrain: mapping2[domain + 1]?.terrain
+    };
+
+    if (securityGatesDebug[regionPass.up?.region] === false || securityGatesDebug[regionPass.up?.region] === undefined) {
+        domainBlocked.up = true;
+        console.log("UP BLOCKED", securityGates[regionPass.up?.region]);
+    }
+    if (securityGatesDebug[regionPass.down?.region] === false || securityGatesDebug[regionPass.down?.region] === undefined) {
+        domainBlocked.down = true;
+        console.log("DOWN BLOCKED", securityGates[regionPass.down?.region]);
+    }
+    if (securityGatesDebug[regionPass.left?.region] === false || securityGatesDebug[regionPass.left?.region] === undefined) {
+        domainBlocked.left = true;
+        console.log("LEFT BLOCKED", securityGates[regionPass.left?.region]);
+    }
+    if (securityGatesDebug[regionPass.right?.region] === false || securityGatesDebug[regionPass.right?.region] === undefined) {
+        domainBlocked.right = true;
+        console.log("RIGHT BLOCKED", securityGates[regionPass.right?.region]);
+    }
+
+    return domainBlocked;
+}
+
 // Map Events
 // Map Rivals
-// Map Athorities
+// Map Authorities
+
 // Map Obatacles
+export const borderReminder = (mapping2, domain, restrictedRegion) => {
+    // player domain 
+    var pd = mapping2[domain].region;
+};
 
 // Add LOAD, CLEAR, EVENT IDENTIFIER
 

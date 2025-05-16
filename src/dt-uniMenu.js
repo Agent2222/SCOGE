@@ -566,6 +566,10 @@ class getUniMenu extends HTMLElement {
     }
   }
 
+  closeMenuTuckRight() {
+    this.closeFullMenu();
+  }
+
   // Send Feedback
   sendFeedback(event) {
     // Event.preventDefault(); // Prevent the form from being submitted the traditional way
@@ -972,7 +976,7 @@ class getUniMenu extends HTMLElement {
         return;
       } else if (this.domainIntroSeen === true) {
         document.getElementById("compDomainDev").setAttribute("active", "true");
-        pinMenu();
+        pinMenu("left");
       }
     });
     this.shadow.getElementById("cloudHallGarmentImg").addEventListener("click", () => {
@@ -1105,7 +1109,7 @@ class getUniMenu extends HTMLElement {
     //   this.switchMenuTabs(el);
     // });
     this.shadow.getElementById("pinMenu").addEventListener("click", () => {
-      pinMenu();
+      pinMenu("left");
     });
     this.beacons = this.shadow.querySelectorAll(".beacon");
     this.beacons.forEach((element) => {
@@ -1286,7 +1290,8 @@ class getUniMenu extends HTMLElement {
               border-top: 2px solid #ff002d;
               border-right: 2px solid #ff002d;
               font-family: "BS-R";
-              font-size: 16px;
+              font-size: 14px;
+              text-transform: uppercase;
               display: none;
               transition: height 0.5s ease;
               overflow-x: hidden;
@@ -1328,7 +1333,7 @@ class getUniMenu extends HTMLElement {
               height: 20%;
               overflow: hidden;
               grid-template-columns: 1fr;
-              grid-template-rows: 70% 30%;
+              grid-template-rows: 1fr;
               align-items: center;
               justify-items: center;
               border-radius: 10px 10px 0 0;
@@ -1441,6 +1446,7 @@ class getUniMenu extends HTMLElement {
             }
             #menuItems > div:hover .uniMenuTxt {
               transform: translateX(40px);
+              letter-spacing: 2px;
             }
             #fullMenu {
               width: 0px;
@@ -3047,25 +3053,31 @@ class getUniMenu extends HTMLElement {
               left: 8%;
             }
 
-            #mintStartBut {
+            #inventoryBut {
               bottom: 3%;
               right: 8%;
             }
 
             #gdBuyBut {
-              color: var(--primary);
+              color: var(--accent);
               justify-items: end;
               align-items: end;
               font-size: 1em;
               background-size: cover;
               background-position: center;
+              border: 1px solid var(--accent);
             }
 
-            #gdBuyBut:hover {
+            // .bgImg {
+            //   opacity: 1;
+            // }
+
+            #gdBuyBut:hover, .inventoryActive {
               background-color: var(--accent);
-              color: var(--secondary);
+              color: var(--accent);
               font-family: "BS-B";
               letter-spacing: 2px;
+              opacity: 1;
             }
 
             #gdBuyBut2:hover {
@@ -3713,7 +3725,7 @@ class getUniMenu extends HTMLElement {
                 margin-bottom: 40%;
               }
 
-              #mintStartBut {
+              #inventoryBut {
                 bottom: auto;
                 right: auto;
                 left: auto;
@@ -3734,14 +3746,6 @@ class getUniMenu extends HTMLElement {
                 font-family: "BS-B";
                 font-size: 1.2em;
                 text-shadow: 0 0 5px black;
-              }
-
-              #gdBuyBut .bgImg {
-                opacity: 1;
-              }
-
-              #gdBuyBut {
-                border: 1px solid var(--accent);
               }
 
               #emailInput::placeholder {
@@ -3774,9 +3778,6 @@ class getUniMenu extends HTMLElement {
                 <div class="menuIcon" id="mi3"></div>
                </div>
               </div>
-              <div id="uniVersion">
-                Universe - v. 0.0.6
-              </div>
             </div>
             <div id="menuItems">
               <div id="uniMenuShop" class="menuTabs">
@@ -3788,7 +3789,7 @@ class getUniMenu extends HTMLElement {
                   <path class="cls-1" d="M289.4,192.1c24.7-36.5,65.7-58.8,110.6-58.8c73.7,0,133.3,59.7,133.3,133.3v82.4c0,9.2,7.5,16.7,16.7,16.7c9.2,0,16.7-7.5,16.7-16.7v-11.6c10,5.8,16.7,16.5,16.7,28.9c0,18.4-14.9,33.3-33.3,33.3s-33.3-14.9-33.3-33.3c0-9.2-7.5-16.7-16.7-16.7s-16.7,7.5-16.7,16.7c0,36.8,29.9,66.7,66.7,66.7s66.7-29.9,66.7-66.7c0-31.1-21.3-57.2-50.1-64.6v-35.1v0h116.7c9.2,0,16.7,7.4,16.7,16.7V650c0,9.2-7.4,16.7-16.7,16.7H116.7c-9.2,0-16.7-7.4-16.7-16.7V283.3c0-9.2,7.4-16.7,16.7-16.7h116.7v83.4c0,9.2,7.5,16.7,16.7,16.7s16.7-7.5,16.7-16.7v-12.6c10,5.8,16.7,16.5,16.7,28.9c0,18.4-14.9,33.3-33.3,33.3c-18.4,0-33.3-14.9-33.3-33.3c0-9.2-7.5-16.7-16.7-16.7c-9.2,0-16.7,7.5-16.7,16.7c0,36.8,29.9,66.7,66.7,66.7s66.7-29.9,66.7-66.7c0-31.1-21.3-57.2-50.1-64.6v-35.2h215.5c9.2,0,16.7-7.5,16.7-16.7s-7.5-16.7-16.7-16.7H116.7c-27.6,0-50,22.4-50,50V650c0,27.6,22.4,50,50,50h566.7c27.6,0,50-22.4,50-50V283.3c0-27.6-22.4-50-50-50h-120C547.9,157.3,480.6,100,400,100c-56,0-107.4,27.9-138.2,73.5c-5.2,7.6-3.1,18,4.5,23.1C273.9,201.8,284.3,199.8,289.4,192.1z"/>
                   </svg>
                 </div>
-                <div class="uniMenuTxt" id="menuEnhancements">Inventory</div>
+                <div class="uniMenuTxt" id="menuEnhancements">Shop</div>
               </div>
               <div id="uniMenuItems" class="menuTabs">
                 <div>
@@ -3837,7 +3838,7 @@ class getUniMenu extends HTMLElement {
                   l2.5,2.4l7.5,5C685,282.5,650,417.5,532.5,532.5z"/>
                 </svg>
                 </div>
-                <div class="uniMenuTxt" id="menuloginBut">Log-in</div>
+                <div class="uniMenuTxt" id="menuloginBut">Universe</div>
               </div>
               <div id="uniMenuCloudHall" class="menuTabs">
                 <div>
@@ -3882,9 +3883,9 @@ class getUniMenu extends HTMLElement {
                     <div class="bgImg" id="syncBG"></div>
                     <div class="buttonTxt" id="syncStartBut">SYNC</div>
                   </div>
-                  <div class="romLogButtons glowButton" id="gdBuyBut">
+                  <div class="romLogButtons glowButton inventoryActive" id="gdBuyBut">
                     <div class="bgImg" id="mintBG"></div>
-                    <div class="buttonTxt" id="mintStartBut">FORGE</div>
+                    <div class="buttonTxt" id="inventoryBut">INVENTORY</div>
                   </div>
                 </div>
               </div>

@@ -1,4 +1,4 @@
-import { newScenario } from "../universe";
+import { newScenario, newCutScene } from "../universe";
 // Check Initial State
 
 export function checkInitialState() {
@@ -51,6 +51,9 @@ export async function story(scenario) {
     break;
     case "Controls":
         window.currentScenario = await newScenario(scenario);
+    break;
+    case "NewGame":
+        window.currentScenario = await newCutScene(scenario);
     break;
   }
 }
