@@ -4,6 +4,19 @@ import leftArrow from "../../assets/images/icons/left-arrow.png";
 import magnaCase1 from "../../assets/images/cards/scoge_magna-case-1.jpg";
 import { forgeable } from "./comp-wallets";
 import { gsap } from "gsap/gsap-core";
+import { SoundtrackManager2 } from "../soundtrack";
+
+import sButton from "../../assets/sound/Forge-Masters/forge-button-1.mp3";
+import sCodeComplete from "../../assets/sound/Forge-Masters/forge-codeComplete-1.mp3";
+import sCodeShift from "../../assets/sound/Forge-Masters/forge-codeshift-1.mp3";
+import sCountdown from "../../assets/sound/Forge-Masters/forge-countdown-1.mp3";
+import sDiscovered from "../../assets/sound/Forge-Masters/forge-discovered-1.mp3";
+import sDesc from "../../assets/sound/Forge-Masters/forge-open-desc-1.mp3";
+import sShiftCode from "../../assets/sound/Forge-Masters/forge-shiftCode-1.mp3";
+import sStartPulse from "../../assets/sound/Forge-Masters/forge-StartPulse-1.mp3";
+import sTimeReset from "../../assets/sound/Forge-Masters/forge-timerReset-1.mp3";
+import sSoundtrack from "../../assets/sound/Forge-Masters/forge-soundtrack-1.mp3";
+
 
 export const forgelib = async () => {
     const httpUrl = "https://uqjdj-siaaa-aaaag-aaoxq-cai.icp0.io/assets/nfts/fgLib.json";
@@ -15,6 +28,7 @@ export const forgelib = async () => {
 class compForge extends HTMLElement {
     constructor() {
         super();
+        this.soundtrack = null;
         this.attachShadow({mode: 'open'});
         this.marketLink = "https://opensea.io/collection/scoge-1";
         this.memoryAvailable = false;
@@ -63,6 +77,7 @@ class compForge extends HTMLElement {
         this.decayGate = true;
         this.colorsBase = ["var(--primary)", "var(--secondary)", "var(--accent)"];
         this.colorOptions = ["var(--primary)", "var(--secondary)", "var(--accent)"];
+        this.forgeSoundtrack = null;
     }
 
     get active() {
@@ -203,6 +218,25 @@ class compForge extends HTMLElement {
 
     buildMarket(e1, e2) {
        //
+    }
+
+    loadSoundtrack() {
+
+        this.forgeSoundtrack = [
+            { key: "forge-button-1", src: sButton, artist: 'Forge', title: 'forge-button-1' },
+            { key: "forge-codeComplete-1", src: sCodeComplete, artist: 'Forge', title: 'forge-codeComplete-1' },
+            { key: "forge-codeshift-1", src: sCodeShift, artist: 'Forge', title: 'forge-codeshift-1' },
+            { key: "forge-countdown-1", src: sCountdown, artist: 'Forge', title: 'forge-countdown-1' },
+            { key: "forge-discovered-1", src: sDiscovered, artist: 'Forge', title: 'forge-discovered-1' },
+            { key: "forge-open-desc-1", src: sDesc, artist: 'Forge', title: 'forge-open-desc-1' },
+            { key: "forge-shiftCode-1", src: sShiftCode, artist: 'Forge', title: 'forge-shiftCode-1' },
+            { key: "forge-StartPulse-1", src: sStartPulse, artist: 'Forge', title: 'forge-StartPulse-1' },
+            { key: "forge-timeReset-1", src: sTimeReset, artist: 'Forge', title: 'forge-timeReset-1' },
+            { key: "forge-soundtrack-1", src: sSoundtrack, artist: 'Forge', title: 'forge-soundtrack-1' }
+        ]
+
+        this.soundtrack = new SoundtrackManager2(this.forgeSoundtrack);
+        this.soundtrack.importNewTracks();
     }
 
     openCheckout(checkout) {
@@ -657,6 +691,8 @@ class compForge extends HTMLElement {
 
     async lockUp() {
         // forgeCode
+        this.soundtrack.stop('forge-button-1');
+        this.soundtrack.play('forge-button-1');
         this.centerVal.forEach(async(ele)=> {
             if (this.movingRight === false) {
                 gsap.timeline()
@@ -720,6 +756,10 @@ class compForge extends HTMLElement {
         this.forgeDecayChecker();
         window.soundtrack.setVolume("forgeInit", 0.7);
         window.soundtrack.play('forgeInit');
+        this.soundtrack.play('forge-soundtrack-1');
+        this.soundtrack.play('forge-countdown-1');
+        this.soundtrack.loop('forge-soundtrack-1');
+        this.soundtrack.loop('forge-countdown-1');
 
         this.shadowRoot.getElementById("forgeFocus").style.display = "block";
         
@@ -826,6 +866,8 @@ class compForge extends HTMLElement {
 
                 switch (this.fp) {
                     case 0:
+                        this.soundtrack.stop('forge-soundtrack-1');
+                        this.soundtrack.stop('forge-countdown-1');
                         console.log("Forge Failed"," - Checking FP", this.fp);
                         clearInterval(this.forgeDecay);
                         // clearInterval(document.getElementById("forgeModal").forgeDecay);
@@ -901,6 +943,8 @@ class compForge extends HTMLElement {
                         // alert("Two Lives Left");
                     break;
                     case null:
+                        this.soundtrack.stop('forge-soundtrack-1');
+                        this.soundtrack.stop('forge-countdown-1');
                         console.log("Calling NULL");
                         this.scale = 1;
                         this.currentConnector = "connector";
@@ -1104,6 +1148,8 @@ class compForge extends HTMLElement {
     }    
 
     async lockDown() {
+        this.soundtrack.stop('forge-button-1');
+        this.soundtrack.play('forge-button-1');
         this.centerVal.forEach(async (ele)=> {
             if (this.movingRight === false) {
                 gsap.timeline()
@@ -1155,6 +1201,8 @@ class compForge extends HTMLElement {
     lockLeft(e) {
         //
         // e.keyCode == 37
+        this.soundtrack.stop('forge-shiftCode-1');
+        this.soundtrack.play('forge-shiftCode-1');
         this.codeColor("left");
         this.allVal.forEach((ele)=> {
             gsap.timeline()
@@ -1235,6 +1283,8 @@ class compForge extends HTMLElement {
         //
         // e.keyCode == 39
         this.codeColor("right");
+        this.soundtrack.stop('forge-shiftCode-1');
+        this.soundtrack.play('forge-shiftCode-1');
         this.allVal.forEach((ele)=> {
             if (this.movingRight === false) {
                 gsap.timeline()
@@ -1416,6 +1466,7 @@ class compForge extends HTMLElement {
 
     connectedCallback() {
         this.render();
+        this.loadSoundtrack();
         this.allVal = this.shadowRoot.querySelectorAll(".val");
         this.centerVal = this.shadowRoot.querySelectorAll(".centerVal");
         this.leftVal = this.shadowRoot.querySelectorAll(".leftVal");
@@ -1484,6 +1535,11 @@ class compForge extends HTMLElement {
         });
 
         this.shadowRoot.getElementById("mainForge").querySelector("comp-close-btn").shadowRoot.getElementById("main").addEventListener("click", () => {
+            this.soundtrack.stop('forge-soundtrack-1');
+            this.soundtrack.stop('forge-countdown-1');
+            this.forgeGoal = [];
+            this.forgeComplete = false;
+
             var main = this.shadowRoot.getElementById("mainForge");
             var forgeFocus = this.shadowRoot.getElementById("forgeFocus");
             var card = this.shadowRoot.getElementById("forgeSelection");
@@ -1504,7 +1560,7 @@ class compForge extends HTMLElement {
             this.scale = 1;
             this.scale = 1;
             this.currentConnector = "connector";
-            this.shadowRoot.getElementById("forgeError").style.display = "grid";
+            // this.shadowRoot.getElementById("forgeError").style.display = "grid";
             this.shadowRoot.getElementById("forgeSuccess").style.display = "none";
             this.fp = 0;
             gsap.to(connector, { 

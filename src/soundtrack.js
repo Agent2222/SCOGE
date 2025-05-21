@@ -8,8 +8,9 @@ var playing = {
 };
 
 export class SoundtrackManager {
-  constructor() {
+  constructor(newTracks) {
     this.tracks = {};
+    this.newTracks = newTracks;
     this.trackList = [
       // MOVING
       { key: 'menuMove3', src: 'https://storage.scoge.co/scogeUniverse/sounds/scoge-menu1-move-3.mp3', artist: 'Menu', title: 'menuMove3' },
@@ -100,5 +101,84 @@ export class SoundtrackManager {
         break;
       default:
     }
+  }
+}
+
+export class SoundtrackManager2 {
+  constructor(newTracks) {
+    this.tracks = {};
+    this.newTracks = newTracks;
+    this.trackList = [
+    ];
+  }
+
+  async play(key) {
+    try {
+      await this.tracks[key].play();
+      // when the track ends make window.spokeAcclimate = true;
+      this.tracks[key].addEventListener('ended', () => {
+        if (key === 'reacclimate-1') {
+          window.spoke.spokeAcclimate = true;
+        }
+      });
+    } catch (error) {
+      // console.error('Failed to play audio:', error);
+    }
+  }
+
+  async pause(key) {
+    try {
+      await this.tracks[key].pause();
+    } catch (error) {
+      // console.error('Failed to pause audio:', error);
+    }
+    // this.tracks[key].pause();
+  }
+
+  stop(key) {
+    try {
+      this.tracks[key].pause();
+      this.tracks[key].currentTime = 0;
+    } catch (error) {
+      console.error('Failed to stop audio:', error);
+    }
+  }
+
+  setVolume(key, volume) {
+    this.tracks[key].volume = volume;
+  }
+
+  loop(key) {
+    this.tracks[key].loop = true;
+  }  
+
+  movement(active, terrain) {
+    switch (active) {
+      case true:
+        if (playing.running === false) {
+          window.soundtrack.setVolume("running-2", playing.startVolume);
+          setTimeout(() => {
+            soundtrack.setVolume("running-2", playing.fullVolume);
+          }, 1000);
+          window.soundtrack.loop("running-2");
+          window.soundtrack.play("running-2");
+          playing.running = true;
+        }
+        break;
+      case false:
+        window.soundtrack.stop("running-2");
+        playing.running = false;
+        break;
+      default:
+    }
+  }
+
+  importNewTracks() {
+    // console.log("Importing new tracks", this.newTracks);  
+    this.trackList = this.newTracks;
+
+    this.trackList.forEach(track => {
+      this.tracks[track.key] = new Audio(track.src);
+    });
   }
 }
