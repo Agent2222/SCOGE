@@ -1,1 +1,0 @@
-import{bM as t,bL as a}from"./main-hS3tnEYq.js";import"./wScoge-BthgsBuw.js";const e="0x313ce567",r=[],n=[{type:"uint8"}];async function o(c){return t({contract:c.contract,method:[e,r,n],params:[]})}async function m(c){return a(()=>o(c),{cacheKey:`${c.contract.chain.id}:${c.contract.address}:decimals`,cacheTime:Number.POSITIVE_INFINITY})}export{m as decimals};
