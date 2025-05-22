@@ -760,6 +760,7 @@ class compForge extends HTMLElement {
         this.soundtrack.play('forge-countdown-1');
         this.soundtrack.loop('forge-soundtrack-1');
         this.soundtrack.loop('forge-countdown-1');
+        this.soundtrack.play('forge-StartPulse-1');
 
         this.shadowRoot.getElementById("forgeFocus").style.display = "block";
         
@@ -1037,6 +1038,7 @@ class compForge extends HTMLElement {
         console.log("Forge Level Passed");
         switch(lvl) {
             case 1:
+                this.soundtrack.play('forge-codeComplete-1');
                 clearInterval(this.forgeDecay);
                 this.scale = 1;
                 this.fp = 1;
@@ -1048,6 +1050,7 @@ class compForge extends HTMLElement {
                         ease: "power3.inOut",
                         zIndex: 1
                     })
+                    this.soundtrack.play('forge-timeReset-1');
                 }, 500)
                 gsap.to(connector, { 
                     rotation: 3600, // Rotate 360 degrees
@@ -1056,6 +1059,7 @@ class compForge extends HTMLElement {
                 });
             break;
             case 2:
+                this.soundtrack.play('forge-codeComplete-1');
                 clearInterval(this.forgeDecay);
                 this.scale = 1; 
                 this.fp = 2;
@@ -1067,6 +1071,7 @@ class compForge extends HTMLElement {
                         ease: "power3.inOut",
                         zIndex: 1
                     })
+                    this.soundtrack.play('forge-timeReset-1');
                 }, 500)
                 gsap.to(connector, { 
                     rotation: 0, // Rotate 360 degrees
