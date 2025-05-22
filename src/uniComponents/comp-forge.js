@@ -1554,6 +1554,8 @@ class compForge extends HTMLElement {
             main.bottom = "5%";
             forgeFocus.style.display = "none";
             card.style.position = "absolute";
+            
+            this.shadowRoot.getElementById("forgerOptions").style.display = "none";
             this.shadowRoot.getElementById("forgeFailed").style.display = "none";
             this.shadowRoot.getElementById("forgeError").style.display = "none";
             this.shadowRoot.querySelector("#forgeSelection").style.transform = "translateX(500px)";
